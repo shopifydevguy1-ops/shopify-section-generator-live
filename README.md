@@ -181,25 +181,31 @@ UPDATE users SET role = 'admin' WHERE email = 'your-email@example.com';
 
 ## Deployment
 
-### Vercel (Recommended)
+⚠️ **Important:** This app **cannot be deployed to GitHub Pages** because it requires Node.js, a database, and API routes. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-1. Push your code to GitHub
-2. Import project in Vercel
+### Quick Deploy Options
+
+**Vercel (Recommended):**
+1. Go to [vercel.com](https://vercel.com)
+2. Import your GitHub repository
 3. Add environment variables
 4. Deploy!
 
-### Other Platforms
+**Netlify:**
+1. Go to [netlify.com](https://netlify.com)
+2. Import from GitHub
+3. Configure build: `npm run build`
+4. Add environment variables
+5. Deploy!
 
-The app can be deployed to any platform that supports Next.js:
-- Netlify
-- Railway
-- Render
-- AWS Amplify
+**Railway:**
+1. Go to [railway.app](https://railway.app)
+2. Deploy from GitHub
+3. Add PostgreSQL database
+4. Add environment variables
+5. Auto-deploys!
 
-Make sure to:
-- Set all environment variables
-- Run database migrations
-- Seed initial data
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment guide with all options.
 
 ## Environment Variables
 
