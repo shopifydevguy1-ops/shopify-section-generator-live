@@ -23,16 +23,43 @@ git branch -M main
 git push -u origin main
 ```
 
-### Step 3: Deploy to GitHub Pages (Optional)
+### Step 3: Deploy to GitHub Pages
 
 1. Go to your repository on GitHub
 2. Click **Settings** → **Pages**
-3. Under **Source**, select **Deploy from a branch**
-4. Choose **main** branch and **/ (root)** folder
-5. Click **Save**
+3. Under **Source**, select **GitHub Actions**
+4. The workflow will automatically deploy when you push to the `main` branch
 
 Your app will be live at:
 `https://shopifydevguy1-ops.github.io/shopify-section-generator/`
+
+#### 🌐 Setting Up a Custom Domain
+
+If you want to use a custom domain (e.g., `u-dong.com`):
+
+1. **Add the CNAME file** (already included in this repo):
+   - The `CNAME` file contains your custom domain
+   - Make sure it's in the root of your repository
+
+2. **Configure DNS** (at your domain registrar):
+   - Add a CNAME record pointing to: `shopifydevguy1-ops.github.io`
+   - Or add A records pointing to GitHub's IP addresses:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+
+3. **Add custom domain in GitHub**:
+   - Go to **Settings** → **Pages**
+   - Under **Custom domain**, enter your domain (e.g., `u-dong.com`)
+   - Click **Save**
+   - Wait for DNS verification (may take a few minutes)
+
+4. **Enable HTTPS** (recommended):
+   - Check the **Enforce HTTPS** checkbox
+   - GitHub will automatically provision an SSL certificate
+
+**Important:** The `CNAME` file must be in the repository root and will be automatically included in deployments.
 
 ## 📝 Alternative: Using GitHub CLI
 
@@ -75,9 +102,13 @@ shopify-section-generator/
 ├── app.js
 ├── suggestions.js
 ├── sections-library.js
+├── CNAME (for custom domain)
 ├── README.md
 ├── HOW_TO_ADD_SECTIONS.md
 ├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
 └── netlify.toml (optional, for Netlify)
 ```
 
@@ -86,9 +117,43 @@ shopify-section-generator/
 After pushing:
 
 1. Visit your repository: https://github.com/shopifydevguy1-ops/shopify-section-generator
-2. Verify all files are uploaded
-3. If using GitHub Pages, wait a few minutes for deployment
-4. Visit your live URL to test
+2. Verify all files are uploaded (including `CNAME` if using custom domain)
+3. Check the **Actions** tab to see if the deployment workflow ran successfully
+4. Wait a few minutes for GitHub Pages deployment
+5. Visit your live URL to test
+
+## 🔧 Troubleshooting Custom Domain 404 Errors
+
+If your custom domain shows a 404 page:
+
+1. **Verify CNAME file exists**:
+   - Check that `CNAME` file is in the repository root
+   - The file should contain only your domain (e.g., `u-dong.com`)
+   - No trailing slashes or `https://` prefix
+
+2. **Check DNS configuration**:
+   - Verify DNS records are correct at your domain registrar
+   - Wait up to 24-48 hours for DNS propagation
+   - Use `dig` or `nslookup` to verify DNS resolution
+
+3. **Verify GitHub Pages settings**:
+   - Go to **Settings** → **Pages**
+   - Ensure **Source** is set to **GitHub Actions**
+   - Check that the custom domain shows "DNS check successful"
+   - Make sure **Enforce HTTPS** is enabled
+
+4. **Check workflow deployment**:
+   - Go to **Actions** tab in your repository
+   - Verify the latest workflow run completed successfully
+   - The workflow should deploy from the root directory (`.`)
+
+5. **Clear browser cache**:
+   - Try accessing the site in incognito/private mode
+   - Clear DNS cache: `sudo dscacheutil -flushcache` (macOS)
+
+6. **Wait for propagation**:
+   - DNS changes can take 24-48 hours to fully propagate
+   - GitHub Pages deployment may take 5-10 minutes after push
 
 ## 🎯 Next Steps
 
