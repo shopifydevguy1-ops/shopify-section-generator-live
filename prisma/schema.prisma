@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  passwordHash        String   @map("password_hash")
+  subscriptionPlan    String   @default("free") @map("subscription_plan")
+  sectionUsageCount   Int      @default(0) @map("section_usage_count")
+  role                String   @default("user") // "user" or "admin"
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  generationLogs      GenerationLog[]
+
+  @@map("users")
+}
+
+model Section {
+  id            String   @id @default(cuid())
+  title         String
+  tags          String[] // ["free", "premium", "slider", etc.]
+  description   String
+  previewImage  String?  @map("preview_image")
+  baseTemplate  String   @map("base_template") @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  generationLogs GenerationLog[]
+
+  @@map("sections")
+}
+
+model GenerationLog {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  sectionId   String?  @map("section_id")
+  prompt      String   @db.Text
+  generatedCode String @map("generated_code") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  section     Section? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+
+  @@map("generation_logs")
+}
