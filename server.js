@@ -17,12 +17,19 @@ app.prepare().then(() => {
     } catch (err) {
       console.error('Error occurred handling', req.url, err)
       res.statusCode = 500
-      res.end('internal server error')
+      res.setHeader('Content-Type', 'text/html')
+      res.end('<h1>Internal Server Error</h1><p>Please check the server logs.</p>')
     }
   }).listen(port, hostname, (err) => {
-    if (err) throw err
+    if (err) {
+      console.error('Failed to start server:', err)
+      process.exit(1)
+    }
     console.log(`> Ready on http://${hostname}:${port}`)
     console.log(`> Environment: ${process.env.NODE_ENV || 'development'}`)
   })
+}).catch((err) => {
+  console.error('Failed to prepare Next.js app:', err)
+  process.exit(1)
 })
 
