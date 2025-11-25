@@ -11,12 +11,41 @@ const port = parseInt(process.env.PORT || '3000', 10)
 // Check if .next directory exists (build is required for production)
 const nextDir = path.join(process.cwd(), '.next')
 const buildManifest = path.join(nextDir, 'BUILD_ID')
-const isBuilt = fs.existsSync(nextDir) && fs.existsSync(buildManifest)
+let isBuilt = fs.existsSync(nextDir) && fs.existsSync(buildManifest)
+
+// If build doesn't exist in production, try to build it
+if (!isBuilt && !dev) {
+  console.log('⚠️  Build not found. Attempting to build now...')
+  console.log('   Current directory:', process.cwd())
+  console.log('   Looking for .next in:', nextDir)
+  
+  try {
+    const { execSync } = require('child_process')
+    console.log('   Running: npm run build')
+    execSync('npm run build', { 
+      stdio: 'inherit',
+      cwd: process.cwd(),
+      env: { ...process.env, NODE_ENV: 'production' }
+    })
+    
+    // Check again after build
+    isBuilt = fs.existsSync(nextDir) && fs.existsSync(buildManifest)
+    
+    if (isBuilt) {
+      console.log('✅ Build completed successfully!')
+    } else {
+      console.error('❌ Build completed but .next directory still not found!')
+      console.error('   This may indicate a build error or wrong directory.')
+    }
+  } catch (error) {
+    console.error('❌ Failed to build:', error.message)
+    console.error('   Please run: npm run build manually')
+  }
+}
 
 if (!isBuilt && !dev) {
   console.error('❌ ERROR: .next directory or BUILD_ID not found!')
   console.error('   This means the Next.js app was not built.')
-  console.error('   The prestart script should have built it, but it may have failed.')
   console.error('   Please check the logs above for build errors.')
   console.error('   You can manually build by running: npm run build')
 }
