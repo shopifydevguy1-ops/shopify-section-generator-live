@@ -103,7 +103,55 @@ Z.com hosting supports Node.js applications. Follow these steps:
    - FTP/SFTP for file uploads
    - Control panel access
 
-#### Deployment Steps
+#### Auto-Deployment Setup (Recommended)
+
+Z.com supports automatic deployment from GitHub. This is the easiest way to deploy:
+
+1. **Connect GitHub Repository:**
+   - Log in to your Z.com control panel
+   - Navigate to your Node.js application settings
+   - Look for "Git Repository" or "Source Code" section
+   - Click "Connect Repository" or "Link GitHub"
+   - Authorize Z.com to access your GitHub account
+   - Select your repository: `shopifydevguy1-ops/shopify-section-generator`
+   - Set the branch to `main` (or `master`)
+   - Set the application root to: `standalone-app`
+
+2. **Configure Build Settings:**
+   - **Build Command:** `npm run build`
+   - **Start Command:** `npm start`
+   - **Node.js Version:** `20.19.4` (or latest 20.x)
+
+3. **Set Environment Variables:**
+   In the Z.com control panel, add these environment variables:
+   - `DATABASE_URL` - Your PostgreSQL connection string
+   - `JWT_SECRET` - Your JWT secret key
+   - `OPENAI_API_KEY` - Your OpenAI API key (optional)
+   - `NODE_ENV` - Set to `production`
+   - `PORT` - Set to `3000` (or the port Z.com assigns)
+
+4. **Enable Auto-Deploy:**
+   - Enable "Auto Deploy" or "Auto Pull" option
+   - This will automatically deploy when you push to the `main` branch
+   - You can also manually trigger deployments from the control panel
+
+5. **Initial Deployment:**
+   - Click "Deploy" or "Pull from Repository" to trigger the first deployment
+   - Z.com will:
+     - Clone your repository
+     - Install dependencies (`npm install`)
+     - Run the build command (`npm run build`)
+     - Start your application (`npm start`)
+
+**That's it!** Every time you push to GitHub, Z.com will automatically:
+- Pull the latest code
+- Install dependencies
+- Build the application
+- Restart the server
+
+#### Manual Deployment Steps (Alternative)
+
+If auto-deployment is not available, follow these steps:
 
 1. **Build Your Application Locally:**
    ```bash
