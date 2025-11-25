@@ -87,6 +87,33 @@ Since Z.com typically offers PHP hosting, you have a few options:
    - Set output directory: `out`
    - Configure environment variables
 
+### Method 1a: Using cPanel Git Interface
+
+If using cPanel's Git Version Control:
+
+1. **Ensure `.cpanel.yml` file exists**
+   - The `.cpanel.yml` file is required for cPanel deployment
+   - This file is already included in the repository root
+   - It configures the build and deployment process
+
+2. **If you get "directory already contains files" error:**
+   - **Option A**: Change the repository path to a new name (e.g., `repositories/shopify-section-generator-live-v2`)
+   - **Option B**: Delete the existing directory via File Manager first, then clone
+   - **Option C**: If the directory already has the repo, use "Pull" instead of "Clone"
+
+3. **Clone the repository**
+   - Repository URL: `https://github.com/shopifydevguy1-ops/shopify-section-generator-live`
+   - Repository Path: Choose a path that doesn't exist or is empty
+   - Repository Name: `shopify-section-generator-live`
+
+4. **Deploy the repository**
+   - After cloning, cPanel will automatically deploy using the `.cpanel.yml` configuration
+   - Or manually click "Deploy HEAD Commit" in the Git Version Control interface
+   - The deployment will:
+     - Install npm dependencies
+     - Build the Next.js application
+     - Copy the built files from `/out` to `public_html`
+
 ### Method 2: Manual Upload
 
 1. **Compress the /out directory**
@@ -179,6 +206,20 @@ NEXT_PUBLIC_APP_URL=https://yourdomain.com
 - [ ] Analytics configured (optional)
 
 ## Troubleshooting
+
+### Git Clone Error: "Directory already contains files"
+If you see this error when cloning in cPanel:
+- **Solution 1**: Change the repository path to a new directory name
+- **Solution 2**: Delete the existing directory via File Manager, then clone
+- **Solution 3**: If the directory already has the repo, use "Pull" to update instead of cloning
+
+### Deployment Error: "No .cpanel.yml file" or "The system cannot deploy"
+If you see this error:
+- **Solution**: Ensure the `.cpanel.yml` file exists in the repository root
+- The file should be committed to Git: `git add .cpanel.yml && git commit -m "Add cPanel deployment config" && git push`
+- Verify the file is in the root directory (same level as `package.json`)
+- Check that the file uses proper YAML syntax (indentation matters)
+- If npm path is incorrect, update `/usr/local/bin/npm` to your cPanel's npm path (check with `which npm` via SSH)
 
 ### Static files not loading
 - Check file paths are correct
