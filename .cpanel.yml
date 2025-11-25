@@ -3,6 +3,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html/
     - export REPOPATH=$HOME/repositories/shopify-section-generator-live
-    - /bin/sh -c "cd $REPOPATH && npm install && npm run build"
+    - /bin/sh -c "cd $REPOPATH && npm install --prefer-offline --no-audit --progress=false && npm run build"
     - /bin/rm -rf $DEPLOYPATH*
     - /bin/cp -R $REPOPATH/out/. $DEPLOYPATH
