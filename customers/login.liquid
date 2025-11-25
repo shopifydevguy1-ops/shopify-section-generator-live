@@ -1,0 +1,79 @@
+{% comment %}
+  Customer Login Template
+  Location: /customers/login.liquid
+  Purpose: Handles customer login with redirect to section generator
+{% endcomment %}
+
+<div class="customer-login-container" style="max-width: 500px; margin: 60px auto; padding: 40px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+  <h1 style="text-align: center; margin-bottom: 30px; font-size: 28px; color: #333;">Login to Your Account</h1>
+
+  {% form 'customer_login', class: 'customer-login-form' %}
+    {% if form.errors %}
+      <div class="form-errors" style="background: #fee; border: 1px solid #fcc; padding: 15px; border-radius: 4px; margin-bottom: 20px; color: #c33;">
+        <strong>Please correct the following errors:</strong>
+        <ul style="margin: 10px 0 0 20px;">
+          {% for field in form.errors %}
+            <li>{{ field | capitalize }}: {{ form.errors[field] }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="form-group" style="margin-bottom: 20px;">
+      <label for="customer_email" style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Email Address</label>
+      <input 
+        type="email" 
+        name="customer[email]" 
+        id="customer_email" 
+        required
+        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; box-sizing: border-box;"
+        value="{{ form.email }}"
+      >
+    </div>
+
+    <div class="form-group" style="margin-bottom: 20px;">
+      <label for="customer_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">Password</label>
+      <input 
+        type="password" 
+        name="customer[password]" 
+        id="customer_password" 
+        required
+        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; box-sizing: border-box;"
+      >
+    </div>
+
+    <div class="form-actions" style="margin-bottom: 20px;">
+      <button 
+        type="submit" 
+        class="login-button"
+        style="width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s;"
+        onmouseover="this.style.background='#1d4ed8'"
+        onmouseout="this.style.background='#2563eb'"
+      >
+        Sign In
+      </button>
+    </div>
+
+    <div class="form-links" style="text-align: center; font-size: 14px;">
+      <a href="{{ routes.account_register_url }}" style="color: #2563eb; text-decoration: none; margin-right: 15px;">Create Account</a>
+      <a href="{{ routes.account_recover_url }}" style="color: #2563eb; text-decoration: none;">Forgot Password?</a>
+    </div>
+  {% endform %}
+
+  {% comment %} Redirect to section generator after successful login {% endcomment %}
+  {% if customer %}
+    <script>
+      window.location.href = '/pages/section-generator';
+    </script>
+  {% endif %}
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .customer-login-container {
+      margin: 20px;
+      padding: 30px 20px;
+    }
+  }
+</style>
+

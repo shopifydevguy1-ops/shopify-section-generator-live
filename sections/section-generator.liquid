@@ -1,0 +1,255 @@
+{% comment %}
+  Section Generator Main Interface
+  Location: /sections/section-generator.liquid
+  Purpose: Main UI for generating Shopify sections using AI
+{% endcomment %}
+
+{%- liquid
+  assign subscription_status = customer.metafields.custom.subscription_status | default: 'inactive'
+  assign subscription_expiry = customer.metafields.custom.subscription_expiry | default: ''
+  assign has_active_subscription = false
+  
+  if customer and subscription_status == 'active'
+    if subscription_expiry == blank or subscription_expiry > 'now' | date: '%s'
+      assign has_active_subscription = true
+    endif
+  endif
+-%}
+
+<div class="section-generator-wrapper" id="section-generator-app">
+  {% if customer and has_active_subscription %}
+    {% comment %} Logged in with active subscription - Show generator {% endcomment %}
+    <div class="generator-container">
+      <div class="generator-header">
+        <h1 class="generator-title">{{ section.settings.title | default: 'AI Section Generator' }}</h1>
+        <div class="user-actions">
+          <span class="user-name">Welcome, {{ customer.first_name }}!</span>
+          <a href="{{ routes.account_logout_url }}" class="logout-link">Logout</a>
+        </div>
+      </div>
+
+      <div class="generator-layout">
+        {% comment %} Left Panel: Input and Suggestions {% endcomment %}
+        <div class="generator-left-panel">
+          <div class="prompt-section">
+            <label for="section-prompt" class="prompt-label">Describe the section you want to create:</label>
+            <textarea 
+              id="section-prompt" 
+              class="prompt-input"
+              placeholder="Example: Create a hero banner with a large image, headline text, and a call-to-action button..."
+              rows="6"
+            ></textarea>
+            <div class="prompt-actions">
+              <button id="generate-btn" class="btn-primary">Generate Section</button>
+              <button id="clear-btn" class="btn-secondary">Clear</button>
+            </div>
+          </div>
+
+          {% comment %} Section Suggestions Panel {% endcomment %}
+          <div class="suggestions-section">
+            <h3 class="suggestions-title">Suggested Sections</h3>
+            <div id="suggestions-container" class="suggestions-grid">
+              <div class="suggestions-loading">Loading suggestions...</div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} Right Panel: Preview and Controls {% endcomment %}
+        <div class="generator-right-panel">
+          <div class="preview-section">
+            <div class="preview-header">
+              <h3 class="preview-title">Live Preview</h3>
+              <div class="preview-controls">
+                <button id="download-btn" class="btn-icon" title="Download Code" disabled>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </button>
+                <button id="copy-btn" class="btn-icon" title="Copy Section" disabled>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
+                <button id="rerun-btn" class="btn-icon" title="Re-run Generator" disabled>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                </button>
+                <button id="add-to-theme-btn" class="btn-icon" title="Add to Theme" disabled>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div id="preview-container" class="preview-container">
+              <div class="preview-placeholder">
+                <p>Your generated section will appear here</p>
+                <p class="preview-hint">Enter a prompt and click "Generate Section" to get started</p>
+              </div>
+            </div>
+          </div>
+
+          {% comment %} Code Output Panel {% endcomment %}
+          <div class="code-section">
+            <div class="code-header">
+              <h3 class="code-title">Generated Code</h3>
+              <button id="toggle-code-btn" class="btn-toggle">Show Code</button>
+            </div>
+            <div id="code-container" class="code-container" style="display: none;">
+              <pre id="generated-code" class="code-output"><code>// Generated code will appear here</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} Loading Overlay {% endcomment %}
+      <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Generating your section...</p>
+      </div>
+    </div>
+
+  {% elsif customer %}
+    {% comment %} Logged in but no active subscription - Show paywall {% endcomment %}
+    <div class="paywall-container">
+      <div class="paywall-content">
+        <h1 class="paywall-title">Upgrade to Access Section Generator</h1>
+        <p class="paywall-description">Your subscription is not active. Please upgrade to continue using the AI Section Generator.</p>
+        
+        <div class="subscription-plans">
+          <div class="plan-card">
+            <h3 class="plan-name">Basic Plan</h3>
+            <div class="plan-price">$29<span>/month</span></div>
+            <ul class="plan-features">
+              <li>50 section generations per month</li>
+              <li>Access to section library</li>
+              <li>Basic support</li>
+            </ul>
+            <button class="btn-plan">Subscribe Now</button>
+          </div>
+          
+          <div class="plan-card plan-featured">
+            <div class="plan-badge">Most Popular</div>
+            <h3 class="plan-name">Pro Plan</h3>
+            <div class="plan-price">$79<span>/month</span></div>
+            <ul class="plan-features">
+              <li>Unlimited section generations</li>
+              <li>Priority AI processing</li>
+              <li>Advanced section templates</li>
+              <li>Priority support</li>
+            </ul>
+            <button class="btn-plan btn-plan-primary">Subscribe Now</button>
+          </div>
+        </div>
+
+        <div class="paywall-actions">
+          <a href="{{ routes.account_url }}" class="btn-secondary">Manage Account</a>
+          <a href="{{ routes.account_logout_url }}" class="btn-secondary">Logout</a>
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    {% comment %} Not logged in - Show login/register prompt {% endcomment %}
+    <div class="paywall-container">
+      <div class="paywall-content">
+        <h1 class="paywall-title">Welcome to AI Section Generator</h1>
+        <p class="paywall-description">Create custom Shopify sections instantly using AI. Login or create an account to get started.</p>
+        
+        <div class="subscription-benefits">
+          <div class="benefit-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>AI-powered section generation</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Access to section library</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Live preview and testing</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Export and download code</span>
+          </div>
+        </div>
+
+        <div class="paywall-actions">
+          <a href="{{ routes.account_login_url }}" class="btn-primary">Login</a>
+          <a href="{{ routes.account_register_url }}" class="btn-secondary">Create Account</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% comment %} Load JavaScript files {% endcomment %}
+<script src="{{ 'section-generator.js' | asset_url }}" defer></script>
+<script src="{{ 'section-suggest.js' | asset_url }}" defer></script>
+<script src="{{ 'section-preview.js' | asset_url }}" defer></script>
+
+{% comment %} Pass library URL to JavaScript {% endcomment %}
+<div data-library-url="{{ 'section-library.json' | asset_url }}" style="display: none;"></div>
+
+{% comment %} Pass API key and model to JavaScript (stored in data attributes) {% endcomment %}
+<div 
+  data-section-type="section-generator"
+  data-api-key="{{ section.settings.openai_api_key }}"
+  data-model="{{ section.settings.openai_model | default: 'gpt-4' }}"
+  style="display: none;"
+></div>
+
+{% comment %} Load CSS {% endcomment %}
+{{ 'section-generator.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Section Generator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "AI Section Generator"
+    },
+    {
+      "type": "text",
+      "id": "openai_api_key",
+      "label": "OpenAI API Key",
+      "info": "Enter your OpenAI API key. Keep this secure and never share it publicly."
+    },
+    {
+      "type": "text",
+      "id": "openai_model",
+      "label": "OpenAI Model",
+      "default": "gpt-4",
+      "info": "Model to use for generation (e.g., gpt-4, gpt-3.5-turbo)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Generator"
+    }
+  ]
+}
+{% endschema %}
+
