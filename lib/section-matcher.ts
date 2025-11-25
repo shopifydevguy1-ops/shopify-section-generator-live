@@ -99,7 +99,7 @@ export async function findBestMatch(
   }
 
   // Score all sections
-  const scoredSections: SectionMatch[] = sections.map((section) => {
+  const scoredSections: SectionMatch[] = sections.map((section: any) => {
     const score = calculateRelevanceScore(section, prompt);
     let reason = '';
 

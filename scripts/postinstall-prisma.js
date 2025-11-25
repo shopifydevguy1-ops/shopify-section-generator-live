@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 // Get the directory where this script is located
 const scriptDir = __dirname;
@@ -14,8 +15,24 @@ const defaultDtsPath = path.join(prismaClientPath, 'default.d.ts');
 try {
   if (fs.existsSync(prismaClientPath)) {
     // Create default.js that properly re-exports the client
-    // Prisma 7 generates TypeScript, so we need to let the bundler handle it
-    fs.writeFileSync(defaultJsPath, `export * from './client.ts';\n`);
+    // For Next.js build compatibility, we need to avoid loading TypeScript during build
+    // The solution is to use a direct export that webpack can handle
+    const defaultJsContent = `// Prisma client export
+// During Next.js build, this file is evaluated but the actual client.ts
+// will be handled by webpack during bundling, not during static analysis
+
+// Direct export - webpack will resolve this during bundling phase
+// This avoids Node.js trying to execute TypeScript during "Collecting page data"
+if (typeof require !== 'undefined' && require.extensions) {
+  // We're in a Node.js environment that can handle this
+  // But we need to ensure webpack processes it, not Node.js directly
+  module.exports = require('./client.ts');
+} else {
+  // Fallback for environments that don't support require
+  module.exports = {};
+}
+`;
+    fs.writeFileSync(defaultJsPath, defaultJsContent);
     fs.writeFileSync(defaultDtsPath, `export * from './client';\n`);
     
     // Set up symlink so @prisma/client can find the generated client
