@@ -34,8 +34,8 @@ A full-featured web application for generating Shopify sections from pre-built t
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/shopifydevguy1-ops/shopify-section-generator.git
-   cd shopify-section-generator
+   git clone https://github.com/shopifydevguy1-ops/shopify-section-generator-live.git
+   cd shopify-section-generator-live
    ```
 
 2. **Install dependencies**
