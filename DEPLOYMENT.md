@@ -214,12 +214,26 @@ If you see this error when cloning in cPanel:
 - **Solution 3**: If the directory already has the repo, use "Pull" to update instead of cloning
 
 ### Deployment Error: "No .cpanel.yml file" or "The system cannot deploy"
-If you see this error:
-- **Solution**: Ensure the `.cpanel.yml` file exists in the repository root
-- The file should be committed to Git: `git add .cpanel.yml && git commit -m "Add cPanel deployment config" && git push`
-- Verify the file is in the root directory (same level as `package.json`)
-- Check that the file uses proper YAML syntax (indentation matters)
-- If npm path is incorrect, update `/usr/local/bin/npm` to your cPanel's npm path (check with `which npm` via SSH)
+**According to [official cPanel documentation](https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/), deployment requires:**
+1. A valid checked-in `.cpanel.yml` file in the repository root
+2. **A clean working tree (no uncommitted changes)** - This is critical!
+
+**Solutions:**
+- **Ensure `.cpanel.yml` exists and is committed**: The file should be in the repository root (same level as `package.json`) and committed to Git
+- **Clean working tree requirement**: cPanel **cannot deploy if the working tree contains uncommitted changes**. To fix this:
+  - If you have SSH access, run:
+    ```bash
+    cd /home/azwywnto/repositories/shopify-section-generator-live
+    git status
+    git reset --hard HEAD  # This discards any uncommitted changes
+    ```
+  - Or commit any uncommitted changes:
+    ```bash
+    git add .
+    git commit -m "Clean working tree"
+    ```
+- **Verify YAML syntax**: Check that the file uses proper YAML syntax (indentation matters, use spaces not tabs)
+- **Check npm path**: If npm path is incorrect, update to your cPanel's npm path (check with `which npm` via SSH)
 
 ### "Deploy HEAD Commit" Button Not Working
 If the deploy button is disabled or doesn't work:
