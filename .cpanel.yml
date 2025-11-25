@@ -1,8 +1,8 @@
 ---
 deployment:
   tasks:
-    - /bin/sh -c "cd $HOME/repositories/shopify-section-generator-live && /usr/local/bin/npm install --production=false"
-    - /bin/sh -c "cd $HOME/repositories/shopify-section-generator-live && /usr/local/bin/npm run build"
-    - /bin/rm -rf $HOME/public_html/*
-    - /bin/cp -R $HOME/repositories/shopify-section-generator-live/out/* $HOME/public_html/
-    - /bin/cp -R $HOME/repositories/shopify-section-generator-live/out/.htaccess $HOME/public_html/ 2>/dev/null || true
+    - export DEPLOYPATH=$HOME/public_html
+    - export REPOPATH=$HOME/repositories/shopify-section-generator-live
+    - cd $REPOPATH && npm install && npm run build
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -R $REPOPATH/out/* $DEPLOYPATH/
