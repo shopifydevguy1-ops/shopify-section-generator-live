@@ -107,7 +107,7 @@ export default async function DashboardPage() {
           </p>
         ) : (
           <div className="space-y-3">
-            {recentLogs.map((log) => (
+            {recentLogs.map((log: typeof recentLogs[0]) => (
               <div
                 key={log.id}
                 className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600"

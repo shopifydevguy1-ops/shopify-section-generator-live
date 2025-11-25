@@ -13,7 +13,7 @@ const sectionSchema = z.object({
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const admin = await requireAdmin(request);
   if (admin instanceof NextResponse) {
@@ -21,11 +21,12 @@ export async function PUT(
   }
 
   try {
+    const { id } = await params;
     const body = await request.json();
     const data = sectionSchema.parse(body);
 
     const section = await prisma.section.update({
-      where: { id: params.id },
+      where: { id },
       data,
     });
 
@@ -33,7 +34,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: error.errors[0].message },
+        { error: error.issues[0].message },
         { status: 400 }
       );
     }
@@ -48,7 +49,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const admin = await requireAdmin(request);
   if (admin instanceof NextResponse) {
@@ -56,8 +57,9 @@ export async function DELETE(
   }
 
   try {
+    const { id } = await params;
     await prisma.section.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: 'Section deleted successfully' });
