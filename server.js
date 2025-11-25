@@ -10,11 +10,15 @@ const port = parseInt(process.env.PORT || '3000', 10)
 
 // Check if .next directory exists (build is required for production)
 const nextDir = path.join(process.cwd(), '.next')
-const isBuilt = fs.existsSync(nextDir)
+const buildManifest = path.join(nextDir, 'BUILD_ID')
+const isBuilt = fs.existsSync(nextDir) && fs.existsSync(buildManifest)
 
 if (!isBuilt && !dev) {
-  console.warn('⚠️  Warning: .next directory not found. Next.js app needs to be built first.')
-  console.warn('⚠️  Run: npm run build')
+  console.error('❌ ERROR: .next directory or BUILD_ID not found!')
+  console.error('   This means the Next.js app was not built.')
+  console.error('   The prestart script should have built it, but it may have failed.')
+  console.error('   Please check the logs above for build errors.')
+  console.error('   You can manually build by running: npm run build')
 }
 
 const app = next({ dev, hostname, port })
