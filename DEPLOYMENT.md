@@ -221,6 +221,16 @@ If you see this error:
 - Check that the file uses proper YAML syntax (indentation matters)
 - If npm path is incorrect, update `/usr/local/bin/npm` to your cPanel's npm path (check with `which npm` via SSH)
 
+### "Deploy HEAD Commit" Button Not Working
+If the deploy button is disabled or doesn't work:
+1. **Click "Update from Remote" first** - This pulls the latest `.cpanel.yml` from GitHub
+2. **Check deployment logs** - In cPanel, look for deployment logs at `$HOME/.cpanel/logs/` or check the "Last Deployment Information" section
+3. **Verify .cpanel.yml syntax** - Ensure YAML indentation is correct (use spaces, not tabs)
+4. **Check npm availability** - If you have SSH access, verify npm is available: `which npm` or `npm --version`
+5. **Verify repository path** - Ensure the repository path in `.cpanel.yml` matches your actual repository path in cPanel
+6. **Check for uncommitted changes** - cPanel requires no uncommitted changes. Run `git status` via SSH in the repository directory
+7. **Try manual deployment** - If automatic deployment fails, you can manually build and copy files via SSH or File Manager
+
 ### Static files not loading
 - Check file paths are correct
 - Verify `.htaccess` or server config for SPA routing
