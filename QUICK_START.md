@@ -6,7 +6,7 @@ Get your Shopify Section Generator up and running in 5 minutes.
 
 - [ ] Node.js 18+ installed
 - [ ] Clerk account created
-- [ ] Stripe account created
+- [ ] PayMongo account created (free account available)
 - [ ] PostgreSQL database (or Supabase account)
 
 ## Step 1: Install Dependencies (2 minutes)
@@ -19,14 +19,15 @@ npm install
 
 1. Copy `.env.example` to `.env.local`
 2. Get your Clerk keys from [clerk.com](https://clerk.com)
-3. Get your Stripe keys from [stripe.com](https://stripe.com)
+3. Get your PayMongo keys from [paymongo.com](https://www.paymongo.com)
 4. Set up a database and get connection string
 
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
+PAYMONGO_SECRET_KEY=sk_test_...
+PAYMONGO_WEBHOOK_SECRET=whsec_...
+PAYMONGO_PRO_AMOUNT=2000
 DATABASE_URL=postgresql://...
 ```
 
@@ -55,7 +56,7 @@ Visit http://localhost:3000
 1. **Sign Up**: Create a new account
 2. **Generate Section**: Go to Generator page
 3. **Test Free Limit**: Generate 5 sections (free plan limit)
-4. **Upgrade**: Test Stripe checkout (use test mode)
+4. **Upgrade**: Test PayMongo checkout (use test mode)
 
 ## Common Issues
 
@@ -69,9 +70,9 @@ Visit http://localhost:3000
 - Check database is running
 - Ensure schema is created
 
-### "Stripe checkout not working"
-- Verify Stripe keys are correct
-- Check Price ID is set
+### "PayMongo checkout not working"
+- Verify PayMongo keys are correct
+- Check PAYMONGO_PRO_AMOUNT is set (amount in cents)
 - Ensure webhook is configured
 
 ## Next Steps
@@ -80,7 +81,7 @@ Visit http://localhost:3000
 - [ ] Set up production deployment ([DEPLOYMENT.md](DEPLOYMENT.md))
 - [ ] Push to GitHub ([GITHUB_SETUP.md](GITHUB_SETUP.md))
 - [ ] Configure production environment variables
-- [ ] Set up Stripe webhooks for production
+- [ ] Set up PayMongo webhooks for production
 
 ## Need Help?
 

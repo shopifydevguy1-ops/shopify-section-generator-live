@@ -11,7 +11,7 @@ All requirements have been implemented. The application is ready for deployment.
 - ✅ TypeScript throughout
 - ✅ Tailwind CSS + ShadCN UI components
 - ✅ Clerk authentication integration
-- ✅ Stripe payment integration
+- ✅ PayMongo payment integration
 - ✅ Dark mode support
 - ✅ Responsive design
 
@@ -34,12 +34,12 @@ All requirements have been implemented. The application is ready for deployment.
 - ✅ Copy to clipboard
 - ✅ Usage tracking
 - ✅ Subscription management
-- ✅ Stripe webhooks
+- ✅ PayMongo webhooks
 
 ### API Routes
 - ✅ `GET /api/templates` - Load templates
 - ✅ `POST /api/generate` - Generate sections
-- ✅ `GET /api/checkout` - Stripe checkout
+- ✅ `GET /api/checkout` - PayMongo checkout
 - ✅ `POST /api/webhooks/stripe` - Webhook handler
 - ✅ `POST /api/cancel-subscription` - Cancel subscription
 
@@ -71,11 +71,10 @@ You need to set these in `.env.local`:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 
-# Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PRO_PRICE_ID=
+# PayMongo
+PAYMONGO_SECRET_KEY=
+PAYMONGO_WEBHOOK_SECRET=
+PAYMONGO_PRO_AMOUNT=2000
 
 # Database
 DATABASE_URL=
@@ -114,7 +113,7 @@ The app is configured for static export (`output: 'export'` in `next.config.js`)
 2. Upload `/out` directory contents
 3. Configure environment variables
 4. Set up database
-5. Configure Stripe webhooks
+5. Configure PayMongo webhooks
 
 See `DEPLOYMENT.md` for detailed instructions.
 
@@ -150,7 +149,7 @@ See `DEPLOYMENT.md` for detailed instructions.
 - Enforces plan limits
 
 ### Subscription Management
-- Stripe checkout integration
+- PayMongo checkout integration
 - Webhook handling
 - Plan upgrades/downgrades
 - Usage limit enforcement
@@ -174,7 +173,7 @@ See `DEPLOYMENT.md` for detailed instructions.
 
 1. **Set up environment variables**
    - Get Clerk keys
-   - Get Stripe keys
+   - Get PayMongo keys
    - Set up database
 
 2. **Configure database**
@@ -189,12 +188,12 @@ See `DEPLOYMENT.md` for detailed instructions.
 4. **Test locally**
    - Run `npm run dev`
    - Test all features
-   - Verify Stripe test mode
+   - Verify PayMongo test mode
 
 5. **Deploy to production**
    - Follow `DEPLOYMENT.md`
    - Set production environment variables
-   - Configure Stripe webhooks
+   - Configure PayMongo webhooks
    - Test production deployment
 
 ## 🐛 Known Limitations

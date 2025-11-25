@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
-import Stripe from "stripe"
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-06-20.acacia",
-})
+import { getPayMongoClient } from "@/lib/paymongo"
 
 export async function GET() {
   try {
@@ -17,36 +13,29 @@ export async function GET() {
       )
     }
 
-    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID
-    if (!priceId) {
-      return NextResponse.json(
-        { error: "Stripe price ID not configured" },
-        { status: 500 }
-      )
-    }
-
+    const paymongo = getPayMongoClient()
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
 
-    // Create Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
-      customer_email: undefined, // Clerk handles email
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
-      success_url: `${appUrl}/account?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${appUrl}/pricing`,
+    // Pro plan: $20/month = ₱20.00 (or adjust based on your pricing)
+    // Amount in cents: 2000 = ₱20.00
+    const amount = parseInt(process.env.PAYMONGO_PRO_AMOUNT || "2000") // Default ₱20.00
+
+    // Create PayMongo checkout session
+    const session = await paymongo.createCheckoutSession({
+      amount: amount,
+      currency: "PHP",
+      description: "Pro Plan - Monthly Subscription",
+      successUrl: `${appUrl}/account?session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${appUrl}/pricing`,
       metadata: {
         clerk_user_id: userId,
+        plan: "pro",
+        billing_period: "monthly",
       },
     })
 
-    if (session.url) {
-      return NextResponse.redirect(session.url)
+    if (session.data?.attributes?.checkout_url) {
+      return NextResponse.redirect(session.data.attributes.checkout_url)
     }
     
     return NextResponse.json(

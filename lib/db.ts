@@ -14,8 +14,8 @@ export interface User {
 export interface Subscription {
   id: string
   user_id: string
-  stripe_subscription_id: string | null
-  stripe_customer_id: string | null
+  paymongo_payment_id: string | null
+  paymongo_payment_intent_id: string | null
   status: 'active' | 'canceled' | 'past_due' | 'trialing'
   current_period_start: Date
   current_period_end: Date
@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  stripe_subscription_id VARCHAR(255) UNIQUE,
-  stripe_customer_id VARCHAR(255),
+  paymongo_payment_id VARCHAR(255) UNIQUE,
+  paymongo_payment_intent_id VARCHAR(255),
   status VARCHAR(50) DEFAULT 'active' CHECK (status IN ('active', 'canceled', 'past_due', 'trialing')),
   current_period_start TIMESTAMP,
   current_period_end TIMESTAMP,
@@ -93,7 +93,8 @@ CREATE TABLE IF NOT EXISTS section_templates (
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_users_clerk_id ON users(clerk_id);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_subscription_id ON subscriptions(stripe_subscription_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_paymongo_payment_id ON subscriptions(paymongo_payment_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_paymongo_payment_intent_id ON subscriptions(paymongo_payment_intent_id);
 CREATE INDEX IF NOT EXISTS idx_usage_logs_user_id ON usage_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_usage_logs_user_month_year ON usage_logs(user_id, month, year);
 CREATE INDEX IF NOT EXISTS idx_section_templates_type ON section_templates(type);
@@ -168,6 +169,44 @@ export async function updateUserPlan(userId: string, plan: 'free' | 'pro'): Prom
     user.plan = plan
     user.updated_at = new Date()
     users.set(user.id, user)
+  }
+}
+
+export async function createOrUpdateSubscription(params: {
+  userId: string
+  paymongoPaymentId?: string | null
+  paymongoPaymentIntentId?: string | null
+  status: 'active' | 'canceled' | 'past_due' | 'trialing'
+  currentPeriodStart: Date
+  currentPeriodEnd: Date
+}): Promise<Subscription> {
+  const existing = await getSubscriptionByUserId(params.userId)
+  
+  if (existing) {
+    // Update existing subscription
+    existing.paymongo_payment_id = params.paymongoPaymentId || existing.paymongo_payment_id
+    existing.paymongo_payment_intent_id = params.paymongoPaymentIntentId || existing.paymongo_payment_intent_id
+    existing.status = params.status
+    existing.current_period_start = params.currentPeriodStart
+    existing.current_period_end = params.currentPeriodEnd
+    existing.updated_at = new Date()
+    subscriptions.set(existing.id, existing)
+    return existing
+  } else {
+    // Create new subscription
+    const subscription: Subscription = {
+      id: crypto.randomUUID(),
+      user_id: params.userId,
+      paymongo_payment_id: params.paymongoPaymentId || null,
+      paymongo_payment_intent_id: params.paymongoPaymentIntentId || null,
+      status: params.status,
+      current_period_start: params.currentPeriodStart,
+      current_period_end: params.currentPeriodEnd,
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
+    subscriptions.set(subscription.id, subscription)
+    return subscription
   }
 }
 

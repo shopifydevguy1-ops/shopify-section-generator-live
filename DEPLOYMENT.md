@@ -6,7 +6,7 @@ This guide will help you deploy the Shopify Section Generator to Z.com hosting.
 
 - Z.com hosting account
 - GitHub repository set up
-- Stripe account configured
+- PayMongo account configured (free account available)
 - Clerk account configured
 - PostgreSQL database (or Supabase)
 
@@ -112,28 +112,26 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-STRIPE_SECRET_KEY=sk_live_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-NEXT_PUBLIC_STRIPE_PRO_PRICE_ID=price_...
+PAYMONGO_SECRET_KEY=sk_live_...
+PAYMONGO_WEBHOOK_SECRET=whsec_...
+PAYMONGO_PRO_AMOUNT=2000
 
 DATABASE_URL=postgresql://user:password@host:5432/database
 
 NEXT_PUBLIC_APP_URL=https://yourdomain.com
 ```
 
-**Note**: Use production keys (pk_live_, sk_live_) not test keys.
+**Note**: Use production keys (sk_live_) not test keys.
 
-## Step 7: Set Up Stripe Webhooks
+## Step 7: Set Up PayMongo Webhooks
 
-1. **Go to Stripe Dashboard → Webhooks**
+1. **Go to PayMongo Dashboard → Developers → Webhooks**
 2. **Add endpoint**: `https://yourdomain.com/api/webhooks/stripe`
 3. **Select events**:
-   - `checkout.session.completed`
-   - `customer.subscription.created`
-   - `customer.subscription.updated`
-   - `customer.subscription.deleted`
-4. **Copy webhook signing secret** to environment variables
+   - `payment.paid`
+   - `payment.failed`
+   - `payment.refunded`
+4. **Copy webhook signing secret** to `PAYMONGO_WEBHOOK_SECRET` environment variable
 
 **Important**: If using static hosting, webhooks must point to your serverless functions or backend API, not the static site.
 
@@ -163,7 +161,7 @@ NEXT_PUBLIC_APP_URL=https://yourdomain.com
    - Generate a section
    - Verify download works
 
-4. **Test payments** (use Stripe test mode first)
+4. **Test payments** (use PayMongo test mode first)
    - Try upgrading to Pro
    - Verify webhook receives events
    - Check subscription status updates
@@ -173,7 +171,7 @@ NEXT_PUBLIC_APP_URL=https://yourdomain.com
 - [ ] All environment variables set
 - [ ] Database schema created
 - [ ] API routes deployed (if using separate backend)
-- [ ] Stripe webhooks configured
+- [ ] PayMongo webhooks configured
 - [ ] Section library uploaded
 - [ ] SSL certificate active (HTTPS)
 - [ ] Domain configured

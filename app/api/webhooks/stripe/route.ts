@@ -1,23 +1,19 @@
 import { NextResponse } from "next/server"
-import Stripe from "stripe"
 import { headers } from "next/headers"
 import { 
   getUserByClerkId, 
-  getSubscriptionByUserId,
-  updateUserPlan 
+  updateUserPlan,
+  createOrUpdateSubscription
 } from "@/lib/db"
+import { getPayMongoClient } from "@/lib/paymongo"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-06-20.acacia",
-})
-
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+const webhookSecret = process.env.PAYMONGO_WEBHOOK_SECRET
 
 export async function POST(request: Request) {
   try {
     const body = await request.text()
     const headersList = await headers()
-    const signature = headersList.get("stripe-signature")
+    const signature = headersList.get("x-paymongo-signature")
 
     if (!signature || !webhookSecret) {
       return NextResponse.json(
@@ -26,23 +22,35 @@ export async function POST(request: Request) {
       )
     }
 
-    let event: Stripe.Event
+    const paymongo = getPayMongoClient()
 
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-    } catch (err: any) {
-      console.error("Webhook signature verification failed:", err.message)
+    // Verify webhook signature
+    const isValid = paymongo.verifyWebhookSignature(body, signature, webhookSecret)
+    if (!isValid) {
+      console.error("Webhook signature verification failed")
       return NextResponse.json(
-        { error: `Webhook Error: ${err.message}` },
+        { error: "Invalid webhook signature" },
         { status: 400 }
       )
     }
 
-    // Handle the event
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session
-        const clerkUserId = session.metadata?.clerk_user_id
+    const event = JSON.parse(body)
+
+    // Handle PayMongo webhook events
+    // PayMongo sends events with structure: { data: { type: "event", attributes: { type: "payment.paid", data: {...} } } }
+    const eventType = event.data?.attributes?.type
+    const eventData = event.data?.attributes?.data
+
+    if (!eventType || !eventData) {
+      console.log("Invalid webhook event structure")
+      return NextResponse.json({ received: true })
+    }
+
+    switch (eventType) {
+      case "payment.paid": {
+        // Payment was successful
+        const metadata = eventData.attributes?.metadata || {}
+        const clerkUserId = metadata.clerk_user_id
 
         if (clerkUserId) {
           const user = await getUserByClerkId(clerkUserId)
@@ -50,55 +58,55 @@ export async function POST(request: Request) {
             await updateUserPlan(user.id, "pro")
             
             // Create or update subscription record
-            // In production, you'd save this to your database
+            // Since PayMongo doesn't have native subscriptions, we'll track manually
+            const now = new Date()
+            const nextMonth = new Date(now)
+            nextMonth.setMonth(nextMonth.getMonth() + 1)
+
+            await createOrUpdateSubscription({
+              userId: user.id,
+              paymongoPaymentId: eventData.id,
+              paymongoPaymentIntentId: eventData.attributes?.payment_intent?.id || null,
+              status: "active",
+              currentPeriodStart: now,
+              currentPeriodEnd: nextMonth,
+            })
+
             console.log(`User ${clerkUserId} upgraded to Pro`)
           }
         }
         break
       }
 
-      case "customer.subscription.created":
-      case "customer.subscription.updated": {
-        const subscription = event.data.object as Stripe.Subscription
-        const customerId = subscription.customer as string
-        
-        // Get customer to find clerk user ID
-        const customer = await stripe.customers.retrieve(customerId)
-        if (!customer.deleted && "metadata" in customer) {
-          const clerkUserId = customer.metadata?.clerk_user_id
-          
-          if (clerkUserId) {
-            const user = await getUserByClerkId(clerkUserId)
-            if (user) {
-              await updateUserPlan(user.id, "pro")
-              console.log(`Subscription updated for user ${clerkUserId}`)
-            }
-          }
+      case "payment.failed": {
+        // Payment failed - you might want to notify the user
+        const metadata = eventData.attributes?.metadata || {}
+        const clerkUserId = metadata.clerk_user_id
+
+        if (clerkUserId) {
+          console.log(`Payment failed for user ${clerkUserId}`)
+          // Optionally downgrade or notify user
         }
         break
       }
 
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription
-        const customerId = subscription.customer as string
-        
-        const customer = await stripe.customers.retrieve(customerId)
-        if (!customer.deleted && "metadata" in customer) {
-          const clerkUserId = customer.metadata?.clerk_user_id
-          
-          if (clerkUserId) {
-            const user = await getUserByClerkId(clerkUserId)
-            if (user) {
-              await updateUserPlan(user.id, "free")
-              console.log(`Subscription canceled for user ${clerkUserId}`)
-            }
+      case "payment.refunded": {
+        // Payment was refunded - downgrade user
+        const metadata = eventData.attributes?.metadata || {}
+        const clerkUserId = metadata.clerk_user_id
+
+        if (clerkUserId) {
+          const user = await getUserByClerkId(clerkUserId)
+          if (user) {
+            await updateUserPlan(user.id, "free")
+            console.log(`User ${clerkUserId} downgraded to Free (refunded)`)
           }
         }
         break
       }
 
       default:
-        console.log(`Unhandled event type: ${event.type}`)
+        console.log(`Unhandled PayMongo event type: ${eventType}`)
     }
 
     return NextResponse.json({ received: true })

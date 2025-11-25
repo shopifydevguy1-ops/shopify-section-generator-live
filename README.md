@@ -1,6 +1,6 @@
 # Shopify Section Generator
 
-A full-featured web application for generating Shopify sections from pre-built templates. Built with Next.js 14, TypeScript, Tailwind CSS, Clerk Authentication, and Stripe payments.
+A full-featured web application for generating Shopify sections from pre-built templates. Built with Next.js 14, TypeScript, Tailwind CSS, Clerk Authentication, and PayMongo payments.
 
 ## Features
 
@@ -18,7 +18,7 @@ A full-featured web application for generating Shopify sections from pre-built t
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + ShadCN UI
 - **Authentication**: Clerk
-- **Payments**: Stripe
+- **Payments**: PayMongo (Philippines payment gateway)
 - **Database**: PostgreSQL (via Supabase or custom setup)
 
 ## Getting Started
@@ -27,7 +27,7 @@ A full-featured web application for generating Shopify sections from pre-built t
 
 - Node.js 18+ and npm/yarn
 - Clerk account (for authentication)
-- Stripe account (for payments)
+- PayMongo account (for payments - free account available)
 - PostgreSQL database (or Supabase)
 
 ### Installation
@@ -58,11 +58,10 @@ A full-featured web application for generating Shopify sections from pre-built t
    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 
-   # Stripe
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-   STRIPE_SECRET_KEY=sk_test_...
-   STRIPE_WEBHOOK_SECRET=whsec_...
-   NEXT_PUBLIC_STRIPE_PRO_PRICE_ID=price_...
+   # PayMongo
+   PAYMONGO_SECRET_KEY=sk_test_...
+   PAYMONGO_WEBHOOK_SECRET=whsec_...
+   PAYMONGO_PRO_AMOUNT=2000
 
    # Database (PostgreSQL connection string)
    DATABASE_URL=postgresql://user:password@localhost:5432/shopify_section_generator
@@ -100,20 +99,24 @@ A full-featured web application for generating Shopify sections from pre-built t
    - After sign-in URL: `/dashboard`
    - After sign-up URL: `/dashboard`
 
-## Setting Up Stripe
+## Setting Up PayMongo
 
-1. Create an account at [stripe.com](https://stripe.com)
-2. Get your API keys from the Stripe Dashboard
-3. Create a product and price for the Pro plan ($20/month)
-4. Copy the Price ID to `NEXT_PUBLIC_STRIPE_PRO_PRICE_ID`
+1. Create a free account at [paymongo.com](https://www.paymongo.com)
+2. Complete account activation and verification
+3. Get your API keys from the PayMongo Dashboard → Developers → API Keys
+4. Copy the Secret Key to `PAYMONGO_SECRET_KEY`
+   - Use test keys (`sk_test_...`) for development
+   - Use live keys (`sk_live_...`) for production
 5. Set up webhook endpoint:
    - URL: `https://yourdomain.com/api/webhooks/stripe`
    - Events to listen for:
-     - `checkout.session.completed`
-     - `customer.subscription.created`
-     - `customer.subscription.updated`
-     - `customer.subscription.deleted`
-6. Copy the webhook signing secret to `STRIPE_WEBHOOK_SECRET`
+     - `payment.paid`
+     - `payment.failed`
+     - `payment.refunded`
+6. Copy the webhook signing secret to `PAYMONGO_WEBHOOK_SECRET`
+7. Configure `PAYMONGO_PRO_AMOUNT` (amount in cents, e.g., 2000 = ₱20.00)
+
+**Note:** PayMongo doesn't have native subscription support like Stripe. This implementation uses manual recurring billing. For true recurring subscriptions, you'll need to implement a cron job or scheduled task to create new checkout sessions monthly.
 
 ## Section Library
 
@@ -172,9 +175,9 @@ A full-featured web application for generating Shopify sections from pre-built t
    - Run the database schema from `lib/db.ts`
    - Update `DATABASE_URL` in your environment variables
 
-5. **Stripe Webhooks**
+5. **PayMongo Webhooks**
    
-   Update your Stripe webhook URL to point to your production domain:
+   Update your PayMongo webhook URL to point to your production domain:
    ```
    https://yourdomain.com/api/webhooks/stripe
    ```
@@ -196,7 +199,7 @@ The app is configured for static export (`output: 'export'` in `next.config.js`)
 The application requires the following tables:
 
 - `users`: User accounts (extends Clerk user data)
-- `subscriptions`: Stripe subscription records
+- `subscriptions`: PayMongo payment/subscription records
 - `usage_logs`: Section generation usage tracking
 - `section_templates`: Optional database storage for templates (can also use JSON files)
 
@@ -213,8 +216,8 @@ Usage resets at the beginning of each billing period.
 
 - `GET /api/templates` - Get all section templates
 - `POST /api/generate` - Generate a section (requires auth)
-- `GET /api/checkout` - Create Stripe checkout session
-- `POST /api/webhooks/stripe` - Handle Stripe webhooks
+- `GET /api/checkout` - Create PayMongo checkout session
+- `POST /api/webhooks/stripe` - Handle PayMongo webhooks
 - `POST /api/cancel-subscription` - Cancel subscription
 
 ## Project Structure
@@ -263,10 +266,11 @@ npm start
 - Check JSON syntax is valid
 - Verify template structure matches the expected format
 
-### Stripe webhooks not working
+### PayMongo webhooks not working
 - Verify webhook URL is correct
 - Check webhook secret matches
-- Ensure webhook events are configured in Stripe dashboard
+- Ensure webhook events are configured in PayMongo dashboard
+- Verify webhook signature verification is working
 
 ### Database connection issues
 - Verify `DATABASE_URL` is correct
