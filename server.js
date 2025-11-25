@@ -20,9 +20,12 @@ if (!isBuilt && !dev) {
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
-// Health check endpoint that always returns HTML
+// Track if Next.js is ready
+let isNextReady = false
+
+// Health check endpoint (only used before Next.js is ready)
 const healthCheck = (req, res) => {
-  if (req.url === '/health' || req.url === '/') {
+  if (req.url === '/health') {
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html')
     res.end(`
@@ -44,13 +47,20 @@ const healthCheck = (req, res) => {
 }
 
 app.prepare().then(() => {
+  isNextReady = true
+  console.log('✅ Next.js app is ready!')
+  
   createServer(async (req, res) => {
     try {
-      // Handle health check before Next.js is ready
-      if (healthCheck(req, res)) {
+      // Only show health check if specifically requested at /health
+      if (req.url === '/health') {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.end(JSON.stringify({ status: 'ok', ready: true }))
         return
       }
       
+      // Serve the actual Next.js app
       const parsedUrl = parse(req.url, true)
       await handle(req, res, parsedUrl)
     } catch (err) {
@@ -82,6 +92,7 @@ app.prepare().then(() => {
 }).catch((err) => {
   console.error('Failed to prepare Next.js app:', err)
   console.error('Error details:', err.message)
+  console.error('Stack:', err.stack)
   
   // Start server anyway to serve helpful error page
   createServer((req, res) => {
@@ -93,8 +104,8 @@ app.prepare().then(() => {
     res.setHeader('Content-Type', 'text/html')
     
     const errorMessage = !isBuilt && !dev 
-      ? '<p><strong>The application needs to be built first.</strong></p><p>Please run: <code>npm run build</code></p>'
-      : `<p>The application failed to initialize.</p><p>Error: ${err.message}</p><p>Please check the server logs for more details.</p>`
+      ? '<p><strong>The application needs to be built first.</strong></p><p>Please run: <code>npm run build</code></p><p>Check the server logs for build errors.</p>'
+      : `<p>The application failed to initialize.</p><p><strong>Error:</strong> ${err.message}</p><p>Please check the server logs for more details.</p>`
     
     res.end(`
       <!DOCTYPE html>
@@ -105,17 +116,19 @@ app.prepare().then(() => {
           <style>
             body { font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
             code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+            .error { color: #d32f2f; }
           </style>
         </head>
         <body>
           <h1>Service Unavailable</h1>
-          ${errorMessage}
+          <div class="error">${errorMessage}</div>
         </body>
       </html>
     `)
   }).listen(port, hostname, () => {
     console.log(`> Health check server running on http://${hostname}:${port}`)
     console.log(`> Next.js app failed to prepare, but server is responding`)
+    console.log(`> Check the error messages above for details`)
   })
 })
 
