@@ -1,0 +1,49 @@
+Essential Files to Upload to Z.com
+===================================
+
+Upload ALL of these files/folders to: apps/shopifysectiongen/standalone-app/
+
+REQUIRED FILES:
+--------------
+package.json          ← MOST IMPORTANT! z.com needs this
+package-lock.json
+server.js
+next.config.ts
+tsconfig.json
+middleware.ts
+next-env.d.ts
+postcss.config.mjs
+eslint.config.mjs
+prisma.config.ts
+
+REQUIRED FOLDERS (upload entire folders):
+------------------------------------------
+app/                  ← All your pages and API routes
+components/           ← React components
+lib/                  ← Utility functions (auth, prisma, etc.)
+prisma/               ← Database schema
+public/               ← Static assets
+scripts/              ← Build scripts
+
+OPTIONAL (but recommended):
+---------------------------
+.env.example          ← For reference (don't upload .env)
+README.md
+*.md files            ← Documentation
+
+DO NOT UPLOAD:
+--------------
+node_modules/         ← Will be installed via npm install
+.next/                ← Will be created during build
+.env                  ← Use z.com environment variables instead
+.git/                 ← Git files (unless using Git deployment)
+
+QUICK UPLOAD ORDER:
+-------------------
+1. package.json (upload this FIRST!)
+2. server.js
+3. All config files (*.ts, *.js, *.json)
+4. All folders (app/, components/, lib/, etc.)
+
+After uploading, go back to z.com and click "Run NPM Install"
+
