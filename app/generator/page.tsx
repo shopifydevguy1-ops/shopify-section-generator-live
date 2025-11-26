@@ -197,12 +197,12 @@ export default function GeneratorPage() {
               <CardContent className="space-y-4">
                 <div>
                   <Label>Section Type</Label>
-                  <Select value={selectedType} onValueChange={setSelectedType}>
+                  <Select value={selectedType || "all"} onValueChange={(value) => setSelectedType(value === "all" ? "" : value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All types</SelectItem>
+                      <SelectItem value="all">All types</SelectItem>
                       {types.map(type => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
