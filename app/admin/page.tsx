@@ -18,31 +18,36 @@ export default async function AdminPage() {
     redirect("/sign-in")
   }
 
-  // Check if user is admin
-  const dbUser = await getUserByClerkId(user.id)
+  // Check if user is admin via Clerk roles
+  const hasAdminRole = user.publicMetadata?.role === 'admin' || 
+                       user.privateMetadata?.role === 'admin' ||
+                       user.organizationMemberships?.some(org => org.role === 'org:admin')
   
-  if (!dbUser) {
-    // User doesn't exist in database yet, redirect to dashboard
-    redirect("/dashboard")
-  }
-  
-  // Check admin status - also verify email is in ADMIN_EMAILS
+  // Check if user is admin via ADMIN_EMAILS environment variable
   const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
   const emailIsAdmin = adminEmails.includes(user.emailAddresses[0]?.emailAddress?.toLowerCase() || '')
   
-  if (!dbUser.is_admin && !emailIsAdmin) {
+  // Check database admin status
+  const dbUser = await getUserByClerkId(user.id)
+  const isDbAdmin = dbUser?.is_admin || false
+  
+  // User is admin if they have admin role in Clerk OR email is in ADMIN_EMAILS OR marked as admin in DB
+  const isAdmin = hasAdminRole || emailIsAdmin || isDbAdmin
+  
+  if (!isAdmin) {
     redirect("/dashboard")
   }
   
-  // If email is in admin list but user isn't marked as admin, update it
-  if (emailIsAdmin && !dbUser.is_admin) {
+  // If user should be admin but isn't marked in DB, update it
+  if ((hasAdminRole || emailIsAdmin) && dbUser && !dbUser.is_admin) {
     const { updateUserAdminStatus } = await import("@/lib/db")
     await updateUserAdminStatus(dbUser.id, true)
-    // Refresh the user data
-    const updatedUser = await getUserByClerkId(user.id)
-    if (updatedUser) {
-      updatedUser.is_admin = true
-    }
+  }
+  
+  // Ensure dbUser exists for stats
+  if (!dbUser) {
+    const { createUser } = await import("@/lib/db")
+    await createUser(user.id, user.emailAddresses[0]?.emailAddress || "", true)
   }
 
   // Get admin stats
