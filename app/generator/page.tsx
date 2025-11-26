@@ -284,7 +284,7 @@ export default function GeneratorPage() {
                             <li>Always backup your theme before making changes</li>
                             <li>Some sections may require specific theme features or CSS classes to work properly</li>
                             <li>If the section doesn&apos;t appear, check that the file name ends with &quot;.liquid&quot;</li>
-                            <li>For best results, use a theme that's compatible with Shopify Online Store 2.0</li>
+                            <li>For best results, use a theme that&apos;s compatible with Shopify Online Store 2.0</li>
                           </ul>
                         </div>
                       </div>
