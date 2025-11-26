@@ -25,8 +25,7 @@ export default async function AdminPage() {
     publicMeta?.role === 'admin' || 
     (typeof publicMeta?.role === 'string' && publicMeta.role.toLowerCase() === 'admin') ||
     privateMeta?.role === 'admin' ||
-    (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin') ||
-    user.organizationMemberships?.some(org => org.role === 'org:admin')
+    (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin')
   
   // Check if user is admin via ADMIN_EMAILS environment variable
   const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []

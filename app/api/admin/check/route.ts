@@ -25,8 +25,7 @@ export async function GET() {
       publicMeta?.role === 'admin' || 
       (typeof publicMeta?.role === 'string' && publicMeta.role.toLowerCase() === 'admin') ||
       privateMeta?.role === 'admin' ||
-      (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin') ||
-      user.organizationMemberships?.some(org => org.role === 'org:admin')
+      (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin')
     
     // Check ADMIN_EMAILS
     const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
