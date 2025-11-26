@@ -8,12 +8,35 @@ import { useState, useEffect } from "react"
 
 export function Navbar() {
   const { isSignedIn, user } = useUser()
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(true) // Default to dark mode
   const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark")
+    // Check localStorage first, then check DOM class, default to dark
+    const savedTheme = localStorage.getItem("theme")
+    let isDark = true // Default to dark
+    
+    if (savedTheme) {
+      isDark = savedTheme === "dark"
+    } else {
+      // If no saved preference, check if dark class is already applied (from layout script)
+      isDark = document.documentElement.classList.contains("dark")
+      // If still no preference, default to dark and set it
+      if (!document.documentElement.classList.contains("dark") && !document.documentElement.classList.contains("light")) {
+        isDark = true
+        document.documentElement.classList.add("dark")
+        localStorage.setItem("theme", "dark")
+      }
+    }
+    
     setDarkMode(isDark)
+    
+    // Ensure DOM matches the state
+    if (isDark) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
   }, [])
 
   useEffect(() => {
