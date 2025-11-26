@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import { Navbar } from "@/components/navbar"
@@ -8,8 +8,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
-import { Copy, Download, Loader2 } from "lucide-react"
+import { Copy, Download, Loader2, Eye, Code } from "lucide-react"
+import { liquidToPreviewHtml, hasRenderableContent } from "@/lib/liquid-preview"
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
@@ -19,6 +21,20 @@ export default function GeneratorPage() {
   const [sectionInput, setSectionInput] = useState<string>("")
   const [generatedCode, setGeneratedCode] = useState<string>("")
   const [loading, setLoading] = useState(false)
+  const [activeTab, setActiveTab] = useState<string>("code")
+  
+  // Generate preview HTML from liquid code
+  const previewHtml = useMemo(() => {
+    if (!generatedCode || !hasRenderableContent(generatedCode)) {
+      return null
+    }
+    try {
+      return liquidToPreviewHtml(generatedCode)
+    } catch (error) {
+      console.error("Error generating preview:", error)
+      return null
+    }
+  }, [generatedCode])
 
   useEffect(() => {
     if (isLoaded && !user) {
@@ -167,7 +183,7 @@ export default function GeneratorPage() {
           {/* Generated Code Preview */}
           <Card>
             <CardHeader>
-              <CardTitle>Generated Code</CardTitle>
+              <CardTitle>Generated Section</CardTitle>
               <CardDescription>Your Shopify section liquid code with schema tags</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -183,11 +199,47 @@ export default function GeneratorPage() {
                       Download .liquid
                     </Button>
                   </div>
-                  <Textarea
-                    value={generatedCode}
-                    readOnly
-                    className="font-mono text-sm min-h-[400px]"
-                  />
+                  
+                  <Tabs value={activeTab} onValueChange={setActiveTab}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="code">
+                        <Code className="mr-2 h-4 w-4" />
+                        Code
+                      </TabsTrigger>
+                      <TabsTrigger value="preview">
+                        <Eye className="mr-2 h-4 w-4" />
+                        Preview
+                      </TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="code" className="mt-4">
+                      <Textarea
+                        value={generatedCode}
+                        readOnly
+                        className="font-mono text-sm min-h-[400px]"
+                      />
+                    </TabsContent>
+                    
+                    <TabsContent value="preview" className="mt-4">
+                      {previewHtml ? (
+                        <div className="border rounded-md overflow-hidden" style={{ height: '400px' }}>
+                          <iframe
+                            srcDoc={previewHtml}
+                            className="w-full h-full border-0"
+                            title="Section Preview"
+                            sandbox="allow-same-origin"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center h-[400px] text-muted-foreground border rounded-md">
+                          <div className="text-center">
+                            <p className="mb-2">Preview not available</p>
+                            <p className="text-xs">This section may not contain renderable HTML content</p>
+                          </div>
+                        </div>
+                      )}
+                    </TabsContent>
+                  </Tabs>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-[400px] text-muted-foreground">
