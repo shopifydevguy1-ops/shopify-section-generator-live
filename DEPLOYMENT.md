@@ -245,6 +245,65 @@ If the deploy button is disabled or doesn't work:
 6. **Check for uncommitted changes** - cPanel requires no uncommitted changes. Run `git status` via SSH in the repository directory
 7. **Try manual deployment** - If automatic deployment fails, you can manually build and copy files via SSH or File Manager
 
+### "Deploy HEAD Commit" Process Takes Too Long
+If the deployment process is very slow (taking 5+ minutes), here are common causes and solutions:
+
+**Common Causes:**
+1. **npm install running every time** - Installing all dependencies on each deployment is slow
+2. **Large number of dependencies** - This project has many packages (Next.js, React, Radix UI, etc.)
+3. **Slow npm registry** - Network latency to npm registry
+4. **Limited server resources** - Shared hosting may have CPU/memory limits
+5. **Next.js build process** - Building Next.js apps can be resource-intensive
+
+**Solutions:**
+
+1. **Optimized .cpanel.yml (Already Applied)**
+   - The `.cpanel.yml` file now checks if `node_modules` exists and is up-to-date before running `npm install`
+   - Only installs dependencies when `package.json` or `package-lock.json` changes
+   - Uses `npm ci` for faster, more reliable installs
+
+2. **Check Deployment Logs**
+   - In cPanel, check the "Last Deployment Information" section
+   - Look for which step is taking the longest (usually `npm install` or `npm run build`)
+   - Check logs at `$HOME/.cpanel/logs/` via SSH
+
+3. **Pre-build Locally (Fastest Option)**
+   - Build the project locally: `npm run build`
+   - Commit the `/out` directory to Git (add to `.gitignore` exclusion if needed)
+   - Modify `.cpanel.yml` to skip build and just copy files:
+     ```yaml
+     - /bin/rm -rf $DEPLOYPATH*
+     - /bin/cp -R $REPOPATH/out/. $DEPLOYPATH
+     ```
+   - **Note**: This requires committing build artifacts, which increases repo size
+
+4. **Use SSH for Manual Deployment**
+   - If you have SSH access, you can manually build and deploy:
+     ```bash
+     cd $HOME/repositories/shopify-section-generator-live
+     git pull origin main
+     npm ci --prefer-offline --no-audit
+     npm run build
+     rm -rf $HOME/public_html/*
+     cp -R out/. $HOME/public_html/
+     ```
+   - This gives you more control and visibility into the process
+
+5. **Optimize Build Process**
+   - Ensure `package-lock.json` is committed to Git (faster installs)
+   - Consider using `.npmrc` to configure npm registry and cache settings
+   - Check if Z.com allows npm cache configuration
+
+6. **Contact Z.com Support**
+   - Ask about server resource limits
+   - Inquire about npm registry mirror options
+   - Check if they offer faster deployment methods
+
+**Expected Deployment Times:**
+- First deployment: 5-10 minutes (full npm install + build)
+- Subsequent deployments (no dependency changes): 2-5 minutes (just build)
+- With optimized `.cpanel.yml`: 1-3 minutes (skips install if unchanged)
+
 ### Static files not loading
 - Check file paths are correct
 - Verify `.htaccess` or server config for SPA routing

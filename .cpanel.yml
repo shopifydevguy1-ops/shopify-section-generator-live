@@ -3,6 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html/
     - export REPOPATH=$HOME/repositories/shopify-section-generator-live
-    - /bin/sh -c "cd $REPOPATH && npm install --prefer-offline --no-audit --progress=false && npm run build"
+    - /bin/sh -c "cd $REPOPATH && if [ ! -d 'node_modules' ] || [ 'package-lock.json' -nt 'node_modules' ] || [ 'package.json' -nt 'node_modules' ]; then npm ci --prefer-offline --no-audit --progress=false --silent || npm install --prefer-offline --no-audit --progress=false --silent; fi"
+    - /bin/sh -c "cd $REPOPATH && npm run build"
     - /bin/rm -rf $DEPLOYPATH*
     - /bin/cp -R $REPOPATH/out/. $DEPLOYPATH
