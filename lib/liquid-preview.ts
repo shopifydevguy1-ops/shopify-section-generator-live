@@ -156,8 +156,163 @@ export function liquidToPreviewHtml(liquidCode: string): string {
     html = '<div style="padding: 40px; text-align: center; color: #666;">No preview content available</div>'
   }
   
-  // Build the full HTML document
+  // Check if the section already has page-width or container classes
+  const hasPageWidth = html.includes('page-width') || html.includes('container')
+  const hasSectionWrapper = html.includes('class="section') || html.includes("class='section")
+  
+  // Build the full HTML document with Shopify theme base
   const styles = styleMatches.length > 0 ? `<style>${styleMatches.join('\n')}</style>` : ''
+  
+  // Shopify theme base CSS
+  const shopifyBaseStyles = `
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background-color: #ffffff;
+    }
+    
+    /* Shopify theme common classes */
+    .page-width {
+      max-width: 120rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .page-width {
+        padding: 0 5rem;
+      }
+    }
+    
+    .section {
+      width: 100%;
+    }
+    
+    .section-padding {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .section-padding {
+        padding-top: 3.6rem;
+        padding-bottom: 3.6rem;
+      }
+    }
+    
+    /* Common typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    
+    h1 { font-size: 3.2rem; }
+    h2 { font-size: 2.4rem; }
+    h3 { font-size: 2rem; }
+    h4 { font-size: 1.8rem; }
+    h5 { font-size: 1.6rem; }
+    h6 { font-size: 1.4rem; }
+    
+    @media screen and (min-width: 750px) {
+      h1 { font-size: 4rem; }
+      h2 { font-size: 3.2rem; }
+      h3 { font-size: 2.4rem; }
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    button, .button, a.button {
+      display: inline-block;
+      padding: 1.2rem 2.4rem;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 0.4rem;
+      cursor: pointer;
+      font-size: 1.4rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    
+    button:hover, .button:hover {
+      opacity: 0.8;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Container utilities */
+    .container {
+      width: 100%;
+      max-width: 120rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .container {
+        padding: 0 5rem;
+      }
+    }
+    
+    /* Grid utilities */
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+    
+    .flex {
+      display: flex;
+    }
+    
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Text utilities */
+    .text-center {
+      text-align: center;
+    }
+    
+    .text-left {
+      text-align: left;
+    }
+    
+    .text-right {
+      text-align: right;
+    }
+  `
+  
+  // Wrap content only if it doesn't already have structure
+  const wrappedContent = hasPageWidth || hasSectionWrapper 
+    ? html 
+    : `<div class="section"><div class="page-width section-padding">${html}</div></div>`
   
   return `<!DOCTYPE html>
 <html lang="en">
@@ -165,20 +320,11 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Section Preview</title>
+  <style>${shopifyBaseStyles}</style>
   ${styles}
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-    * {
-      box-sizing: border-box;
-    }
-  </style>
 </head>
 <body>
-  ${html}
+  ${wrappedContent}
 </body>
 </html>`
 }

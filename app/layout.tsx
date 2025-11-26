@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from "@/components/ui/toaster"
+import Script from "next/script"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -20,19 +21,23 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <script
+          <Script
+            id="theme-init"
+            strategy="beforeInteractive"
             dangerouslySetInnerHTML={{
               __html: `
                 (function() {
-                  const theme = localStorage.getItem('theme');
-                  if (!theme) {
-                    localStorage.setItem('theme', 'dark');
-                    document.documentElement.classList.add('dark');
-                  } else if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
+                  try {
+                    const theme = localStorage.getItem('theme');
+                    if (!theme) {
+                      localStorage.setItem('theme', 'dark');
+                      document.documentElement.classList.add('dark');
+                    } else if (theme === 'dark') {
+                      document.documentElement.classList.add('dark');
+                    } else {
+                      document.documentElement.classList.remove('dark');
+                    }
+                  } catch (e) {}
                 })();
               `,
             }}
