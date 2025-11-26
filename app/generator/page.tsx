@@ -6,89 +6,32 @@ import { useRouter } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
+import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { Copy, Download, Loader2 } from "lucide-react"
-
-interface SectionTemplate {
-  id: string
-  name: string
-  description: string
-  tags: string[]
-  type: string
-  liquid_code: string
-  variables: Record<string, any>
-}
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
   const router = useRouter()
   const { toast } = useToast()
   
-  const [templates, setTemplates] = useState<SectionTemplate[]>([])
-  const [selectedTemplate, setSelectedTemplate] = useState<SectionTemplate | null>(null)
-  const [customizations, setCustomizations] = useState<Record<string, any>>({})
+  const [sectionInput, setSectionInput] = useState<string>("")
   const [generatedCode, setGeneratedCode] = useState<string>("")
   const [loading, setLoading] = useState(false)
-  const [types, setTypes] = useState<string[]>([])
-  const [selectedType, setSelectedType] = useState<string>("")
 
   useEffect(() => {
     if (isLoaded && !user) {
       router.push("/sign-in")
       return
     }
-
-    // Load templates
-    fetch("/api/templates")
-      .then(res => res.json())
-      .then(data => {
-        if (data.templates) {
-          setTemplates(data.templates)
-          const uniqueTypes = Array.from(new Set(data.templates.map((t: SectionTemplate) => t.type)))
-          setTypes(uniqueTypes as string[])
-        }
-      })
-      .catch(err => {
-        console.error("Error loading templates:", err)
-        toast({
-          title: "Error",
-          description: "Failed to load templates. Please try again.",
-          variant: "destructive",
-        })
-      })
-  }, [user, isLoaded, router, toast])
-
-  const handleTemplateSelect = (templateId: string) => {
-    const template = templates.find(t => t.id === templateId)
-    if (template) {
-      setSelectedTemplate(template)
-      // Initialize customizations with default values
-      const defaults: Record<string, any> = {}
-      for (const [key, variable] of Object.entries(template.variables)) {
-        defaults[key] = variable.default
-      }
-      setCustomizations(defaults)
-      setGeneratedCode("")
-    }
-  }
-
-  const handleCustomizationChange = (key: string, value: any) => {
-    setCustomizations(prev => ({
-      ...prev,
-      [key]: value
-    }))
-  }
+  }, [user, isLoaded, router])
 
   const generateSection = async () => {
-    if (!selectedTemplate) {
+    if (!sectionInput.trim()) {
       toast({
         title: "Error",
-        description: "Please select a template first",
+        description: "Please enter section references",
         variant: "destructive",
       })
       return
@@ -100,8 +43,7 @@ export default function GeneratorPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          templateId: selectedTemplate.id,
-          customizations,
+          sectionInput: sectionInput.trim(),
         }),
       })
 
@@ -146,13 +88,13 @@ export default function GeneratorPage() {
   }
 
   const downloadLiquid = () => {
-    if (!generatedCode || !selectedTemplate) return
+    if (!generatedCode) return
 
     const blob = new Blob([generatedCode], { type: "text/plain" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `${selectedTemplate.name.toLowerCase().replace(/\s+/g, "-")}.liquid`
+    a.download = `section-${Date.now()}.liquid`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -163,10 +105,6 @@ export default function GeneratorPage() {
       description: "Section file downloaded successfully",
     })
   }
-
-  const filteredTemplates = selectedType
-    ? templates.filter(t => t.type === selectedType)
-    : templates
 
   if (!isLoaded) {
     return (
@@ -183,123 +121,54 @@ export default function GeneratorPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Section Generator</h1>
-          <p className="text-muted-foreground">Select a template and customize it to generate your Shopify section</p>
+          <p className="text-muted-foreground">Enter section references to generate your Shopify section with schema tags</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Template Selection & Customization */}
+          {/* Section Input */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Select Template</CardTitle>
-                <CardDescription>Choose a section type and template</CardDescription>
+                <CardTitle>Section References</CardTitle>
+                <CardDescription>Enter section IDs or names to reference (one per line or comma-separated)</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Section Type</Label>
-                  <Select value={selectedType || "all"} onValueChange={(value) => setSelectedType(value === "all" ? "" : value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="All types" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All types</SelectItem>
-                      {types.map(type => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="section-input">Section References</Label>
+                  <Textarea
+                    id="section-input"
+                    value={sectionInput}
+                    onChange={(e) => setSectionInput(e.target.value)}
+                    placeholder="hero-banner-1&#10;product-grid-1&#10;custom-animated-text"
+                    className="mt-1 min-h-[200px] font-mono text-sm"
+                  />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Enter section IDs (e.g., hero-banner-1) or names. You can enter multiple sections, one per line or separated by commas.
+                  </p>
                 </div>
-
-                <div>
-                  <Label>Template</Label>
-                  <Select
-                    value={selectedTemplate?.id || ""}
-                    onValueChange={handleTemplateSelect}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a template" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {filteredTemplates.map(template => (
-                        <SelectItem key={template.id} value={template.id}>
-                          {template.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {selectedTemplate && (
-                  <div className="p-4 bg-muted rounded-md">
-                    <p className="text-sm font-semibold mb-2">{selectedTemplate.name}</p>
-                    <p className="text-sm text-muted-foreground mb-3">{selectedTemplate.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedTemplate.tags.map(tag => (
-                        <Badge key={tag} variant="secondary">{tag}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <Button
+                  onClick={generateSection}
+                  disabled={loading || !sectionInput.trim()}
+                  className="w-full"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate Section"
+                  )}
+                </Button>
               </CardContent>
             </Card>
-
-            {selectedTemplate && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Customize</CardTitle>
-                  <CardDescription>Adjust the template variables</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {Object.entries(selectedTemplate.variables).map(([key, variable]) => (
-                    <div key={key}>
-                      <Label htmlFor={key}>{variable.label}</Label>
-                      {variable.type === "textarea" ? (
-                        <Textarea
-                          id={key}
-                          value={customizations[key] || ""}
-                          onChange={(e) => handleCustomizationChange(key, e.target.value)}
-                          placeholder={variable.description}
-                          className="mt-1"
-                        />
-                      ) : (
-                        <Input
-                          id={key}
-                          type={variable.type === "color" ? "color" : "text"}
-                          value={customizations[key] || ""}
-                          onChange={(e) => handleCustomizationChange(key, e.target.value)}
-                          placeholder={variable.description}
-                          className="mt-1"
-                        />
-                      )}
-                      {variable.description && (
-                        <p className="text-xs text-muted-foreground mt-1">{variable.description}</p>
-                      )}
-                    </div>
-                  ))}
-                  <Button
-                    onClick={generateSection}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Generating...
-                      </>
-                    ) : (
-                      "Generate Section"
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
           </div>
 
           {/* Generated Code Preview */}
           <Card>
             <CardHeader>
               <CardTitle>Generated Code</CardTitle>
-              <CardDescription>Your Shopify section liquid code</CardDescription>
+              <CardDescription>Your Shopify section liquid code with schema tags</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {generatedCode ? (

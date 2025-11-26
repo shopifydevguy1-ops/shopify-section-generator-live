@@ -40,21 +40,38 @@ export function loadSectionTemplates(): SectionTemplate[] {
     const files = fs.readdirSync(sectionLibraryPath)
     const jsonFiles = files.filter(file => file.endsWith('.json'))
     
+    console.log(`Found ${jsonFiles.length} JSON files in section-library`)
+    
     const templates: SectionTemplate[] = []
+    let loadedCount = 0
+    let errorCount = 0
     
     for (const file of jsonFiles) {
       try {
         const filePath = path.join(sectionLibraryPath, file)
         const content = fs.readFileSync(filePath, 'utf-8')
         const template = JSON.parse(content) as SectionTemplate
+        
+        // Validate template has required fields
+        if (!template.id || !template.liquid_code) {
+          console.warn(`Skipping ${file}: missing required fields (id or liquid_code)`)
+          errorCount++
+          continue
+        }
+        
         templates.push(template)
+        loadedCount++
       } catch (error) {
         console.error(`Error loading template from ${file}:`, error)
+        errorCount++
       }
     }
     
+    console.log(`Loaded ${loadedCount} templates successfully${errorCount > 0 ? `, ${errorCount} errors` : ''}`)
+    
     // If no templates found, return defaults
     if (templates.length === 0) {
+      console.warn('No templates loaded, using default templates')
       return getDefaultTemplates()
     }
     
@@ -256,5 +273,164 @@ export function getAvailableTypes(): string[] {
   const templates = loadSectionTemplates()
   const types = new Set(templates.map(t => t.type))
   return Array.from(types).sort()
+}
+
+/**
+ * Parse section references from text input
+ * Supports comma-separated or newline-separated section IDs/names
+ */
+export function parseSectionReferences(input: string): string[] {
+  // Split by newlines or commas, trim whitespace, filter empty strings
+  return input
+    .split(/[,\n]/)
+    .map(ref => ref.trim())
+    .filter(ref => ref.length > 0)
+}
+
+/**
+ * Find template by ID or name (case-insensitive)
+ */
+export function findTemplateByIdOrName(idOrName: string): SectionTemplate | null {
+  const templates = loadSectionTemplates()
+  const lowerIdOrName = idOrName.toLowerCase().trim()
+  
+  // First try exact ID match
+  let template = templates.find(t => t.id.toLowerCase() === lowerIdOrName)
+  
+  // If not found, try name match
+  if (!template) {
+    template = templates.find(t => t.name.toLowerCase() === lowerIdOrName)
+  }
+  
+  // If still not found, try partial name match
+  if (!template) {
+    template = templates.find(t => 
+      t.name.toLowerCase().includes(lowerIdOrName) ||
+      lowerIdOrName.includes(t.name.toLowerCase())
+    )
+  }
+  
+  return template || null
+}
+
+/**
+ * Generate schema tag from section variables
+ */
+export function generateSchemaTag(template: SectionTemplate): string {
+  const settings: any[] = []
+  
+  // Convert variables to schema settings
+  for (const [key, variable] of Object.entries(template.variables)) {
+    const setting: any = {
+      type: mapVariableTypeToSchemaType(variable.type),
+      id: key,
+      label: variable.label || key,
+    }
+    
+    // Add default if provided and not empty string
+    if (variable.default !== undefined && variable.default !== null && variable.default !== "") {
+      // For color type, ensure it's a valid color format
+      if (variable.type === "color" && typeof variable.default === "string") {
+        setting.default = variable.default
+      } else if (variable.type !== "color") {
+        setting.default = variable.default
+      }
+    }
+    
+    // Add info/description if provided
+    if (variable.description) {
+      setting.info = variable.description
+    }
+    
+    settings.push(setting)
+  }
+  
+  const schema = {
+    name: template.name,
+    tag: "section",
+    class: "section",
+    settings: settings
+  }
+  
+  return `{% schema %}\n${JSON.stringify(schema, null, 2)}\n{% endschema %}`
+}
+
+/**
+ * Map variable type to Shopify schema type
+ */
+function mapVariableTypeToSchemaType(variableType: string): string {
+  switch (variableType.toLowerCase()) {
+    case "color":
+      return "color"
+    case "textarea":
+      return "textarea"
+    case "text":
+    default:
+      return "text"
+  }
+}
+
+/**
+ * Generate section code from text input with references
+ */
+export function generateSectionFromReferences(input: string): string {
+  const references = parseSectionReferences(input)
+  const templates = loadSectionTemplates()
+  const sections: string[] = []
+  const notFound: string[] = []
+  
+  for (const ref of references) {
+    const template = findTemplateByIdOrName(ref)
+    
+    if (!template) {
+      notFound.push(ref)
+      continue
+    }
+    
+    // Generate liquid code with default values
+    let liquidCode = template.liquid_code
+    
+    // Check if liquid_code uses {{variable}} placeholders or section.settings directly
+    const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
+    
+    if (usesPlaceholders) {
+      // Replace all variables with their default values
+      for (const [key, variable] of Object.entries(template.variables)) {
+        const placeholder = `{{${key}}}`
+        const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+        const defaultValue = variable.default !== undefined && variable.default !== null 
+          ? String(variable.default) 
+          : ""
+        liquidCode = liquidCode.replace(regex, defaultValue)
+      }
+    }
+    // If liquid_code already uses section.settings, no replacement needed
+    
+    // Generate schema tag
+    const schemaTag = generateSchemaTag(template)
+    
+    // Combine liquid code and schema
+    sections.push(`${liquidCode}\n\n${schemaTag}`)
+  }
+  
+  // If no sections found, throw error with helpful message
+  if (sections.length === 0) {
+    if (notFound.length > 0) {
+      throw new Error(`No valid sections found. Could not find: ${notFound.join(', ')}. Please check your section references.`)
+    }
+    throw new Error("No valid sections found. Please check your section references.")
+  }
+  
+  // If some sections not found, log warning but continue
+  if (notFound.length > 0) {
+    console.warn(`Some sections not found: ${notFound.join(', ')}`)
+  }
+  
+  // If multiple sections, join them with separators
+  if (sections.length > 1) {
+    return sections.join("\n\n{% comment %} --- Next Section --- {% endcomment %}\n\n")
+  }
+  
+  return sections[0]
 }
 

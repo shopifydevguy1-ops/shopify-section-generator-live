@@ -6,7 +6,7 @@ import {
   logUsage,
   createUser
 } from "@/lib/db"
-import { generateSection, getTemplateById } from "@/lib/section-generator"
+import { generateSectionFromReferences } from "@/lib/section-generator"
 
 export const dynamic = 'force-dynamic'
 
@@ -22,11 +22,11 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { templateId, customizations } = body
+    const { sectionInput } = body
 
-    if (!templateId) {
+    if (!sectionInput || !sectionInput.trim()) {
       return NextResponse.json(
-        { error: "Template ID is required" },
+        { error: "Section input is required" },
         { status: 400 }
       )
     }
@@ -64,24 +64,14 @@ export async function POST(request: Request) {
       }
     }
 
-    // Get template
-    const template = getTemplateById(templateId)
-    if (!template) {
-      return NextResponse.json(
-        { error: "Template not found" },
-        { status: 404 }
-      )
-    }
+    // Generate section from references
+    const liquidCode = generateSectionFromReferences(sectionInput)
 
-    // Generate section
-    const liquidCode = generateSection(template, customizations || {})
-
-    // Log usage
-    await logUsage(user.id, template.type)
+    // Log usage (use "custom" as type since we're generating from references)
+    await logUsage(user.id, "custom")
 
     return NextResponse.json({
       liquidCode,
-      templateName: template.name,
     })
   } catch (error: any) {
     console.error("Error generating section:", error)
