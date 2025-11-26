@@ -21,6 +21,8 @@ export default function GeneratorPage() {
   const [generatedCode, setGeneratedCode] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<string>("code")
+  const [excludedSectionIds, setExcludedSectionIds] = useState<string[]>([])
+  const [lastInput, setLastInput] = useState<string>("")
 
   useEffect(() => {
     if (isLoaded && !user) {
@@ -41,11 +43,17 @@ export default function GeneratorPage() {
 
     setLoading(true)
     try {
+      // If the input is the same as last time, exclude the previously generated section
+      // If it's different, reset the excluded list
+      const currentInput = sectionInput.trim()
+      const excludedIds = currentInput === lastInput ? excludedSectionIds : []
+      
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          sectionInput: sectionInput.trim(),
+          sectionInput: currentInput,
+          excludedSectionIds: excludedIds,
         }),
       })
 
@@ -65,6 +73,24 @@ export default function GeneratorPage() {
       }
 
       setGeneratedCode(data.liquidCode)
+      
+      // Track the generated section ID and input for next generation
+      if (data.sectionId) {
+        if (currentInput === lastInput) {
+          // Add to excluded list if same input
+          setExcludedSectionIds(prev => {
+            if (!prev.includes(data.sectionId)) {
+              return [...prev, data.sectionId]
+            }
+            return prev
+          })
+        } else {
+          // Reset excluded list for new input
+          setExcludedSectionIds([data.sectionId])
+          setLastInput(currentInput)
+        }
+      }
+      
       toast({
         title: "Success",
         description: "Section generated successfully!",

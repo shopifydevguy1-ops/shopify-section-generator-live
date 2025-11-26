@@ -506,12 +506,15 @@ function mapVariableTypeToSchemaType(variableType: string): string {
 /**
  * Generate section code from text input with references
  * Supports both natural language and explicit section references
+ * Returns only 1 section, excluding previously generated sections
  */
-export function generateSectionFromReferences(input: string): string {
+export function generateSectionFromReferences(
+  input: string, 
+  excludedSectionIds: string[] = []
+): { liquidCode: string; sectionId: string } {
   // First, try to parse as explicit references (IDs or names)
   const explicitReferences = parseSectionReferences(input)
   const templates = loadSectionTemplates()
-  const sections: string[] = []
   const notFound: string[] = []
   const foundTemplates: SectionTemplate[] = []
   
@@ -527,57 +530,66 @@ export function generateSectionFromReferences(input: string): string {
   
   // If no explicit references found or input looks like natural language, use NLP
   if (foundTemplates.length === 0 || (explicitReferences.length === 1 && explicitReferences[0].split(/\s+/).length > 2)) {
-    const nlpResults = findSectionsByNaturalLanguage(input, 5)
+    const nlpResults = findSectionsByNaturalLanguage(input, 10) // Get more results to have options
     foundTemplates.push(...nlpResults)
   }
   
-  // Remove duplicates
+  // Remove duplicates and excluded sections
   const uniqueTemplates = Array.from(
     new Map(foundTemplates.map(t => [t.id, t])).values()
-  )
+  ).filter(t => !excludedSectionIds.includes(t.id))
   
   if (uniqueTemplates.length === 0) {
-    throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
-  }
-  
-  // Generate code for each found template
-  for (const template of uniqueTemplates) {
-    // Generate liquid code with default values
-    let liquidCode = template.liquid_code
-    
-    // Check if liquid_code uses {{variable}} placeholders or section.settings directly
-    const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
-    
-    if (usesPlaceholders) {
-      // Replace all variables with their default values
-      for (const [key, variable] of Object.entries(template.variables)) {
-        const placeholder = `{{${key}}}`
-        const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
-        const defaultValue = variable.default !== undefined && variable.default !== null 
-          ? String(variable.default) 
-          : ""
-        liquidCode = liquidCode.replace(regex, defaultValue)
-      }
+    // If all sections are excluded, reset and try again without exclusions
+    const allTemplates = Array.from(
+      new Map(foundTemplates.map(t => [t.id, t])).values()
+    )
+    if (allTemplates.length === 0) {
+      throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
     }
-    // If liquid_code already uses section.settings, no replacement needed
-    
-    // Generate schema tag
-    const schemaTag = generateSchemaTag(template)
-    
-    // Combine liquid code and schema
-    sections.push(`${liquidCode}\n\n${schemaTag}`)
+    // Use all templates if we've exhausted the excluded ones
+    const selectedTemplate = allTemplates[Math.floor(Math.random() * allTemplates.length)]
+    return generateSectionCode(selectedTemplate)
   }
   
-  // If some explicit references not found, log warning but continue
-  if (notFound.length > 0 && explicitReferences.length > 0) {
-    console.warn(`Some sections not found: ${notFound.join(', ')}`)
-  }
+  // Select one random template from the available ones
+  const selectedTemplate = uniqueTemplates[Math.floor(Math.random() * uniqueTemplates.length)]
   
-  // If multiple sections, join them with separators
-  if (sections.length > 1) {
-    return sections.join("\n\n{% comment %} --- Next Section --- {% endcomment %}\n\n")
-  }
+  return generateSectionCode(selectedTemplate)
+}
+
+/**
+ * Generate liquid code for a single template
+ */
+function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string } {
+  // Generate liquid code with default values
+  let liquidCode = template.liquid_code
   
-  return sections[0]
+  // Check if liquid_code uses {{variable}} placeholders or section.settings directly
+  const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
+  
+  if (usesPlaceholders) {
+    // Replace all variables with their default values
+    for (const [key, variable] of Object.entries(template.variables)) {
+      const placeholder = `{{${key}}}`
+      const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+      const defaultValue = variable.default !== undefined && variable.default !== null 
+        ? String(variable.default) 
+        : ""
+      liquidCode = liquidCode.replace(regex, defaultValue)
+    }
+  }
+  // If liquid_code already uses section.settings, no replacement needed
+  
+  // Generate schema tag
+  const schemaTag = generateSchemaTag(template)
+  
+  // Combine liquid code and schema
+  const fullCode = `${liquidCode}\n\n${schemaTag}`
+  
+  return {
+    liquidCode: fullCode,
+    sectionId: template.id
+  }
 }
 
