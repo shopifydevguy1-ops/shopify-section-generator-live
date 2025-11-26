@@ -153,7 +153,7 @@ export default async function DashboardPage() {
                   {usageCount >= maxUsage && (
                     <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
                       <p className="text-sm text-destructive font-semibold">
-                        You've reached your monthly limit. Upgrade to Pro for unlimited generations.
+                        You&apos;ve reached your monthly limit. Upgrade to Pro for unlimited generations.
                       </p>
                       <Link href="/pricing" className="block mt-2">
                         <Button size="sm">Upgrade Now</Button>

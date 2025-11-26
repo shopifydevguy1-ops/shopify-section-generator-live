@@ -126,7 +126,7 @@ export default async function PricingPage() {
         </div>
 
         <div className="mt-12 text-center text-muted-foreground">
-          <p>All plans include automatic updates and new templates as they're released.</p>
+          <p>All plans include automatic updates and new templates as they&apos;re released.</p>
         </div>
       </main>
     </div>
