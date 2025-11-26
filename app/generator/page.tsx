@@ -130,7 +130,7 @@ export default function GeneratorPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Describe Your Section</CardTitle>
-                <CardDescription>Describe what you need in natural language, or enter specific section IDs</CardDescription>
+                <CardDescription>Describe what you need in natural language</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -139,11 +139,11 @@ export default function GeneratorPage() {
                     id="section-input"
                     value={sectionInput}
                     onChange={(e) => setSectionInput(e.target.value)}
-                    placeholder="I need a hero banner with gradient background and CTA button&#10;&#10;Or enter section IDs:&#10;hero-banner-1, product-grid-1"
+                    placeholder="I need a hero banner with gradient background and CTA button"
                     className="mt-1 min-h-[200px]"
                   />
                   <p className="text-xs text-muted-foreground mt-2">
-                    Describe what you need in plain English (e.g., &quot;hero banner with animation&quot;) or enter specific section IDs. The system will automatically find the best matching sections from the library.
+                    Describe what you need in plain English (e.g., &quot;hero banner with animation&quot;). The system will automatically find the best matching sections from the library.
                   </p>
                 </div>
                 <Button

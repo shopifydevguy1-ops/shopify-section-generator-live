@@ -115,7 +115,17 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
   // In production, query your database
   // SELECT * FROM users WHERE clerk_id = $1
   for (const user of users.values()) {
-    if (user.clerk_id === clerkId) return user
+    if (user.clerk_id === clerkId) {
+      // Check if user should be admin based on current ADMIN_EMAILS
+      const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
+      if (adminEmails.includes(user.email.toLowerCase()) && !user.is_admin) {
+        // Update user to admin if email is in admin list
+        user.is_admin = true
+        user.updated_at = new Date()
+        users.set(user.id, user)
+      }
+      return user
+    }
   }
   return null
 }
@@ -218,6 +228,15 @@ export async function updateUserPlan(userId: string, plan: 'free' | 'pro'): Prom
   const user = Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.plan = plan
+    user.updated_at = new Date()
+    users.set(user.id, user)
+  }
+}
+
+export async function updateUserAdminStatus(userId: string, isAdmin: boolean): Promise<void> {
+  const user = Array.from(users.values()).find(u => u.id === userId)
+  if (user) {
+    user.is_admin = isAdmin
     user.updated_at = new Date()
     users.set(user.id, user)
   }
