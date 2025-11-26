@@ -20,8 +20,29 @@ export default async function AdminPage() {
 
   // Check if user is admin
   const dbUser = await getUserByClerkId(user.id)
-  if (!dbUser || !dbUser.is_admin) {
+  
+  if (!dbUser) {
+    // User doesn't exist in database yet, redirect to dashboard
     redirect("/dashboard")
+  }
+  
+  // Check admin status - also verify email is in ADMIN_EMAILS
+  const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
+  const emailIsAdmin = adminEmails.includes(user.emailAddresses[0]?.emailAddress?.toLowerCase() || '')
+  
+  if (!dbUser.is_admin && !emailIsAdmin) {
+    redirect("/dashboard")
+  }
+  
+  // If email is in admin list but user isn't marked as admin, update it
+  if (emailIsAdmin && !dbUser.is_admin) {
+    const { updateUserAdminStatus } = await import("@/lib/db")
+    await updateUserAdminStatus(dbUser.id, true)
+    // Refresh the user data
+    const updatedUser = await getUserByClerkId(user.id)
+    if (updatedUser) {
+      updatedUser.is_admin = true
+    }
   }
 
   // Get admin stats

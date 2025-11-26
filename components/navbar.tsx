@@ -72,7 +72,7 @@ export function Navbar() {
                   <Button variant="ghost">Account</Button>
                 </Link>
                 {isAdmin && (
-                  <Link href="/admin">
+                  <Link href="/admin/">
                     <Button variant="ghost" size="sm">
                       <Shield className="h-4 w-4 mr-2" />
                       Admin
