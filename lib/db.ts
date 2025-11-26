@@ -119,8 +119,15 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
       // Check if user should be admin based on current ADMIN_EMAILS
       const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
       if (adminEmails.includes(user.email.toLowerCase()) && !user.is_admin) {
-        // Update user to admin if email is in admin list
+        // Update user to admin and pro plan if email is in admin list
         user.is_admin = true
+        user.plan = 'pro' // Admins get pro plan automatically
+        user.updated_at = new Date()
+        users.set(user.id, user)
+      }
+      // If user is admin but not on pro plan, upgrade them
+      if (user.is_admin && user.plan !== 'pro') {
+        user.plan = 'pro'
         user.updated_at = new Date()
         users.set(user.id, user)
       }
@@ -137,11 +144,12 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     ? isAdmin 
     : adminEmails.includes(email.toLowerCase())
   
+  // Admins automatically get pro plan with unlimited generations
   const user: User = {
     id: crypto.randomUUID(),
     clerk_id: clerkId,
     email,
-    plan: 'free',
+    plan: shouldBeAdmin ? 'pro' : 'free',
     is_admin: shouldBeAdmin,
     created_at: new Date(),
     updated_at: new Date(),
@@ -237,6 +245,10 @@ export async function updateUserAdminStatus(userId: string, isAdmin: boolean): P
   const user = Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.is_admin = isAdmin
+    // Admins automatically get pro plan
+    if (isAdmin) {
+      user.plan = 'pro'
+    }
     user.updated_at = new Date()
     users.set(user.id, user)
   }

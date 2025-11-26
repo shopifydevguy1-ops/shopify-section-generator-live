@@ -46,8 +46,8 @@ export async function POST(request: Request) {
       user = await createUser(userId, email)
     }
 
-    // Check usage limits for free plan
-    if (user.plan === "free") {
+    // Check usage limits for free plan (admins have unlimited)
+    if (user.plan === "free" && !user.is_admin) {
       const now = new Date()
       const currentMonth = now.getMonth() + 1
       const currentYear = now.getFullYear()

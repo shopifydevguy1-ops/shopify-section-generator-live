@@ -57,6 +57,18 @@ export default async function AdminPage() {
   if ((hasAdminRole || emailIsAdmin) && dbUser && !dbUser.is_admin) {
     const { updateUserAdminStatus } = await import("@/lib/db")
     await updateUserAdminStatus(dbUser.id, true)
+    // Refresh user data to get updated plan
+    const updatedUser = await getUserByClerkId(user.id)
+    if (updatedUser) {
+      updatedUser.is_admin = true
+      updatedUser.plan = 'pro'
+    }
+  }
+  
+  // If user is admin but not on pro plan, upgrade them
+  if (isAdmin && dbUser && dbUser.plan !== 'pro') {
+    const { updateUserPlan } = await import("@/lib/db")
+    await updateUserPlan(dbUser.id, 'pro')
   }
   
   // Ensure dbUser exists for stats

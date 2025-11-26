@@ -30,13 +30,21 @@ export default async function DashboardPage() {
     redirect("/dashboard")
   }
 
+  // Ensure admin users have pro plan
+  if (dbUser.is_admin && dbUser.plan !== "pro") {
+    const { updateUserPlan } = await import("@/lib/db")
+    await updateUserPlan(dbUser.id, "pro")
+    dbUser.plan = "pro"
+  }
+
   const subscription = await getSubscriptionByUserId(dbUser.id)
   const now = new Date()
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
   const usageCount = await getUserUsageCount(dbUser.id, currentMonth, currentYear)
-  const maxUsage = dbUser.plan === "pro" ? Infinity : 5
-  const remaining = dbUser.plan === "pro" ? "Unlimited" : Math.max(0, maxUsage - usageCount)
+  // Admins and pro users have unlimited
+  const maxUsage = (dbUser.plan === "pro" || dbUser.is_admin) ? Infinity : 5
+  const remaining = (dbUser.plan === "pro" || dbUser.is_admin) ? "Unlimited" : Math.max(0, maxUsage - usageCount)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
