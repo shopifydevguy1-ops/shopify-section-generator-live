@@ -492,11 +492,19 @@ export function generateSchemaTag(template: SectionTemplate): string {
   // Use cleaned name (without CUSTOM prefix)
   const cleanedName = cleanSectionName(template.name)
   
+  // Generate presets array
+  const presets = [
+    {
+      name: cleanedName
+    }
+  ]
+  
   const schema = {
     name: cleanedName,
     tag: "section",
     class: "section",
-    settings: settings
+    settings: settings,
+    presets: presets
   }
   
   return `{% schema %}\n${JSON.stringify(schema, null, 2)}\n{% endschema %}`
