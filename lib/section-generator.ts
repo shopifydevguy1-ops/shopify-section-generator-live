@@ -1,5 +1,6 @@
 // Section Generator Logic
 // Loads sections from JSON files in /section-library
+// Schema generation ensures all variables are properly converted to Shopify schema settings
 
 import fs from 'fs'
 import path from 'path'
