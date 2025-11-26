@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
+  // Removed 'output: export' for Vercel deployment
+  // Vercel supports full Next.js features including API routes and dynamic routes
   trailingSlash: true,
 }
 
