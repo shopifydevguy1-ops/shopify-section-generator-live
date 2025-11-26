@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { getUserByClerkId, getSubscriptionByUserId, updateUserPlan, createOrUpdateSubscription } from "@/lib/db"
 
+export const dynamic = 'force-dynamic'
+
 export async function POST() {
   try {
     const { userId } = auth()

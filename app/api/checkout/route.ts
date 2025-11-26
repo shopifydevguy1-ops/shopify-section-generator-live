@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 import { getPayMongoClient } from "@/lib/paymongo"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const { userId } = auth()

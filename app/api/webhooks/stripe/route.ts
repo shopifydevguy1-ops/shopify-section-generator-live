@@ -7,6 +7,8 @@ import {
 } from "@/lib/db"
 import { getPayMongoClient } from "@/lib/paymongo"
 
+export const dynamic = 'force-dynamic'
+
 const webhookSecret = process.env.PAYMONGO_WEBHOOK_SECRET
 
 export async function POST(request: Request) {

@@ -7,6 +7,8 @@ import {
 } from "@/lib/db"
 import { generateSection, getTemplateById } from "@/lib/section-generator"
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   try {
     const { userId } = auth()
