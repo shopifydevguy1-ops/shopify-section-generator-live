@@ -59,6 +59,11 @@ export function loadSectionTemplates(): SectionTemplate[] {
           continue
         }
         
+        // Ensure variables object exists (even if empty)
+        if (!template.variables || typeof template.variables !== 'object') {
+          template.variables = {}
+        }
+        
         templates.push(template)
         loadedCount++
       } catch (error) {
@@ -449,30 +454,38 @@ export function findTemplateByIdOrName(idOrName: string): SectionTemplate | null
 export function generateSchemaTag(template: SectionTemplate): string {
   const settings: any[] = []
   
-  // Convert variables to schema settings
-  for (const [key, variable] of Object.entries(template.variables)) {
-    const setting: any = {
-      type: mapVariableTypeToSchemaType(variable.type),
-      id: key,
-      label: variable.label || key,
-    }
-    
-    // Add default if provided and not empty string
-    if (variable.default !== undefined && variable.default !== null && variable.default !== "") {
-      // For color type, ensure it's a valid color format
-      if (variable.type === "color" && typeof variable.default === "string") {
-        setting.default = variable.default
-      } else if (variable.type !== "color") {
-        setting.default = variable.default
+  // Ensure variables exist and is an object
+  if (template.variables && typeof template.variables === 'object') {
+    // Convert variables to schema settings
+    for (const [key, variable] of Object.entries(template.variables)) {
+      // Skip if variable is null or undefined
+      if (!variable || typeof variable !== 'object') {
+        continue
       }
+      
+      const setting: any = {
+        type: mapVariableTypeToSchemaType(variable.type || 'text'),
+        id: key,
+        label: variable.label || key,
+      }
+      
+      // Add default if provided and not empty string
+      if (variable.default !== undefined && variable.default !== null && variable.default !== "") {
+        // For color type, ensure it's a valid color format
+        if (variable.type === "color" && typeof variable.default === "string") {
+          setting.default = variable.default
+        } else if (variable.type !== "color") {
+          setting.default = variable.default
+        }
+      }
+      
+      // Add info/description if provided
+      if (variable.description) {
+        setting.info = variable.description
+      }
+      
+      settings.push(setting)
     }
-    
-    // Add info/description if provided
-    if (variable.description) {
-      setting.info = variable.description
-    }
-    
-    settings.push(setting)
   }
   
   // Use cleaned name (without CUSTOM prefix)
