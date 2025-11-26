@@ -239,7 +239,7 @@ export default function GeneratorPage() {
                           <ol className="space-y-3 list-decimal list-inside">
                             <li className="space-y-1">
                               <span className="font-medium">Download the section file</span>
-                              <p className="text-muted-foreground ml-6">Click the "Download .liquid" button above to save the file to your computer.</p>
+                              <p className="text-muted-foreground ml-6">Click the &quot;Download .liquid&quot; button above to save the file to your computer.</p>
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Access your Shopify theme</span>
@@ -247,19 +247,19 @@ export default function GeneratorPage() {
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Navigate to the sections folder</span>
-                              <p className="text-muted-foreground ml-6">In the left sidebar, click on "Sections" folder</p>
+                              <p className="text-muted-foreground ml-6">In the left sidebar, click on &quot;Sections&quot; folder</p>
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Add a new section file</span>
-                              <p className="text-muted-foreground ml-6">Click "Add a new section" and give it a name (e.g., "custom-hero.liquid")</p>
+                              <p className="text-muted-foreground ml-6">Click &quot;Add a new section&quot; and give it a name (e.g., &quot;custom-hero.liquid&quot;)</p>
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Paste your code</span>
-                              <p className="text-muted-foreground ml-6">Copy the entire code from the "Code" tab and paste it into the new section file. Click "Save"</p>
+                              <p className="text-muted-foreground ml-6">Copy the entire code from the &quot;Code&quot; tab and paste it into the new section file. Click &quot;Save&quot;</p>
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Add to your page</span>
-                              <p className="text-muted-foreground ml-6">Go to Online Store → Themes → Customize. Navigate to the page where you want to add the section, then click "Add section" and select your new section from the list.</p>
+                              <p className="text-muted-foreground ml-6">Go to Online Store → Themes → Customize. Navigate to the page where you want to add the section, then click &quot;Add section&quot; and select your new section from the list.</p>
                             </li>
                             <li className="space-y-1">
                               <span className="font-medium">Customize settings</span>
@@ -273,7 +273,7 @@ export default function GeneratorPage() {
                           <ul className="space-y-2 text-blue-800 dark:text-blue-200 text-xs ml-4 list-disc">
                             <li>Make sure your theme supports Online Store 2.0 (sections everywhere)</li>
                             <li>You can add this section to any page: home, product, collection, or custom pages</li>
-                            <li>Test the section on different screen sizes using the theme editor's responsive preview</li>
+                            <li>Test the section on different screen sizes using the theme editor&apos;s responsive preview</li>
                             <li>If you encounter errors, check the browser console and ensure all required settings are configured</li>
                           </ul>
                         </div>
@@ -283,7 +283,7 @@ export default function GeneratorPage() {
                           <ul className="space-y-2 text-amber-800 dark:text-amber-200 text-xs ml-4 list-disc">
                             <li>Always backup your theme before making changes</li>
                             <li>Some sections may require specific theme features or CSS classes to work properly</li>
-                            <li>If the section doesn't appear, check that the file name ends with ".liquid"</li>
+                            <li>If the section doesn&apos;t appear, check that the file name ends with &quot;.liquid&quot;</li>
                             <li>For best results, use a theme that's compatible with Shopify Online Store 2.0</li>
                           </ul>
                         </div>
