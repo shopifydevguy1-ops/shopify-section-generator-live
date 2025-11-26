@@ -18,12 +18,12 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   
   // Process style tags - extract CSS and add to head
   const styleMatches: string[] = []
-  html = html.replace(/{%\s*-\s*style\s*-\s*%}([\s\S]*?){%\s*-\s*endstyle\s*-\s*%}/gi, (match, css) => {
+  html = html.replace(/{%\s*-\s*style\s*-\s*%}([\s\S]*?){%\s*-\s*endstyle\s*-\s*%}/gi, (match: string, css: string) => {
     let processedCss = css.trim()
     // Replace section.id in CSS
     processedCss = processedCss.replace(/section\.id/g, 'preview-section')
     // Replace section.settings in CSS
-    processedCss = processedCss.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match, varName) => {
+    processedCss = processedCss.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match: string, varName: string) => {
       const lowerName = varName.toLowerCase()
       if (lowerName.includes('padding') || lowerName.includes('margin') || lowerName.includes('width') || lowerName.includes('height')) {
         return '20'
@@ -39,7 +39,7 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   html = html.replace(/section\.id/g, 'preview-section')
   
   // Replace section.settings.variable inside Liquid tags {{ section.settings.var }}
-  html = html.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match, varName) => {
+  html = html.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match: string, varName: string) => {
     // Extract default value from filters if present
     const defaultMatch = match.match(/\|\s*default\s*:\s*['"]([^'"]+)['"]/i)
     if (defaultMatch) {
@@ -78,7 +78,7 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   
   // Replace any remaining {{variable}} placeholders that weren't replaced
   // These should already be replaced with defaults, but handle edge cases
-  html = html.replace(/\{\{([^}]+)\}\}/g, (match, varName) => {
+  html = html.replace(/\{\{([^}]+)\}\}/g, (match: string, varName: string) => {
     const trimmed = varName.trim()
     const lowerTrimmed = trimmed.toLowerCase()
     
