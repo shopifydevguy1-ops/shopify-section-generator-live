@@ -12,24 +12,43 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   // Remove schema tags (they don't render)
   html = html.replace(/{%\s*schema\s*%}[\s\S]*?{%\s*endschema\s*%}/gi, '')
   
-  // Remove comment tags
+  // Remove comment tags (both with and without whitespace control)
   html = html.replace(/{%\s*comment\s*%}[\s\S]*?{%\s*endcomment\s*%}/gi, '')
   html = html.replace(/{%\s*-\s*comment\s*-\s*%}[\s\S]*?{%\s*-\s*endcomment\s*-\s*%}/gi, '')
   
   // Process style tags - extract CSS and add to head
   const styleMatches: string[] = []
   html = html.replace(/{%\s*-\s*style\s*-\s*%}([\s\S]*?){%\s*-\s*endstyle\s*-\s*%}/gi, (match, css) => {
-    styleMatches.push(css.trim())
+    let processedCss = css.trim()
+    // Replace section.id in CSS
+    processedCss = processedCss.replace(/section\.id/g, 'preview-section')
+    // Replace section.settings in CSS
+    processedCss = processedCss.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match, varName) => {
+      const lowerName = varName.toLowerCase()
+      if (lowerName.includes('padding') || lowerName.includes('margin') || lowerName.includes('width') || lowerName.includes('height')) {
+        return '20'
+      }
+      return '0'
+    })
+    styleMatches.push(processedCss)
     return ''
   })
   
-  // Replace section.settings.variable with mock values
-  // Handle section.settings.variable with optional filters
-  html = html.replace(/section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?/g, (match, varName) => {
+  // Replace section.id with a mock ID (handle both in and out of Liquid tags)
+  html = html.replace(/\{\{\s*section\.id\s*\}\}/g, 'preview-section')
+  html = html.replace(/section\.id/g, 'preview-section')
+  
+  // Replace section.settings.variable inside Liquid tags {{ section.settings.var }}
+  html = html.replace(/\{\{\s*section\.settings\.([a-zA-Z0-9_-]+)(?:\s*\|\s*[^}]+)?\s*\}\}/g, (match, varName) => {
     // Extract default value from filters if present
     const defaultMatch = match.match(/\|\s*default\s*:\s*['"]([^'"]+)['"]/i)
     if (defaultMatch) {
       return defaultMatch[1]
+    }
+    
+    const numericDefaultMatch = match.match(/\|\s*default\s*:\s*([0-9]+)/i)
+    if (numericDefaultMatch) {
+      return numericDefaultMatch[1]
     }
     
     // Provide mock values based on variable name patterns
@@ -38,7 +57,7 @@ export function liquidToPreviewHtml(liquidCode: string): string {
     if (lowerName.includes('color') || lowerName.includes('background')) {
       return '#ffffff'
     }
-    if (lowerName.includes('text') || lowerName.includes('heading') || lowerName.includes('title')) {
+    if (lowerName.includes('text') || lowerName.includes('heading') || lowerName.includes('title') || lowerName.includes('subheading')) {
       return 'Sample Text'
     }
     if (lowerName.includes('url') || lowerName.includes('link')) {
@@ -57,31 +76,85 @@ export function liquidToPreviewHtml(liquidCode: string): string {
     return 'Default Value'
   })
   
-  // Replace section.id with a mock ID
-  html = html.replace(/section\.id/g, 'preview-section')
-  
   // Replace any remaining {{variable}} placeholders that weren't replaced
-  // These should already be replaced, but just in case
+  // These should already be replaced with defaults, but handle edge cases
   html = html.replace(/\{\{([^}]+)\}\}/g, (match, varName) => {
-    const trimmed = varName.trim().toLowerCase()
-    if (trimmed.includes('color')) {
+    const trimmed = varName.trim()
+    const lowerTrimmed = trimmed.toLowerCase()
+    
+    // Skip if it's a Liquid tag (if, for, etc.)
+    if (trimmed.startsWith('if ') || trimmed.startsWith('for ') || trimmed.startsWith('unless ') || 
+        trimmed.startsWith('case ') || trimmed.startsWith('when ') || trimmed.startsWith('assign ') ||
+        trimmed.startsWith('include ') || trimmed.startsWith('render ') || trimmed.startsWith('end')) {
+      return ''
+    }
+    
+    // Handle filters
+    if (trimmed.includes('|')) {
+      const parts = trimmed.split('|')
+      const varPart = parts[0].trim()
+      const filters = parts.slice(1).join('|')
+      
+      // Extract default from filters
+      const defaultMatch = filters.match(/default\s*:\s*['"]([^'"]+)['"]/i)
+      if (defaultMatch) {
+        return defaultMatch[1]
+      }
+      
+      const numericDefaultMatch = filters.match(/default\s*:\s*([0-9]+)/i)
+      if (numericDefaultMatch) {
+        return numericDefaultMatch[1]
+      }
+      
+      // Remove filters and process the variable
+      const cleanVar = varPart.toLowerCase()
+      if (cleanVar.includes('color')) {
+        return '#000000'
+      }
+      if (cleanVar.includes('url') || cleanVar.includes('link')) {
+        return '#'
+      }
+      if (cleanVar.includes('image')) {
+        return 'https://via.placeholder.com/400x300?text=Image'
+      }
+      return 'Sample Value'
+    }
+    
+    // Simple variable replacement
+    if (lowerTrimmed.includes('color')) {
       return '#000000'
     }
-    if (trimmed.includes('url') || trimmed.includes('link')) {
+    if (lowerTrimmed.includes('url') || lowerTrimmed.includes('link')) {
       return '#'
     }
-    if (trimmed.includes('image')) {
+    if (lowerTrimmed.includes('image')) {
       return 'https://via.placeholder.com/400x300?text=Image'
+    }
+    if (lowerTrimmed.includes('text') || lowerTrimmed.includes('heading') || lowerTrimmed.includes('title')) {
+      return 'Sample Text'
     }
     return 'Sample Value'
   })
   
-  // Process remaining Liquid filters - simplify common ones
-  html = html.replace(/\|\s*times\s*[0-9.]+/gi, '') // Remove times filters (already processed in section.settings)
-  html = html.replace(/\|\s*round\s*:\s*[0-9]+/gi, '') // Remove round filters
-  html = html.replace(/\|\s*default\s*:\s*['"]([^'"]+)['"]/gi, '$1') // Extract default values
-  html = html.replace(/\|\s*default\s*:\s*([0-9]+)/gi, '$1') // Extract numeric defaults
-  html = html.replace(/\{\{\s*([^|]+)\s*\|\s*[^}]+\s*\}\}/g, '{{$1}}') // Simplify complex filters to basic variables
+  // Remove Liquid control flow tags (if, for, etc.) - just remove them for preview
+  html = html.replace(/{%\s*(if|unless|for|case|when|assign|include|render|end\w+)[^%]*%}/gi, '')
+  
+  // Process remaining Liquid filters - remove them
+  html = html.replace(/\|\s*times\s*[0-9.]+/gi, '')
+  html = html.replace(/\|\s*round\s*:\s*[0-9]+/gi, '')
+  html = html.replace(/\|\s*default\s*:\s*['"]([^'"]+)['"]/gi, '$1')
+  html = html.replace(/\|\s*default\s*:\s*([0-9]+)/gi, '$1')
+  
+  // Clean up any remaining Liquid tag syntax
+  html = html.replace(/{%\s*[^%]*\s*%}/g, '')
+  
+  // Trim and clean up whitespace
+  html = html.trim()
+  
+  // If no HTML content remains, return a placeholder
+  if (!html || html.length === 0) {
+    html = '<div style="padding: 40px; text-align: center; color: #666;">No preview content available</div>'
+  }
   
   // Build the full HTML document
   const styles = styleMatches.length > 0 ? `<style>${styleMatches.join('\n')}</style>` : ''
@@ -105,7 +178,7 @@ export function liquidToPreviewHtml(liquidCode: string): string {
   </style>
 </head>
 <body>
-  ${html.trim()}
+  ${html}
 </body>
 </html>`
 }
@@ -114,11 +187,21 @@ export function liquidToPreviewHtml(liquidCode: string): string {
  * Check if the Liquid code contains renderable content
  */
 export function hasRenderableContent(liquidCode: string): boolean {
+  if (!liquidCode || !liquidCode.trim()) {
+    return false
+  }
+  
   // Remove schema and comments
   const withoutSchema = liquidCode.replace(/{%\s*schema\s*%}[\s\S]*?{%\s*endschema\s*%}/gi, '')
   const withoutComments = withoutSchema.replace(/{%\s*comment\s*%}[\s\S]*?{%\s*endcomment\s*%}/gi, '')
+  const withoutComments2 = withoutComments.replace(/{%\s*-\s*comment\s*-\s*%}[\s\S]*?{%\s*-\s*endcomment\s*-\s*%}/gi, '')
   
-  // Check if there's any HTML-like content
-  return /<[a-z][\s\S]*>/i.test(withoutComments)
+  // Check if there's any HTML-like content (tags like <div>, <h1>, <p>, etc.)
+  const hasHtmlTags = /<[a-z][a-z0-9]*[\s\S]*>/i.test(withoutComments2)
+  
+  // Also check for style tags that might contain CSS
+  const hasStyleTags = /{%\s*-\s*style\s*-\s*%}/i.test(liquidCode)
+  
+  return hasHtmlTags || hasStyleTags
 }
 

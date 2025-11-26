@@ -25,11 +25,19 @@ export default function GeneratorPage() {
   
   // Generate preview HTML from liquid code
   const previewHtml = useMemo(() => {
-    if (!generatedCode || !hasRenderableContent(generatedCode)) {
+    if (!generatedCode) {
       return null
     }
+    
+    if (!hasRenderableContent(generatedCode)) {
+      console.log("No renderable content detected in generated code")
+      return null
+    }
+    
     try {
-      return liquidToPreviewHtml(generatedCode)
+      const html = liquidToPreviewHtml(generatedCode)
+      console.log("Preview HTML generated successfully", html.substring(0, 200))
+      return html
     } catch (error) {
       console.error("Error generating preview:", error)
       return null
@@ -222,12 +230,14 @@ export default function GeneratorPage() {
                     
                     <TabsContent value="preview" className="mt-4">
                       {previewHtml ? (
-                        <div className="border rounded-md overflow-hidden" style={{ height: '400px' }}>
+                        <div className="border rounded-md overflow-hidden bg-background" style={{ height: '400px' }}>
                           <iframe
+                            key={generatedCode.substring(0, 50)} // Force re-render when code changes
                             srcDoc={previewHtml}
                             className="w-full h-full border-0"
                             title="Section Preview"
-                            sandbox="allow-same-origin"
+                            sandbox="allow-same-origin allow-scripts"
+                            style={{ backgroundColor: 'transparent' }}
                           />
                         </div>
                       ) : (
