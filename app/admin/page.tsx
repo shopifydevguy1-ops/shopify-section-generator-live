@@ -18,10 +18,15 @@ export default async function AdminPage() {
     redirect("/sign-in")
   }
 
-  // Check if user is admin via Clerk roles
-  const hasAdminRole = user.publicMetadata?.role === 'admin' || 
-                       user.privateMetadata?.role === 'admin' ||
-                       user.organizationMemberships?.some(org => org.role === 'org:admin')
+  // Check if user is admin via Clerk roles (handle different metadata formats)
+  const publicMeta = user.publicMetadata as Record<string, unknown> | undefined
+  const privateMeta = user.privateMetadata as Record<string, unknown> | undefined
+  const hasAdminRole = 
+    publicMeta?.role === 'admin' || 
+    (typeof publicMeta?.role === 'string' && publicMeta.role.toLowerCase() === 'admin') ||
+    privateMeta?.role === 'admin' ||
+    (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin') ||
+    user.organizationMemberships?.some(org => org.role === 'org:admin')
   
   // Check if user is admin via ADMIN_EMAILS environment variable
   const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
@@ -30,6 +35,17 @@ export default async function AdminPage() {
   // Check database admin status
   const dbUser = await getUserByClerkId(user.id)
   const isDbAdmin = dbUser?.is_admin || false
+  
+  // Debug logging (remove in production)
+  console.log('Admin check:', {
+    userId: user.id,
+    email: user.emailAddresses[0]?.emailAddress,
+    publicMetadata: publicMeta,
+    privateMetadata: privateMeta,
+    hasAdminRole,
+    emailIsAdmin,
+    isDbAdmin
+  })
   
   // User is admin if they have admin role in Clerk OR email is in ADMIN_EMAILS OR marked as admin in DB
   const isAdmin = hasAdminRole || emailIsAdmin || isDbAdmin

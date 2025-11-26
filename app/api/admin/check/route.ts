@@ -18,10 +18,15 @@ export async function GET() {
       return NextResponse.json({ isAdmin: false })
     }
 
-    // Check Clerk roles
-    const hasAdminRole = user.publicMetadata?.role === 'admin' || 
-                         user.privateMetadata?.role === 'admin' ||
-                         user.organizationMemberships?.some(org => org.role === 'org:admin')
+    // Check Clerk roles (handle different metadata formats)
+    const publicMeta = user.publicMetadata as Record<string, unknown> | undefined
+    const privateMeta = user.privateMetadata as Record<string, unknown> | undefined
+    const hasAdminRole = 
+      publicMeta?.role === 'admin' || 
+      (typeof publicMeta?.role === 'string' && publicMeta.role.toLowerCase() === 'admin') ||
+      privateMeta?.role === 'admin' ||
+      (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin') ||
+      user.organizationMemberships?.some(org => org.role === 'org:admin')
     
     // Check ADMIN_EMAILS
     const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
