@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { getUserByClerkId, getSubscriptionByUserId, updateUserPlan, createOrUpdateSubscription } from "@/lib/db"
 

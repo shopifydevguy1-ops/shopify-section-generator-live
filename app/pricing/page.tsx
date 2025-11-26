@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Navbar } from "@/components/navbar"
 import { Check } from "lucide-react"
-import { auth } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
 
 export default async function PricingPage() {
   const { userId } = auth()

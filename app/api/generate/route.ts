@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
 import { 
   getUserByClerkId, 
   getUserUsageCount, 
-  logUsage,
-  getTemplateById 
+  logUsage
 } from "@/lib/db"
-import { generateSection } from "@/lib/section-generator"
+import { generateSection, getTemplateById } from "@/lib/section-generator"
 
 export async function POST(request: Request) {
   try {
