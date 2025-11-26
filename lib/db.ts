@@ -7,6 +7,7 @@ export interface User {
   clerk_id: string
   email: string
   plan: 'free' | 'pro'
+  is_admin: boolean
   created_at: Date
   updated_at: Date
 }
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS users (
   clerk_id VARCHAR(255) UNIQUE NOT NULL,
   email VARCHAR(255) NOT NULL,
   plan VARCHAR(20) DEFAULT 'free' CHECK (plan IN ('free', 'pro')),
+  is_admin BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
@@ -118,17 +120,66 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
   return null
 }
 
-export async function createUser(clerkId: string, email: string): Promise<User> {
+export async function createUser(clerkId: string, email: string, isAdmin?: boolean): Promise<User> {
+  // Check if email is in admin list from environment variable
+  const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
+  const shouldBeAdmin = isAdmin !== undefined 
+    ? isAdmin 
+    : adminEmails.includes(email.toLowerCase())
+  
   const user: User = {
     id: crypto.randomUUID(),
     clerk_id: clerkId,
     email,
     plan: 'free',
+    is_admin: shouldBeAdmin,
     created_at: new Date(),
     updated_at: new Date(),
   }
   users.set(user.id, user)
   return user
+}
+
+export async function getAllUsers(): Promise<User[]> {
+  return Array.from(users.values())
+}
+
+export async function getAllSubscriptions(): Promise<Subscription[]> {
+  return Array.from(subscriptions.values())
+}
+
+export async function getAllUsageLogs(): Promise<UsageLog[]> {
+  return usageLogs
+}
+
+export async function getUserStats(): Promise<{
+  totalUsers: number
+  freeUsers: number
+  proUsers: number
+  totalSubscriptions: number
+  activeSubscriptions: number
+  totalGenerations: number
+  generationsThisMonth: number
+}> {
+  const allUsers = await getAllUsers()
+  const allSubscriptions = await getAllSubscriptions()
+  const allLogs = await getAllUsageLogs()
+  
+  const now = new Date()
+  const currentMonth = now.getMonth() + 1
+  const currentYear = now.getFullYear()
+  
+  return {
+    totalUsers: allUsers.length,
+    freeUsers: allUsers.filter(u => u.plan === 'free').length,
+    proUsers: allUsers.filter(u => u.plan === 'pro').length,
+    totalSubscriptions: allSubscriptions.length,
+    activeSubscriptions: allSubscriptions.filter(s => s.status === 'active').length,
+    totalGenerations: allLogs.length,
+    generationsThisMonth: allLogs.filter(log => 
+      log.month === currentMonth && log.year === currentYear
+    ).length,
+  }
 }
 
 export async function getUserUsageCount(userId: string, month: number, year: number): Promise<number> {

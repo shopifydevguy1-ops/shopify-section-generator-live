@@ -3,17 +3,27 @@
 import Link from "next/link"
 import { useUser, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Shield } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export function Navbar() {
   const { isSignedIn, user } = useUser()
   const [darkMode, setDarkMode] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark")
     setDarkMode(isDark)
   }, [])
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetch("/api/admin/check")
+        .then(res => res.json())
+        .then(data => setIsAdmin(data.isAdmin || false))
+        .catch(() => setIsAdmin(false))
+    }
+  }, [isSignedIn])
 
   const toggleDarkMode = () => {
     const newMode = !darkMode
@@ -61,6 +71,14 @@ export function Navbar() {
                 <Link href="/account">
                   <Button variant="ghost">Account</Button>
                 </Link>
+                {isAdmin && (
+                  <Link href="/admin">
+                    <Button variant="ghost" size="sm">
+                      <Shield className="h-4 w-4 mr-2" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
                 <UserButton afterSignOutUrl="/" />
               </>
             ) : (

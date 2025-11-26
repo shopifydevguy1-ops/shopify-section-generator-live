@@ -68,6 +68,9 @@ A full-featured web application for generating Shopify sections from pre-built t
 
    # App URL
    NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+   # Admin Emails (comma-separated list of emails that should have admin access)
+   ADMIN_EMAILS=admin@example.com,owner@example.com
    ```
 
 4. **Set up the database**
@@ -117,6 +120,30 @@ A full-featured web application for generating Shopify sections from pre-built t
 7. Configure `PAYMONGO_PRO_AMOUNT` (amount in cents, e.g., 2000 = ₱20.00)
 
 **Note:** PayMongo doesn't have native subscription support like Stripe. This implementation uses manual recurring billing. For true recurring subscriptions, you'll need to implement a cron job or scheduled task to create new checkout sessions monthly.
+
+## Admin Dashboard
+
+The app includes an admin dashboard for tracking users and subscribers.
+
+### Setting Up Admin Access
+
+1. **Add admin emails to environment variables:**
+   ```env
+   ADMIN_EMAILS=admin@example.com,owner@example.com
+   ```
+   Add comma-separated list of email addresses that should have admin access.
+
+2. **Access the admin dashboard:**
+   - Sign in with an admin email address
+   - Navigate to `/admin` or click the "Admin" button in the navbar
+   - View all users, subscriptions, and usage statistics
+
+### Admin Features
+
+- **User Management**: View all registered users with their plans and subscription status
+- **Usage Tracking**: Monitor section generation activity
+- **Statistics Dashboard**: See total users, subscriptions, and generation counts
+- **Recent Activity**: View latest user registrations and section generations
 
 ## Section Library
 

@@ -129,21 +129,21 @@ export default function GeneratorPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Section References</CardTitle>
-                <CardDescription>Enter section IDs or names to reference (one per line or comma-separated)</CardDescription>
+                <CardTitle>Describe Your Section</CardTitle>
+                <CardDescription>Describe what you need in natural language, or enter specific section IDs</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="section-input">Section References</Label>
+                  <Label htmlFor="section-input">What section do you need?</Label>
                   <Textarea
                     id="section-input"
                     value={sectionInput}
                     onChange={(e) => setSectionInput(e.target.value)}
-                    placeholder="hero-banner-1&#10;product-grid-1&#10;custom-animated-text"
-                    className="mt-1 min-h-[200px] font-mono text-sm"
+                    placeholder="I need a hero banner with gradient background and CTA button&#10;&#10;Or enter section IDs:&#10;hero-banner-1, product-grid-1"
+                    className="mt-1 min-h-[200px]"
                   />
                   <p className="text-xs text-muted-foreground mt-2">
-                    Enter section IDs (e.g., hero-banner-1) or names. You can enter multiple sections, one per line or separated by commas.
+                    Describe what you need in plain English (e.g., "hero banner with animation") or enter specific section IDs. The system will automatically find the best matching sections from the library.
                   </p>
                 </div>
                 <Button

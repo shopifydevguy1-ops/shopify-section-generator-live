@@ -276,6 +276,13 @@ export function getAvailableTypes(): string[] {
 }
 
 /**
+ * Clean section name by removing "CUSTOM" prefix
+ */
+export function cleanSectionName(name: string): string {
+  return name.replace(/^CUSTOM\s+/i, '').trim()
+}
+
+/**
  * Parse section references from text input
  * Supports comma-separated or newline-separated section IDs/names
  */
@@ -285,6 +292,129 @@ export function parseSectionReferences(input: string): string[] {
     .split(/[,\n]/)
     .map(ref => ref.trim())
     .filter(ref => ref.length > 0)
+}
+
+/**
+ * Find sections using natural language processing
+ * Analyzes user text and finds relevant sections based on keywords, tags, and descriptions
+ */
+export function findSectionsByNaturalLanguage(input: string, maxResults: number = 10): SectionTemplate[] {
+  const templates = loadSectionTemplates()
+  const lowerInput = input.toLowerCase()
+  
+  // Extract keywords from input
+  const keywords = lowerInput
+    .split(/\s+/)
+    .filter(word => word.length > 2)
+    .map(word => word.replace(/[^\w]/g, ''))
+    .filter(word => word.length > 0)
+  
+  // Score each template based on relevance
+  const scoredTemplates = templates.map(template => {
+    let score = 0
+    
+    // Check name match
+    const cleanName = cleanSectionName(template.name).toLowerCase()
+    if (cleanName.includes(lowerInput) || lowerInput.includes(cleanName)) {
+      score += 10
+    }
+    
+    // Check keyword matches in name
+    keywords.forEach(keyword => {
+      if (cleanName.includes(keyword)) {
+        score += 5
+      }
+    })
+    
+    // Check description match
+    const lowerDescription = template.description.toLowerCase()
+    if (lowerDescription.includes(lowerInput)) {
+      score += 8
+    }
+    keywords.forEach(keyword => {
+      if (lowerDescription.includes(keyword)) {
+        score += 3
+      }
+    })
+    
+    // Check tag matches
+    template.tags.forEach(tag => {
+      const lowerTag = tag.toLowerCase()
+      if (lowerTag === lowerInput) {
+        score += 10
+      } else if (lowerTag.includes(lowerInput) || lowerInput.includes(lowerTag)) {
+        score += 7
+      }
+      keywords.forEach(keyword => {
+        if (lowerTag.includes(keyword) || keyword.includes(lowerTag)) {
+          score += 4
+        }
+      })
+    })
+    
+    // Check type match
+    if (template.type.toLowerCase().includes(lowerInput) || lowerInput.includes(template.type.toLowerCase())) {
+      score += 6
+    }
+    
+    // Common section type mappings
+    const sectionTypeMappings: Record<string, string[]> = {
+      'hero': ['hero', 'banner', 'landing', 'header', 'intro'],
+      'product': ['product', 'shop', 'catalog', 'item', 'merchandise'],
+      'collection': ['collection', 'category', 'group', 'set'],
+      'testimonial': ['testimonial', 'review', 'feedback', 'rating', 'quote'],
+      'faq': ['faq', 'question', 'answer', 'help', 'support'],
+      'form': ['form', 'contact', 'submit', 'input', 'field'],
+      'gallery': ['gallery', 'image', 'photo', 'picture', 'media'],
+      'video': ['video', 'youtube', 'vimeo', 'media'],
+      'slider': ['slider', 'carousel', 'slideshow', 'swiper'],
+      'countdown': ['countdown', 'timer', 'clock', 'deadline'],
+      'trust': ['trust', 'badge', 'security', 'guarantee', 'certificate'],
+      'social': ['social', 'share', 'facebook', 'twitter', 'instagram'],
+      'newsletter': ['newsletter', 'email', 'subscribe', 'signup'],
+      'blog': ['blog', 'article', 'post', 'news'],
+      'footer': ['footer', 'bottom', 'links'],
+      'header': ['header', 'nav', 'navigation', 'menu'],
+    }
+    
+    // Check type mappings
+    Object.entries(sectionTypeMappings).forEach(([type, synonyms]) => {
+      if (template.type.toLowerCase() === type) {
+        synonyms.forEach(synonym => {
+          if (lowerInput.includes(synonym)) {
+            score += 5
+          }
+        })
+      }
+    })
+    
+    // Check for specific feature keywords
+    const featureKeywords: Record<string, string[]> = {
+      'animated': ['animated', 'animation', 'moving', 'dynamic'],
+      'interactive': ['interactive', 'click', 'hover', 'effect'],
+      'responsive': ['responsive', 'mobile', 'tablet', 'desktop'],
+      'customizable': ['custom', 'customizable', 'configurable', 'settings'],
+    }
+    
+    Object.entries(featureKeywords).forEach(([feature, keywords]) => {
+      keywords.forEach(keyword => {
+        if (lowerInput.includes(keyword)) {
+          if (template.tags.some(tag => tag.toLowerCase().includes(feature))) {
+            score += 3
+          }
+        }
+      })
+    })
+    
+    return { template, score }
+  })
+  
+  // Sort by score and return top results
+  return scoredTemplates
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, maxResults)
+    .map(item => item.template)
 }
 
 /**
@@ -345,8 +475,11 @@ export function generateSchemaTag(template: SectionTemplate): string {
     settings.push(setting)
   }
   
+  // Use cleaned name (without CUSTOM prefix)
+  const cleanedName = cleanSectionName(template.name)
+  
   const schema = {
-    name: template.name,
+    name: cleanedName,
     tag: "section",
     class: "section",
     settings: settings
@@ -372,21 +505,43 @@ function mapVariableTypeToSchemaType(variableType: string): string {
 
 /**
  * Generate section code from text input with references
+ * Supports both natural language and explicit section references
  */
 export function generateSectionFromReferences(input: string): string {
-  const references = parseSectionReferences(input)
+  // First, try to parse as explicit references (IDs or names)
+  const explicitReferences = parseSectionReferences(input)
   const templates = loadSectionTemplates()
   const sections: string[] = []
   const notFound: string[] = []
+  const foundTemplates: SectionTemplate[] = []
   
-  for (const ref of references) {
+  // Try to find sections by explicit references first
+  for (const ref of explicitReferences) {
     const template = findTemplateByIdOrName(ref)
-    
-    if (!template) {
+    if (template) {
+      foundTemplates.push(template)
+    } else {
       notFound.push(ref)
-      continue
     }
-    
+  }
+  
+  // If no explicit references found or input looks like natural language, use NLP
+  if (foundTemplates.length === 0 || (explicitReferences.length === 1 && explicitReferences[0].split(/\s+/).length > 2)) {
+    const nlpResults = findSectionsByNaturalLanguage(input, 5)
+    foundTemplates.push(...nlpResults)
+  }
+  
+  // Remove duplicates
+  const uniqueTemplates = Array.from(
+    new Map(foundTemplates.map(t => [t.id, t])).values()
+  )
+  
+  if (uniqueTemplates.length === 0) {
+    throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
+  }
+  
+  // Generate code for each found template
+  for (const template of uniqueTemplates) {
     // Generate liquid code with default values
     let liquidCode = template.liquid_code
     
@@ -413,16 +568,8 @@ export function generateSectionFromReferences(input: string): string {
     sections.push(`${liquidCode}\n\n${schemaTag}`)
   }
   
-  // If no sections found, throw error with helpful message
-  if (sections.length === 0) {
-    if (notFound.length > 0) {
-      throw new Error(`No valid sections found. Could not find: ${notFound.join(', ')}. Please check your section references.`)
-    }
-    throw new Error("No valid sections found. Please check your section references.")
-  }
-  
-  // If some sections not found, log warning but continue
-  if (notFound.length > 0) {
+  // If some explicit references not found, log warning but continue
+  if (notFound.length > 0 && explicitReferences.length > 0) {
     console.warn(`Some sections not found: ${notFound.join(', ')}`)
   }
   
