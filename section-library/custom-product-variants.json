@@ -1,0 +1,180 @@
+{
+  "id": "custom-product-variants",
+  "name": "CUSTOM Product variants",
+  "description": "Section: CUSTOM Product variants",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n\n  assign variants_position = section.settings.variants_position\n\n  assign use_blocks = section.settings.use_blocks\n\n  assign layout = section.settings.layout\n  assign layout_row = section.settings.layout_row\n  assign layout_row_mobile = section.settings.layout_row_mobile\n  assign layout_gap = section.settings.layout_gap\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\n\n  assign item_padding = section.settings.item_padding\n  assign item_padding_mobile = section.settings.item_padding_mobile\n  assign item_radius = section.settings.item_radius\n  assign item_border_thickness = section.settings.item_border_thickness\n  assign item_border_color = section.settings.item_border_color\n  assign item_bg_color = section.settings.item_bg_color\n  assign item_ratio = section.settings.item_ratio\n  assign item_ratio_mobile = section.settings.item_ratio_mobile\n  assign item_border_active_color = section.settings.item_border_active_color\n\n  assign button_icon_color = section.settings.button_icon_color\n  assign button_icon_hover_color = section.settings.button_icon_hover_color\n\n  assign custom_count_variants = 0\n\n  for block in section.blocks\n    if block.settings.url != blank\n    assign custom_count_variants = custom_count_variants | plus: 1\n    endif\n  endfor\n-%}\n\n{%- style -%}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px !important;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px !important;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px !important;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px !important;\n    padding-left: {{ padding_horizontal_mobile }}rem !important;\n    padding-right: {{ padding_horizontal_mobile }}rem !important;\n  }\n\n  .variants-body-{{ section.id }} {\n    display: grid;\n    grid-template-columns: repeat({{ layout_row_mobile}}, 1fr);\n    gap: {{ layout_gap_mobile }}px;\n    flex-wrap: wrap;\n    align-items: center;\n  }\n\n  .variants-item-{{ section.id }} {\n    display: block;\n    box-sizing: border-box !important;\n    border: {{ item_border_thickness }}px solid {{ item_border_color }};\n    border-radius: {{ item_radius }}px;\n    background-color: {{ item_bg_color }};\n    padding: {{ item_padding_mobile }}px;\n    overflow: hidden;\n  }\n\n  .variants-item-{{ section.id }}.active {\n    border-color: {{ item_border_active_color }};\n  }\n\n  .variants-item-{{ section.id }} img,\n  .variants-item-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: {{ item_radius }}px;\n  }\n\n  .variants-item-{{ section.id }} svg {\n    background-color: #FAFAFA;\n  }\n\n  .variants-slider-wrapper-{{ section.id }} {\n    display: flex;\n    gap: 5px;\n    align-items: center;\n  }\n\n  .variants-slider-{{ section.id }} {\n    flex: 1 1 auto;\n  }\n\n  .variants-btn-prev-{{ section.id }},\n  .variants-btn-next-{{ section.id }} {\n    display: block !important;\n    background-color: transparent;\n    box-shadow: none;\n    border: 0px;\n    width: 16px;\n    flex-shrink: 0;\n    cursor: pointer;\n    text-rendering: auto !important;\n    visibility: visible !important;\n    padding: 0px !important;\n  }\n\n  .variants-btn-prev-{{ section.id }} svg,\n  .variants-btn-next-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n    overflow: visible !important;\n  }\n\n  .variants-btn-prev-{{ section.id }} svg {\n    transform: rotate(180deg);\n  }\n\n  .variants-btn-next-{{ section.id }} svg path,\n  .variants-btn-prev-{{ section.id }} svg path {\n    fill: {{ button_icon_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .variants-btn-next-{{ section.id }}:hover svg path,\n  .variants-btn-prev-{{ section.id }}:hover svg path {\n    fill: {{ button_icon_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .variants-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .variants-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0.5;\n  }\n\n  .variants-btn-prev-{{ section.id }}.swiper-button-lock,\n  .variants-btn-next-{{ section.id }}.swiper-button-lock {\n    display: none !important;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px !important; \n      margin-bottom: {{ margin_bottom }}px !important; \n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px !important;\n      padding-bottom: {{ padding_bottom }}px !important;\n      padding-left: {{ padding_horizontal }}rem !important;\n      padding-right: {{ padding_horizontal }}rem !important;\n    }\n\n    .variants-body-{{ section.id }} {\n      grid-template-columns: repeat({{ layout_row }}, 1fr);\n      gap: {{ layout_gap }}px;\n    }\n\n    .variants-item-{{ section.id }} {\n      width: auto;\n      padding: {{ item_padding }}px;\n    }\n\n  }\n\n{%- endstyle -%}\n\n{% if item_ratio_mobile == \"portrait\" %}\n  <style>\n    .variants-item-{{ section.id }} {\n     aspect-ratio: 9.6/14; \n    }\n  </style>\n{% elsif item_ratio_mobile == \"landscape\" %}\n  <style>\n    .variants-item-{{ section.id }}{\n     aspect-ratio: 12/9; \n    }\n  </style>\n{% elsif item_ratio_mobile == \"square\" %}\n  <style>\n    .variants-item-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else %}\n  <style>\n    .variants-item-{{ section.id }} {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if item_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .variants-item-{{ section.id }} {\n       aspect-ratio: 9.6/14; \n      } \n    }\n  </style>\n{% elsif item_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .variants-item-{{ section.id }}{\n       aspect-ratio: 12/9; \n      }\n    }\n  </style>\n{% elsif item_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .variants-item-{{ section.id }} {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .variants-item-{{ section.id }} {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n{% comment %} PREVIEW {% endcomment %}\n<style>\n  .variants-slider-{{ section.id }}.preview .swiper-wrapper {\n    display: flex;\n    align-items: center;\n    overflow: hidden;\n  }\n\n  .variants-slider-{{ section.id }}.preview .variants-item-{{ section.id }} {\n    width: calc(100% / {{ layout_row_mobile }} - {{ layout_gap_mobile }}px);\n  }\n\n  .variants-slider-{{ section.id }}.preview .variants-item-{{ section.id }}:not(:first-child) {\n    margin-left: {{ layout_gap_mobile }}px;\n  } \n\n  @media(min-width: 1024px) {\n    .variants-slider-{{ section.id }}.preview .variants-item-{{ section.id }}:not(:first-child) {\n      margin-left: {{ layout_gap }}px;\n    } \n\n    .variants-slider-{{ section.id }}.preview .variants-item-{{ section.id }} {\n      width: calc(100% / {{ layout_row }} - {{ layout_gap }}px);\n    }\n  }\n</style>\n\n<script>\n    window.addEventListener('DOMContentLoaded', (event) => {\n        var productForm = document.querySelector('#custom-product-variants');\n      \n        if (!productForm){\n          var productForm = document.querySelector('{% if variants_position == \"below_title\" or variants_position == \"above_title\" %}.product__title{% elsif variants_position == \"below_description\" or variants_position == \"above_description\" %}.product__description{% elsif variants_position == \"below_price\" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n          if (!productForm) return;\n        }\n\n        const templateContent =  document.querySelector('#custom-product-variants-template-{{ section.id }}').content\n        \n        productForm.insertAdjacentElement('{% if variants_position == \"below_buy\" or variants_position == \"below_title\" or variants_position == \"below_description\" or variants_position == \"below_price\" %}afterend{% else %}beforebegin{% endif %}', templateContent.firstElementChild)\n        \n    })\n</script>\n{% if use_blocks %}\n  {% if custom_count_variants > 0 %}\n   <template id=\"custom-product-variants-template-{{ section.id }}\">\n    <div class=\"section-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n      <div class=\"section-{{ section.id }}-settings\">\n        {% if layout == \"slider\" %}\n          <div class=\"variants-slider-wrapper-{{ section.id }}\">\n            <button class=\"variants-btn-prev-{{ section.id }}\">\n              <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                <g clip-path=\"url(#clip0_1_2)\">\n                <path d=\"M3.32264 0L2.69684 0.623745L8.0556 6L2.69684 11.3763L3.32264 12L9.30312 6L3.32264 0Z\" fill=\"black\"/>\n                </g>\n                <defs>\n                <clipPath id=\"clip0_1_2\">\n                <rect width=\"12\" height=\"12\" fill=\"white\"/>\n                </clipPath>\n                </defs>\n              </svg>\n\n            </button>\n            <div class=\"variants-slider-{{ section.id }} swiper preview\">\n              <div class=\"swiper-wrapper\">\n                {% for block in section.blocks %}\n                  {% if block.settings.url != blank %}\n                    {% assign url = block.settings.url %}\n                    {% assign url_parts = url | split: '=' %}\n                    {% assign id = url_parts[1] | plus: 0 %}\n                    <a href=\"{{ block.settings.url }}\" class=\"variants-item-{{ section.id }} swiper-slide {% if product.selected_variant.id == id %}active{% endif %}\">\n                      {% if block.settings.image != blank %}\n                        <img\n                          srcset=\"{{ block.settings.image | image_url: width: 160 }} 160w,\n                                  {{ block.settings.image | image_url: width: 200 }} 200w,\n                                  {{ block.settings.image | image_url: width: 240 }} 240w,\n                                  {{ block.settings.image | image_url: width: 300 }} 300w,\n                                  {{ block.settings.image | image_url: width: 360 }} 360w\"\n                          sizes=\"(min-width:1024px) 300px, (min-width:768px) 25vw, 33vw\"\n                          src=\"{{ block.settings.image | image_url: width: 360 }}\"\n                          alt=\"{{ block.settings.image.alt }}\"\n                          width=\"300\"\n                          height=\"300\"\n                          loading=\"lazy\"\n                          decoding=\"async\"\n                        />\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                    </a>\n                  {% endif %}\n                {% endfor %}\n              </div>\n            </div>\n            <button class=\"variants-btn-next-{{ section.id }}\">\n              <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                <g clip-path=\"url(#clip0_1_2)\">\n                <path d=\"M3.32264 0L2.69684 0.623745L8.0556 6L2.69684 11.3763L3.32264 12L9.30312 6L3.32264 0Z\" fill=\"black\"/>\n                </g>\n                <defs>\n                <clipPath id=\"clip0_1_2\">\n                <rect width=\"12\" height=\"12\" fill=\"white\"/>\n                </clipPath>\n                </defs>\n              </svg>\n            </button>\n          </div>\n        {% else %}\n          <div class=\"variants-body-{{ section.id }}\">\n              {% for block in section.blocks %}\n                {% if block.settings.url != blank %}\n                  <a href=\"{{ block.settings.url }}\" class=\"variants-item-{{ section.id }}\">\n                    {% if block.settings.image != blank %}\n                                              <img\n                          srcset=\"{{ block.settings.image | image_url: width: 160 }} 160w,\n                                  {{ block.settings.image | image_url: width: 200 }} 200w,\n                                  {{ block.settings.image | image_url: width: 240 }} 240w,\n                                  {{ block.settings.image | image_url: width: 300 }} 300w,\n                                  {{ block.settings.image | image_url: width: 360 }} 360w\"\n                          sizes=\"(min-width:1024px) 300px, (min-width:768px) 25vw, 33vw\"\n                          src=\"{{ block.settings.image | image_url: width: 360 }}\"\n                          alt=\"{{ block.settings.image.alt }}\"\n                          width=\"300\"\n                          height=\"300\"\n                          loading=\"lazy\"\n                          decoding=\"async\"\n                        />\n                    {% else %}\n                      {{ 'image' | placeholder_svg_tag }}\n                    {% endif %}\n                  </a>\n                {% endif %}\n              {% endfor %}\n            </div>\n        {% endif %}\n      </div>\n    </div>\n   </template>\n {% endif %}\n{% else %}\n{% if product.variants.size > 1 %}\n  <template id=\"custom-product-variants-template-{{ section.id }}\">\n    <div class=\"section-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n      <div class=\"section-{{ section.id }}-settings\">\n        {% if layout == \"slider\" %}\n          <div class=\"variants-slider-wrapper-{{ section.id }}\">\n            <button class=\"variants-btn-prev-{{ section.id }}\">\n              <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" fill=\"#000000\" height=\"800px\" width=\"800px\" version=\"1.1\" id=\"Layer_1\" viewBox=\"0 0 407.436 407.436\" xml:space=\"preserve\">\n                <polygon points=\"112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 \"/>\n              </svg>\n            </button>\n            <div class=\"variants-slider-{{ section.id }} swiper preview\">\n              <div class=\"swiper-wrapper\">\n                {% for variant in product.variants %}\n                  <a href=\"{{ variant.url }}\" class=\"variants-item-{{ section.id }} swiper-slide {% if product.selected_variant.id == variant.id %}active{% endif %}\">\n                  {% if variant.featured_image != blank %}\n                  {% assign widths_small = '160, 200, 240, 300, 360' %}\n                  {% assign sizes_rule = '(min-width:1024px) 300px, (min-width:768px) 25vw, 33vw' %}\n                  {% if forloop.first %}\n                  {{ variant.featured_image\n                  | image_url: width: 360\n                  | image_tag: alt: variant.featured_image.alt,\n                  widths: widths_small,\n                  sizes: sizes_rule,\n                  fetchpriority: 'high',\n                  loading: 'eager',\n                  decoding: 'async' }}\n                  {% else %}\n                  {{ variant.featured_image\n                  | image_url: width: 360\n                  | image_tag: alt: variant.featured_image.alt,\n                  widths: widths_small,\n                  sizes: sizes_rule,\n                  loading: 'lazy',\n                  decoding: 'async' }}\n                  {% endif %}\n                  {% else %}\n                  {{ 'image' | placeholder_svg_tag }}\n                  {% endif %}\n                  </a>\n                {% endfor %}\n              </div>\n            </div>\n            <button class=\"variants-btn-next-{{ section.id }}\">\n              <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" fill=\"#000000\" height=\"800px\" width=\"800px\" version=\"1.1\" id=\"Layer_1\" viewBox=\"0 0 407.436 407.436\" xml:space=\"preserve\">\n                <polygon points=\"112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 \"/>\n              </svg>\n            </button>\n          </div>\n        {% else %}\n          <div class=\"variants-body-{{ section.id }}\">\n              {% for variant in product.variants %}\n                <a href=\"{{ variant.url }}\" class=\"variants-item-{{ section.id }} {% if product.selected_variant.id == variant.id %}active{% endif %}\">\n                  {% if variant.featured_image != blank %}\n                    <img src=\"{{ variant.featured_image | image_url }}\" alt=\"{{ variant.featured_image.alt }}\">\n                  {% else %}\n                    {{ 'image' | placeholder_svg_tag }}\n                  {% endif %}\n                </a>\n              {% endfor %}\n            </div>\n        {% endif %}\n      </div>\n    </div>\n  </template>              \n{% endif %}\n{% endif %}\n{% if layout == \"slider\" %}\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n\n<script>\n  function initProductVariants() {\n    setTimeout(() => {\n      document.querySelector('.variants-slider-{{ section.id }}').classList.remove(\"preview\");\n      const slider = new Swiper(\".variants-slider-{{ section.id }}\", {\n          speed: 500,\n          spaceBetween: 20,\n          navigation: {\n              prevEl: '.variants-btn-prev-{{ section.id }}',\n              nextEl: '.variants-btn-next-{{ section.id }}',\n          },\n          breakpoints: {\n            320: {\n              spaceBetween: {{ layout_gap_mobile }},\n              slidesPerView: {{ layout_row_mobile }}\n            },\n            768: {\n              spaceBetween: {{ layout_gap_mobile }},\n              slidesPerView: {{ layout_row_mobile }}\n            },\n            1024: {\n              spaceBetween: {{ layout_gap }},\n              slidesPerView: {{ layout_row }}\n            }\n          }\n      });\n    }, 400);\n  }\n\n  document.addEventListener('DOMContentLoaded', initProductVariants);\n  \n  if (Shopify.designMode) {\n        document.addEventListener('shopify:section:unload', initProductVariants);\n        document.addEventListener('shopify:section:load', initProductVariants);\n  }\n</script>\n  \n{% endif %}",
+  "variables": {
+    "variants_position": {
+      "type": "text",
+      "default": "below_price",
+      "label": "Position",
+      "description": "Position"
+    },
+    "use_blocks": {
+      "type": "text",
+      "default": "",
+      "label": "Use custom blocks",
+      "description": "Instead of default variant images"
+    },
+    "layout": {
+      "type": "text",
+      "default": "grid",
+      "label": "Type",
+      "description": "Type"
+    },
+    "layout_row": {
+      "type": "text",
+      "default": "4",
+      "label": "Items per row - desktop",
+      "description": "Control size of variant images"
+    },
+    "layout_row_mobile": {
+      "type": "text",
+      "default": "4",
+      "label": "Items per row - mobile",
+      "description": "Items per row - mobile"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "8",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "item_padding": {
+      "type": "text",
+      "default": "2",
+      "label": "Padding",
+      "description": "Padding"
+    },
+    "item_padding_mobile": {
+      "type": "text",
+      "default": "2",
+      "label": "Padding - mobile",
+      "description": "Padding - mobile"
+    },
+    "item_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "item_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "item_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "item_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "item_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background color",
+      "description": "Background color"
+    },
+    "item_border_color": {
+      "type": "color",
+      "default": "#EBEBED",
+      "label": "Border color",
+      "description": "Border color"
+    },
+    "item_border_active_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border active color",
+      "description": "Border active color"
+    },
+    "button_icon_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow color",
+      "description": "Arrow color"
+    },
+    "button_icon_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow hover color",
+      "description": "Arrow hover color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

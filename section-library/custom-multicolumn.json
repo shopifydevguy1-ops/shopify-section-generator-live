@@ -1,0 +1,576 @@
+{
+  "id": "custom-multicolumn",
+  "name": "CUSTOM Multi Columns",
+  "description": "Section: CUSTOM Multi Columns",
+  "tags": [
+    "multicolumn"
+  ],
+  "type": "custom",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css\"/>\n\n{%- liquid\n assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  \n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_color = section.settings.heading_color\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_letter = section.settings.heading_letter\n  assign heading_mt = section.settings.heading_mt\n  assign heading_mb = section.settings.heading_mb\n  assign heading_align = section.settings.heading_align\n  \n  assign text = section.settings.text\n  assign text_size = section.settings.text_size\n  assign text_color = section.settings.text_color\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_letter = section.settings.text_letter\n  assign text_align = section.settings.text_align\n  \n  assign numbers = section.settings.numbers\n  assign column_mt = section.settings.column_mt\n  assign column_direction = section.settings.column_direction\n  assign column_gap = section.settings.column_gap\n  assign column_gap_mobile = section.settings.column_gap_mobile\n  assign column_radius = section.settings.column_radius\n  assign column_bg_color = section.settings.column_bg_color\n  assign column_padding_horizontal = section.settings.column_padding_horizontal\n  assign column_padding_top = section.settings.column_padding_top\n  assign column_padding_bottom = section.settings.column_padding_bottom\n  assign column_row = section.settings.column_row\n  assign column_row_mobile = section.settings.column_row_mobile\n  \n  assign column_heading_size = section.settings.column_heading_size\n  assign column_heading_color = section.settings.column_heading_color\n  assign column_heading_font = section.settings.column_heading_font\n  assign column_heading_height = section.settings.column_heading_height\n  assign column_heading_letter = section.settings.column_heading_letter\n  assign column_heading_mt = section.settings.column_heading_mt\n  \n  assign column_text_size = section.settings.column_text_size\n  assign column_text_color = section.settings.column_text_color\n  assign column_text_font = section.settings.column_text_font\n  assign column_text_height = section.settings.column_text_height\n  assign column_text_letter = section.settings.column_text_letter\n  assign column_text_mt = section.settings.column_text_mt\n  \n  assign column_link_size = section.settings.column_link_size\n  assign column_link_color = section.settings.column_link_color\n  assign column_link_hover_color = section.settings.column_link_hover_color\n  assign column_link_font = section.settings.column_link_font\n  assign column_link_height = section.settings.column_link_height\n  assign column_link_letter = section.settings.column_link_letter\n  assign column_link_bg_color = section.settings.column_link_bg_color\n  assign column_link_bg_hover_color = section.settings.column_link_bg_hover_color\n  assign column_link_mt = section.settings.column_link_mt\n  assign column_link_padding_vertical = section.settings.column_link_padding_vertical\n  assign column_link_padding_horizontal = section.settings.column_link_padding_horizontal\n  assign column_link_style = section.settings.column_link_style\n  assign column_link_radius = section.settings.column_link_radius\n  assign column_link_width = section.settings.column_link_width\n  assign column_link_max = section.settings.column_link_max\n\n  assign column_number_size = section.settings.column_number_size\n  assign column_number_color = section.settings.column_number_color\n  assign column_number_font = section.settings.column_number_font\n  assign column_number_bg_color = section.settings.column_number_bg_color\n\n  assign column_image_max = section.settings.column_image_max\n  assign column_image_max_mobile = section.settings.column_image_max_mobile\n  assign column_image_radius = section.settings.column_image_radius\n\n  assign column_style = section.settings.column_style\n  assign column_style_mobile = section.settings.column_style_mobile\n\n  assign autoplay = section.settings.autoplay\n  assign autoplay_speed = section.settings.autoplay_speed\n\n  assign nav_btn_bg = section.settings.nav_btn_bg\n  assign nav_btn_hover_bg = section.settings.nav_btn_hover_bg\n  assign nav_border = section.settings.nav_border\n  assign nav_border_hover = section.settings.nav_border_hover\n  assign nav_icon = section.settings.nav_icon\n  assign nav_hover_icon = section.settings.nav_hover_icon\n  assign nav_size = section.settings.nav_size\n  assign nav_size_mobile = section.settings.nav_size_mobile\n  \n  assign hide_nav = section.settings.hide_nav\n\n  if column_direction == 'center'\n    assign justify = 'center'\n  elsif column_direction == 'left'\n    assign justify = 'start'\n  else\n    assign justify = 'end'\n  endif\n\n  if column_row == '2'\n    assign column_maxwidth = 46\n  elsif column_row == '3'\n    assign column_maxwidth = 29\n  elsif column_row == '4'\n    assign column_maxwidth = 21\n  endif\n\n  if column_row_mobile == '1'\n    assign column_maxwidth_mobile = 100\n  elsif column_row_mobile == '2'\n    assign column_maxwidth_mobile = 45\n  elsif column_row_mobile == '3'\n    assign column_maxwidth_mobile = 29\n  elsif column_row_mobile == '4'\n    assign column_maxwidth_mobile = 21\n  endif\n\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  {{ column_heading_font | font_face: font_display: 'swap' }}\n  {{ column_text_font | font_face: font_display: 'swap' }}\n  {{ column_link_font | font_face: font_display: 'swap' }}\n  {{ column_number_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .multicolumns-title-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ heading_mt | times: 0.75 | round: 0  }}px;\n    margin-bottom: {{ heading_mb | times: 0.75 | round: 0  }}px;\n    font-size: {{ heading_size | times: 0.85 }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    letter-spacing: {{ heading_letter }}px;\n    text-transform: unset;\n    text-align: {{ heading_align }};\n  }\n  \n  .multicolumns-text-{{ section.id }} {\n    margin: 0;\n    font-size: {{ text_size | times: 0.85 }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    letter-spacing: {{ text_letter }}px;\n    text-transform: unset;\n    text-align: {{ text_align }};\n  }\n  \n  .multicolumns-items-{{ section.id }} {\n    margin-top: {{ column_mt | times: 0.75 | round: 0  }}px;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: {{ justify }};\n    align-items: stratch;\n    gap: {{ column_gap_mobile }}px;\n  }\n  \n  .multicolumns-item-{{ section.id }} {\n    flex: 0 1 {{ column_maxwidth_mobile }}%;\n    border-radius: {{ column_radius }}px;\n    background-color: {{ column_bg_color }};\n    padding-top: {{ column_padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ column_padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ column_padding_horizontal | times: 0.75 | round: 0 }}px;\n    padding-right: {{ column_padding_horizontal | times: 0.75 | round: 0 }}px;\n    box-sizing: border-box;\n  }\n  \n  .multicolumns-item-number-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 50px;\n    border-radius: 50%;\n    background-color: {{ column_number_bg_color }};\n  }\n  \n  .multicolumns-item-number-{{ section.id }} p {\n    font-size: {{ column_number_size | times: 0.85 }}px;\n    color: {{ column_number_color }};\n  }\n  \n  .multicolumns-item-image-{{ section.id }} {\n    max-width: {{ column_image_max_mobile }}px;\n    margin: 0 auto;\n    border-radius: {{ column_image_radius }}px;\n  }\n  \n  .multicolumns-item-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: {{ column_image_radius }}px;\n  }\n\n  .multicolumns-item-image-{{ section.id }} .placeholder-svg {\n    width: 100%;\n    height: auto;\n  }\n  \n  .multicolumns-item-title-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ column_heading_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ column_heading_size | times: 0.85 }}px;\n    color: {{ column_heading_color }};\n    line-height: {{ column_heading_height }}%;\n    letter-spacing: {{ column_heading_letter }}px;\n    text-align: {{ column_direction }};\n  }\n  \n  .multicolumns-item-text-{{ section.id }} p{\n    margin: 0px;\n    margin-top: {{ column_text_mt }}px;\n    font-size: {{ column_text_size | times: 0.85 }}px;\n    color: {{ column_text_color }};\n    line-height: {{ column_text_height }}%;\n    letter-spacing: {{ column_text_letter }}px;\n    text-align: {{ column_direction }};\n  }\n  \n  .multicolumns-item-link-{{ section.id }} {\n    display: block;\n    margin: 0px;\n    margin-top: {{ column_link_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ column_link_size }}px;\n    color: {{ column_link_color }};\n    line-height: {{ column_link_height }}%;\n    letter-spacing: {{ column_link_letter }}px;\n    text-align: center;\n    transition: all 0.2s ease-in 0s;\n    text-decoration: none;\n  }\n  \n  .multicolumns-item-link-{{ section.id }}:hover {\n    transition: all 0.2s ease-in 0s;\n    color: {{ column_link_hover_color }};\n  }\n\n  .multicolumns-slider-wrapper-{{ section.id }} {\n    margin-top: {{ column_mt | times: 0.75 | round: 0  }}px;\n    display: none;\n    position: relative;\n  }\n\n  .multicolumns-btn-next-{{ section.id }},\n  .multicolumns-btn-prev-{{ section.id }} {\n    position: absolute !important;\n    top: 50% !important;\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n    z-index: 3;\n    border-radius: 50%;\n    border: 1px solid {{ nav_border }} !important;\n    width: {{ nav_size_mobile }}px !important;\n    height: {{ nav_size_mobile }}px !important;\n    background: {{ nav_btn_bg }} !important;\n    cursor: pointer;\n    transition: all 0.3s ease 0s;\n  }\n\n  .multicolumns-btn-prev-{{ section.id }} {\n    left: 5px !important;\n  }\n  .multicolumns-btn-next-{{ section.id }} {\n    right: 5px !important;\n  }\n\n  .multicolumns-btn-next-{{ section.id }} svg {\n    transform: rotate(180deg);\n  }\n\n  .multicolumns-btn-next-{{ section.id }} svg,\n  .multicolumns-btn-prev-{{ section.id }} svg {\n    width: {{ nav_size_mobile | times: 0.75 | round: 0 }}px !important;\n    height: {{ nav_size_mobile | times: 0.75 | round: 0 }}px !important;\n  }\n\n  .multicolumns-btn-next-{{ section.id }} svg path,\n  .multicolumns-btn-prev-{{ section.id }} svg path {\n    fill: {{ nav_icon }};\n    transition: all 0.25s ease 0s;\n  }\n  \n  .multicolumns-btn-prev-{{ section.id }} svg {\n    margin-left: -2px;\n  }\n\n  .multicolumns-btn-next-{{ section.id }}:hover,\n  .multicolumns-btn-prev-{{ section.id }}:hover {\n    border: 1px solid {{ nav_border_hover }} !important;\n    background: {{ nav_btn_hover_bg }} !important;\n  }\n\n  .multicolumns-btn-next-{{ section.id }}:hover svg path,\n  .multicolumns-btn-prev-{{ section.id }}:hover svg path {\n    fill: {{ nav_hover_icon }} !important;\n    transition: all 0.25s ease 0s;\n  }\n  \n  @media(min-width: 768px) {\n    \n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n    \n    .multicolumns-title-{{ section.id }} {\n      font-size: {{ heading_size }}px;\n      margin-top: {{ heading_mt }}px;\n      margin-bottom: {{ heading_mb }}px;\n    }\n    \n    .multicolumns-text-{{ section.id }} {\n      font-size: {{ text_size }}px;\n    }\n\n    \n    .multicolumns-items-{{ section.id }} {\n      margin-top: {{ column_mt }}px;\n      gap: {{ column_gap }}px;\n    }\n    \n    .multicolumns-item-{{ section.id }} {\n      flex: 0 1 {{ column_maxwidth }}%;\n      padding-top: {{ column_padding_top }}px;\n      padding-bottom: {{ column_padding_bottom }}px;\n      padding-left: {{ column_padding_horizontal }}px;\n      padding-right: {{ column_padding_horizontal }}px;\n    }\n    \n    .multicolumns-item-image-{{ section.id }} {\n      max-width: {{ column_image_max }}px;\n    }\n    \n    .multicolumns-item-title-{{ section.id }} {\n      margin-top: {{ column_heading_mt }}px;\n      font-size: {{ column_heading_size }}px;\n    }\n    \n    .multicolumns-item-text-{{ section.id }} p{\n      margin-top: {{ column_text_mt }}px;\n      font-size: {{ column_text_size }}px;\n    }\n    \n    .multicolumns-item-link-{{ section.id }} {\n      margin-top: {{ column_link_mt }}px;\n      font-size: {{ column_link_size }}px;\n    }\n    \n    .multicolumns-item-number-{{ section.id }} p {\n      font-size: {{ column_number_size }}px;\n    }\n\n    .multicolumns-slider-wrapper-{{ section.id }} {\n      margin-top: {{ column_mt }}px;\n    }\n\n    .multicolumns-btn-next-{{ section.id }},\n    .multicolumns-btn-prev-{{ section.id }} {\n      width: {{ nav_size }}px !important;\n      height: {{ nav_size }}px !important;\n    }\n\n    .multicolumns-btn-next-{{ section.id }} svg,\n    .multicolumns-btn-prev-{{ section.id }} svg {\n      height: {{ nav_size | times: 0.75 | round: 0 }}px !important;\n      width: {{ nav_size | times: 0.75 | round: 0 }}px !important;\n    }\n  }\n  @media(max-width: 500px) {\n    .multicolumns-title-{{ section.id }},\n    .multicolumns-text-{{ section.id }}{\n      padding: 0px 20px;\n    }\n  }\n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if section.settings.heading_custom %}\n  <style>\n    .multicolumns-title-{{ section.id }} {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if section.settings.text_custom %}\n  <style>\n    .multicolumns-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if column_direction == 'center' %}\n  <style>\n    .multicolumns-item-number-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n    .multicolumns-item-link-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif column_direction == 'right' %}\n  <style>\n    .multicolumns-item-number-{{ section.id }} {\n      margin-left: auto;\n    }\n    .multicolumns-item-link-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if section.settings.column_heading_custom %}\n  <style>\n    .multicolumns-item-title-{{ section.id }} {\n      font-family: {{ column_heading_font.family }}, {{ column_heading_font.fallback_families }};\n      font-weight: {{ column_heading_font.weight }};\n      font-style: {{ column_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if section.settings.column_text_custom %}\n  <style>\n    .multicolumns-item-text-{{ section.id }} {\n      font-family: {{ column_text_font.family }}, {{ column_text_font.fallback_families }};\n      font-weight: {{ column_text_font.weight }};\n      font-style: {{ column_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if section.settings.column_link_custom %}\n  <style>\n    .multicolumns-item-link-{{ section.id }} {\n      font-family: {{ column_link_font.family }}, {{ column_link_font.fallback_families }};\n      font-weight: {{ column_link_font.weight }};\n      font-style: {{ column_link_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if section.settings.column_number_custom %}\n  <style>\n    .multicolumns-item-number-{{ section.id }} p {\n      font-family: {{ column_number_font.family }}, {{ column_number_font.fallback_families }};\n      font-weight: {{ column_number_font.weight }};\n      font-style: {{ column_number_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if column_link_style == \"button\" %}\n  <style>\n    .multicolumns-item-link-{{ section.id }} {\n      background-color: {{ column_link_bg_color }};\n      padding: {{ column_link_padding_vertical | times: 0.75 | round: 0 }}px {{ column_link_padding_horizontal | times: 0.75 | round: 0 }}px;\n      border-radius: {{ column_link_radius }}px;\n    }\n    \n    .multicolumns-item-link-{{ section.id }}:hover {\n      color: {{ column_link_color }};\n      background-color: {{ column_link_bg_hover_color }};\n    }\n    \n    @media(min-width:768px) {\n      .multicolumns-item-link-{{ section.id }} {\n        padding: {{ column_link_padding_vertical }}px {{ column_link_padding_horizontal }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if column_link_width == \"regular\" %}\n  <style>\n    .multicolumns-item-link-{{ section.id }} {\n      max-width: {{ column_link_max }}px;\n    }\n  </style>\n{% endif %}\n\n{% if column_style == \"slider\" or column_style_mobile == \"slider\" %}\n  <style>\n    {% if column_style_mobile == \"slider\" %}\n      .multicolumns-slider-wrapper-{{ section.id }} {\n        display: block;\n      }\n      .multicolumns-items-{{ section.id }} {\n        display: none;\n      }\n      .multicolumns-item-{{ section.id }} {\n        flex: none;\n      }\n    {% endif %}\n    @media(min-width: 768px) {\n      {% if column_style == \"slider\" %}\n        .multicolumns-slider-wrapper-{{ section.id }} {\n          display: block;\n        }\n        .multicolumns-items-{{ section.id }} {\n          display: none;\n        }\n        .multicolumns-item-{{ section.id }} {\n          flex: none;\n        }\n      {% else %}\n        .multicolumns-slider-wrapper-{{ section.id }} {\n          display: none;\n        }\n        .multicolumns-items-{{ section.id }} {\n          display: flex;\n        }\n        .multicolumns-item-{{ section.id }} {\n          flex: 0 1 {{ column_maxwidth }}%;\n        }\n      {% endif %}\n    }\n  </style>\n{% endif %}\n\n{% if hide_nav %}\n  <style>\n    .multicolumns-btn-next-{{ section.id }},\n    .multicolumns-btn-prev-{{ section.id }} {\n      display: none !important;\n    }\n    @media(min-width: 768px) {\n      .multicolumns-btn-next-{{ section.id }},\n      .multicolumns-btn-prev-{{ section.id }} {\n        display: flex !important;\n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n  <div class=\"page-width section-{{ section.id }}-settings\">\n    \n        {% if heading != blank %}\n          <h2 class=\"multicolumns-title-{{ section.id }}\">{{ heading }}</h2>\n        {% endif %}\n        \n        {% if text != blank %}\n          <p class=\"multicolumns-text-{{ section.id }}\">{{ text }}</p>\n        {% endif %}\n\n        <div class=\"multicolumns-items-{{ section.id }}\">\n          {% for block in section.blocks %}\n            <div class=\"multicolumns-item-{{ section.id }}\">\n\n              {% if numbers %}\n                <div class=\"multicolumns-item-number-{{ section.id }}\">\n                  <p>{{ forloop.index }}</p>\n                </div>\n              {% elsif block.settings.image == blank %}\n                <div class=\"multicolumns-item-image-{{ section.id }}\">\n                   <svg class=\"placeholder-svg\" preserveAspectRatio=\"xMidYMid slice\" width=\"448\" height=\"448\" viewBox=\"0 0 448 448\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <g clip-path=\"url(#clip0_894_1529)\">\n                    <path d=\"M448 0H0V448H448V0Z\" fill=\"#CAABA1\"></path>\n                    <path d=\"M354.54 158.19L321.23 122.32C312.65 113.08 301.39 106.78 289.03 104.31L268.04 100.11C265.32 99.62 262.59 99.18 259.87 98.78C259.87 98.78 259.87 98.78 259.86 98.79C259.86 98.79 259.86 98.79 259.86 98.78C258.57 98.57 257.28 98.47 255.98 98.49C254.68 98.5 253.38 98.63 252.1 98.87L244.85 100.23L237.77 101.56C233.23 102.41 228.64 102.84 224.05 102.83C219.46 102.83 214.86 102.41 210.33 101.56L203.25 100.23L196 98.87C194.72 98.63 193.42 98.5 192.12 98.49C190.82 98.47 189.52 98.57 188.24 98.78C188.24 98.78 188.24 98.78 188.24 98.79C188.24 98.79 188.24 98.79 188.23 98.78C185.5 99.18 182.77 99.61 180.06 100.11L159.07 104.31C146.71 106.78 135.45 113.08 126.87 122.32L93.5601 158.19C90.5301 161.45 90.7501 166.56 94.0401 169.55L126.41 198.98C129.57 201.85 134.43 201.74 137.45 198.72L146.93 189.24C148.82 187.35 152.05 188.69 152.05 191.36V328.12C152.05 332.54 155.63 336.12 160.05 336.12H288.05C292.47 336.12 296.05 332.54 296.05 328.12V191.36C296.05 188.69 299.28 187.35 301.17 189.24L310.65 198.72C313.67 201.74 318.53 201.86 321.69 198.98L354.06 169.55C357.35 166.56 357.57 161.45 354.54 158.19ZM224.04 132.11C223.92 132.11 223.81 132.11 223.7 132.11C223.8 132.11 223.9 132.11 224.01 132.11C224.02 132.11 224.03 132.11 224.05 132.11C224.06 132.11 224.07 132.11 224.09 132.11C224.19 132.11 224.29 132.11 224.4 132.11C224.28 132.11 224.17 132.11 224.06 132.11H224.04Z\" fill=\"#DD6A5A\"></path>\n                    <path d=\"M252.03 98.87L237.68 101.56C228.63 103.26 219.35 103.26 210.31 101.56L195.96 98.87C193.4 98.39 190.79 98.36 188.22 98.78C189.58 117.41 205.07 132.1 224 132.1C242.93 132.1 258.41 117.41 259.78 98.78C257.21 98.36 254.6 98.39 252.04 98.87H252.03Z\" fill=\"#C03D37\"></path>\n                    <path d=\"M195.99 109.55L210.33 112.25C219.37 113.95 228.64 113.95 237.68 112.25L252.02 109.55C253.8 109.22 255.6 109.11 257.4 109.22C258.67 105.95 259.49 102.45 259.75 98.79C257.19 98.37 254.57 98.4 252.02 98.88L237.68 101.58C228.64 103.28 219.37 103.28 210.33 101.58L195.99 98.88C193.44 98.4 190.82 98.37 188.26 98.79C188.53 102.45 189.34 105.95 190.61 109.22C192.41 109.12 194.22 109.22 195.99 109.55Z\" fill=\"#CC5747\"></path>\n                    <path d=\"M232.38 112.11H215.62C214.725 112.11 214 112.835 214 113.73V121.49C214 122.385 214.725 123.11 215.62 123.11H232.38C233.275 123.11 234 122.385 234 121.49V113.73C234 112.835 233.275 112.11 232.38 112.11Z\" fill=\"white\"></path>\n                    <path d=\"M185.16 95.82C186.81 95.53 188.34 96.68 188.61 98.34C191.34 115.43 206.14 128.5 224 128.5C241.86 128.5 256.66 115.44 259.39 98.34C259.65 96.68 261.18 95.53 262.84 95.82L268.77 96.86C270.36 97.14 271.45 98.64 271.2 100.24C267.56 123.03 247.82 140.45 224 140.45C200.18 140.45 180.44 123.03 176.8 100.24C176.55 98.64 177.64 97.14 179.23 96.86L185.16 95.82Z\" fill=\"#E8AF57\"></path>\n                    <path d=\"M95.8204 155.74L93.5904 158.14C90.5604 161.4 90.7804 166.51 94.0704 169.5L126.44 198.93C129.6 201.8 134.46 201.69 137.48 198.67L140.04 196.11L95.8204 155.74Z\" fill=\"#E8AF57\"></path>\n                    <path d=\"M354.541 158.19L321.231 122.32C312.651 113.08 301.391 106.78 289.031 104.31L271.111 100.73C270.541 104.08 269.621 107.32 268.391 110.4L280.511 112.82C292.871 115.29 304.131 121.59 312.711 130.83L346.021 166.7C348.341 169.19 348.751 172.77 347.341 175.65L354.051 169.55C357.341 166.56 357.561 161.45 354.531 158.19H354.541Z\" fill=\"#E87E69\"></path>\n                    <path d=\"M293.9 195.51C284.48 210.74 280.89 228.86 283.79 246.53L283.83 246.8C284.36 249.99 285.01 253.38 285.67 257.18C287.19 265.98 287.93 274.9 287.93 283.83V295C287.93 309 278.56 321.26 265.06 324.95C251.18 328.74 236.59 329.14 222.52 326.12L207.16 322.83C194.49 320.12 181.39 320.17 168.74 322.98L152.01 326.71V328.12C152.01 332.54 155.59 336.12 160.01 336.12H288.01C292.43 336.12 296.01 332.54 296.01 328.12V192.12L293.91 195.52L293.9 195.51Z\" fill=\"#E87E69\"></path>\n                    <path d=\"M352.26 155.74L354.49 158.14C357.52 161.4 357.3 166.51 354.01 169.5L321.64 198.93C318.48 201.8 313.62 201.69 310.6 198.67L308.04 196.11L352.26 155.74Z\" fill=\"#E8AF57\"></path>\n                    </g>\n                    <defs>\n                    <clipPath id=\"clip0_894_1529\">\n                    <rect width=\"448\" height=\"448\" fill=\"white\"></rect>\n                    </clipPath>\n                    </defs>\n                  </svg>\n                 </div>\n              {% elsif block.settings.image != blank %}\n                <div class=\"multicolumns-item-image-{{ section.id }}\">\n                  <img src=\"{{ block.settings.image | image_url: width: 800 }}\" alt=\"multicolumns-item-image-{{ forloop.index }}\" {% if lazy %}lazy=\"loading\"{% endif %}>\n                </div>\n              {% endif %}\n\n              {% if block.settings.heading != blank %}\n                <h3 class=\"multicolumns-item-title-{{ section.id }}\">{{ block.settings.heading }}</h3>\n              {% endif %}\n\n              {% if block.settings.text != blank %}\n                <div class=\"multicolumns-item-text-{{ section.id }}\">{{ block.settings.text }}</div>\n              {% endif %}\n            \n              {% if block.settings.link != blank %}\n                <a href=\"{{ block.settings.link_url }}\" class=\"multicolumns-item-link-{{ section.id }}\">{{ block.settings.link }}</a>\n              {% endif %}\n            \n            </div>\n          {% endfor %}\n        </div>\n        <div class=\"multicolumns-slider-wrapper-{{ section.id }}\">\n          <div class=\"multicolumns-slider-{{ section.id }} swiper\">\n            <div class=\"multicolumns-wrapper-{{ section.id }} swiper-wrapper\">\n              {% for block in section.blocks %}\n                <div class=\"multicolumns-item-{{ section.id }} swiper-slide\">\n    \n                  {% if numbers %}\n                    <div class=\"multicolumns-item-number-{{ section.id }}\">\n                      <p>{{ forloop.index }}</p>\n                    </div>\n                  {% elsif block.settings.image == blank %}\n                    <div class=\"multicolumns-item-image-{{ section.id }}\">\n                       <svg class=\"placeholder-svg\" preserveAspectRatio=\"xMidYMid slice\" width=\"448\" height=\"448\" viewBox=\"0 0 448 448\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <g clip-path=\"url(#clip0_894_1529)\">\n                        <path d=\"M448 0H0V448H448V0Z\" fill=\"#CAABA1\"></path>\n                        <path d=\"M354.54 158.19L321.23 122.32C312.65 113.08 301.39 106.78 289.03 104.31L268.04 100.11C265.32 99.62 262.59 99.18 259.87 98.78C259.87 98.78 259.87 98.78 259.86 98.79C259.86 98.79 259.86 98.79 259.86 98.78C258.57 98.57 257.28 98.47 255.98 98.49C254.68 98.5 253.38 98.63 252.1 98.87L244.85 100.23L237.77 101.56C233.23 102.41 228.64 102.84 224.05 102.83C219.46 102.83 214.86 102.41 210.33 101.56L203.25 100.23L196 98.87C194.72 98.63 193.42 98.5 192.12 98.49C190.82 98.47 189.52 98.57 188.24 98.78C188.24 98.78 188.24 98.78 188.24 98.79C188.24 98.79 188.24 98.79 188.23 98.78C185.5 99.18 182.77 99.61 180.06 100.11L159.07 104.31C146.71 106.78 135.45 113.08 126.87 122.32L93.5601 158.19C90.5301 161.45 90.7501 166.56 94.0401 169.55L126.41 198.98C129.57 201.85 134.43 201.74 137.45 198.72L146.93 189.24C148.82 187.35 152.05 188.69 152.05 191.36V328.12C152.05 332.54 155.63 336.12 160.05 336.12H288.05C292.47 336.12 296.05 332.54 296.05 328.12V191.36C296.05 188.69 299.28 187.35 301.17 189.24L310.65 198.72C313.67 201.74 318.53 201.86 321.69 198.98L354.06 169.55C357.35 166.56 357.57 161.45 354.54 158.19ZM224.04 132.11C223.92 132.11 223.81 132.11 223.7 132.11C223.8 132.11 223.9 132.11 224.01 132.11C224.02 132.11 224.03 132.11 224.05 132.11C224.06 132.11 224.07 132.11 224.09 132.11C224.19 132.11 224.29 132.11 224.4 132.11C224.28 132.11 224.17 132.11 224.06 132.11H224.04Z\" fill=\"#DD6A5A\"></path>\n                        <path d=\"M252.03 98.87L237.68 101.56C228.63 103.26 219.35 103.26 210.31 101.56L195.96 98.87C193.4 98.39 190.79 98.36 188.22 98.78C189.58 117.41 205.07 132.1 224 132.1C242.93 132.1 258.41 117.41 259.78 98.78C257.21 98.36 254.6 98.39 252.04 98.87H252.03Z\" fill=\"#C03D37\"></path>\n                        <path d=\"M195.99 109.55L210.33 112.25C219.37 113.95 228.64 113.95 237.68 112.25L252.02 109.55C253.8 109.22 255.6 109.11 257.4 109.22C258.67 105.95 259.49 102.45 259.75 98.79C257.19 98.37 254.57 98.4 252.02 98.88L237.68 101.58C228.64 103.28 219.37 103.28 210.33 101.58L195.99 98.88C193.44 98.4 190.82 98.37 188.26 98.79C188.53 102.45 189.34 105.95 190.61 109.22C192.41 109.12 194.22 109.22 195.99 109.55Z\" fill=\"#CC5747\"></path>\n                        <path d=\"M232.38 112.11H215.62C214.725 112.11 214 112.835 214 113.73V121.49C214 122.385 214.725 123.11 215.62 123.11H232.38C233.275 123.11 234 122.385 234 121.49V113.73C234 112.835 233.275 112.11 232.38 112.11Z\" fill=\"white\"></path>\n                        <path d=\"M185.16 95.82C186.81 95.53 188.34 96.68 188.61 98.34C191.34 115.43 206.14 128.5 224 128.5C241.86 128.5 256.66 115.44 259.39 98.34C259.65 96.68 261.18 95.53 262.84 95.82L268.77 96.86C270.36 97.14 271.45 98.64 271.2 100.24C267.56 123.03 247.82 140.45 224 140.45C200.18 140.45 180.44 123.03 176.8 100.24C176.55 98.64 177.64 97.14 179.23 96.86L185.16 95.82Z\" fill=\"#E8AF57\"></path>\n                        <path d=\"M95.8204 155.74L93.5904 158.14C90.5604 161.4 90.7804 166.51 94.0704 169.5L126.44 198.93C129.6 201.8 134.46 201.69 137.48 198.67L140.04 196.11L95.8204 155.74Z\" fill=\"#E8AF57\"></path>\n                        <path d=\"M354.541 158.19L321.231 122.32C312.651 113.08 301.391 106.78 289.031 104.31L271.111 100.73C270.541 104.08 269.621 107.32 268.391 110.4L280.511 112.82C292.871 115.29 304.131 121.59 312.711 130.83L346.021 166.7C348.341 169.19 348.751 172.77 347.341 175.65L354.051 169.55C357.341 166.56 357.561 161.45 354.531 158.19H354.541Z\" fill=\"#E87E69\"></path>\n                        <path d=\"M293.9 195.51C284.48 210.74 280.89 228.86 283.79 246.53L283.83 246.8C284.36 249.99 285.01 253.38 285.67 257.18C287.19 265.98 287.93 274.9 287.93 283.83V295C287.93 309 278.56 321.26 265.06 324.95C251.18 328.74 236.59 329.14 222.52 326.12L207.16 322.83C194.49 320.12 181.39 320.17 168.74 322.98L152.01 326.71V328.12C152.01 332.54 155.59 336.12 160.01 336.12H288.01C292.43 336.12 296.01 332.54 296.01 328.12V192.12L293.91 195.52L293.9 195.51Z\" fill=\"#E87E69\"></path>\n                        <path d=\"M352.26 155.74L354.49 158.14C357.52 161.4 357.3 166.51 354.01 169.5L321.64 198.93C318.48 201.8 313.62 201.69 310.6 198.67L308.04 196.11L352.26 155.74Z\" fill=\"#E8AF57\"></path>\n                        </g>\n                        <defs>\n                        <clipPath id=\"clip0_894_1529\">\n                        <rect width=\"448\" height=\"448\" fill=\"white\"></rect>\n                        </clipPath>\n                        </defs>\n                      </svg>\n                     </div>\n                  {% elsif block.settings.image != blank %}\n                    <div class=\"multicolumns-item-image-{{ section.id }}\">\n                      <img src=\"{{ block.settings.image | image_url: width: 800 }}\" alt=\"multicolumns-item-image-{{ forloop.index }}\" {% if lazy %}lazy=\"loading\"{% endif %}>\n                    </div>\n                  {% endif %}\n    \n                  {% if block.settings.heading != blank %}\n                    <h3 class=\"multicolumns-item-title-{{ section.id }}\">{{ block.settings.heading }}</h3>\n                  {% endif %}\n    \n                  {% if block.settings.text != blank %}\n                    <div class=\"multicolumns-item-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                  {% endif %}\n                \n                  {% if block.settings.link != blank %}\n                    <a href=\"{{ block.settings.link_url }}\" class=\"multicolumns-item-link-{{ section.id }}\">{{ block.settings.link }}</a>\n                  {% endif %}\n                \n                </div>\n              {% endfor %}\n            </div>\n        </div>\n        <div class=\"multicolumns-btn-prev-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g></svg>\n        </div>\n        <div class=\"multicolumns-btn-next-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g></svg>\n        </div>\n    </div>\n  </div>\n</div>\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@6.8.4/swiper-bundle.min.js\"></script>\n\n{% assign column_row = column_row | plus: 0 %}\n{% assign column_row_tablet = column_row | times: 0.5 %}\n{% assign column_row_tablet = column_row | round: 0 %}\n{% assign column_row_mobile = column_row_mobile | plus: 0 %}\n\n<script>\n  function multicolumnSliderInit() {\n    new Swiper('.multicolumns-slider-{{ section.id }}', {\n      speed: 300,\n      watchOverflow: false,\n       {% if autoplay %}\n       autoplay: {\n         delay: {{ autoplay_speed | times: 1000 }},\n       },\n      {% endif %}\n      navigation: {\n        nextEl: '.multicolumns-btn-next-{{ section.id }}',\n        prevEl: '.multicolumns-btn-prev-{{ section.id }}',\n      },\n      breakpoints: {\n        320: {\n          {% if section.blocks.size > column_row_mobile and autoplay %}\n            loop: true,\n          {% endif %}\n          slidesPerView: {{ column_row_mobile }},\n          spaceBetween: {{ column_gap_mobile }}\n        },\n        768: {\n          {% if section.blocks.size > column_row_tablet and autoplay %}\n            loop: true,\n          {% else %}\n            loop: false,\n          {% endif %}\n          slidesPerView: {{ column_row | times: 0.5 | round: 0 }},\n          spaceBetween: {{ column_gap_mobile }}\n        },\n        992: {\n          {% if section.blocks.size > column_row and autoplay %}\n            loop: true,\n          {% else %}\n            loop: false,\n          {% endif %}\n          slidesPerView: {{ column_row }},\n          spaceBetween: {{ column_gap}}\n        }\n      }\n    })\n  }\n\n  document.addEventListener('DOMContentLoaded', multicolumnSliderInit);\n\n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', multicolumnSliderInit);\n     document.addEventListener('shopify:section:load', multicolumnSliderInit);\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Heading",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "50",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_letter": {
+      "type": "text",
+      "default": "0",
+      "label": "Heading Letter Spacing",
+      "description": "Heading Letter Spacing"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "heading_mt": {
+      "type": "text",
+      "default": "4",
+      "label": "Heading Margin top",
+      "description": "Heading Margin top"
+    },
+    "heading_mb": {
+      "type": "text",
+      "default": "4",
+      "label": "Heading Margin bottom",
+      "description": "Heading Margin bottom"
+    },
+    "text": {
+      "type": "text",
+      "default": "Text",
+      "label": "Text",
+      "description": "Text"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Text Font Family",
+      "description": "Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "26",
+      "label": "Text Size",
+      "description": "Text Size"
+    },
+    "text_letter": {
+      "type": "text",
+      "default": "0",
+      "label": "Text Letter Spacing",
+      "description": "Text Letter Spacing"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Text Line Height",
+      "description": "Text Line Height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Text Align",
+      "description": "Text Align"
+    },
+    "column_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Columns Margin top",
+      "description": "Columns Margin top"
+    },
+    "column_direction": {
+      "type": "text",
+      "default": "center",
+      "label": "Columns Direction",
+      "description": "Columns Direction"
+    },
+    "column_gap": {
+      "type": "text",
+      "default": "20",
+      "label": "Columns Gap",
+      "description": "Columns Gap"
+    },
+    "column_gap_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Columns Gap - Mobile",
+      "description": "Columns Gap - Mobile"
+    },
+    "column_style": {
+      "type": "text",
+      "default": "columns",
+      "label": "Columns Style",
+      "description": "Columns Style"
+    },
+    "column_style_mobile": {
+      "type": "text",
+      "default": "columns",
+      "label": "Columns Style - Mobile",
+      "description": "Columns Style - Mobile"
+    },
+    "column_row": {
+      "type": "text",
+      "default": "3",
+      "label": "Columns Per Row",
+      "description": "Slider use this value for slide"
+    },
+    "column_row_mobile": {
+      "type": "text",
+      "default": "1",
+      "label": "Columns Per Row (Mobile)",
+      "description": "Slider Mobile use this value for slide"
+    },
+    "column_radius": {
+      "type": "text",
+      "default": "28",
+      "label": "Column Border Radius",
+      "description": "Column Border Radius"
+    },
+    "column_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Column Padding horizontal",
+      "description": "Column Padding horizontal"
+    },
+    "column_padding_top": {
+      "type": "text",
+      "default": "24",
+      "label": "Column Padding top",
+      "description": "Column Padding top"
+    },
+    "column_padding_bottom": {
+      "type": "text",
+      "default": "24",
+      "label": "Column Padding bottom",
+      "description": "Column Padding bottom"
+    },
+    "numbers": {
+      "type": "text",
+      "default": "false",
+      "label": "Use numbers instead of images or icons",
+      "description": "Use numbers instead of images or icons"
+    },
+    "autoplay": {
+      "type": "text",
+      "default": "false",
+      "label": "Use autoplay",
+      "description": "Use autoplay"
+    },
+    "autoplay_speed": {
+      "type": "text",
+      "default": "3",
+      "label": "Autoplay Speed",
+      "description": "Autoplay Speed"
+    },
+    "nav_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Navigation Buttons Size",
+      "description": "Navigation Buttons Size"
+    },
+    "nav_size_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Navigation Buttons Size - Mobile",
+      "description": "Navigation Buttons Size - Mobile"
+    },
+    "hide_nav": {
+      "type": "text",
+      "default": "false",
+      "label": "Hide Navigation Button - Mobile",
+      "description": "Hide Navigation Button - Mobile"
+    },
+    "column_number_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "column_number_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Column Number Font Family",
+      "description": "Column Number Font Family"
+    },
+    "column_number_size": {
+      "type": "text",
+      "default": "36",
+      "label": "Column Number Size",
+      "description": "Column Number Size"
+    },
+    "column_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "column_heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Column Heading Font Family",
+      "description": "Column Heading Font Family"
+    },
+    "column_heading_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Column Heading Size",
+      "description": "Column Heading Size"
+    },
+    "column_heading_letter": {
+      "type": "text",
+      "default": "0",
+      "label": "Column Heading Letter Spacing",
+      "description": "Column Heading Letter Spacing"
+    },
+    "column_heading_height": {
+      "type": "text",
+      "default": "110",
+      "label": "Column Heading Line Height",
+      "description": "Column Heading Line Height"
+    },
+    "column_heading_mt": {
+      "type": "text",
+      "default": "4",
+      "label": "Column Heading Margin top",
+      "description": "Column Heading Margin top"
+    },
+    "column_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "column_text_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Column Text Font Family",
+      "description": "Column Text Font Family"
+    },
+    "column_text_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Column Text Size",
+      "description": "Column Text Size"
+    },
+    "column_text_letter": {
+      "type": "text",
+      "default": "0",
+      "label": "Column Text Letter Spacing",
+      "description": "Column Text Letter Spacing"
+    },
+    "column_text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Column Text Line Height",
+      "description": "Column Text Line Height"
+    },
+    "column_text_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Column Text Margin top",
+      "description": "Column Text Margin top"
+    },
+    "column_link_width": {
+      "type": "text",
+      "default": "regular",
+      "label": "Column Link Width",
+      "description": "Column Link Width"
+    },
+    "column_link_max": {
+      "type": "text",
+      "default": "170",
+      "label": "Column Link Max Width",
+      "description": "Column Link Max Width"
+    },
+    "column_link_padding_horizontal": {
+      "type": "text",
+      "default": "8",
+      "label": "Column Link Padding Horizontal",
+      "description": "Column Link Padding Horizontal"
+    },
+    "column_link_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Column Link Padding Vertical",
+      "description": "Column Link Padding Vertical"
+    },
+    "column_link_radius": {
+      "type": "text",
+      "default": "16",
+      "label": "Column Link Border Radius",
+      "description": "Column Link Border Radius"
+    },
+    "column_link_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "column_link_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Column Link Font Family",
+      "description": "Column Link Font Family"
+    },
+    "column_link_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Column Link Size",
+      "description": "Column Link Size"
+    },
+    "column_link_letter": {
+      "type": "text",
+      "default": "0",
+      "label": "Column Link Letter Spacing",
+      "description": "Column Link Letter Spacing"
+    },
+    "column_link_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Column Link Line Height",
+      "description": "Column Link Line Height"
+    },
+    "column_link_mt": {
+      "type": "text",
+      "default": "12",
+      "label": "Column Link Margin top",
+      "description": "Column Link Margin top"
+    },
+    "column_link_style": {
+      "type": "text",
+      "default": "button",
+      "label": "Column Link Style",
+      "description": "Column Link Style"
+    },
+    "column_image_max": {
+      "type": "text",
+      "default": "160",
+      "label": "Column Image Max-Width",
+      "description": "Column Image Max-Width"
+    },
+    "column_image_max_mobile": {
+      "type": "text",
+      "default": "100",
+      "label": "Column Image Max-Width (Mobile)",
+      "description": "Column Image Max-Width (Mobile)"
+    },
+    "column_image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Column Image Border Radius",
+      "description": "Column Image Border Radius"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#2D281D",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "column_heading_color": {
+      "type": "color",
+      "default": "#2D281D",
+      "label": "Column Heading Color",
+      "description": "Column Heading Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#2D281D",
+      "label": "Text Color",
+      "description": "Text Color"
+    },
+    "column_text_color": {
+      "type": "color",
+      "default": "#2D281D",
+      "label": "Column Text Color",
+      "description": "Column Text Color"
+    },
+    "column_link_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Column Link Color",
+      "description": "Column Link Color"
+    },
+    "column_link_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Column Link Hover Color",
+      "description": "Column Link Hover Color"
+    },
+    "column_link_bg_color": {
+      "type": "color",
+      "default": "#E86940",
+      "label": "Column Link Background Color",
+      "description": "Column Link Background Color"
+    },
+    "column_link_bg_hover_color": {
+      "type": "color",
+      "default": "#A04E33",
+      "label": "Column Link Hover Background Color",
+      "description": "Column Link Hover Background Color"
+    },
+    "column_number_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Column Number Color",
+      "description": "Column Number Color"
+    },
+    "column_number_bg_color": {
+      "type": "color",
+      "default": "#E86940",
+      "label": "Column Number Background Color",
+      "description": "Column Number Background Color"
+    },
+    "column_bg_color": {
+      "type": "color",
+      "default": "#CAABA1",
+      "label": "Column Background Color",
+      "description": "Column Background Color"
+    },
+    "nav_btn_bg": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Navigation Button Background",
+      "description": "Navigation Button Background"
+    },
+    "nav_btn_hover_bg": {
+      "type": "color",
+      "default": "#CAABA1",
+      "label": "Navigation Button Hover Background",
+      "description": "Navigation Button Hover Background"
+    },
+    "nav_border": {
+      "type": "color",
+      "default": "#CAABA1",
+      "label": "Navigation Button Border",
+      "description": "Navigation Button Border"
+    },
+    "nav_border_hover": {
+      "type": "color",
+      "default": "#CAABA1",
+      "label": "Navigation Button Hover Border",
+      "description": "Navigation Button Hover Border"
+    },
+    "nav_icon": {
+      "type": "color",
+      "default": "#CAABA1",
+      "label": "Navigation Button Icon",
+      "description": "Navigation Button Icon"
+    },
+    "nav_hover_icon": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Navigation Button Hover Icon",
+      "description": "Navigation Button Hover Icon"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "190",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

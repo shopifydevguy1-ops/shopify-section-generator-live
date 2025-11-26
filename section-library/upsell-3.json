@@ -1,0 +1,696 @@
+{
+  "id": "upsell-3",
+  "name": "CUSTOM Upsell #3",
+  "description": "Section: CUSTOM Upsell #3",
+  "tags": [
+    "upsell"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n\n  assign upsell_position = section.settings.upsell_position\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_color = section.settings.heading_color\n  assign heading_font = section.settings.heading_font\n  assign heading_custom = section.settings.heading_custom\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_on_border = section.settings.heading_on_border\n\n  assign products = section.settings.products\n  assign content_mt = section.settings.content_mt\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_vertical = section.settings.content_padding_vertical\n  assign content_border_thickness = section.settings.content_border_thickness\n  assign content_border_color = section.settings.content_border_color\n  assign content_radius = section.settings.content_radius\n  assign content_use_shadow = section.settings.content_use_shadow\n  assign content_shadow_width = section.settings.content_shadow_width\n  assign content_gap = section.settings.content_gap\n  assign content_align = section.settings.content_align\n  assign content_items_mt = section.settings.content_items_mt\n  assign content_betweens = section.settings.content_betweens\n\n  assign image_width = section.settings.image_width\n  assign image_radius = section.settings.image_radius\n\n  assign product_heading_size = section.settings.product_heading_size\n  assign product_heading_color = section.settings.product_heading_color\n  assign product_heading_font = section.settings.product_heading_font\n  assign product_heading_height = section.settings.product_heading_height\n  assign product_heading_custom = section.settings.product_heading_custom\n\n  assign product_price_size = section.settings.product_price_size\n  assign product_price_color = section.settings.product_price_color\n  assign product_price_font = section.settings.product_price_font\n  assign product_price_height = section.settings.product_price_height\n  assign product_price_custom = section.settings.product_price_custom\n\n  assign product_quick = section.settings.product_quick\n  assign product_quick_size = section.settings.product_quick_size\n  assign product_quick_color = section.settings.product_quick_color\n  assign product_quick_hover_color = section.settings.product_quick_hover_color\n  assign product_quick_bg_color = section.settings.product_quick_bg_color\n  assign product_quick_bg_hover_color = section.settings.product_quick_bg_hover_color\n  assign product_quick_font = section.settings.product_quick_font\n  assign product_quick_height = section.settings.product_quick_height\n  assign product_quick_custom = section.settings.product_quick_custom\n  assign product_quick_padding_horizontal = section.settings.product_quick_padding_horizontal\n  assign product_quick_padding_vertical = section.settings.product_quick_padding_vertical\n  assign product_quick_radius = section.settings.product_quick_radius\n  assign product_quick_border_thickness = section.settings.product_quick_border_thickness\n  assign product_quick_border = section.settings.product_quick_border\n  assign product_quick_hover_border = section.settings.product_quick_hover_border \n\n  assign modal_width = section.settings.modal_width\n  assign modal_padding_horizontal = section.settings.modal_padding_horizontal\n  assign modal_padding_vertical = section.settings.modal_padding_vertical\n  assign modal_bg_color = section.settings.modal_bg_color\n  assign modal_align_vertical = section.settings.modal_align_vertical\n  assign modal_align = section.settings.modal_align\n\n  assign modal_text_align = \"\"\n  if modal_align == \"center\"\n    assign modal_text_align = \"center\"\n  elsif modal_align == \"end\"\n    assign modal_text_align = \"right\"\n  else\n    assign modal_text_align = \"left\"\n  endif\n\n  assign modal_heading_size = section.settings.modal_heading_size\n  assign modal_heading_color = section.settings.modal_heading_color\n  assign modal_heading_font = section.settings.modal_heading_font\n  assign modal_heading_height = section.settings.modal_heading_height\n  assign modal_heading_custom = section.settings.modal_heading_custom\n  \n  assign modal_price_size = section.settings.modal_price_size\n  assign modal_price_color = section.settings.modal_price_color\n  assign modal_price_font = section.settings.modal_price_font\n  assign modal_price_height = section.settings.modal_price_height\n  assign modal_price_custom = section.settings.modal_price_custom\n  assign modal_price_mt = section.settings.modal_price_mt\n\n  assign modal_image_mt = section.settings.modal_image_mt\n  assign modal_space = section.settings.modal_space\n\n  assign modal_variants_mt = section.settings.modal_variants_mt\n  assign modal_variants_gap = section.settings.modal_variants_gap\n  assign modal_options_mt = section.settings.modal_options_mt\n\n  assign variant_name_size = section.settings.variant_name_size\n  assign variant_name_color = section.settings.variant_name_color\n  assign variant_name_font = section.settings.variant_name_font\n  assign variant_name_height = section.settings.variant_name_height\n  assign variant_name_custom = section.settings.variant_name_custom\n\n  assign variant_option_size = section.settings.variant_option_size\n  assign variant_option_color = section.settings.variant_option_color\n  assign variant_option_hover_color = section.settings.variant_option_hover_color\n  assign variant_option_bg = section.settings.variant_option_bg\n  assign variant_option_hover_bg = section.settings.variant_option_hover_bg\n  assign variant_option_font = section.settings.variant_option_font\n  assign variant_option_height = section.settings.variant_option_height\n  assign variant_option_custom = section.settings.variant_option_custom\n  assign variant_option_padding_vertical = section.settings.variant_option_padding_vertical\n  assign variant_option_padding_horizontal = section.settings.variant_option_padding_horizontal\n  assign variant_option_border_thickness = section.settings.variant_option_border_thickness\n  assign variant_option_border = section.settings.variant_option_border\n  assign variant_option_hover_border = section.settings.variant_option_hover_border\n\n  assign modal_button_text = section.settings.modal_button_text\n  assign modal_button_text_added = section.settings.modal_button_text_added\n  assign modal_button_text_sold = section.settings.modal_button_text_sold\n  assign modal_button_size = section.settings.modal_button_size\n  assign modal_button_color = section.settings.modal_button_color\n  assign modal_button_hover_color = section.settings.modal_button_hover_color\n  assign modal_button_bg = section.settings.modal_button_bg\n  assign modal_button_hover_bg = section.settings.modal_button_hover_bg\n  assign modal_button_font = section.settings.modal_button_font\n  assign modal_button_height = section.settings.modal_button_height\n  assign modal_button_custom = section.settings.modal_button_custom\n  assign modal_button_padding_vertical = section.settings.modal_button_padding_vertical\n  assign modal_button_padding_horizontal = section.settings.modal_button_padding_horizontal\n  assign modal_button_border_thickness = section.settings.modal_button_border_thickness\n  assign modal_button_border = section.settings.modal_button_border\n  assign modal_button_hover_border = section.settings.modal_button_hover_border\n  assign modal_button_mt = section.settings.modal_button_mt\n\n  assign lazy = section.settings.lazy\n  \n-%}\n\n{%- style -%}\n  \n  {{ heading_font | font_face: font_display: 'swap' }}\n  {{ product_heading_font | font_face: font_display: 'swap' }}\n  {{ product_price_font | font_face: font_display: 'swap' }}\n  {{ product_quick_font | font_face: font_display: 'swap' }}\n  {{ modal_heading_font | font_face: font_display: 'swap' }}\n  {{ modal_price_font | font_face: font_display: 'swap' }}\n  {{ variant_name_font | font_face: font_display: 'swap' }}\n  {{ variant_option_font | font_face: font_display: 'swap' }}\n  {{ modal_button_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }}-settings {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .buy-with-heading-{{ section.id }} {\n    margin: 0;\n    width: fit-content;\n    font-size: {{ heading_size | times: 0.85 }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: uppercase;\n    text-align: {{ heading_align }};\n  }\n\n  .buy-with-content-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ content_mt | times: 0.75 | round: 0 }}px;\n    padding: {{ content_padding_vertical | times: 0.75 | round: 0 }}px {{ content_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border: {{ content_border_thickness }}px solid {{ content_border_color }};\n    border-radius: {{ content_radius }}px;\n  }\n\n  .buy-with-product-{{ section.id }} {\n    display: flex;\n    gap: {{ content_gap | times: 0.75 | round: 0 }}px;\n  }\n\n  .buy-with-product-{{ section.id }}:not(:first-child) {\n    margin-top: {{ content_betweens | times: 0.75 | round: 0 }}px;\n  }\n\n  .buy-with-image-{{ section.id }} {\n    display: block;\n    flex: 0 0 {{ image_width }}px;\n    border-radius: {{ image_radius }}px;\n  }\n  \n  .buy-with-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n    border-radius: {{ image_radius }}px;\n  }\n\n  .buy-with-info-{{ section.id }} {\n    flex: 1 1 auto;\n  }\n\n  .buy-with-title-{{ section.id }} {\n    margin: 0px;\n    width: 100%;\n    font-size: {{ product_heading_size | times: 0.85 }}px;\n    color: {{ product_heading_color }};\n    line-height: {{ product_heading_height }}%;\n    text-transform: unset;\n    text-align: {{ content_align }};\n  }\n\n  .buy-with-price-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ content_items_mt | times: 0.75 | round: 0 }}px;\n    width: 100%;\n    font-size: {{ product_price_size | times: 0.85 }}px;\n    color: {{ product_price_color }};\n    line-height: {{ product_price_height }}%;\n    text-transform: unset;\n    text-align: {{ content_align }};\n  }\n\n  .buy-with-quick-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ content_items_mt | times: 0.75 | round: 0 }}px;\n    max-width: fit-content;\n    padding: {{ product_quick_padding_vertical | times: 0.75 | round: 0 }}px {{ product_quick_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border-radius: {{ product_quick_radius }}px;\n    font-size: {{ product_quick_size | times: 0.85 }}px;\n    font-weight: 700;\n    color: {{ product_quick_color }};\n    border: {{ product_quick_border_thickness }}px solid {{ product_quick_border }};\n    background-color: {{ product_quick_bg_color }};\n    line-height: {{ product_quick_height }}%;\n    text-transform: uppercase;\n    text-decoration: none;\n    transition: all 0.25s ease 0s;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n  }\n\n  .buy-with-quick-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ product_quick_hover_color }};\n    background-color: {{ product_quick_bg_hover_color }};\n    border: {{ product_quick_border_thickness }}px solid {{ product_quick_hover_border }};\n  }\n\n  .added-text-{{ section.id }} {\n    position: absolute;\n    left: 0;\n    bottom: -100%;\n    text-align: center;\n    transition: all 0.4s ease 0s;\n    width: calc(100% - ({{ product_quick_border_thickness }}px * 2));\n    background-color: {{ product_quick_bg_color }};\n  }\n\n  .buy-with-quick-{{ section.id }}:hover .added-text-{{ section.id }} {\n    background-color: {{ product_quick_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .added-text-{{ section.id }}.active {\n    transition: all 0.4s ease 0s;\n    bottom: 50%;\n    transform: translateY(50%);\n  }\n\n  .buy-with-modal-{{ section.id }} {\n    position: fixed;\n    top: 0px;\n    bottom: 0px;\n    left: 0px;\n    right: 0px;\n    display: flex;\n    align-items: stretch;\n    justify-content: center;\n    width: 100vw;\n    height: 100vh;\n    background: rgba(255,255,255,0.6);\n    backdrop-filter: blur(10px);\n    -webkit-backdrop-filter: blur(10px);\n    opacity: 0;\n    visibility: hidden;\n    z-index: -1;\n    transition: all 0.25s ease 0s;\n  }\n  \n  .buy-with-modal-{{ section.id }}.active {\n    opacity: 1;\n    visibility: visible;\n    z-index: 99999;\n    transition: all 0.25s ease 0s;\n  }\n\n  .buy-with-modal-body-{{ section.id }} {\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    align-items: {{ modal_align }};\n    max-width: 100%;\n    width: 100%;\n    background-color: {{ modal_bg_color }};\n    box-shadow: 0 2px 8px #0000000f, 0 3px 12px #00000005;\n    height: 100%;\n    position: relative;\n    padding: {{ modal_padding_vertical | times: 0.75 | round: 0 }}px {{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n  }\n\n  .buy-with-close-{{ section.id }} {\n    position: absolute;\n    right: 20px;\n    top: 20px;\n    width: 12px;\n    height: 12px;\n    cursor: pointer;\n    transition: all 0.25s ease 0s;\n  }\n\n  .buy-with-close-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    transform: rotate(180deg);\n  }\n\n  .buy-with-modal-header-{{ section.id }} {\n    width: 100%;\n  }\n\n  .buy-with-modal-title-{{ section.id }} {\n    margin: 0px;\n    width: 100%;\n    font-size: {{ modal_heading_size | times: 0.85 }}px;\n    color: {{ modal_heading_color }};\n    line-height: {{ modal_heading_height }}%;\n    text-transform: unset;\n    margin-right: 20px;\n    text-align: {{ modal_text_align }};\n  }\n\n  .buy-with-modal-price-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ modal_price_mt | times: 0.85 }}px;\n    width: 100%;\n    font-size: {{ modal_price_size | times: 0.85 }}px;\n    color: {{ modal_price_color }};\n    line-height: {{ modal_price_height }}%;\n    text-transform: unset;\n    margin-right: 20px;\n    text-align: {{ modal_text_align }};\n  }\n\n  .buy-with-modal-images-{{ section.id }} {\n    flex: 1 1 auto;\n    overflow-y: auto;\n    margin-left: -{{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    margin-right: -{{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    margin-top: {{ modal_image_mt | times: 0.75 | round: 0 }}px;\n  }\n\n  .buy-with-modal-image-{{ section.id }} {\n    width: 100%;\n    margin: 0px;\n  }\n  \n  .buy-with-modal-image-{{ section.id }}:not(:first-child) {\n    margin-top: {{ modal_space | times: 0.75 | round: 0 }}px;\n  }\n  \n  .buy-with-modal-image-{{ section.id }} img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n  }\n\n  .buy-with-modal-footer-{{ section.id }} {\n    width: calc(100% + {{ modal_padding_horizontal | times: 0.75 | round: 0 }}px * 2);\n    padding: 0px {{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    margin-left: -{{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    margin-right: -{{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    box-shadow: 0 -2px 8px #0000000f, 0 3px 12px #00000005;\n  }\n\n  .buy-with-modal-option-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    align-items: {{ modal_align }};\n    margin: 0px;\n    margin-top: {{ modal_variants_mt | times: 0.75 | round: 0 }}px;\n  }\n  \n  .buy-with-modal-options-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ modal_options_mt | times: 0.75 | round: 0  }}px;\n    display: flex;\n    align-items: center;\n    justify-content: {{ modal_align }};\n    flex-wrap: wrap;\n    gap: {{ modal_variants_gap | times: 0.75 | round: 0 }}px;\n  }\n  \n  .buy-with-modal-options-{{ section.id }} input {\n    position: absolute;\n    opacity: 0;\n    z-index: -1;\n    pointer-evetns: none;\n  }\n\n  .buy-with-modal-option-name-{{ section.id }} {\n    margin: 0px;\n    width: fit-content;\n    font-size: {{ variant_name_size | times: 0.85 }}px;\n    color: {{ variant_name_color }};\n    line-height: {{ variant_name_height }}%;\n    text-transform: uppercase;\n  }\n\n  .buy-with-modal-option-selected-{{ section.id }} {\n    margin-left: 5px;\n    padding-left: 5px;\n    border-left: 1px solid {{ variant_name_color }};\n  }\n\n  .buy-with-modal-options-{{ section.id }} label {\n    margin: 0px;\n    font-size: {{ variant_option_size | times: 0.85 }}px;\n    font-weight: 600;\n    color: {{ variant_option_color }};\n    line-height: {{ variant_option_height }}%;\n    text-transform: uppercase;\n    background-color: {{ variant_option_bg }};\n    border: {{ variant_option_border_thickness }}px solid {{ variant_option_border }};\n    padding: {{ variant_option_padding_vertical | times: 0.75 | round: 0 }}px {{ variant_option_padding_horizontal | times: 0.75 | round: 0 }}px;\n    cursor: pointer;\n    transition: all 0.25s ease 0s;\n  }\n\n  .buy-with-modal-options-{{ section.id }} label:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ variant_option_hover_color }};\n    background-color: {{ variant_option_hover_bg }};\n    border: {{ variant_option_border_thickness }}px solid {{ variant_option_hover_border }};\n  }\n  \n  .buy-with-modal-options-{{ section.id }} input:checked + label {\n    color: {{ variant_option_hover_color }};\n    background-color: {{ variant_option_hover_bg }};\n    border: {{ variant_option_border_thickness }}px solid {{ variant_option_hover_border }};\n  }\n\n  .buy-with-modal-button-{{ section.id }} {\n    width: 100%;\n    margin-top: {{ modal_button_mt | times: 0.75 | round: 0 }}px;\n  }\n  \n  .buy-with-modal-button-{{ section.id }} button {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    text-align: center;\n    width: 100%;\n    font-size: {{ modal_button_size | times: 0.85 }}px;\n    font-weight: 600;\n    color: {{ modal_button_color }};\n    line-height: {{ modal_button_height }}%;\n    text-transform: uppercase;\n    background-color: {{ modal_button_bg }};\n    border: {{ modal_button_border_thickness }}px solid {{ modal_button_border }};\n    padding: {{ modal_button_padding_vertical | times: 0.75 | round: 0 }}px {{ modal_button_padding_horizontal | times: 0.75 | round: 0 }}px;\n    cursor: pointer;\n    transition: all 0.25s ease 0s;\n  }\n\n  .buy-with-modal-button-{{ section.id }} button:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ modal_button_hover_color }};\n    background-color: {{ modal_button_hover_bg }};\n    border: {{ modal_button_border_thickness }}px solid {{ modal_button_hover_border }};\n  }\n\n  .buy-with-modal-button-{{ section.id }} button strong {\n    font-weight: 600;\n    position: relative;\n    margin-left: 7px;\n    padding-left: 10px;\n  }\n\n  .buy-with-modal-button-{{ section.id }} button strong::before {\n    content: '';\n    position: absolute;\n    left: 0;\n    top: 50%;\n    transform: translateY(-50%);\n    width: 4px;\n    height: 4px;\n    border-radius: 50%;\n    background-color: {{ modal_button_color }};\n  }\n\n  .buy-with-modal-button-{{ section.id }} button:hover strong::before {\n    background-color: {{ modal_button_hover_color }};\n  }\n\n  .loading-overlay__spinner.hidden {\n    display: none;\n  }\n  \n  @media(min-width: 768px) {\n    \n    .section-{{ section.id }}-settings {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      padding: 0 5rem;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .buy-with-heading-{{ section.id }} {\n       font-size: {{ heading_size }}px;\n    }\n\n    .buy-with-content-{{ section.id }} {\n      margin-top: {{ content_mt }}px;\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\n    }\n    \n    .buy-with-product-{{ section.id }} {\n      gap: {{ content_gap }}px;\n    }\n\n    .buy-with-product-{{ section.id }}:not(:first-child) {\n      margin-top: {{ content_betweens }}px;\n    }\n    \n    .buy-with-title-{{ section.id }} {\n      font-size: {{ product_heading_size }}px;\n    }\n\n    .buy-with-price-{{ section.id }} {\n      margin-top: {{ content_items_mt }}px;\n      font-size: {{ product_price_size }}px;\n    }\n\n    .buy-with-quick-{{ section.id }} {\n      margin-top: {{ content_items_mt }}px;\n      padding: {{ product_quick_padding_vertical }}px {{ product_quick_padding_horizontal }}px;\n      font-size: {{ product_quick_size }}px;\n    }\n\n    .buy-with-modal-{{ section.id }} {\n      padding: 0px;\n      justify-content: end; \n    }\n    \n    .buy-with-modal-body-{{ section.id }} {\n      transform: translateX(100%);\n      max-width: {{ modal_width }}%;\n      transition: all 0.25s ease 0.3s;\n      padding: {{ modal_padding_vertical }}px {{ modal_padding_horizontal }}px;\n    }\n    \n    .buy-with-modal-{{ section.id }}.active .buy-with-modal-body-{{ section.id }} {\n      transform: translateX(0);\n      transition: all 0.25s ease 0.3s;\n    }\n\n    .buy-with-modal-title-{{ section.id }} {\n      font-size: {{ modal_heading_size }}px;\n    }\n\n    .buy-with-modal-price-{{ section.id }} {\n      margin-top: {{ modal_price_mt }}px;\n      font-size: {{ modal_price_size }}px;\n    }\n\n    .buy-with-modal-images-{{ section.id }} {\n      margin-top: {{ modal_image_mt }}px;\n      margin-left: -{{ modal_padding_horizontal }}px;\n      margin-right: -{{ modal_padding_horizontal }}px;\n    }\n    \n    .buy-with-modal-image-{{ section.id }}:not(:first-child) {\n      margin-top: {{ modal_space }}px;\n    }\n\n    .buy-with-modal-footer-{{ section.id }} {\n      width: calc(100% + {{ modal_padding_horizontal }}px * 2);\n      padding: 0px {{ modal_padding_horizontal }}px;\n      margin-left: -{{ modal_padding_horizontal }}px;\n      margin-right: -{{ modal_padding_horizontal }}px;\n    }\n\n    .buy-with-modal-option-{{ section.id }} {\n      margin-top: {{ modal_variants_mt }}px;\n    }\n\n    .buy-with-modal-options-{{ section.id }} {\n      margin-top: {{ modal_options_mt }}px;\n      gap: {{ modal_variants_gap }}px;\n    }\n\n    .buy-with-modal-option-name-{{ section.id }} {\n      font-size: {{ variant_name_size }}px;\n    }\n\n    .buy-with-modal-options-{{ section.id }} label {\n      font-size: {{ variant_option_size }}px;\n      padding: {{ variant_option_padding_vertical }}px {{ variant_option_padding_horizontal }}px;\n    }\n\n    .buy-with-modal-button-{{ section.id }} {\n      margin-top: {{ modal_button_mt }}px;\n    }\n\n    .buy-with-modal-button-{{ section.id }} button {\n      font-size: {{ modal_button_size }}px;\n      padding: {{ modal_button_padding_vertical }}px {{ modal_button_padding_horizontal }}px;\n    }\n    \n  }\n\n  @media(max-width:768px){\n      .buy-with-modal-body-{{ section.id }} {\n        height: 75vh;\n     }\n  }\n  \n{%- endstyle -%}\n\n{% if heading_custom %}\n  <style>\n    .buy-with-heading-{{ section.id }} {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if product_heading_custom %}\n  <style>\n    .buy-with-title-{{ section.id }} {\n      font-family: {{ product_heading_font.family }}, {{ product_heading_font.fallback_families }};\n      font-weight: {{ product_heading_font.weight }};\n      font-style: {{ product_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if product_price_custom %}\n  <style>\n    .buy-with-price-{{ section.id }} {\n      font-family: {{ product_price_font.family }}, {{ product_price_font.fallback_families }};\n      font-weight: {{ product_price_font.weight }};\n      font-style: {{ product_price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if product_quick_custom %}\n  <style>\n    .buy-with-quick-{{ section.id }} {\n      font-family: {{ product_quick_font.family }}, {{ product_quick_font.fallback_families }};\n      font-weight: {{ product_quick_font.weight }};\n      font-style: {{ product_quick_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if modal_heading_custom %}\n  <style>\n    .buy-with-modal-title-{{ section.id }} {\n      font-family: {{ modal_heading_font.family }}, {{ modal_heading_font.fallback_families }};\n      font-weight: {{ modal_heading_font.weight }};\n      font-style: {{ modal_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if modal_price_custom %}\n  <style>\n    .buy-with-modal-price-{{ section.id }} {\n      font-family: {{ modal_price_font.family }}, {{ modal_price_font.fallback_families }};\n      font-weight: {{ modal_price_font.weight }};\n      font-style: {{ modal_price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if variant_option_custom %}\n  <style>\n    .buy-with-modal-options-{{ section.id }} label {\n      font-family: {{ variant_option_font.family }}, {{ variant_option_font.fallback_families }};\n      font-weight: {{ variant_option_font.weight }};\n      font-style: {{ variant_option_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if modal_button_custom %}\n  <style>\n    .buy-with-modal-button-{{ section.id }} button {\n      font-family: {{ modal_button_font.family }}, {{ modal_button_font.fallback_families }};\n      font-weight: {{ modal_button_font.weight }};\n      font-style: {{ modal_button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if content_use_shadow %}\n  <style>\n    .buy-with-content-{{ section.id }} {\n      box-shadow: 0px 0px {{ content_shadow_width }}px rgba(0, 0, 0, 0.1);\n    }\n  </style>\n{% endif %}\n\n{% if variant_name_custom %}\n  <style>\n    .buy-with-modal-option-name-{{ section.id }} {\n      font-family: {{ variant_name_font.family }}, {{ variant_name_font.fallback_families }};\n      font-weight: {{ variant_name_font.weight }};\n      font-style: {{ variant_name_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if content_align == 'center' %}\n  <style>\n    .buy-with-quick-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif content_align == 'right' %}\n  <style>\n    .buy-with-quick-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if heading_align == 'center' %}\n  <style>\n    .buy-with-heading-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif heading_align == 'right' %}\n  <style>\n    .buy-with-heading-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if heading_on_border %}\n  <style>\n    .buy-with-heading-{{ section.id }} {\n      background-color: {{ background_color }};\n      padding: 5px 10px;\n      transform: translateY(50%);\n    }\n  </style>\n{% endif %}\n\n<script>\n  (function () {\n    function moreLoadProductForm() {\n      let upsellForm = document.querySelector('#custom-upsell-3');\n      if (!upsellForm) {\n        upsellForm = document.querySelector(\n          '{% if upsell_position == \"below_title\" or upsell_position == \"above_title\" %}.product__title{% elsif upsell_position == \"below_description\" or upsell_position == \"above_description\" %}.product__description{% elsif upsell_position == \"below_price\" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}'\n        );\n        if (!upsellForm) return;\n      }\n\n      const template = document.querySelector('#custom-upsell-products-{{ section.id }}');\n      if (template) {\n        const clone = template.content.cloneNode(true);\n        const element = clone.firstElementChild;\n        if (element) {\n          {% if upsell_position == \"below_buy\" or upsell_position == \"below_title\" or upsell_position == \"below_description\" or upsell_position == \"below_price\" %}\n            upsellForm.parentNode.insertBefore(element, upsellForm.nextSibling);\n          {% else %}\n            upsellForm.parentNode.insertBefore(element, upsellForm);\n          {% endif %}\n        }\n      }\n\n      const body = document.querySelector('body');\n\n      {% for product in products %}\n        const tpl{{ forloop.index }} = document.querySelector('#custom-buy-with-wrapper-{{ product.id }}');\n        if (tpl{{ forloop.index }}) {\n          const clone{{ forloop.index }} = tpl{{ forloop.index }}.content.cloneNode(true);\n          const el{{ forloop.index }} = clone{{ forloop.index }}.firstElementChild;\n          if (el{{ forloop.index }}) {\n            body.appendChild(el{{ forloop.index }});\n          }\n        }\n      {% endfor %}\n    }\n\n    window.addEventListener('DOMContentLoaded', moreLoadProductForm);\n  })();\n</script>\n\n\n\n<template id=\"custom-upsell-products-{{ section.id }}\">\n<div class=\"section-{{ section.id }} buy-with-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\" id=\"custom-buy-with-{{ section.id }}\">\n    <div class=\"section-{{ section.id }}-settings\" id=\"buy-with-body-{{ section.id }}\">\n      {% if products != blank %}\n        {% if heading != blank %}\n          <h2 class=\"buy-with-heading-{{ section.id }}\">{{ heading }}</h2>\n        {% endif %}\n  \n        <div class=\"buy-with-content-{{ section.id }}\">\n          {% for product in products %}\n            <div class=\"buy-with-product-{{ section.id }}\">\n              <a href=\"{{ product.url }}\" class=\"buy-with-image-{{ section.id }}\">\n                <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n              </a>\n              <div class=\"buy-with-info-{{ section.id }}\">\n                <h3 class=\"buy-with-title-{{ section.id }}\">{{ product.title }}</h3>\n                <p class=\"buy-with-price-{{ section.id }}\">{{ product.price | money }}</p>\n                <div class=\"buy-with-quick-{{ section.id }}\" id=\"{{ product.id }}\">{{ product_quick }}<span id=\"added-text-{{ product.id }}\" class=\"added-text-{{ section.id }}\">{{ modal_button_text_added }}</span></div>\n              </div>\n            </div>\n          {% endfor %}\n        </div>\n      {% endif %}\n    </div>\n  </div>\n</template>\n\n{% for product in products %}\n  <template class=\"buy-with-modals-{{ section.id }}\" id=\"custom-buy-with-wrapper-{{ product.id }}\">\n    <div class=\"buy-with-modal-{{ section.id }}\" id=\"buy-with-modal-{{ product.id }}\">\n      <div class=\"buy-with-modal-body-{{ section.id }}\">\n        <svg\n          xmlns=\"http://www.w3.org/2000/svg\"\n          aria-hidden=\"true\"\n          focusable=\"false\"\n          class=\"buy-with-close-{{ section.id }}\"\n          id=\"buy-with-close-{{ product.id }}\"\n          fill=\"none\"\n          viewBox=\"0 0 18 17\"\n        >\n          <path d=\"M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z\" fill=\"#000000\">\n        </svg>\n        <div class=\"buy-with-modal-header-{{ section.id }}\">\n          <h3 class=\"buy-with-modal-title-{{ section.id }}\">{{ product.title }}</h3>\n          <p class=\"buy-with-modal-price-{{ section.id }}\" id=\"buy-with-modal-price-{{ product.id }}\">{% if product.selected_or_first_available_variant.compare_at_price < product.selected_or_first_available_variant.price %}{{ product.selected_or_first_available_variant.compare_at_price | money }}{% else %}{{ product.selected_or_first_available_variant.price | money }}{% endif %}</p>\n        </div>\n        <div class=\"buy-with-modal-images-{{ section.id }}\">\n          {% for image in product.images %}\n            <div class=\"buy-with-modal-image-{{ section.id }}\">\n              <img src=\"{{ image | image_url }}\" alt={{ image.alt }} {% if lazy %}loading=\"lazy\"{% endif %}>\n            </div>\n          {% endfor %}\n        </div>\n        <div class=\"buy-with-modal-footer-{{ section.id }}\">\n          <div class=\"buy-with-modal-variants-{{ section.id }}\">\n            {%- assign product_form_id = 'product-form-' | append: section.id -%}\n            {%- unless product.has_only_default_variant -%}\n              {%- for option in product.options_with_values -%}\n                <div class=\"buy-with-modal-option-{{ section.id }}\">\n                  <p class=\"buy-with-modal-option-name-{{ section.id }}\">{{ option.name }} <span class=\"buy-with-modal-option-selected-{{ section.id }}\" id=\"buy-with-modal-option-selected-{{ product.id }}\" data-name=\"{{ option.name }}\">{{ option.selected_value }}</span></p>\n                  <div class=\"buy-with-modal-options-{{ section.id }}\">\n                    {%- for value in option.values -%}\n                        <input\n                          type=\"radio\"\n                          id='{{ product.id }}-{{ option.name | handlize }}-{{ value | handlize }}'\n                          name=\"{{ option.name }}\"\n                          value='{{ value }}'\n                          form=\"{{ product_form_id }}\"\n                          \n                        >\n                        <label for='{{ product.id }}-{{ option.name | handlize }}-{{ value | handlize }}'>\n                          {{ value }}\n                        </label>\n                    {% endfor %}\n                  </div>\n                </div>\n              {%- endfor -%}\n            {% endunless %}\n          </div>\n          <div class=\"buy-with-modal-button-{{ section.id }}\">\n              {%- form 'product',  product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}\n                <input type=\"hidden\" name=\"id\" value=\"{{ product.selected_or_first_available_variant.id }}\" disabled class=\"product-variant-id\">\n                <input type=\"hidden\" value=\"{{ product.selected_or_first_available_variant.id }}\" name=\"items[0][id]\" class=\"product-other-variant-id\">\n                <input class=\"quantity\" type=\"hidden\" name=\"items[0][quantity]\" value=\"1\">\n                <button\n                  id=\"ProductSubmitButton-{{ section.id }}\"\n                  type=\"submit\"\n                  name=\"add\"\n                  class=\"buy-with-modal-button-element-{{ product.id }}\"\n                  {% if product.selected_or_first_available_variant.available == false %}\n                    disabled\n                  {% endif %}\n                >\n                  <span>\n                    {%- if product.selected_or_first_available_variant.available == false -%}\n                      {{ modal_button_text_sold }}\n                    {%- else -%}\n                      {{ modal_button_text }} <strong id=\"buy-with-modal-button-price-{{ product.id }}\">{% if product.selected_or_first_available_variant.compare_at_price < product.selected_or_first_available_variant.price %}{{ product.selected_or_first_available_variant.compare_at_price | money }}{% else %}{{ product.selected_or_first_available_variant.price | money }}{% endif %}</strong>\n                    {%- endif -%}\n                  </span>\n                  <div class=\"loading-overlay__spinner hidden\">\n                    <svg\n                      aria-hidden=\"true\"\n                      focusable=\"false\"\n                      class=\"spinner\"\n                      viewBox=\"0 0 66 66\"\n                      xmlns=\"http://www.w3.org/2000/svg\"\n                    >\n                      <circle class=\"path\" fill=\"none\" stroke-width=\"6\" cx=\"33\" cy=\"33\" r=\"30\"></circle>\n                    </svg>\n                  </div>\n                </button>\n              {%- endform -%}\n            </div>\n        </div>\n      </div>\n    </div>\n  </template>\n{% endfor %}\n\n<script\n  src=\"https://code.jquery.com/jquery-3.7.1.min.js\"\n  integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\"\n  crossorigin=\"anonymous\"></script>\n<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/1.1.0/cart.min.js\"></script>\n<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/1.1.0/rivets-cart.min.js\"></script>            \n\n<script>    \n    var formayMoneyForBuyItWith = function(cents, format) {\n      if (typeof cents == 'string') { cents = cents.replace('.',''); }\n      var value = '';\n      var placeholderRegex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/;\n      var formatString = (format || this.money_format);\n    \n      function defaultOption(opt, def) {\n         return (typeof opt == 'undefined' ? def : opt);\n      }\n    \n      function formatWithDelimiters(number, precision, thousands, decimal) {\n        precision = defaultOption(precision, 2);\n        thousands = defaultOption(thousands, ',');\n        decimal   = defaultOption(decimal, '.');\n    \n        if (isNaN(number) || number == null) { return 0; }\n    \n        number = (number/100.0).toFixed(precision);\n    \n        var parts   = number.split('.'),\n            dollars = parts[0].replace(/(\\d)(?=(\\d\\d\\d)+(?!\\d))/g, '$1' + thousands),\n            cents   = parts[1] ? (decimal + parts[1]) : '';\n    \n        return dollars + cents;\n      }\n    \n      switch(formatString.match(placeholderRegex)[1]) {\n        case 'amount':\n          value = formatWithDelimiters(cents, 2);\n          break;\n        case 'amount_no_decimals':\n          value = formatWithDelimiters(cents, 0);\n          break;\n        case 'amount_with_comma_separator':\n          value = formatWithDelimiters(cents, 2, '.', ',');\n          break;\n        case 'amount_no_decimals_with_comma_separator':\n          value = formatWithDelimiters(cents, 0, '.', ',');\n          break;\n      }\n    \n      return formatString.replace(placeholderRegex, value);\n    };\n    function loadBuyWithModals() {\n      CartJS.init({{ cart | json }}, {\n            \"dataAPI\": false,\n            \"requestBodyClass\": \"loading\"\n        });\n      \n      {% for product in products %}\n        setTimeout(() => {\n          \n          document.getElementById('{{ product.id }}').addEventListener('click', () => {\n            document.getElementById('buy-with-modal-{{ product.id }}').classList.add('active');\n            document.querySelector('body').style.overflow = \"hidden\";\n          });\n          document.addEventListener('click', (e) => {\n            if(e.target == document.getElementById('buy-with-modal-{{ product.id }}')){\n              document.getElementById('buy-with-modal-{{ product.id }}').classList.remove('active');\n              document.querySelector('body').style.overflow = \"\";\n            }\n          });\n          document.getElementById('buy-with-close-{{ product.id }}').addEventListener('click', () => {\n            document.getElementById('buy-with-modal-{{ product.id }}').classList.remove('active');\n            document.querySelector('body').style.overflow = \"\";\n          });\n        }, 300)\n\n        let product{{ forloop.index }} = {{ product | json }};\n\n        let buttonHtml{{ product.id | replace: '-', '' }};\n        if(document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button')) {\n          buttonHtml{{ product.id | replace: '-', '' }} = document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').innerHTML;\n        }\n\n        document.getElementById('buy-with-modal-{{ product.id }}').querySelectorAll('input[type=\"radio\"]').forEach(radio => {\n          radio.addEventListener('change', () => {\n            var selectedOptions = [];\n\n            document.getElementById('buy-with-modal-{{ product.id }}').querySelectorAll('input[type=\"radio\"]:checked').forEach(radio => {\n              selectedOptions.push(radio.value);\n            })\n\n            var matchedVariant = product{{ forloop.index }}.variants.find(variant => {\n              var pass = true;\n              \n              for( var i = 0; i < selectedOptions.length; i++ ) {\n                if(selectedOptions.indexOf(variant.options[i]) === -1) {\n                  pass = false;\n                  break;\n                }\n              }\n\n              return pass;\n            })\n\n          if (!matchedVariant) {\n            if(document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button')) {\n              document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').setAttribute('disabled', \"\");\n              document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').innerText = \"{{ modal_button_text_sold }}\";\n              document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').style.cursor = \"not-allowed\";\n            }\n          } else {\n            document.getElementById('buy-with-modal-{{ product.id }}').querySelector('.product-variant-id').value = matchedVariant.id;\n            document.getElementById('buy-with-modal-{{ product.id }}').querySelector('.product-other-variant-id').value = matchedVariant.id\n            let price{{ forloop.index}} = matchedVariant.price;\n            if(document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button')) {\n              if(matchedVariant.available) {\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').removeAttribute('disabled', \"\");\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').innerHTML = buttonHtml{{ product.id | replace: '-', '' }};\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').style.cursor = \"pointer\"; \n              } else {\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').setAttribute('disabled', \"\");\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').innerText = \"{{ modal_button_text_sold }}\";\n                document.getElementById('buy-with-modal-{{ product.id }}').querySelector('button').style.cursor = \"not-allowed\";\n              }\n            }\n\n            document.getElementById('buy-with-modal-{{ product.id }}').querySelector('#buy-with-modal-price-{{ product.id }}').innerHTML = formayMoneyForBuyItWith(price{{ forloop.index}}, \"{{ shop.money_format }}\");\n            if(document.getElementById('buy-with-modal-{{ product.id }}').querySelector('#buy-with-modal-button-price-{{ product.id }}')) {\n              document.getElementById('buy-with-modal-{{ product.id }}').querySelector('#buy-with-modal-button-price-{{ product.id }}').innerHTML = formayMoneyForBuyItWith(price{{ forloop.index}}, \"{{ shop.money_format }}\"); \n            }\n          }\n\n          document.getElementById('buy-with-modal-{{ product.id }}').querySelectorAll('#buy-with-modal-option-selected-{{ product.id }}').forEach(el => {\n            if(el.getAttribute('data-name') == radio.getAttribute('name') ) {\n              el.innerText = radio.getAttribute('value');\n            }\n          })\n            \n          })\n        })\n\n        document.getElementById('buy-with-modal-{{ product.id }}').querySelector('form').addEventListener('submit', async (e) => {\n          e.preventDefault();\n          let id = document.getElementById('buy-with-modal-{{ product.id }}').querySelector('form').querySelector('.product-other-variant-id').value;\n          CartJS.addItem(id);\n          console.log(CartJS.cart);\n          console.log(CartJS.cart.item_count);\n          \n          const headerCartCount{{ forloop.index }} = document.querySelector('.cart-count-bubble span');\n          if(headerCartCount{{ forloop.index }}) {\n            headerCartCount{{ forloop.index }}.textContent = CartJS.cart.item_count;\n          }\n          document.getElementById('buy-with-modal-{{ product.id }}').classList.remove('active');\n          document.querySelector('body').style.overflow = \"\";\n          setTimeout(function() {\n            document.querySelector('#added-text-{{ product.id }}').classList.add('active');\n          }, 300);\n          setTimeout(function() {\n            document.querySelector('#added-text-{{ product.id }}').classList.remove('active');\n          }, 3000);\n        });\n      {% endfor %}\n    }\n  \n    window.addEventListener('DOMContentLoaded', loadBuyWithModals);\n\n    if (window.Shopify && Shopify.designMode) {\n      window.addEventListener('shopify:section:load', loadBuyWithModals);\n      window.addEventListener('shopify:section:unload', loadBuyWithModals);\n    }\n</script>",
+  "variables": {
+    "upsell_position": {
+      "type": "text",
+      "default": "below_buy",
+      "label": "Position",
+      "description": "Position"
+    },
+    "heading": {
+      "type": "text",
+      "default": "Buy it with",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "heading_on_border": {
+      "type": "text",
+      "default": "true",
+      "label": "Heading on border",
+      "description": "Heading on border"
+    },
+    "content_mt": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "content_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "content_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "content_betweens": {
+      "type": "text",
+      "default": "18",
+      "label": "Space between products",
+      "description": "Space between products"
+    },
+    "content_use_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "content_shadow_width": {
+      "type": "text",
+      "default": "20",
+      "label": "Shadow spread",
+      "description": "Shadow spread"
+    },
+    "products": {
+      "type": "text",
+      "default": "",
+      "label": "Products",
+      "description": "Products"
+    },
+    "content_gap": {
+      "type": "text",
+      "default": "10",
+      "label": "Gap between image and info",
+      "description": "Gap between image and info"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_items_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Product info spacing",
+      "description": "Product info spacing"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "90",
+      "label": "Size",
+      "description": "Size"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "product_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "product_heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "product_heading_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "product_heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "product_price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "product_price_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "product_price_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "product_price_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "product_quick": {
+      "type": "text",
+      "default": "Quick view",
+      "label": "Button label",
+      "description": "Button label"
+    },
+    "product_quick_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "product_quick_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "product_quick_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "product_quick_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "product_quick_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "product_quick_padding_vertical": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "product_quick_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "product_quick_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "modal_width": {
+      "type": "text",
+      "default": "30",
+      "label": "Width - desktop",
+      "description": "Width - desktop"
+    },
+    "modal_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "modal_padding_vertical": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "modal_align": {
+      "type": "text",
+      "default": "start",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "modal_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "modal_heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "modal_heading_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "modal_heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "modal_price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "modal_price_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "modal_price_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "modal_price_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "modal_price_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "modal_image_mt": {
+      "type": "text",
+      "default": "40",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "modal_space": {
+      "type": "text",
+      "default": "20",
+      "label": "Space between images",
+      "description": "Space between images"
+    },
+    "modal_variants_mt": {
+      "type": "text",
+      "default": "30",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "modal_options_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Variant options margin top",
+      "description": "Variant options margin top"
+    },
+    "modal_variants_gap": {
+      "type": "text",
+      "default": "10",
+      "label": "Gap between variant options",
+      "description": "Gap between variant options"
+    },
+    "variant_name_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "variant_name_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "variant_name_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "variant_name_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "variant_option_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "variant_option_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "variant_option_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "variant_option_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "variant_option_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "variant_option_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "variant_option_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "modal_button_text": {
+      "type": "text",
+      "default": "Add to Cart",
+      "label": "Button label",
+      "description": "Button label"
+    },
+    "modal_button_text_added": {
+      "type": "text",
+      "default": "Added",
+      "label": "Button label after adding",
+      "description": "Button label after adding"
+    },
+    "modal_button_text_sold": {
+      "type": "text",
+      "default": "Sold Out",
+      "label": "Button label (sold out)",
+      "description": "Button label (sold out)"
+    },
+    "modal_button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "modal_button_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "modal_button_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "modal_button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "modal_button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "modal_button_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "modal_button_padding_vertical": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "modal_button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "product_heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product title",
+      "description": "Product title"
+    },
+    "product_price_color": {
+      "type": "color",
+      "default": "#707e7a",
+      "label": "Product price",
+      "description": "Product price"
+    },
+    "product_quick_color": {
+      "type": "color",
+      "default": "#d2815f",
+      "label": "Text",
+      "description": "Text"
+    },
+    "product_quick_hover_color": {
+      "type": "color",
+      "default": "#d2815f",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "product_quick_bg_color": {
+      "type": "color",
+      "default": "#F5E9E4",
+      "label": "Background",
+      "description": "Background"
+    },
+    "product_quick_bg_hover_color": {
+      "type": "color",
+      "default": "#E6D4CC",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "product_quick_border": {
+      "type": "color",
+      "default": "#F5E9E4",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "product_quick_hover_border": {
+      "type": "color",
+      "default": "#E6D4CC",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "modal_heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product title",
+      "description": "Product title"
+    },
+    "modal_price_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product price",
+      "description": "Product price"
+    },
+    "variant_name_color": {
+      "type": "color",
+      "default": "#334641",
+      "label": "Product variant name",
+      "description": "Product variant name"
+    },
+    "modal_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "variant_option_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "variant_option_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "variant_option_bg": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "variant_option_hover_bg": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "variant_option_border": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "variant_option_hover_border": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "modal_button_color": {
+      "type": "color",
+      "default": "#D2815F",
+      "label": "Text",
+      "description": "Text"
+    },
+    "modal_button_hover_color": {
+      "type": "color",
+      "default": "#D2815F",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "modal_button_bg": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "modal_button_hover_bg": {
+      "type": "color",
+      "default": "#F1E8E4",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "modal_button_border": {
+      "type": "color",
+      "default": "#D2815F",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "modal_button_hover_border": {
+      "type": "color",
+      "default": "#D2815F",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "content_border_color": {
+      "type": "color",
+      "default": "#D6D3D3",
+      "label": "Content border",
+      "description": "Content border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

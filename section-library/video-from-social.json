@@ -1,0 +1,498 @@
+{
+  "id": "video-from-social",
+  "name": "CUSTOM Video Grid Socials",
+  "description": "Section: CUSTOM Video Grid Socials",
+  "tags": [
+    "video"
+  ],
+  "type": "custom",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css\">\n\n{%- liquid\n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_color = section.settings.heading_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n\n  assign items_mt = section.settings.items_mt\n  assign items_mt_mobile = section.settings.items_mt_mobile\n  assign items_type = section.settings.items_type\n  assign items_type_mobile = section.settings.items_type_mobile\n\n  assign columns_row = section.settings.columns_row\n  assign columns_gap = section.settings.columns_gap\n  assign columns_gap_mobile = section.settings.columns_gap_mobile\n\n  assign item_padding_horizontal = section.settings.item_padding_horizontal\n  assign item_padding_vertical = section.settings.item_padding_vertical\n  assign item_radius = section.settings.item_radius\n  assign item_border_thickness = section.settings.item_border_thickness\n  assign item_border_color = section.settings.item_border_color\n  assign item_bg_color = section.settings.item_bg_color\n\n  assign video_size = section.settings.video_size\n  assign video_size_mobile = section.settings.video_size_mobile\n\n  assign icon = section.settings.icon\n  assign icon_size = section.settings.icon_size\n  assign icon_color = section.settings.icon_color\n  assign icon_bg_color = section.settings.icon_bg_color\n  assign icon_padding = section.settings.icon_padding\n\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_vertical = section.settings.content_padding_vertical\n\n  assign text_size = section.settings.text_size\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_align = section.settings.text_align\n\n  assign slider_nav = section.settings.slider_nav\n  assign slider_nav_mobile = section.settings.slider_nav_mobile\n  assign slider_nav_size = section.settings.slider_nav_size\n  assign slider_nav_size_mobile = section.settings.slider_nav_size_mobile\n  assign slider_nav_btn_bg = section.settings.slider_nav_btn_bg\n  assign slider_nav_btn_hover_bg = section.settings.slider_nav_btn_hover_bg\n  assign slider_nav_border = section.settings.slider_nav_border\n  assign slider_nav_border_hover = section.settings.slider_nav_border_hover\n  assign slider_nav_icon = section.settings.slider_nav_icon\n  assign slider_nav_hover_icon = section.settings.slider_nav_hover_icon\n\n  assign slider_pagination_size = section.settings.slider_pagination_size\n  assign slider_pagination_size_mobile = section.settings.slider_pagination_size_mobile\n  assign slider_pagination_color = section.settings.slider_pagination_color\n  assign slider_pagination_hover_color = section.settings.slider_pagination_hover_color\n\n  assign link_text = section.settings.link_text\n  assign link_url = section.settings.link_url\n  assign link_custom = section.settings.link_custom\n  assign link_font = section.settings.link_font\n  assign link_size = section.settings.link_size\n  assign link_height = section.settings.link_height\n  assign link_align = section.settings.link_align\n  assign link_mt = section.settings.link_mt\n  assign link_padding_vertical = section.settings.link_padding_vertical\n  assign link_padding_horizontal = section.settings.link_padding_horizontal\n  assign link_radius = section.settings.link_radius\n  assign link_border_thickness = section.settings.link_border_thickness\n  assign link_text_color = section.settings.link_text_color\n  assign link_text_hover_color = section.settings.link_text_hover_color\n  assign link_bg_color = section.settings.link_bg_color\n  assign link_bg_hover_color = section.settings.link_bg_hover_color\n  assign link_border_color = section.settings.link_border_color\n  assign link_border_hover_color = section.settings.link_border_hover_color\n\n  assign hide_arrow = section.settings.hide_arrow\n\n  assign video_size_mobile_value = ''\n  if video_size_mobile == 'adapt'\n    assign video_size_mobile_value = 'auto'\n  elsif video_size_mobile == 'small'\n    assign video_size_mobile_value = '20rem'\n  elsif video_size_mobile == 'medium'\n    assign video_size_mobile_value = '30rem'\n  elsif video_size_mobile == 'large'\n    assign video_size_mobile_value = '40rem'\n  endif\n\n  assign video_size_value = ''\n  if video_size == 'adapt'\n    assign video_size_value = 'auto'\n  elsif video_size == 'small'\n    assign video_size_value = '25rem'\n  elsif video_size == 'medium'\n    assign video_size_value = '40rem'\n  elsif video_size == 'large'\n    assign video_size_value = '50rem'\n  endif\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  {{  link_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .video-social-heading-{{ section.id }} {\n    display: block;\n    width: 100%;\n    margin: 0;\n    font-size: {{ heading_size | times: 0.85 }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    text-align: {{ heading_align }};\n  }\n\n  .video-social-body-{{ section.id }} {\n    margin-top: {{ items_mt_mobile }}px;\n  }\n\n  .video-social-grid-{{ section.id }} {\n    gap: {{ columns_gap_mobile }}px;\n    grid-template-columns: repeat(1, minmax(0px, 1fr));\n  }\n\n  /* .video-social-slider-{{ section.id }} {\n    display: none;\n  } */\n\n  .video-social-slider-{{ section.id }} {\n    padding-bottom: {{ slider_pagination_size_mobile | plus: 15 }}px;\n    margin-left: -{{ padding_horizontal_mobile }}rem !important;\n    margin-right: -{{ padding_horizontal_mobile }}rem !important;\n    padding-left: {{ padding_horizontal_mobile }}rem !important;\n    padding-right: {{ padding_horizontal_mobile }}rem !important;\n  }\n\n  .video-social-slider-{{ section.id }} .swiper-wrapper {\n    align-items: stretch !important;\n  }\n\n  .video-social-slider-{{ section.id }} .swiper-slide {\n    height: auto !important;\n  }\n\n  .video-social-item-{{ section.id }} {\n    position: relative;\n    padding: {{ item_padding_vertical | times: 0.75 | round: 0 }}px {{ item_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border-radius: {{ item_radius }}px;\n    border: {{ item_border_thickness }}px solid {{ item_border_color }};\n    background-color: {{ item_bg_color }};\n    box-sizing: border-box !important;\n    overflow: hidden;\n  }\n\n  .video-social-video-{{ section.id }} {\n    height: {{ video_size_mobile_value }};\n    position: relative;\n    z-index: 1;\n  }\n\n  .video-social-video-{{ section.id }} video {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n    box-shadow: none;\n    border: 0px;\n  }\n\n  .video-social-video-{{ section.id }} > svg {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n  }\n\n  .video-social-btn-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 2;\n    width: {{ icon_size | times: 0.75 | round: 0 }}px;\n    height: {{ icon_size | times: 0.75 | round: 0 }}px;\n    border-radius: 50%;\n    padding: {{ icon_padding | times: 0.75 | round: 0 }}px;\n    box-sizing: border-box;\n    cursor: pointer;\n    background-color: {{ icon_bg_color }};\n    color: {{ icon_color }};\n    opacity: 0.9;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-social-btn-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    transform: translate(-50%, -50%) scale(1.05);\n  }\n\n  .video-social-item-{{ section.id }}.active .video-social-btn-{{ section.id }} {\n    display: none;\n  }\n\n  .video-social-btn-{{ section.id }} img,\n  .video-social-btn-{{ section.id }} svg {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n  }\n\n  .video-social-btn-{{ section.id }} svg path {\n    fill: {{ icon_color }};\n  }\n\n  .video-social-content-{{ section.id }} {\n    position: relative;\n    padding: {{ content_padding_vertical | times: 0.75 | round: 0 }}px {{ content_padding_horizontal | times: 0.75 | round: 0 }}px\n  }\n\n  .video-social-text-{{ section.id }} {\n    display: block;\n    width: 100%;\n    margin: 0;\n    font-size: {{ text_size | times: 0.85 }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n    text-align: {{ text_align }};\n  }\n\n  .video-social-icon-{{ section.id }} {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    width: 30px;\n    height: 30px;\n    border-bottom-right-radius: {{ item_radius }}px;\n    border-top-left-radius: {{ item_radius }}px;\n    overflow: hidden;\n  }\n\n  .video-social-icon-{{ section.id }} svg {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n  }\n\n  .video-social-btn-next-{{ section.id }},\n  .video-social-btn-prev-{{ section.id }} {\n    position: absolute !important;\n    top: 39% !important;\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n    z-index: 3;\n    border-radius: 50%;\n    border: 1px solid {{ slider_nav_border }} !important;\n    width: {{ slider_nav_size_mobile }}px !important;\n    height: {{ slider_nav_size_mobile }}px !important;\n    background: {{ slider_nav_btn_bg }} !important;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n  }\n\n  .video-social-btn-prev-{{ section.id }} {\n    left: 5px !important;\n  }\n\n  .video-social-btn-next-{{ section.id }} {\n    right: 5px !important;\n  }\n\n  .video-social-btn-next-{{ section.id }} svg {\n    transform: rotate(180deg);\n  }\n\n  .video-social-btn-next-{{ section.id }} svg,\n  .video-social-btn-prev-{{ section.id }} svg {\n    width: {{ slider_nav_size_mobile | times: 0.75 | round: 0 }}px !important;\n    height: {{ slider_nav_size_mobile | times: 0.75 | round: 0 }}px !important;\n  }\n\n  .video-social-btn-prev-{{ section.id }} svg path,\n  .video-social-btn-next-{{ section.id }} svg path {\n    transition: all 0.25s ease 0s;\n    fill: {{ slider_nav_icon }};\n  }\n\n  .video-social-btn-next-{{ section.id }} svg {\n    margin-left: 2px;\n  }\n\n  .video-social-btn-prev-{{ section.id }} svg {\n    margin-left: -1px;\n  }\n\n  .video-social-btn-next-{{ section.id }}:hover,\n  .video-social-btn-prev-{{ section.id }}:hover {\n    border: 1px solid {{ slider_nav_border_hover }} !important;\n    background: {{ slider_nav_btn_hover_bg }} !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-social-btn-next-{{ section.id }}:hover svg path,\n  .video-social-btn-prev-{{ section.id }}:hover svg path {\n    fill: {{ slider_nav_hover_icon }} !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-social-pagination-{{ section.id }} {\n    display: none;\n    width: 100%;\n    justify-content: center;\n    align-items: center;\n    gap: 20px;\n    bottom: 0;\n  }\n\n  .video-social-pagination-{{ section.id }} .swiper-pagination-bullet {\n    width: {{ slider_pagination_size_mobile }}px;\n    height: {{ slider_pagination_size_mobile }}px;\n    background: transparent !important;\n    border: 1px solid {{ slider_pagination_color }};\n  }\n\n  .video-social-pagination-{{ section.id }} .swiper-pagination-bullet-active {\n    background: {{ slider_pagination_color }} !important;\n  }\n\n  .video-social-pagination-{{ section.id }} .swiper-pagination-bullet:hover {\n    border-color: {{ slider_pagination_hover_color }};\n  }\n\n  .video-social-link-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ link_mt | times: 0.75 | round: 0 }}px;\n    padding: {{ link_padding_vertical | times: 0.75 | round: 0 }}px {{ link_padding_horizontal | times: 0.75 | round: 0 }}px;\n    width: fit-content;\n    display: flex;\n    align-items: center;\n    gap: 20px;\n    font-size: {{ link_size | times: 0.85 }}px;\n    line-height: {{ link_height }}%;\n    color: {{ link_text_color }};\n    background-color: {{ link_bg_color }};\n    border: {{ link_border_thickness }}px solid {{ link_border_color }};\n    border-radius: {{ link_radius }}px;\n    font-weight: 700;\n    text-decoration: none;\n    text-transform: none;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-social-link-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ link_text_hover_color }};\n    border: {{ link_border_thickness }}px solid {{ link_border_hover_color }};\n    background-color: {{ link_bg_hover_color }};\n  }\n\n  .video-social-link-{{ section.id }} svg path {\n    transition: all 0.25s ease 0s;\n    stroke: {{ link_text_color }};\n  }\n\n  .video-social-link-{{ section.id }}:hover svg path {\n    transition: all 0.25s ease 0s;\n    stroke: {{ link_text_hover_color }};\n  }\n\n  .video-social-slider-wrapper-{{ section.id }} {\n    position: relative;\n  }\n\n  .video-social-slider-mobile-wrapper-{{ section.id }} .video-social-item-{{ section.id }}:not(.swiper-slide-active) {\n    pointer-events: none;\n  }\n\n  @media(min-width: 768px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n\n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .video-social-heading-{{ section.id }} {\n      font-size: {{ heading_size }}px;\n    }\n\n    .video-social-body-{{ section.id }} {\n      margin-top: {{ items_mt }}px;\n    }\n\n    .video-social-grid-{{ section.id }} {\n      gap: {{ columns_gap }}px;\n      grid-template-columns: repeat({{ columns_row | times: 0.5 | round: 0 }}, minmax(0px, 1fr));\n    }\n\n    .video-social-item-{{ section.id }} {\n       padding: {{ item_padding_vertical }}px {{ item_padding_horizontal }}px;\n    }\n\n    .video-social-video-{{ section.id }} {\n      height: {{ video_size_value }};\n    }\n\n    .video-social-btn-{{ section.id }} {\n      width: {{ icon_size }}px;\n      height: {{ icon_size }}px;\n      padding: {{ icon_padding }}px;\n    }\n\n    .video-social-content-{{ section.id }} {\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px\n    }\n\n    .video-social-text-{{ section.id }} {\n      font-size: {{ text_size }}px;\n    }\n\n    .video-social-btn-next-{{ section.id }},\n    .video-social-btn-prev-{{ section.id }} {\n      width: {{ slider_nav_size }}px !important;\n      height: {{ slider_nav_size }}px !important;\n    }\n\n    .video-social-btn-next-{{ section.id }} svg,\n    .video-social-btn-prev-{{ section.id }} svg {\n      width: {{ slider_nav_size | times: 0.75 | round: 0 }}px !important;\n      height: {{ slider_nav_size | times: 0.75 | round: 0 }}px !important;\n    }\n\n    .video-social-pagination-{{ section.id }} .swiper-pagination-bullet {\n      width: {{ slider_pagination_size }}px;\n      height: {{ slider_pagination_size }}px;\n    }\n\n    .video-social-link-{{ section.id }} {\n      font-size: {{ link_size }}px;\n      margin-top: {{ link_mt }}px;\n      padding: {{ link_padding_vertical }}px {{ link_padding_horizontal }}px;\n    }\n\n    .video-social-slider-mobile-wrapper-{{ section.id }} .video-social-item-{{ section.id }}:not(.swiper-slide-active) {\n      pointer-events: all;\n    }\n\n    .video-social-slider-{{ section.id }} {\n      margin-left: 0px !important;\n      margin-right: 0px !important;\n      padding-left: 0px !important;\n      padding-right: 0px !important;\n    }\n\n  }\n\n  @media(min-width: 992px) {\n    .video-social-grid-{{ section.id }} {\n      grid-template-columns: repeat({{ columns_row }}, minmax(0px, 1fr));\n    }\n  }\n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if heading_custom %}\n  <style>\n    .video-social-heading-{{ section.id }} {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .video-social-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if link_custom %}\n  <style>\n    .video-social-link-{{ section.id }} {\n      font-family: {{ link_font.family }}, {{ link_font.fallback_families }};\n      font-weight: {{ link_font.weight }};\n      font-style: {{ link_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if items_type_mobile == 'slider' %}\n  <style>\n    .video-social-grid-{{ section.id }} {\n      display: none !important;\n    }\n\n    .video-social-slider-mobile-wrapper-{{ section.id }} {\n      display: block !important;\n    }\n\n    .video-social-slider-desktop-wrapper-{{ section.id }} {\n      display: none !important;\n    }\n  </style>\n{% else %}\n  <style>\n    .video-social-grid-{{ section.id }} {\n      display: grid !important;\n    }\n\n    .video-social-slider-desktop-wrapper-{{ section.id }} {\n      display: none !important;\n    }\n\n    .video-social-slider-mobile-wrapper-{{ section.id }} {\n      display: none !important;\n    }\n  </style>\n{% endif %}\n\n{% if items_type == 'slider' %}\n  <style>\n    @media(min-width: 768px) {\n     .video-social-grid-{{ section.id }} {\n        display: none !important;\n      }\n\n      .video-social-slider-desktop-wrapper-{{ section.id }} {\n        display: block !important;\n      }\n\n      .video-social-slider-mobile-wrapper-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 768px) {\n     .video-social-grid-{{ section.id }} {\n        display: grid !important;\n      }\n\n      .video-social-slider-desktop-wrapper-{{ section.id }} {\n        display: none !important;\n      }\n\n      .video-social-slider-mobile-wrapper-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if slider_nav_mobile == 'buttons' %}\n  <style>\n    .video-social-btn-next-{{ section.id }},\n    .video-social-btn-prev-{{ section.id }} {\n      display: flex !important;\n    }\n    .video-social-pagination-{{ section.id }} {\n       display: none !important;\n    }\n  </style>\n{% elsif slider_nav_mobile == 'pagination' %}\n  <style>\n    .video-social-pagination-{{ section.id }} {\n       display: flex !important;\n    }\n    .video-social-btn-next-{{ section.id }},\n    .video-social-btn-prev-{{ section.id }} {\n      display: none !important;\n    }\n    .video-social-slider-{{ section.id }} {\n      padding-bottom: {{ slider_pagination_size_mobile | plus: 20 }}px !important;\n    }\n    @media(min-width: 1024px) {\n      .video-social-slider-{{ section.id }} {\n        padding-bottom: 0px !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    .video-social-pagination-{{ section.id }} {\n       display: none !important;\n    }\n    .video-social-btn-next-{{ section.id }},\n    .video-social-btn-prev-{{ section.id }} {\n      display: none !important;\n    }\n  </style>\n{% endif %}\n\n{% if slider_nav == 'buttons' %}\n  <style>\n    @media(min-width: 768px) {\n      .video-social-btn-next-{{ section.id }},\n      .video-social-btn-prev-{{ section.id }} {\n        display: flex !important;\n      }\n      .video-social-pagination-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% elsif slider_nav == 'pagination' %}\n  <style>\n    @media(min-width: 768px ) {\n      .video-social-pagination-{{ section.id }} {\n        display: flex !important;\n      }\n\n      .video-social-btn-next-{{ section.id }},\n      .video-social-btn-prev-{{ section.id }} {\n        display: none !important;\n      }\n\n      .video-social-slider-{{ section.id }} {\n        padding-bottom: {{ slider_pagination_size | plus: 20 }}px !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 768px) {\n      .video-social-pagination-{{ section.id }} {\n        display: none !important;\n      }\n\n      .video-social-btn-next-{{ section.id }},\n      .video-social-btn-prev-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if link_align == 'center' %}\n  <style>\n    .video-social-link-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif link_align == 'right' %}\n  <style>\n    .video-social-link-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n<div\n  class=\"section-{{ section.id }} video-social-{{ section.id }}\"\n  style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\"\n>\n  <div class=\"section-{{ section.id }}-settings \">\n    {% if heading != blank %}\n      <h2 class=\"video-social-heading-{{ section.id }}\">{{ heading }}</h2>\n    {% endif %}\n    <div class=\"video-social-body-{{ section.id }}\">\n      <div class=\"video-social-grid-{{ section.id }}\">\n        {% for block in section.blocks %}\n          <div class=\"video-social-item-{{ section.id }}\">\n            <div class=\"video-social-video-{{ section.id }}\">\n              {% if block.settings.video != blank %}\n                {% if block.settings.poster != blank %}\n                  {% assign poster_url = block.settings.poster | image_url %}\n                    <video poster=\"{{ poster_url }}\" {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                {% else %}\n                  <video {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                {% endif %}\n              {% else %}\n                {{ 'lifestyle-1' | placeholder_svg_tag }}\n              {% endif %}\n              <div class=\"video-social-btn-{{ section.id }}\">\n                {% if icon != blank %}\n                  <img src=\"{{ icon | image_url }}\" alt=\"{{ icon.alt }}\">\n                {% else %}\n                  <svg\n                    xmlns=\"http://www.w3.org/2000/svg\"\n                    aria-hidden=\"true\"\n                    focusable=\"false\"\n                    role=\"presentation\"\n                    fill=\"none\"\n                    viewBox=\"0 0 10 14\"\n                  >\n                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M1.48177 0.814643C0.81532 0.448245 0 0.930414 0 1.69094V12.2081C0 12.991 0.858787 13.4702 1.52503 13.0592L10.5398 7.49813C11.1918 7.09588 11.1679 6.13985 10.4965 5.77075L1.48177 0.814643Z\" fill=\"currentColor\"/>\n                  </svg>\n                {% endif %}\n              </div>\n            </div>\n            {% if block.settings.text != blank %}\n              <div class=\"video-social-content-{{ section.id }}\">\n                <p class=\"video-social-text-{{ section.id }}\">{{ block.settings.text }}</p>\n              </div>\n            {% endif %}\n            {% if block.settings.icon_type != 'none' %}\n              <div class=\"video-social-icon-{{ section.id }}\">\n                {% if block.settings.icon_type == 'tiktok' %}\n                  <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                    <path d=\"M28.9699 15.8297C26.8636 15.8765 24.8977 15.2212 23.2126 14.0042V22.3828C23.2126 28.2338 16.8467 31.8848 11.7914 28.9827C6.73619 26.0338 6.73619 18.7318 11.7914 15.7829C13.2425 14.9403 14.9744 14.6127 16.6595 14.8467V19.0594C14.085 18.2169 11.6042 20.5105 12.1659 23.1317C12.7744 25.7529 15.9573 26.7827 17.9701 24.9572C18.6722 24.3019 19.0935 23.3657 19.0935 22.3828V6H23.2126C23.2126 6.37446 23.2126 6.70212 23.3062 7.07658C23.587 8.62124 24.4764 9.97867 25.8338 10.8212C26.7232 11.4297 27.8466 11.7574 28.9699 11.7574V15.8297Z\"\n                          fill=\"white\"/>\n                  </svg>\n                {% elsif block.settings.icon_type == 'reels' %}\n                  <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                    <path d=\"M25.3988 16.2661C25.0238 16.0541 24.6652 15.8259 24.2414 15.5813C24.6652 15.3205 25.0566 15.0923 25.4316 14.8803C27.1758 13.9347 28.1377 12.0112 27.8441 10.0549C27.4201 6.84375 23.7196 4.98562 20.9158 6.58295C18.0468 8.22961 15.1777 9.84348 12.3412 11.5387C10.0916 12.8917 9.76544 14.6848 10.1241 16.804C10.3524 18.1245 11.2326 19.1024 12.39 19.7709C12.7974 19.9992 13.1886 20.2275 13.6289 20.4883C13.1398 20.7816 12.6998 21.0424 12.227 21.2869C10.1404 22.6075 9.42304 25.3133 10.5969 27.4979C11.8358 29.7965 14.7049 30.6768 17.0033 29.4379C19.4812 28.036 21.959 26.6013 24.4206 25.1669C25.0076 24.8245 25.627 24.5149 26.1486 24.0909C28.7732 21.9064 28.382 17.9453 25.3988 16.2661ZM16.6449 21.6131V14.4893L22.807 18.0432L16.6449 21.6131Z\" fill=\"white\"/>\n                  </svg>\n\n                {% elsif block.settings.icon_type == 'shorts' %}\n                  <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.14286 14H29.8571V23.7143C29.8571 26.5615 27.5615 28.8571 24.7143 28.8571H13.2857C10.4385 28.8571 8.14286 26.5615 8.14286 23.7143V14ZM15.5714 18.5469C15.5714 17.5824 16.3915 16.8856 17.2734 16.865C17.5674 16.8581 17.8677 16.9261 18.1473 17.0848H18.1484L22.7132 19.6797C23.8245 20.3111 23.8245 21.9723 22.7132 22.6038L18.1484 25.1987C17.0299 25.8361 15.5714 25.0236 15.5714 23.7377V18.5469Z\" fill=\"white\"/>\n                    <path d=\"M12.9922 7.20201L16.2913 12.8571H8.14286V12.2857C8.14286 9.54276 10.2904 7.3617 12.9922 7.20201Z\" fill=\"white\"/>\n                    <path d=\"M14.2801 7.14286H20.3862L23.7199 12.8571H17.6138L14.2801 7.14286Z\" fill=\"white\"/>\n                    <path d=\"M21.7087 7.14286H24.7143C27.5615 7.14286 29.8571 9.43852 29.8571 12.2857V12.8571H25.0424L21.7087 7.14286Z\" fill=\"white\"/>\n                  </svg>\n                {% elsif block.settings.icon_type == 'facebook' %}\n                  <svg style=\"background-color: black;\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewBox=\"0 0 24 24\">\n                    <path fill=\"white\" d=\"M16.403,9H14V7c0-1.032,0.084-1.682,1.563-1.682h0.868c0.552,0,1-0.448,1-1V3.064c0-0.523-0.401-0.97-0.923-1.005C15.904,2.018,15.299,1.999,14.693,2C11.98,2,10,3.657,10,6.699V9H8c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1l2-0.001V21c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-8.003l2.174-0.001c0.508,0,0.935-0.381,0.993-0.886l0.229-1.996C17.465,9.521,17.001,9,16.403,9z\"></path>\n                  </svg>\n                {% endif %}\n              </div>\n            {% endif %}\n          </div>\n        {% endfor %}\n      </div>\n      <div class=\"video-social-slider-wrapper-{{ section.id }} video-social-slider-desktop-wrapper-{{ section.id }}\">\n        <div class=\"video-social-slider-{{ section.id }} video-social-slider-desktop-{{ section.id }} swiper\">\n          <div class=\"swiper-wrapper\">\n            {% for block in section.blocks %}\n              <div class=\"video-social-item-{{ section.id }} swiper-slide\">\n                <div class=\"video-social-video-{{ section.id }}\">\n                  {% if block.settings.video != blank %}\n                    {% if block.settings.poster != blank %}\n                      {% assign poster_url = block.settings.poster | image_url %}\n                        <video poster=\"{{ poster_url }}\" {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                    {% else %}\n                      <video {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                    {% endif %}\n                  {% else %}\n                    {{ 'lifestyle-1' | placeholder_svg_tag }}\n                  {% endif %}\n                  <div class=\"video-social-btn-{{ section.id }}\">\n                    {% if icon != blank %}\n                      <img src=\"{{ icon | image_url }}\" alt=\"{{ icon.alt }}\">\n                    {% else %}\n                      <svg\n                        xmlns=\"http://www.w3.org/2000/svg\"\n                        aria-hidden=\"true\"\n                        focusable=\"false\"\n                        role=\"presentation\"\n                        fill=\"none\"\n                        viewBox=\"0 0 10 14\"\n                      >\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M1.48177 0.814643C0.81532 0.448245 0 0.930414 0 1.69094V12.2081C0 12.991 0.858787 13.4702 1.52503 13.0592L10.5398 7.49813C11.1918 7.09588 11.1679 6.13985 10.4965 5.77075L1.48177 0.814643Z\" fill=\"currentColor\"/>\n                      </svg>\n                    {% endif %}\n                  </div>\n                </div>\n                {% if block.settings.text != blank %}\n                  <div class=\"video-social-content-{{ section.id }}\">\n                    <p class=\"video-social-text-{{ section.id }}\">{{ block.settings.text }}</p>\n                  </div>\n                {% endif %}\n                {% if block.settings.icon_type != 'none' %}\n                  <div class=\"video-social-icon-{{ section.id }}\">\n                    {% if block.settings.icon_type == 'tiktok' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path d=\"M28.9699 15.8297C26.8636 15.8765 24.8977 15.2212 23.2126 14.0042V22.3828C23.2126 28.2338 16.8467 31.8848 11.7914 28.9827C6.73619 26.0338 6.73619 18.7318 11.7914 15.7829C13.2425 14.9403 14.9744 14.6127 16.6595 14.8467V19.0594C14.085 18.2169 11.6042 20.5105 12.1659 23.1317C12.7744 25.7529 15.9573 26.7827 17.9701 24.9572C18.6722 24.3019 19.0935 23.3657 19.0935 22.3828V6H23.2126C23.2126 6.37446 23.2126 6.70212 23.3062 7.07658C23.587 8.62124 24.4764 9.97867 25.8338 10.8212C26.7232 11.4297 27.8466 11.7574 28.9699 11.7574V15.8297Z\"\n                              fill=\"white\"/>\n                      </svg>\n                    {% elsif block.settings.icon_type == 'reels' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path d=\"M25.3988 16.2661C25.0238 16.0541 24.6652 15.8259 24.2414 15.5813C24.6652 15.3205 25.0566 15.0923 25.4316 14.8803C27.1758 13.9347 28.1377 12.0112 27.8441 10.0549C27.4201 6.84375 23.7196 4.98562 20.9158 6.58295C18.0468 8.22961 15.1777 9.84348 12.3412 11.5387C10.0916 12.8917 9.76544 14.6848 10.1241 16.804C10.3524 18.1245 11.2326 19.1024 12.39 19.7709C12.7974 19.9992 13.1886 20.2275 13.6289 20.4883C13.1398 20.7816 12.6998 21.0424 12.227 21.2869C10.1404 22.6075 9.42304 25.3133 10.5969 27.4979C11.8358 29.7965 14.7049 30.6768 17.0033 29.4379C19.4812 28.036 21.959 26.6013 24.4206 25.1669C25.0076 24.8245 25.627 24.5149 26.1486 24.0909C28.7732 21.9064 28.382 17.9453 25.3988 16.2661ZM16.6449 21.6131V14.4893L22.807 18.0432L16.6449 21.6131Z\" fill=\"white\"/>\n                      </svg>\n\n                    {% elsif block.settings.icon_type == 'shorts' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.14286 14H29.8571V23.7143C29.8571 26.5615 27.5615 28.8571 24.7143 28.8571H13.2857C10.4385 28.8571 8.14286 26.5615 8.14286 23.7143V14ZM15.5714 18.5469C15.5714 17.5824 16.3915 16.8856 17.2734 16.865C17.5674 16.8581 17.8677 16.9261 18.1473 17.0848H18.1484L22.7132 19.6797C23.8245 20.3111 23.8245 21.9723 22.7132 22.6038L18.1484 25.1987C17.0299 25.8361 15.5714 25.0236 15.5714 23.7377V18.5469Z\" fill=\"white\"/>\n                        <path d=\"M12.9922 7.20201L16.2913 12.8571H8.14286V12.2857C8.14286 9.54276 10.2904 7.3617 12.9922 7.20201Z\" fill=\"white\"/>\n                        <path d=\"M14.2801 7.14286H20.3862L23.7199 12.8571H17.6138L14.2801 7.14286Z\" fill=\"white\"/>\n                        <path d=\"M21.7087 7.14286H24.7143C27.5615 7.14286 29.8571 9.43852 29.8571 12.2857V12.8571H25.0424L21.7087 7.14286Z\" fill=\"white\"/>\n                      </svg>\n                    {% elsif block.settings.icon_type == 'facebook' %}\n                      <svg style=\"background-color: black;\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewBox=\"0 0 24 24\">\n                        <path fill=\"white\" d=\"M16.403,9H14V7c0-1.032,0.084-1.682,1.563-1.682h0.868c0.552,0,1-0.448,1-1V3.064c0-0.523-0.401-0.97-0.923-1.005C15.904,2.018,15.299,1.999,14.693,2C11.98,2,10,3.657,10,6.699V9H8c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1l2-0.001V21c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-8.003l2.174-0.001c0.508,0,0.935-0.381,0.993-0.886l0.229-1.996C17.465,9.521,17.001,9,16.403,9z\"></path>\n                      </svg>\n                    {% endif %}\n                  </div>\n                {% endif %}\n              </div>\n            {% endfor %}\n          </div>\n          <div\n            class=\"video-social-pagination-{{ section.id }} video-social-desktop-pagination-{{ section.id }} swiper-pagination\"\n          ></div>\n        </div>\n        <div class=\"video-social-btn-next-{{ section.id }} video-social-desktop-btn-next-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n            <g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g>\n          </svg>\n        </div>\n        <div class=\"video-social-btn-prev-{{ section.id }} video-social-desktop-btn-prev-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n            <g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g>\n          </svg>\n        </div>\n      </div>\n      <div class=\"video-social-slider-wrapper-{{ section.id }} video-social-slider-mobile-wrapper-{{ section.id }}\">\n        <div class=\"video-social-slider-{{ section.id }} video-social-slider-mobile-{{ section.id }} swiper\">\n          <div class=\"swiper-wrapper\">\n            {% for block in section.blocks %}\n              <div class=\"video-social-item-{{ section.id }} swiper-slide\">\n                <div class=\"video-social-video-{{ section.id }}\">\n                  {% if block.settings.video != blank %}\n                    {% if block.settings.poster != blank %}\n                      {% assign poster_url = block.settings.poster | image_url %}\n                        <video poster=\"{{ poster_url }}\" {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                    {% else %}\n                      <video {% if lazy %}data-{% endif %}src=\"{{ block.settings.video.sources[1].url }}\" playsinline preload=\"none\" loop class=\"lazy\"></video>\n                    {% endif %}\n                  {% else %}\n                    {{ 'lifestyle-1' | placeholder_svg_tag }}\n                  {% endif %}\n                  <div class=\"video-social-btn-{{ section.id }}\">\n                    {% if icon != blank %}\n                      <img src=\"{{ icon | image_url }}\" alt=\"{{ icon.alt }}\">\n                    {% else %}\n                      <svg\n                        xmlns=\"http://www.w3.org/2000/svg\"\n                        aria-hidden=\"true\"\n                        focusable=\"false\"\n                        role=\"presentation\"\n                        fill=\"none\"\n                        viewBox=\"0 0 10 14\"\n                      >\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M1.48177 0.814643C0.81532 0.448245 0 0.930414 0 1.69094V12.2081C0 12.991 0.858787 13.4702 1.52503 13.0592L10.5398 7.49813C11.1918 7.09588 11.1679 6.13985 10.4965 5.77075L1.48177 0.814643Z\" fill=\"currentColor\"/>\n                      </svg>\n                    {% endif %}\n                  </div>\n                </div>\n                {% if block.settings.text != blank %}\n                  <div class=\"video-social-content-{{ section.id }}\">\n                    <p class=\"video-social-text-{{ section.id }}\">{{ block.settings.text }}</p>\n                  </div>\n                {% endif %}\n                {% if block.settings.icon_type != 'none' %}\n                  <div class=\"video-social-icon-{{ section.id }}\">\n                    {% if block.settings.icon_type == 'tiktok' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path d=\"M28.9699 15.8297C26.8636 15.8765 24.8977 15.2212 23.2126 14.0042V22.3828C23.2126 28.2338 16.8467 31.8848 11.7914 28.9827C6.73619 26.0338 6.73619 18.7318 11.7914 15.7829C13.2425 14.9403 14.9744 14.6127 16.6595 14.8467V19.0594C14.085 18.2169 11.6042 20.5105 12.1659 23.1317C12.7744 25.7529 15.9573 26.7827 17.9701 24.9572C18.6722 24.3019 19.0935 23.3657 19.0935 22.3828V6H23.2126C23.2126 6.37446 23.2126 6.70212 23.3062 7.07658C23.587 8.62124 24.4764 9.97867 25.8338 10.8212C26.7232 11.4297 27.8466 11.7574 28.9699 11.7574V15.8297Z\"\n                              fill=\"white\"/>\n                      </svg>\n                    {% elsif block.settings.icon_type == 'reels' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path d=\"M25.3988 16.2661C25.0238 16.0541 24.6652 15.8259 24.2414 15.5813C24.6652 15.3205 25.0566 15.0923 25.4316 14.8803C27.1758 13.9347 28.1377 12.0112 27.8441 10.0549C27.4201 6.84375 23.7196 4.98562 20.9158 6.58295C18.0468 8.22961 15.1777 9.84348 12.3412 11.5387C10.0916 12.8917 9.76544 14.6848 10.1241 16.804C10.3524 18.1245 11.2326 19.1024 12.39 19.7709C12.7974 19.9992 13.1886 20.2275 13.6289 20.4883C13.1398 20.7816 12.6998 21.0424 12.227 21.2869C10.1404 22.6075 9.42304 25.3133 10.5969 27.4979C11.8358 29.7965 14.7049 30.6768 17.0033 29.4379C19.4812 28.036 21.959 26.6013 24.4206 25.1669C25.0076 24.8245 25.627 24.5149 26.1486 24.0909C28.7732 21.9064 28.382 17.9453 25.3988 16.2661ZM16.6449 21.6131V14.4893L22.807 18.0432L16.6449 21.6131Z\" fill=\"white\"/>\n                      </svg>\n\n                    {% elsif block.settings.icon_type == 'shorts' %}\n                      <svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M0 12C0 5.37258 5.37258 0 12 0H36V24C36 30.6274 30.6274 36 24 36H0V12Z\" fill=\"#120A0A\"/>\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.14286 14H29.8571V23.7143C29.8571 26.5615 27.5615 28.8571 24.7143 28.8571H13.2857C10.4385 28.8571 8.14286 26.5615 8.14286 23.7143V14ZM15.5714 18.5469C15.5714 17.5824 16.3915 16.8856 17.2734 16.865C17.5674 16.8581 17.8677 16.9261 18.1473 17.0848H18.1484L22.7132 19.6797C23.8245 20.3111 23.8245 21.9723 22.7132 22.6038L18.1484 25.1987C17.0299 25.8361 15.5714 25.0236 15.5714 23.7377V18.5469Z\" fill=\"white\"/>\n                        <path d=\"M12.9922 7.20201L16.2913 12.8571H8.14286V12.2857C8.14286 9.54276 10.2904 7.3617 12.9922 7.20201Z\" fill=\"white\"/>\n                        <path d=\"M14.2801 7.14286H20.3862L23.7199 12.8571H17.6138L14.2801 7.14286Z\" fill=\"white\"/>\n                        <path d=\"M21.7087 7.14286H24.7143C27.5615 7.14286 29.8571 9.43852 29.8571 12.2857V12.8571H25.0424L21.7087 7.14286Z\" fill=\"white\"/>\n                      </svg>\n                    {% elsif block.settings.icon_type == 'facebook' %}\n                      <svg style=\"background-color: black;\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewBox=\"0 0 24 24\">\n                        <path fill=\"white\" d=\"M16.403,9H14V7c0-1.032,0.084-1.682,1.563-1.682h0.868c0.552,0,1-0.448,1-1V3.064c0-0.523-0.401-0.97-0.923-1.005C15.904,2.018,15.299,1.999,14.693,2C11.98,2,10,3.657,10,6.699V9H8c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1l2-0.001V21c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-8.003l2.174-0.001c0.508,0,0.935-0.381,0.993-0.886l0.229-1.996C17.465,9.521,17.001,9,16.403,9z\"></path>\n                      </svg>\n                    {% endif %}\n                  </div>\n                {% endif %}\n              </div>\n            {% endfor %}\n          </div>\n          <div\n            class=\"video-social-pagination-{{ section.id }} video-social-mobile-pagination-{{ section.id }} swiper-pagination\"\n          ></div>\n        </div>\n        <div class=\"video-social-btn-next-{{ section.id }} video-social-mobile-btn-next-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n            <g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g>\n          </svg>\n        </div>\n        <div class=\"video-social-btn-prev-{{ section.id }} video-social-mobile-btn-prev-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n            <g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g>\n          </svg>\n        </div>\n      </div>\n    </div>\n    {% if link_text != blank %}\n      <a href=\"{{ link_url }}\" class=\"video-social-link-{{ section.id }}\">\n        {{ link_text }}\n        {% unless hide_arrow %}\n          <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M3.75 12H20.25\" stroke=\"#120A0A\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n            <path d=\"M13.5 5.25L20.25 12L13.5 18.75\" stroke=\"#120A0A\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n          </svg>\n        {% endunless %}\n      </a>\n    {% endif %}\n  </div>\n</div>\n<style>\n  video img{\n    width:100%;\n    object-fit:cover;\n  }\n</style>\n              \n{% assign col_value_desktop = columns_row | plus: 0 %}\n{% assign col_value_tablet = columns_row | times: 0.5 %}\n{% assign col_value_tablet = col_value_tablet | round: 0 %}\n\n{% if lazy %}\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n{% endif %}\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js\"></script>          \n              \n<script>\n\n  function videoFromSocialinit() {\n    {% if lazy %}\n      var lazyLoadInstance = new LazyLoad();\n\n      window.addEventListener( \"LazyLoad::Initialized\", function (event) {\n        window.lazyLoadInstance = event.detail.instance;\n      },false);\n    {% endif %}\n  \n    const currentSection = document.querySelector(`.video-social-{{ section.id }}`);\n    if (!currentSection) return;\n  \n    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);\n    const swiperDesktop = new Swiper(`.video-social-slider-desktop-{{ section.id }}`, {\n      speed: 300,\n      navigation: {\n        nextEl: `.video-social-desktop-btn-next-{{ section.id }}`,\n        prevEl: `.video-social-desktop-btn-prev-{{ section.id }}`,\n      },\n      pagination : {\n        el: `.video-social-desktop-pagination-{{ section.id }}`,\n        type: 'bullets',\n        clickable: true\n      },\n      breakpoints: {\n        320: {\n          slidesPerView: 1.3,\n          spaceBetween: {{ columns_gap_mobile }},\n        },\n        768: {\n          slidesPerView: {% if section.blocks.size > col_value_tablet %}{{ columns_row | times: 0.5 | round: 0 }}.2{% else %}{{ columns_row | times: 0.5 | round: 0 }}{% endif %},\n          spaceBetween: {{ columns_gap_mobile }}\n        },\n        1024: {\n          slidesPerView: {{ columns_row }},\n          spaceBetween: {{ columns_gap }}\n        }\n      },\n      on: {\n        slideChange: function () {\n          var slides = this.slides;\n          for (var i = 0; i < slides.length; i++) {\n            var video = slides[i].querySelector('video');\n            if (i === this.activeIndex) {\n              video.play();\n              slides[i].classList.add('active');\n            } else {\n              video.pause();\n              slides[i].classList.remove('active');\n            }\n          }\n        }\n      }\n    });\n  \n    const swiperMobile = new Swiper(`.video-social-slider-mobile-{{ section.id }}`, {\n      speed: 300,\n      {% if slider_nav_mobile == \"buttons\" %}\n        allowTouchMove: false,\n      {% endif %}\n      navigation: {\n        nextEl: `.video-social-mobile-btn-next-{{ section.id }}`,\n        prevEl: `.video-social-mobile-btn-prev-{{ section.id }}`,\n      },\n      pagination : {\n        el: `.video-social-mobile-pagination-{{ section.id }}`,\n        type: 'bullets',\n        clickable: true\n      },\n      breakpoints: {\n        320: {\n          slidesPerView: 1.3,\n          spaceBetween: {{ columns_gap_mobile }},\n        },\n        768: {\n          slidesPerView: {% if section.blocks.size > col_value_tablet %}{{ columns_row | times: 0.5 | round: 0 }}.2{% else %}{{ columns_row | times: 0.5 | round: 0 }}{% endif %},\n          spaceBetween: {{ columns_gap_mobile }}\n        },\n        1024: {\n          slidesPerView: {{ columns_row }},\n          spaceBetween: {{ columns_gap }}\n        }\n      },\n      {% if slider_nav_mobile == \"none\" or slider_nav_mobile == \"pagination\" %}\n      on: {\n        slideChange: function () {\n          var slides = this.slides;\n          for (var i = 0; i < slides.length; i++) {\n            var video = slides[i].querySelector('video');\n            if (i === this.activeIndex) {\n  \n            } else {\n              video.pause();\n              slides[i].classList.remove('active');\n            }\n          }\n        }\n      }\n      {% endif %}\n    });\n  \n    const items = currentSection.querySelectorAll(`.video-social-item-{{ section.id }}`);\n    items.forEach(el => {\n      const video = el.querySelector(`.video-social-video-{{ section.id }} video`);\n      if (!video) return;\n  \n      el.addEventListener('click', () => {\n        // Store state before operation\n        const wasPlaying = !video.paused;\n  \n        // Pause all videos in this section first\n        currentSection.querySelectorAll('video').forEach(v => {\n          v.pause();\n          v.closest(`.video-social-item-{{ section.id }}`)?.classList.remove('active');\n        });\n  \n        // Toggle the clicked video based on its previous state\n        if (!wasPlaying) {\n          video.play();\n          el.classList.add('active');\n        }\n      });\n    });\n  \n    {% if slider_nav_mobile == \"buttons\" %}\n      document.querySelector(`.video-social-mobile-btn-prev-{{ section.id }}`).addEventListener('click', function() {\n        var currentIndex = swiperMobile.realIndex;\n        playVideoAndSetActive(currentIndex);\n      });\n  \n      document.querySelector(`.video-social-mobile-btn-next-{{ section.id }}`).addEventListener('click', function() {\n        var currentIndex = swiperMobile.realIndex;\n        playVideoAndSetActive(currentIndex);\n      });\n    {% endif %}\n  \n    function playVideoAndSetActive(index) {\n      var slides = swiperMobile.slides;\n      for (var i = 0; i < slides.length; i++) {\n        var video = slides[i].querySelector('video');\n        if (i === index) {\n          video.play();\n          slides[i].classList.add('active');\n        } else {\n          video.pause();\n          slides[i].classList.remove('active');\n        }\n      }\n    }\n  }\n\n  document.addEventListener('DOMContentLoaded', videoFromSocialinit);\n  \n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', videoFromSocialinit);\n    document.addEventListener('shopify:section:load', videoFromSocialinit);\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Heading",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "36",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "items_mt": {
+      "type": "text",
+      "default": "36",
+      "label": "Items Margin top",
+      "description": "Items Margin top"
+    },
+    "items_mt_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Items Margin top - Mobile",
+      "description": "Items Margin top - Mobile"
+    },
+    "items_type": {
+      "type": "text",
+      "default": "columns",
+      "label": "Items Type",
+      "description": "Items Type"
+    },
+    "items_type_mobile": {
+      "type": "text",
+      "default": "slider",
+      "label": "Items Type - Mobile",
+      "description": "Items Type - Mobile"
+    },
+    "columns_row": {
+      "type": "text",
+      "default": "4",
+      "label": "Columns Per Row",
+      "description": "Slider use this value for slide"
+    },
+    "columns_gap": {
+      "type": "text",
+      "default": "24",
+      "label": "Columns Gap",
+      "description": "Columns Gap"
+    },
+    "columns_gap_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Columns Gap - Mobile",
+      "description": "Columns Gap - Mobile"
+    },
+    "slider_nav": {
+      "type": "text",
+      "default": "buttons",
+      "label": "Slider Navigation Type",
+      "description": "Slider Navigation Type"
+    },
+    "slider_nav_mobile": {
+      "type": "text",
+      "default": "pagination",
+      "label": "Slider Navigation Type - Mobile",
+      "description": "If None or Pagination is selected, autoplay when scrolling through slides is not available"
+    },
+    "slider_nav_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Navigation Buttons Size",
+      "description": "Navigation Buttons Size"
+    },
+    "slider_nav_size_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Navigation Buttons Size - Mobile",
+      "description": "Navigation Buttons Size - Mobile"
+    },
+    "slider_pagination_size": {
+      "type": "text",
+      "default": "15",
+      "label": "Navigation Pagination Size",
+      "description": "Navigation Pagination Size"
+    },
+    "slider_pagination_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Navigation Pagination Size - Mobile",
+      "description": "Navigation Pagination Size - Mobile"
+    },
+    "item_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Border Radius",
+      "description": "Item Border Radius"
+    },
+    "item_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Item Border Thickness",
+      "description": "Item Border Thickness"
+    },
+    "item_padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Item Padding horizontal",
+      "description": "Item Padding horizontal"
+    },
+    "item_padding_vertical": {
+      "type": "text",
+      "default": "0",
+      "label": "Item Padding Vertical",
+      "description": "Item Padding Vertical"
+    },
+    "video_size": {
+      "type": "text",
+      "default": "medium",
+      "label": "Video Size",
+      "description": "Video Size"
+    },
+    "video_size_mobile": {
+      "type": "text",
+      "default": "medium",
+      "label": "Video Size - Mobile",
+      "description": "Video Size - Mobile"
+    },
+    "icon": {
+      "type": "text",
+      "default": "",
+      "label": "Button Play",
+      "description": "Button Play"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "60",
+      "label": "Video Icon Play Size",
+      "description": "Video Icon Play Size"
+    },
+    "icon_padding": {
+      "type": "text",
+      "default": "15",
+      "label": "Video Icon Play Padding",
+      "description": "Video Icon Play Padding"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Content Padding horizontal",
+      "description": "Content Padding horizontal"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "20",
+      "label": "Content Padding Vertical",
+      "description": "Content Padding Vertical"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Text Font Family",
+      "description": "Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Text Size",
+      "description": "Text Size"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Text Line Height",
+      "description": "Text Line Height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Text Align",
+      "description": "Text Align"
+    },
+    "link_text": {
+      "type": "text",
+      "default": "Shop Now",
+      "label": "Link Text",
+      "description": "Link Text"
+    },
+    "link_url": {
+      "type": "text",
+      "default": "",
+      "label": "Link URL",
+      "description": "Link URL"
+    },
+    "link_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "link_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Link Font Family",
+      "description": "Link Font Family"
+    },
+    "link_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Link Size",
+      "description": "Link Size"
+    },
+    "link_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Link Line Height",
+      "description": "Link Line Height"
+    },
+    "link_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Link Text Align",
+      "description": "Link Text Align"
+    },
+    "link_mt": {
+      "type": "text",
+      "default": "36",
+      "label": "Link Margin top",
+      "description": "Link Margin top"
+    },
+    "link_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Link Border Radius",
+      "description": "Link Border Radius"
+    },
+    "link_border_thickness": {
+      "type": "text",
+      "default": "2",
+      "label": "Link Border Thickness",
+      "description": "Link Border Thickness"
+    },
+    "link_padding_horizontal": {
+      "type": "text",
+      "default": "50",
+      "label": "Link Padding horizontal",
+      "description": "Link Padding horizontal"
+    },
+    "link_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Link Padding Vertical",
+      "description": "Link Padding Vertical"
+    },
+    "hide_arrow": {
+      "type": "text",
+      "default": "",
+      "label": "Hide Arrow",
+      "description": "Hide Arrow"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "item_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Item Background Color",
+      "description": "Item Background Color"
+    },
+    "item_border_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Item Border Color",
+      "description": "Item Border Color"
+    },
+    "icon_bg_color": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Button Play Background Color",
+      "description": "Button Play Background Color"
+    },
+    "icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Play Color",
+      "description": "Button Play Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Text Color",
+      "description": "Text Color"
+    },
+    "slider_nav_btn_bg": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Navigation Button Background",
+      "description": "Navigation Button Background"
+    },
+    "slider_nav_btn_hover_bg": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Button Hover Background",
+      "description": "Navigation Button Hover Background"
+    },
+    "slider_nav_border": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Button Border",
+      "description": "Navigation Button Border"
+    },
+    "slider_nav_border_hover": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Button Hover Border",
+      "description": "Navigation Button Hover Border"
+    },
+    "slider_nav_icon": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Button Icon",
+      "description": "Navigation Button Icon"
+    },
+    "slider_nav_hover_icon": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Navigation Button Hover Icon",
+      "description": "Navigation Button Hover Icon"
+    },
+    "slider_pagination_color": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Pagination Color",
+      "description": "Navigation Pagination Color"
+    },
+    "slider_pagination_hover_color": {
+      "type": "color",
+      "default": "#E0C053",
+      "label": "Navigation Pagination Hover Color",
+      "description": "Navigation Pagination Hover Color"
+    },
+    "link_text_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Link Text Color",
+      "description": "Link Text Color"
+    },
+    "link_text_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link Text Hover Color",
+      "description": "Link Text Hover Color"
+    },
+    "link_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link Background Color",
+      "description": "Link Background Color"
+    },
+    "link_bg_hover_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Link Background Hover Color",
+      "description": "Link Background Hover Color"
+    },
+    "link_border_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Link Border Color",
+      "description": "Link Border Color"
+    },
+    "link_border_hover_color": {
+      "type": "color",
+      "default": "#120A0A",
+      "label": "Link Border Hover Color",
+      "description": "Link Border Hover Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#F4F4F4",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "96",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "96",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "130",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load videos for speed optimisation"
+    }
+  }
+}

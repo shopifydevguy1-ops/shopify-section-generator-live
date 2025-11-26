@@ -1,0 +1,492 @@
+{
+  "id": "custom-timeline-4",
+  "name": "CUSTOM Timeline #4",
+  "description": "Section: CUSTOM Timeline #4",
+  "tags": [
+    "timeline"
+  ],
+  "type": "custom",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_highlight_color = section.settings.heading_highlight_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign dots_size = section.settings.dots_size\n  assign dots_size_mobile = section.settings.dots_size_mobile\n  assign dots_show_desktop = section.settings.dots_show_desktop\n  assign dots_show_mobile = section.settings.dots_show_mobile\n  assign dots_color = section.settings.dots_color\n  assign dots_mt = section.settings.dots_mt\n  assign dots_mt_mobile = section.settings.dots_mt_mobile\n  assign dots_align = section.settings.dots_align\n  assign dots_align_mobile = section.settings.dots_align_mobile\n\n  assign dots_horizontal_align = \"\"\n  if dots_align == \"center\"\n    assign dots_horizontal_align = \"center\"\n  elsif dots_align == \"right\"\n    assign dots_horizontal_align = \"end\"\n  else\n    assign dots_horizontal_align = \"start\"\n  endif\n\n  assign dots_horizontal_align_mobile = \"\"\n  if dots_align_mobile == \"center\"\n    assign dots_horizontal_align_mobile = \"center\"\n  elsif dots_align_mobile == \"right\"\n    assign dots_horizontal_align_mobile = \"end\"\n  else\n    assign dots_horizontal_align_mobile = \"start\"\n  endif\n\n  assign slider_gap = section.settings.slider_gap\n  assign slider_gap_mobile = section.settings.slider_gap_mobile\n  assign slider_mt = section.settings.slider_mt\n  assign slider_mt_mobile = section.settings.slider_mt_mobile\n\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_radius = section.settings.image_radius\n\n  assign slide_content_mt = section.settings.slide_content_mt\n  assign slide_content_mt_mobile = section.settings.slide_content_mt_mobile\n  assign slide_content_gap = section.settings.slide_content_gap\n  assign slide_content_gap_mobile = section.settings.slide_content_gap_mobile\n  assign slide_content_align = section.settings.slide_content_align\n  assign slide_content_align_mobile = section.settings.slide_content_align_mobile\n\n  assign date_size = section.settings.date_size\n  assign date_size_mobile = section.settings.date_size_mobile\n  assign date_color = section.settings.date_color\n  assign date_custom = section.settings.date_custom\n  assign date_font = section.settings.date_font\n  assign date_height = section.settings.date_height\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_highlight_color = section.settings.text_highlight_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n\n  assign arrow_size = section.settings.arrow_size\n  assign arrow_size_mobile = section.settings.arrow_size_mobile\n  assign arrow_icon_size = section.settings.arrow_icon_size\n  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n  assign arrow_bg_color = section.settings.arrow_bg_color\n  assign arrow_bg_hover_color = section.settings.arrow_bg_hover_color\n  assign arrow_radius = section.settings.arrow_radius\n  assign arrow_border_thickness = section.settings.arrow_border_thickness\n  assign arrow_border_color = section.settings.arrow_border_color\n  assign arrow_border_hover_color = section.settings.arrow_border_hover_color\n  assign arrow_show_desktop = section.settings.arrow_show_desktop\n  assign arrow_show_mobile = section.settings.arrow_show_mobile\n  assign arrow_hover_effect = section.settings.arrow_hover_effect\n  assign arrow_mt = section.settings.arrow_mt\n  assign arrow_mt_mobile = section.settings.arrow_mt_mobile\n  assign arrow_align = section.settings.arrow_align\n  assign arrow_align_mobile = section.settings.arrow_align_mobile\n\n  assign arrow_horizontal_align = \"\"\n  if arrow_align == \"center\"\n    assign arrow_horizontal_align = \"center\"\n  elsif arrow_align == \"right\"\n    assign arrow_horizontal_align = \"end\"\n  else\n    assign arrow_horizontal_align = \"start\"\n  endif\n\n  assign arrow_horizontal_align_mobile = \"\"\n  if arrow_align_mobile == \"center\"\n    assign arrow_horizontal_align_mobile = \"center\"\n  elsif arrow_align_mobile == \"right\"\n    assign arrow_horizontal_align_mobile = \"end\"\n  else\n    assign arrow_horizontal_align_mobile = \"start\"\n  endif\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{ date_font | font_face: font_display: 'swap' }}\n  {{ text_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .timeline-heading-{{ section.id }} {\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .timeline-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    word-break: brak-word;\n  }\n\n  .timeline-heading-{{ section.id }} * strong {\n    color: {{ heading_highlight_color }};\n  }\n\n  .timeline-pagination-wrapper-{{ section.id }} {\n    display: flex;\n    width: 100%;\n    align-items: center;\n    justify-content: {{ dots_horizontal_align_mobile }} !important;\n  }\n\n  .timeline-pagination-{{ section.id }} {\n    position: relative !important;\n    margin-top: {{ dots_mt_mobile }}px !important;\n    width: 100% !important;\n    max-width: fit-content;\n    justify-content: center;\n    align-items: center;\n    z-index: 1 !important;\n  }\n\n  .timeline-pagination-{{ section.id }} .swiper-pagination-bullet {\n    width: {{ dots_size_mobile }}px !important;\n    height: {{ dots_size_mobile }}px !important;\n    border: 0px !important;\n    background-color: {{ dots_color }} !important;\n    opacity: 0.4 !important;\n    transition: all 0.25s ease 0s;\n    margin: 0 2px !important;\n    \n  }\n\n  .timeline-pagination-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active {\n    opacity: 1 !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .timeline-image-slider-{{ section.id }} {\n    margin-top: {{ slider_mt_mobile }}px !important;\n    margin-left: -{{ padding_horizontal_mobile }}rem !important;\n    margin-right: -{{ padding_horizontal_mobile }}rem !important;\n    padding-left: {{ padding_horizontal_mobile }}rem !important;\n    padding-right: {{ padding_horizontal_mobile }}rem !important;\n  }\n\n  .timeline-content-slider-{{ section.id }} {\n    margin-top: {{ slide_content_mt_mobile }}px !important;\n    margin-left: -{{ padding_horizontal_mobile }}rem !important;\n    margin-right: -{{ padding_horizontal_mobile }}rem !important;\n    padding-left: {{ padding_horizontal_mobile }}rem !important;\n    padding-right: {{ padding_horizontal_mobile }}rem !important;\n  }\n\n  .timeline-image-slider-wrapper-{{ section.id }} {\n    align-items: end !important;\n  }\n\n  .timeline-content-slider-wrapper-{{ section.id }} {\n    margin-left: 0rem;\n  }\n\n  .timeline-image-slide-{{ section.id }} {\n    border: {{ image_border_thickness }}px solid {{ image_border_color }} !important;\n    border-radius: {{ image_radius }}px !important;\n    overflow: hidden !important;\n    opacity: 0.3 !important;\n    transition: all 0.25s ease 0s !important;\n  }\n\n  .timeline-image-slide-{{ section.id }}.swiper-slide-active {\n    opacity: 1 !important;\n    transition: all 0.25s ease 0s !important;\n  }\n\n  .timeline-image-slide-{{ section.id }} img,\n  .timeline-image-slide-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .timeline-image-slide-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n\n  .timeline-content-slide-{{ section.id }} {\n    display: flex !important;\n    flex-direction: column !important;\n    gap: {{ slide_content_gap_mobile }}px !important;\n    opacity: 0.1;\n    transition: all 0.25s ease 0s;\n  }\n\n  .timeline-content-slide-{{ section.id }}.swiper-slide-active {\n    opacity: 1;\n    transition: all 0.25s ease 0s;\n  }\n\n  .timeline-date-{{ section.id }} {\n    margin: 0px;\n    text-align: {{ slide_content_align_mobile }};\n    font-size: {{ date_size_mobile }}px;\n    line-height: {{ date_height }}%;\n    color: {{ date_color }};\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .timeline-text-{{ section.id }} {\n    text-align: {{ slide_content_align_mobile }};\n  }\n\n  .timeline-text-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ text_size_mobile }}px;\n    line-height: {{ text_height }}%;\n    color: {{ text_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .timeline-text-{{ section.id }} * strong {\n    font-weight: 400;\n    color: {{ text_highlight_color }};\n  }\n\n  .timeline-buttons-{{ section.id }} {\n    display: flex;\n    justify-content: {{ arrow_horizontal_align_mobile }};\n    align-items: center;\n    gap: 10px;\n    margin-left: auto;\n    margin-top: {{ arrow_mt_mobile }}px;\n  }\n\n  .timeline-btn-prev-{{ section.id }},\n  .timeline-btn-next-{{ section.id }} {\n    display: flex;\n    width: {{ arrow_size_mobile }}px;\n    height: {{ arrow_size_mobile }}px;\n    border: 0px;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_color }};\n    border-radius: {{ arrow_radius }}px;\n    background: transparent;\n    background: {{ arrow_bg_color }};\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n    /* box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15); */\n  }\n\n  .timeline-btn-prev-{{ section.id }} .animate-icon,\n  .timeline-btn-next-{{ section.id }} .animate-icon {\n    pointer-events: none;\n    place-items: center;\n    display: grid;\n  }\n\n  .timeline-btn-prev-{{ section.id }} .animate-icon:before,\n  .timeline-btn-next-{{ section.id }} .animate-icon:before {\n    content: \"\";\n    grid-area: 1 / -1;\n    transition: all .2s ease;\n    width: {{ arrow_icon_size_mobile }}px;\n    height: {{ arrow_icon_size_mobile }}px;\n    transform: rotate(calc(1 * 45deg));\n    box-sizing: border-box;\n    border-style: solid;\n    border: 0px;\n    border-right: 2px solid currentColor;\n    border-top: 2px solid currentColor;\n    position: relative;\n    left: -1px;\n  }\n\n  .timeline-btn-prev-{{ section.id }} .animate-icon:before {\n    left: unset;\n    right: -1px;\n    border-right: 0px;\n    border-top: 0px;\n    border-bottom: 2px solid currentColor;\n    border-left: 2px solid currentColor;\n  }\n\n  .timeline-btn-prev-{{ section.id }} .animate-icon:after,\n  .timeline-btn-next-{{ section.id }} .animate-icon:after {\n    content: \"\";\n    grid-area: 1 / -1;\n    transition: all .2s ease;\n    width: {{ arrow_icon_size_mobile | minus: 0.3 }}px;\n    height: 1.6px;\n    transform-origin: center;\n    opacity: 0;\n    background: currentColor;\n    transform: scaleX(.5);\n  }\n\n  .timeline-btn-prev-{{ section.id }} span,\n  .timeline-btn-next-{{ section.id }} span {\n    color: {{ arrow_color }};\n  }\n\n  .timeline-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .timeline-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0.5;\n  }\n\n  @media(min-width: 1024px) {\n    .timeline-content-slider-wrapper-{{ section.id }} {\n      margin-left: 10rem;\n    }  \n  }\n\n  @media(min-width: 1320px) {\n    .timeline-content-slider-wrapper-{{ section.id }} {\n      margin-left: 12rem;\n    }  \n  }\n\n  @media(min-width: 1520px) {\n    .timeline-content-slider-wrapper-{{ section.id }} {\n      margin-left: 16rem;\n    }\n  }    \n\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .timeline-heading-{{ section.id }} {\n      text-align: {{ heading_align }};\n    }\n\n    .timeline-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n    }\n\n    .timeline-pagination-wrapper-{{ section.id }} {\n      justify-content: {{ dots_horizontal_align }} !important;\n    }\n\n    .timeline-pagination-{{ section.id }} {\n      margin-top: {{ dots_mt }}px !important;\n    }\n    \n    .timeline-pagination-{{ section.id }} .swiper-pagination-bullet {\n      width: {{ dots_size }}px !important;\n      height: {{ dots_size }}px !important;\n    }\n\n    .timeline-image-slider-{{ section.id }} {\n      margin-top: {{ slider_mt }}px !important;\n      margin-left: -{{ padding_horizontal }}rem !important;\n      margin-right: -{{ padding_horizontal }}rem !important;\n      padding-left: {{ padding_horizontal }}rem !important;\n      padding-right: {{ padding_horizontal }}rem !important;\n    }\n\n    .timeline-content-slider-{{ section.id }} {\n      margin-top: {{ slide_content_mt }}px !important;\n      margin-left: -{{ padding_horizontal }}rem !important;\n      margin-right: -{{ padding_horizontal }}rem !important;\n      padding-left: {{ padding_horizontal }}rem !important;\n      padding-right: {{ padding_horizontal }}rem !important;\n    } \n\n    .timeline-content-slide-{{ section.id }} {\n      flex-direction: row !important;\n      gap: {{ slide_content_gap }}px !important;\n    }\n\n    .timeline-date-{{ section.id }} {\n      text-align: {{ slide_content_align }};\n      font-size: {{ date_size }}px;\n    }\n\n    .timeline-text-{{ section.id }} {\n      text-align: {{ slide_content_align }};\n    }\n    \n    .timeline-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .timeline-buttons-{{ section.id }} {\n      justify-content: {{ arrow_horizontal_align }};\n      margin-top: {{ arrow_mt }}px;\n    }\n\n    .timeline-btn-prev-{{ section.id }},\n    .timeline-btn-next-{{ section.id }} {\n      width: {{ arrow_size }}px;\n      height: {{ arrow_size }}px;\n      transition: all 0.25s ease 0s;\n    }\n\n    .timeline-btn-prev-{{ section.id }} .animate-icon:before,\n    .timeline-btn-next-{{ section.id }} .animate-icon:before {\n      width: {{ arrow_icon_size }}px;\n      height: {{ arrow_icon_size }}px;\n    }\n\n    .timeline-btn-prev-{{ section.id }} .animate-icon:after,\n    .timeline-btn-next-{{ section.id }} .animate-icon:after {\n      width: {{ arrow_icon_size | minus: 0.3 }}px;\n    }\n  }\n\n  .timeline-image-slider-{{ section.id }} {\n    overflow: visible !important;\n  }\n  \n  .timeline-image-slider-{{ section.id }} .swiper-wrapper {\n    will-change: transform;\n  }\n  \n  /* Стили для мобильных устройств */\n  @media (max-width: 1023px) {\n    .timeline-image-slider-wrapper-{{ section.id }} {\n      display: flex !important;\n      flex-wrap: nowrap !important;\n    }\n  \n    .timeline-image-slide-{{ section.id }} {\n      flex: 0 0 auto !important;\n      max-width: none !important;\n    }\n  \n    /* Исправление для последнего слайда */\n    .timeline-image-slider-{{ section.id }} .swiper-slide-active:last-child {\n      opacity: 1 !important;\n    }\n  }\n\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .timeline-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if date_custom %}\n  <style>\n    .timeline-date-{{ section.id }} {\n      font-family: {{ date_font.family }}, {{ date_font.fallback_families }};\n      font-weight: {{ date_font.weight }};\n      font-style: {{ date_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .timeline-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if dots_show_mobile %}\n  <style>\n    .timeline-pagination-{{ section.id }} {\n      display: flex !important;\n    }\n  </style>\n{% else %}\n  <style>\n    .timeline-pagination-{{ section.id }} {\n      display: none !important;\n    }\n  </style>\n{% endif %}\n\n{% if dots_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .timeline-pagination-{{ section.id }} {\n        display: flex !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .timeline-pagination-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if slide_content_align_mobile == 'right' %}\n  <style>\n    .timeline-date-{{ section.id }} {\n      order: 2;\n    }\n\n    .timeline-text-{{ section.id }} {\n      order: 1;\n    }\n  </style>\n{% endif %}\n\n\n{% if slide_content_align == 'right' %}\n  <style>\n    @media (min-width: 1024px) {\n      .timeline-date-{{ section.id }} {\n        order: 2;\n      }\n      .timeline-text-{{ section.id }} {\n        order: 1;\n      }\n    } \n  </style>\n{% else %}\n  <style>\n    @media (min-width: 1024px) {\n      .timeline-date-{{ section.id }} {\n        order: 1;\n      }\n      .timeline-text-{{ section.id }} {\n        order: 2;\n      }\n    } \n  </style>\n{% endif %}\n\n{% if arrow_hover_effect == \"color\" %}\n  <style>\n    .timeline-btn-prev-{{ section.id }}:hover,\n    .timeline-btn-next-{{ section.id }}:hover {\n      transition: all 0.3s ease 0s;\n      border: {{ arrow_border_thickness }}px solid {{ arrow_border_hover_color }};\n      background: {{ arrow_bg_hover_color }};\n    }\n  \n    .timeline-btn-prev-{{ section.id }}:hover .animate-icon,\n    .timeline-btn-next-{{ section.id }}:hover .animate-icon {\n      color: {{ arrow_hover_color }};\n    }\n  </style>\n{% elsif arrow_hover_effect == \"scale\" %}\n  <style>\n    .timeline-btn-prev-{{ section.id }}:hover,\n    .timeline-btn-next-{{ section.id }}:hover {\n      transform: scale(0.9);\n    }\n\n    @media(min-width: 1024px) {\n      .timeline-btn-prev-{{ section.id }}:hover,\n      .timeline-btn-next-{{ section.id }}:hover {\n        transform: scale(0.9);\n      }\n    }\n  </style>\n{% elsif arrow_hover_effect == \"arrow\" %}\n  <style>\n    .timeline-btn-next-{{ section.id }}:hover .animate-icon:before {\n      transform: translate(calc(1 * 0.125rem)) rotate(calc(1 * 45deg));\n    }\n  \n    .timeline-btn-prev-{{ section.id }}:hover .animate-icon:before {\n      transform: translate(calc(-1 * 0.125rem)) rotate(calc(1 * 45deg));\n    }\n    \n    .timeline-btn-prev-{{ section.id }}:hover .animate-icon:after,\n    .timeline-btn-next-{{ section.id }}:hover .animate-icon:after {\n      opacity: 1;\n      transform: scaleX(1);\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_mobile %}\n  <style>\n    .timeline-buttons-{{ section.id }} {\n      display: flex;\n    }\n  </style>\n{% else %}\n  <style>\n    .timeline-buttons-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .timeline-buttons-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .timeline-buttons-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  <style>\n\n\n    @media(min-width: 1024px) {\n      .timeline-image-slide-{{ block.id }} {\n        width: {{ block.settings.image_width }}px !important;\n      }\n    }\n  </style>\n  \n  {% if block.settings.image_ratio_mobile == \"portrait\" %}\n    <style>\n      .timeline-image-slide-{{ block.id }} {\n        aspect-ratio: 9.6/11;\n      }\n    </style>\n  {% elsif block.settings.image_ratio_mobile == \"landscape\" %}\n    <style>\n    .timeline-image-slide-{{ block.id }} {\n      aspect-ratio: 12/8;\n    }\n    </style>\n  {% elsif block.settings.image_ratio_mobile == \"square\" %}\n    <style>\n      .timeline-image-slide-{{ block.id }} {\n        aspect-ratio: 12/12;\n      }\n    </style>\n  {% else %}\n    <style>\n      .timeline-image-slide-{{ block.id }} {\n        aspect-ratio: auto;\n      }\n    </style>\n  {% endif %}\n\n  {% if block.settings.image_ratio == \"portrait\" %}\n    <style>\n      @media(min-width: 1024px) {\n        .timeline-image-slide-{{ block.id }} {\n          aspect-ratio: 9.6/11;\n        }\n      }\n      \n    </style>\n  {% elsif block.settings.image_ratio == \"landscape\" %}\n    <style>\n      @media(min-width: 1024px) {\n        .timeline-image-slide-{{ block.id }} {\n          aspect-ratio: 12/8;\n        }\n      }  \n    </style>\n  {% elsif block.settings.image_ratio == \"square\" %}\n    <style>\n      @media(min-width: 1024px) {\n        .timeline-image-slide-{{ block.id }} {\n          aspect-ratio: 12/12;\n        }\n      }    \n    </style>\n  {% else %}\n    <style>\n      @media(min-width: 1024px) {\n        .timeline-image-slide-{{ block.id }} {\n          aspect-ratio: auto;\n        }\n      }\n    </style>\n  {% endif %}\n\n{% endfor %}\n\n\n\n{% comment %} PREVIEW {% endcomment %}\n<style>\n  .product-reviews-slider-{{ section.id }}.preview .swiper-wrapper {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    overflow: hidden;\n  }\n\n  .product-reviews-slider-{{ section.id }}.preview .product-reviews-item-{{ section.id }} {\n    width: 100%;\n  }\n\n  .product-reviews-slider-{{ section.id }}.preview .product-reviews-item-{{ section.id }}:not(:first-child) {\n    margin-left: {{ slider_gap_mobile }}px;\n  } \n\n  @media(min-width: 1024px) {\n    .product-reviews-slider-{{ section.id }}.preview .product-reviews-item-{{ section.id }}:not(:first-child) {\n      margin-left: {{ slider_gap }}px;\n    } \n\n    .product-reviews-slider-{{ section.id }}.preview .product-reviews-item-{{ section.id }} {\n      width: calc(100% - ({{ slider_gap }}px));\n    }\n  }\n</style>\n\n\n<div class=\"section-{{ section.id }} timeline-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% if heading != blank %}\n        <div class=\"timeline-heading-{{ section.id }}\">{{ heading }}</div>\n      {% endif %}\n      <div class=\"timeline-pagination-wrapper-{{ section.id }}\">\n        <div class=\"timeline-pagination-{{ section.id }} swiper-pagination\"></div>\n      </div>\n    \n      <div class=\"timeline-image-slider-{{ section.id }} swiper\"\n          data-gap=\"{{ slider_gap }}\"\n          data-gap-mobile=\"{{ slider_gap_mobile }}\">\n        <div class=\"timeline-image-slider-wrapper-{{ section.id }} swiper-wrapper\">\n          {% for block in section.blocks %}\n            {% if block.settings.text != blank or block.settings.date != blank %}\n              <div class=\"timeline-image-slide-{{ section.id }} timeline-image-slide-{{ block.id }} swiper-slide\">\n                {% if block.settings.image != blank %}\n                  <img src=\"{{ block.settings.image | img_url: \"1000x1000\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>   \n                {% else %}  \n                  {{ 'image' | placeholder_svg_tag }}\n                {% endif %} \n              </div>\n            {% endif %}\n          {% endfor %}\n        </div>\n      </div>\n      <div class=\"timeline-content-slider-{{ section.id }} swiper\"\n          data-gap=\"{{ slider_gap }}\"\n          data-gap-mobile=\"{{ slider_gap_mobile }}\">\n        <div class=\"timeline-content-slider-wrapper-{{ section.id }} swiper-wrapper\">\n          {% for block in section.blocks %}\n            {% if block.settings.text != blank or block.settings.date != blank %}\n              <div class=\"timeline-content-slide-{{ section.id }} swiper-slide\">\n                {% if block.settings.date != blank %}\n                  <p class=\"timeline-date-{{ section.id }}\">{{ block.settings.date }}</p>\n                {% endif %}\n                {% if block.settings.text != blank %}\n                  <div class=\"timeline-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                {% endif %}             \n              </div>\n            {% endif %}\n          {% endfor %}\n        </div>\n      </div>\n      <div class=\"timeline-buttons-{{ section.id }}\">\n        <button class=\"timeline-btn-prev-{{ section.id }}\">\n          <span class=\"animate-icon\"></span>\n        </button>\n        <button class=\"timeline-btn-next-{{ section.id }}\">\n          <span class=\"animate-icon\"></span>\n        </button>   \n      </div>\n    </div>\n</div>\n\n<script>\n  function loadSwiper(callback) {\n    if (window.Swiper) {\n      callback();\n    } else {\n      const script = document.createElement('script');\n      script.src = \"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\";\n      script.onload = callback;\n      document.head.appendChild(script);\n    }\n  }\n\nfunction initTimeline4(sectionId) {\n  // Вспомогательная функция для определения мобильного устройства\n  const isMobile = () => window.innerWidth < 1024;\n\n  const imageSlider = new Swiper(`.timeline-image-slider-${sectionId}`, {\n    speed: 300,\n    navigation: {\n      nextEl: `.timeline-btn-next-${sectionId}`,\n      prevEl: `.timeline-btn-prev-${sectionId}`,\n    },\n    pagination: {\n      el: `.timeline-pagination-${sectionId}`,\n      type: \"bullets\",\n      clickable: true,\n      renderBullet: function (index, className) {\n        return '<span class=\"' + className + '\"></span>';\n      },\n    },\n    watchSlidesProgress: true,\n    breakpoints: {\n      320: {\n        spaceBetween: parseInt(document.querySelector(`.timeline-image-slider-${sectionId}`).dataset.gapMobile || 0),\n        centeredSlides: false,\n        slidesPerView: 1.5,\n        initialSlide: 0\n      },\n      768: {\n        spaceBetween: parseInt(document.querySelector(`.timeline-image-slider-${sectionId}`).dataset.gapMobile || 0),\n        centeredSlides: false,\n        slidesPerView: \"auto\",\n        initialSlide: 0\n      },\n      1024: {\n        spaceBetween: parseInt(document.querySelector(`.timeline-image-slider-${sectionId}`).dataset.gap || 0),\n        centeredSlides: true,\n        slidesPerView: \"auto\",\n      }\n    },\n    on: {\n      init: function() {\n        this.snapGrid = [...this.slidesGrid];\n      }\n    }\n  });\n\n  const contentSlider = new Swiper(`.timeline-content-slider-${sectionId}`, {\n    speed: 300,\n    allowTouchMove: false,\n    breakpoints: {\n      320: {\n        spaceBetween: 80,\n        slidesPerView: 1,\n        centeredSlides: true,\n      },\n      768: {\n        spaceBetween: 80,\n        slidesPerView: 1,\n        centeredSlides: true,\n      },\n      1024: {\n        spaceBetween: 80,\n        slidesPerView: 2.3,\n        centeredSlides: true,\n      },\n      1420: {\n        spaceBetween: 80,\n        slidesPerView: 2.6,\n        centeredSlides: true,\n      }\n    }\n  });\n\n  let isAnimating = false;\n\n  const syncSliders = (targetIndex) => {\n    if (isAnimating) return;\n\n    isAnimating = true;\n    const totalSlides = imageSlider.slides.length;\n\n    // Убедимся, что индекс в допустимых пределах\n    const safeIndex = Math.max(0, Math.min(targetIndex, totalSlides - 1));\n\n    // Синхронное перемещение слайдеров\n    imageSlider.slideTo(safeIndex, 300);\n    contentSlider.slideTo(safeIndex, 300);\n\n    setTimeout(() => {\n      isAnimating = false;\n    }, 350);\n  };\n\n  // Обработка перемещения для imageSlider\n  imageSlider.on('slideChange', function() {\n    if (!isAnimating) {\n      syncSliders(this.activeIndex);\n    }\n  });\n\n  // Обновление слайдера при изменении размера окна\n  let resizeTimer;\n  window.addEventListener('resize', () => {\n    clearTimeout(resizeTimer);\n    resizeTimer = setTimeout(() => {\n      imageSlider.update();\n      contentSlider.update();\n      \n      // Переопределяем сетку снапов\n      imageSlider.snapGrid = [...imageSlider.slidesGrid];\n      \n      // Обновляем пагинацию\n      imageSlider.pagination.render();\n      imageSlider.pagination.update();\n    }, 200);\n  });\n\n  // Принудительное обновление пагинации при достижении последнего слайда\n  imageSlider.on('reachEnd', function() {\n    const lastIndex = imageSlider.slides.length - 1;\n    \n    setTimeout(() => {\n      // Проверяем, действительно ли мы на последнем слайде\n      if (imageSlider.activeIndex !== lastIndex) {\n        syncSliders(lastIndex);\n      }\n      \n      // Обновляем пагинацию\n      imageSlider.pagination.render();\n      imageSlider.pagination.update();\n    }, 100);\n  });\n\n  // Принудительное обновление при инициализации\n  setTimeout(() => {\n    imageSlider.update();\n    contentSlider.update();\n    imageSlider.pagination.render();\n    imageSlider.pagination.update();\n  }, 100);\n}\n\n  function initializeAllTimeline4Sections() {\n    const sections = document.querySelectorAll('[id^=\"shopify-section-\"]');\n    sections.forEach(section => {\n      if (section.querySelector('.timeline-{{ section.id }}')) {\n        const sectionId = section.id.replace('shopify-section-', '');\n        loadSwiper(() => initTimeline4(sectionId));\n      }\n    });\n  }\n\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', initializeAllTimeline4Sections);\n  } else {\n    initializeAllTimeline4Sections();\n  }\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:load', (event) => {\n      const sectionId = event.detail.sectionId;\n      if (event.target.querySelector('.timeline-{{ section.id }}')) {\n        loadSwiper(() => initTimeline4(sectionId));\n      }\n    });\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Time<strong>line #4</strong></h2>",
+      "label": "Text",
+      "description": "Use bold formatting to apply the accent color"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "48",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "dots_size": {
+      "type": "text",
+      "default": "8",
+      "label": "Size",
+      "description": "Size"
+    },
+    "dots_size_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "dots_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "dots_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "dots_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on desktop",
+      "description": "Show on desktop"
+    },
+    "dots_show_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on mobile",
+      "description": "Show on mobile"
+    },
+    "dots_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "dots_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "slider_gap": {
+      "type": "text",
+      "default": "10",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "slider_gap_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "slider_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "slider_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "10",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "slide_content_gap": {
+      "type": "text",
+      "default": "30",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "slide_content_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "slide_content_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "slide_content_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "slide_content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "slide_content_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "date_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "date_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "date_size": {
+      "type": "text",
+      "default": "72",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "date_size_mobile": {
+      "type": "text",
+      "default": "42",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "date_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "arrow_size": {
+      "type": "text",
+      "default": "48",
+      "label": "Size",
+      "description": "Size"
+    },
+    "arrow_size_mobile": {
+      "type": "text",
+      "default": "38",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "arrow_icon_size": {
+      "type": "text",
+      "default": "10",
+      "label": "Icon size",
+      "description": "Icon size"
+    },
+    "arrow_icon_size_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Icon size - mobile",
+      "description": "Icon size - mobile"
+    },
+    "arrow_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "arrow_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "arrow_hover_effect": {
+      "type": "text",
+      "default": "color",
+      "label": "Hover effect",
+      "description": "Hover effect"
+    },
+    "arrow_mt": {
+      "type": "text",
+      "default": "40",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "arrow_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "arrow_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on desktop",
+      "description": "Show on desktop"
+    },
+    "arrow_show_mobile": {
+      "type": "text",
+      "default": "false",
+      "label": "Show on mobile",
+      "description": "Show on mobile"
+    },
+    "arrow_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "arrow_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Primary",
+      "description": "Primary"
+    },
+    "heading_highlight_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Accent",
+      "description": "Use bold formatting to apply the accent color"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image border",
+      "description": "Image border"
+    },
+    "date_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Date",
+      "description": "Date"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text primary",
+      "description": "Text primary"
+    },
+    "text_highlight_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Text accent",
+      "description": "Use bold formatting to apply the accent color"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "arrow_bg_color": {
+      "type": "color",
+      "default": "",
+      "label": "Background",
+      "description": "Background"
+    },
+    "arrow_bg_hover_color": {
+      "type": "color",
+      "default": "",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "arrow_border_color": {
+      "type": "color",
+      "default": "#C7C7C7",
+      "label": "Border",
+      "description": "Border"
+    },
+    "arrow_border_hover_color": {
+      "type": "color",
+      "default": "#C7C7C7",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "dots_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Dots",
+      "description": "Dots"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

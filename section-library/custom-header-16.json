@@ -1,0 +1,330 @@
+{
+  "id": "custom-header-16",
+  "name": "CUSTOM Header #16",
+  "description": "Section: CUSTOM Header #16",
+  "tags": [
+    "header"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \r\n  assign padding_horizontal = section.settings.padding_horizontal\r\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\r\n  assign padding_top = section.settings.padding_top\r\n  assign padding_bottom = section.settings.padding_bottom\r\n  assign border_color = section.settings.border_color\r\n  assign border_thickness = section.settings.border_thickness\r\n  assign background_color = section.settings.background_color\r\n  assign background_gradient = section.settings.background_gradient\r\n  assign full_width = section.settings.full_width\r\n  assign content_width = section.settings.content_width\r\n  assign lazy = section.settings.lazy\r\n  assign header_logo_dot_color = section.settings.header_logo_dot_color\r\n  assign background_style = section.settings.background_style\r\n\r\n  assign logo = section.settings.logo\r\n  assign logo_mobile = section.settings.logo_mobile\r\n  assign logo_width = section.settings.logo_width\r\n  assign logo_width_mobile = section.settings.logo_width_mobile\r\n  assign use_menu_icon = section.settings.use_menu_icon\r\n  assign menu_icon_color = section.settings.menu_icon_color\r\n\r\n  assign name_size = section.settings.name_size\r\n  assign name_size_mobile = section.settings.name_size_mobile\r\n  assign name_color = section.settings.name_color\r\n  assign name_hover_color = section.settings.name_hover_color\r\n  assign name_custom = section.settings.name_custom\r\n  assign name_font = section.settings.name_font\r\n  assign name_height = section.settings.name_height\r\n\r\n  assign close_color = section.settings.close_color\r\n  assign close_hover_color = section.settings.close_hover_color\r\n\r\n  assign menu = section.settings.menu\r\n  assign menu_divider_thickness = section.settings.menu_divider_thickness\r\n  assign menu_divider_color = section.settings.menu_divider_color\r\n  \r\n  assign list_gap_mobile = section.settings.list_gap_mobile\r\n  assign list_gap = section.settings.list_gap\r\n\r\n  assign sub_list_gap_mobile = section.settings.sub_list_gap_mobile\r\n  assign sub_list_gap = section.settings.sub_list_gap\r\n\r\n  assign link_size = section.settings.link_size\r\n  assign link_size_mobile = section.settings.link_size_mobile\r\n  assign link_color = section.settings.link_color\r\n  assign link_hover_color = section.settings.link_hover_color\r\n  assign link_custom = section.settings.link_custom\r\n  assign link_font = section.settings.link_font\r\n  assign link_height = section.settings.link_height\r\n  assign link_align = section.settings.link_align\r\n  assign link_align_mobile = section.settings.link_align_mobile\r\n\r\n  assign link_horizontal_align = \"\"\r\n  if link_align == \"center\"\r\n    assign link_horizontal_align = \"center\"\r\n  elsif link_align == \"right\"\r\n    assign link_horizontal_align = \"end\"\r\n  else\r\n    assign link_horizontal_align = \"start\"\r\n  endif\r\n\r\n  assign link_horizontal_align_mobile = \"\"\r\n  if link_align_mobile == \"center\"\r\n    assign link_horizontal_align_mobile = \"center\"\r\n  elsif link_align_mobile == \"right\"\r\n    assign link_horizontal_align_mobile = \"end\"\r\n  else\r\n    assign link_horizontal_align_mobile = \"start\"\r\n  endif\r\n\r\n  assign sublink_size = section.settings.sublink_size\r\n  assign sublink_size_mobile = section.settings.sublink_size_mobile\r\n  assign sublink_color = section.settings.sublink_color\r\n  assign sublink_hover_color = section.settings.sublink_hover_color\r\n  assign sublink_custom = section.settings.sublink_custom\r\n  assign sublink_font = section.settings.sublink_font\r\n  assign sublink_height = section.settings.sublink_height  \r\n\r\n  assign toggle_icon_color = section.settings.toggle_icon_color\r\n  assign arrow_icon_color = section.settings.arrow_icon_color\r\n-%}\r\n\r\n{%- style -%}\r\n  {{ name_font | font_face: font_display: 'swap' }}\r\n  {{ link_font | font_face: font_display: 'swap' }}\r\n  {{ sublink_font | font_face: font_display: 'swap' }}\r\n  \r\n  \r\n  .section-{{ section.id }} {\r\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\r\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;    \r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0;\r\n    transform: translateY(-100vh);\r\n    transition: all 0.3s ease 0s;\r\n    z-index: 10;\r\n  }\r\n\r\n  .section-{{ section.id }}.active {\r\n    transform: translateY(0) !important;\r\n    transition: all 0.3s ease 0s;\r\n  }\r\n\r\n  .section-{{ section.id }}-settings {\r\n    margin: 0 auto;    \r\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\r\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\r\n    padding-left: {{ padding_horizontal_mobile }}rem;\r\n    padding-right: {{ padding_horizontal_mobile }}rem;\r\n    z-index: 3;\r\n    position: relative;\r\n  }\r\n\r\n  .header-body-{{ section.id }} {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    overflow-y: scroll;\r\n    scrollbar-width: none;\r\n    max-height: 70vh;\r\n  }\r\n\r\n  .header-menu-{{ section.id }} {\r\n    display: flex;\r\n    width: 100%;\r\n    gap: {{ list_gap_mobile }}px;\r\n    align-items: center;\r\n    flex-direction: column;\r\n  }\r\n\r\n  .header-menu-list-{{ section.id }} {\r\n    padding: 0px;\r\n    margin: 0px;\r\n    display: flex;\r\n    list-style: none;\r\n    align-items: {{  link_horizontal_align_mobile }};\r\n    flex-direction: column;\r\n    width: 100%;\r\n  }\r\n\r\n  .header-menu-item-{{ section.id }} {\r\n    line-height: 100%;\r\n    cursor: pointer;\r\n    box-sizing: border-box;\r\n  }\r\n\r\n  .header-item-{{ section.id }} {\r\n    padding: {{ list_gap_mobile }}px 0px;\r\n  }\r\n\r\n  .header-item-{{ section.id }}:not(.hide):not(:last-child) {\r\n    width: 100%;\r\n    border-bottom: {{ menu_divider_thickness }}px solid {{ menu_divider_color }};\r\n  }\r\n\r\n  .header-menu-link-{{ section.id }} {\r\n    margin: 0;\r\n    text-align: {{ link_align_mobile }};\r\n    font-size: {{ link_size_mobile }}px;\r\n    color: {{ link_color }};\r\n    line-height: {{ link_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    transition: all 0.25s ease 0s;\r\n    text-wrap: nowrap;\r\n    position: relative;\r\n    font-weight: 700;\r\n    display: block;\r\n    width: 100%;\r\n  }\r\n\r\n  .header-submenu-list-{{ section.id }} {\r\n    overflow: hidden;   \r\n    padding: 0px;\r\n    margin: 0px;\r\n    display: none;\r\n    list-style: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: {{  link_horizontal_align_mobile }};\r\n    transition: all 0.25s ease 0s;\r\n    flex-wrap: wrap;\r\n  }\r\n\r\n  .header-submenu-list-{{ section.id }}.active {\r\n    display: flex;\r\n    width: 100%;\r\n  }\r\n\r\n  .header-item-{{ section.id }} {\r\n    width: 100%;\r\n  }\r\n\r\n  .header-submenu-item-{{ section.id }} {\r\n    line-height: 100%;\r\n    cursor: pointer;\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    padding: {{ sub_list_gap_mobile }}px 0px;\r\n  }\r\n\r\n  .header-submenu-item-{{ section.id }}:not(:last-child) {\r\n    border-bottom: {{ menu_divider_thickness }}px solid {{ menu_divider_color }};\r\n  }\r\n\r\n  .header-submenu-link-{{ section.id }} {\r\n    margin: 0;\r\n    display: block;\r\n    text-align: {{ link_align_mobile }};\r\n    font-size: {{ sublink_size_mobile }}px;\r\n    color: {{ sublink_color }};\r\n    line-height: {{ sublink_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    transition: all 0.25s ease 0s;\r\n    text-wrap: nowrap;\r\n    position: relative;\r\n    width: 100%;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .header-logo-close-icon-{{ section.id }} {\r\n    margin-top: 10px;\r\n    display: none;\r\n  }\r\n\r\n  .header-logo-close-icon-{{ section.id }} svg,\r\n  .header-submenu-close-{{ section.id }} svg {\r\n    width: {{ logo_width_mobile }}px;\r\n    height: {{ logo_width_mobile }}px;\r\n    object-fit: cover;\r\n    display: block;\r\n  }\r\n\r\n  .header-submenu-close-{{ section.id }} svg path {\r\n    stroke: {{ arrow_icon_color }};\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n  .header-logo-close-icon-{{ section.id }} svg path {\r\n    stroke: {{ close_color }};\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-logo-click-{{ section.id }}:hover .header-logo-close-icon-{{ section.id }} svg path {\r\n    stroke: {{ close_hover_color }};\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-logo-{{ section.id }}.active .header-logo-close-icon-{{ section.id }} {\r\n    display: block;\r\n  }\r\n\r\n  .header-logo-{{ section.id }}.active .header-logo-image-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-logo-{{ section.id }}.active .header-logo-text-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-logo-{{ section.id }} {\r\n    position: relative;\r\n    margin: 0 auto;\r\n    max-width: fit-content;\r\n    padding: 20px;\r\n    padding-top: 10px;\r\n    position: absolute;\r\n    left: 50%;\r\n    margin-top: -2px;\r\n    cursor: pointer;\r\n    transform: translateX(-50%);\r\n    text-align: center;\r\n    {% if background_style == 'solid' %}\r\n      background-color: {{ background_color }};\r\n    {% else %}\r\n      background-image: {{ background_gradient }};\r\n    {% endif %}\r\n    border-bottom-left-radius: 50px;\r\n    border-bottom-right-radius: 50px;\r\n    z-index: 1;\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-logo-{{ section.id }}.active .header-logo-menu-icon-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-logo-menu-icon-{{ section.id }} {\r\n    position: absolute;\r\n    z-index: 2;\r\n    bottom: -27px;\r\n    right: -4px;\r\n  }\r\n\r\n  .header-logo-menu-icon-{{ section.id }} svg path {\r\n    fill: {{ menu_icon_color }};\r\n  }\r\n\r\n  .header-logo-image-{{ section.id }} {\r\n    margin-top: 10px;\r\n    max-width: {{ logo_width_mobile }}px;\r\n  }\r\n\r\n  .header-logo-image-{{ section.id }} img,\r\n  .header-logo-image-{{ section.id }} svg {\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n  }\r\n\r\n  .header-logo-image-desktop-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-logo-text-{{ section.id }} {\r\n    margin: 0;\r\n    margin-top: 10px;\r\n    font-weight: 700;\r\n    font-size: {{ name_size_mobile }}px;\r\n    color: {{ name_color }};\r\n    line-height: {{ name_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-menu-logo-{{ section.id }} {\r\n    margin: 0 auto;\r\n    max-width: fit-content;\r\n    text-align: center;\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-menu-logo-image-{{ section.id }} {\r\n    display: block;\r\n    width: 100%;\r\n    max-width: {{ logo_width_mobile }}px;\r\n  }\r\n\r\n  .header-menu-logo-image-{{ section.id }} img,\r\n  .header-menu-logo-image-{{ section.id }} svg {\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n  }\r\n\r\n  .header-menu-logo-image-desktop-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-menu-logo-text-{{ section.id }} {\r\n    margin: 0;\r\n    font-weight: 700;\r\n    font-size: {{ name_size_mobile }}px;\r\n    color: {{ name_color }};\r\n    line-height: {{ name_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .header-menu-list-mobile-{{ section.id }} {\r\n    display: flex;\r\n  }\r\n\r\n  .header-menu-list-desktop-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-toggle-{{ section.id }} {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 5px;\r\n    align-items: {{  link_horizontal_align_mobile }};\r\n  }\r\n\r\n  .header-toggle-icon-{{ section.id }} {\r\n    display: flex;\r\n  }\r\n\r\n  .header-toggle-icon-{{ section.id }} svg {\r\n    width: 30px;\r\n    height: 30px;\r\n  }\r\n\r\n  .header-toggle-icon-{{ section.id }} svg path {\r\n    stroke: {{ toggle_icon_color }};\r\n  }\r\n\r\n  .header-toggle-{{ section.id }}.active .header-toggle-icon-{{ section.id }} {\r\n    display: none;\r\n  }\r\n\r\n  .header-answer-{{ section.id }} {\r\n    transition: all 0.3s ease 0s;\r\n  }\r\n\r\n  .header-height-cal-{{ section.id }} {\r\n    visibility: hidden;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;  \r\n    padding-top: 20px;\r\n  }\r\n\r\n  .header-logo-dots-{{ section.id }} {\r\n    display: flex;\r\n    margin: 0;\r\n    padding: 0 10px;\r\n    position: absolute;\r\n    top: 8px;\r\n    left: 0;\r\n    width: 100%;\r\n    margin-bottom: 8px;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n  }\r\n\r\n  .header-logo-dot-{{ section.id }} {\r\n    display: block !important;\r\n    width: 3px;\r\n    height: 3px;\r\n    background-color: {{ header_logo_dot_color }};\r\n  }\r\n   \r\n  @media(min-width: 1024px) {    \r\n    .section-{{ section.id }}-settings {\r\n      padding: 0 5rem;\r\n      padding-top: {{ padding_top }}px;\r\n      padding-bottom: {{ padding_bottom }}px;\r\n      padding-left: {{ padding_horizontal }}rem;\r\n      padding-right: {{ padding_horizontal }}rem;\r\n    }    \r\n\r\n    .section-{{ section.id }}:not(.active):hover {\r\n      top: 20px;\r\n      transition: all 0.3s ease 0s;\r\n    }    \r\n\r\n    .header-body-{{ section.id }} {\r\n      max-height: 70vh;\r\n    }\r\n\r\n    .header-menu-{{ section.id }} {\r\n      gap: {{ list_gap }}px;\r\n    }\r\n\r\n    .header-menu-list-{{ section.id }} {\r\n      gap: {{ list_gap }}px;\r\n      align-items: {{  link_horizontal_align }};\r\n    }\r\n\r\n    .header-menu-link-{{ section.id }} {\r\n      font-size: {{ link_size }}px;\r\n      text-align: {{ link_align }};\r\n      transition: all 0.25s ease;\r\n      color: {{ link_hover_color }};\r\n    }\r\n\r\n    .header-submenu-item-{{ section.id }} {\r\n      width: fit-content;\r\n      padding: 0px !important;\r\n      border-bottom: 0px !important;\r\n    }\r\n\r\n    .header-submenu-link-{{ section.id }}:hover {\r\n      color: {{ sublink_hover_color }};\r\n      transition: all 0.25s ease 0s;\r\n    }  \r\n\r\n    .header-menu-list-{{ section.id }}:hover .header-menu-link-{{ section.id }} {\r\n      color: {{ link_color }};\r\n      transition: all 0.25s ease 0s;\r\n    }\r\n\r\n    .header-menu-list-{{ section.id }} .header-menu-item-{{ section.id }}:hover .header-menu-link-{{ section.id }} {\r\n      color: {{ link_hover_color }};\r\n      transition: all 0.25s ease 0s;\r\n    }\r\n\r\n    .header-submenu-list-{{ section.id }} {    \r\n      max-height: 0; \r\n      flex-direction: row;\r\n      display: flex;\r\n      justify-content: {{  link_horizontal_align }};\r\n      gap: {{ sub_list_gap }}px;\r\n      flex-wrap: nowrap;\r\n      opacity: 0;      \r\n    }\r\n\r\n    .header-menu-item-{{ section.id }}:hover .header-submenu-list-{{ section.id }} {\r\n      max-height: calc({{ link_size }}px + 20px);\r\n      padding-top: 20px;\r\n      opacity: 1;\r\n      transition: all 0.6s ease 0s;\r\n    }\r\n\r\n    .header-submenu-link-{{ section.id }} {     \r\n      font-size: {{ sublink_size }}px;     \r\n      text-align: {{ link_align }};\r\n    }\r\n\r\n    .header-logo-image-{{ section.id }} {\r\n      max-width: {{ logo_width }}px;\r\n    }\r\n\r\n    .header-logo-image-desktop-{{ section.id }} {\r\n      display: block;\r\n    }\r\n\r\n    .header-logo-image-mobile-{{ section.id }} {\r\n      display: none;\r\n    }\r\n\r\n    .header-menu-list-mobile-{{ section.id }} {\r\n      display: none;\r\n    }\r\n\r\n    .header-toggle-{{ section.id }} {\r\n      align-items: {{  link_horizontal_align }};\r\n    }\r\n\r\n    .header-menu-list-desktop-{{ section.id }} {\r\n      display: flex;\r\n    }\r\n\r\n    .header-submenu-list-{{ section.id }} {\r\n      max-height: 0;\r\n    }\r\n\r\n    .header-logo-text-{{ section.id }} {\r\n      font-size: {{ name_size }}px;\r\n      transition: all 0.25s ease;\r\n    }    \r\n\r\n    .header-logo-text-{{ section.id }}:hover {\r\n      transition: all 0.25s ease;\r\n      color: {{ name_hover_color }};\r\n    }\r\n    .header-menu-logo-image-{{ section.id }} {\r\n      max-width: {{ logo_width }}px;\r\n    }\r\n\r\n    .header-menu-logo-image-desktop-{{ section.id }} {\r\n      display: block;\r\n    }\r\n\r\n    .header-menu-logo-image-mobile-{{ section.id }} {\r\n      display: none;\r\n    }\r\n\r\n    .header-logo-close-icon-{{ section.id }} svg,\r\n    .header-submenu-close-{{ section.id }} svg {\r\n      width: {{ logo_width }}px;\r\n      height: {{ logo_width }}px;\r\n    }\r\n\r\n    .header-menu-logo-text-{{ section.id }} {\r\n      font-size: {{ name_size }}px;\r\n      transition: all 0.25s ease;\r\n    }    \r\n\r\n    .header-menu-logo-text-{{ section.id }}:hover {\r\n      transition: all 0.25s ease;\r\n      color: {{ name_hover_color }};\r\n    }\r\n  }\r\n  \r\n{%- endstyle -%}\r\n\r\n{% unless full_width %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: {{ content_width }}px;\r\n    }\r\n  </style>\r\n{% endunless %}\r\n\r\n{% if name_custom %}\r\n  <style>\r\n    .header-menu-logo-text-{{ section.id }},\r\n    .header-logo-text-{{ section.id }} {\r\n      font-family: {{ name_font.family }}, {{ name_font.fallback_families }};\r\n      font-weight: {{ name_font.weight }};\r\n      font-style: {{ name_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if link_custom %}\r\n  <style>\r\n    .header-menu-link-{{ section.id }} {\r\n      font-family: {{ link_font.family }}, {{ link_font.fallback_families }};\r\n      font-weight: {{ link_font.weight }};\r\n      font-style: {{ link_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if sublink_custom %}\r\n  <style>\r\n    .header-submenu-link-{{ section.id }} {\r\n      font-family: {{ sublink_font.family }}, {{ sublink_font.fallback_families }};\r\n      font-weight: {{ sublink_font.weight }};\r\n      font-style: {{ sublink_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% for block in section.blocks %}\r\n  {% if block.type == 'socials' %}  \r\n     {%- liquid\r\n        assign socials_horizontal_align = \"\"\r\n      if block.settings.socials_align == \"center\"\r\n        assign socials_horizontal_align = \"center\"\r\n      elsif block.settings.socials_align == \"right\"\r\n        assign socials_horizontal_align = \"end\"\r\n      else\r\n        assign socials_horizontal_align = \"start\"\r\n      endif\r\n    \r\n      assign socials_horizontal_align_mobile = \"\"\r\n      if block.settings.socials_align_mobile == \"center\"\r\n        assign socials_horizontal_align_mobile = \"center\"\r\n      elsif block.settings.socials_align_mobile == \"right\"\r\n        assign socials_horizontal_align_mobile = \"end\"\r\n      else\r\n        assign socials_horizontal_align_mobile = \"start\"\r\n      endif -%}\r\n    <style>         \r\n      .header-social-list-{{ section.id }} {\r\n        padding: 0px;\r\n        margin: 0px;\r\n        list-style: none;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        align-items: center;\r\n        width: 90%;\r\n        justify-content: {{ socials_horizontal_align_mobile }};\r\n        gap: {{ block.settings.social_list_gap_mobile }}px;\r\n        margin-top: 12px;\r\n      }    \r\n    \r\n      .header-social-link-{{ section.id }} {          \r\n        box-sizing: content-box;\r\n        background-color: {{ block.settings.social_icon_bg_color }};\r\n        transition: all 0.25s ease 0s;\r\n        display: block;       \r\n        width: {{ block.settings.social_icon_size_mobile }}px;\r\n        height: {{ block.settings.social_icon_size_mobile }}px;\r\n      }\r\n    \r\n      .header-social-link-{{ section.id }} svg {\r\n        display: block;\r\n        width: 100%;\r\n        height: 100%;\r\n        object-fit: contain;\r\n      }\r\n    \r\n      .header-social-link-{{ section.id }} svg path {\r\n        fill: {{ block.settings.social_icon_color }};\r\n        transition: all 0.25s ease 0s;\r\n      }\r\n      \r\n      @media(min-width: 1024px) {  \r\n        .header-social-list-{{ section.id }} {\r\n          justify-content: {{ socials_horizontal_align }};\r\n          gap: {{ block.settings.social_list_gap }}px;\r\n        }\r\n\r\n        .header-social-list-{{ section.id }}:hover .header-social-link-{{ section.id }} svg path {\r\n          fill: {{ block.settings.social_icon_hover_color }};\r\n          transition: all 0.25s ease 0s;\r\n        }\r\n    \r\n        .header-social-link-{{ section.id }} {\r\n          width: {{ block.settings.social_icon_size }}px;\r\n          height: {{ block.settings.social_icon_size }}px;\r\n        }      \r\n        \r\n        .header-social-link-{{ section.id }}:hover svg path {\r\n          fill: {{ block.settings.social_icon_color }} !important;\r\n          transition: all 0.25s ease 0s;\r\n        }\r\n      }\r\n    </style>\r\n  {% endif %}\r\n{% endfor %}\r\n\r\n{% comment %} FOR FREE THEMES{% endcomment %}\r\n{%- if settings.cart_type == \"drawer\" -%}\r\n  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}\r\n  {{ 'component-cart.css' | asset_url | stylesheet_tag }}\r\n  {{ 'component-totals.css' | asset_url | stylesheet_tag }}\r\n  {{ 'component-price.css' | asset_url | stylesheet_tag }}\r\n  {{ 'component-discounts.css' | asset_url | stylesheet_tag }}\r\n{%- endif -%}\r\n{% comment %} FOR FREE THEMES{% endcomment %}\r\n\r\n<div class=\"section-{{ section.id }} header-{{ section.id }}\">\r\n    <div class=\"section-{{ section.id }}-settings\" {% if background_style == 'solid' %}style=\"background-color:{{ background_color }};\"{% elsif background_style == 'gradient' %} style=\"background-image: {{ background_gradient }};\"{% endif %}>\r\n      <div class=\"header-body-{{ section.id }}\">\r\n        <div class=\"header-menu-{{ section.id }}\">\r\n          <div class=\"header-menu-logo-{{ section.id }}\">\r\n            {% if logo != blank %}\r\n              <a href=\"{{ shop.url }}\" class=\"header-menu-logo-image-{{ section.id }} {% if logo_mobile != blank %}header-menu-logo-image-desktop-{{ section.id }}{% endif %}\">\r\n                <img src=\"{{ logo | image_url }}\" alt=\"{{ logo.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\r\n              </a>\r\n              {% if logo_mobile != blank %}\r\n                <a href=\"{{ shop.url }}\" class=\"header-menu-logo-image-{{ section.id }} header-menu-logo-image-mobile-{{ section.id }}\">\r\n                  <img src=\"{{ logo_mobile | image_url }}\" alt=\"{{ logo_mobile.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\r\n                </a>\r\n              {% endif %}\r\n            {% else %}\r\n              <a href=\"{{ shop.url }}\" class=\"header-menu-logo-text-{{ section.id }}\">{{ shop.name }}</a>\r\n            {% endif %}\r\n          </div> \r\n          {% if menu != blank %}           \r\n            <ul class=\"header-menu-list-{{ section.id }} header-menu-list-desktop-{{ section.id }}\">\r\n              {% for link in menu.links %}              \r\n                <li class=\"header-menu-item-{{ section.id }} header-menu-item-main-{{ section.id }} {% if link.links.size > 0 %}header-menu-item-parent-{{ section.id }}{% endif %}\">\r\n                  <{% if link.links.size > 0 %}p{% else %}a href=\"{{ link.url }}\"{% endif %} class=\"header-menu-link-{{ section.id }}\">\r\n                    {{ link.title }}\r\n                  </{% if link.links.size > 0 %}p{% else %}a{% endif %}>\r\n                  {% if link.links.size > 0 %}\r\n                    <ul class=\"header-submenu-list-{{ section.id }}\">\r\n                      {% for sublink in link.links %}\r\n                        <li class=\"header-submenu-item-{{ section.id }}\">\r\n                          <a href=\"{{ sublink.url }}\" class=\"header-submenu-link-{{ section.id }}\">{{ sublink.title }}</a>\r\n                        </li>\r\n                      {% endfor %}\r\n                    </ul>\r\n                  {% endif %}\r\n                </li>              \r\n              {% endfor %}\r\n            </ul>\r\n          {% endif %}\r\n          <ul class=\"header-menu-list-{{ section.id }} header-menu-list-mobile-{{ section.id }}\">     \r\n            {% if menu != blank %}              \r\n              {% for link in menu.links %}\r\n                {% if link.links.size > 0 %}\r\n                  <li class=\"header-item-{{ section.id }}\">        \r\n                    <div class=\"header-toggle-{{ section.id }}\">\r\n                      <{% if link.links.size > 0 %}p{% else %}a href=\"{{ link.url }}\"{% endif %} class=\"header-menu-link-{{ section.id }} header-question-{{ section.id }}\">\r\n                        {{ link.title }}\r\n                      </{% if link.links.size > 0 %}p{% else %}a{% endif %}>\r\n                      <div class=\"header-toggle-icon-{{ section.id }}\">\r\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"currentColor\" height=\"16\" width=\"16\">\r\n                          <path d=\"M11.25 7.5h-3.75m0 0H3.75m3.75 0V3.75m0 3.75v3.75\" stroke-width=\"1\"></path>\r\n                        </svg>\r\n                      </div>\r\n                    </div>\r\n                    <ul class=\"header-submenu-list-{{ section.id }}\">\r\n                      {% for submenu_link in link.links %}                \r\n                        <li class=\"header-submenu-item-{{ section.id }}\">\r\n                          <a href=\"{{ submenu_link.url }}\" class=\"header-submenu-link-{{ section.id }}\">{{ submenu_link.title }}</a>\r\n                        </li>                     \r\n                      {% endfor %}   \r\n                      <div class=\"header-submenu-close-{{ section.id }}\">\r\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"currentColor\" height=\"16\" width=\"16\">\r\n                          <path d=\"m3.75 5 -2.5 2.5m0 0 2.5 2.5m-2.5 -2.5h12.5\" stroke-width=\"1\"></path>\r\n                        </svg>\r\n                      </div>\r\n                    </ul>                        \r\n                  </li>  \r\n                {% else %}\r\n                  <li class=\"header-menu-item-{{ section.id }} header-item-{{ section.id }} header-menu-item-main-{{ section.id }}\">\r\n                    <{% if link.links.size > 0 %}p{% else %}a href=\"{{ link.url }}\"{% endif %} class=\"header-menu-link-{{ section.id }}\">\r\n                      {{ link.title }}\r\n                    </{% if link.links.size > 0 %}p{% else %}a{% endif %}>\r\n                  </li>\r\n                {% endif %}\r\n              {% endfor %}                 \r\n            {% endif %}   \r\n          </ul>\r\n          {% for block in section.blocks %}\r\n            {% if block.type == 'socials' %}\r\n              <ul class=\"header-social-list-{{ section.id }}\">\r\n                {% if block.settings.instagram != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.instagram }}\">\r\n                      <svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                        <title>Instagram icon</title><path d=\"M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.facebook != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.facebook }}\">\r\n                      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 8 18\" fill=\"none\" class=\"w-16 h-16\">\r\n                          <path d=\"M5.15 17.14h-3.1v-8.5H0V5.72h2.06V3.99c0-2.4.62-3.85 3.35-3.85h2.27v2.94H6.26c-1.06 0-1.11.4-1.11 1.16v1.47H7.7l-.3 2.93H5.14v8.5Z\" fill=\"currentColor\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.twitter != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.twitter }}\">\r\n                      <svg alt=\"\" width=\"19\" height=\"19\" viewBox=\"0 0 19 19\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M19 9.5C19 14.7467 14.7467 19 9.5 19C4.25329 19 0 14.7467 0 9.5C0 4.25329 4.25329 0 9.5 0C14.7467 0 19 4.25329 19 9.5ZM8.18721 10.0675L3.64633 3.99603H7.14609L10.123 7.97639L13.8073 3.99603H14.8358L10.5825 8.59099L15.379 15.0039H11.8792L8.64689 10.6819L4.6462 15.0039H3.61771L8.18721 10.0675ZM6.76655 4.75353H5.15877L12.2586 14.2464H13.8663L6.76655 4.75353Z\" fill=\"currentColor\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.linkedin != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.linkedin }}\">\r\n                      <svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                          <path d=\"M1.82 0C.82 0 0 .82 0 1.82v12.36C0 15.18.82 16 1.82 16h12.36c1 0 1.82-.82 1.82-1.82V1.82c0-1-.82-1.82-1.82-1.82H1.82Zm0 1.45h12.36c.2 0 .37.16.37.37v12.36c0 .2-.16.37-.37.37H1.82a.36.36 0 0 1-.37-.37V1.82c0-.2.16-.37.37-.37ZM3.95 2.7a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Zm6.57 3.32c-1.04 0-1.73.57-2.02 1.12h-.05v-.96H6.41v6.91h2.14V9.7c0-.9.17-1.78 1.3-1.78 1.09 0 1.1 1.02 1.1 1.82v3.36h2.14V9.3c0-1.85-.4-3.27-2.57-3.27Zm-7.61.16v6.91h2.16V6.2H2.9Z\" fill=\"currentColor\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.youtube != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.youtube }}\">\r\n                      <svg role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\r\n                        <title>YouTube icon</title><path d=\"M23.499 6.203a3.008 3.008 0 00-2.089-2.089c-1.87-.501-9.4-.501-9.4-.501s-7.509-.01-9.399.501a3.008 3.008 0 00-2.088 2.09A31.258 31.26 0 000 12.01a31.258 31.26 0 00.523 5.785 3.008 3.008 0 002.088 2.089c1.869.502 9.4.502 9.4.502s7.508 0 9.399-.502a3.008 3.008 0 002.089-2.09 31.258 31.26 0 00.5-5.784 31.258 31.26 0 00-.5-5.808zm-13.891 9.4V8.407l6.266 3.604z\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.pinterest != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.pinterest }}\">\r\n                      <svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                        <title>Pinterest icon</title><path d=\"M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.whatsapp != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.whatsapp }}\">\r\n                      <svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                        <title>WhatsApp</title><path d=\"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n                {% if block.settings.tiktok != blank %}\r\n                  <li class=\"header-social-item-{{ section.id }}\">\r\n                    <a class=\"header-social-link-{{ section.id }}\" href=\"{{ block.settings.tiktok }}\">\r\n                      <svg role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\r\n                        <title>TikTok icon</title><path d=\"M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z\"></path>\r\n                      </svg>\r\n                    </a>\r\n                  </li>\r\n                {% endif %}\r\n              </ul>\r\n            {% endif %}\r\n          {% endfor %}\r\n        </div>          \r\n      </div>\r\n    </div>\r\n    <div class=\"header-logo-{{ section.id }} header-logo-click-{{ section.id }}\">     \r\n      {% if logo != blank %}\r\n        <div class=\"header-logo-image-{{ section.id }} {% if logo_mobile != blank %}header-logo-image-desktop-{{ section.id }}{% endif %}\">\r\n          <img src=\"{{ logo | image_url }}\" alt=\"{{ logo.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\r\n        </div>\r\n        {% if logo_mobile != blank %}\r\n          <div class=\"header-logo-image-{{ section.id }} header-logo-image-mobile-{{ section.id }}\">\r\n            <img src=\"{{ logo_mobile | image_url }}\" alt=\"{{ logo_mobile.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\r\n          </div>\r\n        {% endif %}\r\n      {% else %}\r\n        <p class=\"header-logo-text-{{ section.id }}\">{{ shop.name }}</p>\r\n      {% endif %}   \r\n      <div class=\"header-logo-dots-{{ section.id }}\">\r\n        {% for i in (1..6) %}\r\n          <span class=\"header-logo-dot-{{ section.id }}\"></span>\r\n        {% endfor %}\r\n      </div>\r\n      {% if use_menu_icon %}\r\n        <div class=\"header-logo-menu-icon-{{ section.id }}\">\r\n          <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"37.34\" height=\"26.8\" fill=\"#b30838\" viewBox=\"0 0 37.34 26.8\"><path d=\"M0 20.23A1 1 0 0 1 1 19a.86.86 0 0 1 1 .73 2.54 2.54 0 0 1 1.86-1 2.58 2.58 0 0 1 2.15.94A3.13 3.13 0 0 1 8 18.6a2.57 2.57 0 0 1 3 2.64l.19 3.94a1 1 0 1 1-2 .1l-.25-3.58c0-.83-.52-1.4-1.26-1.36s-1.17.66-1.13 1.47l.17 3.58a1 1 0 1 1-2 .1l-.17-3.58c0-.83-.52-1.39-1.26-1.36s-1.2.65-1.16 1.45l.17 3.58a1 1 0 0 1-1 1.19 1 1 0 0 1-1.04-1.06ZM18.48 18.58a1.53 1.53 0 0 0-2-.7 1.58 1.58 0 0 0-.76 2Zm-2.2 2.49a1.66 1.66 0 0 0 2.25.5c.9-.42 1.19-1.43 1.65-1.65a.86.86 0 0 1 1.07.43c.36.77-.86 2.25-2.16 2.86a3.53 3.53 0 0 1-4.87-1.88 3.68 3.68 0 0 1 1.55-4.94 3.6 3.6 0 0 1 4.65 1.77.76.76 0 0 1-.4 1.15ZM21.69 14a1 1 0 0 1-.05-1.49.91.91 0 0 1 1.23-.09 2.1 2.1 0 0 1 .88-1.91 2.79 2.79 0 0 1 4 .1l2.78 2.79a1 1 0 0 1 0 1.49 1.09 1.09 0 0 1-1.53-.18l-2.53-2.54a1.36 1.36 0 0 0-2-.11 1.2 1.2 0 0 0 0 1.87l2.52 2.54a1 1 0 0 1 .13 1.53 1.11 1.11 0 0 1-1.57-.13ZM29.43 6.34a1.1 1.1 0 0 1-.51-1.5 1 1 0 0 1 1.46-.37l3.19 1.79a1.22 1.22 0 0 0 1.76-.56 1.37 1.37 0 0 0-.54-1.86L31.6 2.05a1.12 1.12 0 0 1-.52-1.5 1 1 0 0 1 1.47-.38L35.77 2c1.58.9 2 2.58 1 4.55s-2.58 2.51-4.16 1.62Z\" style=\"fill-rule:evenodd\"/></svg>\r\n        </div>\r\n      {% endif %}\r\n      <div class=\"header-logo-close-icon-{{ section.id }}\">\r\n        <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"currentColor\" height=\"16\" width=\"16\">\r\n          <path d=\"M11.25 3.75 3.75 11.25M3.75 3.75l7.5 7.5\" stroke-width=\"1\"></path>\r\n        </svg>\r\n      </div>\r\n    </div> \r\n</div>\r\n\r\n<script>\r\nfunction initHeader16() {\r\n  const toggleButtons = document.querySelectorAll('.header-toggle-{{ section.id }}');\r\n  const closeButtons = document.querySelectorAll('.header-submenu-close-{{ section.id }}');\r\n  const allItems = document.querySelectorAll('.header-item-{{ section.id }}');\r\n  \r\n  toggleButtons.forEach(button => {\r\n    button.addEventListener('click', function() {\r\n      const parentItem = this.closest('li');\r\n      \r\n      if(parentItem) {\r\n        allItems.forEach(item => {\r\n          if (item !== parentItem) {\r\n            item.style.display = 'none';\r\n          }\r\n        });\r\n        \r\n        this.style.display = 'none'; \r\n\r\n        parentItem.classList.add('hide'); \r\n\r\n        const submenuList = parentItem.querySelector('.header-submenu-list-{{ section.id }}');\r\n        \r\n        if (submenuList) {\r\n          submenuList.classList.add('active');\r\n        }\r\n      }    \r\n    });\r\n  });\r\n\r\n  closeButtons.forEach(closeButton => {\r\n    closeButton.addEventListener('click', function() {\r\n      const parentItem = this.closest('li');\r\n      \r\n      allItems.forEach(item => {\r\n        item.style.display = '';\r\n      });\r\n\r\n      parentItem.classList.remove('hide');\r\n      \r\n      const submenuList = parentItem.querySelector('.header-submenu-list-{{ section.id }}');\r\n      if (submenuList) {\r\n        submenuList.classList.remove('active');\r\n      }\r\n      \r\n      const toggleButton = parentItem.querySelector('.header-toggle-{{ section.id }}');\r\n      if (toggleButton) {\r\n        toggleButton.style.display = ''; \r\n      }\r\n    });\r\n  });\r\n}\r\n\r\n  function setupHeaderTransform() {\r\n    const section = document.querySelector('.section-{{ section.id }}');\r\n    const settings = document.querySelector('.section-{{ section.id }}-settings');\r\n    const logoClick = document.querySelector('.header-logo-click-{{ section.id }}');\r\n\r\n    if (section && settings && logoClick) {\r\n      const settingsHeight = settings.offsetHeight;\r\n      section.style.transform = `translateY(-${settingsHeight}px)`;\r\n\r\n      logoClick.addEventListener('click', () => {\r\n        section.classList.toggle('active');\r\n        logoClick.classList.toggle('active');\r\n        if (!section.classList.contains('active')) {\r\n          section.style.transform = `translateY(-${settingsHeight}px)`;\r\n        }\r\n      });\r\n\r\n      let resizeTimerTransform;\r\n      window.addEventListener('resize', () => {\r\n        clearTimeout(resizeTimerTransform);\r\n        resizeTimerTransform = setTimeout(() => {\r\n          if (!section.classList.contains('active')) {\r\n            const newSettingsHeight = settings.offsetHeight;\r\n            section.style.transform = `translateY(-${newSettingsHeight}px)`;\r\n          }\r\n        }, 250);\r\n      });\r\n    }\r\n  }\r\n\r\n  document.addEventListener('DOMContentLoaded', () => {\r\n    initHeader16();\r\n    setupHeaderTransform();\r\n  });\r\n  \r\n  if (Shopify.designMode) {\r\n    document.addEventListener('shopify:section:unload', () => {\r\n      initHeader16();\r\n      setupHeaderTransform();\r\n    });\r\n    document.addEventListener('shopify:section:load', () => {\r\n      initHeader16();\r\n      setupHeaderTransform();\r\n    });\r\n  }\r\n</script>",
+  "variables": {
+    "logo": {
+      "type": "text",
+      "default": "",
+      "label": "Logo",
+      "description": "Logo"
+    },
+    "logo_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Logo - mobile",
+      "description": "Logo - mobile"
+    },
+    "logo_width": {
+      "type": "text",
+      "default": "40",
+      "label": "Width",
+      "description": "Width"
+    },
+    "logo_width_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "use_menu_icon": {
+      "type": "text",
+      "default": "true",
+      "label": "Use 'menu' text",
+      "description": "Use 'menu' text"
+    },
+    "name_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "name_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "name_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "name_size_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "name_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "menu": {
+      "type": "text",
+      "default": "main-menu",
+      "label": "Menu",
+      "description": "Menu"
+    },
+    "list_gap": {
+      "type": "text",
+      "default": "40",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "list_gap_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "menu_divider_thickness": {
+      "type": "text",
+      "default": "2",
+      "label": "Divider - mobile",
+      "description": "Divider - mobile"
+    },
+    "link_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "link_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "link_size": {
+      "type": "text",
+      "default": "36",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "link_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "link_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "link_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "link_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "sub_list_gap": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "sub_list_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "sublink_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "sublink_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "sublink_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "sublink_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "sublink_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "link_color": {
+      "type": "color",
+      "default": "#707070",
+      "label": "Link",
+      "description": "Link"
+    },
+    "link_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link hover",
+      "description": "Link hover"
+    },
+    "sublink_color": {
+      "type": "color",
+      "default": "#707070",
+      "label": "Sublink",
+      "description": "Sublink"
+    },
+    "sublink_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Sublink hover",
+      "description": "Sublink hover"
+    },
+    "menu_divider_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Divider",
+      "description": "Divider"
+    },
+    "toggle_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Plus icon",
+      "description": "Plus icon"
+    },
+    "arrow_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Arrow icon",
+      "description": "Arrow icon"
+    },
+    "close_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "close_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "name_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "name_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "menu_icon_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "'Menu' text",
+      "description": "'Menu' text"
+    },
+    "header_logo_dot_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Dotted divider",
+      "description": "Dotted divider"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "linear-gradient(180deg, #2C2C2C 0%, #000000 100%)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Content width",
+      "description": "Content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "false",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

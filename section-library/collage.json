@@ -1,0 +1,60 @@
+{
+  "id": "collage",
+  "name": "t:sections.collage.name",
+  "description": "Section: t:sections.collage.name",
+  "tags": [
+    "collage"
+  ],
+  "type": "custom",
+  "liquid_code": "{{ 'collage.css' | asset_url | stylesheet_tag }}\n{{ 'component-card.css' | asset_url | stylesheet_tag }}\n{{ 'component-price.css' | asset_url | stylesheet_tag }}\n{{ 'component-modal-video.css' | asset_url | stylesheet_tag }}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<link rel=\"stylesheet\" href=\"{{ 'component-deferred-media.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n\n<div class=\"color-{{ section.settings.color_scheme }} gradient isolate\">\n  <div class=\"page-width{% if section.settings.heading == blank %} no-heading{% endif %} section-{{ section.id }}-padding\">\n    <h2 class=\"collage-wrapper-title {{ section.settings.heading_size }}\">{{ section.settings.heading | escape }}</h2>\n    <div class=\"collage{% if section.settings.mobile_layout == 'collage' %} collage--mobile{% endif %}\">\n      {%- for block in section.blocks -%}\n        <div class=\"collage__item collage__item--{{ block.type }} collage__item--{{ section.settings.desktop_layout }}\" {{ block.shopify_attributes }}>\n          {%- case block.type -%}\n            {%- when 'image' -%}\n              <div class=\"collage-card {% if section.settings.card_styles == 'none' %}global-media-settings{% else %}card-wrapper {{ section.settings.card_styles }} color-{{ settings.card_color_scheme }}{% endif %}\">\n                <div class=\"media media--transparent ratio\"{% if block.settings.image != blank %} style=\"--ratio-percent: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%\"{% else %} style=\"--ratio-percent: 100%\"{% endif %}>\n                  {%- if block.settings.image != blank -%}\n                    {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {% if section.blocks.size == 1 %}calc({{ settings.page_width }}px - 100px){% else %}{{ settings.page_width | minus: 100 | times: 0.67 | round }}px{% endif %}, (min-width: 750px){% if section.blocks.size == 1 %} calc(100vw - 100px){% else %} 500px{% endif %}, calc(100vw - 30px)}{%- endcapture -%}\n\n                    {{ block.settings.image | image_url: width: 3000 | image_tag:\n                      loading: 'lazy',\n                      sizes: sizes,\n                      widths: '550, 720, 990, 1100, 1500, 2200, 3000'\n                    }}\n                  {%- else -%}\n                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}\n                  {%- endif -%}\n                </div>\n              </div>\n            {%- when 'product' -%}\n              {% render 'card-product',\n                card_product: block.settings.product,\n                media_aspect_ratio: 'adapt',\n                show_secondary_image: block.settings.second_image,\n                extend_height: true\n              %}\n            {%- when 'collection' -%}\n              {% render 'card-collection',\n                card_collection: block.settings.collection,\n                media_aspect_ratio: 'adapt',\n                columns: 2,\n                extend_height: true,\n                wrapper_class: section.settings.card_styles\n              %}\n            {%- when 'video' -%}\n              <div class=\"collage-card {% if section.settings.card_styles == 'none' %}global-media-settings{% else %}{{ section.settings.card_styles }} color-{{ settings.card_color_scheme }}{% endif %}\">\n                <noscript>\n                  <a href=\"{{ block.settings.video_url }}\" class=\"collage-card__link{% if block.settings.image_padding %} collage-card-spacing{% endif %}\">\n                    <div class=\"media media--transparent ratio\"{% if block.settings.cover_image != blank %} style=\"--ratio-percent: {{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%\"{% else %} style=\"--ratio-percent: 100%\"{% endif %}>\n                      {%- if block.settings.cover_image != blank -%}\n                        {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {% if section.blocks.size == 1 %}calc({{ settings.page_width }}px - 100px){% else %}{{ settings.page_width | minus: 100 | times: 0.67 | round }}px{% endif %}, (min-width: 750px){% if section.blocks.size == 1 %} calc(100vw - 100px){% else %} 500px{% endif %}, calc(100vw - 30px){%- endcapture -%}\n                        {{ block.settings.cover_image | image_url: width: 3000 | image_tag:\n                          loading: 'lazy',\n                          sizes: sizes,\n                          widths: '550, 720, 990, 1100, 1500, 2200, 3000'\n                        }}\n                      {%- else -%}\n                        {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}\n                      {%- endif -%}\n                    </div>\n                  </a>\n                </noscript>\n                <modal-opener class=\"no-js-hidden\" data-modal=\"#PopupModal-{{ block.id }}\">\n                  <div class=\"deferred-media\">\n                    <button class=\"deferred-media__poster full-unstyled-link{% if block.settings.image_padding %} collage-card-spacing{% endif %}\" type=\"button\" aria-label=\"{{ 'sections.video.load_video' | t: description: block.settings.description | escape }}\" aria-haspopup=\"dialog\" data-media-id=\"{{ block.settings.video_url.id }}\">\n                      <div class=\"media media--transparent ratio\"{% if block.settings.cover_image != blank %} style=\"--ratio-percent: {{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%\"{% else %} style=\"--ratio-percent: 100%\"{% endif %}>\n                        <span class=\"deferred-media__poster-button motion-reduce\">\n                          {%- render 'icon-play' -%}\n                        </span>\n\n                        {%- if block.settings.cover_image != blank -%}\n                          {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {% if section.blocks.size == 1 %}calc({{ settings.page_width }}px - 100px){% else %}{{ settings.page_width | minus: 100 | times: 0.67 | round }}px{% endif %}, (min-width: 750px){% if section.blocks.size == 1 %} calc(100vw - 100px){% else %} 500px{% endif %}, calc(100vw - 30px){%- endcapture -%}\n                          {{ block.settings.cover_image | image_url: width: 3000 | image_tag:\n                            loading: 'lazy',\n                            sizes: sizes,\n                            widths: '550, 720, 990, 1100, 1500, 2200, 3000'\n                          }}\n                        {%- else -%}\n                          {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}\n                        {%- endif -%}\n                      </div>\n                    </button>\n                  </div>\n                </modal-opener>\n                <modal-dialog id=\"PopupModal-{{ block.id }}\" class=\"modal-video media-modal color-background-1\">\n                  <div class=\"modal-video__content\" role=\"dialog\" aria-label=\"{{ block.settings.description | escape }}\" aria-modal=\"true\" tabindex=\"-1\">\n                    <button id=\"ModalClose-{{ block.id }}\" type=\"button\" class=\"modal-video__toggle\" aria-label=\"{{ 'accessibility.close' | t }}\">{% render 'icon-close' %}</button>\n                    <div class=\"modal-video__content-info\">\n                      <deferred-media class=\"modal-video__video template-popup\">\n                        <template>\n                          {%- if block.settings.video_url.type == 'youtube' -%}\n                            <iframe src=\"https://www.youtube.com/embed/{{ block.settings.video_url.id }}?enablejsapi=1\" class=\"js-youtube\" allow=\"autoplay; encrypted-media\" allowfullscreen title=\"{{ block.settings.description | escape }}\" ></iframe>\n                          {%- else -%}\n                            <iframe src=\"https://player.vimeo.com/video/{{ block.settings.video_url.id }}\" class=\"js-vimeo\" allow=\"autoplay; encrypted-media\" allowfullscreen title=\"{{ block.settings.description | escape }}\"></iframe>\n                          {%- endif -%}\n                        </template>\n                      </deferred-media>\n                    </div>\n                  </div>\n                </modal-dialog>\n              </div>\n          {%- endcase -%}\n        </div>\n      {%- endfor -%}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Multimedia collage",
+      "label": "t:sections.collage.settings.heading.label",
+      "description": "t:sections.collage.settings.heading.label"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label",
+      "description": "t:sections.all.heading_size.label"
+    },
+    "desktop_layout": {
+      "type": "text",
+      "default": "left",
+      "label": "t:sections.collage.settings.desktop_layout.label",
+      "description": "t:sections.collage.settings.desktop_layout.label"
+    },
+    "mobile_layout": {
+      "type": "text",
+      "default": "collage",
+      "label": "t:sections.collage.settings.mobile_layout.label",
+      "description": "t:sections.collage.settings.mobile_layout.label"
+    },
+    "card_styles": {
+      "type": "text",
+      "default": "product-card-wrapper",
+      "label": "t:sections.collage.settings.card_styles.label",
+      "description": "t:sections.collage.settings.card_styles.info"
+    },
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.all.colors.has_cards_info"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

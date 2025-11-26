@@ -1,0 +1,498 @@
+{
+  "id": "custom-instafeed-7",
+  "name": "CUSTOM Instafeed #7",
+  "description": "Section: CUSTOM Instafeed #7",
+  "tags": [
+    "instafeed"
+  ],
+  "type": "custom",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign heading = section.settings.heading\n  assign heading_mobile = section.settings.heading_mobile\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign bg_text = section.settings.bg_text\n  assign bg_text_size = section.settings.bg_text_size\n  assign bg_text_color = section.settings.bg_text_color\n  assign bg_text_custom = section.settings.bg_text_custom\n  assign bg_text_font = section.settings.bg_text_font\n  assign bg_text_height = section.settings.bg_text_height\n\n  assign slider_mt_mobile = section.settings.slider_mt_mobile\n  assign slider_mt = section.settings.slider_mt\n  assign slider_width_mobile = section.settings.slider_width_mobile\n  assign slider_width = section.settings.slider_width\n\n  assign item_image_ratio = section.settings.item_image_ratio\n  assign item_image_ratio_mobile = section.settings.item_image_ratio_mobile\n  assign item_image_radius = section.settings.item_image_radius\n  assign item_image_border_thickness = section.settings.item_image_border_thickness\n  assign item_image_border_color = section.settings.item_image_border_color\n\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_color = section.settings.text_color\n  assign text_mt = section.settings.text_mt\n  assign text_mt_mobile = section.settings.text_mt_mobile\n  assign text_align = section.settings.text_align\n  assign text_align_mobile = section.settings.text_align_mobile\n  assign text_link_hover_color = section.settings.text_link_hover_color\n  assign text_link_color = section.settings.text_link_color\n\n  assign tag_size = section.settings.tag_size\n  assign tag_size_mobile = section.settings.tag_size_mobile\n  assign tag_color = section.settings.tag_color\n  assign tag_hover_color = section.settings.tag_hover_color\n  assign tag_custom = section.settings.tag_custom\n  assign tag_font = section.settings.tag_font\n  assign tag_height = section.settings.tag_height\n  assign tag_padding_vertical = section.settings.tag_padding_vertical\n  assign tag_padding_vertical_mobile = section.settings.tag_padding_vertical_mobile\n  assign tag_padding_horizontal = section.settings.tag_padding_horizontal\n  assign tag_padding_horizontal_mobile = section.settings.tag_padding_horizontal_mobile\n  assign tag_radius = section.settings.tag_radius\n  assign tag_border_thickness = section.settings.tag_border_thickness\n  assign tag_border_color = section.settings.tag_border_color\n  assign tag_border_hover_color = section.settings.tag_border_hover_color\n  assign tag_bg_color = section.settings.tag_bg_color\n  assign tag_bg_hover_color = section.settings.tag_bg_hover_color\n\n  assign dots_size = section.settings.dots_size\n  assign dots_size_mobile = section.settings.dots_size_mobile\n  assign dots_show_desktop = section.settings.dots_show_desktop\n  assign dots_show_mobile = section.settings.dots_show_mobile\n  assign dots_color = section.settings.dots_color\n\n  assign arrow_icon_size = section.settings.arrow_icon_size\n  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n  assign arrow_show_desktop = section.settings.arrow_show_desktop\n  assign arrow_show_mobile = section.settings.arrow_show_mobile\n  \n-%}\n\n{%- style -%}\n\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  bg_text_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  {{  tag_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n    -webkit-background-clip: padding-box;\n    background-clip: padding-box;\n  }\n\n  .section-{{ section.id }} * {\n    -webkit-background-clip: padding-box;\n    background-clip: padding-box;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n    position: relative;\n  }\n\n  .instafeed-background-text-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    display: none;\n    margin: 0px;\n    font-size: {{ bg_text_size }}px;\n    color: {{ bg_text_color }};\n    line-height: {{ bg_text_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n    /* mix-blend-mode: plus-lighter; */\n  }\n\n  .instafeed-heading-{{ section.id }} {\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .instafeed-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .instafeed-heading-desktop-{{ section.id }} {\n    display: none;\n  }\n\n  .instafeed-slider-wrapper-{{ section.id }} {\n    margin-top: {{ slider_mt_mobile }}px;\n    position: relative;\n    width: 100%;\n    max-width: {{ slider_width_mobile }}%;\n    margin-left: auto;\n    margin-right: auto;\n  }\n\n  .instafeed-image-{{ section.id }} {\n    border-radius: {{ item_image_radius }}px;\n    border: {{ item_image_border_thickness }}px solid {{ item_image_border_color }};\n    overflow: hidden;\n    position: relative;\n  }\n\n  .instafeed-image-{{ section.id }} img,\n  .instafeed-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .instafeed-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n\n  .instafeed-text-{{ section.id }} {\n    margin-top: {{ text_mt_mobile }}px;\n    text-align: {{ text_align_mobile }};\n  }\n\n  .instafeed-text-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n\n  .instafeed-text-{{ section.id }} a,\n  .instafeed-text-{{ section.id }} a * {\n    color: {{ text_link_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .instafeed-text-{{ section.id }} a:hover,\n  .instafeed-text-{{ section.id }} a:hover * {\n    color: {{ text_link_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .instafeed-tag-{{ section.id }} {\n    position: absolute;\n    bottom: 10px;\n    left: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    width: 100%;\n    max-width: fit-content;\n    margin: 0;\n    font-size: {{ tag_size_mobile }}px;\n    color: {{ tag_color }};\n    background-color: {{ tag_bg_color }};\n    border: {{ tag_border_thickness }}px solid {{ tag_border_color }};\n    line-height: {{ tag_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ tag_padding_vertical_mobile }}px {{ tag_padding_horizontal_mobile }}px;\n    border-radius: {{ tag_radius }}px;\n    transition: all 0.25s ease 0s;\n    font-weight: 700;\n    z-index: 2;\n    box-sizing: border-box;\n  }\n\n  .instafeed-tag-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ tag_hover_color }};\n    background-color: {{ tag_bg_hover_color }};\n    border-color: {{ tag_border_hover_color }};\n  }\n\n  .instafeed-pagination-{{ section.id }} {\n    margin-top: 20px;\n    position: static !important;\n    width: 100% !important;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .instafeed-pagination-{{ section.id }} .swiper-pagination-bullet {\n    margin: 0px !important;\n    width: {{ dots_size_mobile }}px !important;\n    height: {{ dots_size_mobile }}px !important;\n    background-color: {{ dots_color }} !important;\n    border-radius: 50% !important;\n    opacity: 0.6 !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .instafeed-pagination-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active {\n    opacity: 1 !important;\n    width: {{ dots_size_mobile }}px !important;\n    height: {{ dots_size_mobile  }}px !important;\n    transition: all 0.25s ease 0s !important;\n  }\n\n  .instafeed-navigation-{{ section.id }} {\n    gap: 10px;\n    align-items: center;\n    max-width: fit-content;\n    margin-left: auto;\n    margin-right: auto;\n    margin-top: 20px;\n  }\n\n  .instafeed-btn-prev-{{ section.id }},\n  .instafeed-btn-next-{{ section.id }} {\n    background: transparent;\n    border: 0px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 0px;\n  }\n\n  .instafeed-btn-prev-{{ section.id }} svg,\n  .instafeed-btn-next-{{ section.id }} svg {\n    height: {{ arrow_icon_size_mobile }}px;\n    width: {{ arrow_icon_size_mobile }}px;\n  }\n\n  .instafeed-btn-next-{{ section.id }} svg {\n    transform: rotate(180deg);\n    margin-left: 2px;\n  }\n\n  .instafeed-btn-prev-{{ section.id }} svg {\n    margin-left: -2px;\n  }\n\n  .instafeed-btn-prev-{{ section.id }} svg path,\n  .instafeed-btn-next-{{ section.id }} svg path {\n    fill: {{ arrow_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .instafeed-btn-prev-{{ section.id }}:hover svg path,\n  .instafeed-btn-next-{{ section.id }}:hover svg path {\n    fill: {{ arrow_hover_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .instafeed-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .instafeed-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .instafeed-background-text-{{ section.id }} {\n      display: block;\n    }\n\n    .instafeed-heading-{{ section.id }} {\n      text-align: {{ heading_align }};\n    }\n\n    .instafeed-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n    }\n\n    .instafeed-heading-mobile-{{ section.id }} {\n      display: none;\n    }\n\n    .instafeed-heading-desktop-{{ section.id }} {\n      display: block;\n    }\n\n    .instafeed-slider-wrapper-{{ section.id }} {\n      margin-top: {{ slider_mt }}px;\n      max-width: {{ slider_width }}%;\n      padding: 0px {{ arrow_icon_size | times: 2 | plus: 30 }}px;\n    }\n\n    .instafeed-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      text-align: {{ text_align }};\n    }\n\n    .instafeed-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .instafeed-tag-{{ section.id }} {\n      padding: {{ tag_padding_vertical }}px {{ tag_padding_horizontal }}px;\n      font-size: {{ tag_size }}px;\n    }\n\n    .instafeed-pagination-{{ section.id }} .swiper-pagination-bullet {\n      width: {{ dots_size }}px !important;\n      height: {{ dots_size }}px !important;\n    }\n\n    .instafeed-pagination-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active {\n      width: {{ dots_size }}px !important;\n      height: {{ dots_size }}px !important;\n    }\n\n    .instafeed-navigation-{{ section.id }} {\n      margin: 0px;\n      position: absolute;\n      z-index: 2;\n      right: 0px;\n      bottom: 17%;\n    }\n\n    .instafeed-btn-prev-{{ section.id }} svg,\n    .instafeed-btn-next-{{ section.id }} svg {\n      height: {{ arrow_icon_size }}px;\n      width: {{ arrow_icon_size }}px;\n    }\n    \n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .instafeed-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .instafeed-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if tag_custom %}\n  <style>\n    .instafeed-tag-{{ section.id }} {\n      font-family: {{ tag_font.family }}, {{ tag_font.fallback_families }};\n      font-weight: {{ tag_font.weight }};\n      font-style: {{ tag_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if bg_text_custom %}\n  <style>\n    .instafeed-background-text-{{ section.id }} {\n      font-family: {{ bg_text_font.family }}, {{ bg_text_font.fallback_families }};\n      font-weight: {{ bg_text_font.weight }};\n      font-style: {{ bg_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_mobile %}\n  <style>\n    .instafeed-navigation-{{ section.id }} {\n      display: flex;\n    }\n  </style>\n{% else %}\n  <style>\n    .instafeed-navigation-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-navigation-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-navigation-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if dots_show_mobile %}\n  <style>\n    .instafeed-pagination-{{ section.id }} {\n      display: flex !important;\n    }\n  </style>\n{% else %}\n  <style>\n    .instafeed-pagination-{{ section.id }} {\n      display: none !important;\n    }\n  </style>\n{% endif %}\n\n{% if dots_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-pagination-{{ section.id }} {\n        display: flex !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-pagination-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .shop-image-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n    .shop-image-{{ section.id }}{\n     aspect-ratio: 12/10; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .shop-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else %}\n  <style>\n    .shop-image-{{ section.id }} {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .shop-image-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n      } \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .shop-image-{{ section.id }}{\n       aspect-ratio: 12/10; \n      }\n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .shop-image-{{ section.id }} {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .shop-image-{{ section.id }} {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n{% if item_image_ratio_mobile == \"portrait\" %}\n  <style>\n    .instafeed-image-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif item_image_ratio_mobile == \"landscape\" %}\n  <style>\n    .instafeed-image-{{ section.id }}{\n     aspect-ratio: 12/10; \n    }\n  </style>\n{% elsif item_image_ratio_mobile == \"square\" %}\n  <style>\n    .instafeed-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else %}\n  <style>\n    .instafeed-image-{{ section.id }} {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if item_image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .instafeed-image-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n      } \n    }\n  </style>\n{% elsif item_image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-image-{{ section.id }} {\n       aspect-ratio: 12/10; \n      }\n    }\n  </style>\n{% elsif item_image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-image-{{ section.id }} {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .instafeed-image-{{ section.id }} {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} instafeed-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% if bg_text != blank %}\n        <div class=\"instafeed-background-text-{{ section.id }}\">{{ bg_text }}</div>\n      {% endif %}\n      \n      {% if heading != blank %}\n        <div class=\"instafeed-heading-{{ section.id }} {% if heading_mobile != blank %}instafeed-heading-desktop-{{ section.id }}{% endif %}\">\n          {{ heading }}\n        </div>\n      {% endif %}\n\n      {% if heading_mobile != blank %}\n        <div class=\"instafeed-heading-{{ section.id }} instafeed-heading-mobile-{{ section.id }}\">\n          {{ heading_mobile }}\n        </div>\n      {% endif %}\n\n      <div class=\"instafeed-slider-wrapper-{{ section.id }}\">\n        <div class=\"instafeed-slider-{{ section.id }} swiper\">\n          <div class=\"swiper-wrapper\">\n            {% for block in section.blocks %}\n              <div class=\"instafeed-slide-{{ section.id }} swiper-slide\">\n                <div class=\"instafeed-image-{{ section.id }}\">\n                  {% if block.settings.image != blank %}\n                    <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                  {% else %}\n                    {{ 'image' | placeholder_svg_tag }}\n                  {% endif %}\n\n                  {% if block.settings.tag != blank %}\n                    <{% if block.settings.tag_url != blank %}a href=\"{{ block.settings.tag_url }}\"{% else %}p{% endif %} class=\"instafeed-tag-{{ section.id }}\">\n                      {{ block.settings.tag }}\n                    </{% if block.settings.tag_url != blank %}a{% else %}p{% endif %}>\n                  {% endif %}\n                </div>\n                {% if block.settings.text != blank %}\n                  <div class=\"instafeed-text-{{ section.id }}\">\n                    {{ block.settings.text }}\n                  </div>\n                {% endif %}\n              </div>\n            {% endfor %}\n          </div>\n          <div class=\"instafeed-pagination-{{ section.id }} swiper-pagination\"></div>\n        </div>\n        <div class=\"instafeed-navigation-{{ section.id }}\">\n          <button class=\"instafeed-btn-prev-{{ section.id }}\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g></svg>\n          </button>\n          <button class=\"instafeed-btn-next-{{ section.id }}\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g id=\"Left\"><path d=\"M14,17a1,1,0,0,1-.707-.293l-4-4a1,1,0,0,1,0-1.414l4-4a1,1,0,1,1,1.414,1.414L11.414,12l3.293,3.293A1,1,0,0,1,14,17Z\"/></g></svg>\n          </button>\n        </div>\n      </div>\n    </div>\n</div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n\n<script>\n  function initInstafeed7() {\n    const slider = new Swiper(\".instafeed-slider-{{ section.id }}\", {\n      speed: 300,\n      spaceBetween: 20,\n      loop: true,\n      effect: \"fade\",\n      fadeEffect: { crossFade: true },\n      navigation: {\n        nextEl: '.instafeed-btn-next-{{ section.id }}',\n        prevEl: '.instafeed-btn-prev-{{ section.id }}',\n      },\n      pagination: {\n        el: '.instafeed-pagination-{{ section.id }}',\n        type: 'bullets',\n        clickable: true,\n      },\n    });\n  }\n\n  document.addEventListener('DOMContentLoaded', initInstafeed7);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initInstafeed7);\n     document.addEventListener('shopify:section:load', initInstafeed7);\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "<p>Tag your photos with <strong>#section.store</strong></p>",
+      "label": "Heading - Desktop",
+      "description": "Heading - Desktop"
+    },
+    "heading_mobile": {
+      "type": "textarea",
+      "default": "<p><strong>#section.store</strong></p>",
+      "label": "Heading - Mobile",
+      "description": "Heading - Mobile"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Heading Size - Mobile",
+      "description": "Heading Size - Mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align - Mobile",
+      "description": "Heading Text Align - Mobile"
+    },
+    "bg_text": {
+      "type": "text",
+      "default": "#section.store",
+      "label": "Background Text",
+      "description": "Background Text"
+    },
+    "bg_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "bg_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Background Text Font Family",
+      "description": "Background Text Font Family"
+    },
+    "bg_text_size": {
+      "type": "text",
+      "default": "116",
+      "label": "Background Text Size",
+      "description": "Background Text Size"
+    },
+    "bg_text_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Background Text Line Height",
+      "description": "Background Text Line Height"
+    },
+    "slider_width": {
+      "type": "text",
+      "default": "50",
+      "label": "Slider Width",
+      "description": "Slider Width"
+    },
+    "slider_width_mobile": {
+      "type": "text",
+      "default": "90",
+      "label": "Slider Width - Mobile",
+      "description": "Slider Width - Mobile"
+    },
+    "slider_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Slider Margin Top",
+      "description": "Slider Margin Top"
+    },
+    "slider_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Slider Margin Top - Mobile",
+      "description": "Slider Margin Top - Mobile"
+    },
+    "item_image_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Slide Image Roundness",
+      "description": "Slide Image Roundness"
+    },
+    "item_image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Slide Image Border Thickness",
+      "description": "Slide Image Border Thickness"
+    },
+    "item_image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Slide Image Aspect Ratio",
+      "description": "Slide Image Aspect Ratio"
+    },
+    "item_image_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Slide Image Aspect Ratio - Mobile",
+      "description": "Slide Image Aspect Ratio - Mobile"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Text Font Family",
+      "description": "Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Text Size",
+      "description": "Text Size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Text Size - Mobile",
+      "description": "Text Size - Mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Text Line Height",
+      "description": "Text Line Height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Text Margin Top",
+      "description": "Text Margin Top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Text Margin Top - Mobile",
+      "description": "Text Margin Top - Mobile"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Text Text Align",
+      "description": "Text Text Align"
+    },
+    "text_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Text Text Align - Mobile",
+      "description": "Text Text Align - Mobile"
+    },
+    "tag_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "tag_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Tag Font Family",
+      "description": "Tag Font Family"
+    },
+    "tag_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Tag Size",
+      "description": "Tag Size"
+    },
+    "tag_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Tag Size - Mobile",
+      "description": "Tag Size - Mobile"
+    },
+    "tag_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Tag Line Height",
+      "description": "Tag Line Height"
+    },
+    "tag_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Tag Padding Vertical",
+      "description": "Tag Padding Vertical"
+    },
+    "tag_padding_vertical_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Tag Padding Vertical - Mobile",
+      "description": "Tag Padding Vertical - Mobile"
+    },
+    "tag_padding_horizontal": {
+      "type": "text",
+      "default": "14",
+      "label": "Tag Padding Horizontal",
+      "description": "Tag Padding Horizontal"
+    },
+    "tag_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Tag Padding Horizontal - Mobile",
+      "description": "Tag Padding Horizontal - Mobile"
+    },
+    "tag_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Tag Roundness",
+      "description": "Tag Roundness"
+    },
+    "tag_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Tag Border Thickness",
+      "description": "Tag Border Thickness"
+    },
+    "arrow_icon_size": {
+      "type": "text",
+      "default": "28",
+      "label": "Arrow Icon Size",
+      "description": "Arrow Icon Size"
+    },
+    "arrow_icon_size_mobile": {
+      "type": "text",
+      "default": "28",
+      "label": "Arrow Icon Size - Mobile",
+      "description": "Arrow Icon Size - Mobile"
+    },
+    "arrow_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on Desktop",
+      "description": "Show on Desktop"
+    },
+    "arrow_show_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on Mobile",
+      "description": "Show on Mobile"
+    },
+    "dots_size": {
+      "type": "text",
+      "default": "10",
+      "label": "Dots Size",
+      "description": "Dots Size"
+    },
+    "dots_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Dots Size - Mobile",
+      "description": "Dots Size - Mobile"
+    },
+    "dots_show_desktop": {
+      "type": "text",
+      "default": "false",
+      "label": "Show on Desktop",
+      "description": "Show on Desktop"
+    },
+    "dots_show_mobile": {
+      "type": "text",
+      "default": "false",
+      "label": "Show on Mobile",
+      "description": "Show on Mobile"
+    },
+    "item_image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Slide Image Border Color",
+      "description": "Slide Image Border Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Slide Text Color",
+      "description": "Slide Text Color"
+    },
+    "text_link_color": {
+      "type": "color",
+      "default": "#334FB4",
+      "label": "Slide Text Link Color",
+      "description": "Slide Text Link Color"
+    },
+    "text_link_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Slide Text Link Hover Color",
+      "description": "Slide Text Link Hover Color"
+    },
+    "tag_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tag Text Color",
+      "description": "Tag Text Color"
+    },
+    "tag_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Tag Hover Text Color",
+      "description": "Tag Hover Text Color"
+    },
+    "tag_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Tag Background Color",
+      "description": "Tag Background Color"
+    },
+    "tag_bg_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tag Background Hover Color",
+      "description": "Tag Background Hover Color"
+    },
+    "tag_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tag Border Color",
+      "description": "Tag Border Color"
+    },
+    "tag_border_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tag Border Hover Color",
+      "description": "Tag Border Hover Color"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow color",
+      "description": "Arrow color"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#555555",
+      "label": "Arrow Hover color",
+      "description": "Arrow Hover color"
+    },
+    "dots_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Dots Color",
+      "description": "Dots Color"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "bg_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background Text Color",
+      "description": "Background Text Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section Roundness",
+      "description": "Section Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

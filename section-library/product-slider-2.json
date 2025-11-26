@@ -1,0 +1,133 @@
+{
+  "id": "product-slider-2",
+  "name": "CUSTOM Product Slider",
+  "description": "Section: CUSTOM Product Slider",
+  "tags": [
+    "product",
+    "slider"
+  ],
+  "type": "product",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css\" />\n\n{%- style -%}\n\n  {{ section.settings.section_title_font | font_face }}\n  {{ section.settings.section_slide_title_font | font_face }}\n  {{ section.settings.section_product_title_font | font_face }}\n  {{ section.settings.slide_btn_font | font_face }}\n  {{ section.settings.header_link_font | font_face }}\n\n  .section-{{ section.id }}-padding .swiper-section-title {\n    font-size: {{ section.settings.section_title_size }}px !important;\n    font-family: {{ section.settings.section_title_font.family }}!important;\n    text-transform: uppercase;\n    color: {{ section.settings.section_title_color }};\n  }\n  .section-{{ section.id }}-padding .slide-title {\n    font-size: {{ section.settings.section_slide_title_size }}px !important;\n    font-family: {{ section.settings.section_slide_title_font.family }}!important;\n    text-transform: uppercase;\n    color: {{ section.settings.section_slide_title_color }};\n  }\n  .section-{{ section.id }}-padding .slide-product-title {\n    font-size: {{ section.settings.slide_product_title_size }}px!important;\n    font-family: {{ section.settings.section_product_title_font.family }}!important;\n    text-transform: uppercase;\n    color: {{ section.settings.section_product_title_color }};\n  }\n  .section-{{ section.id }}-padding .slide-btn {\n    font-size: {{ section.settings.slide_btn_size }}px !important;\n    font-family: {{ section.settings.slide_btn_font.family }}!important;\n    text-transform: uppercase;\n  }\n  .section-{{ section.id }}-padding .slide-btn > a {\n    background-color: {{ section.settings.slide_btn_bg_color }};\n    color: {{ section.settings.slide_btn_font_color }};\n  }\n  .section-{{ section.id }}-padding .header-link-text > a {\n    color: {{ section.settings.header_link_text_color }};\n    font-family: {{ section.settings.header_link_font.family }}!important;\n  }\n\n\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n    text-transform: uppercase;\n    font-family: {{ section.settings.section_font_new }};\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n  {%- if section.settings.background-color != '#ffffff' -%}\n    .slide-content {\n      background-color: {{ section.settings.background-color }};\n    }\n  {%- endif -%}\n\n\n  .header-link-text {\n    margin-left: auto;\n    margin-right: 110px;\n    margin-top: 5px;\n    font-size: 14px;\n  }\n  .header-link-text > a {\n    color: #000;\n  }\n  .slide-title {\n    margin-top: 15px;\n  }\n  .slide-product-title {\n    margin-top: 5px;\n    font-weight: 600;\n  }\n  .slide-btn > a {\n    padding: 0.75em 1.25em;\n    text-decoration: none;\n  }\n\n  .slide-btn > a:hover {\n    opacity: 0.7;\n  }\n\n  .swiper-button-wrapper > div:empty {\n    display: block;\n  }\n  .swiper-header {\n    display: flex;\n    margin-top: 9px;\n  }\n\n  .swiper {\n    width: 100%;\n    height: 100%;\n  }\n\n  .swiper-slide {\n    text-align: center;\n    font-size: 18px;\n    background: #fff;\n\n    /* Center slide text vertically */\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    display: flex;\n    -webkit-box-pack: center;\n    -ms-flex-pack: center;\n    -webkit-justify-content: center;\n    justify-content: center;\n    -webkit-box-align: center;\n    -ms-flex-align: center;\n    -webkit-align-items: center;\n    align-items: center;\n\n    display: flex;\n    flex-direction: column;\n  }\n\n  .swiper-slide img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .swiper {\n    margin-left: auto;\n    margin-right: auto;\n  }\n\n\n  .swiper-wrapper {\n    margin-top: 40px;\n    margin-bottom: 10px;\n  }\n  .swiper-button-next {\n    top: 29px !important;\n    right: 0 !important;\n  }\n  .swiper-button-prev {\n    top: 29px !important;\n    left: auto;\n    right: 50px !important;\n  }\n\n  .swiper-button-prev,\n  .swiper-button-next {\n    width: 40px;\n    height: 40px;\n    background: #fff;\n    border: 1px solid gray;\n    border-radius: 50%;\n    color: blue;\n    font-weight: 400;\n    outline: 0;\n    transition: background-color 0.2s ease, color 0.2s ease;\n    margin-left: 20px;\n    color: #000;\n  }\n  .swiper-button-prev:hover,\n  .swiper-button-next:hover {\n    font-weight: 700;\n  }\n\n  .swiper-button-prev::after,\n  .swiper-button-next::after {\n    font-size: 14px;\n    position: relative;\n  }\n\n  .swiper-button-prev::after:hover,\n  .swiper-button-next::after:hover {\n    transform: scale(1.1);\n  }\n  \n  .swiper-button-prev::after {\n    top: 5px;\n    left: 14px;\n  }\n  .swiper-button-next::after {\n    top: 5px;\n    left: 16px;\n  }\n\n  .slide-content {\n    text-align: left;\n    width: 100%;\n  }\n\n  .slide-btn {\n    margin-top: 20px;\n  }\n\n  @media screen and (max-width: 640px) {\n    .header-link-text {\n      display: none;\n    }\n  }\n  @media screen and (max-width: 768px) {\n    .swiper-button-prev::after,\n    .swiper-button-next::after {\n      top: 7px;\n    }\n  }\n  .slide-image {\n    height:400px;\n  }\n  .slide-image > svg {\n    border: 1px solid;\n      display: block;\n    width: 99%;\n    height: 99%;\n  }\n\n{%- endstyle -%}\n\n\n<div style=\"background-color:{{ section.settings.background-color }};\">\n  <div class=\"page-width section-{{ section.id }}-padding\">\n\n\n    <div class=\"swiper mySwiper\">\n      <div class=\"swiper-header\">\n        <div class=\"swiper-section-title\">{{ section.settings.section_title }}</div>\n        <div class=\"header-link-text\">\n          <a href=\"{{ section.settings.header_link.url }}\">{{ section.settings.header_link_text }}</a>\n        </div>\n        <div class=\"swiper-button-wrapper\">\n          <div class=\"swiper-button-next\"></div>\n          <div class=\"swiper-button-prev\"></div>\n        </div>\n      </div>\n      <div class=\"swiper-wrapper\">\n\n        {%- for block in section.blocks -%}\n          {%- case block.type -%}\n            {%- when 'block' -%}\n            <div class=\"swiper-slide\">\n              <div class=\"slide-image\">\n                {%- if block.settings.image_pick != blank %}\n                  {%- assign featured_image = block.settings.image_pick -%}\n                  <a href=\"{{ block.settings.product.url }}\">\n                    <img src=\"{{ featured_image | img_url: '480x480' }}\"\n                      srcset=\"{{ featured_image | img_url: '480x480' }} 480w, {{ featured_image | img_url: '960x960' }} 960w, {{ featured_image | img_url: '1440x1440' }} 1440w\"\n                      loading=\"lazy\">\n                  </a>\n                {%- else block.settings.product != blank -%}\n                  {%- assign featured_image = block.settings.product.featured_image -%}\n                  <a href=\"{{ block.settings.product.url }}\">\n                    <img src=\"{{ featured_image | img_url: '480x480' }}\"\n                      srcset=\"{{ featured_image | img_url: '480x480' }} 480w, {{ featured_image | img_url: '960x960' }} 960w, {{ featured_image | img_url: '1440x1440' }} 1440w\"\n                      loading=\"lazy\">\n                  </a>\n                {%- else -%}\n                  {{ 'product-2' | placeholder_svg_tag: 'scrolling-logo-cloud_placeholder' }}\n                {%- endif -%}\n              </div>\n              <div class=\"slide-content\">\n                <div class=\"slide-title\">\n                  {%- if block.settings.product_slide_title != blank -%}\n                    {{ block.settings.product_slide_title }}\n                  {%- else -%}\n                    &nbsp;\n                  {%- endif -%}\n                </div>\n                <div class=\"slide-product-title\">\n                  {%- if block.settings.product_alt_title != blank -%}\n                    {{ block.settings.product_alt_title }}\n                  {%- else -%}\n                     {%- if block.settings.product.title != blank -%}\n                        {{ block.settings.product.title }}\n                      {%- else -%}\n                         Default title\n                      {%- endif -%}\n                  {%- endif -%}\n                </div>\n                <div class=\"slide-btn\">\n                  <a href=\"{{ block.settings.product.url }}\">{{ block.settings.button_text }}</a>\n                </div>\n              </div>\n            </div>\n          {%- endcase -%}\n        {%- endfor -%}\n      </div>\n\n\n    </div>\n  </div>\n</div>\n\n\n<!-- Swiper JS -->\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js\"></script>\n\n<script>\n  var swiper = new Swiper(\".mySwiper\", {\n    slidesPerView: 1,\n    spaceBetween: 10,\n    loop: true,\n    navigation: {\n      nextEl: \".swiper-button-next\",\n      prevEl: \".swiper-button-prev\"\n    },\n    breakpoints: {\n      640: {\n        slidesPerView: 2,\n        spaceBetween: 15\n      },\n      768: {\n        slidesPerView: 3,\n        spaceBetween: 30\n      }\n\n    }\n  });\n</script>",
+  "variables": {
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "section_title": {
+      "type": "text",
+      "default": "Latest Arrivlas",
+      "label": "Header of section",
+      "description": "Header of section"
+    },
+    "section_title_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Header font family",
+      "description": "Header font family"
+    },
+    "section_title_size": {
+      "type": "text",
+      "default": "23",
+      "label": "Header font size",
+      "description": "Header font size"
+    },
+    "section_title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Header color",
+      "description": "Header color"
+    },
+    "section_slide_title_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Slide description font family",
+      "description": "Slide description font family"
+    },
+    "section_slide_title_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Slide description size",
+      "description": "Slide description size"
+    },
+    "section_slide_title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Slide description color",
+      "description": "Slide description color"
+    },
+    "section_product_title_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Product title font family",
+      "description": "Product title font family"
+    },
+    "slide_product_title_size": {
+      "type": "text",
+      "default": "23",
+      "label": "Product title size",
+      "description": "Product title size"
+    },
+    "section_product_title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product title color",
+      "description": "Product title color"
+    },
+    "slide_btn_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Button font family",
+      "description": "Button font family"
+    },
+    "slide_btn_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Button text size",
+      "description": "Button text size"
+    },
+    "slide_btn_font_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Button font color",
+      "description": "Button font color"
+    },
+    "slide_btn_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button background color",
+      "description": "Button background color"
+    },
+    "header_link_text": {
+      "type": "text",
+      "default": "View all",
+      "label": "Link text in header",
+      "description": "Link text in header"
+    },
+    "header_link_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Link font family",
+      "description": "Link font family"
+    },
+    "header_link_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Link text color",
+      "description": "Link text color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    }
+  }
+}

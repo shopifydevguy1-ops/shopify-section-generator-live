@@ -1,0 +1,673 @@
+{
+  "id": "custom-video-banner-flagman",
+  "name": "CUSTOM Video banner pro",
+  "description": "Section: CUSTOM Video banner pro",
+  "tags": [
+    "video",
+    "banner"
+  ],
+  "type": "banner",
+  "liquid_code": "<link\r\n  rel=\"stylesheet\"\r\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\r\n/>\r\n\r\n{%- liquid\r\n  assign padding_horizontal = section.settings.padding_horizontal\r\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\r\n  assign padding_top = section.settings.padding_top\r\n  assign padding_bottom = section.settings.padding_bottom\r\n  assign border_color = section.settings.border_color\r\n  assign border_thickness = section.settings.border_thickness\r\n  assign margin_top = section.settings.margin_top\r\n  assign margin_bottom = section.settings.margin_bottom\r\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\r\n  assign margin_horizontal = section.settings.margin_horizontal\r\n  assign background_color = section.settings.background_color\r\n  assign background_gradient = section.settings.background_gradient\r\n  assign width = section.settings.width\r\n  assign content_width = section.settings.content_width\r\n  assign lazy = section.settings.lazy\r\n  assign section_radius = section.settings.section_radius\r\n  assign background_style = section.settings.background_style\r\n\r\n  assign layout_height = section.settings.layout_height\r\n  assign layout_fixed_height = section.settings.layout_fixed_height\r\n  assign layout_fixed_height_mobile = section.settings.layout_fixed_height_mobile\r\n  assign liquid_glass = section.settings.liquid_glass\r\n\r\n  assign autoplay = section.settings.autoplay\r\n  assign autoplay_delay = section.settings.autoplay_delay\r\n  assign overlay = section.settings.overlay\r\n  assign overlay_color = section.settings.overlay_color\r\n\r\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\r\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\r\n  assign content_padding_vertical = section.settings.content_padding_vertical\r\n  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile\r\n  assign content_max_width = section.settings.content_max_width\r\n  assign content_align = section.settings.content_align\r\n  assign content_align_mobile = section.settings.content_align_mobile\r\n  assign content_vertical_align = section.settings.content_vertical_align\r\n  assign content_vertical_align_mobile = section.settings.content_vertical_align_mobile\r\n\r\n  assign content_horizontal_align = \"\"\r\n  if content_align == \"center\"\r\n    assign content_horizontal_align = \"center\"\r\n  elsif content_align == \"right\"\r\n    assign content_horizontal_align = \"end\"\r\n  else\r\n    assign content_horizontal_align = \"start\"\r\n  endif\r\n\r\n  assign content_horizontal_align_mobile = \"\"\r\n  if content_align_mobile == \"center\"\r\n    assign content_horizontal_align_mobile = \"center\"\r\n  elsif content_align_mobile == \"right\"\r\n    assign content_horizontal_align_mobile = \"end\"\r\n  else\r\n    assign content_horizontal_align_mobile = \"start\"\r\n  endif\r\n\r\n  assign heading_custom = section.settings.heading_custom\r\n  assign heading_font = section.settings.heading_font\r\n  assign heading_size = section.settings.heading_size\r\n  assign heading_size_mobile = section.settings.heading_size_mobile\r\n  assign heading_height = section.settings.heading_height\r\n  assign heading_color = section.settings.heading_color\r\n\r\n  assign text_custom = section.settings.text_custom\r\n  assign text_font = section.settings.text_font\r\n  assign text_size = section.settings.text_size\r\n  assign text_size_mobile = section.settings.text_size_mobile\r\n  assign text_height = section.settings.text_height\r\n  assign text_color = section.settings.text_color\r\n  assign text_mt = section.settings.text_mt\r\n  assign text_mt_mobile = section.settings.text_mt_mobile\r\n\r\n  assign button_custom = section.settings.button_custom\r\n  assign button_font = section.settings.button_font\r\n  assign button_size = section.settings.button_size\r\n  assign button_size_mobile = section.settings.button_size_mobile\r\n  assign button_height = section.settings.button_height\r\n  assign button_padding_vertical = section.settings.button_padding_vertical\r\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\r\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\r\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\r\n  assign button_radius = section.settings.button_radius\r\n  assign button_border_thickness = section.settings.button_border_thickness\r\n  assign first_button_color = section.settings.first_button_color\r\n  assign first_button_hover_color = section.settings.first_button_hover_color\r\n  assign button_mt = section.settings.button_mt\r\n  assign button_mt_mobile = section.settings.button_mt_mobile\r\n  assign first_button_border_color = section.settings.first_button_border_color\r\n  assign first_button_border_hover_color = section.settings.first_button_border_hover_color\r\n  assign first_button_bg_color = section.settings.first_button_bg_color\r\n  assign first_button_bg_hover_color = section.settings.first_button_bg_hover_color\r\n  assign button_style = section.settings.button_style\r\n  assign second_button_color = section.settings.second_button_color\r\n  assign second_button_hover_color = section.settings.second_button_hover_color\r\n  assign second_button_border_color = section.settings.second_button_border_color\r\n  assign second_button_border_hover_color = section.settings.second_button_border_hover_color\r\n  assign second_button_bg_color = section.settings.second_button_bg_color\r\n  assign second_button_bg_hover_color = section.settings.second_button_bg_hover_color\r\n  assign open_in_new_tab = section.settings.open_in_new_tab\r\n\r\n  assign numbers_align = section.settings.numbers_align\r\n  assign numbers_align_mobile = section.settings.numbers_align_mobile\r\n  assign numbers_vertical_align = section.settings.numbers_vertical_align\r\n  assign numbers_vertical_align_mobile = section.settings.numbers_vertical_align_mobile\r\n\r\n  assign numbers_horizontal_align = \"\"\r\n  if numbers_align == \"center\"\r\n    assign numbers_horizontal_align = \"center\"\r\n  elsif numbers_align == \"right\"\r\n    assign numbers_horizontal_align = \"end\"\r\n  else\r\n    assign numbers_horizontal_align = \"start\"\r\n  endif\r\n\r\n  assign numbers_horizontal_align_mobile = \"\"\r\n  if numbers_align_mobile == \"center\"\r\n    assign numbers_horizontal_align_mobile = \"center\"\r\n  elsif numbers_align_mobile == \"right\"\r\n    assign numbers_horizontal_align_mobile = \"end\"\r\n  else\r\n    assign numbers_horizontal_align_mobile = \"start\"\r\n  endif\r\n\r\n  assign number_color = section.settings.number_color\r\n  assign number_bg_color = section.settings.number_bg_color\r\n  assign number_border_color = section.settings.number_border_color\r\n  assign number_custom = section.settings.number_custom\r\n  assign number_font = section.settings.number_font\r\n  assign number_size = section.settings.number_size\r\n  assign number_size_mobile = section.settings.number_size_mobile\r\n  assign number_height = section.settings.number_height\r\n  assign use_numbers = section.settings.use_numbers\r\n\r\n  assign action_size = section.settings.action_size\r\n  assign action_size_mobile = section.settings.action_size_mobile\r\n  assign action_icon_size = section.settings.action_icon_size\r\n  assign action_icon_size_mobile = section.settings.action_icon_size_mobile\r\n  assign action_color = section.settings.action_color\r\n  assign action_hover_color = section.settings.action_hover_color\r\n  assign action_bg_color = section.settings.action_bg_color\r\n  assign action_bg_hover_color = section.settings.action_bg_hover_color\r\n  assign action_border_thickness = section.settings.action_border_thickness\r\n  assign action_border_color = section.settings.action_border_color\r\n  assign action_border_hover_color = section.settings.action_border_hover_color\r\n  assign use_action = section.settings.use_action\r\n\r\n  assign colors_advanced = section.settings.colors_advanced\r\n  assign primary_color = section.settings.primary_color\r\n  assign secondary_color = section.settings.secondary_color\r\n  assign accent_color = section.settings.accent_color\r\n-%}\r\n\r\n{%- style -%}\r\n  .section-{{ section.id }} {\r\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\r\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\r\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\r\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\r\n    margin-left: {{ margin_horizontal_mobile }}rem;\r\n    margin-right: {{ margin_horizontal_mobile }}rem;\r\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\r\n    overflow: hidden;\r\n  }\r\n  \r\n  .section-{{ section.id }}-settings {\r\n    margin: 0 auto;\r\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\r\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\r\n    padding-left: {{ padding_horizontal_mobile }}rem;\r\n    padding-right: {{ padding_horizontal_mobile }}rem;\r\n  }\r\n\r\n  .video-banner-body-{{ section.id }} {\r\n    position: relative;\r\n    height: 100%;    \r\n  }\r\n\r\n  .video-banner-slider-{{ section.id }} {\r\n    width: 100% !important;\r\n    height: 100% !important;\r\n  }\r\n\r\n  .video-banner-slider-{{ section.id }} .swiper-wrapper {\r\n    align-items: stretch !important;\r\n  }\r\n\r\n  .video-banner-slide-{{ section.id }} {\r\n    box-sizing: border-box !important;\r\n    position: relative;\r\n    height: auto !important;\r\n  }\r\n\r\n  .video-banner-slide-{{ section.id }} img,\r\n  .video-banner-slide-{{ section.id }} svg,\r\n  .video-banner-slide-{{ section.id }} iframe,\r\n  .video-banner-slide-{{ section.id }} video {\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    box-shadow: none;\r\n    border: 0px;\r\n  }\r\n\r\n  .video-banner-slide-{{ section.id }} svg {\r\n    background-color: #AFAFAF;\r\n  }\r\n\r\n  .video-banner-slide-{{ section.id }}:after {\r\n    content: '';\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: {{ overlay_color | hex_to_rgba: overlay }};\r\n    z-index: 0;\r\n  }\r\n\r\n  .video-banner-slide-content-{{ section.id }} {  \r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;    \r\n    display: flex;\r\n    flex-direction: column; \r\n    z-index: 1;\r\n    justify-content: {{ content_vertical_align_mobile }};\r\n    align-items: {{ content_horizontal_align_mobile }};\r\n  }\r\n\r\n  .video-banner-slide-content-wrap-{{ section.id }} {\r\n    display: flex;    \r\n    flex-direction: column;\r\n    align-items: {{ content_horizontal_align_mobile }};\r\n    z-index: 1;\r\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;\r\n    justify-content: {{ content_vertical_align_mobile }};\r\n  }\r\n\r\n  .video-banner-heading-{{ section.id }} {\r\n    text-align: {{ content_align_mobile }};\r\n  }\r\n\r\n  .video-banner-heading-{{ section.id }} * {\r\n    margin: 0;  \r\n    font-size: {{ heading_size_mobile }}px;\r\n    {% if colors_advanced %}\r\n      color: {{ heading_color }};\r\n    {% else %}\r\n      color: {{ primary_color }};\r\n    {% endif %}\r\n    line-height: {{ heading_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    word-break: break-word;\r\n    font-weight: 700;\r\n  }    \r\n\r\n  .video-banner-text-{{ section.id }} {\r\n    text-align: {{ content_align_mobile }};\r\n    margin-top: {{ text_mt_mobile }}px;    \r\n  }\r\n\r\n  .video-banner-text-{{ section.id }} * {\r\n    margin: 0;    \r\n    text-transform: unset;  \r\n    word-break: break-word;\r\n    font-size: {{ text_size_mobile }}px;\r\n    line-height: {{ text_height }}%;\r\n    {% if colors_advanced %}\r\n      color: {{ text_color }};\r\n    {% else %}\r\n      color: {{ primary_color }};\r\n    {% endif %}\r\n  }\r\n\r\n  .video-banner-button-{{ section.id }} {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    max-width: fit-content;\r\n    gap: 10px;\r\n    width: 100%;\r\n    margin: 0;\r\n    margin-top: {{ button_mt_mobile }}px;\r\n    font-size: {{ button_size_mobile }}px;\r\n    line-height: {{ button_height }}%;\r\n    text-align: center;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\r\n    border-radius: {{ button_radius }}px;\r\n    transition: all 0.25s ease 0s;\r\n    background-color: transparent;\r\n    border: 0px;\r\n    cursor: pointer;\r\n    font-weight: 700;\r\n    min-width: max-content;\r\n  }\r\n\r\n  .video-banner-first-button-{{ section.id }} {\r\n    {% if colors_advanced %}\r\n    color: {{ first_button_color }};\r\n    {% else %}\r\n    color: {{ primary_color }};\r\n    {% endif %}\r\n  }\r\n\r\n  .video-banner-second-button-{{ section.id }} {\r\n    {% if colors_advanced %}\r\n    color: {{ second_button_color }};\r\n    {% elsif button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\r\n    color: {{ accent_color }};\r\n    {% else %}\r\n    color: {{ primary_color }};\r\n    {% endif %}\r\n  }\r\n\r\n  .video-banner-button-inner-{{ section.id }} {\r\n    margin: 0px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 10px;\r\n  }\r\n\r\n  .video-banner-first-button-{{ section.id }}:hover {\r\n    {% if colors_advanced %}\r\n    color: {{ first_button_hover_color }};\r\n    {% else %}\r\n    color: {{ accent_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .video-banner-button-{{ section.id }} svg {\r\n    width: 14px;\r\n    height: 14px;\r\n    background-color: transparent;\r\n  }\r\n\r\n  .video-banner-first-button-{{ section.id }} svg path {\r\n    {% if colors_advanced %}\r\n    fill: {{ first_button_color }};\r\n    {% else %}\r\n    fill: {{ primary_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .video-banner-first-button-{{ section.id }}:hover svg path {\r\n    {% if colors_advanced %}\r\n    fill: {{ first_button_hover_color }};\r\n    {% else %}\r\n    fill: {{ accent_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }  \r\n\r\n  .video-banner-second-button-{{ section.id }}:hover {\r\n    {% if colors_advanced %}\r\n    color: {{ second_button_hover_color }};\r\n    {% else %}\r\n    color: {{ accent_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .video-banner-second-button-{{ section.id }} svg path {\r\n    {% if colors_advanced %}\r\n    fill: {{ second_button_color }};\r\n    {% elsif button_style == \"non_outline_arrow\" %}\r\n    fill: {{ accent_color }};\r\n    {% else %}\r\n    fill: {{ primary_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .video-banner-second-button-{{ section.id }}:hover svg path {\r\n    {% if colors_advanced %}\r\n    fill: {{ second_button_hover_color }};\r\n    {% else %}\r\n    fill: {{ accent_color }};\r\n    {% endif %}\r\n    transition: all 0.25s ease 0s;\r\n  }  \r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} {\r\n    position: absolute;\r\n    top: 50% !important;\r\n    transform: translateY(-50%) !important;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: {{ numbers_vertical_align_mobile }};\r\n    gap: 8px;\r\n    height: 98% !important;\r\n    align-items: {{ numbers_horizontal_align_mobile }};\r\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;\r\n    z-index: 2 !important;\r\n  }\r\n  \r\n  @keyframes headingAnimate{{ section.id | replace: '-', '' }} {\r\n    0% {\r\n      opacity: 0;\r\n      transform: translateY(60%);\r\n    }\r\n\r\n    100% {\r\n      opacity: 1;\r\n      transform: translateY(0)\r\n    }\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet {\r\n    width: 40px;\r\n    height: 40px;\r\n    position: relative;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    background-color: transparent;\r\n    border-radius: 50%;\r\n    cursor: pointer;\r\n    transition: 0.3s;\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet svg {\r\n    width: auto;\r\n    height: auto;\r\n    background-color: transparent;\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet {\r\n    height: 43px;\r\n    width: 43px;\r\n    margin: 0px;\r\n    background-color: {{ number_bg_color | hex_to_rgba: 0.5 }};\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet span {\r\n    margin: 0;  \r\n    font-size: {{ number_size_mobile }}px;\r\n    color: {{ number_color }};\r\n    line-height: {{ number_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    word-break: break-word;\r\n    font-family: 'Montserrat', sans-serif;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .progress {\r\n    transform: rotate(-90deg);\r\n  }\r\n\r\n  .video-banner-numbers-pagination-{{ section.id }} .circle-origin {\r\n    fill: transparent;\r\n    background-color: {{ number_bg_color | hex_to_rgba: 0.5 }};\r\n    stroke: {{ number_border_color }};\r\n    stroke-width: 1;\r\n    stroke-linecap: round;\r\n    stroke-dasharray: 125.664px;\r\n    stroke-dashoffset: 125.664px;\r\n  }\r\n  \r\n  .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet-active .circle-origin {\r\n    -webkit-animation: progress{{ section.id | replace: '-', '' }} {{ autoplay_delay | plus: 1 }}s;\r\n    animation: progress{{ section.id | replace: '-', '' }} {{ autoplay_delay | plus: 1 }}s;\r\n  }\r\n  \r\n  @keyframes progress{{ section.id | replace: '-', '' }} {\r\n    0% {\r\n      stroke-dashoffset: 125.664px;\r\n    }\r\n\r\n    100% {\r\n      stroke-dashoffset: 0px;\r\n    }\r\n  }\r\n\r\n  .video-banner-buttons-{{ section.id }} {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 15px;\r\n    justify-content: {{ content_horizontal_align_mobile }};\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }} {\r\n    position: absolute !important;\r\n    top: 5%;\r\n    left: {{ content_padding_horizontal_mobile }}px;\r\n    z-index: 3;\r\n    width: {{ action_size_mobile }}px;\r\n    height: {{ action_size_mobile }}px;\r\n    border: {{ action_border_thickness }}px solid {{ action_border_color }};\r\n    border-radius: 50%;\r\n    background: {{ action_bg_color | hex_to_rgba: 0.3 }};\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    transition: all 0.3s ease 0s;\r\n    cursor: pointer;\r\n    -webkit-appearance: none;\r\n    z-index: 2;\r\n    box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15);\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }} svg {\r\n    background: transparent;\r\n    height: {{ action_icon_size_mobile }}px;\r\n    width: {{ action_icon_size_mobile }}px;\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }} svg path {\r\n    fill: {{ action_color }};\r\n    transition: all 0.3s ease 0s;\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }}:hover {\r\n    transition: all 0.3s ease 0s;\r\n    border: {{ action_border_thickness }}px solid {{ action_border_hover_color }};\r\n    background: {{ action_bg_hover_color | hex_to_rgba: 0.3 }};\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }}:hover svg path {\r\n    fill: {{ action_hover_color }};\r\n    transition: all 0.3s ease 0s;\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }} .video-banner-play-{{ section.id }} {\r\n    display: none !important;\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }}.active .video-banner-play-{{ section.id }} {\r\n    display: block !important;\r\n  }\r\n\r\n  .video-banner-action-{{ section.id }}.active .video-banner-pause-{{ section.id }} {\r\n    display: none !important;\r\n  }\r\n\r\n  .video-banner-video-mobile-{{ section.id }} {\r\n    display: block !important;\r\n  }\r\n\r\n  .video-banner-video-desktop-{{ section.id }} {\r\n    display: none !important;\r\n  }\r\n  \r\n  @media(min-width: 1024px) {\r\n\r\n    .section-{{ section.id }} {\r\n      margin-top: {{ margin_top }}px;\r\n      margin-bottom: {{ margin_bottom }}px;\r\n      margin-left: {{ margin_horizontal }}rem;\r\n      margin-right: {{ margin_horizontal }}rem;\r\n      border-radius: {{ section_radius }}px;\r\n    }\r\n    \r\n    .section-{{ section.id }}-settings {\r\n      padding: 0 5rem;\r\n      padding-top: {{ padding_top }}px;\r\n      padding-bottom: {{ padding_bottom }}px;\r\n      padding-left: {{ padding_horizontal }}rem;\r\n      padding-right: {{ padding_horizontal }}rem;\r\n    }\r\n\r\n    .video-banner-slide-content-{{ section.id }} {\r\n      align-items: {{ content_horizontal_align }};      \r\n      justify-content: {{ content_vertical_align }};\r\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\r\n    }\r\n\r\n    .video-banner-slide-content-wrap-{{ section.id }} {    \r\n      align-items: {{ content_horizontal_align }};\r\n      width: {{ content_max_width }}%;\r\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\r\n      justify-content: {{ content_vertical_align }};\r\n    }\r\n          \r\n    .video-banner-heading-{{ section.id }} {\r\n      text-align: {{ content_align }};\r\n    }\r\n\r\n    .video-banner-heading-{{ section.id }} * {\r\n      font-size: {{ heading_size }}px;\r\n    }\r\n      \r\n    .video-banner-text-{{ section.id }} {\r\n      text-align: {{ content_align }};\r\n      margin-top: {{ text_mt }}px;    \r\n    }\r\n\r\n    .video-banner-text-{{ section.id }} * {\r\n      font-size: {{ text_size }}px;\r\n    }\r\n\r\n    .video-banner-button-{{ section.id }} {\r\n      margin-top: {{ button_mt }}px;\r\n      font-size: {{ button_size }}px;\r\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\r\n    }  \r\n\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      justify-content: {{ numbers_vertical_align }};\r\n      align-items: {{ numbers_horizontal_align }};\r\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\r\n    }\r\n\r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet span {\r\n      font-size: {{ number_size }}px;\r\n    }\r\n\r\n    .video-banner-buttons-{{ section.id }} {\r\n      justify-content: {{ content_horizontal_align }};\r\n    }\r\n\r\n    .video-banner-action-{{ section.id }} {\r\n      left: {{ content_padding_horizontal }}px;\r\n      width: {{ action_size }}px;\r\n      height: {{ action_size }}px;\r\n    }\r\n\r\n    .video-banner-action-{{ section.id }} svg {\r\n      height: {{ action_icon_size }}px;\r\n      width: {{ action_icon_size }}px;\r\n    }\r\n\r\n    .video-banner-video-mobile-{{ section.id }} {\r\n      display: none !important;\r\n    }\r\n\r\n    .video-banner-video-desktop-{{ section.id }} {\r\n      display: block !important;\r\n    }\r\n  }\r\n  \r\n{%- endstyle -%}\r\n\r\n{% if width == 'custom' %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: {{ content_width }}px;\r\n    }\r\n  </style>\r\n{% elsif width == 'page' %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: var(--page-width);\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if margin_horizontal_mobile > 0 %}\r\n  <style>\r\n    .section-{{ section.id }} {\r\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n    }\r\n    \r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: 0px;\r\n        border-right: 0px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if margin_horizontal > 0 %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if heading_custom %}\r\n  <style>\r\n    {{ heading_font | font_face: font_display: 'swap' }}\r\n\r\n    .video-banner-heading-{{ section.id }} * {\r\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\r\n      font-weight: {{ heading_font.weight }};\r\n      font-style: {{ heading_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if text_custom %}\r\n  <style>\r\n    {{ text_font | font_face: font_display: 'swap' }}\r\n\r\n    .video-banner-text-{{ section.id }} * {\r\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\r\n      font-weight: {{ text_font.weight }};\r\n      font-style: {{ text_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if button_custom %}\r\n  <style>\r\n    {{ button_font | font_face: font_display: 'swap' }}\r\n\r\n    .video-banner-button-{{ section.id }} {\r\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\r\n      font-weight: {{ button_font.weight }};\r\n      font-style: {{ button_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if number_custom %}\r\n  <style>\r\n    {{ number_font | font_face: font_display: 'swap' }}\r\n    \r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet span {\r\n      font-family: {{ number_font.family }}, {{ number_font.fallback_families }};\r\n      font-weight: {{ number_font.weight }};\r\n      font-style: {{ number_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if liquid_glass %}\r\n  <style>\r\n    .liquid-design-{{ section.id }} {\r\n        position: relative; \r\n        overflow: hidden;\r\n        z-index: 10;      \r\n        background-color: transparent !important; \r\n        border-color: transparent !important;\r\n        border-width: 0 !important;\r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .glass-filter-{{ section.id }},\r\n    .liquid-design-{{ section.id }} .glass-overlay-{{ section.id }},\r\n    .liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n        position: absolute;\r\n        inset: 0;\r\n        border-radius: inherit; \r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .glass-filter-{{ section.id }} {\r\n        backdrop-filter: blur(4px);\r\n        -webkit-backdrop-filter: blur(4px);\r\n        filter: url(#lensFilter-{{ section.id }}) saturate(120%) brightness(1.15);\r\n        z-index: 0; \r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .glass-overlay-{{ section.id }} {\r\n        background: var(--lg-bg-color); /* Например, rgba(255, 255, 255, 0.2) */\r\n        z-index: 1;\r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n        box-shadow: inset 1px 1px 0 var(--lg-highlight),\r\n                    inset 0 0 5px var(--lg-highlight);\r\n        z-index: 2;\r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .liquid-button-content {\r\n      position: relative;\r\n      z-index: 3; \r\n      width: 100%;\r\n      height: 100%;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n    }\r\n\r\n    .liquid-design-{{ section.id }} .glass-overlay-{{ section.id }} {\r\n      background: rgba(0, 0, 0, 0.25);\r\n      transition: background 0.25s ease;\r\n    }\r\n\r\n    .liquid-design-{{ section.id }}:hover .glass-overlay-{{ section.id }},\r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}.swiper-pagination-bullet-active .glass-overlay-{{ section.id }} {\r\n      background: rgba(0, 0, 0, 0.35); \r\n    }\r\n\r\n    .video-banner-first-button-{{ section.id }}.liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n      {% assign highlight_color = first_button_color | color_lighten: 40 | color_modify: 'alpha', 0.75 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_color }},\r\n                  inset 0 0 5px {{ highlight_color }};\r\n      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;\r\n    }\r\n    .video-banner-first-button-{{ section.id }}.liquid-design-{{ section.id }}:hover .glass-specular-{{ section.id }} {\r\n      {% assign highlight_hover_color = first_button_hover_color | color_lighten: 40 | color_modify: 'alpha', 0.85 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_hover_color }},\r\n                  inset 0 0 5px {{ highlight_hover_color }};\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }}.liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n      {% assign highlight_color = second_button_color | color_lighten: 40 | color_modify: 'alpha', 0.75 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_color }},\r\n                  inset 0 0 5px {{ highlight_color }};\r\n      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;\r\n    }\r\n    .video-banner-second-button-{{ section.id }}.liquid-design-{{ section.id }}:hover .glass-specular-{{ section.id }} {\r\n      {% assign highlight_hover_color = second_button_hover_color | color_lighten: 40 | color_modify: 'alpha', 0.85 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_hover_color }},\r\n                  inset 0 0 5px {{ highlight_hover_color }};\r\n    }\r\n\r\n    .video-banner-action-{{ section.id }}.liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n      {% assign highlight_color = action_color | color_lighten: 40 | color_modify: 'alpha', 0.75 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_color }},\r\n                  inset 0 0 5px {{ highlight_color }};\r\n      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;\r\n    }\r\n    .video-banner-action-{{ section.id }}.liquid-design-{{ section.id }}:hover .glass-specular-{{ section.id }} {\r\n      {% assign highlight_hover_color = action_hover_color | color_lighten: 40 | color_modify: 'alpha', 0.85 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_hover_color }},\r\n                  inset 0 0 5px {{ highlight_hover_color }};\r\n    }\r\n\r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }} .glass-specular-{{ section.id }} {\r\n      {% assign highlight_color = number_color | color_lighten: 40 | color_modify: 'alpha', 0.75 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_color }},\r\n                  inset 0 0 5px {{ highlight_color }};\r\n      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;\r\n    }\r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}.swiper-pagination-bullet-active .glass-specular-{{ section.id }},\r\n    .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}:hover .glass-specular-{{ section.id }} {\r\n      {% assign highlight_hover_color = number_border_color | color_lighten: 40 | color_modify: 'alpha', 0.85 %}\r\n      box-shadow: inset 1px 1px 0 {{ highlight_hover_color }},\r\n                  inset 0 0 5px {{ highlight_hover_color }};\r\n    }\r\n  </style>\r\n\r\n  {% if section.settings.liquid_glass_hover_effect %}\r\n    <style>\r\n      .video-banner-button-{{ section.id }}.liquid-design-{{ section.id }},\r\n      .video-banner-action-{{ section.id }}.liquid-design-{{ section.id }},\r\n      .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }} {\r\n        transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 2.2), background 0.25s ease, box-shadow 0.25s ease; /* Overshoot on transform only */\r\n      }\r\n      .video-banner-action-{{ section.id }}.liquid-design-{{ section.id }} {\r\n          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2), background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;\r\n      }\r\n\r\n      .video-banner-first-button-{{ section.id }}.liquid-design-{{ section.id }}:hover,\r\n      .video-banner-second-button-{{ section.id }}.liquid-design-{{ section.id }}:hover,\r\n      .video-banner-action-{{ section.id }}.liquid-design-{{ section.id }}:hover,\r\n      .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}:hover,\r\n      .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}.swiper-pagination-bullet-active {\r\n        transform: scale(1.08); \r\n      }\r\n\r\n       .video-banner-numbers-pagination-{{ section.id }} .swiper-pagination-bullet.liquid-design-{{ section.id }}{\r\n          transform-origin: center center;\r\n       }\r\n    </style>\r\n  {% endif %}\r\n{% endif %}\r\n\r\n{% if numbers_align_mobile == 'left' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      left: 10px !important;\r\n    }\r\n  </style>\r\n{% elsif numbers_align_mobile == 'right' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      left: calc(65% - 10px) !important;\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      left: 50% !important;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_align == 'left' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        left: 10px !important;\r\n      }\r\n    }\r\n  </style>\r\n{% elsif numbers_align == 'right' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        left: calc(95% - 10px) !important;\r\n      }\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        left: 50% !important;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_vertical_align_mobile == 'start' and numbers_align_mobile == 'left' %}\r\n  <style>\r\n    .video-banner-action-{{ section.id }} {\r\n      left: inherit;\r\n      right: {{ content_padding_horizontal_mobile }}px;\r\n    }\r\n\r\n    .video-banner-numbers-pagination-{{ section.id }}  {\r\n      left: 0 !important;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_vertical_align == 'start' and numbers_align == 'left' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-action-{{ section.id }} {\r\n        left: inherit;\r\n        right: {{ content_padding_horizontal }}px;\r\n      }\r\n      \r\n      .video-banner-numbers-pagination-{{ section.id }}  {\r\n        left: 0 !important;\r\n      }\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-action-{{ section.id }} {\r\n        left: {{ content_padding_horizontal }}px;\r\n        right: inherit;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_vertical_align_mobile == 'start' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      flex-direction: row !important;\r\n      top: 8% !important;\r\n      height: fit-content !important;\r\n      max-width: 80% !important;\r\n      {% if numbers_vertical_align_mobile == 'start' and numbers_align_mobile == 'left' %}\r\n      left: 0% !important;\r\n      transform: translateX(0%) translateY(-50%) !important;\r\n      {% else %}\r\n        left: 100% !important;\r\n        transform: translateX(-100%) translateY(-50%) !important;\r\n      {% endif %}\r\n      justify-content: {{ numbers_horizontal_align_mobile }};\r\n    }\r\n  </style>\r\n{% elsif numbers_vertical_align_mobile == 'end' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      flex-direction: row !important;\r\n      top: 92% !important;\r\n      height: fit-content !important;\r\n      max-width: 100% !important;\r\n      left: 0 !important;\r\n      justify-content: {{ numbers_horizontal_align_mobile }};\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      flex-direction: column !important;\r\n      left: 0 !important;\r\n      top: 50% !important;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_vertical_align == 'start' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        flex-direction: row !important;\r\n        top: 8% !important;\r\n        height: fit-content !important;\r\n        max-width: 80% !important;\r\n        {% if numbers_vertical_align == 'start' and numbers_align == 'left' %}\r\n        left: 0% !important;\r\n        transform: translateX(0%) translateY(-50%) !important;\r\n        {% else %}\r\n          left: 100% !important;\r\n          transform: translateX(-100%) translateY(-50%) !important;\r\n        {% endif %}\r\n        \r\n        justify-content: {{ numbers_horizontal_align }};\r\n      }\r\n    }  \r\n  </style>\r\n{% elsif numbers_vertical_align == 'end' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        flex-direction: row !important;\r\n        top: 92% !important;\r\n        height: fit-content !important;\r\n        max-width: 100% !important;\r\n        left: 0 !important;\r\n        justify-content: {{ numbers_horizontal_align }};\r\n      }\r\n    }  \r\n  </style>\r\n{% else %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        flex-direction: column !important;\r\n        left: 0 !important;\r\n        top: 50% !important;\r\n      }\r\n    }  \r\n  </style>\r\n{% endif %}\r\n\r\n{% if numbers_vertical_align_mobile == 'start' and numbers_align_mobile == 'center' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      transform: translate(-50%, -50%);\r\n    }\r\n  </style>\r\n{%  elsif numbers_vertical_align_mobile == 'end' and numbers_align_mobile == 'center' %}\r\n  <style>\r\n    .video-banner-numbers-pagination-{{ section.id }} {\r\n      transform: translate(-50%, -50%);\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n\r\n{% if numbers_vertical_align == 'start' and numbers_align == 'center' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        transform: translate(-50%, -50%);\r\n      }\r\n    }\r\n  </style>\r\n{% elsif numbers_vertical_align == 'end' and numbers_align == 'center' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .video-banner-numbers-pagination-{{ section.id }} {\r\n        transform: translate(-50%, -50%);\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if layout_height == \"full_screen\" %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      height: 100%;\r\n    }\r\n\r\n    .video-banner-{{ section.id }} {\r\n      height: 95vh;\r\n    }\r\n    @media(min-width: 1024px) {      \r\n      .section-{{ section.id }}-settings {\r\n        height: 100%;\r\n      }\r\n\r\n      .video-banner-{{ section.id }} {\r\n        height: 95vh;\r\n      }\r\n    }\r\n  </style>\r\n{% elsif layout_height == 'fixed_height' %}  \r\n  <style>    \r\n    .section-{{ section.id }}-settings {\r\n      height: 100%;\r\n    }\r\n\r\n    .video-banner-{{ section.id }} {\r\n      height: {{ layout_fixed_height_mobile }}px;\r\n    }\r\n\r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }}-settings {\r\n        height: 100%;\r\n      }\r\n\r\n      .video-banner-{{ section.id }} {\r\n        height: {{ layout_fixed_height }}px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\r\n  <style>\r\n    .video-banner-first-button-{{ section.id }} {\r\n      {% if colors_advanced %}\r\n      background-color: {{ first_button_bg_color }};\r\n      {% else %}\r\n      background-color: {{ accent_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-first-button-{{ section.id }}:hover {\r\n      {% if colors_advanced %}\r\n      background-color: {{ first_button_bg_hover_color }};\r\n      {% else %}\r\n      background-color: {{ secondary_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }} {\r\n      {% if colors_advanced %}\r\n      background-color: {{ second_button_bg_color }};\r\n      {% else %}\r\n      background-color: {{ primary_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }}:hover {\r\n      {% if colors_advanced %}\r\n      background-color: {{ second_button_bg_hover_color }};\r\n      {% else %}\r\n      background-color: {{ secondary_color }};\r\n      {% endif %}\r\n    }\r\n  </style>\r\n{% elsif button_style == \"outline\" or button_style == \"outline_arrow\" %}\r\n  <style>\r\n    .video-banner-first-button-{{ section.id }} {\r\n      border-width: {{ button_border_thickness }}px;\r\n      border-style: solid;\r\n      {% if colors_advanced %}\r\n      background-color: {{ first_button_bg_color }};\r\n      border-color: {{ first_button_border_color }};\r\n      {% else %}\r\n      background-color: {{ accent_color }};\r\n      border-color: {{ accent_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-first-button-{{ section.id }}:hover {\r\n      {% if colors_advanced %}\r\n      background-color: {{ first_button_bg_hover_color }};\r\n      border-color: {{ first_button_border_hover_color }};\r\n      {% else %}\r\n      background-color: {{ secondary_color }};\r\n      border-color: {{ secondary_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }} {\r\n      border-width: {{ button_border_thickness }}px;\r\n      border-style: solid;\r\n      {% if colors_advanced %}\r\n      background-color: {{ second_button_bg_color }};\r\n      border-color: {{ second_button_border_color }};\r\n      {% else %}\r\n      background-color: transparent;\r\n      border-color: {{ primary_color }};\r\n      {% endif %}\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }}:hover {\r\n      {% if colors_advanced %}\r\n      background-color: {{ second_button_bg_hover_color }};\r\n      border-color: {{ second_button_border_hover_color }};\r\n      {% else %}\r\n      background-color: {{ secondary_color }};\r\n      border-color: {{ secondary_color }};\r\n      {% endif %}\r\n    }\r\n  </style>\r\n{% elsif button_style == \"link\" %}\r\n  <style>\r\n    .video-banner-first-button-{{ section.id }} {\r\n      padding: 0px !important;\r\n      background-color: transparent;\r\n      border: 0px;\r\n    }\r\n\r\n    .video-banner-second-button-{{ section.id }} {\r\n      padding: 0px !important;\r\n      background-color: transparent;\r\n      border: 0px;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n<div class=\"section-{{ section.id }} video-banner-{{ section.id }}\" {% if background_style == 'solid' %}style=\"background-color:{{ background_color }};\"{% else %} style=\"background-image: {{ background_gradient }};\"{% endif %}>\r\n    <div class=\"section-{{ section.id }}-settings\">\r\n      <div class=\"video-banner-body-{{ section.id }}\">\r\n        <div class=\"video-banner-slider-{{ section.id }} swiper\">\r\n          <div class=\"swiper-wrapper\">\r\n            {% for block in section.blocks %}\r\n              {% if block.type == 'slide' %}\r\n                <div class=\"video-banner-slide-{{ section.id }} swiper-slide\" id=\"{{ block.id }}\">\r\n                  {% if block.settings.video_url_mobile != blank or block.settings.video_mobile != blank %}\r\n                    {% assign video_url_id = block.settings.video_url.id %}\r\n                    {% assign video_id = block.settings.video.id %}\r\n                    {% assign loop = '&loop=1&playlist=' | append: video_id %}\r\n                    {% assign loop_url = '&loop=1&playlist=' | append: video_url_id %}\r\n                    {%- if block.settings.source != 'uploaded' -%}\r\n                      {%- if block.settings.video_url.type == 'youtube' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"                      \r\n                          data-src1=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\" \r\n                          data-src2=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"     \r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy video-banner-video-desktop-{{ section.id }}\"\r\n                        ></iframe>\r\n                        {%- elsif block.settings.video_url.type == 'vimeo' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"\r\n                          data-src1=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"\r\n                          data-src2=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"\r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy video-banner-video-desktop-{{ section.id }}\"\r\n                        ></iframe>\r\n                        {% else %}\r\n                          {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                          <video {% if lazy %}data-{% endif %}src=\"{{ placeholder_video }}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy video-banner-video-desktop-{{ section.id }}\"></video>\r\n                      {% endif %}                       \r\n                    {% else %}\r\n                      {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                      <video {% if lazy %}data-{% endif %}src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy video-banner-video-desktop-{{ section.id }}\"></video>\r\n                    {% endif %}  \r\n\r\n                    {% assign video_url_id_mobile = block.settings.video_url_mobile.id %}\r\n                    {% assign video_id_mobile = block.settings.video_mobile.id %}\r\n                    {% assign loop_mobile = '&loop=1&playlist=' | append: video_id_mobile %}\r\n                    {% assign loop_url_mobile = '&loop=1&playlist=' | append: video_url_id_mobile %}\r\n                    {%- if block.settings.source != 'uploaded' -%}\r\n                      {%- if block.settings.video_url_mobile.type == 'youtube' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://www.youtube.com/embed/{{ video_url_id_mobile }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url_mobile }}\"                      \r\n                          data-src1=\"https://www.youtube.com/embed/{{ video_url_id_mobile }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url_mobile }}\" \r\n                          data-src2=\"https://www.youtube.com/embed/{{ video_url_id_mobile }}?enablejsapi=1&mute=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url_mobile }}\"     \r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy video-banner-video-mobile-{{ section.id }}\"\r\n                        ></iframe>\r\n                        {%- elsif block.settings.video_url_mobile.type == 'vimeo' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://player.vimeo.com/video/{{ video_url_id_mobile }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url_mobile }}\"\r\n                          data-src1=\"https://player.vimeo.com/video/{{ video_url_id_mobile }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url_mobile }}\"\r\n                          data-src2=\"https://player.vimeo.com/video/{{ video_url_id_mobile }}?enablejsapi=1&muted=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url_mobile }}\"\r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy video-banner-video-mobile-{{ section.id }}\"\r\n                        ></iframe>\r\n                        {% else %}\r\n                          {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                          <video {% if lazy %}data-{% endif %}src=\"{{ placeholder_video }}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy video-banner-video-mobile-{{ section.id }}\"></video>\r\n                      {% endif %}                       \r\n                    {% else %}\r\n                      {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                      <video {% if lazy %}data-{% endif %}src=\"{% if block.settings.video_mobile != blank %}{{ block.settings.video_mobile.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy video-banner-video-mobile-{{ section.id }}\"></video>\r\n                    {% endif %}  \r\n\r\n                  {% else %}\r\n                    {% assign video_url_id = block.settings.video_url.id %}\r\n                    {% assign video_id = block.settings.video.id %}\r\n                    {% assign loop = '&loop=1&playlist=' | append: video_id %}\r\n                    {% assign loop_url = '&loop=1&playlist=' | append: video_url_id %}\r\n                    {%- if block.settings.source != 'uploaded' -%}\r\n                      {%- if block.settings.video_url.type == 'youtube' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"                      \r\n                          data-src1=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\" \r\n                          data-src2=\"https://www.youtube.com/embed/{{ video_url_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"     \r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy\"\r\n                        ></iframe>\r\n                        {%- elsif block.settings.video_url.type == 'vimeo' -%}\r\n                        <iframe\r\n                          {% if lazy %}data-{% endif %}src=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"\r\n                          data-src1=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"\r\n                          data-src2=\"https://player.vimeo.com/video/{{ video_url_id }}?enablejsapi=1&muted=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"\r\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                          allowfullscreen\r\n                          class=\"lazy\"\r\n                        ></iframe>\r\n                        {% else %}\r\n                          {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                          <video {% if lazy %}data-{% endif %}src=\"{{ placeholder_video }}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy\"></video>\r\n                      {% endif %}\r\n                    {% else %}\r\n                      {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                      <video {% if lazy %}data-{% endif %}src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy\"></video>\r\n                    {% endif %}  \r\n                  {% endif %}\r\n\r\n                  {% if use_action %}\r\n                    <div class=\"video-banner-action-{{ section.id }} liquid-design-{{ section.id }}\">\r\n                      {% if liquid_glass %}\r\n                        <div class=\"glass-filter-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-overlay-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-specular-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                      {% endif %}\r\n                      <div class=\"liquid-button-content\">\r\n                        <svg\r\n                          xmlns=\"http://www.w3.org/2000/svg\"\r\n                          viewBox=\"0 0 16 16\"\r\n                          width=\"1em\"\r\n                          height=\"1em\"\r\n                          role=\"presentation\"\r\n                          class=\"video-banner-play-{{ section.id }}\"\r\n                        >\r\n                          <path d=\"m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z\"></path>\r\n                        </svg>\r\n                        <svg\r\n                          xmlns=\"http://www.w3.org/2000/svg\"\r\n                          viewBox=\"0 0 16 16\"\r\n                          width=\"1em\"\r\n                          height=\"1em\"\r\n                          fill=\"currentColor\"\r\n                          role=\"presentation\"\r\n                          class=\"video-banner-pause-{{ section.id }}\"\r\n                        >\r\n                          <path d=\"M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z\"></path>\r\n                        </svg>\r\n                      </div>\r\n                    </div>\r\n                  {% endif %}    \r\n                  \r\n                  <div class=\"video-banner-slide-content-{{ section.id }}\">\r\n                    <div class=\"video-banner-slide-content-wrap-{{ section.id }}\">\r\n                      {% if block.settings.heading != blank %}\r\n                        <div class=\"video-banner-heading-{{ section.id }}\">{{ block.settings.heading }}</div>\r\n                      {% endif %}\r\n\r\n                      {% if block.settings.text != blank %}\r\n                        <div class=\"video-banner-text-{{ section.id }}\">{{ block.settings.text }}</div>\r\n                      {% endif %}\r\n\r\n                      <div class=\"video-banner-buttons-{{ section.id }}\">\r\n\r\n                        {% if block.settings.first_button != blank %}\r\n                          <{% if block.settings.first_url != blank %}a href=\"{{ block.settings.first_url }}\" {% if open_in_new_tab %} target=\"_blank\"{% endif %}{% else %}div{% endif %} \r\n                              class=\"video-banner-button-{{ section.id }} video-banner-first-button-{{ section.id }} liquid-design-{{ section.id }}\"\r\n                          >\r\n                            {% if liquid_glass %}\r\n                              <div class=\"glass-filter-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                              <div class=\"glass-overlay-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                              <div class=\"glass-specular-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                            {% endif %}\r\n\r\n                              <div class=\"liquid-button-content\">\r\n                                  <p class=\"video-banner-button-inner-{{ section.id }}\">\r\n                                      {{ block.settings.first_button }}\r\n                                      {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\r\n                                        <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                          <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\r\n                                          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\r\n                                          <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\r\n                                        </svg>\r\n                                      {% endif %}\r\n                                  </p>\r\n                              </div>\r\n                          </{% if block.settings.first_url != blank %}a{% else %}div{% endif %}>\r\n                        {% endif %}\r\n\r\n                        {% if block.settings.second_button != blank %}\r\n                          <{% if block.settings.second_url != blank %}a href=\"{{ block.settings.second_url }}\" {% if open_in_new_tab %} target=\"_blank\"{% endif %}{% else %}div{% endif %} \r\n                              class=\"video-banner-button-{{ section.id }} video-banner-second-button-{{ section.id }} liquid-design-{{ section.id }}\"\r\n                          >\r\n                            {% if liquid_glass %}\r\n                              <div class=\"glass-filter-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                              <div class=\"glass-overlay-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                              <div class=\"glass-specular-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                            {% endif %}\r\n\r\n                              <div class=\"liquid-button-content\">\r\n                                  <p class=\"video-banner-button-inner-{{ section.id }}\">\r\n                                      {{ block.settings.second_button }}\r\n                                      {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\r\n                                        <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                          <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\r\n                                          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\r\n                                          <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\r\n                                        </svg>\r\n                                      {% endif %}\r\n                                  </p>\r\n                              </div>\r\n                          </{% if block.settings.second_url != blank %}a{% else %}div{% endif %}>\r\n                        {% endif %}\r\n                      </div>    \r\n                    </div>                  \r\n                  </div>\r\n                </div>\r\n              {% endif %}\r\n            {% endfor %}\r\n          </div>        \r\n        </div>  \r\n        {% if use_numbers %}\r\n          <div class=\"video-banner-numbers-pagination-{{ section.id }} swiper-pagination\"></div>\r\n        {% endif %}\r\n      </div> \r\n      {% if liquid_glass %}\r\n        <svg xmlns=\"http://www.w3.org/2000/svg\" style=\"display: none;\">\r\n          <filter id=\"lensFilter-{{ section.id }}\" x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" filterUnits=\"objectBoundingBox\">\r\n            <feComponentTransfer in=\"SourceAlpha\" result=\"alpha\">\r\n              <feFuncA type=\"identity\" />\r\n            </feComponentTransfer>\r\n            <feGaussianBlur in=\"alpha\" stdDeviation=\"50\" result=\"blur\" />\r\n            <feDisplacementMap in=\"SourceGraphic\" in2=\"blur\" scale=\"50\" xChannelSelector=\"A\" yChannelSelector=\"A\" />\r\n          </filter>\r\n        </svg>  \r\n      {% endif %}\r\n    </div>\r\n</div>\r\n\r\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\r\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\r\n\r\n<script>\r\nfunction initVideoBanner() { \r\n\r\n  window.addEventListener(\r\n    \"LazyLoad::Initialized\",\r\n    function (event) {\r\n      window.lazyLoadInstance = event.detail.instance;\r\n    },\r\n    false\r\n  );\r\n\r\n  let lazyLoadInstance = new LazyLoad();\r\n\r\n  const slider = new Swiper(\".video-banner-slider-{{ section.id }}\", {  \r\n    effect: \"fade\",   \r\n    speed: 500,\r\n    loop: true,\r\n    {% if autoplay %}\r\n      autoplay: {\r\n        delay: {{ autoplay_delay }} * 1000,\r\n        disableOnInteraction: false,\r\n      },\r\n    {% endif %}\r\n    {% if use_numbers %}\r\n      pagination: {\r\n        el: '.video-banner-numbers-pagination-{{ section.id }}',\r\n        clickable: true,\r\n        renderBullet: function (i, className) {\r\n          {% if liquid_glass %}\r\n            {% if autoplay %}\r\n              return `<button class=\"${className} ${className}-{{ section.id }} liquid-design-{{ section.id }}\">\r\n                        <div class=\"glass-filter-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-overlay-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-specular-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"liquid-button-content\">\r\n                          <svg class=\"progress\" width=\"43\" height=\"43\"><circle class=\"circle-origin\" r=\"20\" cx=\"21.5\" cy=\"21.5\"></circle></svg>\r\n                          <span>${i + 1}</span>\r\n                        </div>\r\n                      </button>`;\r\n            {% else %}\r\n              return `<button class=\"${className} ${className}-{{ section.id }} liquid-design-{{ section.id }}\">\r\n                        <div class=\"glass-filter-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-overlay-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"glass-specular-{{ section.id }}\" style=\"display: block !important\"></div>\r\n                        <div class=\"liquid-button-content\">\r\n                          <span>${i + 1}</span>\r\n                        </div>\r\n                      </button>`;\r\n            {% endif %}\r\n          {% else %}\r\n            {% if autoplay %}\r\n              return `<button class=\"${className} ${className}-{{ section.id }}\"><svg class=\"progress\" width=\"43\" height=\"43\"><circle class=\"circle-origin\" r=\"20\" cx=\"21.5\" cy=\"21.5\"></circle></svg><span>${i + 1}</span></button>`;\r\n            {% else %}\r\n              return `<button class=\"${className} ${className}-{{ section.id }}\"><span>${i + 1}</span></button>`;\r\n            {% endif %}\r\n          {% endif %}\r\n        }\r\n      }\r\n    {% endif %}\r\n  });\r\n\r\n  document.querySelectorAll(`.video-banner-slide-{{ section.id }}`).forEach(el => {\r\n    let btn = el.querySelector(`.video-banner-action-{{ section.id }}`);\r\n    let frame = el.querySelector('iframe');\r\n    let video = el.querySelector('video');\r\n    \r\n    if(btn) {\r\n      btn.addEventListener('click', () => {\r\n        btn.classList.toggle('active');\r\n        if(btn.classList.contains('active')) {\r\n          if(frame) {\r\n            let src1 = frame.getAttribute('data-src2');\r\n            frame.src = src1;\r\n          }\r\n          if(video) {\r\n            video.pause();\r\n          }\r\n        } else {\r\n          if(frame) {\r\n            let src2 = frame.getAttribute('data-src1');\r\n            frame.src = src2;\r\n          }\r\n          if(video) {\r\n            video.play();\r\n          }\r\n        }\r\n      });\r\n    }\r\n  });\r\n}\r\n\r\ndocument.addEventListener('DOMContentLoaded', initVideoBanner);\r\n\r\nif (Shopify.designMode) {\r\n  document.addEventListener('shopify:section:unload', initVideoBanner);\r\n  document.addEventListener('shopify:section:load', initVideoBanner);\r\n}\r\n\r\n</script>",
+  "variables": {
+    "layout_height": {
+      "type": "text",
+      "default": "full_screen",
+      "label": "Height",
+      "description": "Height"
+    },
+    "layout_fixed_height": {
+      "type": "text",
+      "default": "600",
+      "label": "Fixed height",
+      "description": "Fixed height"
+    },
+    "layout_fixed_height_mobile": {
+      "type": "text",
+      "default": "460",
+      "label": "Fixed height - mobile",
+      "description": "Fixed height - mobile"
+    },
+    "autoplay": {
+      "type": "text",
+      "default": "true",
+      "label": "Use autoplay",
+      "description": "Use autoplay"
+    },
+    "autoplay_delay": {
+      "type": "text",
+      "default": "6",
+      "label": "Autoplay delay",
+      "description": "Autoplay delay"
+    },
+    "liquid_glass": {
+      "type": "text",
+      "default": "",
+      "label": "Liquid glass buttons",
+      "description": "Liquid glass buttons"
+    },
+    "liquid_glass_hover_effect": {
+      "type": "text",
+      "default": "true",
+      "label": "Liquid glass hover effect",
+      "description": "Liquid glass hover effect"
+    },
+    "overlay": {
+      "type": "text",
+      "default": "0.2",
+      "label": "Overlay",
+      "description": "Overlay"
+    },
+    "content_max_width": {
+      "type": "text",
+      "default": "80",
+      "label": "Max width",
+      "description": "Max width"
+    },
+    "content_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "content_padding_vertical_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "50",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "content_vertical_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Position",
+      "description": "Position"
+    },
+    "content_vertical_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Position - mobile",
+      "description": "Position - mobile"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "56",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "36",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "open_in_new_tab": {
+      "type": "text",
+      "default": "false",
+      "label": "Open link in new tab",
+      "description": "Open link in new tab"
+    },
+    "button_style": {
+      "type": "text",
+      "default": "outline",
+      "label": "Style",
+      "description": "Style"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "button_advanced": {
+      "type": "text",
+      "default": "false",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "button_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "use_numbers": {
+      "type": "text",
+      "default": "true",
+      "label": "Use pagination",
+      "description": "Use pagination"
+    },
+    "numbers_align": {
+      "type": "text",
+      "default": "right",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "numbers_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "numbers_vertical_align": {
+      "type": "text",
+      "default": "start",
+      "label": "Position",
+      "description": "Position"
+    },
+    "numbers_vertical_align_mobile": {
+      "type": "text",
+      "default": "end",
+      "label": "Position - mobile",
+      "description": "Position - mobile"
+    },
+    "number_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "number_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "number_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "number_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "number_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "number_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "use_action": {
+      "type": "text",
+      "default": "true",
+      "label": "Use play/pause button",
+      "description": "Use play/pause button"
+    },
+    "action_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Size",
+      "description": "Size"
+    },
+    "action_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "action_icon_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size",
+      "description": "Icon size"
+    },
+    "action_icon_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size - mobile",
+      "description": "Icon size - mobile"
+    },
+    "action_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "primary_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Primary",
+      "description": "Primary"
+    },
+    "secondary_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Secondary",
+      "description": "Secondary"
+    },
+    "accent_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Accent",
+      "description": "Accent"
+    },
+    "colors_advanced": {
+      "type": "text",
+      "default": "true",
+      "label": "Advanced colors",
+      "description": "Advanced colors"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "first_button_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Text",
+      "description": "Text"
+    },
+    "first_button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "first_button_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "first_button_bg_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "first_button_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "first_button_border_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "second_button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "second_button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "second_button_bg_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background",
+      "description": "Background"
+    },
+    "second_button_bg_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "second_button_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "second_button_border_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "number_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Number",
+      "description": "Number"
+    },
+    "number_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "number_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "action_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "action_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "action_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "action_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "action_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "action_border_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "overlay_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Overlay",
+      "description": "Overlay"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "width": {
+      "type": "text",
+      "default": "full",
+      "label": "Width",
+      "description": "Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Content width",
+      "description": "Content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

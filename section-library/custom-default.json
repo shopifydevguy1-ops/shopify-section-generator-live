@@ -1,0 +1,36 @@
+{
+  "id": "custom-default",
+  "name": "CUSTOM Default",
+  "description": "Section: CUSTOM Default",
+  "tags": [
+    "default"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- style -%}\n  .section-{{ section.id }}-padding {\n    max-width: {{section.settings.section-width}}rem;\n    margin: 0 auto;\n    padding: 0 1.5rem;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n      padding: 0 5rem;\n    }\n  }\n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};\">\n  <div class=\"page-width section-{{ section.id }}-padding\">\n    <div>Content here</div>\n  </div>\n</div>",
+  "variables": {
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

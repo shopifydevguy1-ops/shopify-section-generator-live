@@ -1,0 +1,42 @@
+{
+  "id": "custom-nft-roadmap",
+  "name": "Roadmap",
+  "description": "Section: Roadmap",
+  "tags": [
+    "nft"
+  ],
+  "type": "custom",
+  "liquid_code": "<div class=\"container\">\n    <h2 class=\"roadmap__title\">{{section.settings.heading}}</h2>\n    <div class=\"level__list-wrapper\">\n        {%- for block in section.blocks -%}\n        {%- unless forloop.last -%}\n          <style>.level__item-wrapper.level{{forloop.index}}::after {height: {{block.settings.line_height}};}</style>\n        {%- endunless -%}\n            <div class=\"level__item-wrapper level{{forloop.index}}\">\n                <div class=\"level {% if block.settings.reverse %}level-reverse{% endif %}\">\n                <div class=\"level__content-wrapper\">\n                    <div class=\"level__number\">{{block.settings.level}}</div>\n                    <div class=\"level__title\">{{block.settings.level_heading}}</div>\n                    <div class=\"level__description\">{{block.settings.level_description}}</div>\n                </div>\n                <div class=\"level__image level__image{{forloop.index}}\">\n                  {%- if block.settings.level_image -%}\n                  <style>.level__image{{forloop.index}} img {max-height: {{block.settings.level_image_height}}; width: auto;}</style>\n                    {{ block.settings.level_image | image_url: width: block.settings.level_image.width | image_tag: loading: 'lazy', alt: block.settings.level_headingblock.settings.product_title }}\n                  {%- else -%}\n                    {{ 'image' | placeholder_svg_tag }}\n                  {%- endif -%}\n                </div>\n                </div>\n            </div>\n        {%- endfor -%}\n    </div>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Roadmap",
+      "label": "Section Heading",
+      "description": "Section Heading"
+    },
+    "button_gradient_color_1": {
+      "type": "color",
+      "default": "#ea3bd8",
+      "label": "Gradient color 1",
+      "description": "Body color settings: background: "
+    },
+    "button_gradient_color_2": {
+      "type": "color",
+      "default": "#a931ee",
+      "label": "Gradient color 2",
+      "description": "Body color settings: background: "
+    },
+    "button_gradient_color_3": {
+      "type": "color",
+      "default": "#7f5aec",
+      "label": "Gradient color 3",
+      "description": "Body color settings: background: "
+    },
+    "button_gradient_color_4": {
+      "type": "color",
+      "default": "#82a3f7",
+      "label": "Gradient color 4",
+      "description": "Body color settings: background: "
+    }
+  }
+}

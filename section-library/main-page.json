@@ -1,0 +1,24 @@
+{
+  "id": "main-page",
+  "name": "t:sections.main-page.name",
+  "description": "Section: t:sections.main-page.name",
+  "tags": [
+    "main"
+  ],
+  "type": "custom",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"{{ 'section-main-page.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n<link rel=\"stylesheet\" href=\"{{ 'component-rte.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n\n<noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>\n<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div class=\"page-width page-width--narrow section-{{ section.id }}-padding\">\n  <h1 class=\"main-page-title page-title h0\">\n    {{ page.title | escape }}\n  </h1>\n  <div class=\"rte\">\n    {{ page.content }}\n  </div>\n</div>",
+  "variables": {
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

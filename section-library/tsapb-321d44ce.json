@@ -1,0 +1,90 @@
+{
+  "id": "tsapb-321d44ce",
+  "name": "❤️ Text & Button",
+  "description": "Section: ❤️ Text & Button",
+  "tags": [
+    "tsapb"
+  ],
+  "type": "custom",
+  "liquid_code": "<!-- --VERSION-11-- -->\n\n{% style %}\n:root {\n--vtl-neutral-100: #222;\n--vtl-neutral-70: #5e5e5e;\n--vtl-neutral-03: #f8f8f8;\n--vtl-neutral-01: #fff;\n--vtl-size-0: 0px;\n--vtl-size-1: 1px;\n--vtl-size-2: 2px;\n--vtl-size-4: 4px;\n--vtl-size-8: 8px;\n--vtl-size-12: 12px;\n--vtl-size-14: 14px;\n--vtl-size-16: 16px;\n--vtl-size-20: 20px;\n--vtl-size-24: 24px;\n--vtl-size-32: 32px;\n--vtl-size-40: 40px;\n--vtl-size-64: 64px;\n--vtl-font-weight-400: 400;\n--vtl-font-weight-600: 600;\n--vtl-line-height-140: 1.4;\n--vtl-text-decoration-none: none;\n--vtl-text-decoration-underline: underline;\n--vtl-border-width-1: var(--vtl-size-1);\n--vtl-color-bg-fill-default-on-light: var(--vtl-neutral-100);\n--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);\n--vtl-color-bg-surface-tertiary-on-light: var(--vtl-neutral-03);\n--vtl-color-text-disable-on-light: var(--vtl-neutral-70);\n--vtl-color-text-on-bg-fill-on-light: var(--vtl-neutral-01);\n--vtl-space-0: var(--vtl-size-0);\n--vtl-space-2: var(--vtl-size-2);\n--vtl-space-4: var(--vtl-size-4);\n--vtl-space-8: var(--vtl-size-8);\n--vtl-space-12: var(--vtl-size-12);\n--vtl-space-16: var(--vtl-size-16);\n--vtl-space-20: var(--vtl-size-20);\n--vtl-space-24: var(--vtl-size-24);\n--vtl-space-32: var(--vtl-size-32);\n--vtl-space-40: var(--vtl-size-40);\n--vtl-space-64: var(--vtl-size-64);\n--vtl-font-size-14: var(--vtl-size-14);\n}\n\n\n{% endstyle %}\n\n<!-- --UUID-321d44ce-- -->\n\n<section class=\"Vtls-{{ section.id | handle }} VtlsTextButtonSection\">\n\t{%- liquid\n\t\tassign buttons_block = section.blocks | where: \"type\", \"buttons\" | first\n\t-%}\n\t<div\n\t\tclass=\"\n\t\t\tVtlsTextButtonSectionContainer\n\t\t\tVtlsTextButtonSectionContainer--backgroundStyle-{{ section.settings.section_background_style }}\n\t\t\t{% if section.settings.section_background_style == \"gradient\" and section.settings.enable_animation == true %}VtlsTextButtonSectionContainer--hasAnimation{% endif %}\n\t\t\t{% if section.settings.section_width == 100 %}VtlsTextButtonSectionContainer--fullWidth{% endif %}\n\t\t\"\n\t>\n\t\t<div\n\t\t\tclass=\"\n\t\t\t\tVtlsTextButtonContent\n\t\t\t\tVtlsTextButtonContent--contentLayout-{{ section.settings.content_layout_desktop }}\n\t\t\t\tVtlsTextButton__Content--alignment-{{ section.settings.content_alignment }}\n\t\t\t\"\n\t\t>\n\t\t\t<div class=\"VtlsTextBox\">\n\t\t\t\t{%- for block in section.blocks -%}\n\t\t\t\t\t{%- case block.type -%}\n\t\t\t\t\t\t{%- when \"heading\" -%}\n\t\t\t\t\t\t\t{%- if block.settings.heading_alternative_font -%}\n\t\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t\t{{- block.settings.heading_font | font_face: font_display: 'swap' -}}\n\t\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t\t{%- endif -%}\n\t\t\t\t\t\t\t{%- capture heading_css_variables -%}\n                                    --block-heading-size: {{- block.settings.heading_size -}}px;\n                                    --block-heading-color: {{- block.settings.heading_color -}};\n                                    --block-heading-font: {{- block.settings.heading_font.family -}};\n                                  {%- endcapture -%}\n\t\t\t\t\t\t\t<h2\n\t\t\t\t\t\t\t\tstyle=\"{{- heading_css_variables | strip_newlines | escape -}}\"\n\t\t\t\t\t\t\t\tclass=\"VtlsTextBox__Heading VtlsTextBox__Heading--style-{{ block.settings.heading_style }} {% if block.settings.heading_alternative_font == true %}VtlsTextBox__Heading--alternativeFont{% endif %}\"\n\t\t\t\t\t\t\t\t{{ block.shopify_attributes }}\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t{{- block.settings.heading -}}\n\t\t\t\t\t\t\t</h2>\n\t\t\t\t\t\t{%- when \"caption\" -%}\n\t\t\t\t\t\t\t{%- if block.settings.caption_alternative_font -%}\n\t\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t\t{{- block.settings.caption_font | font_face: font_display: 'swap' -}}\n\t\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t\t{%- endif -%}\n\t\t\t\t\t\t\t{%- capture caption_css_variables -%}\n                                    --block-caption-size: {{- block.settings.caption_size -}}px;\n                                    --block-caption-color: {{- block.settings.caption_color -}};\n                                    --block-caption-font: {{- block.settings.caption_font.family -}};\n                                    --block-caption-weight: {{- block.settings.caption_weight -}};\n                                  {%- endcapture -%}\n\t\t\t\t\t\t\t<p\n\t\t\t\t\t\t\t\tstyle=\"{{- caption_css_variables | strip_newlines | escape -}}\"\n\t\t\t\t\t\t\t\tclass=\"VtlsTextBox__Caption {% if block.settings.caption_alternative_font == true %}VtlsTextBox__Caption--alternativeFont{% endif %}\"\n\t\t\t\t\t\t\t\t{{ block.shopify_attributes }}\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t{{- block.settings.caption -}}\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t{%- when \"text\" -%}\n\t\t\t\t\t\t\t{%- if block.settings.description_alternative_font -%}\n\t\t\t\t\t\t\t\t{%- liquid\n\t\t\t\t\t\t\t\t\tassign body_font_bold = block.settings.description_font | font_modify: 'weight', 'bold'\n\t\t\t\t\t\t\t\t\tassign body_font_italic = block.settings.description_font | font_modify: 'style', 'italic'\n\t\t\t\t\t\t\t\t\tassign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'\n\t\t\t\t\t\t\t\t%}\n\t\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t\t{{- block.settings.description_font | font_face: font_display: 'swap' -}}\n\t\t\t\t\t\t\t\t\t{{ body_font_bold | font_face: font_display: 'swap' }}\n\t\t\t\t\t\t\t\t\t{{ body_font_italic | font_face: font_display: 'swap' }}\n\t\t\t\t\t\t\t\t\t{{ body_font_bold_italic | font_face: font_display: 'swap' }}\n\t\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t\t{%- endif -%}\n\t\t\t\t\t\t\t{%- capture description_css_variables -%}\n                                    --block-description-size: {{- block.settings.description_size -}}px;\n                                    --block-description-color: {{- block.settings.description_color -}};\n                                    --block-description-font: {{- block.settings.description_font.family -}};\n                                  {%- endcapture -%}\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tstyle=\"{{- description_css_variables | strip_newlines | escape -}}\"\n\t\t\t\t\t\t\t\tclass=\"VtlsTextBox__Description VtlsTextBox__Description--alignment-{{ section.settings.text_alignment }} {% if block.settings.description_alternative_font == true %}VtlsTextBox__Description--alternativeFont{% endif %}\"\n\t\t\t\t\t\t\t\t{{ block.shopify_attributes }}\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t{{- block.settings.description -}}\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t{%- endcase -%}\n\t\t\t\t{%- endfor -%}\n\t\t\t</div>\n\t\t\t{%- if buttons_block -%}\n\t\t\t\t<div class=\"VtlsButtonsGroup\">\n\t\t\t\t\t{%- capture buttons_css_variables -%}\n                            --block-primary-button-text-color: {{- buttons_block.settings.primary_text_color -}};\n                            --block-primary-button-background-color: {{- buttons_block.settings.primary_background_color -}};\n                            --block-primary-button-corner-radius: {{- buttons_block.settings.primary_button_corner -}}px;\n                            --block-primary-button-border-color: {{- buttons_block.settings.primary_border_color -}};\n            \n                            --block-secondary-button-text-color: {{- buttons_block.settings.secondary_text_color -}};\n                            --block-secondary-button-background-color: {{- buttons_block.settings.secondary_background_color -}};\n                            --block-secondary-button-corner-radius: {{- buttons_block.settings.secondary_button_corner -}}px;\n                            --block-secondary-button-border-color: {{- buttons_block.settings.secondary_border_color -}};\n                          {%- endcapture -%}\n\t\t\t\t\t<div\n\t\t\t\t\t\tstyle=\"{{- buttons_css_variables | strip_newlines | escape -}}\"\n\t\t\t\t\t\tclass=\"VtlsTextButtonButtons\"\n\t\t\t\t\t\t{{ buttons_block.shopify_attributes }}\n\t\t\t\t\t>\n\t\t\t\t\t\t{%- if buttons_block.settings.primary_button_label != blank -%}\n\t\t\t\t\t\t\t<vtls-scroll-to-top>\n\t\t\t\t\t\t\t\t<a\n\t\t\t\t\t\t\t\t\t{% if buttons_block.settings.primary_new_tab == true %}\n\t\t\t\t\t\t\t\t\t\ttarget=\"_blank\"\n\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\tclass=\"VtlsTextButtonButtons__Primary VtlsTextButtonButtons__Primary--{{ buttons_block.settings.primary_button_style }}\"\n\t\t\t\t\t\t\t\t\t{% if buttons_block.settings.primary_button_behaviour == \"link\" %}\n\t\t\t\t\t\t\t\t\t\thref=\"{{ buttons_block.settings.primary_button_link }}\"\n\t\t\t\t\t\t\t\t\t{% else %}\n\t\t\t\t\t\t\t\t\t\thref=\"javascript:void(0)\"\n\t\t\t\t\t\t\t\t\t\tdata-scroll-to-top\n\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\taria-label=\"{{ buttons_block.settings.primary_button_label | escape }}\"\n\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t{{- buttons_block.settings.primary_button_label | escape -}}\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</vtls-scroll-to-top>\n\t\t\t\t\t\t{%- endif -%}\n\t\t\t\t\t\t{%- if buttons_block.settings.secondary_button_label != blank -%}\n\t\t\t\t\t\t\t<a\n\t\t\t\t\t\t\t\t{% if buttons_block.settings.secondary_new_tab == true %}\n\t\t\t\t\t\t\t\t\ttarget=\"_blank\"\n\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\tclass=\"VtlsTextButtonButtons__Secondary VtlsTextButtonButtons__Secondary--{{ buttons_block.settings.secondary_button_style }}\"\n\t\t\t\t\t\t\t\thref=\"{{ buttons_block.settings.secondary_button_link }}\"\n\t\t\t\t\t\t\t\taria-label=\"{{ buttons_block.settings.secondary_button_label | escape }}\"\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t{{- buttons_block.settings.secondary_button_label | escape -}}\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t{%- endif -%}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t{%- endif -%}\n\t\t</div>\n\t</div>\n</section>",
+  "variables": {
+    "content_alignment": {
+      "type": "text",
+      "default": "center",
+      "label": "Content alignment",
+      "description": "Content alignment"
+    },
+    "content_layout_desktop": {
+      "type": "text",
+      "default": "vertical",
+      "label": "Content layout on desktop",
+      "description": "Content layout on desktop"
+    },
+    "section_width": {
+      "type": "text",
+      "default": "80",
+      "label": "Section width",
+      "description": "Applies only to desktop"
+    },
+    "section_max_width": {
+      "type": "text",
+      "default": "",
+      "label": "Custom max width (optional)",
+      "description": "Section max width in pixels"
+    },
+    "vertical_padding": {
+      "type": "text",
+      "default": "60",
+      "label": "Top - bottom padding (desktop)",
+      "description": "Top - bottom padding (desktop)"
+    },
+    "vertical_margin": {
+      "type": "text",
+      "default": "40",
+      "label": "Top - bottom margin (desktop)",
+      "description": "Top - bottom margin (desktop)"
+    },
+    "vertical_padding_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Top - bottom padding (mobile)",
+      "description": "Top - bottom padding (mobile)"
+    },
+    "vertical_margin_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Top - bottom margin (mobile)",
+      "description": "Top - bottom margin (mobile)"
+    },
+    "section_background_style": {
+      "type": "text",
+      "default": "regular",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "section_background": {
+      "type": "color",
+      "default": "#F8F8F8",
+      "label": "Color",
+      "description": "Color"
+    },
+    "section_gradient": {
+      "type": "color",
+      "default": "linear-gradient(#72ffb3, #fffa63)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "enable_animation": {
+      "type": "text",
+      "default": "false",
+      "label": "Add gradient animation",
+      "description": "Add gradient animation"
+    },
+    "block_corner_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Background corner radius",
+      "description": "Background corner radius"
+    }
+  }
+}

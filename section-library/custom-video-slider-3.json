@@ -1,0 +1,547 @@
+{
+  "id": "custom-video-slider-3",
+  "name": "CUSTOM Video slider #3",
+  "description": "Section: CUSTOM Video slider #3",
+  "tags": [
+    "video",
+    "slider"
+  ],
+  "type": "slider",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n>\n\n{%- liquid\n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign slider_view_mobile = section.settings.slider_view_mobile\n  assign slider_view = section.settings.slider_view\n  assign slider_gap_mobile = section.settings.slider_gap_mobile\n  assign slider_gap = section.settings.slider_gap\n  assign slider_rotate = section.settings.slider_rotate\n\n  assign video_radius = section.settings.video_radius\n  assign video_border_thickness = section.settings.video_border_thickness\n  assign video_border_color = section.settings.video_border_color\n  assign video_shadow = section.settings.video_shadow\n  assign video_height = section.settings.video_height\n  assign video_height_mobile = section.settings.video_height_mobile\n  assign video_height_active = section.settings.video_height_active\n  assign video_height_active_mobile = section.settings.video_height_active_mobile\n\n  assign content_padding_vertical = section.settings.content_padding_vertical\n  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\n  assign content_radius = section.settings.content_radius\n  assign content_border_thickness = section.settings.content_border_thickness\n  assign content_border_color = section.settings.content_border_color\n  assign content_bg_color = section.settings.content_bg_color\n  assign content_mt_mobile = section.settings.content_mt_mobile\n  assign content_mt = section.settings.content_mt\n  assign content_shadow = section.settings.content_shadow\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_align = section.settings.text_align\n  assign text_align_mobile = section.settings.text_align_mobile\n\n  assign icon_size_mobile = section.settings.icon_size_mobile\n  assign icon_size = section.settings.icon_size\n  assign icon_bg_color = section.settings.icon_bg_color\n  assign icon_bg_hover_color = section.settings.icon_bg_hover_color\n  assign icon_border_thickness = section.settings.icon_border_thickness\n  assign icon_border_color = section.settings.icon_border_color\n  assign icon_border_hover_color = section.settings.icon_border_hover_color\n  assign icon_color = section.settings.icon_color\n  assign icon_hover_color = section.settings.icon_hover_color\n\n  assign arrow_size = section.settings.arrow_size\n  assign arrow_size_mobile = section.settings.arrow_size_mobile\n  assign arrow_icon_size = section.settings.arrow_icon_size\n  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n  assign arrow_bg_color = section.settings.arrow_bg_color\n  assign arrow_bg_hover_color = section.settings.arrow_bg_hover_color\n  assign arrow_radius = section.settings.arrow_radius\n  assign arrow_border_thickness = section.settings.arrow_border_thickness\n  assign arrow_border_color = section.settings.arrow_border_color\n  assign arrow_border_hover_color = section.settings.arrow_border_hover_color\n  assign arrow_show_desktop = section.settings.arrow_show_desktop\n  assign arrow_show_mobile = section.settings.arrow_show_mobile\n  assign arrow_hover_effect = section.settings.arrow_hover_effect\n  assign arrow_shadow = section.settings.arrow_shadow\n\n  assign use_action = section.settings.use_action\n  assign action_size = section.settings.action_size\n  assign action_size_mobile = section.settings.action_size_mobile\n  assign action_icon_size = section.settings.action_icon_size\n  assign action_icon_size_mobile = section.settings.action_icon_size_mobile\n  assign action_color = section.settings.action_color\n  assign action_hover_color = section.settings.action_hover_color\n  assign action_bg_color = section.settings.action_bg_color\n  assign action_bg_hover_color = section.settings.action_bg_hover_color\n  assign action_border_thickness = section.settings.action_border_thickness\n  assign action_border_color = section.settings.action_border_color\n  assign action_border_hover_color = section.settings.action_border_hover_color\n  assign action_shadow = section.settings.action_shadow\n\n  assign sound_size_mobile = section.settings.sound_size_mobile\n  assign sound_size = section.settings.sound_size\n  assign sound_icon_size_mobile = section.settings.sound_icon_size_mobile\n  assign sound_icon_size = section.settings.sound_icon_size\n  assign sound_border_thickness = section.settings.sound_border_thickness\n  assign use_sound = section.settings.use_sound\n  assign sound_shadow = section.settings.sound_shadow\n-%}\n\n{%- style -%}\n  {{  text_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    overflow: hidden;\n  }\n\n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n    position: relative;\n  }\n\n  .video-slider-slider-{{ section.id }} {\n    overflow: hidden !important;\n  }\n  \n  .video-slider-slide-{{ section.id }} {\n    box-sizing: border-box !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-video-{{ section.id }} {\n    position: relative;\n    overflow: hidden;\n    height: {{ video_height_active_mobile }}px;\n    transition: all 0.25s ease 0s;\n    display: flex;\n    align-items: center;\n  }\n\n  .video-slider-video-element-{{ section.id }} {\n    position: relative;\n    height: {{ video_height_mobile }}px;\n    transition: all 0.25s ease 0s;\n    width: 100%;\n  }\n\n  .video-slider-video-{{ section.id }} video,\n  .video-slider-video-{{ section.id }} iframe {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    box-shadow: none;\n    border: 0px;\n    border-radius: {{ video_radius }}px;\n    border: {{ video_border_thickness }}px solid {{ video_border_color }};\n  }\n\n  .video-slider-slide-{{ section.id }}.swiper-slide-active .video-slider-video-element-{{ section.id }} {\n    height: 100%;\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-content-{{ section.id }} {\n    margin-top: {{ content_mt_mobile }}px;\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;\n    border-radius: {{ content_radius }}px;\n    border: {{ content_border_thickness }}px solid {{ content_border_color }};\n    background-color: {{ content_bg_color }};\n    transform: translateY(-{{ video_height_active_mobile | minus: video_height_mobile | times: 0.5 | round: 0 }}px);\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-slide-{{ section.id }}.swiper-slide-active .video-slider-content-{{ section.id }} {\n    transform: translateY(0);\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-text-{{ section.id }} {\n    text-align: {{ text_align_mobile }};\n    flex: 1 1 auto;\n  }\n\n  .video-slider-text-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n  }\n\n  .video-slider-navigation-{{ section.id }} {\n    margin-top: 20px;\n    gap: 20px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n\n  .video-slider-btn-prev-{{ section.id }},\n  .video-slider-btn-next-{{ section.id }} {\n    display: flex;\n    width: {{ arrow_size_mobile }}px;\n    height: {{ arrow_size_mobile }}px;\n    border: 0px;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_color }};\n    border-radius: {{ arrow_radius }}px;\n    background: transparent;\n    background: {{ arrow_bg_color }};\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n  }\n\n  .video-slider-btn-prev-{{ section.id }} {\n    left: 16px;\n  }\n\n  .video-slider-btn-next-{{ section.id }} {\n    right: 16px;\n  }\n\n  .video-slider-btn-prev-{{ section.id }} .animate-icon,\n  .video-slider-btn-next-{{ section.id }} .animate-icon {\n    pointer-events: none;\n    place-items: center;\n    display: grid;\n  }\n\n  .video-slider-btn-prev-{{ section.id }} .animate-icon:before,\n  .video-slider-btn-next-{{ section.id }} .animate-icon:before {\n    content: \"\";\n    grid-area: 1 / -1;\n    transition: all .2s ease;\n    width: {{ arrow_icon_size_mobile }}px;\n    height: {{ arrow_icon_size_mobile }}px;\n    transform: rotate(calc(1 * 45deg));\n    box-sizing: border-box;\n    border-style: solid;\n    border: 0px;\n    border-right: 2px solid currentColor;\n    border-top: 2px solid currentColor;\n    position: relative;\n    left: -1px;\n  }\n\n  .video-slider-btn-prev-{{ section.id }} .animate-icon:before {\n    left: unset;\n    right: -1px;\n    border-right: 0px;\n    border-top: 0px;\n    border-bottom: 2px solid currentColor;\n    border-left: 2px solid currentColor;\n  }\n\n  .video-slider-btn-prev-{{ section.id }} .animate-icon:after,\n  .video-slider-btn-next-{{ section.id }} .animate-icon:after {\n    content: \"\";\n    grid-area: 1 / -1;\n    transition: all .2s ease;\n    width: {{ arrow_icon_size_mobile | minus: 0.3 }}px;\n    height: 1.6px;\n    transform-origin: center;\n    opacity: 0;\n    background: currentColor;\n    transform: scaleX(.5);\n  }\n\n  .video-slider-btn-prev-{{ section.id }} span,\n  .video-slider-btn-next-{{ section.id }} span {\n    color: {{ arrow_color }};\n  }\n\n  .video-slider-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .video-slider-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0.5;\n  }\n\n  .video-slider-controls-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    width: 100%;\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    justify-content: end;\n    z-index: 2;\n    padding: 10px;\n  }\n\n  .video-slider-action-{{ section.id }} {\n    width: {{ action_size_mobile }}px;\n    height: {{ action_size_mobile }}px;\n    border: {{ action_border_thickness }}px solid {{ action_border_color }};\n    border-radius: 50%;\n    background: {{ action_bg_color | hex_to_rgba: 0.3 }};\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n    z-index: 2;\n  }\n\n  .video-slider-action-{{ section.id }} svg {\n    height: {{ action_icon_size_mobile }}px;\n    width: {{ action_icon_size_mobile }}px;\n  }\n\n  .video-slider-action-{{ section.id }} svg path {\n    fill: {{ action_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .video-slider-action-{{ section.id }}:hover {\n    transition: all 0.3s ease 0s;\n    border: {{ action_border_thickness }}px solid {{ action_border_hover_color }};\n    background: {{ action_bg_hover_color | hex_to_rgba: 0.3 }};\n  }\n\n  .video-slider-action-{{ section.id }}:hover svg path {\n    fill: {{ action_hover_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .video-slider-action-{{ section.id }} .video-slider-unmute-{{ section.id }} {\n    display: none !important;\n  }\n\n  .video-slider-action-{{ section.id }}.active .video-slider-unmute-{{ section.id }} {\n    display: block !important;\n  }\n\n  .video-slider-action-{{ section.id }}.active .video-slider-mute-{{ section.id }} {\n    display: none !important;\n  }\n\n  .video-slider-sound-{{ section.id }} {\n    width: {{ sound_size_mobile }}px;\n    height: {{ sound_size_mobile }}px;\n    border: {{ sound_border_thickness }}px solid {{ action_border_color }};\n    border-radius: 50%;\n    background: {{ action_bg_color | hex_to_rgba: 0.3 }};\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n    transition: all 0.25s ease 0s;\n    z-index: 2;\n  }\n\n  .video-slider-sound-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    border: {{ sound_border_thickness }}px solid {{ action_border_hover_color }};\n    background: {{ action_bg_hover_color | hex_to_rgba: 0.3 }};\n  }\n\n  .video-slider-sound-{{ section.id }} svg {\n    height: {{ sound_icon_size_mobile }}px;\n    width: {{ sound_icon_size_mobile }}px;\n  }\n\n  .video-slider-sound-{{ section.id }} svg {\n    fill: {{ action_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-sound-{{ section.id }}:hover svg {\n    fill: {{ action_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-sound-{{ section.id }} .video-slider-unmute-{{ section.id }} {\n    display: none;\n  }\n\n  .video-slider-sound-{{ section.id }}.active .video-slider-unmute-{{ section.id }} {\n    display: block;\n  }\n\n  .video-slider-sound-{{ section.id }}.active .video-slider-mute-{{ section.id }} {\n    display: none;\n  }\n\n  .video-slider-wrapper-{{ section.id }} {\n    position: relative;\n  }\n\n  .video-slider-link-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 8px;\n    width: {{ icon_size_mobile }}px;\n    height: {{ icon_size_mobile }}px;\n    flex-shrink: 0;\n    border-radius: 50%;\n    background-color: {{ icon_bg_color }};\n    border: {{ icon_border_thickness }}px solid {{ icon_border_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .video-slider-link-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n\n  .video-slider-link-{{ section.id }} svg path {\n    stroke: {{ icon_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n\n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .video-slider-video-{{ section.id }} {\n      height: {{ video_height_active }}px;\n    }\n\n    .video-slider-video-element-{{ section.id }} {\n      height: {{ video_height }}px;\n    }\n\n    .video-slider-content-{{ section.id }} {\n      margin-top: {{ content_mt }}px;\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\n      transform: translateY(-{{ video_height_active | minus: video_height | times: 0.5 | round: 0 }}px);\n    }\n\n    .video-slider-text-{{ section.id }} {\n      text-align: {{ text_align }};\n    }\n\n    .video-slider-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .video-slider-btn-prev-{{ section.id }},\n    .video-slider-btn-next-{{ section.id }} {\n      width: {{ arrow_size }}px;\n      height: {{ arrow_size }}px;\n      transition: all 0.25s ease 0s;\n    }\n\n    .video-slider-btn-prev-{{ section.id }} .animate-icon:before,\n    .video-slider-btn-next-{{ section.id }} .animate-icon:before {\n      width: {{ arrow_icon_size }}px;\n      height: {{ arrow_icon_size }}px;\n    }\n\n    .video-slider-btn-prev-{{ section.id }} .animate-icon:after,\n    .video-slider-btn-next-{{ section.id }} .animate-icon:after {\n      width: {{ arrow_icon_size | minus: 0.3 }}px;\n    }\n\n    .video-slider-btn-prev-{{ section.id }} {\n      left: 40px !important;\n    }\n\n    .video-slider-btn-next-{{ section.id }} {\n      right: 40px !important;\n    }\n\n    .video-slider-action-{{ section.id }} {\n      width: {{ action_size }}px;\n      height: {{ action_size }}px;\n    }\n\n    .video-slider-action-{{ section.id }} svg {\n      height: {{ action_icon_size }}px;\n      width: {{ action_icon_size }}px;\n    }\n\n    .video-slider-sound-{{ section.id }} {\n      width: {{ sound_size }}px;\n      height: {{ sound_size }}px;\n    }\n\n    .video-slider-sound-{{ section.id }} svg {\n      width: {{ sound_icon_size }}px;\n      height: {{ sound_icon_size }}px;\n    }\n\n    .video-slider-link-{{ section.id }} {\n      width: {{ icon_size }}px;\n      height: {{ icon_size }}px;\n    }\n\n    .video-slider-link-{{ section.id }}:hover {\n      background-color: {{ icon_bg_hover_color }};\n      border-color: {{ icon_border_hover_color }};\n      transition: all 0.25s ease 0s;\n    }\n\n    .video-slider-link-{{ section.id }}:hover svg path {\n      stroke: {{ icon_hover_color }};\n      transition: all 0.25s ease 0s;\n    }\n  }\n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if text_custom %}\n  <style>\n    .video-slider-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if video_shadow %}\n  <style>\n    .video-slider-slider-{{ section.id }} {\n      padding: 10px;\n    }\n\n    .video-slider-video-{{ section.id }} {\n      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n    }\n  </style>\n{% endif %}\n\n{% if content_shadow %}\n  <style>\n    .video-slider-slider-{{ section.id }} {\n      padding: 10px;\n    }\n\n    .video-slider-content-{{ section.id }} {\n      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_hover_effect == 'color' %}\n  <style>\n    .video-slider-btn-prev-{{ section.id }}:hover,\n    .video-slider-btn-next-{{ section.id }}:hover {\n      transition: all 0.3s ease 0s;\n      border: {{ arrow_border_thickness }}px solid {{ arrow_border_hover_color }};\n      background: {{ arrow_bg_hover_color }};\n    }\n\n    .video-slider-btn-prev-{{ section.id }}:hover .animate-icon,\n    .video-slider-btn-next-{{ section.id }}:hover .animate-icon {\n      color: {{ arrow_hover_color }};\n    }\n  </style>\n{% elsif arrow_hover_effect == 'scale' %}\n  <style>\n    .video-slider-btn-prev-{{ section.id }}:hover,\n    .video-slider-btn-next-{{ section.id }}:hover {\n      transform: scale(0.9);\n    }\n\n    @media(min-width: 1024px) {\n      .video-slider-btn-prev-{{ section.id }}:hover,\n      .video-slider-btn-next-{{ section.id }}:hover {\n        transform: scale(0.9);\n      }\n    }\n  </style>\n{% elsif arrow_hover_effect == 'arrow' %}\n  <style>\n    .video-slider-btn-next-{{ section.id }}:hover .animate-icon:before {\n      transform: translate(calc(1 * 0.125rem)) rotate(calc(1 * 45deg));\n    }\n\n    .video-slider-btn-prev-{{ section.id }}:hover .animate-icon:before {\n      transform: translate(calc(-1 * 0.125rem)) rotate(calc(1 * 45deg));\n    }\n\n    .video-slider-btn-prev-{{ section.id }}:hover .animate-icon:after,\n    .video-slider-btn-next-{{ section.id }}:hover .animate-icon:after {\n      opacity: 1;\n      transform: scaleX(1);\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_mobile %}\n  <style>\n    .video-slider-navigation-{{ section.id }} {\n      display: flex;\n    }\n  </style>\n{% else %}\n  <style>\n    .video-slider-navigation-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .video-slider-navigation-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .video-slider-navigation-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if arrow_shadow %}\n  <style>\n    .video-slider-btn-prev-{{ section.id }},\n    .video-slider-btn-next-{{ section.id }} {\n      box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15);\n    }\n  </style>\n{% endif %}\n\n{% if action_shadow %}\n  <style>\n    .video-slider-action-{{ section.id }} {\n      box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15);\n    }\n  </style>\n{% endif %}\n\n{% if sound_shadow %}\n  <style>\n    .video-slider-sound-{{ section.id }} {\n      box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15);\n    }\n  </style>\n{% endif %}\n\n{% comment %} PREVIEW {% endcomment %}\n<style>\n  .video-slider-slider-{{ section.id }}.preview .swiper-wrapper {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    overflow: hidden;\n    gap: {{ section.settings.slider_gap }}px;\n    padding: 10px;\n  }\n\n   .video-slider-slider-{{ section.id }}.preview .video-slider-slide-{{ section.id }} {\n    width: calc((100% - ({{ section.settings.slider_gap }}px * ({{ section.settings.slider_view }} - 1))) / {{ section.settings.slider_view }});\n  }\n\n  .video-slider-slider-{{ section.id }}.preview .video-slider-slide-{{ section.id }}:not(:first-child) {\n    margin-left: 0; /* Remove the existing margin */\n  }\n\n  @media(min-width: 1024px ) {\n   .video-slider-slider-{{ section.id }}.preview .video-slider-slide-{{ section.id }} {\n      width: 33%;\n    }\n\n    .video-slider-slider-{{ section.id }}.preview .video-slider-slide-{{ section.id }} {\n      transform: scale(0.9) !important;\n    }\n\n    .video-slider-slider-{{ section.id }}.preview .video-slider-slide-{{ section.id }}:nth-child(2) {\n      transform: scale(1) !important;\n    }\n  }\n</style>\n\n<div\n  class=\"section-{{ section.id }} video-slider-{{ section.id }}\"\n  style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\"\n>\n  <div class=\"section-{{ section.id }}-settings\">\n    <div class=\"video-slider-wrapper-{{ section.id }}\">\n      <div class=\"video-slider-slider-{{ section.id }} preview\"\n        data-slider-view=\"{{ slider_view }}\"\n        data-slider-view-mobile=\"{{ slider_view_mobile }}\"\n        data-slider-view-tablet=\"{{ slider_view | times: 0.5 | round: 0 }}\"\n        data-slider-gap=\"{{ slider_gap }}\"\n        data-slider-gap-mobile=\"{{ slider_gap_mobile }}\"\n        data-slider-rotate=\"{{ slider_rotate }}\">\n        <div class=\"swiper-wrapper\">\n          {% for i in (1..4) %}\n            {% for block in section.blocks %}\n              <div class=\"swiper-slide video-slider-slide-{{ section.id }}\">\n                <div class=\"video-slider-video-{{ section.id }}\">\n                  <div class=\"video-slider-video-element-{{ section.id }}\">\n                    <div class=\"video-slider-controls-{{ section.id }}\">\n                      {% if use_sound and block.settings.video_url == null %}\n                        <div class=\"video-slider-sound-{{ section.id }}\">\n                          <svg class=\"video-slider-mute-{{ section.id }}\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\">\n                            <path fill=\"none\" d=\"M0 0h24v24H0z\"></path><path d=\"M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm14.525-4l3.536 3.536-1.414 1.414L19 13.414l-3.536 3.536-1.414-1.414L17.586 12 14.05 8.464l1.414-1.414L19 10.586l3.536-3.536 1.414 1.414L20.414 12z\"></path>\n                          </svg>\n                          <svg class=\"video-slider-unmute-{{ section.id }}\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\">\n                            <path fill=\"none\" d=\"M0 0h24v24H0z\"></path><path d=\"M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z\"></path>\n                          </svg>\n                        </div>\n                      {% endif %}\n                      {% if use_action and block.settings.video_url == null %}\n                        <div class=\"video-slider-action-{{ section.id }}\">\n                          <svg\n                            xmlns=\"http://www.w3.org/2000/svg\"\n                            viewBox=\"0 0 16 16\"\n                            width=\"1em\"\n                            height=\"1em\"\n                            role=\"presentation\"\n                            class=\"video-slider-mute-{{ section.id }}\"\n                          >\n                            <path d=\"m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z\"></path>\n                          </svg>\n                          <svg\n                            xmlns=\"http://www.w3.org/2000/svg\"\n                            viewBox=\"0 0 16 16\"\n                            width=\"1em\"\n                            height=\"1em\"\n                            fill=\"currentColor\"\n                            role=\"presentation\"\n                            class=\"video-slider-unmute-{{ section.id }}\"\n                          >\n                            <path d=\"M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z\"></path>\n                          </svg>\n                        </div>\n                      {% endif %}\n                    </div>\n                    {% assign video_id = block.settings.video_url.id %}\n                    {% assign loop = '&loop=1&playlist=' | append: video_id %}\n                    {%- if block.settings.video_url != null -%}\n                      {%- if block.settings.video_url.type == 'youtube' -%}\n                        <iframe\n                          {% if lazy %}data-{% endif %}src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay={% if forloop.first %}1{% else %}0{% endif %}&controls=0&showinfo=0{{ loop }}\"\n                          data-src1=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"\n                          data-src2=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                          allowfullscreen\n                          class=\"lazy\"\n                        ></iframe>\n                      {%- else -%}\n                        <iframe\n                          {% if lazy %}data-{% endif %}src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay={% if forloop.first %}1{% else %}0{% endif %}&controls=0&showinfo=0{{ loop }}\"\n                          data-src1=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"\n                          data-src2=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                          allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                          allowfullscreen\n                          class=\"lazy\"\n                        ></iframe>\n                      {% endif %}\n  \n                    {% else %}\n                      {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\n                      <video\n                        {% if lazy %}data-{% endif %}src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\"\n                        {% if forloop.first %}\n                          autoplay\n                        {% endif %}\n                        muted\n                        playsinline\n                        preload=\"none\"\n                        loop\n                        class=\"lazy\"\n                      ></video>\n                    {% endif %}\n                  </div>\n                </div>\n                <div class=\"video-slider-content-{{ section.id }}\">\n                  {% if block.settings.text != blank %}\n                    <div class=\"video-slider-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                  {% endif %}\n                  {% if block.settings.url != blank %}\n                    <a href=\"{{ block.settings.url }}\" class=\"video-slider-link-{{ section.id }}\">\n                      <svg viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10.804 6.563 6.902 2.661l.619-.619L12.478 7l-4.983 4.983-.619-.619 3.927-3.926H1.96v-.875z\" fill=\"#fff\" stroke=\"#fff\"></path></svg>\n                    </a>\n                  {% endif %}\n                </div>\n              </div>\n            {% endfor %}\n          {% endfor %}\n        </div>\n      </div>\n      <div class=\"video-slider-navigation-{{ section.id }}\">\n        <button class=\"video-slider-btn-prev-{{ section.id }}\">\n          <span class=\"animate-icon\"></span>\n        </button>\n        <button class=\"video-slider-btn-next-{{ section.id }}\">\n          <span class=\"animate-icon\"></span>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n{% if lazy %}\n  <script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n{% endif %}\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n                                    \n<script>\n  function initVideoSlider3() {\n  \n    const settings = {\n      sliderView: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderView,\n      sliderViewMobile: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderViewMobile,\n      sliderViewTablet: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderViewTablet,\n      sliderGap: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderGap,\n      sliderGapMobile: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderGapMobile,\n      sliderRotate: document.querySelector('.video-slider-slider-{{ section.id }}').dataset.sliderRotate\n    };\n  \n    document.querySelector(`.video-slider-slider-{{ section.id }}`).classList.remove('preview');\n  \n    {% if lazy %}\n      var lazyLoadInstance = new LazyLoad();\n    \n      window.addEventListener(\n        \"LazyLoad::Initialized\",\n        function (event) {\n          window.lazyLoadInstance = event.detail.instance;\n        },\n        false\n      );\n    {% endif %}\n  \n    const slider = new Swiper(`.video-slider-slider-{{ section.id }}`, {\n      centeredSlides: true,\n      navigation: {\n        nextEl: `.video-slider-btn-next-{{ section.id }}`,\n        prevEl: `.video-slider-btn-prev-{{ section.id }}`\n      },\n      loopAdditionalSlides: 4,\n      loopedSlides: 4,\n      loop: true,\n      initialSlide: 0,\n      breakpoints: {\n        320: {\n          slidesPerView: parseFloat(settings.sliderViewMobile),\n          spaceBetween: parseInt(settings.sliderGapMobile),\n        },\n        768: {\n          slidesPerView: parseFloat(settings.sliderViewTablet),\n          spaceBetween: parseInt(settings.sliderGapMobile),\n        },\n        1024: {\n          slidesPerView: parseFloat(settings.sliderView),\n          spaceBetween: parseInt(settings.sliderGap),\n        }\n      },\n      on: {\n        slideChange: function() {\n          const slides = this.slides;\n          let activeSlide = slides[this.activeIndex];\n  \n          slides.forEach(slide => {\n            let video = slide.querySelector('video');\n            let frame = slide.querySelector('iframe');\n            let btn = slide.querySelector(`.video-slider-action-{{ section.id }}`);\n  \n            if (video) {\n              video.pause();\n            }\n  \n            if(frame) {\n              let src2 = frame.getAttribute('data-src2');\n              frame.src = src2;\n            }\n  \n            if (btn) {\n              btn.classList.remove('active');\n            }\n          });\n  \n          if(activeSlide) {\n            let video = activeSlide.querySelector('video');\n            let frame = activeSlide.querySelector('iframe');\n            let btn = activeSlide.querySelector(`.video-slider-action-{{ section.id }}`);\n  \n            if (video) {\n              video.play();\n            }\n  \n            if(frame) {\n              let src1 = frame.getAttribute('data-src1');\n              frame.src = src1;\n            }\n  \n            if (btn) {\n              btn.classList.add('active');\n            }\n          }   \n        }\n      }\n    });\n  \n    document.querySelectorAll(`.video-slider-slide-{{ section.id }}`).forEach(el => {\n      let btn = el.querySelector(`.video-slider-action-{{ section.id }}`);\n      let soundBtn = el.querySelector(`.video-slider-sound-{{ section.id }}`);\n      let frame = el.querySelector('iframe');\n      let video = el.querySelector('video');\n      \n      if(btn) {\n        btn.addEventListener('click', () => {\n          btn.classList.toggle('active');\n          if(btn.classList.contains('active')) {\n            document.querySelectorAll(`.video-slider-slide-{{ section.id }}`).forEach(element => {\n              if(el != element) {\n                let btn = element.querySelector(`.video-slider-action-{{ section.id }}`);\n                let frame = element.querySelector('iframe');\n                let video = element.querySelector('video');\n                if(btn) {\n                  btn.classList.remove('active');\n                }\n  \n                if(frame) {\n                  let src2 = frame.getAttribute('data-src2');\n                  frame.src = src2;\n                }\n                if(video) {\n                  video.pause();\n                }\n              }\n            });\n  \n            if(frame) {\n              let src1 = frame.getAttribute('data-src1');\n              frame.src = src1;\n            }\n            if(video) {\n              video.play();\n            }\n          } else {\n            if(frame) {\n              let src2 = frame.getAttribute('data-src2');\n              frame.src = src2;\n            }\n            if(video) {\n              video.pause();\n            }\n          }\n        });\n      }\n  \n      if(soundBtn) {\n        soundBtn.addEventListener('click', () => {\n          soundBtn.classList.toggle('active');\n          if(soundBtn.classList.contains('active')) {\n            if(frame) {\n              let src = frame.getAttribute(\"src\");\n              var muteIndex = src.indexOf(\"mute=\");\n              var muteValue = src.charAt(muteIndex + 5);\n              if (muteValue === \"1\") {\n                frame.src = src.slice(0, muteIndex + 5) + \"0\" + src.slice(muteIndex + 6);\n              }\n            }\n            if(video) {\n              video.muted = false;\n            }\n          } else {\n            if(frame) {\n              let src = frame.getAttribute(\"src\");\n              var muteIndex = src.indexOf(\"mute=\");\n              var muteValue = src.charAt(muteIndex + 5);\n              if (muteValue === \"0\") {\n                frame.src = src.slice(0, muteIndex + 5) + \"1\" + src.slice(muteIndex + 6);\n              }\n            }\n            if(video) {\n              video.muted = true;\n            }\n          }\n        });\n      }\n    });\n  }\n  \n  document.addEventListener('DOMContentLoaded', initVideoSlider3);\n  \n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initVideoSlider3);\n    document.addEventListener('shopify:section:load', initVideoSlider3);\n  }\n</script>",
+  "variables": {
+    "slider_view": {
+      "type": "text",
+      "default": "5",
+      "label": "Slides per view",
+      "description": "Slides per view"
+    },
+    "slider_view_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Slides per view - mobile",
+      "description": "Slides per view - mobile"
+    },
+    "slider_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "slider_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "video_height": {
+      "type": "text",
+      "default": "390",
+      "label": "Height",
+      "description": "Height"
+    },
+    "video_height_active": {
+      "type": "text",
+      "default": "500",
+      "label": "Height active",
+      "description": "Height active"
+    },
+    "video_height_mobile": {
+      "type": "text",
+      "default": "390",
+      "label": "Height - mobile",
+      "description": "Height - mobile"
+    },
+    "video_height_active_mobile": {
+      "type": "text",
+      "default": "390",
+      "label": "Height active - mobile",
+      "description": "Height active - mobile"
+    },
+    "video_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "video_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "video_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "content_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "content_mt": {
+      "type": "text",
+      "default": "12",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "content_mt_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "content_radius": {
+      "type": "text",
+      "default": "6",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "content_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "content_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "text_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "30",
+      "label": "Size",
+      "description": "Size"
+    },
+    "icon_size_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "icon_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "use_action": {
+      "type": "text",
+      "default": "true",
+      "label": "Use play button",
+      "description": "Use play button"
+    },
+    "action_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Size",
+      "description": "Size"
+    },
+    "action_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "action_icon_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size",
+      "description": "Icon size"
+    },
+    "action_icon_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size - mobile",
+      "description": "Icon size - mobile"
+    },
+    "action_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "action_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "use_sound": {
+      "type": "text",
+      "default": "true",
+      "label": "Use mute/unmute button",
+      "description": "Use mute/unmute button"
+    },
+    "sound_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Size",
+      "description": "Size"
+    },
+    "sound_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "sound_icon_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size",
+      "description": "Icon size"
+    },
+    "sound_icon_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon size - mobile",
+      "description": "Icon size - mobile"
+    },
+    "sound_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "sound_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "arrow_size": {
+      "type": "text",
+      "default": "48",
+      "label": "Size",
+      "description": "Size"
+    },
+    "arrow_size_mobile": {
+      "type": "text",
+      "default": "48",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "arrow_icon_size": {
+      "type": "text",
+      "default": "8",
+      "label": "Icon size",
+      "description": "Icon size"
+    },
+    "arrow_icon_size_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Icon size - mobile",
+      "description": "Icon size - mobile"
+    },
+    "arrow_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "arrow_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "arrow_hover_effect": {
+      "type": "text",
+      "default": "color",
+      "label": "Hover effect",
+      "description": "Hover effect"
+    },
+    "arrow_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "arrow_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on desktop",
+      "description": "Show on desktop"
+    },
+    "arrow_show_mobile": {
+      "type": "text",
+      "default": "false",
+      "label": "Show on mobile",
+      "description": "Show on mobile"
+    },
+    "video_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "content_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "content_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "icon_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "icon_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "icon_bg_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "icon_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "icon_border_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "action_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "action_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "action_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "action_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "action_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "action_border_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon",
+      "description": "Icon"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Icon hover",
+      "description": "Icon hover"
+    },
+    "arrow_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "arrow_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "arrow_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "arrow_border_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load media for speed optimisation"
+    }
+  }
+}

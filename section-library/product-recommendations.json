@@ -1,0 +1,84 @@
+{
+  "id": "product-recommendations",
+  "name": "t:sections.product-recommendations.name",
+  "description": "Section: t:sections.product-recommendations.name",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"{{ 'component-card.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n<link rel=\"stylesheet\" href=\"{{ 'component-price.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n<link rel=\"stylesheet\" href=\"{{ 'section-product-recommendations.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n\n<noscript>{{ 'component-card.css' | asset_url | stylesheet_tag }}</noscript>\n<noscript>{{ 'component-price.css' | asset_url | stylesheet_tag }}</noscript>\n<noscript>{{ 'section-product-recommendations.css' | asset_url | stylesheet_tag }}</noscript>\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div class=\"color-{{ section.settings.color_scheme }} gradient no-js-hidden\">\n  <product-recommendations class=\"product-recommendations page-width section-{{ section.id }}-padding isolate\" data-url=\"{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}\">\n    {% if recommendations.performed and recommendations.products_count > 0 %}\n      <h2 class=\"product-recommendations__heading {{ section.settings.heading_size }}\">{{ section.settings.heading | escape }}</h2>\n      <ul class=\"grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down\" role=\"list\">\n        {% for recommendation in recommendations.products %}\n          <li class=\"grid__item\">\n            {% render 'card-product',\n              card_product: recommendation,\n              media_aspect_ratio: section.settings.image_ratio,\n              show_secondary_image: section.settings.show_secondary_image,\n              show_vendor: section.settings.show_vendor,\n              show_rating: section.settings.show_rating\n            %}\n          </li>\n        {% endfor %}\n      </ul>\n    {% endif %}\n  </product-recommendations>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "You may also like",
+      "label": "t:sections.product-recommendations.settings.heading.label",
+      "description": "t:sections.product-recommendations.settings.heading.label"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label",
+      "description": "t:sections.all.heading_size.label"
+    },
+    "products_to_show": {
+      "type": "text",
+      "default": "4",
+      "label": "t:sections.product-recommendations.settings.products_to_show.label",
+      "description": "t:sections.product-recommendations.settings.products_to_show.label"
+    },
+    "columns_desktop": {
+      "type": "text",
+      "default": "4",
+      "label": "t:sections.product-recommendations.settings.columns_desktop.label",
+      "description": "t:sections.product-recommendations.settings.columns_desktop.label"
+    },
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.all.colors.has_cards_info"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "adapt",
+      "label": "t:sections.product-recommendations.settings.image_ratio.label",
+      "description": "t:sections.product-recommendations.settings.image_ratio.label"
+    },
+    "show_secondary_image": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.product-recommendations.settings.show_secondary_image.label",
+      "description": "t:sections.product-recommendations.settings.show_secondary_image.label"
+    },
+    "show_vendor": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.product-recommendations.settings.show_vendor.label",
+      "description": "t:sections.product-recommendations.settings.show_vendor.label"
+    },
+    "show_rating": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.product-recommendations.settings.show_rating.label",
+      "description": "t:sections.product-recommendations.settings.show_rating.info"
+    },
+    "columns_mobile": {
+      "type": "text",
+      "default": "2",
+      "label": "t:sections.product-recommendations.settings.columns_mobile.label",
+      "description": "t:sections.product-recommendations.settings.columns_mobile.label"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

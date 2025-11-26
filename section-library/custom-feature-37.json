@@ -1,0 +1,432 @@
+{
+  "id": "custom-feature-37",
+  "name": "CUSTOM Feature #37",
+  "description": "Section: CUSTOM Feature #37",
+  "tags": [
+    "feature"
+  ],
+  "type": "feature",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign toggles_gap = section.settings.toggles_gap  \n  assign toggles_gap_mobile = section.settings.toggles_gap_mobile\n\n  assign toggle_custom = section.settings.toggle_custom\n  assign toggle_font = section.settings.toggle_font\n  assign toggle_size = section.settings.toggle_size\n  assign toggle_size_mobile = section.settings.toggle_size_mobile\n  assign toggle_height = section.settings.toggle_height\n  assign toggle_color = section.settings.toggle_color\n  assign toggle_bg_color = section.settings.toggle_bg_color\n  assign toggle_padding_horizontal = section.settings.toggle_padding_horizontal\n  assign toggle_padding_horizontal_mobile = section.settings.toggle_padding_horizontal_mobile\n  assign toggle_padding_vertical = section.settings.toggle_padding_vertical\n  assign toggle_padding_vertical_mobile = section.settings.toggle_padding_vertical_mobile\n  assign toggle_radius = section.settings.toggle_radius\n  assign toggle_border_thickness = section.settings.toggle_border_thickness\n  assign toggle_border_color = section.settings.toggle_border_color\n  assign toggle_border_hover_color = section.settings.toggle_border_hover_color\n  assign toggle_border_active_color = section.settings.toggle_border_active_color\n  assign toggle_bg_hover_color = section.settings.toggle_bg_hover_color\n  assign toggle_bg_active_color = section.settings.toggle_bg_active_color\n  assign toggle_hover_color = section.settings.toggle_hover_color\n  assign toggle_active_color = section.settings.toggle_active_color\n\n  assign layout_gap = section.settings.layout_gap\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\n  assign layout_mt = section.settings.layout_mt\n  assign layout_mt_mobile = section.settings.layout_mt_mobile\n\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_radius = section.settings.image_radius\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n\n  assign second_image_width = section.settings.second_image_width\n  assign second_image_width_mobile = section.settings.second_image_width_mobile\n  assign second_image_border_thickness = section.settings.second_image_border_thickness\n  assign second_image_border_color = section.settings.second_image_border_color\n  assign second_image_radius = section.settings.second_image_radius\n  assign second_image_ratio = section.settings.second_image_ratio\n  assign second_image_ratio_mobile = section.settings.second_image_ratio_mobile\n\n  assign feature_layout_align = section.settings.feature_layout_align\n  assign feature_layout_align_mobile = section.settings.feature_layout_align_mobile\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_mt = section.settings.text_mt\n  assign text_mt_mobile = section.settings.text_mt_mobile\n\n  assign lazy_load_setting = 'lazy'\n  unless lazy\n    assign lazy_load_setting = 'eiger'\n  endunless\n-%}\n\n{%- style -%}\n  {{ toggle_font | font_face: font_display: 'swap' }}\n  {{ title_font | font_face: font_display: 'swap' }}\n  {{ text_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n  \n  .feature-toggles-{{ section.id }} {\n    display: flex;\n    flex-wrap: nowrap;\n    overflow-x: scroll;\n    scrollbar-width: none;\n    align-items: center;   \n    justify-content: start; \n    gap: {{ toggles_gap_mobile }}px;\n    margin-left: -{{ padding_horizontal_mobile }}rem;\n    margin-right: -{{ padding_horizontal_mobile }}rem;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n  \n  .feature-toggles-{{ section.id }}::-webkit-scrollbar {\n    display: none;\n  }\n\n  .feature-toggle-{{ section.id }} {\n    margin: 0;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    font-size: {{ toggle_size_mobile }}px;\n    color: {{ toggle_color }};\n    line-height: {{ toggle_height }}%;\n    background-color: {{ toggle_bg_color }};\n    padding: {{ toggle_padding_vertical_mobile }}px {{ toggle_padding_horizontal_mobile }}px;\n    border: {{ toggle_border_thickness }}px solid {{ toggle_border_color }};\n    border-radius: {{ toggle_radius }}px;\n    text-transform: unset;\n    text-decoration: none;\n    white-space: nowrap;\n    transition: all 0.25s ease 0s;\n  }\n\n  .feature-toggle-{{ section.id }}.active {\n    background-color: {{ toggle_bg_active_color }};\n    border: {{ toggle_border_thickness }}px solid {{ toggle_border_active_color }};\n    color: {{ toggle_active_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .feature-item-{{ section.id }} {\n    display: none;\n    flex-direction: column;\n    gap: {{ layout_gap_mobile }}px;\n    align-items: center;\n    margin-top: {{ layout_mt_mobile }}px;\n  }\n\n  .feature-item-{{ section.id }}.active {\n    display: flex;\n  }\n\n  .feature-images-{{ section.id }} {\n    position: relative;\n    width: 70%;\n  }\n\n  .feature-image-{{ section.id }} {\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-radius: {{ image_radius }}px;\n    overflow: hidden;\n    width: 100%;\n  }\n\n  .feature-second-image-{{ section.id }} {\n    position: absolute;\n    bottom: -{{ second_image_width_mobile | times: 0.25 }}px;\n    left: -{{ second_image_width_mobile | times: 0.25 }}px;\n    width: {{ second_image_width_mobile }}px;\n    border: {{ second_image_border_thickness }}px solid {{ second_image_border_color }};\n    border-radius: {{ second_image_radius }}px;\n    overflow: hidden;\n  }\n\n  .feature-image-{{ section.id }} img,\n  .feature-image-{{ section.id }} svg,\n  .feature-second-image-{{ section.id }} img,\n  .feature-second-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .feature-image-{{ section.id }} svg,\n  .feature-second-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n\n  .feature-title-{{ section.id }} {\n    margin: 0px;\n    width: 100%;\n    text-align: {{ feature_layout_align_mobile }};\n    font-size: {{ title_size_mobile }}px;\n    line-height: {{ title_height }}%;\n    color: {{ title_color }};\n    text-transform: unset;\n    word-break: break-word;\n    font-weight: 700;\n  }\n\n  .feature-text-{{ section.id }} {\n    margin-top: {{ text_mt_mobile }}px;\n    text-align: {{ feature_layout_align_mobile }};\n    width: 100%;\n  }\n\n  .feature-text-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ text_size_mobile }}px;\n    line-height: {{ text_height }}%;\n    color: {{ text_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 0rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: calc({{ padding_bottom }}px + {{ second_image_width | times: 0.25 }}px);\n      padding-left: calc({{ padding_horizontal }}rem + {{ second_image_width | times: 0.25 }}px);\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .feature-toggles-{{ section.id }} {\n      flex-wrap: wrap;\n      justify-content: center;\n      gap: {{ toggles_gap }}px;\n      margin-left: 0rem;\n      margin-right: 0rem;\n      padding-left: 0rem;\n      padding-right: 0rem;\n    }\n\n    .feature-toggle-{{ section.id }} {\n      font-size: {{ toggle_size }}px;\n      padding: {{ toggle_padding_vertical }}px {{ toggle_padding_horizontal }}px;\n    }\n\n      \n    .feature-toggle-{{ section.id }}:not(.active):hover {\n      background-color: {{ toggle_bg_hover_color }};\n      border: {{ toggle_border_thickness }}px solid {{ toggle_border_hover_color }};\n      color: {{ toggle_hover_color }};\n      transition: all 0.25s ease 0s;\n    }\n\n    .feature-item-{{ section.id }} {\n      display: none;\n      grid-template-columns: 1fr 1fr;\n      gap: {{ layout_gap }}px;\n      margin-top: {{ layout_mt }}px;\n    }\n\n    .feature-item-{{ section.id }}.active {\n      display: grid;\n    }\n\n    .feature-images-{{ section.id }} {\n      width: 100%;\n    }\n\n    .feature-second-image-{{ section.id }} {\n      width: {{ second_image_width }}px;\n      bottom: -{{ second_image_width | times: 0.25 }}px;\n      left: -{{ second_image_width | times: 0.25 }}px;\n    }\n\n    .feature-title-{{ section.id }} {\n      text-align: {{ feature_layout_align }};\n      font-size: {{ title_size }}px;\n    }\n\n    .feature-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      text-align: {{ feature_layout_align }};\n    }\n\n    .feature-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if toggle_custom %}\n  <style>\n    .feature-toggle-{{ section.id }} {\n      font-family: {{ toggle_font.family }}, {{ toggle_font.fallback_families }};\n      font-weight: {{ toggle_font.weight }};\n      font-style: {{ toggle_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if title_custom %}\n  <style>\n    .feature-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .feature-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .feature-image-{{ section.id }} {\n      aspect-ratio: 9.6/11;\n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n  .feature-image-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .feature-image-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .feature-image-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-image-{{ section.id }} {\n        aspect-ratio: 9.6/11;\n      }\n    }\n    \n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-image-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }  \n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-image-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }    \n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .feature-image-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if second_image_ratio_mobile == \"portrait\" %}\n  <style>\n    .feature-second-image-{{ section.id }} {\n      aspect-ratio: 9.6/11;\n    }\n  </style>\n{% elsif second_image_ratio_mobile == \"landscape\" %}\n  <style>\n  .feature-second-image-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif second_image_ratio_mobile == \"square\" %}\n  <style>\n    .feature-second-image-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .feature-second-image-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if second_image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-second-image-{{ section.id }} {\n        aspect-ratio: 9.6/11;\n      }\n    }\n    \n  </style>\n{% elsif second_image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-second-image-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }  \n  </style>\n{% elsif second_image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-second-image-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }    \n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .feature-second-image-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} feature-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"feature-body-{{ section.id }}\">\n        <div class=\"feature-toggles-{{ section.id }}\">\n          {% for block in section.blocks %}\n            <p class=\"feature-toggle-{{ section.id }} {% if forloop.first %}active{% endif %}\" id=\"{{ block.id }}\">{{ block.settings.toggle }}</p>\n          {% endfor %}\n        </div>\n        <div class=\"feature-items-{{ section.id }}\">\n          {% for block in section.blocks %}\n            <div class=\"feature-item-{{ section.id }} {% if forloop.first %}active{% endif %}\" data-id=\"{{ block.id }}\">\n              <div class=\"feature-images-{{ section.id }}\">\n                <div class=\"feature-image-{{ section.id }}\">\n                  {% if block.settings.image != blank %}\n                  {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                    {{ block.settings.image | image_url: width: 1000 | image_tag:\n                      loading: lazy_load_setting,\n                      width: block.settings.image.width,\n                      height: block.settings.image.height,\n                      sizes: sizes,\n                      widths: '360, 535, 750, 1070, 1500'\n                    }}\n                  {% else %}  \n                    {{ 'image' | placeholder_svg_tag }}\n                  {% endif %}  \n                </div>\n                {% if block.settings.use_second_image != blank %}\n                  <div class=\"feature-second-image-{{ section.id }}\">\n                    {% if block.settings.second_image != blank %}\n                    {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                      {{ block.settings.second_image | image_url: width: 700 | image_tag:\n                        loading: lazy_load_setting,\n                        width: block.settings.second_image.width,\n                        height: block.settings.second_image.height,\n                        sizes: sizes,\n                        widths: '360, 535, 750, 1070, 1500'\n                      }}\n                    {% else %}  \n                      {{ 'image' | placeholder_svg_tag }}\n                    {% endif %}  \n                  </div>\n                {% endif %}\n              </div>\n              <div class=\"feature-content-{{ section.id }}\">\n                {% if block.settings.title != blank %}\n                  <h3 class=\"feature-title-{{ section.id }}\">{{ block.settings.title }}</h3>\n                {% endif %}\n                {% if block.settings.text != blank %}\n                  <div class=\"feature-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                {% endif %}\n              </div>\n            </div>\n          {% endfor %}\n        </div>\n      </div>\n    </div>\n</div>\n\n<script>\n  function initFeature37() {\n    const toggles = document.querySelectorAll('.feature-toggle-{{ section.id }}');\n    const contents = document.querySelectorAll('.feature-item-{{ section.id }}');\n\n    toggles.forEach(toggle => {\n      toggle.addEventListener('click', () => {\n        contents.forEach(otherContent => otherContent.classList.remove('active'));\n        toggles.forEach(otherToggle => otherToggle.classList.remove('active'));\n        contents.forEach(content => {\n          if(toggle.id == content.getAttribute('data-id')) {          \n            content.classList.add('active');\n            toggle.classList.add('active');\n          }\n        })\n      })\n    })\n  }\n\n  document.addEventListener('DOMContentLoaded', initFeature37);\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initFeature37);\n    document.addEventListener('shopify:section:load', initFeature37);\n  }\n</script>",
+  "variables": {
+    "toggles_gap": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "toggles_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "toggle_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "toggle_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "toggle_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "toggle_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "toggle_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "toggle_padding_horizontal": {
+      "type": "text",
+      "default": "26",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "toggle_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "toggle_padding_vertical": {
+      "type": "text",
+      "default": "14",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "toggle_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "toggle_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "toggle_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "80",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "48",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "layout_mt": {
+      "type": "text",
+      "default": "52",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "layout_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "32",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "second_image_width": {
+      "type": "text",
+      "default": "210",
+      "label": "Width",
+      "description": "Width"
+    },
+    "second_image_width_mobile": {
+      "type": "text",
+      "default": "130",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "second_image_radius": {
+      "type": "text",
+      "default": "150",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "second_image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "second_image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "second_image_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "feature_layout_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "feature_layout_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "42",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "36",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "toggle_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "toggle_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "toggle_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text active",
+      "description": "Text active"
+    },
+    "toggle_bg_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background",
+      "description": "Background"
+    },
+    "toggle_bg_hover_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "toggle_bg_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background active",
+      "description": "Background active"
+    },
+    "toggle_border_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "toggle_border_hover_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "toggle_border_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border active",
+      "description": "Border active"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Title",
+      "description": "Title"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image 1 border",
+      "description": "Image 1 border"
+    },
+    "second_image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image 2 border",
+      "description": "Image 2 border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

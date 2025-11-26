@@ -1,0 +1,384 @@
+{
+  "id": "custom-scrolling-promotion",
+  "name": "CUSTOM Scrolling promotion",
+  "description": "Section: CUSTOM Scrolling promotion",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \r\n  assign padding_horizontal = section.settings.padding_horizontal\r\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\r\n  assign padding_top = section.settings.padding_top\r\n  assign padding_bottom = section.settings.padding_bottom\r\n  assign border_color = section.settings.border_color\r\n  assign border_thickness = section.settings.border_thickness\r\n  assign margin_top = section.settings.margin_top\r\n  assign margin_bottom = section.settings.margin_bottom\r\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\r\n  assign margin_horizontal = section.settings.margin_horizontal\r\n  assign background_color = section.settings.background_color\r\n  assign background_gradient = section.settings.background_gradient\r\n  assign width = section.settings.width\r\n  assign content_width = section.settings.content_width\r\n  assign lazy = section.settings.lazy\r\n  assign section_radius = section.settings.section_radius\r\n  assign background_style = section.settings.background_style\r\n\r\n  assign scrolling_velocity = section.settings.scrolling_velocity\r\n  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile\r\n  assign cards_gap = section.settings.cards_gap\r\n  assign cards_gap_mobile = section.settings.cards_gap_mobile\r\n  assign reverse_direction = section.settings.reverse_direction\r\n  assign pause_hover = section.settings.pause_hover\r\n\r\n  assign card_border_thickness = section.settings.card_border_thickness\r\n  assign card_border_color = section.settings.card_border_color\r\n  assign card_radius = section.settings.card_radius\r\n  assign card_padding_horizontal = section.settings.card_padding_horizontal\r\n  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile\r\n  assign card_padding_vertical = section.settings.card_padding_vertical\r\n  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile\r\n  assign card_bg_color = section.settings.card_bg_color\r\n  assign card_shadow = section.settings.card_shadow\r\n  assign card_shadow_color = section.settings.card_shadow_color\r\n  assign card_content_align = section.settings.card_content_align\r\n  assign card_content_align_mobile = section.settings.card_content_align_mobile\r\n  assign card_width = section.settings.card_width\r\n  assign card_width_mobile = section.settings.card_width_mobile\r\n\r\n  assign card_content_horizontal_align = \"\"\r\n  if card_content_align == \"center\"\r\n    assign card_content_horizontal_align = \"center\"\r\n  elsif card_content_align == \"right\"\r\n    assign card_content_horizontal_align = \"end\"\r\n  else\r\n    assign card_content_horizontal_align = \"start\"\r\n  endif\r\n\r\n  assign card_content_horizontal_align_mobile = \"\"\r\n  if card_content_align_mobile == \"center\"\r\n    assign card_content_horizontal_align_mobile = \"center\"\r\n  elsif card_content_align_mobile == \"right\"\r\n    assign card_content_horizontal_align_mobile = \"end\"\r\n  else\r\n    assign card_content_horizontal_align_mobile = \"start\"\r\n  endif\r\n\r\n  assign media_ratio = section.settings.media_ratio\r\n  assign media_ratio_mobile = section.settings.media_ratio_mobile\r\n  assign media_radius = section.settings.media_radius\r\n  assign media_border_thickness = section.settings.media_border_thickness\r\n  assign media_border_color = section.settings.media_border_color\r\n\r\n  assign title_custom = section.settings.title_custom\r\n  assign title_font = section.settings.title_font\r\n  assign title_size = section.settings.title_size\r\n  assign title_size_mobile = section.settings.title_size_mobile\r\n  assign title_height = section.settings.title_height\r\n  assign title_color = section.settings.title_color\r\n  assign title_mt = section.settings.title_mt\r\n  assign title_mt_mobile = section.settings.title_mt_mobile\r\n\r\n  assign text_custom = section.settings.text_custom\r\n  assign text_font = section.settings.text_font\r\n  assign text_size = section.settings.text_size\r\n  assign text_size_mobile = section.settings.text_size_mobile\r\n  assign text_height = section.settings.text_height\r\n  assign text_color = section.settings.text_color\r\n  assign text_mt = section.settings.text_mt\r\n  assign text_mt_mobile = section.settings.text_mt_mobile\r\n\r\n  assign loading_attribute = 'eager'\r\n  if lazy \r\n    assign loading_attribute = 'lazy' \r\n  endif \r\n-%}\r\n\r\n{%- style -%}\r\n  {{ title_font | font_face: font_display: 'swap' }} \r\n  {{ text_font | font_face: font_display: 'swap' }} \r\n\r\n  .section-{{ section.id }} {\r\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\r\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\r\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\r\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\r\n    margin-left: {{ margin_horizontal_mobile }}rem;\r\n    margin-right: {{ margin_horizontal_mobile }}rem;\r\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;    \r\n  }\r\n  \r\n  .section-{{ section.id }}-settings {\r\n    margin: 0 auto;\r\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\r\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\r\n    padding-left: {{ padding_horizontal_mobile }}rem;\r\n    padding-right: {{ padding_horizontal_mobile }}rem;\r\n    overflow: hidden;\r\n  }\r\n  \r\n  .promotion-wrapper-{{ section.id }} {\r\n    position: relative;\r\n    z-index: 1;\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    scrollbar-width: none;\r\n    -ms-flex-wrap: nowrap;\r\n    flex-wrap: nowrap;\r\n    background-attachment: scroll !important;\r\n  }\r\n\r\n  .promotion-list-{{ section.id }} {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    white-space: nowrap;\r\n    height: 100%;\r\n    background-attachment: scroll !important;\r\n    -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\r\n    animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\r\n    flex-shrink: 0;\r\n  }\r\n\r\n  .promotion-card-{{ section.id }} {\r\n    text-decoration: none;\r\n    width: {{ card_width_mobile }}px;\r\n    margin-right: {{ cards_gap_mobile }}px;\r\n    display: flex !important;\r\n    flex-direction: column !important;\r\n    align-items: {{ card_content_horizontal_align_mobile }};\r\n    justify-content: space-between !important;\r\n    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px !important; \r\n    border: {{ card_border_thickness }}px solid {{ card_border_color }} !important;\r\n    border-radius: {{ card_radius }}px !important;\r\n    background-color: {{ card_bg_color }} !important;\r\n    overflow: hidden !important;\r\n  }\r\n\r\n  .promotion-card-bottom-wrapper-{{ section.id }} {\r\n    flex: 1 1 0;\r\n    display: flex !important;\r\n    flex-direction: column !important;\r\n    align-items: {{ card_content_horizontal_align_mobile }};\r\n  }\r\n\r\n  .promotion-media-{{ section.id }} {\r\n    overflow: hidden;\r\n    background-attachment: scroll !important;\r\n    border-radius: {{ media_radius }}px;\r\n    border: {{ media_border_thickness }}px solid {{ media_border_color }};\r\n    flex-shrink: 0;\r\n    width: 100%;\r\n  }\r\n\r\n  .promotion-media-{{ section.id }} video,\r\n  .promotion-media-{{ section.id }} iframe,\r\n  .promotion-media-{{ section.id }} img,\r\n  .promotion-media-{{ section.id }} svg {\r\n    display: inline-block;\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    border: 0px;\r\n  }\r\n\r\n  .promotion-media-{{ section.id }} svg {\r\n    background-color: #AFAFAF;\r\n  }\r\n\r\n  .promotion-card-title-{{ section.id }} {\r\n    margin: 0;\r\n    margin-top: {{ title_mt_mobile }}px;\r\n    font-size: {{ title_size_mobile }}px;\r\n    color: {{ title_color }};\r\n    line-height: {{ title_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    word-break: break-word;\r\n    text-wrap: wrap;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .promotion-card-text-{{ section.id }} {\r\n    text-align: {{ card_content_align_mobile }};\r\n    margin-top: {{ text_mt_mobile }}px;  \r\n  }\r\n\r\n  .promotion-card-text-{{ section.id }} * {\r\n    margin: 0;\r\n    font-size: {{ text_size_mobile }}px;\r\n    color: {{ text_color }};\r\n    line-height: {{ text_height }}%;\r\n    text-transform: unset;\r\n    text-decoration: none;\r\n    word-break: break-word;\r\n    text-wrap: wrap;\r\n  }\r\n\r\n  @media(min-width: 1024px) {\r\n\r\n    .section-{{ section.id }} {\r\n      margin-top: {{ margin_top }}px;\r\n      margin-bottom: {{ margin_bottom }}px;\r\n      margin-left: {{ margin_horizontal }}rem;\r\n      margin-right: {{ margin_horizontal }}rem;\r\n      border-radius: {{ section_radius }}px;\r\n    }\r\n    \r\n    .section-{{ section.id }}-settings {\r\n      padding: 0 5rem;\r\n      padding-top: {{ padding_top }}px;\r\n      padding-bottom: {{ padding_bottom }}px;\r\n      padding-left: {{ padding_horizontal }}rem;\r\n      padding-right: {{ padding_horizontal }}rem;\r\n    }\r\n\r\n    .promotion-list-{{ section.id }} {\r\n      -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;\r\n      animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;\r\n    }\r\n\r\n    .promotion-card-{{ section.id }} {\r\n      width: {{ card_width }}px;\r\n      margin-right: {{ cards_gap }}px;\r\n      align-items: {{ card_content_horizontal_align }};\r\n      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px !important; \r\n    }    \r\n\r\n    .promotion-card-bottom-wrapper-{{ section.id }} {\r\n      align-items: {{ card_content_horizontal_align }};\r\n    }\r\n\r\n    .promotion-card-title-{{ section.id }} {     \r\n      margin-top: {{ title_mt }}px;\r\n      font-size: {{ title_size }}px;\r\n    }\r\n\r\n    .promotion-card-text-{{ section.id }} {\r\n      margin-top: {{ text_mt }}px;\r\n      text-align: {{ card_content_align }};   \r\n    }\r\n\r\n    .promotion-card-text-{{ section.id }} * {\r\n      align-items: {{ card_content_horizontal_align }};\r\n      font-size: {{ text_size }}px;\r\n    }\r\n  }\r\n  \r\n{%- endstyle -%}\r\n\r\n{% if width == 'custom' %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: {{ content_width }}px;\r\n    }\r\n  </style>\r\n{% elsif width == 'page' %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: clamp(100px, var(--page-content-width, var(--page-width)), 100%);\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if margin_horizontal_mobile > 0 %}\r\n  <style>\r\n    .section-{{ section.id }} {\r\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n    }\r\n    \r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: 0px;\r\n        border-right: 0px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if margin_horizontal > 0 %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if title_custom %}\r\n  <style>\r\n    .promotion-card-title-{{ section.id }} {\r\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\r\n      font-weight: {{ title_font.weight }};\r\n      font-style: {{ title_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if text_custom %}\r\n  <style>\r\n    .promotion-card-text-{{ section.id }} * {\r\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\r\n      font-weight: {{ text_font.weight }};\r\n      font-style: {{ text_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if card_shadow %}\r\n  <style>\r\n    .promotion-card-{{ section.id }} {\r\n      box-shadow: {{ card_shadow_color }}33 0px 8px 24px;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if media_ratio_mobile == \"portrait\" %}\r\n  <style>\r\n    .promotion-media-{{ section.id }} {\r\n      aspect-ratio: 9.6/13;\r\n    }\r\n  </style>\r\n{% elsif media_ratio_mobile == \"landscape\" %}\r\n  <style>\r\n  .promotion-media-{{ section.id }} {\r\n    aspect-ratio: 12/8;\r\n  }\r\n  </style>\r\n{% elsif media_ratio_mobile == \"square\" %}\r\n  <style>\r\n    .promotion-media-{{ section.id }} {\r\n      aspect-ratio: 12/12;\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    .promotion-media-{{ section.id }} {\r\n      aspect-ratio: auto;\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if media_ratio == \"portrait\" %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .promotion-media-{{ section.id }} {\r\n        aspect-ratio: 9.6/13;\r\n      }\r\n    }\r\n    \r\n  </style>\r\n{% elsif media_ratio == \"landscape\" %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .promotion-media-{{ section.id }} {\r\n        aspect-ratio: 12/8;\r\n      }\r\n    }  \r\n  </style>\r\n{% elsif media_ratio == \"square\" %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .promotion-media-{{ section.id }} {\r\n        aspect-ratio: 12/12;\r\n      }\r\n    }    \r\n  </style>\r\n{% else %}\r\n  <style>\r\n     @media(min-width: 1024px) {\r\n      .promotion-media-{{ section.id }} {\r\n        aspect-ratio: auto;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n\r\n{% if reverse_direction %}\r\n  <style>\r\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\r\n      0% {\r\n        transform: translateX(-100%);\r\n      }\r\n      100% {\r\n        transform: translateX(0%);\r\n      }\r\n    }\r\n  </style>\r\n{% else %}\r\n  <style>\r\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\r\n      0% {\r\n        transform: translateX(0%);\r\n      }\r\n      100% {\r\n        transform: translateX(-100%);\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if pause_hover %}\r\n\t<style>\r\n    @media(min-width: 1024px) {\r\n      .promotion-wrapper-{{ section.id }}:hover .promotion-list-{{ section.id }} {\r\n        animation-play-state: paused;\r\n      }\r\n    }\r\n    \r\n    @media(max-width: 1023px) {\r\n      .promotion-wrapper-{{ section.id }}.paused .promotion-list-{{ section.id }} {\r\n        animation-play-state: paused;\r\n      }\r\n    }\r\n\t</style>\r\n{% endif %}\r\n\r\n{% capture list %}\r\n  <div class=\"promotion-list-{{ section.id }}\">\r\n    {% for block in section.blocks %}\r\n      {% if block.type == 'promotion' %}\r\n        <{% if block.settings.url != blank %}a href=\"{{ block.settings.url }}\"{% else %}div{% endif %} class=\"promotion-card-{{ section.id }} swiper-card\">    \r\n          <div class=\"promotion-card-bottom-wrapper-{{ section.id }}\">\r\n            <div class=\"promotion-media-{{ section.id }}\">      \r\n              {% if block.settings.media_type == 'video' %}           \r\n                {% assign media_url_id = block.settings.media_url.id %}\r\n                {% assign loop_url = '&loop=1&playlist=' | append: media_url_id %}\r\n                {%- if block.settings.source != 'uploaded' -%}\r\n                    {%- if block.settings.media_url.type == 'youtube' -%}\r\n                    <iframe\r\n                        {% if lazy %}data-{% endif %}src=\"https://www.youtube.com/embed/{{ media_url_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"                     \r\n                        {% if lazy %}data-{% endif %}src1=\"https://www.youtube.com/embed/{{ media_url_id }}?enablejsapi=1&mute=0&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"   \r\n                        allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                        allowfullscreen\r\n                        class=\"lazy\"\r\n                    ></iframe>\r\n                    {%- else -%}\r\n                    <iframe\r\n                        {% if lazy %}data-{% endif %}src=\"https://player.vimeo.com/video/{{ media_url_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0{{ loop_url }}\"\r\n                        {% if lazy %}data-{% endif %}src1=\"https://player.vimeo.com/video/{{ media_url_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&modestbranding=1&showinfo=0{{ loop_url }}\"\r\n                        allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\r\n                        allowfullscreen\r\n                        class=\"lazy\"\r\n                    ></iframe>\r\n                    {% endif %}\r\n                {% else %}\r\n                    {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\r\n                    <video {% if lazy %}data-{% endif %}src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy\"></video>\r\n                {% endif %}\r\n              {% else %}\r\n                {% if block.settings.image != blank %}\r\n                  {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\r\n                  {{ block.settings.image | image_url: width: 1000 | image_tag:\r\n                    loading: loading_attribute,\r\n                    width: block.settings.image.width,\r\n                    height: block.settings.image.height,\r\n                    sizes: sizes,\r\n                    widths: '360, 535, 750, 1070, 1500'\r\n                  }}\r\n                {% else %}\r\n                  {{ 'image' | placeholder_svg_tag }}\r\n                {% endif %}\r\n              {% endif %}\r\n            </div>        \r\n            {% if block.settings.title != blank %}\r\n              <p class=\"promotion-card-title-{{ section.id }}\">\r\n                {{ block.settings.title }}                  \r\n              </p>  \r\n            {% endif %}                                  \r\n            {% if block.settings.text != blank %}\r\n              <div class=\"promotion-card-text-{{ section.id }}\">\r\n                {{ block.settings.text }}                  \r\n              </div>  \r\n            {% endif %} \r\n          </div>                                            \r\n        </{% if block.settings.url != blank %}a{% else %}div{% endif %}>\r\n      {% endif %}\r\n    {% endfor %}\r\n  </div>\r\n{% endcapture %}\r\n\r\n<div class=\"section-{{ section.id }} promotion-{{ section.id }}\" {% if background_style == 'solid' %}style=\"background-color:{{ background_color }};\"{% else %} style=\"background-image: {{ background_gradient }};\"{% endif %}>\r\n    <div class=\"section-{{ section.id }}-settings\">\r\n      <div class=\"promotion-wrapper-{{ section.id }}\">\r\n        {{ list }}\r\n        {{ list }}\r\n      </div>\r\n    </div>\r\n</div>\r\n\r\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\r\n\r\n<script>\r\n  function initScrollingPromotion() {\r\n    let lazyLoadInstance = new LazyLoad();\r\n\r\n    window.addEventListener(\r\n      \"LazyLoad::Initialized\",\r\n      function (event) {\r\n        window.lazyLoadInstance = event.detail.instance;\r\n      },\r\n      false\r\n    );\r\n\r\n    const promotionWrapper = document.querySelector('.promotion-wrapper-{{ section.id }}');\r\n    if (promotionWrapper && {{ pause_hover | json }}) {\r\n      let isPaused = false;\r\n      \r\n      promotionWrapper.addEventListener('click', function(e) {\r\n        if (window.innerWidth < 1024) {\r\n          isPaused = !isPaused;\r\n          if (isPaused) {\r\n            promotionWrapper.classList.add('paused');\r\n          } else {\r\n            promotionWrapper.classList.remove('paused');\r\n          }\r\n        }\r\n      });\r\n\r\n      window.addEventListener('resize', function() {\r\n        if (window.innerWidth >= 1024 && isPaused) {\r\n          isPaused = false;\r\n          promotionWrapper.classList.remove('paused');\r\n        }\r\n      });\r\n    }\r\n  }\r\n\r\n  document.addEventListener('DOMContentLoaded', initScrollingPromotion);\r\n\r\n  if (Shopify.designMode) {\r\n    document.addEventListener('shopify:section:unload', initScrollingPromotion);\r\n    document.addEventListener('shopify:section:load', initScrollingPromotion);\r\n  }\r\n</script>",
+  "variables": {
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "40",
+      "label": "Speed",
+      "description": "🐇 ———●——— 🐢"
+    },
+    "scrolling_velocity_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Speed - mobile",
+      "description": "🐇 ———●——— 🐢"
+    },
+    "reverse_direction": {
+      "type": "text",
+      "default": "",
+      "label": "Reverse scrolling direction",
+      "description": "Reverse scrolling direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "true",
+      "label": "Pause on hover",
+      "description": "Pause on hover"
+    },
+    "cards_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "cards_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "cards_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "card_width": {
+      "type": "text",
+      "default": "330",
+      "label": "Width",
+      "description": "Width"
+    },
+    "card_width_mobile": {
+      "type": "text",
+      "default": "310",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "card_padding_advanced": {
+      "type": "text",
+      "default": "false",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "card_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "card_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "card_padding_vertical": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "card_padding_vertical_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "16",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "card_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "card_shadow_color": {
+      "type": "color",
+      "default": "#959DA5",
+      "label": "Shadow color",
+      "description": "Shadow color"
+    },
+    "card_content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "card_content_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "media_radius": {
+      "type": "text",
+      "default": "16",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "media_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "media_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "media_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "title_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "title_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "title_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_advanced": {
+      "type": "text",
+      "default": "",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "media_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Media border",
+      "description": "Media border"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Title",
+      "description": "Title"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "card_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "width": {
+      "type": "text",
+      "default": "full",
+      "label": "Width",
+      "description": "Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Content width",
+      "description": "Content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

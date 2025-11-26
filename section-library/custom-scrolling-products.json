@@ -1,0 +1,547 @@
+{
+  "id": "custom-scrolling-products",
+  "name": "CUSTOM Scrolling Products",
+  "description": "Section: CUSTOM Scrolling Products",
+  "tags": [
+    "scrolling",
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign products = section.settings.products\n  assign collection = section.settings.collection\n  assign collection_show_all = section.settings.collection_show_all\n  assign collection_show = section.settings.collection_show\n\n  assign scrolling_direction = section.settings.scrolling_direction\n  assign scrolling_velocity = section.settings.scrolling_velocity\n  assign scrolling_gap = section.settings.scrolling_gap\n  assign scrolling_gap_mobile = section.settings.scrolling_gap_mobile\n  assign pause_hover = section.settings.pause_hover\n\n  assign card_width_mobile = section.settings.card_width_mobile\n  assign card_width = section.settings.card_width\n  assign card_radius = section.settings.card_radius\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_border_color = section.settings.card_border_color\n  assign card_bg_color = section.settings.card_bg_color\n  assign card_shadow = section.settings.card_shadow\n  assign card_shadow_color = section.settings.card_shadow_color\n\n  assign content_padding_vertical = section.settings.content_padding_vertical\n  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_uppercase = section.settings.title_uppercase\n\n  assign price_size = section.settings.price_size\n  assign price_size_mobile = section.settings.price_size_mobile\n  assign price_color = section.settings.price_color\n  assign price_custom = section.settings.price_custom\n  assign price_font = section.settings.price_font\n  assign price_height = section.settings.price_height\n  assign price_mt = section.settings.price_mt\n\n  assign button = section.settings.button\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_mt = section.settings.button_mt\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n  assign button_arrow = section.settings.button_arrow\n\n  assign badge = section.settings.badge\n  assign badge_size = section.settings.badge_size\n  assign badge_size_mobile = section.settings.badge_size_mobile\n  assign badge_color = section.settings.badge_color\n  assign badge_custom = section.settings.badge_custom\n  assign badge_font = section.settings.badge_font\n  assign badge_height = section.settings.badge_height\n  assign badge_bg_color = section.settings.badge_bg_color\n  assign badge_padding_vertical = section.settings.badge_padding_vertical\n  assign badge_padding_horizontal = section.settings.badge_padding_horizontal\n  assign badge_padding_vertical_mobile = section.settings.badge_padding_vertical_mobile\n  assign badge_padding_horizontal_mobile = section.settings.badge_padding_horizontal_mobile\n\n  assign count = ''\n\n  if collection != blank\n    if collection_show_all\n      for item in collections[collection].products\n        assign count = count | plus: 1\n      endfor\n    else\n      for item in (1..collection_show)\n        assign count = count | plus: 1\n      endfor\n    endif\n  elsif products != blank\n    for item in products\n      assign count = count | plus: 1\n    endfor\n  endif\n  \n-%}\n\n{%- style -%}\n\n  {{  heading_font | font_face: font_display: 'swap' }}\n\n  {{ title_font | font_face: font_display: 'swap' }}\n  {{ price_font | font_face: font_display: 'swap' }}\n  {{ button_font | font_face: font_display: 'swap' }}\n  {{ badge_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .products-heading-{{ section.id }} {\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .products-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n  }\n\n  .products-card-{{ section.id }} {\n    width: 100%;\n    max-width: {{ card_width_mobile }}px;\n    border-radius: {{ card_radius }}px;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    background-color: {{ card_bg_color }};\n    position: relative;\n    overflow: hidden;\n    text-decoration: none;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    box-sizing: border-box;\n  }\n\n  .products-image-{{ section.id }} {\n    aspect-ratio: 1/1;\n  }\n\n  .products-image-{{ section.id }} img,\n  .products-image-{{ section.id }} svg {\n    display: block;\n    object-fit: cover;\n    width: 100%;\n    aspect-ratio: 1/1;\n  }\n\n  .products-image-{{ section.id }}.products-sale-image-{{ section.id }} img,\n  .products-image-{{ section.id }}.products-sale-image-{{ section.id }} svg {\n    aspect-ratio: 1/0.81;\n  }\n\n  .products-image-{{ section.id }} svg {\n    background-color: #DEDEDE;\n  }\n\n  .products-content-{{ section.id }} {\n    flex: 1 1 auto;\n    display: flex;\n    flex-direction: column;\n    box-sizing: border-box;\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;\n  }\n\n  .products-content-inner-{{ section.id }} {\n    flex: 1 1 auto;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n  }\n\n  .products-title-{{ section.id }} {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n    margin: 0px;\n    font-size: {{ title_size_mobile }}px;\n    color: {{ title_color }};\n    line-height: {{ title_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n    text-decoration: none;\n    text-overflow: ellipsis;\n    white-space: normal;\n  }\n\n  .products-price-{{ section.id }} {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 5px;\n    margin-top: {{ price_mt | times: 0.75 | round: 0 }}px;\n  }\n\n  .products-main-price-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ price_size_mobile }}px;\n    color: {{ price_color }};\n    line-height: {{ price_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n    text-decoration: none;\n  }\n\n  .products-crossed-price-{{ section.id }} {\n    margin: 0px;\n    color: #999999;\n    text-decoration: line-through;\n    font-size: {{ price_size_mobile | times: 0.75 | round: 0 }}px;\n  }\n\n  .products-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    max-width: 100%;\n    widht: 100%;\n    margin: 0;\n    margin-top: {{ button_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ button_size_mobile }}px;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    background-color: {{ button_bg_color }};\n    transition: all 0.25s ease 0s;\n    position: relative;\n    font-weight: 700;\n    z-index: 2;\n  }\n\n  .products-button-{{ section.id }}:hover {\n    color: {{ button_hover_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    background-color: {{ button_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n  \n  .products-button-{{ section.id }} svg {\n    width: 20px;\n    height: 20px;\n    stroke: {{ button_color }};\n    transition: all 0.25s ease 0s;\n  }\n  \n  .products-button-{{ section.id }}:hover svg {\n    stroke: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .products-badge-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    max-width: 100%;\n    widht: 100%;\n    margin: 0;\n    font-size: {{ badge_size_mobile }}px;\n    color: {{ badge_color }};\n    line-height: {{ badge_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    font-weight: 700;\n    padding: {{ badge_padding_vertical_mobile }}px {{ badge_padding_horizontal_mobile }}px;\n    background-color: {{ badge_bg_color }};\n  }\n\n  .marquee-horizontal-{{ section.id }} {\n    position: relative;\n    z-index: 1;\n    display: inline-flex;\n    overflow: hidden;\n    width: 100%;\n    -webkit-box-pack: start;\n    -webkit-justify-content: flex-start;\n    -ms-flex-pack: start;\n    justify-content: flex-start;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n    -ms-flex-align: center;\n    align-items: center;\n  }\n\n  .track-horizontal-{{section.id}} {\n      padding-left: {{ scrolling_gap_mobile }}px;\n      display: -webkit-box;\n      display: -webkit-flex;\n      display: -ms-flexbox;\n      display: flex;\n      flex-shrink: 0;\n      width: calc(({{ card_width_mobile }}px * {{ count }}) + ({{ scrolling_gap_mobile }}px * {{ count }}));\n      gap: {{ scrolling_gap_mobile }}px;\n      -webkit-box-pack: start;\n      -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n      justify-content: flex-start;\n      -webkit-box-align: center;\n      -webkit-align-items: center;\n      -ms-flex-align: center;\n      align-items: stretch;\n      white-space: nowrap;\n      will-change: transform;\n      animation: marquee-horizontal-{{ scrolling_direction }} {{ scrolling_velocity | times: 1000 | round: 0 }}ms linear infinite;\n  }\n\n  @keyframes marquee-horizontal-left {\n    0% {\n        transform: translateZ(0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translate3d(-100%,0,0);\n    }\n  }\n\n  @keyframes marquee-horizontal-right {\n    0% {\n        transform: translate3d(-100%,0,0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translateZ(0);\n    }\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .products-heading-{{ section.id }} {\n      text-align: {{ heading_align }};\n    }\n  \n    .products-heading-{{ section.id }} * {\n      font-size: {{ heading_size | times: 0.75 }}px;\n    }\n\n    .products-card-{{ section.id }} {\n      max-width: {{ card_width }}px;\n    }\n\n    .products-content-{{ section.id }} {\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\n    }\n\n    .products-title-{{ section.id }} {\n      font-size: {{ title_size }}px;\n    }\n\n    .products-price-{{ section.id }} {\n      margin-top: {{ price_mt }}px;\n    }\n\n    .products-main-price-{{ section.id }} {\n      font-size: {{ price_size }}px;\n    }\n\n    .products-crossed-price-{{ section.id }} {\n      font-size: {{ price_size | times: 0.75 | round: 0 }}px;\n    }\n\n    .products-button-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n      font-size: {{ button_size }}px;\n    }\n\n    .products-badge-{{ section.id }} {\n      font-size: {{ badge_size }}px;\n      padding: {{ badge_padding_vertical }}px {{ badge_padding_horizontal }}px;\n    }\n\n    .track-horizontal-{{section.id}} {\n      padding-left: {{ scrolling_gap }}px;\n      width: calc(({{ card_width }}px * {{ count }}) + ({{ scrolling_gap }}px * {{ count }}));\n      gap: {{ scrolling_gap }}px; \n    }\n\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if heading_custom %}\n  <style>\n    .products-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if title_custom %}\n  <style>\n    .products-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if price_custom %}\n  <style>\n    .products-main-price-{{ section.id }},\n    .products-crossed-price-{{ section.id }} {\n      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};\n      font-weight: {{ price_font.weight }};\n      font-style: {{ price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .products-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if badge_custom %}\n  <style>\n    .products-badge-{{ section.id }} {\n      font-family: {{ badge_font.family }}, {{ badge_font.fallback_families }};\n      font-weight: {{ badge_font.weight }};\n      font-style: {{ badge_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if card_shadow %}\n  <style>\n    .track-horizontal-{{section.id}} {\n      padding-bottom: 12px;\n      padding-top: 12px;\n    }\n    .products-card-{{ section.id }} {\n      box-shadow: {{ card_shadow_color | hex_to_rgba: 0.15 }} 0px 2px 8px;\n    }\n  </style>\n{% endif %}\n\n{% if title_uppercase %}\n  <style>\n    .products-title-{{ section.id }} {\n      text-transform: uppercase;\n    }\n  </style>\n{% endif %}\n\n{% if pause_hover %}\n  <style>\n    .marquee-horizontal-{{ section.id }}:hover .track-horizontal-{{section.id}} {\n       animation-play-state: paused \n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} products-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% if heading != blank %}\n        <div class=\"products-heading-{{ section.id }}\">{{ heading }}</div>\n      {% endif %}\n      <div class=\"marquee-horizontal-{{ section.id }}\">\n        {% for item in (1..4) %}\n          <div class=\"track-horizontal-{{ section.id }}\">\n            {% if collection != blank %}\n              {% if collection_show_all %}\n                {% for product in collections[collection].products %}\n                  <a href=\"{{ product.url }}\" class=\"products-card-{{ section.id }}\">\n                    <div class=\"products-image-{{ section.id }} {% if product.compare_at_price > product.price and badge != blank %}products-sale-image-{{ section.id }}{% endif %}\">\n                      {% if product.compare_at_price > product.price and badge != blank %}\n                        <div class=\"products-badge-{{ section.id }}\">\n                          {{ badge }}\n                        </div>\n                      {% endif %}\n                      {% if product.featured_image != blank %}\n                        <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                    </div>\n                    <div class=\"products-content-{{ section.id }}\">\n                      <div class=\"products-content-inner-{{ section.id }}\">\n                        <p class=\"products-title-{{ section.id }}\">{{ product.title }}</p>\n                        <div class=\"products-price-{{ section.id }}\">\n                          {% if product.compare_at_price > product.price %}\n                            <p class=\"products-crossed-price-{{ section.id }} \">{{ product.compare_at_price | money }}</p>\n                            <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                          {% else %}\n                            <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                          {% endif %}\n                        </div>\n                      </div>\n                      <div class=\"products-button-{{ section.id }}\">\n                        {{ button }}\n                        {% if button_arrow %}\n                          <svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-arrow-up-right\"><line x1=\"7\" y1=\"17\" x2=\"17\" y2=\"7\"></line><polyline points=\"7 7 17 7 17 17\"></polyline></svg>\n                        {% endif %}\n                      </div>\n                    </div>\n                  </a>\n                {% endfor %}\n              {% else %}\n                {% for product in collections[collection].products limit:collection_show %}\n                  <a href=\"{{ product.url }}\" class=\"products-card-{{ section.id }} swiper-slide\">\n                    <div class=\"products-image-{{ section.id }} {% if product.compare_at_price > product.price and badge != blank %}products-sale-image-{{ section.id }}{% endif %}\">\n                      {% if product.compare_at_price > product.price and badge != blank %}\n                        <div class=\"products-badge-{{ section.id }}\">\n                          {{ badge }}\n                        </div>\n                      {% endif %}\n                      {% if product.featured_image != blank %}\n                        <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                    </div>\n                    <div class=\"products-content-{{ section.id }}\">\n                      <div class=\"products-content-inner-{{ section.id }}\">\n                        <p class=\"products-title-{{ section.id }}\">{{ product.title }}</p>\n                        <div class=\"products-price-{{ section.id }}\">\n                          {% if product.compare_at_price > product.price %}\n                            <p class=\"products-crossed-price-{{ section.id }} \">{{ product.compare_at_price | money }}</p>\n                            <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                          {% else %}\n                            <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                          {% endif %}\n                        </div>\n                      </div>\n                      <div class=\"products-button-{{ section.id }}\">\n                        {{ button }}\n                        {% if button_arrow %}\n                          <svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-arrow-up-right\"><line x1=\"7\" y1=\"17\" x2=\"17\" y2=\"7\"></line><polyline points=\"7 7 17 7 17 17\"></polyline></svg>\n                        {% endif %}\n                      </div>\n                    </div>\n                  </a>\n                {% endfor %}\n              {% endif %}\n            {% elsif products != blank %}\n              {% for product in products %}\n                <a href=\"{{ product.url }}\" class=\"products-card-{{ section.id }} swiper-slide\">\n                  <div class=\"products-image-{{ section.id }} {% if product.compare_at_price > product.price and badge != blank %}products-sale-image-{{ section.id }}{% endif %}\">\n                    {% if product.compare_at_price > product.price and badge != blank %}\n                      <div class=\"products-badge-{{ section.id }}\">\n                        {{ badge }}\n                      </div>\n                    {% endif %}\n                    {% if product.featured_image != blank %}\n                      <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                    {% else %}\n                      {{ 'image' | placeholder_svg_tag }}\n                    {% endif %}\n                  </div>\n                  <div class=\"products-content-{{ section.id }}\">\n                    <div class=\"products-content-inner-{{ section.id }}\">\n                      <p class=\"products-title-{{ section.id }}\">{{ product.title }}</p>\n                      <div class=\"products-price-{{ section.id }}\">\n                        {% if product.compare_at_price > product.price %}\n                          <p class=\"products-crossed-price-{{ section.id }} \">{{ product.compare_at_price | money }}</p>\n                          <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                        {% else %}\n                          <p class=\"products-main-price-{{ section.id }}\">{{ product.price | money }}</p>\n                        {% endif %}\n                      </div>\n                    </div>\n                    <div class=\"products-button-{{ section.id }}\">\n                      {{ button }}\n                      {% if button_arrow %}\n                        <svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-arrow-up-right\"><line x1=\"7\" y1=\"17\" x2=\"17\" y2=\"7\"></line><polyline points=\"7 7 17 7 17 17\"></polyline></svg>\n                      {% endif %}\n                    </div>\n                  </div>\n                </a>\n              {% endfor %}\n            {% else %}\n              {% for item in (1..8) %}\n                <div class=\"products-card-{{ section.id }} swiper-slide\">\n                  <div class=\"products-image-{{ section.id }} {% if forloop.index == 5 or forloop.index == 6 and badge != blank %}products-sale-image-{{ section.id }}{% endif %}\">\n                    {% if forloop.index == 5 or forloop.index == 6 %}\n                      <div class=\"products-badge-{{ section.id }}\">\n                        {{ badge }}\n                      </div>\n                    {% endif %}\n                    {{ 'image' | placeholder_svg_tag }}\n                  </div>\n                  <div class=\"products-content-{{ section.id }}\">\n                    <div class=\"products-content-inner-{{ section.id }}\">\n                      <p class=\"products-title-{{ section.id }}\">{{ product.title }}</p>\n                      <div class=\"products-price-{{ section.id }}\">\n                        {% if forloop.index == 5 or forloop.index == 6 %}\n                          <p class=\"products-crossed-price-{{ section.id }} \">$175.00</p>\n                          <p class=\"products-main-price-{{ section.id }}\">$125.00</p>\n                        {% else %}\n                          <p class=\"products-main-price-{{ section.id }}\">$175.00</p>\n                        {% endif %}\n                      </div>\n                    </div>\n                    <div class=\"products-button-{{ section.id }}\">\n                      {{ button }}\n                      {% if button_arrow %}\n                        <svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-arrow-up-right\"><line x1=\"7\" y1=\"17\" x2=\"17\" y2=\"7\"></line><polyline points=\"7 7 17 7 17 17\"></polyline></svg>\n                      {% endif %}\n                    </div>\n                  </div>\n                </div>\n              {% endfor %}\n            {% endif %}\n          </div>\n        {% endfor %}\n      </div>\n    </div>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Heading Size - Mobile",
+      "description": "Heading Size - Mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align - Mobile",
+      "description": "Heading Text Align - Mobile"
+    },
+    "collection": {
+      "type": "text",
+      "default": "",
+      "label": "Products from the Collection",
+      "description": "Products from the Collection"
+    },
+    "products": {
+      "type": "text",
+      "default": "",
+      "label": "List of Products",
+      "description": "If no collection chosen above"
+    },
+    "collection_show": {
+      "type": "text",
+      "default": "10",
+      "label": "Collection Products to Show",
+      "description": "Collection Products to Show"
+    },
+    "collection_show_all": {
+      "type": "text",
+      "default": "",
+      "label": "Collection All Products",
+      "description": "Collection All Products"
+    },
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "35",
+      "label": "Scrolling speed",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_direction": {
+      "type": "text",
+      "default": "left",
+      "label": "Scrolling Direction",
+      "description": "Scrolling Direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "true",
+      "label": "Pause on Hover",
+      "description": "Pause on Hover"
+    },
+    "scrolling_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Scrolling Gap",
+      "description": "Scrolling Gap"
+    },
+    "scrolling_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Scrolling Gap - Mobile",
+      "description": "Scrolling Gap - Mobile"
+    },
+    "card_width": {
+      "type": "text",
+      "default": "240",
+      "label": "Card Width",
+      "description": "Card Width"
+    },
+    "card_width_mobile": {
+      "type": "text",
+      "default": "240",
+      "label": "Card Width - Mobile",
+      "description": "Card Width - Mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "10",
+      "label": "Card Border Radius",
+      "description": "Card Border Radius"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Card Border Thickness",
+      "description": "Card Border Thickness"
+    },
+    "card_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Card Shadow",
+      "description": "Use Card Shadow"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Content Padding Vertical",
+      "description": "Content Padding Vertical"
+    },
+    "content_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Content Padding Vertical - Mobile",
+      "description": "Content Padding Vertical - Mobile"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "14",
+      "label": "Content Padding Horizontal",
+      "description": "Content Padding Horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Content Padding Horizontal - Mobile",
+      "description": "Content Padding Horizontal - Mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Product Title Font Family",
+      "description": "Product Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Product Title Size",
+      "description": "Product Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Product Title Size - Mobile",
+      "description": "Product Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Product Title Line Height",
+      "description": "Product Title Line Height"
+    },
+    "title_uppercase": {
+      "type": "text",
+      "default": "",
+      "label": "Use Title Uppercase",
+      "description": "Use Title Uppercase"
+    },
+    "price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "price_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Product Price Font Family",
+      "description": "Product Price Font Family"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Product Price Size",
+      "description": "Product Price Size"
+    },
+    "price_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Product Price Size - Mobile",
+      "description": "Product Price Size - Mobile"
+    },
+    "price_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Product Price Line Height",
+      "description": "Product Price Line Height"
+    },
+    "price_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Price Margin Top",
+      "description": "Price Margin Top"
+    },
+    "button": {
+      "type": "text",
+      "default": "SHOP NOW",
+      "label": "Button Text",
+      "description": "Button Text"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Button Font Family",
+      "description": "Button Font Family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size",
+      "description": "Button Size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size - Mobile",
+      "description": "Button Size - Mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Line Height",
+      "description": "Button Line Height"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Margin Top",
+      "description": "Button Margin Top"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Button Padding Vertical",
+      "description": "Button Padding Vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Button Padding Vertical - Mobile",
+      "description": "Button Padding Vertical - Mobile"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Button Padding Horizontal",
+      "description": "Button Padding Horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Button Padding Horizontal - Mobile",
+      "description": "Button Padding Horizontal - Mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "20",
+      "label": "Button Border Radius",
+      "description": "Button Border Radius"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Button Border Thickness",
+      "description": "Button Border Thickness"
+    },
+    "button_arrow": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Button Arrow",
+      "description": "Use Button Arrow"
+    },
+    "badge": {
+      "type": "text",
+      "default": "",
+      "label": "Badge Text",
+      "description": "Add text to show sales badge"
+    },
+    "badge_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "badge_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Badge Font Family",
+      "description": "Badge Font Family"
+    },
+    "badge_size": {
+      "type": "text",
+      "default": "17",
+      "label": "Badge Size",
+      "description": "Badge Size"
+    },
+    "badge_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Badge Size - Mobile",
+      "description": "Badge Size - Mobile"
+    },
+    "badge_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Badge Line Height",
+      "description": "Badge Line Height"
+    },
+    "badge_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Badge Padding Vertical",
+      "description": "Badge Padding Vertical"
+    },
+    "badge_padding_vertical_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Badge Padding Vertical - Mobile",
+      "description": "Badge Padding Vertical - Mobile"
+    },
+    "badge_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Badge Padding Horizontal",
+      "description": "Badge Padding Horizontal"
+    },
+    "badge_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Badge Padding Horizontal - Mobile",
+      "description": "Badge Padding Horizontal - Mobile"
+    },
+    "card_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Background Color",
+      "description": "Card Background Color"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#181818",
+      "label": "Card Border Color",
+      "description": "Card Border Color"
+    },
+    "card_shadow_color": {
+      "type": "color",
+      "default": "#181818",
+      "label": "Card Shadow Color",
+      "description": "Card Shadow Color"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#181818",
+      "label": "Title Color",
+      "description": "Title Color"
+    },
+    "price_color": {
+      "type": "color",
+      "default": "#181818",
+      "label": "Price Color",
+      "description": "Price Color"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Color",
+      "description": "Button Color"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button Hover Color",
+      "description": "Button Hover Color"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button Background Color",
+      "description": "Button Background Color"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Background Hover Color",
+      "description": "Button Background Hover Color"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button Border Color",
+      "description": "Button Border Color"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button Border Hover Color",
+      "description": "Button Border Hover Color"
+    },
+    "badge_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Badge Color",
+      "description": "Badge Color"
+    },
+    "badge_bg_color": {
+      "type": "color",
+      "default": "#F44848",
+      "label": "Badge Background Color",
+      "description": "Badge Background Color"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#181818",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FCF7EE",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "160",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

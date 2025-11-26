@@ -1,0 +1,120 @@
+{
+  "id": "custom-scrolling-text",
+  "name": "CUSTOM Scrolling text",
+  "description": "Section: CUSTOM Scrolling text",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n  .{{ section.id }}-ss-scroller__container{\n    position: relative;\n    display:flex;\n    align-items:center;\n    overflow:hidden;\n    flex-wrap: no-wrap;\n    transform:translateZ(0);\n    background-color:{{section.settings.background_color}};\n    background-image: {{section.settings.background_gradient}};\n    padding: {{section.settings.inside_padding}}px 0;\n  }\n\n  .{{ section.id }}-ss-scroller__container.reverse {\n    flex-direction: row-reverse;\n  }\n\n  .{{ section.id }}-ss-scroller__text{\n    font-size:25px;\n    margin:0;\n    white-space:nowrap;\n    width:auto;\n    perspective:900px;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n    -webkit-justify-content: flex-start;\n    -ms-flex-pack: start;\n    justify-content: flex-start;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n    -ms-flex-align: center;\n    align-items: center;\n    animation:ss-scroller-left {{ section.settings.scrolling_speed }}s linear infinite;\n    color: {{section.settings.text_color}};\n    {% unless section.settings.text_gradient == blank %}\n      background-image: {{section.settings.text_gradient}};\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n    {% endunless %}\n  }\n\n  .{{ section.id }}-ss-scroller__text-item {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n    -ms-flex: 0 0 auto;\n    flex: 0 0 auto;\n    box-sizing: border-box;\n    backface-visibility: hidden;\n    -webkit-perspective: 1000;\n    -webkit-backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform: translate3d(0, 0, 0);\n  }\n\n  @media only screen and (min-width:769px){\n\n      .{{ section.id }}-ss-scroller__text span{\n        padding:0 15px;\n      }\n    }\n\n    .{{ section.id }}-ss-scroller__text span{\n      padding:0 20px;\n    }\n\n  .ss-scroller__text--right{\n    animation-name:ss-scroller-right;\n  }\n\n  @keyframes ss-scroller-left {\n    from { transform: translateX(0); }\n    to { transform: translateX(-50%); }\n  }\n\n  @keyframes ss-scroller-right {\n     from { transform:translateX(-50%); }\n     to {transform:translateX(0%); }\n    }\n  }\n</style>\n{% if section.settings.pause_hover %}\n  <style>\n    .{{ section.id }}-ss-scroller__text:hover {\n      animation-play-state: paused;\n    }\n  </style>\n{% endif %}\n{%- style -%}\n    {% if section.settings.color_scheme == 'button' %}\n      .ss-scroller--{{ section.id }} {\n        background: {{ settings.color_button }};\n        color: {{ settings.color_button_text }};\n      }\n    {% endif %}\n    .ss-scroller--{{ section.id }} .{{ section.id }}-ss-scroller__text {\n      font-size: {{ section.settings.text_size }}px;\n      animation-duration: {{ section.settings.scrolling_speed}}s;\n    }\n    @media screen and (max-width: 768px) {\n      .ss-scroller--{{ section.id }} .{{ section.id }}-ss-scroller__text {\n        font-size: {{ section.settings.text_size_mobile}}px;\n        animation-duration: {{ section.settings.scrolling_speed_mobile }}s;\n      }\n    }\n    {% unless section.settings.text_spacing %}\n      .ss-scroller--{{ section.id }} .ss-scroller__text span {\n        padding: 0;\n      }\n    {% endunless %}\n  }\n{%- endstyle -%}\n\n{% capture icon %}\n  {% if section.settings.icon != blank %}\n    <img\n      src=\"{{ section.settings.icon | img_url: 'master' }}\"\n      alt=\"{{ section.settings.icon.alt }}\"\n      style=\"width: {{ section.settings.icon_width }}px; object-fit: contain;\"\n    >\n  {% endif %}\n{% endcapture %}\n\n{% assign text_font = section.settings.text_font %}\n<style>\n  {{ text_font | font_face }}\n</style>\n\n{% if section.settings.direction_rtl %}\n  <style>\n  .{{ section.id }}-ss-scroller__text-item span {\n    unicode-bidi: bidi-override !important;\n    direction: rtl !important;\n    text-align:right; \n  }\n  </style>\n{% endif %}\n\n<div class=\"ss-scroller ss-scroller--{{ section.id }}\">\n  {%- capture markup -%}\n    <div class=\"{{ section.id }}-ss-scroller__container\">\n      <div class=\"{{ section.id }}-ss-scroller__text ss-scroller__text--{{ section.settings.direction }}\"\n      style=\"font-family: {{ text_font.family | escape }};\"\n      >\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <!-- <span aria-hidden=\"true\">{{ section.settings.text }}</span>\n            {{ icon }} -->\n      </div>\n      <div class=\"{{ section.id }}-ss-scroller__text ss-scroller__text--{{ section.settings.direction }}\"\n      style=\"font-family: {{ text_font.family | escape }};\"\n      >\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <div class=\"{{ section.id }}-ss-scroller__text-item\">\n          {% if section.settings.direction_rtl %}\n            {{ icon }}\n          {% endif %}\n          <span>{{ section.settings.text }}</span>\n          {% unless section.settings.direction_rtl %}\n            {{ icon }}\n          {% endunless %}\n        </div>\n        <!-- <span aria-hidden=\"true\">{{ section.settings.text }}</span>\n            {{ icon }} -->\n      </div>\n    </div>\n  {%- endcapture -%}\n\n  {%- if section.settings.link != blank -%}\n    <a href=\"{{ section.settings.link }}\" style=\"text-decoration:none;\">\n      {{ markup }}\n    </a>\n  {%- else -%}\n    {{ markup }}\n  {%- endif -%}\n</div>\n\n{% if section.settings.direction_rtl %}\n  <script>\n    function initScrollingText() {\n      var htmlElement = document.documentElement;\n  \n      if (window.getComputedStyle(htmlElement).getPropertyValue('direction') === 'rtl') {\n          document.querySelector('.{{ section.id }}-ss-scroller__container').classList.add('reverse');\n      }\n    }\n  \n    document.addEventListener('DOMContentLoaded', initScrollingText);\n    \n    if (Shopify.designMode) {\n       document.addEventListener('shopify:section:unload', initScrollingText);\n       document.addEventListener('shopify:section:load', initScrollingText);\n    }\n  </script>\n{% endif %}",
+  "variables": {
+    "text": {
+      "type": "text",
+      "default": "Free shipping and easy returns",
+      "label": "Text",
+      "description": "Text"
+    },
+    "icon": {
+      "type": "text",
+      "default": "",
+      "label": "Icon (Optional)",
+      "description": "Icon (Optional)"
+    },
+    "icon_width": {
+      "type": "text",
+      "default": "24",
+      "label": "Icon width",
+      "description": "Icon width"
+    },
+    "link": {
+      "type": "text",
+      "default": "",
+      "label": "Link",
+      "description": "Link"
+    },
+    "direction": {
+      "type": "text",
+      "default": "left",
+      "label": "Direction",
+      "description": "Direction"
+    },
+    "inside_padding": {
+      "type": "text",
+      "default": "0",
+      "label": "Inside padding",
+      "description": "Inside padding"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "open_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "70",
+      "label": "Text size",
+      "description": "Text size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Text size mobile",
+      "description": "Text size mobile"
+    },
+    "scrolling_speed": {
+      "type": "text",
+      "default": "25",
+      "label": "Scrolling speed",
+      "description": "Scrolling speed"
+    },
+    "scrolling_speed_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Scrolling speed mobile",
+      "description": "Scrolling speed mobile"
+    },
+    "text_spacing": {
+      "type": "text",
+      "default": "true",
+      "label": "Add spacing",
+      "description": "Add spacing"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "false",
+      "label": "Pause on Hover",
+      "description": "Pause on Hover"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#232323",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "text_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Text gradient",
+      "description": "Text gradient"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Background color",
+      "description": "Background color"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "direction_rtl": {
+      "type": "text",
+      "default": "",
+      "label": "Use RTL Direction",
+      "description": "Use RTL Direction"
+    }
+  }
+}

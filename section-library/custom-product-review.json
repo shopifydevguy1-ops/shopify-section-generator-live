@@ -1,0 +1,348 @@
+{
+  "id": "custom-product-review",
+  "name": "CUSTOM Product reviews",
+  "description": "Section: CUSTOM Product reviews",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign lazy = section.settings.lazy\n\n  assign reviews_position = section.settings.reviews_position\n  assign reviews_meta = section.settings.reviews_meta\n  assign reviews_radius = section.settings.reviews_radius\n  assign reviews_bg_color = section.settings.reviews_bg_color\n\n  assign review_padding_vertical = section.settings.review_padding_vertical\n  assign review_padding_horizontal = section.settings.review_padding_horizontal\n  assign review_radius = section.settings.review_radius\n  assign review_border_thickness = section.settings.review_border_thickness\n  assign review_border_color = section.settings.review_border_color\n  assign review_bg_color = section.settings.review_bg_color\n\n  assign image_width = section.settings.image_width\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_ratio = section.settings.image_ratio\n\n  assign stars_icon = section.settings.stars_icon\n  assign stars_color = section.settings.stars_color\n  assign stars_size = section.settings.stars_size\n\n  assign author_size = section.settings.author_size\n  assign author_size_mobile = section.settings.author_size_mobile\n  assign author_color = section.settings.author_color\n  assign author_custom = section.settings.author_custom\n  assign author_font = section.settings.author_font\n  assign author_height = section.settings.author_height\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_mt = section.settings.text_mt\n\n  assign arrow_size = section.settings.arrow_size\n  assign arrow_size_mobile = section.settings.arrow_size_mobile\n  assign arrow_icon_size = section.settings.arrow_icon_size\n  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n  assign arrow_bg_color = section.settings.arrow_bg_color\n  assign arrow_bg_hover_color = section.settings.arrow_bg_hover_color\n  assign arrow_border_thickness = section.settings.arrow_border_thickness\n  assign arrow_border_color = section.settings.arrow_border_color\n  assign arrow_border_hover_color = section.settings.arrow_border_hover_color\n  assign arrow_show_desktop = section.settings.arrow_show_desktop\n  assign arrow_show_mobile = section.settings.arrow_show_mobile\n\n  assign loading_attribute = 'eager'\n  if lazy\n    assign loading_attribute = 'lazy'\n  endif  \n-%}\n\n{%- style -%}\n\n  {{  author_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }}-settings {\n    border: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px !important;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px !important;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n    border-radius: {{ reviews_radius }}px;\n  }\n\n  .reviews-items-{{ section.id }} {\n    position: relative;\n    background-color: {{ reviews_bg_color }};\n  }\n\n  .reviews-slider-{{ section.id }} * {\n    box-sizing: border-box;\n  }\n\n  .reviews-slider-{{ section.id }} .swiper-wrapper {\n    align-items: stretch;\n  }\n\n  .reviews-slider-{{ section.id }} .swiper-slide {\n    height: auto;\n  }\n\n  .reviews-item-{{ section.id }} {\n    height: 100%;\n    display: flex;\n    align-items: center;\n    gap: 20px;\n    padding: {{ review_padding_vertical | times: 0.75 | round: 0 }}px {{ review_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border: {{ review_border_thickness }}px solid {{ review_border_color }};\n    background-color: {{ review_bg_color }};\n    border-radius: {{ review_radius }}px;\n  }\n\n  .reviews-content-{{ section.id }} {\n    flex: 1 1 auto;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n  }\n\n  .reviews-image-{{ section.id }} {\n    flex: 0 0 {{ image_width }}px;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-radius: {{ image_radius }}px;\n  }\n\n  .reviews-image-{{ section.id }} img,\n  .reviews-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: {{ image_radius }}px;\n  }\n\n  .reviews-image-{{ section.id }} svg {\n    background-color: #DDDDDD;\n  }\n\n  .reviews-top-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n  }\n\n  .testimonials-stars-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n  }\n\n  .testimonials-stars-{{ section.id }} svg path {\n    fill: {{ stars_color }};\n  }\n\n  .testimonials-stars-{{ section.id }} svg,\n  .testimonials-stars-{{ section.id }} img {\n    display: block;\n    width: {{ stars_size }}px;\n    height: {{ stars_size }}px;\n    object-fit: cover;\n  }\n\n  .reviews-author-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ author_size_mobile }}px;\n    color: {{ author_color }};\n    line-height: {{ author_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .reviews-text-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ text_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n  }\n\n  .reviews-btn-prev-{{ section.id }},\n  .reviews-btn-next-{{ section.id }} {\n    display: flex;\n    position: absolute;\n    z-index: 2;\n    top: 50%;\n    transform: translateY(-50%);\n    width: {{ arrow_size_mobile }}px;\n    height: {{ arrow_size_mobile }}px;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_color }};\n    border-radius: 50%;\n    background: {{ arrow_bg_color }};\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n    box-shadow: 0px -2px 12px rgba(0, 0, 0, .08);\n  }\n\n  .reviews-btn-prev-{{ section.id }} {\n    left: -{{ arrow_size_mobile | times: 0.5 }}px !important;\n  }\n\n  .reviews-btn-next-{{ section.id }} {\n    right: -{{ arrow_size_mobile | times: 0.5 }}px !important;\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg,\n  .reviews-btn-next-{{ section.id }} svg {\n    height: {{ arrow_icon_size_mobile }}px;\n    width: {{ arrow_icon_size_mobile }}px;\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg {\n    transform: rotate(180deg);\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg path,\n  .reviews-btn-next-{{ section.id }} svg path {\n    fill: {{ arrow_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .reviews-btn-prev-{{ section.id }}:hover ,\n  .reviews-btn-next-{{ section.id }}:hover {\n    transition: all 0.3s ease 0s;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_hover_color }};\n    background: {{ arrow_bg_hover_color }};\n  }\n\n  .reviews-btn-prev-{{ section.id }}:hover svg path,\n  .reviews-btn-next-{{ section.id }}:hover svg path {\n    fill: {{ arrow_hover_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .reviews-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .reviews-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0;\n  }\n  \n  @media(min-width: 1024px) {\n    \n    .section-{{ section.id }}-settings {\n      margin-top: {{ margin_top }}px !important;\n      margin-bottom: {{ margin_bottom }}px !important;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .reviews-item-{{ section.id }} {\n      padding: {{ review_padding_vertical }}px {{ review_padding_horizontal }}px;\n    }\n\n    .reviews-author-{{ section.id }} {\n      font-size: {{ author_size }}px;\n    }\n\n    .reviews-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      font-size: {{ text_size }}px;\n    }\n\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      width: {{ arrow_size }}px;\n      height: {{ arrow_size }}px;\n    }\n\n    .reviews-btn-prev-{{ section.id }} {\n      left: -{{ arrow_size | times: 0.5 }}px !important;\n    }\n  \n    .reviews-btn-next-{{ section.id }} {\n      right: -{{ arrow_size | times: 0.5 }}px !important;\n    }\n\n    .reviews-btn-prev-{{ section.id }} svg,\n    .reviews-btn-next-{{ section.id }} svg {\n      height: {{ arrow_icon_size }}px;\n      width: {{ arrow_icon_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% if author_custom %}\n  <style>\n    .reviews-author-{{ section.id }} {\n      font-family: {{ author_font.family }}, {{ author_font.fallback_families }};\n      font-weight: {{ author_font.weight }};\n      font-style: {{ author_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .reviews-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 12/8; \n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_mobile %}\n  <style>\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      display: flex;\n    }\n  </style>\n{% else %}\n  <style>\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .reviews-btn-prev-{{ section.id }},\n      .reviews-btn-next-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .reviews-btn-prev-{{ section.id }},\n      .reviews-btn-next-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n<script>\n  (function () {\n    function moreLoadProductForm() {\n      var productForm = document.querySelector('#custom-reviews');\n      if (!productForm){\n        var productForm = document.querySelector('{% if reviews_position == \"below_title\" or reviews_position == \"above_title\" %}.product__title{% elsif reviews_position == \"below_description\" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n        if (!productForm) return;\n        }\n        const templateContent = document.querySelector(\n          '#custom-reviews-{{ section.id }}'\n        ).content;\n\n        productForm.insertAdjacentElement(\n          '{% if reviews_position == \"below_buy\" or reviews_position == \"below_title\" or reviews_position == \"below_description\" %}afterend{% else %}beforebegin{% endif %}',\n          templateContent.firstElementChild\n        );\n    }\n    function moreUnloadProductForm() {\n      const productForm = document.querySelector('.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons');\n\n      if (!productForm) return;\n\n      const contentTemplateBuyWith = document.querySelector(\n        '#reviews-body-{{ section.id }}'\n      );\n\n      if (contentTemplateBuyWith) contentTemplateBuyWith.remove();\n\n    }\n    window.addEventListener('DOMContentLoaded', moreLoadProductForm);\n\n    // load and unload product form when in Shopify editor:\n    if (window.Shopify && Shopify.designMode) {\n      window.addEventListener('shopify:section:load', moreLoadProductForm);\n      window.addEventListener('shopify:section:unload', moreUnloadProductForm);\n    }\n  })();\n</script>\n\n<template class=\"section-{{ section.id }} reviews-{{ section.id }}\"  id=\"custom-reviews-{{ section.id }}\">\n    <div class=\"section-{{ section.id }}-settings\" id=\"reviews-body-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n      <div class=\"reviews-items-{{ section.id }}\">\n        <div class=\"reviews-slider-{{ section.id }} swiper\">\n          <div class=\"swiper-wrapper\">\n            {% assign reviews_title = reviews_meta | handleize %}\n            {% assign reviews = product.metafields.custom[reviews_title].value %}\n            {% if reviews_meta != blank and reviews != blank %}\n              {% for review in reviews %}\n                <div class=\"swiper-slide\">\n                  <div class=\"reviews-item-{{ section.id }}\">\n                    {% unless review.hide_image %}\n                    <div class=\"reviews-image-{{ section.id }}\">\n                      {% if review.image != blank %}\n                        {%- liquid assign img_alt = review.image.alt | escape -%}\n                        {%- capture sizes -%}, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                          {{ review.image | image_url: width: 1000 | image_tag:\n                            loading: loading_attribute,\n                            width: review.image.width,\n                            height: review.image.height,\n                            sizes: sizes,\n                            widths: '450, 535, 750, 1070, 1500',\n                            alt: img_alt\n                          }}\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}  \n                    </div>\n                    {% endunless %}\n                    <div class=\"reviews-content-{{ section.id }}\">\n                      <div class=\"reviews-top-{{ section.id }}\">\n                        {% if review.author != blank %}\n                        <p class=\"reviews-author-{{ section.id }}\">{{ review.author }}</p>\n                        {% endif %}\n                        {% if review.rating != 0 %}\n                          <div class=\"testimonials-stars-{{ section.id }}\">\n                              {% if stars_icon != blank %}\n                                {% for item in (1..review.rating) %}\n                                  {%- liquid assign img_alt = stars_icon.alt | escape -%}\n                                  {%- capture sizes -%}, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                                    {{ stars_icon | image_url: width: 1000 | image_tag:\n                                      loading: loading_attribute,\n                                      width: stars_icon.width,\n                                      height: stars_icon.height,\n                                      sizes: sizes,\n                                      widths: '450, 535, 750, 1070, 1500',\n                                      alt: img_alt\n                                    }}    \n                                {% endfor %}\n                              {% else %}\n                                {% for item in (1..review.rating) %}\n                                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                                    <path d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"#1F448C\"></path>\n                                  </svg>\n                                {% endfor %}\n                              {% endif %}\n                          </div>\n                        {% endif %}\n                      </div>\n                      {% if review.text != blank %}\n                        <p class=\"reviews-text-{{ section.id }}\">{{ review.text }}</p>\n                      {% endif %}\n                    </div>\n                  </div>\n                </div>\n              {% endfor %}\n            {% else %}\n            {% for block in section.blocks %}\n              <div class=\"swiper-slide\">\n                <div class=\"reviews-item-{{ section.id }}\">\n                  {% unless block.settings.hide_image %}\n                  <div class=\"reviews-image-{{ section.id }}\">\n                      {% if block.settings.image != blank %}\n                        {%- liquid assign img_alt = block.settings.image.alt | escape -%}\n                        {%- capture sizes -%}, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                          {{ block.settings.image | image_url: width: 1000 | image_tag:\n                            loading: loading_attribute,\n                            width: block.settings.image.width,\n                            height: block.settings.image.height,\n                            sizes: sizes,\n                            widths: '450, 535, 750, 1070, 1500',\n                            alt: img_alt\n                          }}\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %} \n                  </div>\n                  {% endunless %}\n                  <div class=\"reviews-content-{{ section.id }}\">\n                    <div class=\"reviews-top-{{ section.id }}\">\n                      {% if block.settings.author != blank %}\n                      <p class=\"reviews-author-{{ section.id }}\">{{ block.settings.author }}</p>\n                      {% endif %}\n                      {% if block.settings.stars_count != 0 %}\n                        <div class=\"testimonials-stars-{{ section.id }}\">\n                            {% if stars_icon != blank %}\n                              {% for item in (1..block.settings.stars_count) %}                           \n                                {%- liquid assign img_alt = stars_icon.alt | escape -%}\n                                {%- capture sizes -%}, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                                  {{ stars_icon | image_url: width: 1000 | image_tag:\n                                    loading: loading_attribute,\n                                    width: stars_icon.width,\n                                    height: stars_icon.height,\n                                    sizes: sizes,\n                                    widths: '450, 535, 750, 1070, 1500',\n                                    alt: img_alt\n                                  }}           \n                              {% endfor %}\n                            {% else %}\n                              {% for item in (1..block.settings.stars_count) %}\n                                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                                  <path d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"#1F448C\"></path>\n                                </svg>\n                              {% endfor %}\n                            {% endif %}\n                        </div>\n                      {% endif %}\n                    </div>\n                    {% if block.settings.text != blank %}\n                      <p class=\"reviews-text-{{ section.id }}\">{{ block.settings.text }}</p>\n                    {% endif %}\n                  </div>\n                </div>\n              </div>\n            {% endfor %}\n            {% endif %}\n          </div>\n        </div>\n        <div class=\"reviews-btn-prev-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path d=\"m13.172 12-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414 4.95-4.95Z\"></path>\n          </svg>\n        </div>\n        <div class=\"reviews-btn-next-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path d=\"m13.172 12-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414 4.95-4.95Z\"></path>\n          </svg>\n        </div>\n      </div>\n    </div>\n</template>\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n\n<script>\n  function initProductReviews() {\n    setTimeout(() => {\n      const slider = new Swiper('.reviews-slider-{{ section.id }}', {\n        speed: 200,\n        slidesPerView: 'auto',\n        navigation: {\n        nextEl: '.reviews-btn-next-{{ section.id }}',\n        prevEl: '.reviews-btn-prev-{{ section.id }}'\n      },\n      })\n    },200)\n  }\n\n  document.addEventListener('DOMContentLoaded', initProductReviews);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initProductReviews);\n     document.addEventListener('shopify:section:load', initProductReviews);\n  }\n  \n</script>",
+  "variables": {
+    "reviews_position": {
+      "type": "text",
+      "default": "above_buy",
+      "label": "Position",
+      "description": "Position"
+    },
+    "reviews_meta": {
+      "type": "text",
+      "default": "",
+      "label": "Reviews metafield",
+      "description": "If you want to display reviews using a metafield, then enter the key of the metafield [Watch tutorial on setup](https://www.loom.com/share/63996d1ae32744cc9e33576ab2c6e141?sid=fc4405b5-3128-4f13-bd01-50526d7e5160)"
+    },
+    "reviews_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "review_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "review_padding_horizontal": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "review_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "review_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "60",
+      "label": "Width",
+      "description": "Width"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "stars_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Icon",
+      "description": "Replaces the default stars icon"
+    },
+    "stars_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Size",
+      "description": "Size"
+    },
+    "author_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "author_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "author_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "author_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "author_advanced": {
+      "type": "text",
+      "default": "false",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "author_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_advanced": {
+      "type": "text",
+      "default": "false",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "4",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "arrow_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Size",
+      "description": "Size"
+    },
+    "arrow_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "arrow_icon_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Size",
+      "description": "Size"
+    },
+    "arrow_icon_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "arrow_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "arrow_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on desktop",
+      "description": "Show on desktop"
+    },
+    "arrow_show_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on mobile",
+      "description": "Show on mobile"
+    },
+    "review_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "review_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Image border",
+      "description": "Image border"
+    },
+    "author_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Author",
+      "description": "Author"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "stars_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Default stars",
+      "description": "Default stars"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow",
+      "description": "Arrow"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow hover",
+      "description": "Arrow hover"
+    },
+    "arrow_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "arrow_bg_hover_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "arrow_border_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Border",
+      "description": "Border"
+    },
+    "arrow_border_hover_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "10",
+      "label": "Top",
+      "description": "Top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "10",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

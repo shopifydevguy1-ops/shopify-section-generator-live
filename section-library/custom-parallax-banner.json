@@ -1,0 +1,205 @@
+{
+  "id": "custom-parallax-banner",
+  "name": "CUSTOM Parallax Banner",
+  "description": "Section: CUSTOM Parallax Banner",
+  "tags": [
+    "parallax",
+    "banner"
+  ],
+  "type": "banner",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign parallax = section.settings.parallax\n  assign parallax_mobile = section.settings.parallax_mobile\n\n  assign banner_height = section.settings.banner_height\n  assign banner_fixed_height = section.settings.banner_fixed_height\n  assign banner_fixed_height_mobile = section.settings.banner_fixed_height_mobile\n\n  assign image = section.settings.image\n  assign image_mobile = section.settings.image_mobile\n\n  assign overlay = section.settings.overlay\n  assign overlay_color = section.settings.overlay_color\n\n  assign content_maxwidth_mobile = section.settings.content_maxwidth_mobile\n  assign content_maxwidth = section.settings.content_maxwidth\n  assign content_vertical_position_mobile = section.settings.content_vertical_position_mobile\n  assign content_vertical_position = section.settings.content_vertical_position\n  assign content_horizontal_position_mobile = section.settings.content_horizontal_position_mobile\n  assign content_horizontal_position = section.settings.content_horizontal_position\n  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile\n  assign content_padding_vertical = section.settings.content_padding_vertical\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n\n  assign text_align_mobile = \"\"\n  if content_horizontal_position_mobile == \"start\"\n    assign text_align_mobile = \"left\"\n  elsif content_horizontal_position_mobile == \"center\"\n    assign text_align_mobile = \"center\"\n  else\n  assign text_align_mobile = \"right\"\n  endif\n\n  assign text_align = \"\"\n  if content_horizontal_position == \"start\"\n    assign text_align = \"left\"\n  elsif content_horizontal_position == \"center\"\n    assign text_align = \"center\"\n  else\n  assign text_align = \"right\"\n  endif\n\n  \n-%}\n\n{%- style -%}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n    height: 100%;\n    position: relative;\n  }\n\n  .banner-image-{{ section.id }} {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 1;\n  }\n\n  .banner-image-inner-{{ section.id }} {\n    height: 100%;\n  }\n\n  .banner-image-{{ section.id }} img,\n  .banner-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .banner-image-{{ section.id }} svg {\n    background-color: #e8e8e8;\n  }\n\n  .banner-image-mobile-{{ section.id }},\n  .banner-image-desktop-{{ section.id }} {\n    height: 100%;\n  }\n\n  .banner-image-desktop-{{ section.id }} {\n    display: none;\n  }\n\n  .banner-image-{{ section.id }}:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    background-color: {{ overlay_color | hex_to_rgba: overlay }};\n    z-index: 1;\n  }\n\n  .banner-body-{{ section.id }} {\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    justify-content: {{ content_vertical_position_mobile }};\n    align-items: {{ content_horizontal_position_mobile }};\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    z-index: 2;\n  }\n\n  .banner-content-{{ section.id }} {\n    width: 100%;\n    max-width: {{ content_maxwidth_mobile }}%;\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;\n    text-align: {{ text_align_mobile }};\n  }\n\n  .banner-button-{{ section.id }} {\n    margin: 10px;\n  }\n\n  .banner-parallax-mobile-{{ section.id }} {\n    display: block;\n    width: 100%;\n    height: 100%;\n    z-index: 1;\n    overflow: hidden;\n  }\n\n  .banner-parallax-mobile-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .banner-parallax-mobile-{{ section.id }} * {\n    height: 100%;\n  }\n\n  .banner-parallax-desktop-{{ section.id }} > * {\n    height: 100%;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .banner-image-desktop-{{ section.id }} {\n      display: block;\n    }\n\n    .banner-image-mobile-{{ section.id }} {\n      display: none;\n    }\n\n    .banner-body-{{ section.id }} {\n      justify-content: {{ content_vertical_position }};\n      align-items: {{ content_horizontal_position }};\n    }\n\n    .banner-content-{{ section.id }} {\n      max-width: {{ content_maxwidth }}%;\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;\n      text-align: {{ text_align }};\n    }\n  }\n\n  @media only screen and (hover: none) and (pointer: coarse){\n    .banner-parallax-{{ section.id }} {\n        background-attachment: scroll;\n    }\n  }  \n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if banner_height == \"adapt_first\" %}\n  <style>\n    .banner-{{ section.id }} {\n      height: 100vh;\n    }\n  </style>\n{% elsif banner_height == \"auto_height\" %}\n  <style>\n\n   .banner-{{ section.id }} {\n      height: auto;\n    }\n\n    .banner-body-{{ section.id }} {\n      position: relative;\n    }\n\n  </style>\n{% else %}\n  <style>\n    .banner-{{ section.id }} {\n      height: {{ banner_fixed_height_mobile }}px;\n    }\n  \n    @media(min-width: 768px) {\n      .banner-{{ section.id }} {\n        height: {{ banner_fixed_height }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n\n  {% if block.type == \"heading\" %}\n\n    <style>\n      \n      {{ block.settings.heading_font | font_face: font_display: 'swap' }}\n      \n      .banner-heading-{{ block.id }} {\n        margin-top: {{ block.settings.heading_mt | times: 0.75 | round: 0 }}px;\n        text-align: {{ text_align_mobile }};\n      }\n    \n      .banner-heading-{{ block.id }} * {\n        margin: 0;\n        font-size: {{ block.settings.heading_size_mobile }}px;\n        color: {{ block.settings.heading_color }};\n        line-height: {{ block.settings.heading_height }}%;\n        text-transform: unset;\n      }\n\n      @media(min-width: 1024px) {\n        \n        .banner-heading-{{ block.id }} {\n          margin-top: {{ block.settings.heading_mt }}px;\n          text-align: {{ text_align }};\n        }\n      \n        .banner-heading-{{ block.id }} * {\n          font-size: {{ block.settings.heading_size }}px;\n        }\n      }\n    </style>\n\n    {% if block.settings.heading_custom %}\n      <style>\n        .banner-heading-{{ block.id }} * {\n          font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};\n          font-weight: {{ block.settings.heading_font.weight }};\n          font-style: {{ block.settings.heading_font.style }};\n        }\n      </style>\n    {% endif %}\n\n  {% elsif block.type == \"text\" %}\n\n    <style>\n\n      {{ block.settings.text_font | font_face: font_display: 'swap' }}\n\n      .banner-text-{{ block.id }} {\n        margin-top: {{ block.settings.text_mt | times: 0.75 | round: 0 }}px;\n        text-align: {{ text_align_mobile }};\n      }\n    \n      .banner-text-{{ block.id }} * {\n        margin: 0;\n        font-size: {{ block.settings.text_size_mobile }}px;\n        color: {{ block.settings.text_color }};\n        line-height: {{ block.settings.text_height }}%;\n        text-transform: unset;\n      }\n\n      @media(min-width: 1024px) {\n        .banner-text-{{ block.id }} {\n          margin-top: {{ block.settings.text_mt }}px;\n          text-align: {{ text_align }};\n        }\n    \n        .banner-text-{{ block.id }} * {\n          font-size: {{ block.settings.text_size }}px;\n        }\n      }\n      \n    </style>\n\n    {% if block.settings.text_custom %}\n      <style>\n        .banner-text-{{ block.id }} * {\n          font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};\n          font-weight: {{ block.settings.text_font.weight }};\n          font-style: {{ block.settings.text_font.style }};\n        }\n      </style>\n    {% endif %}\n\n  {% elsif block.type == \"button\" %}\n\n    <style>\n      \n      {{ block.settings.button_font | font_face: font_display: 'swap' }}\n\n      .banner-button-{{ block.id }} {\n        margin-top: {{ block.settings.button_mt | times: 0.75 | round: 0 }}px !important;\n        font-size: {{ block.settings.button_size_mobile }}px;\n        font-weight: 700;\n        color: {{ block.settings.button_color }};\n        line-height: {{ block.settings.button_height }}%;\n        text-transform: unset;\n        text-decoration: none;\n        display: inline-flex;\n        align-items: center;\n        justify-content: center;\n        max-width: fit-content;\n        text-align: center;\n        text-transform: unset;\n        text-decoration: none;\n        padding: {{ block.settings.button_padding_vertical | times: 0.75 | round: 0 }}px {{ block.settings.button_padding_horizontal | times: 0.75 | round: 0 }}px;\n        border-radius: {{ block.settings.button_radius }}px;\n        gap: {{ block.settings.button_gap | times: 0.75 | round: 0 }}px;\n        transition: all 0.25s ease 0s;\n        position: relative;\n        z-index: 2;\n      }\n\n      .banner-button-{{ block.id }}:hover {\n        color: {{ block.settings.button_hover_color }};\n        transition: all 0.25s ease 0s;\n      }\n    \n      .banner-button-icon-{{ block.id }} {\n        display: block;\n        width: 16px;\n        height: 16px;\n      }\n    \n      .banner-button-icon-{{ block.id }} svg {\n        display: block;\n        width: 100%;\n        height: 100%;\n        object-fit: cover;\n      }\n    \n      .banner-button-{{ block.id }} svg path {\n        stroke: {{ block.settings.button_color }};\n        transition: all 0.25s ease 0s;\n      }\n    \n      .banner-button-{{ block.id }}:hover svg path {\n        stroke: {{ block.settings.button_hover_color }};\n        transition: all 0.25s ease 0s;\n      }\n\n      @media(min-width: 1024px) {\n        \n        .banner-button-{{ block.id }} {\n          margin-top: {{ block.settings.button_mt }}px !important;\n          gap: {{ block.settings.button_gap }}px;\n          padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;\n          font-size: {{ block.settings.button_size }}px;\n        }\n        \n      }\n      \n    </style>\n\n    {% if block.settings.button_custom %}\n      <style>\n        .banner-button-{{ block.id }} {\n          font-family: {{ block.settings.button_font.family }}, {{ block.settings.button_font.fallback_families }};\n          font-weight: {{ block.settings.button_font.weight }};\n          font-style: {{ block.settings.button_font.style }};\n        }\n      </style>\n    {% endif %}\n\n    {% if block.settings.button_ellipse %}\n      <style>\n        .banner-button-{{ block.id }} {\n          border-radius: 100% / 100%;\n        }\n      </style>\n    {% endif %}\n\n    {% if block.settings.button_shadow %}\n      <style>\n        .banner-button-{{ block.id }} {\n          box-shadow: 0 8px 16px 2px {{ block.settings.button_shadow_color | hex_to_rgba: 0.33 }};\n        }\n      </style>\n    {% endif %}\n\n    {% if block.settings.button_style == \"non_outline\" or block.settings.button_style == \"non_outline_arrow\" %}\n      <style>\n        .banner-button-{{ block.id }} {\n          background-color: {{ block.settings.button_bg_color }};\n        }\n    \n        .banner-button-{{ block.id }}:hover {\n          background-color: {{ block.settings.button_bg_hover_color }};\n        }\n      </style>\n    {% elsif block.settings.button_style == \"outline\" or block.settings.button_style == \"outline_arrow\" %}\n      <style>\n        .banner-button-{{ block.id }} {\n          background-color: {{ block.settings.button_bg_color }};\n          border: {{ block.settings.button_border_thickness }}px solid {{ block.settings.button_border_color }};\n        }\n    \n        .banner-button-{{ block.id }}:hover {\n          background-color: {{ block.settings.button_bg_hover_color }};\n          border: {{ block.settings.button_border_thickness }}px solid {{ block.settings.button_border_hover_color }};\n        }\n      </style>\n    {% endif %}\n    \n  {% endif %}\n  \n{% endfor %}\n\n<div class=\"section-{{ section.id }} banner-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"banner-image-{{ section.id }}\">\n        <div class=\"banner-image-mobile-{{ section.id }} {% if parallax_mobile %}banner-parallax-mobile-{{ section.id }}{% endif %}\">\n          {% if image_mobile != blank %}\n            <img src=\"{{ image_mobile | image_url }}\" alt=\"{{ image_mobile.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n          {% elsif image != blank %}\n            <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n          {% else %}\n            {{ 'lifestyle-2' | placeholder_svg_tag  }}\n          {% endif %}\n        </div>\n        <div class=\"banner-image-desktop-{{ section.id }} {% if parallax %}banner-parallax-desktop-{{ section.id }}{% endif %}\">\n          {% if image != blank %}\n            <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n          {% else %}\n            {{ 'lifestyle-2' | placeholder_svg_tag  }}\n          {% endif %}\n        </div>\n      </div>\n\n      <div class=\"banner-body-{{ section.id }}\">\n\n        <div class=\"banner-content-{{ section.id }}\">\n          {% for block in section.blocks %}\n            {% if block.type == \"heading\" %}\n              \n              {% if block.settings.heading != blank %}\n                <div class=\"banner-heading-{{ block.id }}\">{{ block.settings.heading }}</div>\n              {% endif %}\n  \n            {% elsif block.type == \"text\" %}\n              \n              {% if block.settings.text != blank %}\n                <div class=\"banner-text-{{ block.id }}\">{{ block.settings.text }}</div>\n              {% endif %}\n  \n            {% elsif block.type == \"button\" %}\n              \n              {% if block.settings.button != blank %}\n                <a href=\"{{ block.settings.button_url }}\" class=\"banner-button-{{ block.id }} banner-button-{{ section.id }}\">\n                  {{ block.settings.button }}\n                  {% if block.settings.button_style == \"non_outline_arrow\" or block.settings.button_style == \"outline_arrow\" %}\n                    <span class=\"banner-button-icon-{{ block.id }}\">\n                      <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M3.75 12H20.25\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n                        <path d=\"M13.5 5.25L20.25 12L13.5 18.75\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n                      </svg>\n                    </span>\n                  {% endif %}\n                </a>\n              {% endif %}\n  \n            {% endif %}\n            \n          {% endfor %}\n        </div>\n      </div>\n    </div>\n</div>\n                          \n{% if parallax_mobile or parallax %}\n  <script src=\"https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js\"></script>\n  <script>\n    function initParallax() {\n      var image = document.querySelector('.banner-parallax-mobile-{{ section.id }} img');\n      if(image) {\n        new simpleParallax(image, {\n          scale: 1.5\n        }); \n      }\n\n      var image_desktop = document.querySelector('.banner-parallax-desktop-{{ section.id }} img');\n      if(image_desktop) {\n        new simpleParallax(image_desktop, {\n          scale: 1.5\n        }); \n      }\n    }\n\n    document.addEventListener('DOMContentLoaded', initParallax);\n    \n    if (Shopify.designMode) {\n      document.addEventListener('shopify:section:unload', initParallax);\n      document.addEventListener('shopify:section:load', initParallax);\n    }\n  </script>\n{% endif %}",
+  "variables": {
+    "parallax": {
+      "type": "text",
+      "default": "true",
+      "label": "Enable Parallax Effect (Desktop)",
+      "description": "Enable Parallax Effect (Desktop)"
+    },
+    "parallax_mobile": {
+      "type": "text",
+      "default": "false",
+      "label": "Enable Parallax Effect (Mobile)",
+      "description": "Enable Parallax Effect (Mobile)"
+    },
+    "banner_height": {
+      "type": "text",
+      "default": "adapt_first",
+      "label": "Banner Height",
+      "description": "Banner Height"
+    },
+    "banner_fixed_height": {
+      "type": "text",
+      "default": "600",
+      "label": "Banner Fixed Height",
+      "description": "Banner Fixed Height"
+    },
+    "banner_fixed_height_mobile": {
+      "type": "text",
+      "default": "500",
+      "label": "Banner Fixed Height - Mobile",
+      "description": "Banner Fixed Height - Mobile"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "image_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Image - Mobile",
+      "description": "Image - Mobile"
+    },
+    "overlay": {
+      "type": "text",
+      "default": "0.2",
+      "label": "Image Overlay Opacity",
+      "description": "Image Overlay Opacity"
+    },
+    "content_maxwidth": {
+      "type": "text",
+      "default": "65",
+      "label": "Content Width",
+      "description": "Content Width"
+    },
+    "content_maxwidth_mobile": {
+      "type": "text",
+      "default": "100",
+      "label": "Content Width - Mobile",
+      "description": "Content Width - Mobile"
+    },
+    "content_horizontal_position": {
+      "type": "text",
+      "default": "center",
+      "label": "Content Horizontal Position",
+      "description": "Content Horizontal Position"
+    },
+    "content_horizontal_position_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Content Horizontal Position - Mobile",
+      "description": "Content Horizontal Position - Mobile"
+    },
+    "content_vertical_position": {
+      "type": "text",
+      "default": "center",
+      "label": "Content Vertical Position",
+      "description": "If 'Banner Height' is not Auto Height!"
+    },
+    "content_vertical_position_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Content Vertical Position - Mobile",
+      "description": "If 'Banner Height' is not Auto Height!"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "32",
+      "label": "Content Padding Vertical",
+      "description": "Content Padding Vertical"
+    },
+    "content_padding_vertical_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Content Padding Vertical - Mobile",
+      "description": "Content Padding Vertical - Mobile"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Content Padding Horizontal",
+      "description": "Content Padding Horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Content Padding Horizontal - Mobile",
+      "description": "Content Padding Horizontal - Mobile"
+    },
+    "overlay_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Overlay Color",
+      "description": "Overlay Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

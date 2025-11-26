@@ -1,0 +1,108 @@
+{
+  "id": "logo-cloud",
+  "name": "CUSTOM Logo cloud",
+  "description": "Section: CUSTOM Logo cloud",
+  "tags": [
+    "logo"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n  .section-{{ section.id }}-padding {\n    max-width: var(--max-width);\n    margin:  var(--mt) auto var(--mb) auto;\n    padding: 0 1.5rem;\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n  }\n\n  .image-wrapper {\n    display:flex;\n    justify-content: space-evenly;\n    align-items: center;\n    flex-wrap:wrap;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 5rem;\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n    .image-wrapper {\n      {% if section.settings.image_only %}\n          justify-content: center;\n          gap:20px;\n      {% else %}\n         justify-content: space-evenly;\n      {% endif %}\n    }\n  }\n</style>\n\n<div\n  style=\"\n    background-color:{{ section.settings.background-color }};\n    --max-width: {{ section.settings.section-width }}rem;\n    --mt: {{ section.settings.margin_top }}px;\n    --mb: {{ section.settings.margin_bottom }}px;\n    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    --pt-desktop: {{ section.settings.padding_top }}px;\n    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n    --pb-desktop: {{ section.settings.padding_bottom }}px;\n  \"\n>\n  <div\n    class=\"section-{{ section.id }}-padding\"\n    data-autoplay-interval=\"{{ section.settings.autoplay_interval }}000\"\n  >\n    <style></style>\n    {% if section.settings.title != blank %}\n      <div\n        style=\"\n          color: {{ section.settings.title_color }};\n          font-size: {{ section.settings.title_size }}px;\n          margin-bottom: {{ section.settings.title_margin_bottom }}px;\n          text-align: {{ section.settings.title_align }};\n        \"\n      >\n        {{ section.settings.title }}\n      </div>\n    {% endif %}\n    <style>\n      .logos-grid-{{ section.id }} {\n        display: grid;\n        justify-content: center;\n        align-items: center;\n      }\n      @media (min-width: 750px) {\n        .logos-grid-{{ section.id }} {\n          grid-template-columns: repeat(2, 1fr);\n        }\n        .logos-grid--image-only-{{ section.id }} {\n          grid-template-columns: 1fr;\n        }\n      }\n    </style>\n    <div\n      class=\"\n        logos-grid-{{ section.id }}\n        {% if section.settings.image_only %}\n        logos-grid--image-only-{{ section.id }}\n        {% endif %}\n      \"\n    >\n      <style>\n        .logos-grid--image-only-{{ section.id }} .content-wrapper-{{ section.id }} {\n          display: none;\n        }\n      </style>\n      <div\n        class=\"content-wrapper-{{ section.id }}\"\n        style=\"color: {{ section.settings.text_color }};\"\n      >\n        <style>\n          .content-{{ section.id }} {\n            text-align: center;\n          }\n          @media (min-width: 750px) {\n            .content-{{ section.id }} {\n              text-align: left;\n            }\n          }\n        </style>\n        {% for block in section.blocks %}\n          <div\n            class=\"content-{{ section.id }}\"\n            data-index=\"{{ forloop.index0 }}\"\n            style=\"\n              font-size: {{ section.settings.font_size }}px;\n              {% if forloop.first == false %}\n                display: none;\n              {% endif %}\n            \"\n          >\n            {{ block.settings.content | richtext }}\n          </div>\n        {% endfor %}\n      </div>\n      <style>\n        .clickable-image-{{ section.id }} {\n          cursor: pointer;\n          max-width: var(--max-width, 10rem);\n          margin: 1.6rem;\n          opacity: .5;\n          color: white;\n          transition: opacity .3s ease-in-out;\n        }\n        .clickable-image-{{ section.id }}--active,\n        .logos-grid--image-only-{{ section.id }} .clickable-image-{{ section.id }} {\n          opacity: 1;\n        }\n        .clickable-image-{{ section.id }} svg {\n          width: 100%;\n        }\n      </style>\n      <div\n        class=\"image-wrapper\"\n        style=\"\"\n      >\n        {% for block in section.blocks %}\n          {% if block.settings.image != blank %}\n            <img\n              class=\"clickable-image-{{ section.id }} clickable-image-{{ section.id }}--active\"\n              style=\"--max-width: {{ section.settings.image_max_width }}px\"\n              data-index=\"{{ forloop.index0 }}\"\n              src=\"{{ block.settings.image | img_url: 'master' }}\"\n              alt=\"{{ block.settings.image.alt }}\"\n            >\n          {% else %}\n            <div\n              class=\"clickable-image-{{ section.id }} clickable-image-{{ section.id }}--active\"\n              style=\"--max-width: {{ section.settings.image_max_width }}px\"\n              data-index=\"{{ forloop.index0 }}\"\n            >\n              {{ 'product-1' | placeholder_svg_tag: '' }}\n            </div>\n          {% endif %}\n        {% endfor %}\n      </div>\n    </div>\n  </div>\n</div>\n\n<script>\n  (function () {\n    function sectionSetup() {\n      let section = document.querySelector('.section-{{ section.id }}-padding');\n      let images = section.querySelectorAll(\n        '.clickable-image-{{ section.id }}'\n      );\n      let content = section.querySelectorAll('.content-{{ section.id }}');\n      let index = 0;\n\n      let autoplayInterval;\n      let autoplayIntervalTime = parseInt(section.dataset.autoplayInterval);\n\n      images.forEach(function (image) {\n        image.addEventListener('click', function () {\n          index = this.dataset.index;\n          updateSlide();\n          if (autoplayInterval) clearInterval(autoplayInterval);\n        });\n      });\n\n      function updateSlide() {\n        images.forEach(function (image) {\n          image.classList.remove('clickable-image-{{ section.id }}--active');\n        });\n        content.forEach(function (content) {\n          content.style.display = 'none';\n        });\n        images[index].classList.add('clickable-image-{{ section.id }}--active');\n        content[index].style.display = 'block';\n      }\n\n      updateSlide(); // init\n      if (autoplayIntervalTime && autoplayIntervalTime > 0)\n        autoplayInterval = setInterval(function () {\n          index++;\n          if (index >= images.length) index = 0;\n\n          updateSlide();\n        }, autoplayIntervalTime);\n    }\n\n    sectionSetup();\n    if (window.Shopify && window.Shopify.designMode) {\n      document.addEventListener('shopify:section:load', function (event) {\n        if (event.detail.sectionId !== '{{ section.id }}') return;\n        sectionSetup();\n      });\n    }\n  })();\n</script>",
+  "variables": {
+    "title": {
+      "type": "text",
+      "default": "",
+      "label": "Title",
+      "description": "Title"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Title color",
+      "description": "Title color"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "32",
+      "label": "Title font size",
+      "description": "Title font size"
+    },
+    "title_margin_bottom": {
+      "type": "text",
+      "default": "16",
+      "label": "Title margin bottom",
+      "description": "Title margin bottom"
+    },
+    "title_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Title align",
+      "description": "Title align"
+    },
+    "image_only": {
+      "type": "text",
+      "default": "false",
+      "label": "Remove quotes and center images",
+      "description": "Remove quotes and center images"
+    },
+    "autoplay_interval": {
+      "type": "text",
+      "default": "5",
+      "label": "Autoplay interval (ms)",
+      "description": "Autoplay interval (ms)"
+    },
+    "image_max_width": {
+      "type": "text",
+      "default": "90",
+      "label": "Image width",
+      "description": "Image width"
+    },
+    "font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Text font size",
+      "description": "Text font size"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#212121",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#F3FAF5",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "custom-schedule",
+  "name": "CUSTOM Schedule",
+  "description": "Section: CUSTOM Schedule",
+  "tags": [
+    "schedule"
+  ],
+  "type": "custom",
+  "liquid_code": "<div class=\"section-{{ section.id }} schedule-{{ section.id }}\">\r\n  <div class=\"section-{{ section.id }}-settings\">\r\n  </div>\r\n</div>\r\n\r\n\r\n<script>\r\n  function initSchedule() {\r\n    const inEditor = typeof Shopify !== 'undefined' && Shopify.designMode;\r\n\r\n    // Find THIS scheduler section\r\n    const currentContainer = document.querySelector('.schedule-{{ section.id }}');\r\n    const currentSectionElement = currentContainer ? currentContainer.closest('.shopify-section') : null;\r\n\r\n    // Find the NEXT real .shopify-section (controls the section BELOW)\r\n    let sectionToControl = currentSectionElement ? currentSectionElement.nextElementSibling : null;\r\n    while (sectionToControl && !sectionToControl.classList.contains('shopify-section')) {\r\n      sectionToControl = sectionToControl.nextElementSibling;\r\n    }\r\n    if (!sectionToControl) return;\r\n\r\n    const enableSchedule = {{ section.settings.enable_schedule | json }};\r\n\r\n    // If scheduling is disabled → always show the controlled section (and keep scheduler visible)\r\n    if (!enableSchedule) {\r\n      sectionToControl.style.display = 'block';\r\n      if (currentSectionElement) currentSectionElement.style.display = 'block';\r\n      return;\r\n    }\r\n\r\n    // ---- Timezone-safe comparison (Fix #1) ----\r\n    const pad = (n) => n.toString().padStart(2, '0');\r\n    const tzToHours = (tz) => {\r\n      // accepts formats like \"UTC-6\", \"UTC+2\", \"UTC+0\"\r\n      const n = parseInt(String(tz).replace('UTC', ''), 10);\r\n      return isNaN(n) ? 0 : n;\r\n    };\r\n    const toInstantUTC = (y, m, d, h, min, tzHours) => {\r\n      // Build a UTC instant that corresponds to the \"wall time\" at the chosen timezone.\r\n      // Example: 2025-10-18 09:00 at UTC+7 -> UTC hour = 09 - (+7) = 02\r\n      return new Date(Date.UTC(y, parseInt(m, 10) - 1, d, h - tzHours, min, 0));\r\n    };\r\n\r\n    // Read begin/end values as numbers where relevant\r\n    const beginMonth = '{{ section.settings.begin_month }}';\r\n    const beginDay = {{ section.settings.begin_day }};\r\n    const beginYear = '{{ section.settings.begin_year }}' === 'this_year'\r\n      ? new Date().getFullYear()\r\n      : new Date().getFullYear() + 1;\r\n    const beginHour = parseInt('{{ section.settings.begin_hour }}', 10);\r\n    const beginMinute = parseInt('{{ section.settings.begin_minute }}', 10);\r\n    const beginTimezone = '{{ section.settings.begin_timezone }}';\r\n\r\n    const endMonth = '{{ section.settings.end_month }}';\r\n    const endDay = {{ section.settings.end_day }};\r\n    const endYear = '{{ section.settings.end_year }}' === 'this_year'\r\n      ? new Date().getFullYear()\r\n      : new Date().getFullYear() + 1;\r\n    const endHour = parseInt('{{ section.settings.end_hour }}', 10);\r\n    const endMinute = parseInt('{{ section.settings.end_minute }}', 10);\r\n    const endTimezone = '{{ section.settings.end_timezone }}';\r\n\r\n    const beginInstant = toInstantUTC(\r\n      beginYear, beginMonth, beginDay, beginHour, beginMinute, tzToHours(beginTimezone)\r\n    );\r\n    const endInstant = toInstantUTC(\r\n      endYear, endMonth, endDay, endHour, endMinute, tzToHours(endTimezone)\r\n    );\r\n\r\n    const nowInstant = new Date(); // already UTC-based for comparisons\r\n\r\n    const withinWindow = nowInstant >= beginInstant && nowInstant <= endInstant;\r\n\r\n    if (withinWindow) {\r\n      sectionToControl.style.display = 'block';\r\n      if (currentSectionElement) currentSectionElement.style.display = 'block';\r\n    } else {\r\n      // Hide controlled section; keep scheduler visible in Theme Editor (Fix #2)\r\n      sectionToControl.style.display = 'none';\r\n      if (!inEditor && currentSectionElement) currentSectionElement.style.display = 'none';\r\n      return;\r\n    }\r\n  }\r\n\r\n  document.addEventListener('DOMContentLoaded', initSchedule);\r\n\r\n  if (typeof Shopify !== 'undefined' && Shopify.designMode) {\r\n    // Re-run when the section is reloaded/selected in the editor\r\n    ['shopify:section:load', 'shopify:section:unload', 'shopify:section:select', 'shopify:section:deselect']\r\n      .forEach(ev => document.addEventListener(ev, initSchedule));\r\n  }\r\n</script>",
+  "variables": {
+    "enable_schedule": {
+      "type": "text",
+      "default": "false",
+      "label": "Enable schedule",
+      "description": "Enable schedule"
+    },
+    "begin_month": {
+      "type": "text",
+      "default": "01",
+      "label": "Month",
+      "description": "Month"
+    },
+    "begin_day": {
+      "type": "text",
+      "default": "1",
+      "label": "Day of month",
+      "description": "Day of month"
+    },
+    "begin_year": {
+      "type": "text",
+      "default": "this_year",
+      "label": "Year",
+      "description": "Year"
+    },
+    "begin_hour": {
+      "type": "text",
+      "default": "00",
+      "label": "Hour",
+      "description": "Hour"
+    },
+    "begin_minute": {
+      "type": "text",
+      "default": "00",
+      "label": "Minute",
+      "description": "Minute"
+    },
+    "begin_timezone": {
+      "type": "text",
+      "default": "UTC+1",
+      "label": "Timezone",
+      "description": "Timezone"
+    },
+    "end_month": {
+      "type": "text",
+      "default": "12",
+      "label": "Month",
+      "description": "Month"
+    },
+    "end_day": {
+      "type": "text",
+      "default": "31",
+      "label": "Day of month",
+      "description": "Day of month"
+    },
+    "end_year": {
+      "type": "text",
+      "default": "this_year",
+      "label": "Year",
+      "description": "Year"
+    },
+    "end_hour": {
+      "type": "text",
+      "default": "23",
+      "label": "Hour",
+      "description": "Hour"
+    },
+    "end_minute": {
+      "type": "text",
+      "default": "59",
+      "label": "Minute",
+      "description": "Minute"
+    },
+    "end_timezone": {
+      "type": "text",
+      "default": "UTC+1",
+      "label": "Timezone",
+      "description": "Timezone"
+    }
+  }
+}

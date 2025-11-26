@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import { 
   getUserByClerkId, 
   getUserUsageCount, 
-  logUsage
+  logUsage,
+  createUser
 } from "@/lib/db"
 import { generateSection, getTemplateById } from "@/lib/section-generator"
 
@@ -30,13 +31,19 @@ export async function POST(request: Request) {
       )
     }
 
-    // Get user from database
-    const user = await getUserByClerkId(userId)
+    // Get user from database, create if doesn't exist
+    let user = await getUserByClerkId(userId)
     if (!user) {
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      )
+      // Create user if doesn't exist
+      const clerkUser = await currentUser()
+      if (!clerkUser) {
+        return NextResponse.json(
+          { error: "Unable to get user information" },
+          { status: 401 }
+        )
+      }
+      const email = clerkUser.emailAddresses[0]?.emailAddress || ""
+      user = await createUser(userId, email)
     }
 
     // Check usage limits for free plan

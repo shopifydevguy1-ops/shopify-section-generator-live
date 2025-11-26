@@ -1,0 +1,43 @@
+{
+  "id": "main-list-collections",
+  "name": "t:sections.main-list-collections.name",
+  "description": "Section: t:sections.main-list-collections.name",
+  "tags": [
+    "main",
+    "collection"
+  ],
+  "type": "collection",
+  "liquid_code": "{{ 'component-card.css' | asset_url | stylesheet_tag }}\n{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}\n\n<div class=\"page-width\">\n  <h1 class=\"title title--primary\">{{ section.settings.title | escape }}</h1>\n  {%- liquid\n    case section.settings.sort\n      when 'products_high' or 'products_low'\n        assign collections = collections | sort: 'all_products_count'\n      when 'date' or 'date_reversed'\n        assign collections = collections | sort: 'published_at'\n    endcase\n\n    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'\n      assign collections = collections | reverse\n    endif\n\n    assign moduloResult = 28 | modulo: section.settings.columns_desktop\n    assign paginate_by = 30\n    if moduloResult == 0\n      assign paginate_by = 28\n    endif\n  -%}\n  {%- paginate collections by paginate_by -%}\n    <ul class=\"collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down\" role=\"list\">\n      {%- for collection in collections -%}\n        <li class=\"collection-list__item grid__item\">\n          {% render 'card-collection', card_collection: collection, media_aspect_ratio: section.settings.image_ratio, columns: 3 %}\n        </li>\n      {%- endfor -%}\n    </ul>\n    {% render 'pagination', paginate: paginate %}\n  {%- endpaginate -%}\n</div>",
+  "variables": {
+    "title": {
+      "type": "text",
+      "default": "Collections",
+      "label": "t:sections.main-list-collections.settings.title.label",
+      "description": "t:sections.main-list-collections.settings.title.label"
+    },
+    "sort": {
+      "type": "text",
+      "default": "alphabetical",
+      "label": "t:sections.main-list-collections.settings.sort.label",
+      "description": "t:sections.main-list-collections.settings.sort.label"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "adapt",
+      "label": "t:sections.main-list-collections.settings.image_ratio.label",
+      "description": "t:sections.main-list-collections.settings.image_ratio.info"
+    },
+    "columns_desktop": {
+      "type": "text",
+      "default": "3",
+      "label": "t:sections.main-list-collections.settings.columns_desktop.label",
+      "description": "t:sections.main-list-collections.settings.columns_desktop.label"
+    },
+    "columns_mobile": {
+      "type": "text",
+      "default": "2",
+      "label": "t:sections.main-list-collections.settings.columns_mobile.label",
+      "description": "t:sections.main-list-collections.settings.columns_mobile.label"
+    }
+  }
+}

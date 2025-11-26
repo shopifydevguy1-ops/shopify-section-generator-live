@@ -1,0 +1,342 @@
+{
+  "id": "custom-player",
+  "name": "CUSTOM Audio Player",
+  "description": "Section: CUSTOM Audio Player",
+  "tags": [
+    "player"
+  ],
+  "type": "custom",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css\">\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n\n  assign player_width_mobile = section.settings.player_width_mobile\n  assign player_width = section.settings.player_width\n  assign player_bg_color = section.settings.player_bg_color\n  assign player_radius = section.settings.player_radius\n\n  assign player_image_radius = section.settings.player_image_radius\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n\n  assign author_size = section.settings.author_size\n  assign author_size_mobile = section.settings.author_size_mobile\n  assign author_color = section.settings.author_color\n  assign author_custom = section.settings.author_custom\n  assign author_font = section.settings.author_font\n  assign author_height = section.settings.author_height\n\n  assign icons_color = section.settings.icons_color\n  assign icons_hover_bg_color = section.settings.icons_hover_bg_color\n  assign icons_hover_color = section.settings.icons_hover_color\n  assign icons_disabled_color = section.settings.icons_disabled_color\n  assign icons_active_bg_color = section.settings.icons_active_bg_color\n  assign icons_active_color = section.settings.icons_active_color\n\n  assign playlist_height = section.settings.playlist_height\n  assign playlist_odd_bg_color = section.settings.playlist_odd_bg_color\n  assign playlist_hover_bg_color = section.settings.playlist_hover_bg_color\n  assign playlist_hover_color = section.settings.playlist_hover_color\n  assign playlist_active_bg_color = section.settings.playlist_active_bg_color\n  assign playlist_active_color = section.settings.playlist_active_color\n\n  assign playlist_title_size = section.settings.playlist_title_size\n  assign playlist_title_size_mobile = section.settings.playlist_title_size_mobile\n  assign playlist_title_color = section.settings.playlist_title_color\n  assign playlist_title_custom = section.settings.playlist_title_custom\n  assign playlist_title_font = section.settings.playlist_title_font\n  assign playlist_title_height = section.settings.playlist_title_height\n\n  assign playlist_author_size = section.settings.playlist_author_size\n  assign playlist_author_size_mobile = section.settings.playlist_author_size_mobile\n  assign playlist_author_color = section.settings.playlist_author_color\n  assign playlist_author_custom = section.settings.playlist_author_custom\n  assign playlist_author_font = section.settings.playlist_author_font\n  assign playlist_author_height = section.settings.playlist_author_height\n\n  assign playlist_scrollbar_thumb_color = section.settings.playlist_scrollbar_thumb_color\n  assign playlist_scrollbar_bg_color = section.settings.playlist_scrollbar_bg_color\n  \n-%}\n\n{%- style -%}\n\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  author_font | font_face: font_display: 'swap' }}\n  {{  playlist_author_font | font_face: font_display: 'swap' }}\n  {{  playlist_title_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .section-{{ section.id }}-settings #simp button,.section-{{ section.id }}-settings #simp input,.section-{{ section.id }}-settings #simp img {\n      border: 0;\n  }\n  \n  .section-{{ section.id }}-settings #simp {\n      max-width: {{ player_width_mobile }}%;\n      text-align: initial;\n      line-height: initial;\n      background: {{ player_bg_color }};\n      margin: 0 auto;\n      border-radius: {{ player_radius }}px;\n      overflow: hidden;\n      color: {{ icons_color }};\n  }\n\n  .section-{{ section.id }}-settings #simp .w-full {\n    width: 100%;\n  }\n\n  .section-{{ section.id }}-settings #simp .flex {\n    display: -webkit-flex;\n    display: flex;\n  }\n\n  .section-{{ section.id }}-settings #simp .flex-wrap {\n    display: -webkit-flex;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n    flex-wrap: wrap;\n  }\n\n  .section-{{ section.id }}-settings #simp .flex-align {\n    -webkit-align-items: center;\n    align-items: center;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-album {\n      padding: 20px 25px 5px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-album .simp-cover {\n      margin-right: 20px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-album .simp-cover img {\n      max-width:80px;\n      width:100%;\n      margin:0;\n      padding:0;\n      display:block;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-album .simp-cover div {\n    display: block !important;\n    border-radius: {{ player_image_radius }}px;\n    overlow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-album .simp-title {\n      margin: 0;\n      font-size: {{ title_size_mobile }}px;\n      color: {{ title_color }};\n      line-height: {{ title_height }}%;\n      text-transform: unset;\n      font-weight: 700;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-album .simp-artist {\n      margin: 0;\n      font-size: {{ author_size_mobile }}px;\n      color: {{ author_color }};\n      line-height: {{ author_height }}%;\n      text-transform: unset;\n      font-weight: 700;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls {\n      padding: 15px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls button {\n      font-size: 130%;\n      width: 32px;\n      height: 32px;\n      background: none;\n      color: {{ icons_color }};\n      padding: 7px;\n      cursor: pointer;\n      border: 0;\n      border-radius: 3px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls button[disabled] {\n      color: {{ icons_disabled_color }};\n      cursor: initial;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls button:not([disabled]):hover {\n      background: {{ icons_hover_bg_color }};\n      color: {{ icons_hover_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-prev,\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-next {\n      font-size: 100%;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-next {\n    padding-left: 9px;\n    padding-top: 6px;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-prev {\n    padding-left: 6px;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-plause {\n    padding-left: 9px;\n    padding-top: 6px;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-plext,\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-random {\n    padding-left: 6px;\n    padding-top: 6px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-tracker,\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume {\n      flex: 1;\n      margin-left: 10px;\n      position: relative;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-buffer  {\n      display: block !important;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      left: 0;\n      height: 5px;\n      margin-top: -2.5px;\n      border-radius: 100px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-buffer  {\n      -webkit-animation: audio-progress 1s linear infinite;\n      animation: audio-progress 1s linear infinite;\n      background-image: linear-gradient(-45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);\n      background-repeat: repeat-x;\n      background-size: 25px 25px;\n      color: transparent;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-time,\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-others {\n      margin-left: 10px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume {\n      max-width: 110px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume .simp-mute {\n     margin-right: 5px;\n     padding-left: 3px;\n     padding-top: 6px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-active {\n      background: {{ icons_active_bg_color }};\n      color: {{ icons_active_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-shide button {\n      font-size: 100%;\n      padding: 0;\n      width: 24px;\n      height: 17px;\n      display: block;\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-shide button.simp-shide-bottom {\n    padding-bottom: 1px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls input[type=range] {\n      -webkit-appearance: none;\n      background: transparent;\n      height: 19px;\n      margin: 0;\n      width: 100%;\n      display: block;\n      position: relative;\n      z-index: 2;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-webkit-slider-runnable-track {\n      background: rgba(183,197,205,.66);\n      height: 5px;\n      border-radius: 2.5px;\n      transition: box-shadow .3s ease;\n      position: relative;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-moz-range-track {\n      background: rgba(183,197,205,.66);\n      height: 5px;\n      border-radius: 2.5px;\n      transition: box-shadow .3s ease;\n      position: relative;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-load .simp-progress::-webkit-slider-runnable-track {\n      background:#2f3841;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-load .simp-progress::-moz-range-track {\n      background:#2f3841;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-progress::-webkit-slider-runnable-track {\n      background:rgba(255,255,255,.25);\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-progress::-moz-range-track {\n      background: rgba(255,255,255,.25);\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-webkit-slider-thumb {\n      -webkit-appearance: none;\n      background: #fff;\n      height: 13px;\n      width: 13px;\n      margin-top: -4px;\n      cursor: pointer;\n      border-radius: 50%;\n      box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-moz-range-thumb {\n      -webkit-appearance: none;\n      background: #fff;\n      height: 13px;\n      width: 13px;\n      cursor: pointer;\n      border-radius: 50%;\n      box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-footer {\n      padding: 10px 10px 12px;\n      font-size: 90%;\n      text-align: center;\n      opacity: .7;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-display {\n      overflow: hidden;\n      max-height: 650px;\n      transition: max-height .5s ease-in-out;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-hide {\n      max-height: 0;\n  }\n  \n  /* playlist */\n  .section-{{ section.id }}-settings #simp ul {\n      margin: 5px 0 0;\n      padding: 0;\n      list-style: none;\n      max-height: {{ playlist_height }}px;\n  }\n  \n  .section-{{ section.id }}-settings #simp ul li {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      display: block;\n      margin: 0;\n      padding: 8px 20px;\n      cursor: pointer;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-playlist ul li:last-child {\n      padding-bottom: 13px;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-playlist ul li:nth-child(odd) {\n      background: {{ playlist_odd_bg_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-playlist ul li:hover {\n      background: {{ playlist_hover_bg_color }};\n      color: {{ playlist_hover_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-playlist ul li.simp-active {\n      background: {{ playlist_active_bg_color }};\n      color: {{ playlist_active_color }};\n  }\n\n  .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {\n      margin: 0;\n      font-size: {{ playlist_title_size_mobile }}px;\n      color: {{ playlist_title_color }};\n      line-height: {{ playlist_title_height }}%;\n      text-transform: unset;\n  }\n  \n  .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {\n      margin: 0;\n      font-size: {{ playlist_author_size_mobile }}px;\n      color: {{ playlist_author_color }};\n      line-height: {{ playlist_author_height }}%;\n      text-transform: unset;\n      opacity: 0.5;\n      margin-left: 5px;\n  }\n  \n  /* playlist scrollbar */\n  .section-{{ section.id }}-settings #simp ul {\n      overflow-y: auto;\n      overflow-x: hidden;\n      scrollbar-color: {{ playlist_scrollbar_thumb_color }} {{ playlist_scrollbar_bg_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar-track {\n      background-color: {{ playlist_scrollbar_bg_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar {\n      width:6px;\n      background-color: {{ playlist_scrollbar_bg_color }};\n  }\n  \n  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar-thumb {\n      background-color: {{ playlist_scrollbar_thumb_color }};\n  }\n  \n  /* progress animation */\n  @-webkit-keyframes audio-progress {\n      to {\n          background-position: 25px 0;\n      }\n  }\n  @keyframes audio-progress {\n      to {\n          background-position: 25px 0;\n      }\n  }\n  \n  /* mobile */\n  @media screen and (max-width:480px)  {\n      .section-{{ section.id }}-settings #simp .simp-controls .simp-volume,.section-{{ section.id }}-settings #simp .simp-controls .simp-others {\n          display: none;\n      }\n    \n      .section-{{ section.id }}-settings #simp .simp-controls .simp-time {\n          margin-right: 10px;\n      }\n  }\n  @media screen and (max-width:370px)  {\n      .section-{{ section.id }}-settings #simp .simp-time .simp-slash,.section-{{ section.id }}-settings #simp .simp-time .end-time {\n          display: none;\n      }\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .section-{{ section.id }}-settings #simp {\n      max-width: {{ player_width }}px;\n    }\n\n    .section-{{ section.id }}-settings #simp .simp-album .simp-title {\n      font-size: {{ title_size }}px;\n    }\n\n    .section-{{ section.id }}-settings #simp .simp-album .simp-artist {\n      font-size: {{ author_size }}px;\n    }\n\n    .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {\n      font-size: {{ playlist_title_size }}px;\n    }\n\n    .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {\n      font-size: {{ playlist_author_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if title_custom %}\n  <style>\n    .section-{{ section.id }}-settings #simp .simp-album .simp-title {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if author_custom %}\n  <style>\n    .section-{{ section.id }}-settings #simp .simp-album .simp-artist {\n      font-family: {{ author_font.family }}, {{ author_font.fallback_families }};\n      font-weight: {{ author_font.weight }};\n      font-style: {{ author_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if playlist_title_custom %}\n  <style>\n    .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {\n      font-family: {{ playlist_title_font.family }}, {{ playlist_title_font.fallback_families }};\n      font-weight: {{ playlist_title_font.weight }};\n      font-style: {{ playlist_title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if playlist_author_custom %}\n  <style>\n    .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {\n      font-family: {{ playlist_author_font.family }}, {{ playlist_author_font.fallback_families }};\n      font-weight: {{ playlist_author_font.weight }};\n      font-style: {{ playlist_author_font.style }};\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} player-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"simple-audio-player\" id=\"simp\" data-config='{\"shide_top\":false,\"shide_btm\":false,\"auto_load\":false}'>\n        <div class=\"simp-playlist\">\n          <ul>\n            {% for block in section.blocks %}\n              {% if block.settings.audio != blank and block.settings.title != blank %}\n                <li><span class=\"simp-source {% if forloop.first %}simp-active{% endif %}\" data-src=\"{{ block.settings.audio }}\" {% if block.settings.image != blank %}data-cover=\"{{ block.settings.image | image_url }}\"{% endif %}>{{ block.settings.title }}</span>{% if block.settings.author != blank %}<span class=\"simp-desc\">{{ block.settings.author }}</span>{% endif %}</li>\n              {% endif %}\n            {% endfor %}\n            </ul>\n        </div>\n      </div>\n    </div>\n</div>\n\n<script>\n  function initPlayer() {\n    // Multiple events to a listener\n    function addEventListener_multi(element, eventNames, handler) {\n      var events = eventNames.split(' ');\n      events.forEach(e => element.addEventListener(e, handler, false));\n    }\n    \n    // Random numbers in a specific range\n    function getRandom(min, max) {\n      min = Math.ceil(min);\n      max = Math.floor(max);\n      return Math.floor(Math.random() * (max - min + 1)) + min;\n    }\n    \n    // Position element inside element\n    function getRelativePos(elm) {\n      var pPos = elm.parentNode.getBoundingClientRect(); // parent pos\n      var cPos = elm.getBoundingClientRect(); // target pos\n      var pos = {};\n    \n      pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,\n      pos.right  = cPos.right  - pPos.right,\n      pos.bottom = cPos.bottom - pPos.bottom,\n      pos.left   = cPos.left   - pPos.left;\n    \n      return pos;\n    }\n    \n    function formatTime(val) {\n      var h = 0, m = 0, s;\n      val = parseInt(val, 10);\n      if (val > 60 * 60) {\n       h = parseInt(val / (60 * 60), 10);\n       val -= h * 60 * 60;\n      }\n      if (val > 60) {\n       m = parseInt(val / 60, 10);\n       val -= m * 60;\n      }\n      s = val;\n      val = (h > 0)? h + ':' : '';\n      val += (m > 0)? ((m < 10 && h > 0)? '0' : '') + m + ':' : '0:';\n      val += ((s < 10)? '0' : '') + s;\n      return val;\n    }\n    \n    function simp_initTime() {\n      simp_controls.querySelector('.start-time').innerHTML = formatTime(simp_audio.currentTime); //calculate current value time\n      if (!simp_isStream) {\n        simp_controls.querySelector('.end-time').innerHTML = formatTime(simp_audio.duration); //calculate total value time\n        simp_progress.value = simp_audio.currentTime / simp_audio.duration * 100; //progress bar\n      }\n      \n      // ended of the audio\n      if (simp_audio.currentTime == simp_audio.duration) {\n        simp_controls.querySelector('.simp-plause').classList.remove('fa-pause');\n        simp_controls.querySelector('.simp-plause').classList.add('fa-play');\n        simp_audio.removeEventListener('timeupdate', simp_initTime);\n        \n        if (simp_isNext) { //auto load next audio\n          var elem;\n          simp_a_index++;\n          if (simp_a_index == simp_a_url.length) { //repeat all audio\n            simp_a_index = 0;\n            elem = simp_a_url[0];\n          } else {\n            elem = simp_a_url[simp_a_index];  \n          }\n          simp_changeAudio(elem);\n          simp_setAlbum(simp_a_index);\n        } else {\n          simp_isPlaying = false;\n        }\n      }\n    }\n    \n    function simp_initAudio() {\n      // if readyState more than 2, audio file has loaded\n    \tsimp_isLoaded = simp_audio.readyState == 4 ? true : false;\n      simp_isStream = simp_audio.duration == 'Infinity' ? true : false;\n      simp_controls.querySelector('.simp-plause').disabled = false;\n      simp_progress.disabled = simp_isStream ? true : false;\n      if (!simp_isStream) {\n        simp_progress.parentNode.classList.remove('simp-load','simp-loading');\n        simp_controls.querySelector('.end-time').innerHTML = formatTime(simp_audio.duration);\n      }\n      simp_audio.addEventListener('timeupdate', simp_initTime); //tracking load progress\n      if (simp_isLoaded && simp_isPlaying) simp_audio.play();\n      \n      // progress bar click event\n      addEventListener_multi(simp_progress, 'touchstart mousedown', function(e) {\n        if (simp_isStream) {\n          e.stopPropagation();\n          return false;\n        }\n        if (simp_audio.readyState == 4) {\n          simp_audio.removeEventListener('timeupdate', simp_initTime);\n          simp_audio.pause();\n        }\n      });\n      \n      addEventListener_multi(simp_progress, 'touchend mouseup', function(e) {\n        if (simp_isStream) {\n          e.stopPropagation();\n          return false;\n        }\n        if (simp_audio.readyState == 4) {\n          simp_audio.currentTime = simp_progress.value * simp_audio.duration / 100;\n          simp_audio.addEventListener('timeupdate', simp_initTime);\n          if (simp_isPlaying) simp_audio.play();\n        }\n      });\n    }\n    \n    function simp_loadAudio(elem) {\n      simp_progress.parentNode.classList.add('simp-loading');\n      simp_controls.querySelector('.simp-plause').disabled = true;\n      simp_audio.querySelector('source').src = elem.dataset.src;\n      simp_audio.load();\n      \n      simp_audio.volume = parseFloat(simp_v_num / 100); //based on valume input value\n      simp_audio.addEventListener('canplaythrough', simp_initAudio); //play audio without stop for buffering\n      \n      // if audio fails to load, only IE/Edge 9.0 or above\n      simp_audio.addEventListener('error', function() {\n        alert('Please reload the page.');\n      });\n    }\n    \n    function simp_setAlbum(index) {\n      simp_cover.innerHTML = simp_a_url[index].dataset.cover ? '<div style=\"background:url(' + simp_a_url[index].dataset.cover + ') no-repeat;background-size:cover;width:80px;height:80px;\"></div>' : '<i class=\"fa fa-music fa-5x\"></i>';\n      simp_title.innerHTML = simp_source[index].querySelector('.simp-source').innerHTML;\n      simp_artist.innerHTML = simp_source[index].querySelector('.simp-desc') ? simp_source[index].querySelector('.simp-desc').innerHTML : '';\n    }\n    \n    function simp_changeAudio(elem) {\n    \tsimp_isLoaded = false;\n      simp_controls.querySelector('.simp-prev').disabled = simp_a_index == 0 ? true : false;\n      simp_controls.querySelector('.simp-plause').disabled = simp_auto_load ? true : false;\n      simp_controls.querySelector('.simp-next').disabled = simp_a_index == simp_a_url.length-1 ? true : false;\n      simp_progress.parentNode.classList.add('simp-load');\n      simp_progress.disabled = true;\n      simp_progress.value = 0;\n      simp_controls.querySelector('.start-time').innerHTML = '00:00';\n      simp_controls.querySelector('.end-time').innerHTML = '00:00';\n      elem = simp_isRandom && simp_isNext ? simp_a_url[getRandom(0, simp_a_url.length-1)] : elem;\n      \n      // playlist, audio is running\n      for (var i = 0; i < simp_a_url.length; i++) {\n        simp_a_url[i].parentNode.classList.remove('simp-active');\n        if (simp_a_url[i] == elem) {\n          simp_a_index = i;\n          simp_a_url[i].parentNode.classList.add('simp-active');\n        }\n      }\n      \n      // scrolling to element inside element\n      var simp_active = getRelativePos(simp_source[simp_a_index]);\n      simp_source[simp_a_index].parentNode.scrollTop = simp_active.top;\n      \n      if (simp_auto_load || simp_isPlaying) simp_loadAudio(elem);\n      \n      if (simp_isPlaying) {\n        simp_controls.querySelector('.simp-plause').classList.remove('fa-play');\n        simp_controls.querySelector('.simp-plause').classList.add('fa-pause');\n      }\n    }\n    \n    function simp_startScript() {\n      ap_simp = document.querySelector('.section-{{ section.id }}-settings #simp');\n      simp_audio = ap_simp.querySelector('#audio');\n      simp_album = ap_simp.querySelector('.simp-album');\n      simp_cover = simp_album.querySelector('.simp-cover');\n      simp_title = simp_album.querySelector('.simp-title');\n      simp_artist = simp_album.querySelector('.simp-artist');\n      simp_controls = ap_simp.querySelector('.simp-controls');\n      simp_progress = simp_controls.querySelector('.simp-progress');\n      simp_volume = simp_controls.querySelector('.simp-volume');\n      simp_v_slider = simp_volume.querySelector('.simp-v-slider');\n      simp_v_num = simp_v_slider.value; //default volume\n      simp_others = simp_controls.querySelector('.simp-others');\n      simp_auto_load = simp_config.auto_load; //auto load audio file\n      \n      if (simp_config.shide_top) simp_album.parentNode.classList.toggle('simp-hide');\n      if (simp_config.shide_btm) {\n        simp_playlist.classList.add('simp-display');\n        simp_playlist.classList.toggle('simp-hide');\n      }\n      \n      if (simp_a_url.length <= 1) {\n        simp_controls.querySelector('.simp-prev').style.display = 'none';\n        simp_controls.querySelector('.simp-next').style.display = 'none';\n        simp_others.querySelector('.simp-plext').style.display = 'none';\n        simp_others.querySelector('.simp-random').style.display = 'none';\n      }\n    \n      // Playlist listeners\n      simp_source.forEach(function(item, index) {\n        if (item.classList.contains('simp-active')) simp_a_index = index; //playlist contains '.simp-active'\n        item.addEventListener('click', function() {\n          simp_audio.removeEventListener('timeupdate', simp_initTime);\n          simp_a_index = index;\n          simp_changeAudio(this.querySelector('.simp-source'));\n          simp_setAlbum(simp_a_index);\n        });\n      });\n      \n      // FIRST AUDIO LOAD =======\n      simp_changeAudio(simp_a_url[simp_a_index]);\n      simp_setAlbum(simp_a_index);\n      // FIRST AUDIO LOAD =======\n      \n      // Controls listeners\n      simp_controls.querySelector('.simp-plauseward').addEventListener('click', function(e) {\n        var eles = e.target.classList;\n        if (eles.contains('simp-plause')) {\n          if (simp_audio.paused) {\n            if (!simp_isLoaded) simp_loadAudio(simp_a_url[simp_a_index]);\n            simp_audio.play();\n            simp_isPlaying = true;\n            eles.remove('fa-play');\n            eles.add('fa-pause');\n          } else {\n            simp_audio.pause();\n            simp_isPlaying = false;\n            eles.remove('fa-pause');\n            eles.add('fa-play');\n          }\n        } else {\n          if (eles.contains('simp-prev') && simp_a_index != 0) {\n            simp_a_index = simp_a_index-1;\n            e.target.disabled = simp_a_index == 0 ? true : false;\n          } else if (eles.contains('simp-next') && simp_a_index != simp_a_url.length-1) {\n            simp_a_index = simp_a_index+1;\n            e.target.disabled = simp_a_index == simp_a_url.length-1 ? true : false;\n          }\n          simp_audio.removeEventListener('timeupdate', simp_initTime);\n          simp_changeAudio(simp_a_url[simp_a_index]);\n          simp_setAlbum(simp_a_index);\n        }\n      });\n      \n      // Audio volume\n      simp_volume.addEventListener('click', function(e) {\n        var eles = e.target.classList;\n        if (eles.contains('simp-mute')) {\n          if (eles.contains('fa-volume-up')) {\n            eles.remove('fa-volume-up');\n            eles.add('fa-volume-off');\n            simp_v_slider.value = 0;\n          } else {\n            eles.remove('fa-volume-off');\n            eles.add('fa-volume-up');\n            simp_v_slider.value = simp_v_num;\n          }\n        } else {\n          simp_v_num = simp_v_slider.value;\n          if (simp_v_num != 0) {\n            simp_controls.querySelector('.simp-mute').classList.remove('fa-volume-off');\n            simp_controls.querySelector('.simp-mute').classList.add('fa-volume-up');\n          }\n        }\n        simp_audio.volume = parseFloat(simp_v_slider.value / 100);\n      });\n      \n      // Others\n      simp_others.addEventListener('click', function(e) {\n        var eles = e.target.classList;\n        if (eles.contains('simp-plext')) {\n          simp_isNext = simp_isNext && !simp_isRandom ? false : true;\n          if (!simp_isRandom) simp_isRanext = simp_isRanext ? false : true;\n          eles.contains('simp-active') && !simp_isRandom ? eles.remove('simp-active') : eles.add('simp-active');\n        } else if (eles.contains('simp-random')) {\n          simp_isRandom = simp_isRandom ? false : true;\n          if (simp_isNext && !simp_isRanext) {\n            simp_isNext = false;\n            simp_others.querySelector('.simp-plext').classList.remove('simp-active');\n          } else {\n            simp_isNext = true;\n            simp_others.querySelector('.simp-plext').classList.add('simp-active');\n          }\n          eles.contains('simp-active') ? eles.remove('simp-active') : eles.add('simp-active');\n        } else if (eles.contains('simp-shide-top')) {\n          simp_album.parentNode.classList.toggle('simp-hide');\n        } else if (eles.contains('simp-shide-bottom')) {\n          simp_playlist.classList.add('simp-display');\n          simp_playlist.classList.toggle('simp-hide');\n        }\n      });\n    }\n    \n    // Start simple player\n    if (document.querySelector('.section-{{ section.id }}-settings #simp')) {\n      var simp_auto_load, simp_audio, simp_album, simp_cover, simp_title, simp_artist, simp_controls, simp_progress, simp_volume, simp_v_slider, simp_v_num, simp_others;\n      var ap_simp = document.querySelector('.section-{{ section.id }}-settings #simp');\n      var simp_playlist = ap_simp.querySelector('.simp-playlist');\n      var simp_source = simp_playlist.querySelectorAll('li');\n      var simp_a_url = simp_playlist.querySelectorAll('[data-src]');\n      var simp_a_index = 0;\n      var simp_isPlaying = false;\n      var simp_isNext = false; //auto play\n      var simp_isRandom = false; //play random\n      var simp_isRanext = false; //check if before random starts, simp_isNext value is true\n      var simp_isStream = false; //radio streaming\n      var simp_isLoaded = false; //audio file has loaded\n      var simp_config = ap_simp.dataset.config ? JSON.parse(ap_simp.dataset.config) : {\n        shide_top: false, //show/hide album\n        shide_btm: false, //show/hide playlist\n        auto_load: false //auto load audio file\n      };\n      \n      var simp_elem = '';\n      simp_elem += '<audio id=\"audio\" preload><source src=\"\" type=\"audio/mpeg\"></audio>';\n      simp_elem += '<div class=\"simp-display\"><div class=\"simp-album w-full flex-wrap\"><div class=\"simp-cover\"><i class=\"fa fa-music fa-5x\"></i></div><div class=\"simp-info\"><div class=\"simp-title\">Title</div><div class=\"simp-artist\">Artist</div></div></div></div>';\n      simp_elem += '<div class=\"simp-controls flex-wrap flex-align\">';\n      simp_elem += '<div class=\"simp-plauseward flex flex-align\"><button type=\"button\" class=\"simp-prev fa fa-backward\" disabled></button><button type=\"button\" class=\"simp-plause fa fa-play\" disabled></button><button type=\"button\" class=\"simp-next fa fa-forward\" disabled></button></div>';\n      simp_elem += '<div class=\"simp-tracker simp-load\"><input class=\"simp-progress\" type=\"range\" min=\"0\" max=\"100\" value=\"0\" disabled/><div class=\"simp-buffer\"></div></div>';\n      simp_elem += '<div class=\"simp-time flex flex-align\"><span class=\"start-time\">00:00</span><span class=\"simp-slash\"> / </span><span class=\"end-time\">00:00</span></div>';\n      simp_elem += '<div class=\"simp-volume flex flex-align\"><button type=\"button\" class=\"simp-mute fa fa-volume-up\"></button><input class=\"simp-v-slider\" type=\"range\" min=\"0\" max=\"100\" value=\"100\"/></div>';\n      simp_elem += '<div class=\"simp-others flex flex-align\"><button type=\"button\" class=\"simp-plext fa fa-play-circle\" title=\"Auto Play\"></button><button type=\"button\" class=\"simp-random fa fa-random\" title=\"Random\"></button><div class=\"simp-shide\"><button type=\"button\" class=\"simp-shide-top fa fa-caret-up\" title=\"Show/Hide Album\"></button><button type=\"button\" class=\"simp-shide-bottom fa fa-caret-down\" title=\"Show/Hide Playlist\"></button></div></div>';\n      simp_elem += '</div>'; //simp-controls\n      \n      var simp_player = document.createElement('div');\n      simp_player.classList.add('simp-player');\n      simp_player.innerHTML = simp_elem;\n      ap_simp.insertBefore(simp_player, simp_playlist);\n      simp_startScript();\n    }\n  }\n\n  document.addEventListener('DOMContentLoaded', initPlayer);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initPlayer);\n     document.addEventListener('shopify:section:load', initPlayer);\n  }\n</script>",
+  "variables": {
+    "player_width": {
+      "type": "text",
+      "default": "600",
+      "label": "Player Container Width",
+      "description": "Player Container Width"
+    },
+    "player_width_mobile": {
+      "type": "text",
+      "default": "100",
+      "label": "Player Container Width - Mobile",
+      "description": "Player Container Width - Mobile"
+    },
+    "player_radius": {
+      "type": "text",
+      "default": "6",
+      "label": "Player Border Radius",
+      "description": "Player Border Radius"
+    },
+    "player_image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Player Image Border Radius",
+      "description": "Player Image Border Radius"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Title Font Family",
+      "description": "Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Title Size",
+      "description": "Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Title Size - Mobile",
+      "description": "Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Title Line Height",
+      "description": "Title Line Height"
+    },
+    "author_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "author_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Author Font Family",
+      "description": "Author Font Family"
+    },
+    "author_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Author Size",
+      "description": "Author Size"
+    },
+    "author_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Author Size - Mobile",
+      "description": "Author Size - Mobile"
+    },
+    "author_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Author Line Height",
+      "description": "Author Line Height"
+    },
+    "playlist_height": {
+      "type": "text",
+      "default": "245",
+      "label": "Player Playlist Max Height",
+      "description": "Player Playlist Max Height"
+    },
+    "playlist_title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "playlist_title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Title Font Family",
+      "description": "Title Font Family"
+    },
+    "playlist_title_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Title Size",
+      "description": "Title Size"
+    },
+    "playlist_title_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Title Size - Mobile",
+      "description": "Title Size - Mobile"
+    },
+    "playlist_title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Title Line Height",
+      "description": "Title Line Height"
+    },
+    "playlist_author_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "playlist_author_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Author Font Family",
+      "description": "Author Font Family"
+    },
+    "playlist_author_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Author Size",
+      "description": "Author Size"
+    },
+    "playlist_author_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Author Size - Mobile",
+      "description": "Author Size - Mobile"
+    },
+    "playlist_author_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Author Line Height",
+      "description": "Author Line Height"
+    },
+    "player_bg_color": {
+      "type": "color",
+      "default": "#17212b",
+      "label": "Player Background Color",
+      "description": "Player Background Color"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Player Title Color",
+      "description": "Player Title Color"
+    },
+    "author_color": {
+      "type": "color",
+      "default": "#6c7883",
+      "label": "Player Author Color",
+      "description": "Player Author Color"
+    },
+    "icons_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Player Icons Color",
+      "description": "Player Icons Color"
+    },
+    "icons_disabled_color": {
+      "type": "color",
+      "default": "#636469",
+      "label": "Player Icons Disabled Color",
+      "description": "Player Icons Disabled Color"
+    },
+    "icons_active_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Player Icons Active Color",
+      "description": "Player Icons Active Color"
+    },
+    "icons_active_bg_color": {
+      "type": "color",
+      "default": "#242f3d",
+      "label": "Player Icons Active Bakground Color",
+      "description": "Player Icons Active Bakground Color"
+    },
+    "icons_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Player Icons Hover Color",
+      "description": "Player Icons Hover Color"
+    },
+    "icons_hover_bg_color": {
+      "type": "color",
+      "default": "#4082bc",
+      "label": "Player Icons Hover Background Color",
+      "description": "Player Icons Hover Background Color"
+    },
+    "playlist_title_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Playlist Title Color",
+      "description": "Playlist Title Color"
+    },
+    "playlist_author_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Playlist Author Color",
+      "description": "Playlist Author Color"
+    },
+    "playlist_odd_bg_color": {
+      "type": "color",
+      "default": "#0e1621",
+      "label": "Playlist Item Odd Background Color",
+      "description": "Playlist Item Odd Background Color"
+    },
+    "playlist_hover_bg_color": {
+      "type": "color",
+      "default": "#242f3d",
+      "label": "Playlist Item Hover Background Color",
+      "description": "Playlist Item Hover Background Color"
+    },
+    "playlist_hover_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Playlist Item Hover Color",
+      "description": "Playlist Item Hover Color"
+    },
+    "playlist_active_bg_color": {
+      "type": "color",
+      "default": "#4082bc",
+      "label": "Playlist Item Active Background Color",
+      "description": "Playlist Item Active Background Color"
+    },
+    "playlist_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Playlist Item Active Color",
+      "description": "Playlist Item Active Color"
+    },
+    "playlist_scrollbar_bg_color": {
+      "type": "color",
+      "default": "#2f3841",
+      "label": "Playlist Scrollbar Background Color",
+      "description": "Playlist Scrollbar Background Color"
+    },
+    "playlist_scrollbar_thumb_color": {
+      "type": "color",
+      "default": "#73797f",
+      "label": "Playlist Scrollbar Thumb Color",
+      "description": "Playlist Scrollbar Thumb Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

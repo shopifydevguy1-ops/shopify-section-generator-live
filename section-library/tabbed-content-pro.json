@@ -1,0 +1,522 @@
+{
+  "id": "tabbed-content-pro",
+  "name": "CUSTOM Tabs Pro",
+  "description": "Section: CUSTOM Tabs Pro",
+  "tags": [
+    "tabbed"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n  .section-{{ section.id }}-padding {\n    max-width: var(--max-width);\n    margin: var(--mt,0) auto var(--mb,0);\n    padding: var(--pt,0) var(--px, 1.5rem) var(--pb,0);\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      margin: var(--mt-desktop,0) auto var(--mb-desktop,0);\n      padding: var(--pt-desktop,0) var(--px-desktop, 1.5rem) var(--pb-desktop,0);\n    }\n  }\n</style>\n\n<style>\n  .tabbed-content-{{ section.id }} * {\n    box-sizing: border-box;\n  }\n  .tabbed-content-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__tabs {\n    display: flex;\n    /*flex-wrap: wrap;*/\n    gap: var(--gap, 0);\n    flex-direction: column;\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__tab {\n    overflow: hidden;\n    padding: var(--tab-py, 1rem) var(--tab-px, 1rem);\n    border: var(--tab-border, unset);\n    border-radius: var(--tab-border-radius, 0);\n    background-color: var(--tab-background-color, #f5f5f5);\n    color: var(--tab-text-color, #000000);\n    text-align: center;\n    cursor: pointer;\n    transition: all 0.2s ease-in-out;\n    font-family: var(--section-tab-title-font-family, inherit);\n    font-weight: var(--section-tab-title-font-weight, 400);\n\n    font-size: var(--tab-font-size, inherit);\n    line-height: var(--tab-line-height, inherit);\n    letter-spacing: var(--tab-letter-spacing, 0);\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__content {\n    display: flex;\n    flex-direction: column;\n    background-color: var(--content-background-color, transparent);\n    border-radius: var(--content-border-radius, 0);\n    border: var(--content-border-width, 0) var(--content-border-style, solid)\n      var(--content-border-color, #000000);\n\n    padding: var(--content-pt, 1rem) var(--content-px, 1rem) var(--content-pb, 1rem);\n    margin: var(--content-mt, 0) var(--content-mx, 0) var(--content-mb, 0);\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__content-item {\n    display: none;\n\n    color: var(--content-text-color, #000000);\n    font-family: var(--content-font-family, inherit);\n    font-weight: var(--content-font-weight, 400);\n    font-size: var(--content-text-font-size, inherit);\n    line-height: var(--content-text-line-height, inherit);\n    letter-spacing: var(--content-text-letter-spacing, 0);\n\n    text-align: var(--content-text-align, left);\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__content-item a {\n    color: var(--content-link-color, inherit);\n    text-decoration: none;\n  }\n  .tabbed-content-{{ section.id }} .tabbed-content__content-item.content-link-underline a {\n    text-decoration: underline;\n  }\n\n  .tabbed-content-{{ section.id }} .tabbed-content__content-item--active {\n    display: flex;\n  }\n\n  @media screen and (min-width: 750px) {\n    .tabbed-content-{{ section.id }} .tabbed-content__content {\n      padding: var(--content-pt-desktop, 1rem) var(--content-px-desktop, 1rem)\n        var(--content-pb-desktop, 1rem);\n      margin: var(--content-mt-desktop, 0) var(--content-mx-desktop, 0)\n        var(--content-mb-desktop, 0);\n    }\n\n    .tabbed-content-{{ section.id }} .tabbed-content__content-item {\n      font-size: var(--content-text-font-size-desktop, inherit);\n      line-height: var(--content-text-line-height-desktop, inherit);\n      letter-spacing: var(--content-text-letter-spacing-desktop, 0);\n      text-align: var(--content-text-align-desktop, left);\n    }\n\n    .tabbed-content-{{ section.id }} .tabbed-content__tabs {\n      flex-direction: row;\n      gap: var(--gap-desktop, 0);\n    }\n\n    .tabbed-content-{{ section.id }} .tabbed-content__tab {\n      flex: 1 1 auto;\n      padding: var(--tab-py-desktop, 1rem) var(--tab-px-desktop, 1rem);\n\n      font-size: var(--tab-font-size-desktop, inherit);\n      line-height: var(--tab-line-height-desktop, inherit);\n      letter-spacing: var(--tab-letter-spacing-desktop, 0);\n    }\n  }\n</style>\n\n<style>\n  .tabbed-content-section-title {\n    display: block;\n    text-align: var(--section-title-text-align, center);\n    color: var(--section-title-color, #000000);\n    font-family: var(--section-title-font-family, inherit);\n    font-weight: var(--section-title-font-weight, 700);\n    margin: var(--section-title-margin-top, 0) auto\n      var(--section-title-margin-bottom, 0);\n    font-size: var(--section-title-font-size, inherit);\n    line-height: var(--section-title-line-height, inherit);\n    letter-spacing: var(--section-title-letter-spacing, 0);\n  }\n  /* Desktop version: */\n  @media screen and (min-width: 750px) {\n    .tabbed-content-section-title {\n      text-align: var(--section-title-text-align-desktop, center);\n      margin: var(--section-title-margin-top-desktop, 0) auto\n        var(--section-title-margin-bottom-desktop, 0);\n      font-size: var(--section-title-font-size-desktop, inherit);\n      line-height: var(--section-title-line-height-desktop, inherit);\n      letter-spacing: var(--section-title-letter-spacing-desktop, 0);\n    }\n  }\n</style>\n\n{% if section.settings.tab_active_state_selector == 'background_color' %}\n  <style>\n    .tabbed-content-{{ section.id }} .tabbed-content__tab--active,\n    .tabbed-content-{{ section.id }} .tabbed-content__tab:hover {\n      background-color: var(--tab-active-hover-background-color, #ffffff);\n      color: var(--tab-active-text-color, #000000);\n    }\n  </style>\n{% else %}\n  <style>\n    .tabbed-content-{{ section.id }} .tabbed-content__tab--active,\n    .tabbed-content-{{ section.id }} .tabbed-content__tab:hover {\n      /*background-color: var(--tab-active-hover-background-color, #ffffff);*/\n      color: var(--tab-active-text-color, #000000);\n      position: relative;\n    }\n    .tabbed-content-{{ section.id }} .tabbed-content__tab--active::after,\n    .tabbed-content-{{ section.id }} .tabbed-content__tab:hover::after {\n      /* a fake border bottom with position absolute: */\n      content: '';\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      height: 10px;\n      border-bottom: {{ section.settings.tab_border_width }}px solid {{ section.settings.tab_active_hover_background_color }};\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  <style>\n    .tabbed-content__content-item-{{ block.id }} {\n      flex-direction: column;\n    }\n    \n    .tabbed-content__content-item-image-{{ block.id }} {\n      min-height: 100%;\n      width: 100%;\n      border-radius: {{ block.settings.image_radius }}px;\n    }\n    \n    .tabbed-content__content-item-image-{{ block.id }} img {\n      width: 100%;\n      height: 100%;\n      display: block;\n      object-fit: cover;\n      border-radius: {{ block.settings.image_radius }}px;\n    }\n    @media(min-width: 750px) {\n      .tabbed-content__content-item-{{ block.id }} {\n        flex-direction: {{ block.settings.layout }};\n      }\n      \n      .tabbed-content__content-item-image-{{ block.id }} {\n        max-width: {{ block.settings.desktop_image_width }}%;\n      }\n    }\n  </style>\n  {% if block.settings.image_height == 'small' %}\n    <style>\n      .tabbed-content__content-item-image-{{ block.id }} {\n        height: 25rem;\n      }\n    </style>\n  {% elsif block.settings.image_height == 'large' %}\n    <style>\n      .tabbed-content__content-item-image-{{ block.id }} {\n        height: 40rem;\n      }\n    </style>\n  {% endif %}\n  {% if block.settings.image_align == 'center' %}\n    <style>\n      .tabbed-content__content-item-image-{{ block.id }} {\n        margin-left: auto;\n        margin-right: auto;\n      }\n    </style>\n  {% elsif block.settings.image_align == 'right' %}\n    <style>\n      .tabbed-content__content-item-image-{{ block.id }} {\n        margin-left: auto;\n      }\n    </style>\n  {% endif %}\n{% endfor %}\n\n<div\n  class=\"{{ section.settings.section_class }}\"\n  style=\"\n    background-color:{{ section.settings.background-color }};\n    --max-width: {{ section.settings.section-width }}rem;\n    --pt: {{ section.settings.padding_top }}px;\n    --pt-desktop: {{ section.settings.padding_top_desktop }}px;\n    --pb: {{ section.settings.padding_bottom }}px;\n    --pb-desktop: {{ section.settings.padding_bottom_desktop }}px;\n    --px: {{ section.settings.padding_horizontal }}px;\n    --px-desktop: {{ section.settings.padding_horizontal_desktop }}px;\n    --mt: {{ section.settings.margin_top }}px;\n    --mt-desktop: {{ section.settings.margin_top_desktop }}px;\n    --mb: {{ section.settings.margin_bottom }}px;\n    --mb-desktop: {{ section.settings.margin_bottom_desktop }}px;\n  \"\n>\n  {% assign title_font_family = section.settings.section_title_font_family %}\n  {% if section.settings.custom_font_family_name != blank %}\n    {% assign title_font_family = section.settings.custom_font_family_name %}\n  {% else %}\n    <style>\n      {{ title_font_family | font_face }}\n      {% if section.settings.section_title_font_weight != 'inherit' %}\n        {% assign title_font_alt = title_font_family\n          | font_modify: 'weight', section.settings.section_title_font_weight\n        %}\n        {{ title_font_alt | font_face }}\n      {% endif %}\n    </style>\n    {% assign title_font_family = title_font_family.family %}\n  {% endif %}\n  <div\n    class=\"page-width section-{{ section.id }}-padding\" id=\"tabs-pro\"\n    style=\"\n      --section-title-text-align: {{ section.settings.section_title_text_align }};\n      --section-title-color: {{ section.settings.section_title_color }};\n      --section-title-font-family: {{ title_font_family | escape }};\n      --section-title-font-weight: {{ section.settings.section_title_font_weight }};\n      {% if section.settings.section_title_font_size > 0 %}\n        --section-title-font-size: {{ section.settings.section_title_font_size }}px;\n      {% endif %}\n      {% if section.settings.section_title_line_height > 0 %}\n        --section-title-line-height: {{ section.settings.section_title_line_height }}px;\n      {% endif %}\n      --section-title-letter-spacing: {{ section.settings.section_title_letter_spacing }}px;\n      --section-title-margin-top: {{ section.settings.section_title_margin_top }}px;\n      --section-title-margin-bottom: {{ section.settings.section_title_margin_bottom }}px;\n\n      --section-title-text-align-desktop: {{ section.settings.section_title_text_align_desktop }};\n      {% if section.settings.section_title_font_size_desktop > 0 %}\n        --section-title-font-size-desktop: {{ section.settings.section_title_font_size_desktop }}px;\n      {% endif %}\n      {% if section.settings.section_title_line_height_desktop > 0 %}\n        --section-title-line-height-desktop: {{ section.settings.section_title_line_height_desktop }}px;\n      {% endif %}\n      --section-title-letter-spacing-desktop: {{ section.settings.section_title_letter_spacing_desktop }}px;\n      --section-title-margin-top-desktop: {{ section.settings.section_title_margin_top_desktop }}px;\n      --section-title-margin-bottom-desktop: {{ section.settings.section_title_margin_bottom_desktop }}px;\n    \"\n  >\n    {% comment %} Section title: {% endcomment %}\n    {% if section.settings.section_title != blank %}\n      {% case section.settings.section_title_html_element %}\n        {% when 'h1' %}\n          <h1 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h1>\n        {% when 'h2' %}\n          <h2 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h2>\n        {% when 'h3' %}\n          <h3 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h3>\n        {% when 'h4' %}\n          <h4 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h4>\n        {% when 'h5' %}\n          <h5 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h5>\n        {% when 'h6' %}\n          <h6 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h6>\n        {% when 'div' %}\n          <div class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </div>\n        {% when 'span' %}\n          <span class=\"tabbed-content-section-title\">\n            {{- section.settings.section_title -}}\n          </span>\n        {% when 'p' %}\n          <p class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </p>\n        {% else %}\n          <h2 class=\"tabbed-content-section-title\">\n            {{ section.settings.section_title }}\n          </h2>\n      {% endcase %}\n    {% endif %}\n\n    {% comment %} Tabbed content: {% endcomment %}\n    <div class=\"tabbed-content tabbed-content-{{ section.id }}\">\n      {% assign tab_title_font_family = section.settings.section_tab_title_font_family %}\n      {% if section.settings.tab_title_custom_font_family_name != blank %}\n        {% assign tab_title_font_family = section.settings.tab_title_custom_font_family_name %}\n      {% else %}\n        <style>\n          {{ tab_title_font_family | font_face }}\n          {% if section.settings.section_tab_title_font_weight != 'inherit' %}\n            {% assign title_font_alt = tab_title_font_family\n              | font_modify: 'weight', section.settings.section_tab_title_font_weight\n            %}\n            {{ title_font_alt | font_face }}\n          {% endif %}\n        </style>\n        {% assign tab_title_font_family = tab_title_font_family.family %}\n      {% endif %}\n      <div\n        class=\"tabbed-content__tabs\"\n        style=\"\n          --section-tab-title-font-family: {{ tab_title_font_family | escape }};\n          --section-tab-title-font-weight: {{ section.settings.section_tab_title_font_weight }};\n\n          {% if section.settings.tab_style == 'with-border' %}\n          --tab-border: {{ section.settings.tab_border_width }}px solid {{ section.settings.tab_border_color }};\n          {% endif %}\n          --tab-border-radius: {{ section.settings.tab_border_radius }}px;\n          --tab-background-color: {{ section.settings.tab_background_color }};\n          --tab-text-color: {{ section.settings.tab_text_color }};\n          --tab-active-hover-background-color: {{ section.settings.tab_active_hover_background_color }};\n          --tab-active-text-color: {{ section.settings.tab_active_title_color }};\n\n          {% if section.settings.tab_title_font_size > 0 %}\n            --tab-font-size: {{ section.settings.tab_title_font_size }}px;\n          {% endif %}\n          {% if section.settings.tab_title_line_height > 0 %}\n            --tab-line-height: {{ section.settings.tab_title_line_height }}px;\n          {% endif %}\n          --tab-letter-spacing: {{ section.settings.tab_title_letter_spacing }}px;\n\n          {% if section.settings.tab_title_font_size_desktop > 0 %}\n            --tab-font-size-desktop: {{ section.settings.tab_title_font_size_desktop }}px;\n          {% endif %}\n          {% if section.settings.tab_title_line_height_desktop > 0 %}\n            --tab-line-height-desktop: {{ section.settings.tab_title_line_height_desktop }}px;\n          {% endif %}\n          --tab-letter-spacing-desktop: {{ section.settings.tab_title_letter_spacing_desktop }}px;\n\n          --tab-px: {{ section.settings.tab_padding_horizontal }}px;\n          --tab-py: {{ section.settings.tab_padding_vertical }}px;\n          --tab-px-desktop: {{ section.settings.tab_padding_horizontal_desktop }}px;\n          --tab-py-desktop: {{ section.settings.tab_padding_vertical_desktop }}px;\n\n          --gap: {{ section.settings.tab_gap }}px;\n          --gap-desktop: {{ section.settings.tab_gap_desktop }}px;\n        \"\n      >\n        {% for block in section.blocks %}\n          <button\n            type=\"button\"\n            class=\"tabbed-content__tab\"\n            {% if section.settings.tag_alignment == 'auto' %}\n              style=\"flex-grow: 0;\"\n            {% else %}\n              style=\"flex: 1 1 100%;\"\n            {% endif %}\n          >\n            {{ block.settings.title }}\n          </button>\n        {% endfor %}\n      </div>\n      <div\n        class=\"tabbed-content__content\"\n        style=\"\n          --content-background-color: {{ section.settings.content_background_color }};\n          --content-border-radius: {{ section.settings.content_border_radius }}px;\n          --content-border-width: {{ section.settings.content_border_width }}px;\n          --content-border-color: {{ section.settings.content_border_color }};\n\n          --content-pt: {{ section.settings.content_padding_top }}px;\n          --content-pb: {{ section.settings.content_padding_bottom }}px;\n          --content-px: {{ section.settings.content_padding_horizontal }}px;\n          --content-mt: {{ section.settings.content_margin_top }}px;\n          --content-mb: {{ section.settings.content_margin_bottom }}px;\n\n          --content-pt-desktop: {{ section.settings.content_padding_top_desktop }}px;\n          --content-pb-desktop: {{ section.settings.content_padding_bottom_desktop }}px;\n          --content-px-desktop: {{ section.settings.content_padding_horizontal_desktop }}px;\n          --content-mt-desktop: {{ section.settings.content_margin_top_desktop }}px;\n          --content-mb-desktop: {{ section.settings.content_margin_bottom_desktop }}px;\n        \"\n      >\n        {% for block in section.blocks %}\n          {% assign content_font_family = section.settings.content_text_font %}\n          {% if section.settings.content_text_custom_font_family_name != blank\n          %}\n            {% assign content_font_family = section.settings.content_text_custom_font_family_name %}\n          {% else %}\n            <style>\n              {{ content_font_family | font_face }}\n              {% if section.settings.content_text_font_weight != 'inherit' %}\n                 {% assign content_font_alt = content_font_family\n                   | font_modify: 'weight', section.settings.content_text_font_weight\n                 %}\n                 {{ content_font_alt | font_face }}\n              {% endif %}\n            </style>\n            {% assign content_font_family = content_font_family.family %}\n          {% endif %}\n          <div\n            class=\"\n              tabbed-content__content-item tabbed-content__content-item-{{ block.id }}\n              {% if section.settings.content_link_underline == true %}\n                content-link-underline\n              {% endif %}\n            \"\n            {{ block.shopify_attributes }}\n            style=\"\n              --content-text-color: {{ section.settings.content_text_color }};\n              --content-font-family: {{ content_font_family | escape }};\n              --content-font-weight: {{ section.settings.content_text_font_weight }};\n\n              --content-text-align: {{ section.settings.content_text_align }};\n              {% if section.settings.content_text_font_size > 0 %}\n                --content-text-font-size: {{ section.settings.content_text_font_size }}px;\n              {% endif %}\n              {% if section.settings.content_text_line_height > 0 %}\n                --content-text-line-height: {{ section.settings.content_text_line_height }}px;\n              {% endif %}\n              --content-text-letter-spacing: {{ section.settings.content_text_letter_spacing }}px;\n\n              --content-text-align-desktop: {{ section.settings.content_text_align_desktop }};\n              {% if section.settings.content_text_font_size_desktop > 0 %}\n                --content-text-font-size-desktop: {{ section.settings.content_text_font_size_desktop }}px;\n              {% endif %}\n              {% if section.settings.content_text_line_height_desktop > 0 %}\n                --content-text-line-height-desktop: {{ section.settings.content_text_line_height_desktop }}px;\n              {% endif %}\n              --content-text-letter-spacing-desktop: {{ section.settings.content_text_letter_spacing_desktop }}px;\n\n              --content-link-color: {{ section.settings.content_link_color }};\n            \"\n          >\n            {% if block.settings.image != blank %}\n              <div class=\"tabbed-content__content-item-image-{{ block.id }}\">\n                <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.alt }}\" {% if section.settings.lazy %}loading=\"lazy\"{% endif %}>\n              </div>\n            {%  endif %}\n            <div class=\"tabbed-content__content-item-body-{{ block.id }}\">\n              {% assign block_page = pages[block.settings.page_content] %}\n              {% if block.settings.page_content != blank\n                and block_page != blank\n              %}\n                {% if block.settings.show_page_title == true %}\n                  {% case block.settings.page_title_html_element %}\n                    {% when 'h1' %}\n                      <h1>{{ block_page.title }}</h1>\n                    {% when 'h2' %}\n                      <h2>{{ block_page.title }}</h2>\n                    {% when 'h3' %}\n                      <h3>{{ block_page.title }}</h3>\n                    {% when 'h4' %}\n                      <h4>{{ block_page.title }}</h4>\n                    {% when 'h5' %}\n                      <h5>{{ block_page.title }}</h5>\n                    {% when 'h6' %}\n                      <h6>{{ block_page.title }}</h6>\n                    {% when 'div' %}\n                      <div>{{ block_page.title }}</div>\n                    {% when 'span' %}\n                      <span>{{ block_page.title }}</span>\n                    {% when 'p' %}\n                      <p>{{ block_page.title }}</p>\n                    {% else %}\n                      <h2>{{ block_page.title }}</h2>\n                  {% endcase %}\n                {% endif %}\n                {{ block_page.content }}\n              {% else %}\n                {{ block.settings.content }}\n                {% if block.settings.product_description %}\n                  {{ product.content }}\n                {% endif %}\n              {% endif %}\n            </div>\n          </div>\n        {% endfor %}\n      </div>\n    </div>\n  </div>\n</div>\n\n<script>\n  (function () {\n    function tabInit() {\n      const sectionWrapper = document.querySelector(\n        `.tabbed-content-{{ section.id }}`\n      );\n      const tabButtons = sectionWrapper.querySelectorAll(\n        '.tabbed-content__tab'\n      );\n      const tabContent = sectionWrapper.querySelectorAll(\n        '.tabbed-content__content-item'\n      );\n\n      function switchToTab(index) {\n        tabButtons.forEach((button) => {\n          button.classList.remove('tabbed-content__tab--active');\n        });\n        tabContent.forEach((content) => {\n          content.classList.remove('tabbed-content__content-item--active');\n        });\n        tabButtons[index].classList.add('tabbed-content__tab--active');\n        tabContent[index].classList.add('tabbed-content__content-item--active');\n      }\n\n      switchToTab(0); // init\n\n      tabButtons.forEach((button, index) => {\n        button.addEventListener('click', () => {\n          switchToTab(index);\n        });\n      });\n\n      // switchToTab to this block using event.detail.blockId to find the block:\n      document.addEventListener('shopify:block:select', function (event) {\n        const selectedTab = sectionWrapper.querySelector(\n          `.tabbed-content__content-item-${event.detail.blockId}`\n        );\n        const selectedTabIndex = Array.from(tabContent).indexOf(selectedTab);\n        if (selectedTabIndex !== -1) switchToTab(selectedTabIndex);\n      });\n    }\n\n    tabInit();\n    // shopify:section:load:\n    document.addEventListener('shopify:section:load', function (event) {\n      if (event.detail.sectionId === '{{ section.id }}') {\n        tabInit();\n      }\n    });\n  })();\n</script>",
+  "variables": {
+    "section_class": {
+      "type": "text",
+      "default": "",
+      "label": "Section class",
+      "description": "Add section class (without dot). Use spaces to separate multiple classes."
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    },
+    "padding_top_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal_desktop": {
+      "type": "text",
+      "default": "50",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "margin_top_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "15",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    },
+    "section_title": {
+      "type": "text",
+      "default": "More information",
+      "label": "Section title",
+      "description": "Add section title"
+    },
+    "section_title_html_element": {
+      "type": "text",
+      "default": "h2",
+      "label": "Section title HTML element",
+      "description": "Choose section title HTML element"
+    },
+    "section_title_text_align_desktop": {
+      "type": "text",
+      "default": "center",
+      "label": "Text align",
+      "description": "Choose text align"
+    },
+    "section_title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Section title color",
+      "description": "Section title color"
+    },
+    "section_title_font_family": {
+      "type": "text",
+      "default": "open_sans_n6",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "custom_font_family_name": {
+      "type": "text",
+      "default": "",
+      "label": "Custom Font Family Name",
+      "description": "Add your custom font. Example: 'Helvetica', 'Arial', sans-serif"
+    },
+    "section_title_font_weight": {
+      "type": "text",
+      "default": "inherit",
+      "label": "Font weight",
+      "description": "Font weight"
+    },
+    "section_title_font_size_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "section_title_line_height_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "section_title_letter_spacing_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "section_title_margin_top_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "section_title_margin_bottom_desktop": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "section_title_text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Text align",
+      "description": "Choose text align"
+    },
+    "section_title_font_size": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "section_title_line_height": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "section_title_letter_spacing": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "section_title_margin_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "section_title_margin_bottom": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "section_tab_title_font_family": {
+      "type": "text",
+      "default": "open_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "tab_title_custom_font_family_name": {
+      "type": "text",
+      "default": "",
+      "label": "Custom Font Family Name",
+      "description": "Add your custom font. Example: 'Helvetica', 'Arial', sans-serif"
+    },
+    "section_tab_title_font_weight": {
+      "type": "text",
+      "default": "inherit",
+      "label": "Font weight",
+      "description": "Font weight"
+    },
+    "tab_style": {
+      "type": "text",
+      "default": "with-border",
+      "label": "Tab Style",
+      "description": "Tab Style"
+    },
+    "tab_border_width": {
+      "type": "text",
+      "default": "1",
+      "label": "Tab border width",
+      "description": "Tab border width"
+    },
+    "tab_border_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Tab border radius",
+      "description": "Tab border radius"
+    },
+    "tab_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tab border color",
+      "description": "Tab border color"
+    },
+    "tab_background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Tab background color",
+      "description": "Tab background color"
+    },
+    "tab_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Tab text color",
+      "description": "Tab text color"
+    },
+    "tab_active_hover_background_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Active - Tab Background color",
+      "description": "Also used for hover state, and for border bottom color if border bottom is selected for active state"
+    },
+    "tab_active_state_selector": {
+      "type": "text",
+      "default": "background_color",
+      "label": "Tab active state selector",
+      "description": "Tab active state selector"
+    },
+    "tab_active_title_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Active - Tab title color",
+      "description": "Active - Tab title color"
+    },
+    "tag_alignment": {
+      "type": "text",
+      "default": "fullwidth",
+      "label": "Tag alignment",
+      "description": "Tag alignment"
+    },
+    "tab_padding_vertical_desktop": {
+      "type": "text",
+      "default": "14",
+      "label": "Tab padding vertical",
+      "description": "Tab padding vertical"
+    },
+    "tab_padding_horizontal_desktop": {
+      "type": "text",
+      "default": "14",
+      "label": "Tab padding horizontal",
+      "description": "Tab padding horizontal"
+    },
+    "tab_gap_desktop": {
+      "type": "text",
+      "default": "10",
+      "label": "Gap between tabs",
+      "description": "Gap between tabs"
+    },
+    "tab_title_font_size_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "tab_title_line_height_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "tab_title_letter_spacing_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "tab_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Tab padding vertical",
+      "description": "Tab padding vertical"
+    },
+    "tab_padding_horizontal": {
+      "type": "text",
+      "default": "12",
+      "label": "Tab padding horizontal",
+      "description": "Tab padding horizontal"
+    },
+    "tab_gap": {
+      "type": "text",
+      "default": "6",
+      "label": "Gap between tabs",
+      "description": "Gap between tabs"
+    },
+    "tab_title_font_size": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "tab_title_line_height": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "tab_title_letter_spacing": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "content_background_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Content background color",
+      "description": "Content background color"
+    },
+    "content_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Content border color",
+      "description": "Content border color"
+    },
+    "content_border_width": {
+      "type": "text",
+      "default": "1",
+      "label": "Content border width",
+      "description": "Content border width"
+    },
+    "content_border_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Content border radius",
+      "description": "Content border radius"
+    },
+    "content_margin_top_desktop": {
+      "type": "text",
+      "default": "20",
+      "label": "Content margin top",
+      "description": "Content margin top"
+    },
+    "content_padding_top_desktop": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding top",
+      "description": "Content padding top"
+    },
+    "content_padding_horizontal_desktop": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding horizontal",
+      "description": "Content padding horizontal"
+    },
+    "content_padding_bottom_desktop": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding bottom",
+      "description": "Content padding bottom"
+    },
+    "content_margin_bottom_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Content margin bottom",
+      "description": "Content margin bottom"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding horizontal",
+      "description": "Content padding horizontal"
+    },
+    "content_margin_top": {
+      "type": "text",
+      "default": "12",
+      "label": "Content margin top",
+      "description": "Content margin top"
+    },
+    "content_padding_top": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding top",
+      "description": "Content padding top"
+    },
+    "content_padding_bottom": {
+      "type": "text",
+      "default": "20",
+      "label": "Content padding bottom",
+      "description": "Content padding bottom"
+    },
+    "content_margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Content margin bottom",
+      "description": "Content margin bottom"
+    },
+    "content_text_align_desktop": {
+      "type": "text",
+      "default": "left",
+      "label": "Text align",
+      "description": "Choose text align"
+    },
+    "content_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Content text color",
+      "description": "Content text color"
+    },
+    "content_text_font": {
+      "type": "text",
+      "default": "open_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "content_text_custom_font_family_name": {
+      "type": "text",
+      "default": "",
+      "label": "Custom Font Family Name",
+      "description": "Add your custom font. Example: 'Helvetica', 'Arial', sans-serif"
+    },
+    "content_text_font_weight": {
+      "type": "text",
+      "default": "inherit",
+      "label": "Font weight",
+      "description": "Font weight"
+    },
+    "content_text_font_size_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "content_text_line_height_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "content_text_letter_spacing_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "content_text_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Text align",
+      "description": "Choose text align - Mobile"
+    },
+    "content_text_font_size": {
+      "type": "text",
+      "default": "0",
+      "label": "Font size",
+      "description": "Leave 0 to use default font size"
+    },
+    "content_text_line_height": {
+      "type": "text",
+      "default": "0",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "content_text_letter_spacing": {
+      "type": "text",
+      "default": "0",
+      "label": "Letter spacing",
+      "description": "Letter spacing"
+    },
+    "content_link_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Content link color",
+      "description": "Color of links inside the tab content"
+    },
+    "content_link_underline": {
+      "type": "text",
+      "default": "false",
+      "label": "Add underline to link",
+      "description": "Add underline to link"
+    }
+  }
+}

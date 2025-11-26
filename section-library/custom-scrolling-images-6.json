@@ -1,0 +1,192 @@
+{
+  "id": "custom-scrolling-images-6",
+  "name": "CUSTOM Scrolling images #6",
+  "description": "Section: CUSTOM Scrolling images #6",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n  assign background_style = section.settings.background_style\n\n  assign scrolling_velocity = section.settings.scrolling_velocity\n  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile\n  assign scrolling_gap = section.settings.scrolling_gap\n  assign scrolling_gap_mobile = section.settings.scrolling_gap_mobile\n  assign reverse_direction = section.settings.reverse_direction\n  assign pause_hover = section.settings.pause_hover\n\n  assign image_width = section.settings.image_width\n  assign image_width_mobile = section.settings.image_width_mobile\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n\n  assign loading_attribute = 'eager'\n  if lazy\n    assign loading_attribute = 'lazy'\n  endif\n-%}\n\n{%- style -%}\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .scrolling-wrapper-{{ section.id }} {\n    position: relative;\n    z-index: 1;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    scrollbar-width: none;\n    -ms-flex-wrap: nowrap;\n    flex-wrap: nowrap;\n    left: var(--scroll-offset);\n    background-attachment: scroll !important;\n  }\n\n  .scrolling-list-{{ section.id }} {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    white-space: nowrap;\n    height: 100%;\n    background-attachment: scroll !important;\n    -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\n    animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\n    flex-shrink: 0;\n  }\n\n  .scrolling-card-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    margin-right: {{ scrolling_gap_mobile }}px;\n    width: {{ image_width_mobile }}px;\n    text-decoration: none;\n    position: relative;\n  }\n\n  .scrolling-image-{{ section.id }} {\n    overflow: hidden;\n    background-attachment: scroll !important;\n    border-radius: {{ image_radius }}px;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    flex-shrink: 0;\n  }\n\n  .scrolling-image-{{ section.id }} img,\n  .scrolling-image-{{ section.id }} svg {\n    display: inline-block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover\n  }\n\n  .scrolling-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .scrolling-list-{{ section.id }} {\n      -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;\n      animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;\n    }\n\n    .scrolling-card-{{ section.id }} {\n      margin-right: {{ scrolling_gap }}px;\n      width: {{ image_width }}px;   \n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .scrolling-image-{{ section.id }} {\n      aspect-ratio: 9.6/13;\n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n  .scrolling-image-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .scrolling-image-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .scrolling-image-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .scrolling-image-{{ section.id }} {\n        aspect-ratio: 9.6/13;\n      }\n    }\n    \n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .scrolling-image-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }  \n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .scrolling-image-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }    \n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .scrolling-image-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if reverse_direction %}\n  <style>\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\n      0% {\n        transform: translateX(-100%);\n      }\n      100% {\n        transform: translateX(0%);\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\n      0% {\n        transform: translateX(0%);\n      }\n      100% {\n        transform: translateX(-100%);\n      }\n    }\n  </style>\n{% endif %}\n\n{% if pause_hover %}\n\t<style>\n    .scrolling-wrapper-{{ section.id }}:hover .scrolling-list-{{ section.id }} {\n      animation-play-state: paused\n    }\n\t</style>\n{% endif %}\n\n{% for block in section.blocks %}\n  <style>\n    .scrolling-author-{{ block.id }} {\n      left: {{ block.settings.horizontal_position_mobile }}px;\n      top: {{ block.settings.vertical_position_mobile }}px;\n    }\n\n    @media(min-width: 1024px) {\n      .scrolling-author-{{ block.id }} {\n        left: {{ block.settings.horizontal_position }}px;\n        top: {{ block.settings.vertical_position }}px;\n      }\n    }\n  </style>\n{% endfor %}\n\n{% capture list %}\n  <div class=\"scrolling-list-{{ section.id }}\">\n    {% for block in section.blocks %}\n      <div class=\"scrolling-card-{{ section.id }}\">\n        <div class=\"scrolling-image-{{ section.id }}\">                 \n          {% if block.settings.image != blank %}\n            {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n            {{ block.settings.image | image_url: width: 1500 | image_tag:\n              loading: loading_attribute,\n              width: block.settings.image.width,\n              height: block.settings.image.height,\n              sizes: sizes,\n              widths: '165, 360, 535, 750, 1070, 1500'\n            }}                    \n          {% else %}  \n            {{ 'image' | placeholder_svg_tag }}\n          {% endif %}\n        </div>\n      </div>            \n    {% endfor %}   \n  </div>\n{% endcapture %}\n\n<div class=\"section-{{ section.id }} scrolling-{{ section.id }}\" {% if background_style == 'solid' %}style=\"background-color:{{ background_color }};\"{% else %} style=\"background-image: {{ background_gradient }};\"{% endif %}>\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"scrolling-wrapper-{{ section.id }}\">\n        {{ list }}\n        {{ list }}\n        {{ list }}\n        {{ list }}\n      </div>\n    </div>\n</div>\n\n<script>\n  function initScrollingImages6() {\n    const scrollingList = document.querySelector('.scrolling-wrapper-{{ section.id }}');\n    let lastScrollY = window.scrollY;\n    let currentOffset = 0; \n\n    function updateScrollEffect() {\n      const scrollY = window.scrollY;\n      const scrollDelta = scrollY - lastScrollY; \n      lastScrollY = scrollY; \n\n      const scrollSensitivity = 0.5; \n      currentOffset -= scrollDelta * scrollSensitivity;\n\n      scrollingList.style.setProperty('--scroll-offset', `${currentOffset}px`);\n\n      requestAnimationFrame(updateScrollEffect);\n    }\n\n    requestAnimationFrame(updateScrollEffect);\n  }\n\n  document.addEventListener('DOMContentLoaded', initScrollingImages6);\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initScrollingImages6);\n    document.addEventListener('shopify:section:load', initScrollingImages6);\n  }\n</script>",
+  "variables": {
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "40",
+      "label": "Speed",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_velocity_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Speed mobile",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_gap": {
+      "type": "text",
+      "default": "70",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "scrolling_gap_mobile": {
+      "type": "text",
+      "default": "36",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "reverse_direction": {
+      "type": "text",
+      "default": "",
+      "label": "Reverse scrolling direction",
+      "description": "Reverse scrolling direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "true",
+      "label": "Pause on hover",
+      "description": "Pause on hover"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "80",
+      "label": "Width",
+      "description": "Width"
+    },
+    "image_width_mobile": {
+      "type": "text",
+      "default": "60",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides - mobile",
+      "description": "Sides - mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Content width",
+      "description": "Content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "image-banner",
+  "name": "t:sections.image-banner.name",
+  "description": "Section: t:sections.image-banner.name",
+  "tags": [
+    "image",
+    "banner"
+  ],
+  "type": "banner",
+  "liquid_code": "{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}\n\n{%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}\n  {%- style -%}\n  @media screen and (max-width: 749px) {\n    #Banner-{{ section.id }}::before,\n    #Banner-{{ section.id }} .banner__media::before,\n    #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {\n      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;\n      content: '';\n      display: block;\n    }\n  }\n\n  @media screen and (min-width: 750px) {\n    #Banner-{{ section.id }}::before,\n    #Banner-{{ section.id }} .banner__media::before {\n      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;\n      content: '';\n      display: block;\n    }\n  }\n  {%- endstyle -%}\n{%- endif -%}\n\n{%- style -%}\n  #Banner-{{ section.id }}::after {\n    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};\n  }\n{%- endstyle -%}\n\n<div id=\"Banner-{{ section.id }}\" class=\"banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.adapt_height_first_image and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}\">\n  {%- if section.settings.image != blank -%}\n    <div class=\"banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}\">\n      {%-liquid\n        assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio\n        if section.settings.image_2 != blank\n          assign image_class = \"banner__media-image-half\"\n        endif\n        if section.settings.image_2 != blank and section.settings.stack_images_on_mobile\n          assign sizes = \"(min-width: 750px) 50vw, 100vw\"\n        elsif section.settings.image_2 != blank\n          assign sizes = \"50vw\"\n        else\n          assign sizes = \"100vw\"\n        endif\n      -%}\n      {{ section.settings.image | image_url: width: 1500 | image_tag:\n        loading: 'lazy',\n        width: section.settings.image.width,\n        height: image_height,\n        class: image_class,\n        sizes: sizes,\n        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',\n        alt: section.settings.image.alt | escape\n      }}\n    </div>\n  {%- elsif section.settings.image_2 == blank -%}\n    <div class=\"banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}\">\n      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}\n    </div>\n  {%- endif -%}\n  {%- if section.settings.image_2 != blank -%}\n    <div class=\"banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}\">\n      {%-liquid\n        assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio\n        if section.settings.image != blank\n          assign image_class_2 = \"banner__media-image-half\"\n        endif\n        if section.settings.image != blank and section.settings.stack_images_on_mobile\n          assign sizes = \"(min-width: 750px) 50vw, 100vw\"\n        elsif section.settings.image != blank\n          assign sizes = \"50vw\"\n        else\n          assign sizes = \"100vw\"\n        endif\n      -%}\n      {{ section.settings.image_2 | image_url: width: 1500 | image_tag:\n        loading: 'lazy',\n        width: section.settings.image_2.width,\n        height: image_height_2,\n        class: image_class_2,\n        sizes: sizes,\n        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',\n        alt: section.settings.image_2.alt | escape\n      }}\n    </div>\n  {%- endif -%}\n  <div class=\"banner__content banner__content--{{ section.settings.desktop_content_position }} page-width\">\n    <div class=\"banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient\">\n      {%- for block in section.blocks -%}\n        {%- case block.type -%}\n          {%- when 'heading' -%}\n            <h2 class=\"banner__heading {{ block.settings.heading_size }}\" {{ block.shopify_attributes }}>\n              <span>{{ block.settings.heading | escape }}</span>\n            </h2>\n          {%- when 'text' -%}\n            <div class=\"banner__text {{ block.settings.text_style }}\" {{ block.shopify_attributes }}>\n              <span>{{ block.settings.text | escape }}</span>\n            </div>\n          {%- when 'buttons' -%}\n            <div class=\"banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}\" {{ block.shopify_attributes }}>\n              {%- if block.settings.button_label_1 != blank -%}\n                <a{% if block.settings.button_link_1 == blank %} role=\"link\" aria-disabled=\"true\"{% else %} href=\"{{ block.settings.button_link_1 }}\"{% endif %} class=\"button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}\">{{ block.settings.button_label_1 | escape }}</a>\n              {%- endif -%}\n              {%- if block.settings.button_label_2 != blank -%}\n                <a{% if block.settings.button_link_2 == blank %} role=\"link\" aria-disabled=\"true\"{% else %} href=\"{{ block.settings.button_link_2 }}\"{% endif %} class=\"button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}\">{{ block.settings.button_label_2 | escape }}</a>\n              {%- endif -%}\n\n            </div>\n        {%- endcase -%}\n      {%- endfor -%}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "t:sections.image-banner.settings.image.label",
+      "description": "t:sections.image-banner.settings.image.label"
+    },
+    "image_2": {
+      "type": "text",
+      "default": "",
+      "label": "t:sections.image-banner.settings.image_2.label",
+      "description": "t:sections.image-banner.settings.image_2.label"
+    },
+    "image_overlay_opacity": {
+      "type": "text",
+      "default": "0",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "description": "t:sections.image-banner.settings.image_overlay_opacity.label"
+    },
+    "image_height": {
+      "type": "text",
+      "default": "medium",
+      "label": "t:sections.image-banner.settings.image_height.label",
+      "description": "t:sections.image-banner.settings.image_height.info"
+    },
+    "adapt_height_first_image": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.image-banner.settings.adapt_height_first_image.label",
+      "description": "t:sections.image-banner.settings.adapt_height_first_image.info"
+    },
+    "desktop_content_position": {
+      "type": "text",
+      "default": "middle-center",
+      "label": "t:sections.image-banner.settings.desktop_content_position.label",
+      "description": "t:sections.image-banner.settings.desktop_content_position.label"
+    },
+    "show_text_box": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.image-banner.settings.show_text_box.label",
+      "description": "t:sections.image-banner.settings.show_text_box.label"
+    },
+    "desktop_content_alignment": {
+      "type": "text",
+      "default": "center",
+      "label": "t:sections.image-banner.settings.desktop_content_alignment.label",
+      "description": "t:sections.image-banner.settings.desktop_content_alignment.label"
+    },
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.image-banner.settings.color_scheme.info"
+    },
+    "mobile_content_alignment": {
+      "type": "text",
+      "default": "center",
+      "label": "t:sections.image-banner.settings.mobile_content_alignment.label",
+      "description": "t:sections.image-banner.settings.mobile_content_alignment.label"
+    },
+    "stack_images_on_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.image-banner.settings.stack_images_on_mobile.label",
+      "description": "t:sections.image-banner.settings.stack_images_on_mobile.label"
+    },
+    "show_text_below": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.image-banner.settings.show_text_below.label",
+      "description": "t:sections.image-banner.settings.show_text_below.label"
+    }
+  }
+}

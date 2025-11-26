@@ -1,0 +1,192 @@
+{
+  "id": "custom-scrolling-logo-cloud-pro",
+  "name": "CUSTOM Scrolling logo cloud",
+  "description": "Section: CUSTOM Scrolling logo cloud",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid\n\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign background_style = section.settings.background_style\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign lazy = section.settings.lazy\n  \n  assign width = section.settings.width\n  assign content_width = section.settings.content_width\n\n  assign border_thickness = section.settings.border_thickness\n  assign border_color = section.settings.border_color\n\n  assign ss_title = section.settings.ss_title\n  assign header_size =  section.settings.header_size \n  assign header_color =  section.settings.header_color\n  assign header_align = section.settings.header_align\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  \n  assign sliders_mt = section.settings.sliders_mt\n  assign logo_padding_top = section.settings.logo_padding_top\n  assign logo_padding_bottom = section.settings.logo_padding_bottom\n  assign shadow = section.settings.shadow\n  assign scrolling_velocity = section.settings.scrolling_velocity\n  assign pause_hover = section.settings.pause_hover\n  assign slider_background_color = section.settings.slider_background_color\n  assign slider_gap_mobile = section.settings.slider_gap_mobile\n  assign slider_gap = section.settings.slider_gap\n  assign slider_direction = section.settings.slider_direction\n\n  assign icon_width =  section.settings.icon_width\n\n  assign lazy_load_setting = 'lazy'\n  unless lazy\n    assign lazy_load_setting = 'eager'\n  endunless\n\n-%}\n<style>\n\n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    margin-top: {{ margin_top | times: 0.85 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.85 | round: 0 }}px;\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n    {% if background_style == 'solid' %}\n      background-color:{{ background_color }};\n    {% else %}\n      background-image: {{ background_gradient }};\n    {% endif %}\n    border: {{ border_thickness }}px solid {{ border_color }};\n  }\n\n  @media screen and (min-width: 768px) {\n    .section-{{ section.id }}-settings {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n  }\n</style>\n\n<style>\n\n  {{ heading_font | font_face: font_display: 'swap' }}\n  \n  .scrolling-logo-cloud_{{ section.id }} {\n    margin-top: {{ sliders_mt | times: 0.85 | round: 0 }}px;\n  }\n\n  .scrolling-logo-cloud-title-{{ section.id }} {\n    width: 100%;\n    margin: 0px;\n    text-align: {{ header_align }};\n    padding: 0 15px;\n    font-size:{{ header_size | times: 0.75 | round: 0 }}px;\n    color: {{ header_color }};\n  }\n  \n  .scrolling-logo-cloud_placeholder {\n    width:100%;\n  }\n\n  .scrolling-logo-cloud_{{ section.id }} .slide-{{ section.id }} {\n    display: block;\n    flex: 0 0 {{ icon_width | times: 0.85 | round: 0 }}px;\n    width: 100%;\n  }\n  \n  .scrolling-logo-cloud_{{ section.id }} .slide-{{ section.id }} img,\n  .scrolling-logo-cloud_{{ section.id }} .slide-{{ section.id }} svg {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n  }\n\n  .marquee-horizontal-{{ section.id }} {\n      position: relative;\n      z-index: 1;\n      display: inline-flex;\n      overflow: hidden;\n      width: 100%;\n      -webkit-box-pack: start;\n      -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n      justify-content: flex-start;\n      -webkit-box-align: center;\n      -webkit-align-items: center;\n      -ms-flex-align: center;\n      align-items: center;\n  }\n\n  .marquee-horizontal-{{ section.id }}.reverse {\n    flex-direction: row-reverse;\n  }\n\n  .track-horizontal-{{section.id}} {\n      padding-left: {{ slider_gap_mobile }}px;\n      display: -webkit-box;\n      display: -webkit-flex;\n      display: -ms-flexbox;\n      display: flex;\n      flex-shrink: 0;\n      width: calc(({{ icon_width | times: 0.85 | round: 0 }}px * {{ section.blocks.size }}) + ({{ slider_gap_mobile }}px * {{ section.blocks.size }}));\n      gap: {{ slider_gap_mobile }}px;\n      -webkit-box-pack: start;\n      -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n      justify-content: flex-start;\n      -webkit-box-align: center;\n      -webkit-align-items: center;\n      -ms-flex-align: center;\n      align-items: center;\n      white-space: nowrap;\n      will-change: transform;\n      animation: marquee-horizontal-{{ slider_direction }} {{ scrolling_velocity | times: 1000 | round: 0 }}ms linear infinite;\n  }\n  \n  @keyframes marquee-horizontal-left {\n    0% {\n        transform: translateZ(0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translate3d(-100%,0,0);\n    }\n  }\n\n  @keyframes marquee-horizontal-right {\n    0% {\n        transform: translate3d(-100%,0,0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translateZ(0);\n    }\n  }\n\n  @media screen and (min-width: 768px) {\n    \n    .scrolling-logo-cloud-title-{{ section.id }} {\n      font-size:{{ header_size }}px;\n      color: {{ header_color }};\n    }\n  \n    .scrolling-logo-cloud_{{ section.id }} .slide-{{ section.id }} {\n      flex: 0 0 {{ icon_width }}px;\n      width: 100%;\n    }\n    \n    .track-horizontal-{{section.id}} {\n      padding-left: {{ slider_gap }}px;\n      width: calc(({{ icon_width }}px * {{ section.blocks.size }}) + ({{ slider_gap }}px * {{ section.blocks.size }}));\n      gap: {{ slider_gap }}px; \n    }\n  }\n\n  @media screen and (max-width: 767px) {\n    .scrolling-logo-cloud_{{ section.id }} {\n      padding: 0 15px;\n    }    \n  }\n\n  {% if pause_hover %}\n    .marquee-horizontal-{{ section.id }}:hover .track-horizontal-{{section.id}} {\n      animation-play-state: paused;\n    }\n  {% endif %}\n</style>\n\n{% if heading_custom %}\n  <style>\n    .scrolling-logo-cloud-title-{{ section.id }} {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if width == 'custom' %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% elsif width == 'page' %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: var(--page-width);\n    }\n  </style>\n{% endif %}\n\n{% capture loop %}\n  {%- for block in section.blocks -%}\n    {%- case block.type -%}\n      {%- when 'slide' -%}\n          <div class=\"slide-{{ section.id }}\">\n            {% if block.settings.link != blank %}<a href=\"{{ block.settings.link }}\" >{% endif %}\n              {%- if block.settings.image != blank -%}\n                {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                  {{ block.settings.image | image_url: width: 1000 | image_tag:\n                    loading: lazy_load_setting,\n                    width: block.settings.image.width,\n                    height: block.settings.image.height,\n                    sizes: sizes,\n                    widths: '180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048'\n                  }}\n              {%- else -%}\n                {{ 'product-2' | placeholder_svg_tag: 'scrolling-logo-cloud_placeholder' }}\n              {%- endif -%}\n            {% if block.settings.link != blank %}</a>{% endif %}\n          </div>\n    {%- endcase -%}\n  {%- endfor -%}\n{% endcapture %}\n\n{% if direction_rtl %}\n  <style>\n  .scrolling-logo-cloud-title-{{ section.id }} {\n    unicode-bidi: bidi-override !important;\n    direction: rtl !important;\n  }\n  </style>\n{% endif %}\n\n<section\n  class=\"section-{{ section.id }}-settings\"\n  data-section-id=\"{{ section.id }}\"\n\n  style=\"\n    --pt: {{ padding_top | times: 0.75 | round: 0 }}px;\n    --pt-desktop: {{ padding_top }}px;\n    --pb: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    --pb-desktop: {{ padding_bottom }}px;\n  \"\n>\n  <h2\n    class=\"scrolling-logo-cloud-title-{{ section.id }}\"\n    id=\"scrolling-logo-cloud\"\n    style=\"font-weight: 700;\"\n  >\n    {{ ss_title }}\n  </h2>\n  <div \n    class=\"scrolling-logo-cloud_{{ section.id }}\" id=\"custom-scrolling-logo-cloud\"\n    style=\"{% if shadow %} box-shadow: 4px 4px 20px rgba(191, 191, 191, 0.5);{% endif %}background: {{ slider_background_color }};padding:0;\n    padding-top:{{ logo_padding_top }}px;padding-bottom:{{ logo_padding_bottom }}px;\"\n    >\n    <div class=\"marquee-horizontal-{{ section.id }} marquee-{{ section.settings.direction }}\">\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {{ loop }}\n      </div>\n    </div>\n  </div>\n</section>\n\n<script>\n  function initScrollingLogoCloudPro() {\n    var htmlElement = document.documentElement;\n\n    if (window.getComputedStyle(htmlElement).getPropertyValue('direction') === 'rtl') {\n        document.querySelector('.marquee-horizontal-{{ section.id }}').classList.add('reverse');\n    }\n  }\n\n  document.addEventListener('DOMContentLoaded', initScrollingLogoCloudPro);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initScrollingLogoCloudPro);\n     document.addEventListener('shopify:section:load', initScrollingLogoCloudPro);\n  }\n</script>",
+  "variables": {
+    "ss_title": {
+      "type": "text",
+      "default": "Trusted by",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "header_size": {
+      "type": "text",
+      "default": "30",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "header_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "10",
+      "label": "Scrolling speed",
+      "description": "🐇 ———●——— 🐢"
+    },
+    "slider_direction": {
+      "type": "text",
+      "default": "left",
+      "label": "Direction",
+      "description": "Direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "false",
+      "label": "Pause on hover",
+      "description": "Pause on hover"
+    },
+    "shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Shadow",
+      "description": "Check this box to add shadow around the slider"
+    },
+    "slider_advanced": {
+      "type": "text",
+      "default": "false",
+      "label": "Advanced settings",
+      "description": "Advanced settings"
+    },
+    "sliders_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "logo_padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Useful for when logo cloud background color is different from section background color."
+    },
+    "logo_padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Useful for when logo cloud background color is different from section background color."
+    },
+    "slider_gap": {
+      "type": "text",
+      "default": "30",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "slider_gap_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "icon_width": {
+      "type": "text",
+      "default": "200",
+      "label": "Width",
+      "description": "Width"
+    },
+    "slider_background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "header_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Top",
+      "description": "Top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Top",
+      "description": "Top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Bottom",
+      "description": "Bottom"
+    },
+    "width": {
+      "type": "text",
+      "default": "full",
+      "label": "Width",
+      "description": "Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Content width",
+      "description": "Content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

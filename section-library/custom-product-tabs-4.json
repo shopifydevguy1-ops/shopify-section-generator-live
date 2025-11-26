@@ -1,0 +1,258 @@
+{
+  "id": "custom-product-tabs-4",
+  "name": "CUSTOM Product tabs #4",
+  "description": "Section: CUSTOM Product tabs #4",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n\n  assign tabs_position = section.settings.tabs_position\n  assign tabs_gap = section.settings.tabs_gap\n  assign tabs_gap_mobile = section.settings.tabs_gap_mobile\n\n  assign use_animation = section.settings.use_animation\n  \n  assign tab_text_custom = section.settings.tab_text_custom\n  assign tab_text_font = section.settings.tab_text_font\n  assign tab_text_size = section.settings.tab_text_size\n  assign tab_text_size_mobile = section.settings.tab_text_size_mobile  \n  assign tab_text_height = section.settings.tab_text_height\n  assign tab_text_color = section.settings.tab_text_color\n  assign tab_text_color_hover = section.settings.tab_text_color_hover\n  assign tab_padding_vertical = section.settings.tab_padding_vertical\n  assign tab_padding_vertical_mobile = section.settings.tab_padding_vertical_mobile\n  assign tab_padding_horizontal = section.settings.tab_padding_horizontal\n  assign tab_padding_horizontal_mobile = section.settings.tab_padding_horizontal_mobile\n\n  assign content_text_font = section.settings.content_text_font\n  assign content_text_custom = section.settings.content_text_custom\n  assign content_text_size = section.settings.content_text_size\n  assign content_text_size_mobile = section.settings.content_text_size_mobile\n  assign content_text_color = section.settings.content_text_color\n  assign content_text_height = section.settings.content_text_height\n  assign content_padding_vertical = section.settings.content_padding_vertical\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\n\n  assign arrow_size = section.settings.arrow_size\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n\n  assign line_color = section.settings.line_color\n  assign line_active_color = section.settings.line_active_color\n  assign line_thickness = section.settings.line_thickness\n  \n-%}\n\n{%- style -%}\n\n  {{  tab_text_font | font_face: font_display: 'swap' }}\n  {{  content_text_font | font_face: font_display: 'swap' }}  \n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .product-tabs-box-{{ section.id }} {\n    width: 100%;   \n    position: relative;\n  }\n\n  .product-tabs-box-{{ section.id }}::after {\n    content: '';\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: {{ line_thickness }}px;\n    background: {{ line_color }};\n    z-index: 0;\n  }\n\n  .product-tabs-btn-{{ section.id }} {\n    max-width: fit-content !important;\n    font-size: {{ tab_text_size_mobile }}px; \n    color: {{ tab_text_color }}; \n    line-height: {{ tab_text_height }}%;\n    background: none;\n    border: none;\n    padding: {{ tab_padding_vertical_mobile }}px {{ tab_padding_horizontal_mobile }}px; \n    cursor: pointer;\n    position: relative;\n    user-select: none;\n    transition: all 0.25s ease 0s;\n    -webkit-tap-highlight-color: transparent;\n  }\n\n  .product-tabs-btn-{{ section.id }}:hover {\n    color: {{ tab_text_color_hover }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .product-tabs-btn-{{ section.id }}::after {\n    content: '';\n    position: absolute;\n    bottom: 0px;\n    left: 0;\n    width: 100%;\n    height: {{ line_thickness }}px;\n    background: {{ line_active_color }};\n    z-index: 2;\n    opacity: 0;\n    transition: all 0.5s ease 0s;\n  }\n\n  .product-tabs-btn-{{ section.id }}.active::after {\n    opacity: 1;\n    transition: all 0.5s ease 0s;\n  }\n\n  .product-tabs-btn-{{ section.id }}:not(:last-child) {\n    margin-right: {{ tabs_gap_mobile }}px;\n  }\n\n  .product-tabs-content-box-{{ section.id }} {\n    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px; \n  }\n\n  .product-tabs-active-content {\n    display: inline-block !important;\n  }\n\n  .product-tabs-content-{{ section.id }} {\n    display: none;\n  }\n  \n  .product-tabs-content-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ content_text_size_mobile }}px;\n    color: {{ content_text_color }};\n    line-height: {{ content_text_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n  }\n\n  .product-tabs-wrapper-{{ section.id }} {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;    \n    gap: 10px;\n    position: relative;\n  }\n\n  .product-tabs-wrapper-{{ section.id }}::before,\n  .product-tabs-wrapper-{{ section.id }}::after {\n    content: \" \";\n    position: absolute;\n    opacity: 0;\n    -webkit-transition: opacity 0.2s ease-in-out;\n    transition: opacity 0.2s ease-in-out;\n    top: 0;\n    bottom: 0;\n    width: 20px;\n    pointer-events: none;\n    z-index: 2;\n  }\n\n  .product-tabs-wrapper-{{ section.id }}::before {\n    left: 0;\n    background: -webkit-gradient(linear, left top, right top, from({{ background_color }}), to(rgba(255, 255, 255, 0)));\n    background: linear-gradient(to right, {{ background_color }}, rgba(255, 255, 255, 0));\n  }\n\n  .product-tabs-wrapper-{{ section.id }}::after {\n    right: 0;\n    opacity: 1;\n    background: -webkit-gradient(linear, right top, left top, from({{ background_color }}), to(rgba(255, 255, 255, 0)));\n    background: linear-gradient(to left, {{ background_color }}, rgba(255, 255, 255, 0));\n  }\n\n  .product-tabs-wrapper-{{ section.id }}.not-first::before {\n    opacity: 1;\n  }\n\n  .product-tabs-wrapper-{{ section.id }}.last::after {\n    opacity: 0;\n  } \n\n  .product-tabs-button-prev-{{ section.id }},\n  .product-tabs-button-next-{{ section.id }}{\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: transparent;\n    border: 0px;\n    padding: 0px;\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    z-index: 2;\n    cursor: pointer;\n    width: {{ arrow_size }}px;\n  }\n\n  .product-tabs-button-prev-{{ section.id }} {\n    left: -{{ arrow_size }}px;\n  }\n\n  .product-tabs-button-next-{{ section.id }} {\n    right: -{{ arrow_size }}px;\n  }\n\n  .product-tabs-button-prev-{{ section.id }} svg,\n  .product-tabs-button-next-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .product-tabs-button-prev-{{ section.id }} path,\n  .product-tabs-button-next-{{ section.id }} path { \n    fill: {{ arrow_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .product-tabs-button-prev-{{ section.id }}:hover path,\n  .product-tabs-button-next-{{ section.id }}:hover path { \n    fill: {{ arrow_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .product-tabs-button-prev-{{ section.id }}.swiper-button-disabled,\n  .product-tabs-button-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0.3;\n  }\n\n\n  @media(min-width: 1024px) {\n    .section-{{ section.id }}-settings {\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n\n    .product-tabs-btn-{{ section.id }} {\n      font-size: {{ tab_text_size }}px;\n      padding: {{ tab_padding_vertical }}px {{ tab_padding_horizontal }}px; \n    }\n\n    .product-tabs-btn-{{ section.id }}:not(:last-child) {\n      margin-right: {{ tabs_gap }}px;\n    }\n\n    .product-tabs-content-box-{{ section.id }} {\n      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px; \n    }\n\n    .product-tabs-button-prev-{{ section.id }},\n    .product-tabs-button-next-{{ section.id }}{\n      display: flex;\n      opacity: 0;\n    }\n\n    .product-tabs-button-prev-{{ section.id }}.swiper-button-disabled,\n    .product-tabs-button-next-{{ section.id }}.swiper-button-disabled {\n      opacity: 0;\n    }\n\n    .product-tabs-button-prev-{{ section.id }}.swiper-button-lock,\n    .product-tabs-button-next-{{ section.id }}.swiper-button-lock {\n      display: none;\n    }\n\n    .product-tabs-wrapper-{{ section.id }}:hover .product-tabs-button-prev-{{ section.id }},\n    .product-tabs-wrapper-{{ section.id }}:hover .product-tabs-button-next-{{ section.id }}{\n      opacity: 1;\n      transition: all 0.25s ease 0s;\n    }\n\n    .product-tabs-wrapper-{{ section.id }}:hover .product-tabs-button-prev-{{ section.id }}.swiper-button-disabled,\n    .product-tabs-wrapper-{{ section.id }}:hover .product-tabs-button-next-{{ section.id }}.swiper-button-disabled {\n      opacity: 0.3;\n      transition: all 0.25s ease 0s;\n    }\n\n    .product-tabs-button-prev-{{ section.id }} {\n      display: none;\n    }\n\n    .product-tabs-wrapper-{{ section.id }}.not-first .product-tabs-button-prev-{{ section.id }} {\n      display: flex;\n    }\n    \n    .product-tabs-content-{{ section.id }} * {\n      font-size: {{ content_text_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% if tab_text_custom %}\n  <style>\n    .product-tabs-btn-{{ section.id }} {\n      font-family: {{ tab_text_font.family }}, {{ tab_text_font.fallback_families }};\n      font-weight: {{ tab_text_font.weight }};\n      font-style: {{ tab_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if content_text_custom %}\n  <style>\n    .product-tabs-content-{{ section.id }} * {\n      font-family: {{ content_text_font.family }}, {{ content_text_font.fallback_families }};\n      font-weight: {{ content_text_font.weight }};\n      font-style: {{ content_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if use_animation %}\n  <style>\n    .product-tabs-content-{{ section.id }} {\n      animation: moving .8s ease;    \n    }\n\n    @keyframes moving {\n      from { \n        transform: translateX(50px); \n        opacity: 0;\n      }\n      to { \n        transform: translateX(0px); \n        opacity: 1;\n      }\n    } \n  </style>\n{% endif %}\n\n<script>\n  window.addEventListener('DOMContentLoaded', (event) => {       \n    var productForm = document.querySelector('#custom-product-tabs-4');\n\n    if (!productForm){\n      var productForm = document.querySelector('{% if tabs_position == \"below_title\" or tabs_position == \"above_title\" %}.product__title{% elsif tabs_position == \"below_description\" or tabs_position == \"above_description\" %}.product__description{% elsif tabs_position == \"below_price\" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n      if (!productForm) return;\n    }\n\n    const templateContent =  document.querySelector('#custom-product-tabs-4-{{ section.id }}').content\n\n    productForm.insertAdjacentElement('{% if tabs_position == \"below_buy\" or tabs_position == \"below_title\" or tabs_position == \"below_description\" or tabs_position == \"below_price\" %}afterend{% else %}beforebegin{% endif %}', templateContent.firstElementChild)\n  })  \n</script>\n\n<template id=\"custom-product-tabs-4-{{ section.id }}\">\n  <div class=\"section-{{ section.id }} product-tabs-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n          <div class=\"product-tabs-wrapper-{{ section.id }}\">\n            <div class=\"product-tabs-button-prev-{{ section.id }}\">\n              <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                <path d=\"M14.2893 5.70708C13.8988 5.31655 13.2657 5.31655 12.8751 5.70708L7.98768 10.5993C7.20729 11.3805 7.2076 12.6463 7.98837 13.427L12.8787 18.3174C13.2693 18.7079 13.9024 18.7079 14.293 18.3174C14.6835 17.9269 14.6835 17.2937 14.293 16.9032L10.1073 12.7175C9.71678 12.327 9.71678 11.6939 10.1073 11.3033L14.2893 7.12129C14.6799 6.73077 14.6799 6.0976 14.2893 5.70708Z\" fill=\"#0F0F0F\"/>\n              </svg>\n            </div>           \n            <div class=\"swiper product-tabs-box-{{ section.id }}\">\n              <div class=\"swiper-wrapper\">\n                {% for block in section.blocks %}                \n                <div class=\"swiper-slide product-tabs-btn-{{ section.id }} {% if forloop.first %}active{% endif %}\">{{ block.settings.btn_text }}</div>                   \n                {% endfor %}  \n              </div>             \n            </div> \n            <div class=\"product-tabs-button-next-{{ section.id }}\">\n              <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                <path d=\"M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z\" fill=\"#0F0F0F\"/>\n              </svg>\n            </div> \n          </div>                  \n          <div class=\"product-tabs-content-box-{{ section.id }}\">\n            {% for block in section.blocks %}\n              <div class=\"product-tabs-content-{{ section.id }}\">\n                {% if block.settings.use_description %}\n                  {{ product.content }}\n                {% else %}\n                {{ block.settings.text }}\n                {% endif %}\n              </div>\n            {% endfor %}\n          </div>\n    </div>\n  </div>\n</template>\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n                  \n<script>\n  function tabsInit() {\n    setTimeout(() => {\n      let btnNext = document.querySelector('.product-tabs-button-next-{{ section.id }}');\n      let sliderWrapper = document.querySelector('.product-tabs-wrapper-{{ section.id }}');\n      if(btnNext) {\n        btnNext.addEventListener('click', () => {\n          sliderWrapper.classList.add('not-first');\n        })\n        \n        const observer = new MutationObserver((mutations) => {  \n          mutations.forEach((mutation) => {  \n            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {  \n              if (btnNext.classList.contains('swiper-button-disabled')) {  \n                sliderWrapper.classList.add('last');  \n              } else {  \n                sliderWrapper.classList.remove('last');  \n              }  \n            }  \n          });  \n        });\n\n        const config = {  \n          attributes: true, \n          childList: false,\n          subtree: false\n        };  \n        observer.observe(btnNext, config);\n      }\n      \n      const slider = new Swiper(\".product-tabs-box-{{ section.id }}\", {\n        slidesPerView: 'auto',\n        speed: 300,  \n        navigation: {\n          nextEl: \".product-tabs-button-next-{{ section.id }}\",\n          prevEl: \".product-tabs-button-prev-{{ section.id }}\",\n        },\n        on: {\n          slideChange: function () {\n\n            sliderWrapper.classList.add('not-first');\n            \n            const prevBtn = document.querySelector(\".product-tabs-button-prev-{{ section.id }}\");\n            if(prevBtn.classList.contains('swiper-button-disabled')) {\n              sliderWrapper.classList.remove('not-first');\n            }\n            \n\n            const nextBtn = document.querySelector(\".product-tabs-button-next-{{ section.id }}\");\n            if(nextBtn.classList.contains('swiper-button-disabled')) {\n              sliderWrapper.classList.add('last');\n            }\n          }\n        }\n      });\n      \n      const tabs = document.querySelectorAll('.product-tabs-btn-{{ section.id }}');\n      const allContent = document.querySelectorAll('.product-tabs-content-{{ section.id }}');\n\n      if (tabs) {\n        allContent[0].classList.add('product-tabs-active-content'); \n\n        tabs.forEach((tab, index) => {\n          tab.addEventListener('click', (e) => {\n            tabs.forEach(tab => {tab.classList.remove('active')});\n            tab.classList.add('active');\n            \n            allContent.forEach(content => { content.classList.remove('product-tabs-active-content')})\n            allContent[index].classList.add('product-tabs-active-content')\n\n            slider.slideTo(index);\n          })\n        })\n      }   \n    }, 400)\n  }\n\n  document.addEventListener('DOMContentLoaded', tabsInit);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', tabsInit);\n     document.addEventListener('shopify:section:load', tabsInit);\n  }\n</script>",
+  "variables": {
+    "tabs_position": {
+      "type": "text",
+      "default": "below_buy",
+      "label": "Position",
+      "description": "Position"
+    },
+    "tabs_gap": {
+      "type": "text",
+      "default": "0",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "tabs_gap_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "use_animation": {
+      "type": "text",
+      "default": "false",
+      "label": "Use text slide-in animation",
+      "description": "Use text slide-in animation"
+    },
+    "tab_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "tab_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "tab_text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "tab_text_size_mobile": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "tab_text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "tab_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "tab_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "tab_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "tab_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "content_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "content_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "content_text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "content_text_size_mobile": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "content_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "content_padding_vertical": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "content_padding_vertical_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "arrow_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Size",
+      "description": "Size"
+    },
+    "line_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Line thickness",
+      "description": "Line thickness"
+    },
+    "tab_text_color": {
+      "type": "color",
+      "default": "#717171",
+      "label": "Title",
+      "description": "Title"
+    },
+    "tab_text_color_hover": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Title hover",
+      "description": "Title hover"
+    },
+    "content_text_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Text",
+      "description": "Text"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Arrow",
+      "description": "Arrow"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Arrow hover",
+      "description": "Arrow hover"
+    },
+    "line_color": {
+      "type": "color",
+      "default": "#E5E5E5",
+      "label": "Default",
+      "description": "Default"
+    },
+    "line_active_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Active",
+      "description": "Active"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

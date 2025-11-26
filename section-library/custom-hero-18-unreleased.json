@@ -1,0 +1,342 @@
+{
+  "id": "custom-hero-18-unreleased",
+  "name": "CUSTOM Hero #18",
+  "description": "Section: CUSTOM Hero #18",
+  "tags": [
+    "hero"
+  ],
+  "type": "hero",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign content_align = section.settings.content_align\n  assign content_align_mobile = section.settings.content_align_mobile\n  assign content_padding_horizontal = section.settings.content_padding_horizontal\n  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile\n\n  assign content_horizontal_align = \"\"\n  if content_align == \"center\"\n    assign content_horizontal_align = \"center\"\n  elsif content_align == \"right\"\n    assign content_horizontal_align = \"end\"\n  else\n    assign content_horizontal_align = \"start\"\n  endif\n\n  assign content_horizontal_align_mobile = \"\"\n  if content_align_mobile == \"center\"\n    assign content_horizontal_align_mobile = \"center\"\n  elsif content_align_mobile == \"right\"\n    assign content_horizontal_align_mobile = \"end\"\n  else\n    assign content_horizontal_align_mobile = \"start\"\n  endif\n\n  assign heading = section.settings.heading\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_height = section.settings.heading_height\n  assign heading_color = section.settings.heading_color\n  assign heading_animation_color = section.settings.heading_animation_color\n\n  assign button = section.settings.button\n  assign button_url = section.settings.button_url\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n  assign button_style = section.settings.button_style\n  assign button_mt = section.settings.button_mt\n  assign button_mt_mobile = section.settings.button_mt_mobile\n\n  assign image = section.settings.image\n  assign image_radius = section.settings.image_radius\n  assign image_radius_mobile = section.settings.image_radius_mobile\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n-%}\n\n{%- style -%}\n  {{ heading_font | font_face: font_display: 'swap' }}\n  {{ button_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .hero-body-{{ section.id }} {\n    position: relative;\n    min-height: 100vh;\n    min-height: 100svh;\n  }\n\n  .hero-wrap-{{ section.id }} {\n    position: absolute;\n    top: 0;\n    right: 0;\n    z-index: 2;\n    width: 100%;\n    height: 100%;\n  }\n\n  .hero-content-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    align-items: {{ content_horizontal_align_mobile }};\n    width: 100%;\n    padding: 0px {{ content_padding_horizontal_mobile }}px;\n    position: sticky;\n    top: 80px;\n    height: calc(75svh - 80px);\n  }\n\n  .hero-heading-{{ section.id }} {        \n    width: 100%;\n    text-align: {{ content_align_mobile }};\n  }\n\n  .hero-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }   \n  \n  .hero-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    max-width: fit-content;\n    gap: 10px;\n    width: 100%;    \n    margin-top: {{ button_mt_mobile }}px;\n    font-size: {{ button_size_mobile }}px;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    transition: all 0.25s ease 0s;\n    background-color: transparent;\n    border: 0px;\n    cursor: pointer;\n  }\n\n  .hero-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .hero-button-{{ section.id }}:hover {\n    color: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .hero-button-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n\n  .hero-button-{{ section.id }} svg path {\n    fill: {{ button_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .hero-button-{{ section.id }}:hover svg path {\n    fill: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .hero-image-body-{{ section.id }} {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n  }\n\n  .hero-image-{{ section.id }} {\n    width: 100%;\n    height: 100%;\n    overflow: hidden;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-top-left-radius: {{ image_radius_mobile }}px;\n    border-top-right-radius: {{ image_radius_mobile }}px; \n    transform: translateY(35%) scale(0.7);\n  }\n\n  .hero-image-{{ section.id }} img,\n  .hero-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .hero-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n  \n  @media(min-width: 768px) {\n\n    .hero-content-{{ section.id }} {\n      height: calc(50svh - 80px);\n    }\n    \n    .hero-body-{{ section.id }} {\n      height: 100%;\n    }\n\n    .hero-image-{{ section.id }} {\n      transform: translateY(50%) scale(0.7);\n    }\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }    \n    \n    .hero-content-{{ section.id }} {\n      align-items: {{ content_horizontal_align }};\n      padding: 0px {{ content_padding_horizontal }}px;\n      height: calc(70svh - 80px);\n    }\n\n    .hero-image-{{ section.id }} {\n      transform: translateY(35%) scale(0.6);\n    }\n\n    .hero-heading-{{ section.id }} {\n      text-align: {{ content_align }};\n    }\n  \n    .hero-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n    }\n\n    .hero-button-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n      font-size: {{ button_size }}px;\n    }\n\n    .hero-image-{{ section.id }} {\n      border-top-left-radius: {{ image_radius }}px;\n      border-top-right-radius: {{ image_radius }}px; \n    }\n  }\n\n  @media(min-width: 1440px) {\n    .hero-image-{{ section.id }} {\n      transform: translateY(25%) scale(0.8);\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .hero-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .hero-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\n  <style>\n    .hero-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n    }\n\n    .hero-button-{{ section.id }}:hover {\n      transition: all 0.25s ease 0s;\n      background-color: {{ button_bg_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"outline\" or button_style == \"outline_arrow\" %}\n  <style>\n    .hero-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    }\n\n    .hero-button-{{ section.id }}:hover {\n      transition: all 0.25s ease 0s;\n      background-color: {{ button_bg_hover_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"link\" %}\n  <style>\n    .hero-button-{{ section.id }} {\n      padding: 0px !important;\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} hero-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"hero-body-{{ section.id }}\">\n        <div class=\"hero-wrap-{{ section.id }}\">\n          <div class=\"hero-content-{{ section.id }}\">\n            {% if heading != blank %}\n              <div class=\"hero-heading-{{ section.id }}\">{{ heading }}</div>\n            {% endif %}\n            {% if button != blank %}\n              <{% if button_url != blank %}a href=\"{{ button_url }}\"{% else %}div{% endif %} class=\"hero-button-{{ section.id }}\">\n                <p class=\"hero-button-inner-{{ section.id }}\">\n                {{ button }}\n                  {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\n                    <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                      <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                      <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                    </svg>\n                  {% endif %}\n                </p>\n              </{% if button_url != blank %}a{% else %}div{% endif %}>\n            {% endif %}  \n          </div>\n        </div>      \n        <div class=\"hero-image-body-{{ section.id }}\">\n          <div class=\"hero-image-{{ section.id }}\">\n            {% if image != blank %}\n              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n            {% else %}\n              {{ 'image' | placeholder_svg_tag }}\n            {% endif %}\n          </div>\n        </div>  \n      </div>          \n    </div>\n</div>\n\n<script>\nfunction initHero18() {\n    const heroSection = document.querySelector('.section-{{ section.id }}');\n    const heroImage = document.querySelector('.hero-image-{{ section.id }}');\n    const heroContent = document.querySelector('.hero-content-{{ section.id }}');\n    const heroHeading = document.querySelector('.hero-heading-{{ section.id }} *');\n\n    const initialTransform = getComputedStyle(heroImage).transform;\n    let initialScale = 1;\n    let initialTranslateY = 0;\n    let currentProgress = 0;\n\n    if (initialTransform !== 'none') {\n        const matrixValues = initialTransform.match(/matrix.*\\((.+)\\)/)[1].split(', ');\n        initialScale = parseFloat(matrixValues[0]);\n        initialTranslateY = parseFloat(matrixValues[5]);\n    }\n\n    const initialBorderRadius = {\n        topLeft: parseInt(getComputedStyle(heroImage).borderTopLeftRadius, 10) || 0,\n        topRight: parseInt(getComputedStyle(heroImage).borderTopRightRadius, 10) || 0\n    };\n\n    const initialHeadingColor = '{{ heading_color }}';\n    const finalHeadingColor = '{{ heading_animation_color }}';\n\n    function mixColors(color1, color2, percentage) {\n        const r1 = parseInt(color1.slice(1, 3), 16);\n        const g1 = parseInt(color1.slice(3, 5), 16);\n        const b1 = parseInt(color1.slice(5, 7), 16);\n        \n        const r2 = parseInt(color2.slice(1, 3), 16);\n        const g2 = parseInt(color2.slice(3, 5), 16);\n        const b2 = parseInt(color2.slice(5, 7), 16);\n        \n        const r = Math.round(r1 + (r2 - r1) * percentage);\n        const g = Math.round(g1 + (g2 - g1) * percentage);\n        const b = Math.round(b1 + (b2 - b1) * percentage);\n        \n        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;\n    }\n\n    function lerp(start, end, factor) {\n        return start + (end - start) * factor;\n    }\n\n    function updateAnimation() {\n        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;\n        const windowHeight = window.innerHeight;\n        const windowWidth = window.innerWidth;\n        \n        const sectionRect = heroSection.getBoundingClientRect();\n        const sectionTop = sectionRect.top;\n        const sectionBottom = sectionRect.bottom;\n        \n        if (sectionBottom < 0 || sectionTop > windowHeight) {\n            return;\n        }\n        \n        const animationDistance = windowHeight * 0.75;\n        const targetProgress = Math.min(Math.max(scrollTop / animationDistance, 0), 1);\n        \n        currentProgress = lerp(currentProgress, targetProgress, 0.03);\n        \n        const smoothProgress = currentProgress * currentProgress * (3 - 2 * currentProgress);\n        const imageProgress = Math.min(smoothProgress * 2, 1);\n\n        const currentScale = initialScale + (1 - initialScale) * imageProgress;\n        const currentTranslateY = initialTranslateY * (1 - imageProgress);\n        heroImage.style.transform = `translate3d(0, ${currentTranslateY}px, 0) scale(${currentScale})`;\n\n        const currentBorderRadius = {\n            topLeft: initialBorderRadius.topLeft * (1 - imageProgress),\n            topRight: initialBorderRadius.topRight * (1 - imageProgress)\n        };\n        heroImage.style.borderTopLeftRadius = `${currentBorderRadius.topLeft}px`;\n        heroImage.style.borderTopRightRadius = `${currentBorderRadius.topRight}px`;\n\n        const currentColor = mixColors(initialHeadingColor, finalHeadingColor, imageProgress);\n        heroHeading.style.color = currentColor;\n\n        if (windowWidth >= 1024) {\n            const contentRect = heroContent.getBoundingClientRect();\n            const maxContentTranslate = Math.min(15, (sectionBottom - contentRect.height) / 2);\n\n            if (sectionTop <= contentRect.top && contentRect.bottom <= sectionBottom) {\n                const contentTranslateY = Math.min(maxContentTranslate * smoothProgress, maxContentTranslate);\n                heroContent.style.transform = `translate3d(0, ${contentTranslateY}%, 0)`;\n            }\n        } else {\n            heroContent.style.transform = 'none';\n        }\n\n        requestAnimationFrame(updateAnimation);\n    }\n\n    function onScroll() {\n        requestAnimationFrame(updateAnimation);\n    }\n\n    window.addEventListener('scroll', onScroll, { passive: true });\n    updateAnimation();\n    \n    return () => {\n        window.removeEventListener('scroll', onScroll);\n    };\n}\n\ndocument.addEventListener('DOMContentLoaded', initHero18);\n\nif (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initHero18);\n    document.addEventListener('shopify:section:load', initHero18);\n}\n</script>",
+  "variables": {
+    "content_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "content_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Hero #18</h2>",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "80",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "60",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button": {
+      "type": "text",
+      "default": "Shop now",
+      "label": "Button label",
+      "description": "Leave the label blank to hide the button."
+    },
+    "button_url": {
+      "type": "text",
+      "default": "",
+      "label": "URL",
+      "description": "URL"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "button_mt_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "button_style": {
+      "type": "text",
+      "default": "outline",
+      "label": "Button style",
+      "description": "Button style"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "320",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_radius_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Roundness - mobile",
+      "description": "Roundness - mobile"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#FFCE70",
+      "label": "Background",
+      "description": "Background"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#FFCE70",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#FFCE70",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#FFCE70",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_animation_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Heading animation",
+      "description": "Heading animation"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "100",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "false",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "id": "tech-product-slider",
+  "name": "CUSTOM Tech Product Slider",
+  "description": "Section: CUSTOM Tech Product Slider",
+  "tags": [
+    "tech",
+    "product",
+    "slider"
+  ],
+  "type": "product",
+  "liquid_code": "<style>\n  .section-{{ section.id }}-padding {\n    max-width: var(--max-width);\n    margin: 0 auto;\n    padding: 0 1.5rem;\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 5rem;\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n  }\n</style>\n\n<style>\n  /*\n  .tech-product-slider .swiper {\n    padding-bottom: var(--pb);\n  }\n  @media screen and (min-width: 750px) {\n    .tech-product-slider .swiper {\n      padding-bottom: var(--pb-desktop);\n    }\n  }\n  */\n  .font-size-scale-075-on-mobile,\n  .font-size-scale-075-on-mobile p {\n    font-size: calc(var(--font-size) * 0.75);\n    color: var(--font-color);\n    margin: 0;\n  }\n  @media screen and (min-width: 750px) {\n    .font-size-scale-075-on-mobile,\n    .font-size-scale-075-on-mobile p {\n      font-size: var(--font-size);\n    }\n  }\n  .tech-product-slider-inner {\n    position: relative;\n    --swiper-navigation-sides-offset: 12px;\n  }\n  @media screen and (min-width: 750px) {\n    .tech-product-slider-inner {\n      --swiper-navigation-sides-offset: -24px;\n    }\n  }\n  .tech-product-slider .swiper-button-prev svg,\n  .tech-product-slider .swiper-button-prev img,\n  .tech-product-slider .swiper-button-next svg,\n  .tech-product-slider .swiper-button-next img {\n    height: auto;\n    display: block;\n    width: 100%;\n  }\n  .tech-product-slider .swiper-button-prev,\n  .tech-product-slider .swiper-button-next {\n    height: auto;\n    margin-top: unset;\n    transform: translateY(-50%);\n  }\n  .tech-product-slider .swiper-button-prev:after,\n  .tech-product-slider .swiper-button-next:after {\n    content: '';\n  }\n  .tech-product-slider .swiper-button-next.swiper-button-disabled,\n  .tech-product-slider .swiper-button-prev.swiper-button-disabled {\n    opacity: 0;\n  }\n\n  .tech-product-slider .swiper-slide {\n    height: auto;\n    text-align: center;\n    transition: 0.2s ease;\n  }\n\n  {% if section.settings.hover_effect %}\n    .tech-product-slider-{{ section.id }} .swiper-slide:hover {\n      transform: scale(1.05);\n      transition: 0.2s ease;\n    }\n  {% endif %}\n\n  @media screen and (min-width: 750px) {\n    .tech-product-slider .swiper-slide-not-in-view {\n      opacity: 0;\n    }\n  }\n\n  .tech-product-slider-{{ section.id }} .tech-product-slider-product-url {\n    all: unset;\n    cursor: pointer;\n    padding: 25px 10px 25px;\n    display: flex;\n    flex-direction: column;\n    gap: 25px;\n    justify-content: space-between;\n    height: 100%;\n    box-sizing: border-box;\n    background: #ffffff;\n    border-radius: {{section.settings.card_radius}}px;\n    overflow: hidden;\n    {% if section.settings.shadow %}\n      box-shadow: 4px 4px 20px rgba(191, 191, 191, 0.5); \n    {% endif %}\n  }\n  .tech-product-slider-product-image {\n    width: 100%;\n    object-fit: contain;\n    margin: 0 auto;\n  }\n</style>\n\n{% if section.settings.hide_arrows_on_mobile == true %}\n  <style>\n    .tech-product-slider-{{ section.id }} .swiper-button-prev,\n    .tech-product-slider-{{ section.id }} .swiper-button-next {\n      display: none;\n    }\n    @media screen and (min-width: 750px) {\n      .tech-product-slider-{{ section.id }} .swiper-button-prev,\n      .tech-product-slider-{{ section.id }} .swiper-button-next {\n        display: block;\n      }\n    }\n  </style>\n{% endif %}\n\n<div\n  style=\"\n    background-color:{{ section.settings.background-color }};\n    --max-width: {{ section.settings.section-width }}rem;\n    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    --pt-desktop: {{ section.settings.padding_top }}px;\n    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n    --pb-desktop: {{ section.settings.padding_bottom }}px;\n  \"\n>\n  <div class=\"\">\n    <div\n      class=\"tech-product-slider tech-product-slider-{{ section.id }}\" id=\"tech-slider\"\n    >\n      {% if section.settings.title != blank %}\n        <div\n          class=\"page-width section-{{ section.id }}-padding\"\n          style=\"margin-bottom: 0px; padding-bottom: 0;\"\n        >\n          {% if section.settings.title_link != blank %}\n            <a\n              href=\"{{ section.settings.title_link }}\"\n              class=\"font-size-scale-075-on-mobile\"\n              style=\"\n                color: {{ section.settings.title_color }};\n                --font-size: {{ section.settings.title_font_size }}px;\n                font-weight: 700;\n                text-decoration: none;\n                text-align: {{ section.settings.title_alignment }};\n                width: 100%;\n                display: block;\n              \"\n            >\n              {{ section.settings.title }}\n            </a>\n          {% else %}\n            <div\n              class=\"font-size-scale-075-on-mobile\"\n              style=\"\n                color: {{ section.settings.title_color }};\n                --font-size: {{ section.settings.title_font_size }}px;\n                font-weight: 700;\n                text-decoration: none;\n                text-align: {{ section.settings.title_alignment }};\n                width: 100%;\n                display: block;\n              \"\n            >\n              {{ section.settings.title }}\n            </div>\n          {% endif %}\n        </div>\n      {% endif %}\n      <div class=\"tech-product-slider-inner\">\n        <div\n          class=\"page-width section-{{ section.id }}-padding\"\n          style=\"padding-top: 12px;\"\n        >\n          <div\n            class=\"swiper swiper-{{ section.id }}\"\n            style=\"overflow: visible;\"\n          >\n            <div class=\"swiper-wrapper\">\n              {% for block in section.blocks %}\n                {% assign product = block.settings.product %}\n                <div class=\"swiper-slide\">\n                  {% assign image = product.featured_image %}\n                  {% if block.settings.image != blank %}\n                    {% assign image = block.settings.image %}\n                  {% endif %}\n                  <a\n                    href=\"{{ product.url }}\"\n                    class=\"tech-product-slider-product-url\"\n                  >\n                    {% comment %} overwrite title if possible: {% endcomment %}\n                    {% if block.settings.title != blank %}\n                      {% assign product_title = block.settings.title %}\n                    {% else %}\n                      {% assign product_title = product.title %}\n                    {% endif %}\n                    <div\n                      class=\"font-size-scale-075-on-mobile\"\n                      style=\"\n                        color: {{ section.settings.product_title_color }};\n                        --font-size: {{ section.settings.product_title_font_size }}px;\n                        font-weight: 700;\n                      \"\n                    >\n                      {{- product_title -}}\n                    </div>\n                    {% if image != blank %}\n                      <img\n                        class=\"tech-product-slider-product-image\"\n                        src=\"{{ image | img_url: '500x' }}\"\n                        srcset=\"\n                          {{ image | img_url: '300x' }} 500w,\n                          {{ image | img_url: '500x' }} 800w,\n                          {{ image | img_url: '800x' }} 1200w,\n                          {{ image | img_url: 'master' }} 2400w\n                        \"\n                        alt=\"{{ image.alt }}\"\n                        style=\"width: {{ block.settings.image_width }}%\"\n                      >\n                    {% endif %}\n                    <div\n                      class=\"font-size-scale-075-on-mobile\"\n                      style=\"\n                        --font-color: {{ section.settings.product_price_color }};\n                        --font-size: {{ section.settings.product_price_font_size }}px;\n                      \"\n                    >\n                      {% if block.settings.price == blank %}\n                        From <strong>{{ product.price_min | money }}</strong>\n                      {% else %}\n                        {{ block.settings.price }}\n                      {% endif %}\n                    </div>\n                  </a>\n                </div>\n              {% endfor %}\n            </div>\n            <div\n              class=\"swiper-button-prev-{{ section.id }} swiper-button-prev\"\n              style=\"width: {{ section.settings.icon_size }}px\"\n            >\n              {% if section.settings.icon_left != blank %}\n                <img\n                  src=\"{{ section.settings.icon_left | img_url: '50x' }}\"\n                  alt=\"{{ section.settings.icon_left.alt }}\"\n                  style=\"width: {{ section.settings.icon_size }}px\"\n                >\n              {% else %}\n                <svg\n                  xmlns=\"http://www.w3.org/2000/svg\"\n                  width=\"42\"\n                  height=\"42\"\n                  viewBox=\"0 0 42 42\"\n                  fill=\"none\"\n                  style=\"transform: rotate(180deg);\"\n                >\n                  <circle cx=\"21.1716\" cy=\"21.2717\" r=\"20.1033\" fill=\"white\" stroke=\"black\"/>\n                  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.2157 16.4383C18.1572 16.4887 18.1108 16.5486 18.0792 16.6145C18.0475 16.6804 18.0312 16.7511 18.0312 16.8224C18.0312 16.8938 18.0475 16.9644 18.0792 17.0303C18.1108 17.0962 18.1572 17.1561 18.2157 17.2065L22.7942 21.1623L18.2157 25.1182C18.0978 25.22 18.0316 25.3582 18.0316 25.5022C18.0316 25.6463 18.0978 25.7845 18.2157 25.8863C18.3335 25.9882 18.4934 26.0454 18.6601 26.0454C18.8268 26.0454 18.9866 25.9882 19.1045 25.8863L24.1262 21.5464C24.1846 21.496 24.231 21.4362 24.2626 21.3702C24.2943 21.3043 24.3106 21.2337 24.3106 21.1623C24.3106 21.091 24.2943 21.0203 24.2626 20.9544C24.231 20.8885 24.1846 20.8286 24.1262 20.7782L19.1045 16.4383C19.0462 16.3878 18.9769 16.3477 18.9007 16.3204C18.8244 16.293 18.7426 16.279 18.6601 16.279C18.5775 16.279 18.4958 16.293 18.4195 16.3204C18.3432 16.3477 18.274 16.3878 18.2157 16.4383Z\" fill=\"#121212\" fill-opacity=\"0.75\"/>\n                </svg>\n              {% endif %}\n            </div>\n            <div\n              class=\"swiper-button-next-{{ section.id }} swiper-button-next\"\n              style=\"width: {{ section.settings.icon_size }}px\"\n            >\n              {% if section.settings.icon_right != blank %}\n                <img\n                  src=\"{{ section.settings.icon_right | img_url: '50x' }}\"\n                  alt=\"{{ section.settings.icon_right.alt }}\"\n                  style=\"width: {{ section.settings.icon_size }}px\"\n                >\n              {% else %}\n                <svg\n                  xmlns=\"http://www.w3.org/2000/svg\"\n                  width=\"42\"\n                  height=\"42\"\n                  viewBox=\"0 0 42 42\"\n                  fill=\"none\"\n                >\n                  <circle cx=\"21.1716\" cy=\"21.2717\" r=\"20.1033\" fill=\"white\" stroke=\"black\"/>\n                  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.2157 16.4383C18.1572 16.4887 18.1108 16.5486 18.0792 16.6145C18.0475 16.6804 18.0312 16.7511 18.0312 16.8224C18.0312 16.8938 18.0475 16.9644 18.0792 17.0303C18.1108 17.0962 18.1572 17.1561 18.2157 17.2065L22.7942 21.1623L18.2157 25.1182C18.0978 25.22 18.0316 25.3582 18.0316 25.5022C18.0316 25.6463 18.0978 25.7845 18.2157 25.8863C18.3335 25.9882 18.4934 26.0454 18.6601 26.0454C18.8268 26.0454 18.9866 25.9882 19.1045 25.8863L24.1262 21.5464C24.1846 21.496 24.231 21.4362 24.2626 21.3702C24.2943 21.3043 24.3106 21.2337 24.3106 21.1623C24.3106 21.091 24.2943 21.0203 24.2626 20.9544C24.231 20.8885 24.1846 20.8286 24.1262 20.7782L19.1045 16.4383C19.0462 16.3878 18.9769 16.3477 18.9007 16.3204C18.8244 16.293 18.7426 16.279 18.6601 16.279C18.5775 16.279 18.4958 16.293 18.4195 16.3204C18.3432 16.3477 18.274 16.3878 18.2157 16.4383Z\" fill=\"#121212\" fill-opacity=\"0.75\"/>\n                </svg>\n              {% endif %}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<script>\n  // load the swiper css and js only once:\n  (function () {\n    const cssId = 'swiper-css';\n    let existingLink = document.getElementById(cssId);\n    if (!existingLink) {\n      let link = document.createElement('link');\n      link.href = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css';\n      link.rel = 'stylesheet';\n      link.id = cssId;\n      let head = document.getElementsByTagName('head')[0];\n      head.appendChild(link);\n    }\n    const jsId = 'swiper-js';\n    let existingScript = document.getElementById(jsId);\n    if (!existingScript) {\n      let script = document.createElement('script');\n      script.src = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js';\n      script.id = jsId;\n      script.defer = true;\n      // fire a custom event when the script is loaded:\n      script.onload = function () {\n        let event = new Event('swiper:loaded');\n        document.dispatchEvent(event);\n      };\n      let head = document.getElementsByTagName('head')[0];\n      head.appendChild(script);\n    }\n\n    function loadSwiper() {\n      let swiper;\n      try {\n        swiper = new Swiper('.swiper-{{ section.id }}', {\n          slidesPerView: 1.6,\n          spaceBetween: 10,\n          navigation: {\n            nextEl: '.swiper-button-next-{{ section.id }}',\n            prevEl: '.swiper-button-prev-{{ section.id }}',\n          },\n          breakpoints: {\n            750: {\n              slidesPerView: 5,\n              spaceBetween: 20,\n            },\n          },\n        });\n\n        function updateSlidesVisibility(swiper) {\n          let activeSlide = document.querySelector(\n            '.swiper-{{ section.id }} .swiper-slide-active'\n          );\n          let slides = document.querySelectorAll(\n            '.swiper-{{ section.id }} .swiper-slide'\n          );\n          let activeIndex = swiper.activeIndex;\n          slides.forEach((slide, index) => {\n            if (slide === activeSlide) {\n              slide.classList.remove('swiper-slide-not-in-view');\n              activeIndex = index;\n              console.log('activeIndex', activeIndex);\n            } else if (\n              index === activeIndex + 1 ||\n              index === activeIndex + 2 ||\n              index === activeIndex + 3 ||\n              index === activeIndex + 4\n            ) {\n              slide.classList.remove('swiper-slide-not-in-view');\n              console.log('in view index: ' + index);\n            } else {\n              slide.classList.add('swiper-slide-not-in-view');\n              console.log('not in view index: ' + index);\n            }\n          });\n        }\n        updateSlidesVisibility(swiper);\n        swiper.on('slideChange', updateSlidesVisibility);\n        swiper.on('slideChangeTransitionEnd', updateSlidesVisibility);\n      } catch (e) {\n        console.log('Swiper not loaded');\n        console.log(e);\n      }\n    }\n    document.addEventListener('swiper:loaded', loadSwiper);\n    if (window.Shopify && Shopify.designMode) {\n      document.addEventListener('shopify:section:load', loadSwiper);\n    }\n  })();\n</script>",
+  "variables": {
+    "hover_effect": {
+      "type": "text",
+      "default": "true",
+      "label": "Hover effect",
+      "description": "Card size will increase on hover"
+    },
+    "hide_arrows_on_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Hide Arrows on Mobile",
+      "description": "Hide Arrows on Mobile"
+    },
+    "shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Shadow",
+      "description": "Check this box to add shadow around the cards"
+    },
+    "title": {
+      "type": "text",
+      "default": "Popular Phones",
+      "label": "Title",
+      "description": "Title"
+    },
+    "title_alignment": {
+      "type": "text",
+      "default": "left",
+      "label": "Title Alignment",
+      "description": "Title Alignment"
+    },
+    "title_link": {
+      "type": "text",
+      "default": "",
+      "label": "Title Link",
+      "description": "Title Link"
+    },
+    "icon_left": {
+      "type": "text",
+      "default": "",
+      "label": "Icon Left",
+      "description": "Icon Left"
+    },
+    "icon_right": {
+      "type": "text",
+      "default": "",
+      "label": "Icon Right",
+      "description": "Icon Right"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "9",
+      "label": "Card roundness",
+      "description": "Card roundness"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "42",
+      "label": "Icon Size",
+      "description": "Icon Size"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#363636",
+      "label": "Title Color",
+      "description": "Title Color"
+    },
+    "product_title_color": {
+      "type": "color",
+      "default": "#363636",
+      "label": "Product Title Color",
+      "description": "Product Title Color"
+    },
+    "product_price_color": {
+      "type": "color",
+      "default": "#363636",
+      "label": "Product Price Color",
+      "description": "Product Price Color"
+    },
+    "title_font_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Title Font Size",
+      "description": "Title Font Size"
+    },
+    "product_title_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Product Title Font Size",
+      "description": "Product Title Font Size"
+    },
+    "product_price_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Product Price Font Size",
+      "description": "Product Price Font Size"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#f5f5f5",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

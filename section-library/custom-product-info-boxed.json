@@ -1,0 +1,48 @@
+{
+  "id": "custom-product-info-boxed",
+  "name": "CUSTOM Product Info Boxed",
+  "description": "Section: CUSTOM Product Info Boxed",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n\n  .ss-meta-pop-banner {\n    background-color: {{section.settings.header-color}};\n    border-radius: 16px 16px 0 0;\n    text-align: center;\n    padding: 6px;\n    border:lightgrey 1px solid;\n    border-bottom:none;\n    color: {{ section.settings.header-text-color }}\n  }\n{%- endstyle -%}\n\n\n\n<script>\n    window.addEventListener('DOMContentLoaded', (event) => {\n        const productInfo = document.querySelector('{% if section.settings.custom_class != blank %}.{{ section.settings.custom_class }}{% else %}.product__info-container, .product-single__meta, .form__wrapper{% endif %}')\n\n        if (!productInfo) {\n            return\n        }\n        productInfo.style.cssText +=  'display:block;background-color:{{section.settings.background-color}};padding:{{section.settings.padding}}px;border-radius:0 0 16px 16px;border:lightgrey 1px solid;box-shadow:0px 4.5px 2px rgb(0 0 0 / 2%), 0px 8.1px 4.7px rgb(0 0 0 / 2%), 0px 10.7px 8.5px rgb(0 0 0 / 3%), 0px 12.8px 14.1px rgb(0 0 0 / 3%), 0px 14.8px 23.3px rgb(0 0 0 / 4%), 0px 17.9px 40.7px rgb(0 0 0 / 5%), 0px 29px 88px rgb(0 0 0 / 6%);border-top:none;'\n\n        const templateContent =  document.querySelector('#custom-product-meta-pop-{{ section.id }}').content\n        \n        productInfo.insertAdjacentElement('beforebegin', templateContent.firstElementChild)\n        \n    })\n</script>\n<template id=\"custom-product-meta-pop-{{ section.id }}\">\n  \n  <div class=\"ss-meta-pop-banner\">\n    <span style=\"vertical-align: sub;margin-right:5px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"{{ section.settings.header-text-color }}\" class=\"bi bi-heart-fill\" viewBox=\"0 0 16 16\">\n  <path fill-rule=\"evenodd\" d=\"M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z\"/>\n</svg></span>{{ section.settings.header-text }}</div>\n</template>",
+  "variables": {
+    "header-text": {
+      "type": "text",
+      "default": "9 out of 10 recommends us",
+      "label": "Header text",
+      "description": "Header text"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "header-color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Header background color",
+      "description": "Header background color"
+    },
+    "header-text-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Header text color",
+      "description": "Header text color"
+    },
+    "padding": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding",
+      "description": "Padding"
+    },
+    "custom_class": {
+      "type": "text",
+      "default": "",
+      "label": "Custom Target Class",
+      "description": "Without punctuation '.'"
+    }
+  }
+}

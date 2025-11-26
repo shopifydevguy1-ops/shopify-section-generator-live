@@ -1,0 +1,174 @@
+{
+  "id": "trust-badges",
+  "name": "CUSTOM Trust Badges Emoji",
+  "description": "Section: CUSTOM Trust Badges Emoji",
+  "tags": [
+    "trust"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n\n  assign trust_position = section.settings.trust_position\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n\n  assign sub_title_size = section.settings.sub_title_size\n  assign sub_title_size_mobile = section.settings.sub_title_size_mobile\n  assign sub_title_color = section.settings.sub_title_color\n  assign sub_title_custom = section.settings.sub_title_custom\n  assign sub_title_font = section.settings.sub_title_font\n  assign sub_title_height = section.settings.sub_title_height\n\n  assign line_border_color = section.settings.line_border_color\n-%}\n\n{%- style -%}\n\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  sub_title_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .ss-trust-badges-list-{{ section.id }} {\n    list-style: none;\n    padding: 0;\n    display: grid;\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  \n  .ss-trust-badge-item-{{ section.id }} {\n    text-align: center;\n    padding: .75rem;\n    flex: 1;\n    display: flex;\n    border-color: {{ line_border_color }};\n    border-style: solid;\n    border-width: 0px;\n  }\n  \n  .ss-trust-badge-item-{{ section.id }}:nth-child(even) {\n    border-right-width: 0;\n    border-bottom-width: 1px;\n  }\n  \n  .ss-trust-badge-item-{{ section.id }}:nth-child(odd) {\n    border-left-width: 0;\n    border-right-width: 1px;\n    border-bottom-width: 1px;\n  }\n  \n  .ss-trust-badge-item-{{ section.id }}:nth-child(-n+2) {\n    border-top-width: 0;\n  }\n  \n  .ss-trust-badge-icon-{{ section.id }} {\n    margin:0 10px 0 2.5px;\n    display: flex;\n    justify-content: center;\n    flex-direction: column;\n    margin-bottom: 0;\n    font-size: calc(var(--emoji-font-size) * 0.9);\n  }\n  \n  .ss-trust-badge-icon-{{ section.id }} svg {\n    height: 30px;\n  }\n  \n  .ss-trust-badge-text-{{ section.id }} {\n    display: flex;\n    justify-content: center;\n    flex-direction: column;\n  }\n  \n  .ss-trust-badge-text-{{ section.id }} p {\n    line-height: 1.2;\n    margin-top: 0;\n    margin-bottom: 0;\n    text-align: left;\n  }\n  \n  .ss-trust-badge-title-{{ section.id }} {\n    margin: 0;\n    font-size: {{ title_size_mobile }}px;\n    color: {{ title_color }};\n    line-height: {{ title_height }}%;\n    text-transform: unset;\n  }\n  \n  .ss-trust-badge-subtitle-{{ section.id }} {\n    margin: 0;\n    font-size: {{ sub_title_size_mobile }}px;\n    color: {{ sub_title_color }};\n    line-height: {{ sub_title_height }}%;\n    text-transform: unset;\n  }\n\n   .ss-trust-badge-image-{{ section.id }} {\n     flex: 0 0 40px;\n   }\n\n  .ss-trust-badge-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .ss-trust-badge-icon-{{ section.id }} {\n      margin:0 10px 0 7.5px;\n      font-size: var(--emoji-font-size);\n    }\n    \n    .ss-trust-badge-title-{{ section.id }} {\n      font-size: {{ title_size }}px;\n    }\n    \n    .ss-trust-badge-subtitle-{{ section.id }} {\n      font-size: {{ sub_title_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if title_custom %}\n  <style>\n    .ss-trust-badge-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_title_custom %}\n  <style>\n    .ss-trust-badge-subtitle-{{ section.id }} {\n      font-family: {{ sub_title_font.family }}, {{ sub_title_font.fallback_families }};\n      font-weight: {{ sub_title_font.weight }};\n      font-style: {{ sub_title_font.style }};\n    }\n  </style>\n{% endif %}\n\n<script>\n  (function () {\n    function loadProductForm() {\n\n      var productForm = document.querySelector('#custom-emoji');\n      \n      if (!productForm){\n        var productForm = document.querySelector('{% if trust_position == \"below_title\" or trust_position == \"above_title\" %}.product__title{% elsif trust_position == \"below_description\" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n        if (!productForm) return;\n      }\n\n      const templateContent = document.querySelector(\n        '#custom-trust-badges-template-{{ section.id }}'\n      ).content;\n\n      {%- comment -%}\n        if the section.blocks.size is even, the last two blocks will have no border-bottom\n        if the section.blocks.size is odd, the last block will have no border-bottom\n      {%- endcomment -%}\n      const trustBadgesList = templateContent.querySelector(\n        '#custom-trust-badges-list-{{ section.id }}'\n      );\n      const trustBadgeItems = trustBadgesList.querySelectorAll(\n        '.ss-trust-badge-item-{{ section.id }}'\n      );\n      const trustBadgeItemsCount = trustBadgeItems.length;\n      const trustBadgeItemsLastIndex = trustBadgeItemsCount - 1;\n      if(trustBadgeItemsCount % 2 == 0) {\n        trustBadgeItems[trustBadgeItemsLastIndex].style.borderBottomWidth = '0';\n        trustBadgeItems[trustBadgeItemsLastIndex - 1].style.borderBottomWidth = '0';\n      } else {\n        trustBadgeItems[trustBadgeItemsLastIndex].style.borderBottomWidth = '0';\n      }\n\n      productForm.insertAdjacentElement(\n        '{% if trust_position == \"below_buy\" or trust_position == \"below_title\" or trust_position == \"below_description\" %}afterend{% else %}beforebegin{% endif %}',\n        templateContent.firstElementChild\n      );\n    }\n    function unloadProductForm() {\n      var productForm = document.querySelector('#custom-emoji');\n      \n      if (!productForm){\n        var productForm = document.querySelector('{% if trust_position == \"below_title\" or trust_position == \"above_title\" %}.product__title{% elsif trust_position == \"below_description\" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n        if (!productForm) return;\n      }\n\n      const trustBadgesList = document.querySelector(\n        '#custom-trust-badges-list-{{ section.id }}'\n      );\n\n      if (trustBadgesList) trustBadgesList.remove();\n    }\n    window.addEventListener('DOMContentLoaded', loadProductForm);\n\n  })();\n</script>\n\n<template id=\"custom-trust-badges-template-{{ section.id }}\">\n  <div class=\"section-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <ul\n        id=\"custom-trust-badges-list-{{ section.id }}\"\n        class=\"ss-trust-badges-list-{{ section.id }}\"\n        aria-label=\"{{ section.settings.list_label }}\"\n        style=\"\n          --emoji-font-size: {{ section.settings.emoji_font_size }}px;\n        \"\n      >\n        {% for block in section.blocks %}\n          <li\n            class=\"ss-trust-badge-item-{{ section.id }}\"\n          >\n            {% if block.settings.image != blank %}\n              <div class=\"ss-trust-badge-image-{{ section.id }}\">\n                <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image }}\">\n              </div>\n            {% else %}\n              {% unless block.settings.icon == blank %}\n                <div class=\"ss-trust-badge-icon-{{ section.id }}\">\n                  {{ block.settings.icon }}\n                </div>\n              {% endunless %}\n            {% endif %}\n            <div class=\"ss-trust-badge-text-{{ section.id }}\">\n              <div\n                class=\"ss-trust-badge-title-{{ section.id }}\"\n              >\n                {{ block.settings.title }}\n              </div>\n              {% if block.settings.subtitle != blank %}\n                <div\n                  class=\"ss-trust-badge-subtitle-{{ section.id }}\"\n                >\n                  {{ block.settings.subtitle }}\n                </div>\n              {% endif %}\n            </div>\n          </li>\n        {% endfor %}\n      </ul>\n    </div>\n  </div>\n</template>",
+  "variables": {
+    "trust_position": {
+      "type": "text",
+      "default": "below_buy",
+      "label": "Trust Badges Position",
+      "description": "Trust Badges Position"
+    },
+    "emoji_font_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Emoji Font size",
+      "description": "Emoji Font size"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Title Font Family",
+      "description": "Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Title Size",
+      "description": "Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Title Size - Mobile",
+      "description": "Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Title Line Height",
+      "description": "Title Line Height"
+    },
+    "sub_title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "sub_title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Sub-Title Font Family",
+      "description": "Sub-Title Font Family"
+    },
+    "sub_title_size": {
+      "type": "text",
+      "default": "10",
+      "label": "Sub-Title Size",
+      "description": "Sub-Title Size"
+    },
+    "sub_title_size_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Sub-Title Size - Mobile",
+      "description": "Sub-Title Size - Mobile"
+    },
+    "sub_title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Sub-Title Line Height",
+      "description": "Sub-Title Line Height"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Title color",
+      "description": "Title color"
+    },
+    "sub_title_color": {
+      "type": "color",
+      "default": "#716969",
+      "label": "Subtitle color",
+      "description": "Subtitle color"
+    },
+    "line_border_color": {
+      "type": "color",
+      "default": "#DEDEDE",
+      "label": "Border Between Items Color",
+      "description": "Border Between Items Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

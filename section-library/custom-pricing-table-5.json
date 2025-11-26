@@ -1,0 +1,624 @@
+{
+  "id": "custom-pricing-table-5",
+  "name": "CUSTOM Pricing table #5",
+  "description": "Section: CUSTOM Pricing table #5",
+  "tags": [
+    "pricing"
+  ],
+  "type": "custom",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign section_radius = section.settings.section_radius\n\n  assign tabs_border_thickness = section.settings.tabs_border_thickness\n  assign tabs_border_color = section.settings.tabs_border_color\n  assign tabs_radius = section.settings.tabs_radius\n  assign tabs_bg_color = section.settings.tabs_bg_color\n  assign tabs_mt = section.settings.tabs_mt\n  assign tabs_mt_mobile = section.settings.tabs_mt_mobile\n\n  assign tab_custom = section.settings.tab_custom\n  assign tab_font = section.settings.tab_font\n  assign tab_size = section.settings.tab_size\n  assign tab_size_mobile = section.settings.tab_size_mobile\n  assign tab_height = section.settings.tab_height\n  assign tab_color = section.settings.tab_color  \n  assign tab_bg_color = section.settings.tab_bg_color\n  assign tab_active_color = section.settings.tab_active_color  \n  assign tab_bg_active_color = section.settings.tab_bg_active_color\n  assign tab_bg_active_gradient = section.settings.tab_bg_active_gradient\n  assign tab_padding_horizontal = section.settings.tab_padding_horizontal  \n  assign tab_padding_horizontal_mobile = section.settings.tab_padding_horizontal_mobile\n  assign tab_padding_vertical = section.settings.tab_padding_vertical  \n  assign tab_padding_vertical_mobile = section.settings.tab_padding_vertical_mobile\n  assign tab_radius = section.settings.tab_radius\n  assign tab_border_thickness = section.settings.tab_border_thickness\n  assign tab_border_color = section.settings.tab_border_color\n  assign tab_border_active_color = section.settings.tab_border_active_color\n  assign tab_shadow = section.settings.tab_shadow\n\n  assign cards_per_row = section.settings.cards_per_row\n  assign cards_gap = section.settings.cards_gap\n  assign cards_gap_mobile = section.settings.cards_gap_mobile\n  assign cards_mt = section.settings.cards_mt\n  assign cards_mt_mobile = section.settings.cards_mt_mobile\n\n  assign card_padding_vertical = section.settings.card_padding_vertical\n  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile\n  assign card_padding_horizontal = section.settings.card_padding_horizontal\n  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_radius = section.settings.card_radius\n  assign card_align = section.settings.card_align\n  assign card_align_mobile = section.settings.card_align_mobile\n\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_height = section.settings.title_height \n  \n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_mt = section.settings.text_mt\n  assign text_mt_mobile = section.settings.text_mt_mobile\n\n  assign price_second_text = section.settings.price_second_text\n  assign price_custom = section.settings.price_custom\n  assign price_font = section.settings.price_font\n  assign price_size = section.settings.price_size\n  assign price_size_mobile = section.settings.price_size_mobile\n  assign price_height = section.settings.price_height\n  assign price_mt = section.settings.price_mt\n  assign price_mt_mobile = section.settings.price_mt_mobile\n\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile \n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_mt = section.settings.button_mt\n  assign button_mt_mobile = section.settings.button_mt_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_style = section.settings.button_style\n\n  assign table_border_thickness = section.settings.table_border_thickness\n  assign table_mt = section.settings.table_mt\n  assign table_mt_mobile = section.settings.table_mt_mobile\n  assign table_padding_vertical = section.settings.table_padding_vertical\n  assign table_padding_vertical_mobile = section.settings.table_padding_vertical_mobile\n\n  assign table_left_custom = section.settings.table_left_custom\n  assign table_left_font = section.settings.table_left_font\n  assign table_left_size = section.settings.table_left_size\n  assign table_left_size_mobile = section.settings.table_left_size_mobile\n  assign table_left_height = section.settings.table_left_height\n\n  assign table_right_custom = section.settings.table_right_custom\n  assign table_right_font = section.settings.table_right_font\n  assign table_right_size = section.settings.table_right_size\n  assign table_right_size_mobile = section.settings.table_right_size_mobile\n  assign table_right_height = section.settings.table_right_height\n-%}\n\n{%- style -%}\n  {{ tab_font | font_face: font_display: 'swap' }}\n  {{ title_font | font_face: font_display: 'swap' }}\n  {{ text_font | font_face: font_display: 'swap' }}\n  {{ price_font | font_face: font_display: 'swap' }}\n  {{ button_font | font_face: font_display: 'swap' }}\n  {{ table_left_font | font_face: font_display: 'swap' }}\n  {{ table_right_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .pricing-toggles-{{ section.id }} {\n    display: flex;\n    align-items: center;    \n    border-radius: {{ tabs_radius }}px;\n    padding: 5px;\n    background-color: {{ tabs_bg_color }};\n    border: {{ tabs_border_thickness }}px solid {{ tabs_border_color }};\n    max-width: fit-content;\n    margin: 0 auto;\n    margin-top: {{ tabs_mt_mobile }}px;\n  }\n\n  .pricing-toggle-{{ section.id }} {\n    padding: {{ tab_padding_vertical_mobile }}px {{ tab_padding_horizontal_mobile }}px;\n    border-radius: {{ tab_radius }}px;\n    border: {{ tab_border_thickness }}px solid {{ tab_border_color }};\n    background-color: {{ tab_bg_color }};\n    margin: 0;    \n    text-align: center;\n    text-transform: unset;\n    word-wrap: break-word;\n    font-size: {{ tab_size_mobile }}px;\n    line-height: {{ tab_height }}%;\n    color: {{ tab_color }};  \n    cursor: pointer;\n    font-weight: 700;\n  }\n\n  .pricing-toggle-{{ section.id }}.active {\n    border: {{ tab_border_thickness }}px solid {{ tab_border_active_color }};\n    background-color: {{ tab_bg_active_color }};\n    background-image: {{ tab_bg_active_gradient }};\n    color: {{ tab_active_color }};  \n  }\n\n  .pricing-cards-{{ section.id }} {\n    display: none;\n    grid-template-columns: 1fr;\n    gap: {{ cards_gap_mobile }}px;\n    margin-top: {{ cards_mt_mobile }}px;\n  }\n\n  .pricing-cards-{{ section.id }}.active {\n    display: grid;\n  }\n\n  .pricing-card-{{ section.id }} {\n    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;\n    border-radius: {{ card_radius }}px;\n    overflow: hidden;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n  }\n\n  .pricing-title-{{ section.id }} {\n    margin: 0;    \n    text-align: {{ card_align_mobile }};\n    text-transform: unset;\n    font-size: {{ title_size_mobile }}px;\n    line-height: {{ title_height }}%;\n    font-weight: 700;\n  }\n\n  .pricing-text-{{ section.id }} {\n    text-align: {{ card_align_mobile }};\n    margin-top: {{ text_mt_mobile }}px;\n  }\n\n  .pricing-text-{{ section.id }} * {\n    margin: 0;        \n    text-transform: unset;\n    font-size: {{ text_size_mobile }}px;\n    line-height: {{ text_height }}%;\n  }\n\n  .pricing-price-{{ section.id }} {\n    text-align: {{ card_align_mobile }};\n    margin-top: {{ price_mt_mobile }}px;\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n    justify-content: {{ card_align_mobile }};\n  }\n\n  .pricing-price-{{ section.id }} * {\n    margin: 0;        \n    text-transform: unset;\n    font-size: {{ price_size_mobile }}px;\n    line-height: {{ price_height }}%;\n    font-weight: 700;\n  }\n\n  .pricing-price-{{ section.id }} span {\n    font-size: {{ price_size_mobile | times: 0.5 }}px;\n  }\n  \n  .pricing-card-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    width: 100%;\n    margin: 0;\n    margin-top: {{ button_mt_mobile }}px;\n    font-size: {{ button_size_mobile }}px;\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    transition: all 0.25s ease 0s;\n    background-color: transparent;\n    border: 0px;\n    cursor: pointer;\n    font-weight: 700;\n    min-width: max-content;\n  }\n\n  .pricing-card-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .pricing-card-button-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n\n  .pricing-card-table-{{ section.id }} {\n    margin-top: {{ table_mt_mobile }}px;\n  }\n\n  .pricing-card-table-item-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: {{ table_padding_vertical_mobile }}px 0px;\n  }\n  \n  .pricing-card-table-left-{{ section.id }} {\n    margin: 0;    \n    text-align: left;\n    text-transform: unset;\n    font-size: {{ table_left_size_mobile }}px;\n    line-height: {{ table_left_height }}%;\n  }\n\n  .pricing-card-table-right-{{ section.id }} {\n    margin: 0;    \n    text-align: right;\n    text-transform: unset;\n    font-size: {{ table_right_size_mobile }}px;\n    line-height: {{ table_right_height }}%;\n    font-weight: 700;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .pricing-toggles-{{ section.id }} {     \n      margin-top: {{ tabs_mt }}px;\n    }\n\n    .pricing-toggle-{{ section.id }} {\n      padding: {{ tab_padding_vertical }}px {{ tab_padding_horizontal }}px;    \n      font-size: {{ tab_size }}px;\n    }\n\n    .pricing-cards-{{ section.id }} {\n      grid-template-columns: repeat({{ cards_per_row }}, 1fr);\n      gap: {{ cards_gap }}px;\n      margin-top: {{ cards_mt }}px;\n    }\n\n    .pricing-card-{{ section.id }} {\n      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;\n    }\n    \n    .pricing-title-{{ section.id }} {\n      text-align: {{ card_align }};\n      font-size: {{ title_size }}px;\n    }\n\n    .pricing-text-{{ section.id }} {\n      text-align: {{ card_align }};\n      margin-top: {{ text_mt }}px;\n    }\n\n    .pricing-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .pricing-price-{{ section.id }} {\n      text-align: {{ card_align }};\n      margin-top: {{ price_mt }}px;\n      justify-content: {{ card_align }};\n    }\n\n    .pricing-price-{{ section.id }} * {\n      font-size: {{ price_size }}px;\n    }\n\n    .pricing-price-{{ section.id }} span {\n      font-size: {{ price_size | times: 0.5 }}px;\n    }\n\n    .pricing-card-button-{{ section.id }} {    \n      margin-top: {{ button_mt }}px;\n      font-size: {{ button_size }}px;     \n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n    }\n\n    .pricing-card-table-{{ section.id }} {\n      margin-top: {{ table_mt }}px;\n    }\n  \n    .pricing-card-table-item-{{ section.id }} {\n      padding: {{ table_padding_vertical }}px 0px;\n    }\n\n    .pricing-card-table-left-{{ section.id }} {\n      font-size: {{ table_left_size }}px;\n    }\n\n    .pricing-card-table-right-{{ section.id }} {\n      font-size: {{ table_right_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n\n{% if tab_custom %}\n  <style>\n    .pricing-toggle-{{ section.id }} {\n      font-family: {{ tab_font.family }}, {{ tab_font.fallback_families }};\n      font-weight: {{ tab_font.weight }};\n      font-style: {{ tab_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if title_custom %}\n  <style>\n    .pricing-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .pricing-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if price_custom %}\n  <style>\n    .pricing-price-{{ section.id }} * {\n      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};\n      font-weight: {{ price_font.weight }};\n      font-style: {{ price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .pricing-card-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if table_left_custom %}\n  <style>\n    .pricing-card-table-left-{{ section.id }} {\n      font-family: {{ table_left_font.family }}, {{ table_left_font.fallback_families }};\n      font-weight: {{ table_left_font.weight }};\n      font-style: {{ table_left_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if table_right_custom %}\n  <style>\n    .pricing-card-table-right-{{ section.id }} {\n      font-family: {{ table_right_font.family }}, {{ table_right_font.fallback_families }};\n      font-weight: {{ table_right_font.weight }};\n      font-style: {{ table_right_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if tab_shadow %}\n  <style>\n    .pricing-toggle-{{ section.id }}.active {\n      box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 3px 0px;\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  {% case block.type %}\n    {% when 'card' %}\n      <style>\n        .pricing-card-{{ block.id }} {\n          background-color: {{ block.settings.card_bg_color }};\n          border: {{ card_border_thickness }}px solid {{ block.settings.card_border_color }};\n        }\n\n        .pricing-title-{{ block.id }} {\n          color: {{ block.settings.title_color }};\n        }\n\n        .pricing-text-{{ block.id }} * {\n          color: {{ block.settings.text_color }};\n        }\n\n        .pricing-price-{{ block.id }} * {\n          color: {{ block.settings.price_color }};\n        }\n        \n        .pricing-card-button-{{ block.id }} {\n          color: {{ block.settings.button_color }};         \n        }\n\n        .pricing-card-button-{{ block.id }}:hover {\n          color: {{ block.settings.button_hover_color }};\n        }\n\n        .pricing-card-button-{{ block.id }} svg path {\n          fill: {{ block.settings.button_color }};\n        }\n\n        .pricing-card-button-{{ block.id }}:hover svg path {\n          fill: {{ block.settings.button_hover_color }};\n        }\n\n        .pricing-card-table-item-{{ block.id }} {\n          border-top: {{ table_border_thickness }}px solid {{ block.settings.table_border_color }};\n        }\n\n        .pricing-card-table-right-{{ block.id }} {\n          color: {{ block.settings.table_right_color }};\n        }\n\n        .pricing-card-table-left-{{ block.id }} {\n          color: {{ block.settings.table_left_color }};\n        }\n      </style>\n\n      {% if button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\n        <style>\n          .pricing-card-button-{{ block.id }} {\n            background-color: {{ block.settings.button_bg_color }};\n            background-image: {{ block.settings.button_bg_gradient }};\n          }\n\n          .pricing-card-button-{{ block.id }}:hover {\n            background-color: {{ block.settings.button_bg_hover_color }};\n            background-image: {{ block.settings.button_bg_hover_gradient }};\n          }\n        </style>\n      {% elsif button_style == \"outline\" or button_style == \"outline_arrow\" %}\n        <style>\n          .pricing-card-button-{{ block.id }} {\n            background-color: {{ block.settings.button_bg_color }};\n            background-image: {{ block.settings.button_bg_gradient }};\n            border: {{ button_border_thickness }}px solid {{ block.settings.button_border_color }};\n          }\n\n          .pricing-card-button-{{ block.id }}:hover {\n            background-color: {{ block.settings.button_bg_hover_color }};\n            background-image: {{ block.settings.button_bg_hover_gradient }};\n            border: {{ button_border_thickness }}px solid {{ block.settings.button_border_hover_color }};\n          }\n        </style>\n      {% elsif button_style == \"link\" %}\n        <style>\n          .pricing-card-button-{{ block.id }} {\n            padding: 0px !important;\n          }\n        </style>\n      {% endif %}\n    {% when 'heading' %}\n      <style>\n        {{  block.settings.heading_font | font_face: font_display: 'swap' }}\n\n        .pricing-heading-{{ block.id }} {\n          margin-top: {{ block.settings.heading_mt_mobile }}px;\n          text-align: {{ block.settings.heading_align_mobile }};\n          position: relative;\n          z-index: 2;\n        }\n\n        .pricing-heading-{{ block.id }} * {          \n          margin: 0;            \n          font-size: {{ block.settings.heading_size_mobile }}px;\n          color: {{ block.settings.heading_color }};\n          line-height: {{ block.settings.heading_height }}%;\n          text-transform: unset;\n          text-decoration: none;\n          word-break: break-word;\n          font-weight: 700;\n        }          \n\n        @media(min-width: 1024px) {\n          .pricing-heading-{{ block.id }} {\n            margin-top: {{ block.settings.heading_mt }}px;\n            text-align: {{ block.settings.heading_align }};\n          }\n\n          .pricing-heading-{{ block.id }} * {                \n            font-size: {{ block.settings.heading_size }}px;\n          }  \n        }\n      </style>\n\n      {% if block.settings.heading_custom %}\n        <style>\n          .pricing-heading-{{ block.id }} * {\n            font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};\n            font-weight: {{ block.settings.heading_font.weight }};\n            font-style: {{ block.settings.heading_font.style }};\n          }\n        </style>\n      {% endif %}\n\n    {% when 'caption' %}\n      <style>\n        {{  block.settings.text_font | font_face: font_display: 'swap' }}\n\n        .pricing-bottom-text-{{ block.id }} {      \n          margin-top: {{ block.settings.text_mt_mobile }}px;\n          text-align: {{ block.settings.text_align_mobile }};\n          font-weight: 400;\n        }\n\n        .pricing-bottom-text-{{ block.id }} * {          \n          margin: 0;            \n          font-size: {{ block.settings.text_size_mobile }}px;\n          color: {{ block.settings.text_color }};\n          line-height: {{ block.settings.text_height }}%;\n          text-transform: unset;\n          text-decoration: none;\n          word-break: break-word;\n        }          \n\n        @media(min-width: 1024px) {\n          .pricing-bottom-text-{{ block.id }} {\n            margin-top: {{ block.settings.text_mt }}px;\n            text-align: {{ block.settings.text_align }};\n            max-width: {{ block.settings.text_max_width }}%;\n          }\n\n          .pricing-bottom-text-{{ block.id }} * {                \n            font-size: {{ block.settings.text_size }}px;\n          }  \n        }\n      </style>\n\n      {% if block.settings.text_custom %}\n        <style>\n          .pricing-bottom-text-{{ block.id }} * {\n            font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};\n            font-weight: {{ block.settings.text_font.weight }};\n            font-style: {{ block.settings.text_font.style }};\n          }\n        </style>\n      {% endif %}\n      \n      {% if block.settings.text_align == \"center\" %}\n        <style>\n          @media(min-width: 1024px) {\n            .pricing-bottom-text-{{ block.id }} {\n              margin-left: auto;\n              margin-right: auto;\n            } \n          }\n        </style>\n      {% elsif block.settings.text_align == \"right\" %}\n        <style>\n          @media(min-width: 1024px) {\n            .pricing-bottom-text-{{ block.id }} {\n              margin-left: auto;\n              margin-right: 0px;\n            } \n          }\n        </style>\n      {% else %}\n        <style>\n          @media(min-width: 1024px) {\n            .pricing-bottom-text-{{ block.id }} {\n              margin-left: 0px;\n              margin-right: 0px;\n            } \n          }\n        </style>\n      {% endif %}\n\n    {% when 'button' %}  \n      <style>\n        {{  block.settings.button_font | font_face: font_display: 'swap' }}\n\n        .pricing-button-{{ block.id }} {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          max-width: fit-content;\n          gap: 10px;\n          width: 100%;\n          margin: 0 auto;      \n          margin-top: {{ block.settings.button_mt_mobile }}px;\n          font-size: {{ block.settings.button_size_mobile }}px;\n          color: {{ block.settings.button_color }};\n          line-height: {{ block.settings.button_height }}%;\n          text-align: center;\n          text-transform: unset;\n          text-decoration: none;\n          padding: {{ block.settings.button_padding_vertical_mobile }}px {{ block.settings.button_padding_horizontal_mobile }}px;\n          border-radius: {{ block.settings.button_radius }}px;\n          transition: all 0.3s ease 0s;\n          background-color: transparent;\n          border: 0px;\n          cursor: pointer;\n          font-weight: 700;\n        }\n\n        .pricing-button-inner-{{ block.id }} {\n          margin: 0px;\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          gap: 10px;\n          text-decoration: none;\n        }\n\n        .pricing-button-{{ block.id }}:hover {\n          color: {{ block.settings.button_hover_color }};\n          transition: all 0.25s ease 0s;\n        }\n\n        .pricing-button-{{ block.id }} svg {\n          width: 14px;\n          height: 14px;\n        }\n\n        .pricing-button-{{ block.id }} svg path {\n          fill: {{ block.settings.button_color }};\n          transition: all 0.25s ease 0s;\n        }\n\n        .pricing-button-{{ block.id }}:hover svg path {\n          fill: {{ block.settings.button_hover_color }};\n          transition: all 0.25s ease 0s;\n        }\n\n        @media (min-width: 1024px) {\n          .pricing-button-{{ block.id }} {\n            margin-top: {{ block.settings.button_mt }}px;\n            padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;\n            font-size: {{ block.settings.button_size }}px;\n          }\n        }\n      </style>\n\n      {% if block.settings.use_shadow %}\n        <style>\n          .pricing-button-{{ block.id }}:hover {\n            -webkit-box-shadow: 0px 0px 8px 2px {{ block.settings.button_bg_color }};\n            -moz-box-shadow: 0px 0px 8px 2px {{ block.settings.button_bg_color }};\n            box-shadow: 0px 0px 8px 2px {{ block.settings.button_bg_color }};\n          }\n        </style>\n      {% endif %}  \n\n      {% if block.settings.button_custom %}\n        <style>\n          .pricing-button-{{ block.id }} {\n            font-family: {{ block.settings.button_font.family }}, {{ block.settings.button_font.fallback_families }};\n            font-weight: {{ block.settings.button_font.weight }};\n            font-style: {{ block.settings.button_font.style }};\n          }\n        </style>\n      {% endif %}\n\n      {% if block.settings.button_style == \"non_outline\" or block.settings.button_style == \"non_outline_arrow\" %}\n        <style>\n          .pricing-button-{{ block.id }} {\n            transition: all 0.3s ease 0s;\n            background-color: {{  block.settings.button_bg_color }};\n            background-image: {{ block.settings.button_bg_gradient }};\n          }\n      \n          .pricing-button-{{ block.id }}:hover {\n            transition: all 0.3s ease 0s;\n            background-color: {{  block.settings.button_bg_hover_color }};\n            background-image: {{ block.settings.button_bg_hover_gradient }};\n          }\n        </style>\n      {% elsif block.settings.button_style == \"outline\" or block.settings.button_style == \"outline_arrow\" %}\n        <style>          \n          .pricing-button-{{ block.id }} {\n            transition: all 0.3s ease 0s;\n            background-color: {{  block.settings.button_bg_color }};\n            background-image: {{ block.settings.button_bg_gradient }};\n            border: {{  block.settings.button_border_thickness }}px solid {{  block.settings.button_border_color }};\n          }\n      \n          .pricing-button-{{ block.id }}:hover {\n            transition: all 0.3s ease 0s;\n            background-color: {{  block.settings.button_bg_hover_color }};\n            background-image: {{ block.settings.button_bg_hover_gradient }};\n            border: {{  block.settings.button_border_thickness }}px solid {{ block.settings.button_border_hover_color }};\n          }\n        </style>\n      {% elsif block.settings.button_style == \"link\" %}\n        <style>\n          .pricing-button-{{ block.id }} {\n            padding: 0px !important;\n            text-decoration: underline;\n            text-underline-offset: 3px;\n            text-decoration-color: {{ block.settings.button_border_color }};\n            -webkit-box-shadow: none !important;\n            -moz-box-shadow: none !important;\n            box-shadow: none !important;\n          }\n\n          .pricing-button-{{ block.id }}:hover {\n            text-decoration-color: {{ block.settings.button_border_hover_color }};\n          }\n        </style>\n      {% endif %}     \n    {% else %}\n      \n  {% endcase %}\n{% endfor %}\n\n<div class=\"section-{{ section.id }} pricing-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% for block in section.blocks %}\n        {% if block.type == 'heading' %}\n          {% if block.settings.heading != blank %}\n            <div class=\"pricing-heading-{{ block.id }}\">{{ block.settings.heading }}</div>\n          {% endif %}\n        {% endif %}\n      {% endfor %}\n\n      <div class=\"pricing-toggles-{{ section.id }}\">\n        {% for block in section.blocks %}\n          {% if block.type == 'tab' %}\n            <p class=\"pricing-toggle-{{ section.id }} {% if block.settings.active_default %}active{% endif %}\" id=\"{{ block.id }}\">{{ block.settings.tab }}</p>\n          {% endif %}     \n        {% endfor %}\n      </div>\n\n      <div class=\"pricing-tabs-{{ section.id }}\">\n        {% assign inside_item = false %} \n        {% for block in section.blocks %}\n          {% if block.type == 'tab' %}\n            {% if inside_item %}\n              </div>\n            {% endif %}  \n            <div class=\"pricing-cards-{{ section.id }} {% if block.settings.active_default %}active{% endif %}\" data-id=\"{{ block.id }}\">     \n              {% assign inside_item = true %}                \n          {% elsif block.type == 'card' %}\n            <div class=\"pricing-card-{{ section.id }} pricing-card-{{ block.id }}\">\n              <div class=\"pricing-card-top-{{ section.id }}\">\n                {% if block.settings.title != blank %}\n                  <p class=\"pricing-title-{{ section.id }} pricing-title-{{ block.id }}\">{{ block.settings.title }}</p>\n                {% endif %}\n                {% if block.settings.text != blank %}\n                  <div class=\"pricing-text-{{ section.id }} pricing-text-{{ block.id }}\">{{ block.settings.text }}</div>\n                {% endif %}\n              </div>\n              \n              <div class=\"pricing-card-bottom-{{ section.id }}\">\n                {% if block.settings.price_text != blank %}\n                  <div class=\"pricing-price-{{ section.id }} pricing-price-{{ block.id }}\"><p>{{ block.settings.price_text }}</p><span>{{ price_second_text }}</span></div>\n                {% endif %}\n                {% if block.settings.button_text != blank %}\n                  <a href=\"{{ block.settings.url }}\" class=\"pricing-card-button-{{ section.id }} pricing-card-button-{{ block.id }}\">\n                    <p class=\"pricing-card-button-inner-{{ section.id }} pricing-card-button-inner-{{ block.id }}\">\n                      {{ block.settings.button_text }}\n                      {% if block.settings.button_style == \"non_outline_arrow\" or block.settings.button_style == \"outline_arrow\" %}\n                        <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                          <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                        </svg>\n                      {% endif %}\n                    </p>\n                  </a> \n                {% endif %} \n\n                <div class=\"pricing-card-table-{{ section.id }}\">\n                  {% if block.settings.first_left_text != blank and block.settings.first_right_text != blank %}\n                    <div class=\"pricing-card-table-item-{{ section.id }} pricing-card-table-item-{{ block.id }}\">\n                      <p class=\"pricing-card-table-left-{{ section.id }} pricing-card-table-left-{{ block.id }}\">{{ block.settings.first_left_text }}</p>\n                      <p class=\"pricing-card-table-right-{{ section.id }} pricing-card-table-right-{{ block.id }}\">{{ block.settings.first_right_text }}</p>\n                    </div>\n                  {% endif %}\n                  {% if block.settings.second_left_text != blank and block.settings.second_right_text != blank %}\n                    <div class=\"pricing-card-table-item-{{ section.id }} pricing-card-table-item-{{ block.id }}\">\n                      <p class=\"pricing-card-table-left-{{ section.id }} pricing-card-table-left-{{ block.id }}\">{{ block.settings.second_left_text }}</p>\n                      <p class=\"pricing-card-table-right-{{ section.id }} pricing-card-table-right-{{ block.id }}\">{{ block.settings.second_right_text }}</p>\n                    </div>\n                  {% endif %}\n                  {% if block.settings.third_left_text != blank and block.settings.third_right_text != blank %}\n                    <div class=\"pricing-card-table-item-{{ section.id }} pricing-card-table-item-{{ block.id }}\">\n                      <p class=\"pricing-card-table-left-{{ section.id }} pricing-card-table-left-{{ block.id }}\">{{ block.settings.third_left_text }}</p>\n                      <p class=\"pricing-card-table-right-{{ section.id }} pricing-card-table-right-{{ block.id }}\">{{ block.settings.third_right_text }}</p>\n                    </div>\n                  {% endif %}\n                  {% if block.settings.fourth_left_text != blank and block.settings.fourth_right_text != blank %}\n                    <div class=\"pricing-card-table-item-{{ section.id }} pricing-card-table-item-{{ block.id }}\">\n                      <p class=\"pricing-card-table-left-{{ section.id }} pricing-card-table-left-{{ block.id }}\">{{ block.settings.fourth_left_text }}</p>\n                      <p class=\"pricing-card-table-right-{{ section.id }} pricing-card-table-right-{{ block.id }}\">{{ block.settings.fourth_right_text }}</p>\n                    </div>\n                  {% endif %}\n                  {% if block.settings.fifth_left_text != blank and block.settings.fifth_right_text != blank %}\n                    <div class=\"pricing-card-table-item-{{ section.id }} pricing-card-table-item-{{ block.id }}\">\n                      <p class=\"pricing-card-table-left-{{ section.id }} pricing-card-table-left-{{ block.id }}\">{{ block.settings.fifth_left_text }}</p>\n                      <p class=\"pricing-card-table-right-{{ section.id }} pricing-card-table-right-{{ block.id }}\">{{ block.settings.fifth_right_text }}</p>\n                    </div>\n                  {% endif %}\n                </div>\n              </div> \n            </div>      \n          {% endif %}              \n        {% endfor %}\n        {% if inside_item %}\n          </div>\n        {% endif %}\n      </div> \n\n      {% for block in section.blocks %}\n        {% case block.type %}\n          {% when 'button' %}\n            {% if block.settings.button != blank %}                 \n              <a href=\"{{ block.settings.url }}\" class=\"pricing-button-{{ block.id }}\">\n                <p class=\"pricing-button-inner-{{ block.id }}\">\n                  {{ block.settings.button }}\n                  {% if block.settings.button_style == \"non_outline_arrow\" or block.settings.button_style == \"outline_arrow\" %}\n                    <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                      <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                      <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                    </svg>\n                  {% endif %}\n                </p>\n              </a>     \n            {% endif %} \n          {% when 'caption' %}\n            {% if block.settings.text != blank %}\n              <div class=\"pricing-bottom-text-{{ block.id }}\">{{ block.settings.text }}</div>\n            {% endif %}  \n          {% else %}\n            \n        {% endcase %}\n      {% endfor %}\n    </div>\n</div>\n\n<script>\n  function initPricingTable5() {\n    const tabs = document.querySelectorAll('.pricing-toggle-{{ section.id }}');\n    const cards = document.querySelectorAll('.pricing-cards-{{ section.id }}');\n\n    // let firstTab = null;\n    // let firstCard = null;\n\n    // tabs.forEach(tab => {\n    //   if (!firstTab) firstTab = tab;\n    // });\n\n    // cards.forEach(card => {\n    //   if (!firstCard) firstCard = card;\n    // });\n\n    // if (firstTab && firstCard) {\n    //   firstTab.classList.add('active');\n    //   firstCard.classList.add('active');\n    // }\n\n    tabs.forEach(tab => {\n      tab.addEventListener(\"click\", () => {\n        tabs.forEach(otherTab => otherTab.classList.remove('active'));\n        cards.forEach(otherCard => otherCard.classList.remove('active'));\n\n        const targetId = tab.id;\n        const targetCard = Array.from(cards).find(card => card.dataset.id === targetId);\n        if (targetCard) {\n          targetCard.classList.add('active');\n          tab.classList.add('active');\n        }\n      });\n    });\n  }\n\n  document.addEventListener('DOMContentLoaded', initPricingTable5);\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initPricingTable5);\n    document.addEventListener('shopify:section:load', initPricingTable5);\n  }\n</script>",
+  "variables": {
+    "tabs_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "tabs_border_thickness": {
+      "type": "text",
+      "default": "2",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "tabs_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "tabs_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "tab_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "tab_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "tab_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "tab_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "tab_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "tab_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "tab_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "tab_padding_vertical": {
+      "type": "text",
+      "default": "14",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "tab_padding_vertical_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "tab_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "tab_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "tab_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "cards_per_row": {
+      "type": "text",
+      "default": "2",
+      "label": "Cards per row",
+      "description": "Cards per row"
+    },
+    "cards_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "cards_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "cards_mt": {
+      "type": "text",
+      "default": "48",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "cards_mt_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "card_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "card_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "card_padding_vertical": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "card_padding_vertical_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "20",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "card_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "card_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "price_second_text": {
+      "type": "text",
+      "default": "/mo",
+      "label": "Billing frequency text",
+      "description": "Billing frequency text"
+    },
+    "price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "price_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "56",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "price_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "price_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "price_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "price_mt_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "28",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "button_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "button_style": {
+      "type": "text",
+      "default": "non_outline",
+      "label": "Button style",
+      "description": "Button style"
+    },
+    "table_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "table_padding_vertical_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "table_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "table_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "table_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "table_left_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "table_left_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "table_left_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "table_left_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "table_left_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "table_right_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "table_right_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "table_right_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "table_right_size_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "table_right_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "tabs_bg_color": {
+      "type": "color",
+      "default": "#F5F5F5",
+      "label": "Background",
+      "description": "Background"
+    },
+    "tabs_border_color": {
+      "type": "color",
+      "default": "#DEDEDE",
+      "label": "Border",
+      "description": "Border"
+    },
+    "tab_color": {
+      "type": "color",
+      "default": "#767676",
+      "label": "Text",
+      "description": "Text"
+    },
+    "tab_bg_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background",
+      "description": "Background"
+    },
+    "tab_border_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Border",
+      "description": "Border"
+    },
+    "tab_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "tab_bg_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "tab_bg_active_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "tab_border_active_color": {
+      "type": "color",
+      "default": "#DEDEDE",
+      "label": "Border",
+      "description": "Border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1000",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    }
+  }
+}

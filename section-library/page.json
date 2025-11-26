@@ -1,0 +1,42 @@
+{
+  "id": "page",
+  "name": "t:sections.page.name",
+  "description": "Section: t:sections.page.name",
+  "tags": [
+    "page"
+  ],
+  "type": "custom",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"{{ 'component-rte.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n<link rel=\"stylesheet\" href=\"{{ 'section-main-page.css' | asset_url }}\" media=\"print\" onload=\"this.media='all'\">\n\n<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>\n<noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div class=\"color-{{ section.settings.color_scheme }} gradient\">\n  <div class=\"page-width page-width--narrow section-{{ section.id }}-padding\">\n    <h2 class=\"page-title {{ section.settings.heading_size }}\">\n      {%- if section.settings.page.title != blank -%}\n        {{ section.settings.page.title | escape }}\n      {%- else -%}\n        {{ 'sections.page.title' | t }}\n      {%- endif -%}\n    </h2>\n    <div class=\"rte\">\n      {%- if section.settings.page.content != blank -%}\n        {{ section.settings.page.content }}\n      {%- else -%}\n        <div class='page-placeholder-wrapper placeholder'>\n          {{ 'page' | placeholder_svg_tag: 'page-placeholder' }}\n        </div>\n      {%- endif -%}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "page": {
+      "type": "text",
+      "default": "",
+      "label": "t:sections.page.settings.page.label",
+      "description": "t:sections.page.settings.page.label"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label",
+      "description": "t:sections.all.heading_size.label"
+    },
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.all.colors.label"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

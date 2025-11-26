@@ -1,0 +1,32 @@
+{
+  "id": "main-collection-banner",
+  "name": "t:sections.main-collection-banner.name",
+  "description": "Section: t:sections.main-collection-banner.name",
+  "tags": [
+    "main",
+    "collection",
+    "banner"
+  ],
+  "type": "collection",
+  "liquid_code": "{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}\n{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}\n\n{%- style -%}\n  @media screen and (max-width: 749px) {\n    .collection-hero--with-image .collection-hero__inner {\n      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);\n    }\n  }\n{%- endstyle -%}\n\n<div class=\"collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient\">\n  <div class=\"collection-hero__inner page-width\">\n    <div class=\"collection-hero__text-wrapper\">\n      <h1 class=\"collection-hero__title\">\n        <span class=\"visually-hidden\">{{ 'sections.collection_template.title' | t }}: </span>\n        {{- collection.title | escape -}}\n      </h1>\n\n      {%- if section.settings.show_collection_description -%}\n        <div class=\"collection-hero__description rte\">{{ collection.description }}</div>\n      {%- endif -%}\n    </div>\n\n    {%- if section.settings.show_collection_image and collection.image -%}\n      <div class=\"collection-hero__image-container media gradient\">\n        <img\n          srcset=\"{%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}\n            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}\n            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}\n            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}\n            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}\n            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}\n            {{ collection.image | image_url }} {{ collection.image.width }}w\"\n          src=\"{{ collection.image | image_url: width: 750 }}\"\n          sizes=\"(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)\"\n          alt=\"\"\n          width=\"{{ collection.image.width }}\"\n          height=\"{{ collection.image.height }}\"\n        >\n      </div>\n    {%- endif -%}\n  </div>\n</div>",
+  "variables": {
+    "show_collection_description": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label",
+      "description": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    "show_collection_image": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.main-collection-banner.settings.show_collection_image.label",
+      "description": "t:sections.main-collection-banner.settings.show_collection_image.info"
+    },
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.all.colors.label"
+    }
+  }
+}

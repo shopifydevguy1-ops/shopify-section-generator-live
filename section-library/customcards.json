@@ -1,0 +1,42 @@
+{
+  "id": "customcards",
+  "name": "Custom Cards",
+  "description": "Section: Custom Cards",
+  "tags": [
+    "customcards"
+  ],
+  "type": "custom",
+  "liquid_code": "<div class=\"custom-cards-section\" \n     style=\"--color-background: {{ section.settings.background_color }}; --color-text: {{ section.settings.text_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;\">\n  <div class=\"page-width\">\n    <div class=\"custom-cards-grid\" style=\"--cards-per-row: {{ section.settings.cards_per_row }};\">\n      {% for block in section.blocks %}\n        <div class=\"custom-card__wrapper\" {{ block.shopify_attributes }}>\n          {% if block.settings.image != blank %}\n            <div class=\"custom-card__image-wrapper\">\n              {{ block.settings.image | image_url: width: 800 | image_tag: \n                loading: 'lazy',\n                class: 'custom-card__image',\n                widths: '165, 360, 535, 750, 1070, 1500'\n              }}\n            </div>\n          {% endif %}\n\n          <div class=\"custom-card__content\">\n            {% if block.settings.title != blank %}\n              <div class=\"custom-card__title\">\n                {% if block.settings.button_link != blank %}\n                  <a href=\"{{ block.settings.button_link }}\" class=\"custom-card__title-link\">\n                    {{ block.settings.title }}\n                  </a>\n                {% else %}\n                  {{ block.settings.title }}\n                {% endif %}\n              </div>\n            {% endif %}\n          </div>\n        </div>\n      {% endfor %}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "cards_per_row": {
+      "type": "text",
+      "default": "4",
+      "label": "Cards per row (desktop)",
+      "description": "Cards per row (desktop)"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Background color",
+      "description": "Background color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    }
+  }
+}

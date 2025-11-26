@@ -1,0 +1,36 @@
+{
+  "id": "newsletter",
+  "name": "t:sections.newsletter.name",
+  "description": "Section: t:sections.newsletter.name",
+  "tags": [
+    "newsletter"
+  ],
+  "type": "custom",
+  "liquid_code": "{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}\n{{ 'newsletter-section.css' | asset_url | stylesheet_tag }}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div class=\"newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}\">\n  <div class=\"newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding\">\n    {%- for block in section.blocks -%}\n      {%- case block.type -%}\n        {%- when '@app' -%}\n          {% render block %}\n        {%- when 'heading' -%}\n          <h2 class=\"{{ block.settings.heading_size }}\" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>\n        {%- when 'paragraph' -%}\n          <div class=\"newsletter__subheading rte\" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>\n        {%- when 'email_form' -%}\n          <div {{ block.shopify_attributes }}>\n            {% form 'customer', class: 'newsletter-form' %}\n              <input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n              <div class=\"newsletter-form__field-wrapper\">\n                <div class=\"field\">\n                  <input\n                    id=\"NewsletterForm--{{ section.id }}\"\n                    type=\"email\"\n                    name=\"contact[email]\"\n                    class=\"field__input\"\n                    value=\"{{ form.email }}\"\n                    aria-required=\"true\"\n                    autocorrect=\"off\"\n                    autocapitalize=\"off\"\n                    autocomplete=\"email\"\n                    {% if form.errors %}\n                      autofocus\n                      aria-invalid=\"true\"\n                      aria-describedby=\"Newsletter-error--{{ section.id }}\"\n                    {% elsif form.posted_successfully? %}\n                      aria-describedby=\"Newsletter-success--{{ section.id }}\"\n                    {% endif %}\n                    placeholder=\"{{ 'newsletter.label' | t }}\"\n                    required\n                  >\n                  <label class=\"field__label\" for=\"NewsletterForm--{{ section.id }}\">\n                    {{ 'newsletter.label' | t }}\n                  </label>\n                  <button type=\"submit\" class=\"newsletter-form__button field__button\" name=\"commit\" id=\"Subscribe\" aria-label=\"{{ 'newsletter.button_label' | t }}\">\n                    {% render 'icon-arrow' %}\n                  </button>\n                </div>\n                {%- if form.errors -%}\n                  <small class=\"newsletter-form__message form__message\" id=\"Newsletter-error--{{ section.id }}\">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>\n                {%- endif -%}\n              </div>\n              {%- if form.posted_successfully? -%}\n                <h3 class=\"newsletter-form__message newsletter-form__message--success form__message\" id=\"Newsletter-success--{{ section.id }}\" tabindex=\"-1\" autofocus>{% render 'icon-success' %}{{ 'newsletter.success' | t }}</h3>\n              {%- endif -%}\n            {% endform %}\n          </div>\n      {%- endcase -%}\n    {%- endfor -%}\n  </div>\n</div>",
+  "variables": {
+    "color_scheme": {
+      "type": "text",
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "description": "t:sections.all.colors.label"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.newsletter.settings.full_width.label",
+      "description": "t:sections.newsletter.settings.full_width.label"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "40",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "52",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

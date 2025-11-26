@@ -1,0 +1,198 @@
+{
+  "id": "custom-collection-list-2",
+  "name": "CUSTOM Collection list #2",
+  "description": "Section: CUSTOM Collection list #2",
+  "tags": [
+    "collection"
+  ],
+  "type": "collection",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign menu = section.settings.menu\n\n  assign collections_number = section.settings.collections_number\n  assign collections_display = section.settings.collections_display\n  assign collections_separator = section.settings.collections_separator\n  assign collections_superscript = section.settings.collections_superscript\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_hover_color = section.settings.text_hover_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_align = section.settings.text_align\n  assign text_align_mobile = section.settings.text_align_mobile\n\n  assign show_image = section.settings.show_image\n  \n-%}\n\n{%- style -%}\n\n  {{  text_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .collection-list-{{ section.id }} {\n    text-align: {{ text_align_mobile }};\n  }\n\n  .collection-link-{{ section.id }} {\n    display: inline-block;\n  }\n\n  .collection-link-{{ section.id }},\n  .collection-text-{{ section.id }},\n  .collection-superscript-{{ section.id }},\n  .collection-separator-{{ section.id }} {\n    margin: 0;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n    transition: all 0.25s ease 0s;\n    text-decoration: none;\n  }\n\n  .collection-superscript-{{ section.id }} {\n    font-size: 75% !important;\n    line-height: 0;\n  }\n\n  .collection-item-{{ section.id }} {\n    max-width: fit-content;\n  }\n\n  .collection-separator-{{ section.id }} {\n    margin-left: 7px;\n    margin-right: 7px;\n  }\n\n  .collection-item-{{ section.id }}:hover .collection-text-{{ section.id }},\n  .collection-item-{{ section.id }}:hover .collection-superscript-{{ section.id }} {\n    transition: all 0.25s ease 0s;\n    color: {{ text_hover_color }};\n  }\n\n  .collection-item-{{ section.id }}:hover .collection-text-{{ section.id }} {\n    text-decoration: underline;\n  }\n\n  .collection-image-{{ section.id }} {\n    display: none;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%,-50%);\n    width: calc(100vw / 3);\n    z-index: 2;\n    pointer-events: none;\n  }\n\n  .collection-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .collection-item-{{ section.id }}:hover .collection-image-{{ section.id }} {\n    display: block;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .collection-list-{{ section.id }} {\n      text-align: {{ text_align }};\n    }\n\n    .collection-link-{{ section.id }},\n    .collection-text-{{ section.id }},\n    .collection-superscript-{{ section.id }},\n    .collection-separator-{{ section.id }} {\n      font-size: {{ text_size }}px;\n    }\n    \n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .collection-item-{{ section.id }},\n    .collection-item-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_align_mobile == \"center\" %}\n  <style>\n    .collection-item-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif text_align_mobile == \"right\" %}\n  <style>\n    .collection-item-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if text_align == \"center\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .collection-item-{{ section.id }} {\n        margin-left: auto;\n        margin-right: auto;\n      } \n    }\n  </style>\n{% elsif text_align == \"right\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .collection-item-{{ section.id }} {\n        margin-left: auto;\n        margin-right: 0px;\n      } \n    }\n  </style>\n{% elsif text_align == \"left\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .collection-item-{{ section.id }} {\n        margin-left: 0px;\n        margin-right: 0px;\n      } \n    }\n  </style>\n{% endif %}\n\n{% if collections_display == \"paragraph\" %}\n  <style>\n    .collection-item-{{ section.id }} {\n      display: inline;\n    }\n  </style>\n{% elsif collections_display == \"list\" %}\n  <style>\n    .collection-item-{{ section.id }} {\n      display: block;\n    }\n\n    .collection-separator-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% elsif collections_display == \"list_paragraph\" %}\n  <style>\n    .collection-item-{{ section.id }} {\n      display: block;\n    }\n\n    .collection-separator-{{ section.id }} {\n      display: none;\n    }\n\n    @media(min-width: 1024px) {\n      .collection-item-{{ section.id }} {\n        display: inline;\n      }\n\n      .collection-separator-{{ section.id }} {\n        display: inline;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if collections_separator == \"none\" %}\n  <style>\n    .collection-link-{{ section.id }} {\n      margin-right: 16px;\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} collection-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <ul class=\"collection-list-{{ section.id }}\">\n        {% if menu != blank %}\n          {% for link in menu.links %}\n            {% assign link_handle = link.handle | handleize %}\n            {% assign menu_collection = collections[link_handle] %}\n            \n            <li class=\"collection-item-{{ section.id }}\">\n              <a href=\"{{ link.url }}\" class=\"collection-link-{{ section.id }}\">\n                <span class=\"collection-text-{{ section.id }}\">{% if collections_superscript == \"index\" %}<sup class=\"collection-superscript-{{ section.id }}\">{{ forloop.index }}</sup>{% endif %}{{ link.title | escape }}{% if collections_superscript == \"products\" %}{% if menu_collection != blank %}<sup class=\"collection-superscript-{{ section.id }}\">{{ menu_collection.products_count }}</sup>{% elsif link_handle contains \"all\" or link_handle contains \"shop\" %}<sup class=\"collection-superscript-{{ section.id }}\">{{ shop.products_count }}</sup>{% endif %}{% endif %}</span>\n              </a>\n              {% unless forloop.last %}\n                {% if collections_separator != \"none\" %}\n                  <span class=\"collection-separator-{{ section.id }}\">{% if collections_separator == \"emdash\" %}—{% elsif collections_separator == \"hyphen\" %}-{% elsif collections_separator == \"dot\" %}·{% elsif collections_separator == \"bullet\" %}•{% endif %}</span>\n                {% endif %}\n              {% endunless %}\n\n              {% if show_image and menu_collection.featured_image != blank%}\n                <div class=\"collection-image-{{ section.id }}\">\n                  <img src=\"{{ menu_collection.featured_image | image_url }}\" alt=\"{{ menu_collection.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                </div>\n              {% endif %}\n            </li>\n          {% endfor %}\n        {% else %}\n          {% for collection in collections limit: collections_number %}\n            <li class=\"collection-item-{{ section.id }}\">\n              <a href=\"{{ collection.url }}\" class=\"collection-link-{{ section.id }}\">\n                <span class=\"collection-text-{{ section.id }}\">{% if collections_superscript == \"index\" %}<sup class=\"collection-superscript-{{ section.id }}\">{{ forloop.index }}</sup>{% endif %}{{ collection.title | escape }}{% if collections_superscript == \"products\" %}<sup class=\"collection-superscript-{{ section.id }}\">{{ collection.products_count }}</sup>{% endif %}</span>\n              </a>\n              {% unless forloop.last %}\n                {% if collections_separator != \"none\" %}\n                  <span class=\"collection-separator-{{ section.id }}\">{% if collections_separator == \"emdash\" %}—{% elsif collections_separator == \"hyphen\" %}-{% elsif collections_separator == \"dot\" %}·{% elsif collections_separator == \"bullet\" %}•{% endif %}</span>\n                {% endif %}\n              {% endunless %}\n  \n              {% if show_image and collection.featured_image != blank%}\n                <div class=\"collection-image-{{ section.id }}\">\n                  <img src=\"{{ collection.featured_image | image_url }}\" alt=\"{{ collection.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                </div>\n              {% endif %}\n            </li>\n          {% endfor %}\n        {% endif %}\n      </ul>\n    </div>\n</div>",
+  "variables": {
+    "menu": {
+      "type": "text",
+      "default": "",
+      "label": "Menu",
+      "description": "This menu won't show dropdown items"
+    },
+    "collections_number": {
+      "type": "text",
+      "default": "10",
+      "label": "Show first x collections",
+      "description": "Show first x collections"
+    },
+    "collections_display": {
+      "type": "text",
+      "default": "paragraph",
+      "label": "Display",
+      "description": "Display"
+    },
+    "collections_separator": {
+      "type": "text",
+      "default": "emdash",
+      "label": "Separator",
+      "description": "Separator"
+    },
+    "collections_superscript": {
+      "type": "text",
+      "default": "products",
+      "label": "Superscript",
+      "description": "Superscript"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use сustom font",
+      "description": "Use сustom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "72",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "text_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "show_image": {
+      "type": "text",
+      "default": "true",
+      "label": "Show image on hover",
+      "description": "Show image on hover"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "text_hover_color": {
+      "type": "color",
+      "default": "#FF6464",
+      "label": "Text hover color",
+      "description": "Text hover color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

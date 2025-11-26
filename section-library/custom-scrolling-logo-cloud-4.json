@@ -1,0 +1,216 @@
+{
+  "id": "custom-scrolling-logo-cloud-4",
+  "name": "CUSTOM Scrolling logo #4",
+  "description": "Section: CUSTOM Scrolling logo #4",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign scrolling_velocity = section.settings.scrolling_velocity\n  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile\n  assign scrolling_direction = section.settings.scrolling_direction\n  assign scrolling_gap_mobile = section.settings.scrolling_gap_mobile\n  assign scrolling_gap = section.settings.scrolling_gap\n  assign pause_hover = section.settings.pause_hover\n\n  assign card_width_desktop = section.settings.card_width_desktop\n  assign card_width_mobile = section.settings.card_width_mobile\n  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile\n  assign card_padding_horizontal = section.settings.card_padding_horizontal\n  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile\n  assign card_padding_vertical = section.settings.card_padding_vertical\n  assign card_bg_color = section.settings.card_bg_color\n  assign card_radius = section.settings.card_radius\n  assign card_border_color = section.settings.card_border_color\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_shadow = section.settings.card_shadow\n\n  assign edge_blur_width = section.settings.edge_blur_width\n  assign edge_blur_intensity = section.settings.edge_blur_intensity\n\n-%}\n\n{%- style -%}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .scrolling-logo-slider-{{ section.id }} {\n    display: flex;\n    position: relative;\n    overflow: hidden;\n    padding: 36px 0px;\n  }\n\n  .scrolling-logo-slider-{{ section.id }}::before,\n  .scrolling-logo-slider-{{ section.id }}::after {\n    content: \"\";\n    position: absolute;\n    width: {{ edge_blur_width }}%;\n    height: 100%;\n    top: 0;\n    z-index: 2;\n    pointer-events: none;\n  }\n  \n  .scrolling-logo-slider-{{ section.id }}::before {\n    background: linear-gradient(90deg, {{ background_color }} {{ edge_blur_intensity }}%, rgba(0,0,0,0));\n    left: 0;\n  }\n  \n  .scrolling-logo-slider-{{ section.id }}::after {\n    background: linear-gradient(270deg, {{ background_color }} {{ edge_blur_intensity }}%, rgba(0,0,0,0));\n    right: 0;\n  }\n\n  .scrolling-logo-slide-{{ section.id }} {\n    width: 100%;\n    flex: 0 0 {{ card_width_mobile }}px;\n    overflow: hidden;\n    position: relative;\n    border-radius: {{ card_radius }}px;\n    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;\n    border: solid {{ card_border_color }} {{ card_border_thickness }}px;\n    background: {{ card_bg_color }};\n  }\n\n  .scrolling-logo-slide-{{ section.id }}.card-shadow {\n    box-shadow: 0 .8rem 4rem rgba(0,0,0,.08)\n  }\n  \n  .scrolling-logo-slide-{{ section.id }} img,\n  .scrolling-logo-slide-{{ section.id }} svg {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: contain;\n  }\n\n  .scrolling-logo-slide-{{ section.id }} > svg {\n    background-color: #a0a0a0;\n  }\n\n  .marquee-horizontal-{{ section.id }} {\n    position: relative;\n    z-index: 1;\n    display: inline-flex;\n    /* overflow: hidden; */\n    width: 100%;\n    -webkit-box-pack: start;\n    -webkit-justify-content: flex-start;\n    -ms-flex-pack: start;\n    justify-content: flex-start;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n    -ms-flex-align: center;\n    align-items: center;\n}\n\n  html[dir=\"rtl\"] .marquee-horizontal-{{ section.id }} {\n    flex-direction: row-reverse;\n  }\n\n  .track-horizontal-{{section.id}} {\n    padding-left: {{ scrolling_gap_mobile }}px;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    flex-shrink: 0;\n    width: calc(({{ card_width_mobile }}px * {{ section.blocks.size }}) + ({{ scrolling_gap_mobile }}px * {{ section.blocks.size }}));\n    gap: {{ scrolling_gap_mobile }}px;\n    -webkit-box-pack: start;\n    -webkit-justify-content: flex-start;\n    -ms-flex-pack: start;\n    justify-content: flex-start;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n    -ms-flex-align: center;\n    align-items: stretch;\n    white-space: nowrap;\n    will-change: transform;\n    animation: marquee-horizontal-{{ scrolling_direction }} {{ scrolling_velocity_mobile }}s linear infinite;\n  }\n\n  @keyframes marquee-horizontal-left {\n    0% {\n        transform: translateZ(0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translate3d(-100%,0,0);\n    }\n  }\n\n  @keyframes marquee-horizontal-right {\n    0% {\n        transform: translate3d(-100%,0,0);\n        visibility: visible;\n    }\n    \n    100% {\n        transform: translateZ(0);\n    }\n  }\n\n  .clip-{{ section.id }} {\n    width: 100%;\n    height: 100%;\n    pointer-events: none;\n    position: absolute;\n    top: 0%;\n    bottom: 0%;\n    left: 0%;\n    right: 0%;\n    background-color: transparent !important;\n  }\n\n  .scrolling-hover-{{ section.id }} {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: #1b1b1b80;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    opacity: 0;\n    transition: all 0.25s ease 0s;\n  }\n\n  .scrolling-logo-slide-{{ section.id }}:hover .scrolling-hover-{{ section.id }} {\n    opacity: 1;\n    transition: all 0.25s ease 0s;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .scrolling-logo-slide-{{ section.id }} {\n      flex: 0 0 {{ card_width_desktop }}px;\n      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;\n    }\n\n    .track-horizontal-{{section.id}} {\n      padding-left: {{ scrolling_gap }}px;\n      width: calc(({{ card_width_desktop }}px * {{ section.blocks.size }}) + ({{ scrolling_gap }}px * {{ section.blocks.size }}));\n      gap: {{ scrolling_gap }}px;\n      animation-duration: {{ scrolling_velocity }}s;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if pause_hover %}\n  <style>\n    .marquee-horizontal-{{ section.id }}:hover .track-horizontal-{{section.id}} {\n      animation-play-state: paused \n    }\n  </style>\n{% endif %}\n  \n{% capture blocks %}\n  <div class=\"track-horizontal-{{section.id}}\">\n    {% for block in section.blocks %}\n      <{% if block.settings.url != blank %}a href=\"{{ block.settings.url }}\"{% else %}div{% endif %} class=\"scrolling-logo-slide-{{ section.id }} {% if card_shadow %}card-shadow{% endif %}\">\n        {% if block.settings.image != blank %}\n          <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n          {% else %}\n            {{ 'image' | placeholder_svg_tag }}\n          {% endif %}\n  \n        </{% if block.settings.url != blank %}a{% else %}div{% endif %}>\n    {% endfor %}\n  </div>\n{% endcapture %}\n\n<div class=\"section-{{ section.id }} scrolling-{{ section.id }}\" style=\"background-color:{{ background_color }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"scrolling-logo-slider-{{ section.id }}\">\n        <div class=\"marquee-horizontal-{{ section.id }}\">\n          {% for item in (1..4) %}\n            {{ blocks }}\n          {% endfor %}\n        </div>\n      </div>\n    </div>\n</div>",
+  "variables": {
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "30",
+      "label": "Speed",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_velocity_mobile": {
+      "type": "text",
+      "default": "34",
+      "label": "Speed - mobile",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_direction": {
+      "type": "text",
+      "default": "left",
+      "label": "Direction",
+      "description": "Direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "false",
+      "label": "Pause on hover",
+      "description": "Pause on hover"
+    },
+    "scrolling_gap": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "scrolling_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "card_width_desktop": {
+      "type": "text",
+      "default": "190",
+      "label": "Width",
+      "description": "Width"
+    },
+    "card_width_mobile": {
+      "type": "text",
+      "default": "170",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "card_padding_horizontal": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "card_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "card_padding_vertical": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "card_padding_vertical_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "card_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "edge_blur_width": {
+      "type": "text",
+      "default": "17",
+      "label": "Edge blur width",
+      "description": "Edge blur width"
+    },
+    "edge_blur_intensity": {
+      "type": "text",
+      "default": "15",
+      "label": "Edge blur intensity",
+      "description": "Edge blur intensity"
+    },
+    "card_bg_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Background",
+      "description": "Background"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

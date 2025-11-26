@@ -1,0 +1,66 @@
+{
+  "id": "custom-atc-button-4",
+  "name": "CUSTOM ATC Button #4",
+  "description": "Section: CUSTOM ATC Button #4",
+  "tags": [
+    "atc"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n\n  .ss-atc-button-style {\n    border: none;\n    background-color: {{ section.settings.first_color }};\n    border-radius: 6px;\n    color: {{ section.settings.text_color }};\n    cursor: pointer;\n    display: inline-block;\n    text-transform: uppercase;\n    padding: {{section.settings.ss-button_padding}}rem;\n    font-weight: 600;\n    font-size: 1em;\n    outline: none;\n    font-size: {{section.settings.ss-font-size}}px;\n    margin-bottom:15px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: {{section.settings.ss-border-width}}px solid {{section.settings.border_color}};\n  }\n  .ss-atc-button-style svg path {\n    fill: {{ section.settings.text_color }};\n  }\n  .ss-atc-button-style:before {\n    -webkit-transform: translateY(7px);\n    transform: translateY(7px);\n    background-color: inherit;\n    border-radius: 8px;\n    z-index: -1;\n    border-bottom: #b5b4b4 2px solid;\n    box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.5);\n  }\n\n  .ss-atc-button-style:hover {\n    background-color: {{section.settings.button_hover_color}};\n    color: {{section.settings.text_color_hover}};\n  }\n  \n  .ss-atc-button-style:hover svg path{\n    fill: {{section.settings.text_color_hover}} !important;\n  }\n\n  .ss-atc-button-style:active {\n    background-color: {{section.settings.button_hover_color}};\n    color: {{section.settings.text_color_hover}};\n  }\n\n  .ss-atc-button-style:after {\n    --border-opacity:none!important;\n  }\n\n  svg.ss-atc-button-style {\n    background-color:red;\n  }\n\n\n</style>\n\n<script>\n    window.addEventListener('DOMContentLoaded', (event) => {\n        const productATC = document.querySelector('{% if section.settings.custom_class_selector != blank %}{{ section.settings.custom_class_selector }}{% else %}.product-form__submit, .add-to-cart, .product-form__cart-submit, .button--addToCart, .product-buy-buttons--cta, .product__submit__add{% endif %}')\n\n        if (!productATC) {\n            return\n        }\n\n      productATC.insertAdjacentHTML('afterbegin','<svg style=\"margin-right: 10px;margin-bottom: 3px;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"{{section.settings.ss-font-size}}\" height=\"{{section.settings.ss-font-size}}\" fill=\"currentColor\" class=\"bi bi-bag-fill\" viewBox=\"0 0 16 16\"><path d=\"M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z\"/></svg>');\n      productATC.classList.add(\"ss-atc-button-style\");\n    });\n</script>",
+  "variables": {
+    "custom_class_selector": {
+      "type": "text",
+      "default": "",
+      "label": "Custom class selector",
+      "description": "Custom class selector"
+    },
+    "first_color": {
+      "type": "color",
+      "default": "#3FBE44",
+      "label": "Button color",
+      "description": "Button color"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#51c556",
+      "label": "Button hover color",
+      "description": "Button hover color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000",
+      "label": "Text Color",
+      "description": "Text Color"
+    },
+    "text_color_hover": {
+      "type": "color",
+      "default": "#fff",
+      "label": "Text Hover Color ",
+      "description": "Text Hover Color "
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#51c556",
+      "label": "Border Color",
+      "description": "Border Color"
+    },
+    "ss-border-width": {
+      "type": "text",
+      "default": "1",
+      "label": "Border Width",
+      "description": "Border Width"
+    },
+    "ss-font-size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font-size",
+      "description": "Font-size"
+    },
+    "ss-button_padding": {
+      "type": "text",
+      "default": "1.7",
+      "label": "Button size",
+      "description": "Button size"
+    }
+  }
+}

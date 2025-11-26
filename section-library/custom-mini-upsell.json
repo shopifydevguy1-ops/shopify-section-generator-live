@@ -1,0 +1,198 @@
+{
+  "id": "custom-mini-upsell",
+  "name": "CUSTOM Upsell 01",
+  "description": "Section: CUSTOM Upsell 01",
+  "tags": [
+    "mini"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign upsell_position = section.settings.upsell_position\n\n  assign cards_gap = section.settings.cards_gap\n  assign cards_gap_mobile = section.settings.cards_gap_mobile\n-%}\n\n{% if section.blocks.size > 0 %}\n  <style>\n    .complete-look {\n      display: grid;\n      grid-template-columns: 100%;\n    }\n    .complete-look__form {\n      background-color: #f7f7f7;\n      max-width: 44rem;\n      margin-bottom: {{ cards_gap_mobile }}px;\n      {%- if section.settings.boxshadow -%}\n         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n      {%- endif -%}\n    }\n    .complete-look__wrap {\n      display: flex;\n      align-items: center;\n      padding: {{ section.settings.vertical_padding }}px {{ section.settings.horizontal_padding }}px;\n      padding: \n    }\n    .complete-look__img {\n      width: {{ section.settings.image_width }}px;\n      aspect-ratio: 1/1;\n      align-self: center;\n      border-radius:{{section.settings.border_radius}}px;\n    }\n\n    @media only screen and (min-width: 768px) {\n      .complete-look__form {\n        margin-bottom: {{ cards_gap }}px;\n      }\n    }\n    .complete-look__product-details {\n      flex: 1;\n    }\n    .complete-look__title-wrap {\n      display: flex;\n      justify-content: space-between;\n      align-items: start;\n      flex-direction:column;\n      margin-left:10px;\n    }\n    .complete-look__link {\n      display: block;\n      text-decoration: none !important;\n      padding-right: 10px;\n      line-height: 1.2;\n    }\n    .complete-look__cta {\n      box-shadow: none;\n      cursor: pointer;\n\n      display: inline-block;\n      transition: background-color 0.3s, color 0.3s, border-color 0.3s;\n      letter-spacing: 1.5px;\n      text-align: center;\n      line-height: 1;\n\n      background-color: #000;\n      border: 2px solid #000;\n      background-color: {{section.settings.price_color}};\n      color: {{section.settings.price_text_color}};\n      border-radius: {{section.settings.atc-border-radius}}px;\n      font-size: {{section.settings.price_size}}px;\n      flex-shrink: 0;\n    }\n    {% comment %} @media only screen and (min-width: 768px) { {% endcomment %}\n      .complete-look__cta {\n        font-family: inherit;\n        margin-top: 5px;\n        min-width: 70px;\n        padding: 10px;\n        width:100%;\n      }\n    {% comment %} } {% endcomment %}\n\n    .complete-look__cta.complete-look__cta-soldout-{{ section.id }} {\n      opacity: 0.5;\n      font-size: {{ section.settings.soldout_font_size }}px;\n      background-color: {{ section.settings.soldout_bg_color }};\n      color: {{ section.settings.soldout_text_color }};\n      cursor: not-allowed;\n    }\n    .complete-look__product-title,\n    .complete-look__product-price,\n    .complete-look__promo {\n      \n      font-size: 9px;\n      letter-spacing: 1.25px;\n      color: #000;\n      line-height: 1.4;\n    }\n    .custom-mini-atc__heading {\n      font-size: 14px;\n      font-weight: {{section.settings.heading_font_weight}};\n      letter-spacing: 1.5px;\n      margin: 10px 0px;\n    }\n\n    .complete-look__variant-select {\n      -webkit-appearance: none;\n      -moz-appearance: none;\n      appearance: none;\n      padding: 5px;\n      margin-top: 5px;\n      font-family: {{section.settings.variant_font_family.family}};\n      border-radius: {{section.settings.variant_atc-border-radius}}px;\n      font-size: {{section.settings.variant_font_size}}px;\n      color: {{section.settings.variant_price_text_color}};\n      background: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4l3 3 3-3' stroke='black' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>\")\n              no-repeat right 1rem center;\n      background-size: 12px;\n      padding-right: 2rem; /* keeps text from overlapping */\n      \n    }\n  </style>\n\n  <script>\n    (function () {\n      function moreLoadProductForm() {\n        var upsellForm = document.querySelector('#custom-upsell-products');\n        if (!upsellForm){\n          var upsellForm = document.querySelector('{% if upsell_position == \"below_title\" or upsell_position == \"above_title\" %}.product__title{% elsif upsell_position == \"below_description\" or upsell_position == \"above_description\" %}.product__description{% elsif upsell_position == \"below_price\" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n          if (!upsellForm) return;\n          }\n          const templateContent = document.querySelector(\n            '#custom-upsell-products-{{ section.id }}'\n          ).content;\n\n          upsellForm.insertAdjacentElement(\n          '{% if upsell_position == \"below_buy\" or upsell_position == \"below_title\" or upsell_position == \"below_description\" or upsell_position == \"below_price\" %}afterend{% else %}beforebegin{% endif %}',\n            templateContent.firstElementChild\n          );      \n      }\n      window.addEventListener('DOMContentLoaded', moreLoadProductForm);\n    })();\n  </script>\n  \n  <template id=\"custom-upsell-products-{{ section.id }}\">\n    <div class=\"complete-look\">\n      {% if section.settings.heading %}\n        <div\n          class=\"custom-mini-atc__heading\"\n          style=\"font-size: {{ section.settings.heading_size }}px; color: {{ section.settings.heading_color }};\"\n        >\n          {{ section.settings.heading }}\n        </div>\n      {% endif %}\n      {% for block in section.blocks %}\n        {% assign product = block.settings.product %}\n        <div\n          data-mini-atc\n          class=\"complete-look__form\"\n          style=\"background-color: {{ section.settings.background_color }}; border-radius: {{ section.settings.border_radius }}px;\"\n        >\n          <div class=\"complete-look__wrap\">\n            <img\n              class=\"complete-look__img complete-look__img-{{ section.id }} complete-look__img-{{ block.id }}\"\n              src=\"{{ product.featured_image | img_url: '300x' }}\"\n              alt=\"{{ product.title }}\"\n              data-mini-atc-image-{{ forloop.index }}            \n              loading=\"lazy\"\n            >\n            <div class=\"complete-look__product-details\">\n              <div class=\"complete-look__title-wrap\">\n                <div>\n                  <a\n                    class=\"complete-look__link\"\n                    href=\"{{ product.url }}\"\n                  >\n                    <div\n                      class=\"complete-look__product-title\"\n                      style=\"font-size: {{ section.settings.title_size }}px; color: {{ section.settings.title_color }}\"\n                    >\n                      {{ product.title }}\n                    </div>\n                    {% if block.settings.promo_text != blank %}\n                      <div\n                        class=\"complete-look__promo\"\n                        style=\"font-size: {{ section.settings.promo_size }}px; color: {{ section.settings.promo_color }};\"\n                      >\n                        {{ block.settings.promo_text }}\n                      </div>\n                    {% endif %}\n                  </a>\n\n                  {% if block.settings.enable_variant_dropdown %}\n                    <select\n                      class=\"complete-look__variant-select complete-look__variant-select--{{ block.id }}\"\n                      data-mini-atc-variant-select\n                      data-mini-atc-variant-select--{{ forloop.index }}\n                      data-product-id=\"{{ product.id }}\"\n                    >\n                      {% for variant in product.variants %}\n                        <option value=\"{{ variant.id }}\">{{ variant.title }}</option>\n                      {% endfor %}\n                    </select>\n                  {% endif %}\n                </div>\n                <button\n                  type=\"submit\"\n                  name=\"add\"\n                  class=\"complete-look__cta complete-look__cta-{{ section.id }} {% unless product.available %}complete-look__cta-soldout-{{ section.id }}{% endunless %}\"\n                  data-mini-add-to-cart\n                  data-mini-add-to-cart-{{ forloop.index }}\n                  data-variant-id=\"{{ product.variants.first.id }}\"\n                  {% unless product.available %}disabled{% endunless %}\n                >\n                  {% if product.available %}{{ section.settings.atc_text }} -  <span class=\"money notranslate\">{{ product.price | money_with_currency }}</span>{% else %}{{ section.settings.soldout }}{% endif %}\n                </button>\n              </div>\n            </div>\n          </div>\n        </div>\n      {% endfor %}\n    </div>\n  </template>\n\n  <script>\n    var formayMoneyForBuyItWith = function(cents, format) {\n      if (typeof cents == 'string') { cents = cents.replace('.',''); }\n      var value = '';\n      var placeholderRegex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/;\n      var formatString = (format || this.money_format);\n    \n      function defaultOption(opt, def) {\n         return (typeof opt == 'undefined' ? def : opt);\n      }\n    \n      function formatWithDelimiters(number, precision, thousands, decimal) {\n        precision = defaultOption(precision, 2);\n        thousands = defaultOption(thousands, ',');\n        decimal   = defaultOption(decimal, '.');\n    \n        if (isNaN(number) || number == null) { return 0; }\n    \n        number = (number/100.0).toFixed(precision);\n    \n        var parts   = number.split('.'),\n            dollars = parts[0].replace(/(\\d)(?=(\\d\\d\\d)+(?!\\d))/g, '$1' + thousands),\n            cents   = parts[1] ? (decimal + parts[1]) : '';\n    \n        return dollars + cents;\n      }\n    \n      switch(formatString.match(placeholderRegex)[1]) {\n        case 'amount':\n          value = formatWithDelimiters(cents, 2);\n          break;\n        case 'amount_no_decimals':\n          value = formatWithDelimiters(cents, 0);\n          break;\n        case 'amount_with_comma_separator':\n          value = formatWithDelimiters(cents, 2, '.', ',');\n          break;\n        case 'amount_no_decimals_with_comma_separator':\n          value = formatWithDelimiters(cents, 0, '.', ',');\n          break;\n      }\n    \n      return formatString.replace(placeholderRegex, value);\n    };\n\n    function handleCartBehavior() {\n      const themeName = window.Shopify.theme.name.toLowerCase();\n      \n      if ({{ section.settings.refresh_after_atc }}) {\n        window.location.reload();\n        return;\n      }\n      \n      switch (themeName) {\n        case 'dawn':\n          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));\n          const cartDrawer = document.querySelector('cart-drawer');\n          if (cartDrawer) {\n            cartDrawer.open();\n          }\n          break;\n        case 'horizon':\n          const cartDrawerComponent = document.querySelector('cart-drawer-component');\n          if (cartDrawerComponent) {\n            cartDrawerComponent.open();\n          }\n          break;\n        case 'debut':\n          window.location.href = '/cart';\n          break;\n        default:\n          window.location.href = '/cart';\n          break;\n      }\n    }\n\n    document.addEventListener('DOMContentLoaded', function () {\n      setTimeout(() => {\n        const addToCartButtons = document.querySelectorAll('[data-mini-add-to-cart]');\n        addToCartButtons.forEach(function (button) {\n          button.addEventListener('click', function () {\n            const variantId = button.getAttribute('data-variant-id');\n            if (!variantId) return;\n\n            const originalHtml = button.innerHTML;\n            button.innerHTML = 'Adding...';\n\n            fetch('/cart/add.js', {\n              method: 'POST',\n              headers: {\n                'Content-Type': 'application/json',\n              },\n              body: JSON.stringify({\n                items: [\n                  {\n                    id: variantId,\n                    quantity: 1,\n                  },\n                ],\n              }),\n            })\n              .then(function (response) {\n                return response.json();\n              })            \n                \n              .then(function (data) {\n                button.innerHTML = 'Added';\n                setTimeout(function () {\n                  button.innerHTML = originalHtml;\n                  handleCartBehavior();\n                }, 1000);\n\n                if (window.Shopify.theme.name.toLowerCase() === 'dawn') {\n                  fetch('/cart?view=ajax') \n                    .then(response => response.text())\n                    .then(html => {\n                      const parser = new DOMParser();\n                      const doc = parser.parseFromString(html, 'text/html');\n                      const updatedCartContent = doc.querySelector('cart-drawer');\n                      \n                      const currentCartDrawer = document.querySelector('cart-drawer');\n                      if (currentCartDrawer && updatedCartContent) {\n                        currentCartDrawer.innerHTML = updatedCartContent.innerHTML;\n                      }\n                    });\n                }\n              })\n          \n              .catch(function (error) {\n                console.error(error);\n                button.innerHTML = 'Error';\n                setTimeout(function () {\n                  button.innerHTML = originalHtml;\n                }, 1000);\n              });\n          });\n        });\n\n        {% for block in section.blocks %}\n          let select{{ forloop.index }} = document.querySelector('[data-mini-atc-variant-select--{{ forloop.index }}]');\n          let product{{ forloop.index }} = {{ all_products[block.settings.product] | json }};\n          let addToCartButton{{ forloop.index }} = document.querySelector('.complete-look__cta[data-mini-add-to-cart-{{ forloop.index }}]');\n          \n          select{{ forloop.index }}.addEventListener('change', () => {\n            const variantId = select{{ forloop.index }}.value;\n            addToCartButton{{ forloop.index }}.setAttribute('data-variant-id', variantId);\n        \n            var selectedOptionId = select{{ forloop.index }}.value;\n            var matchedVariant = product{{ forloop.index }}.variants.find(variant => variant.id == selectedOptionId);\n        \n            if (matchedVariant.featured_image) {\n              document.querySelector('[data-mini-atc-image-{{ forloop.index }}]').src = matchedVariant.featured_image.src;\n            } else {\n              document.querySelector('[data-mini-atc-image-{{ forloop.index }}]').src = product{{ forloop.index }}.featured_image;\n            }\n        \n            if (!matchedVariant.available) {\n              addToCartButton{{ forloop.index }}.setAttribute('disabled', \"\");\n              addToCartButton{{ forloop.index }}.innerText = \"{{ section.settings.soldout }}\";\n              addToCartButton{{ forloop.index }}.style.cursor = \"not-allowed\";\n            } else {\n              addToCartButton{{ forloop.index }}.removeAttribute('disabled');\n              addToCartButton{{ forloop.index }}.innerHTML = '{{ section.settings.atc_text }} - ' + formayMoneyForBuyItWith(matchedVariant.price, \"{{ shop.money_with_currency_format }}\");\n              addToCartButton{{ forloop.index }}.style.cursor = \"pointer\";\n            }\n          });\n        {% endfor %}\n      }, 300);\n    });\n  </script>\n{% endif %}",
+  "variables": {
+    "upsell_position": {
+      "type": "text",
+      "default": "below_buy",
+      "label": "Position",
+      "description": "Position"
+    },
+    "cards_gap": {
+      "type": "text",
+      "default": "14",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "cards_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "horizontal_padding": {
+      "type": "text",
+      "default": "15",
+      "label": "Horizontal padding",
+      "description": "Horizontal padding"
+    },
+    "vertical_padding": {
+      "type": "text",
+      "default": "0",
+      "label": "Vertical padding",
+      "description": "Vertical padding"
+    },
+    "border_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Border radius",
+      "description": "Border radius"
+    },
+    "boxshadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Shadow",
+      "description": "Shadow"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Background color",
+      "description": "Background color"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "105",
+      "label": "Image width",
+      "description": "Image width"
+    },
+    "heading": {
+      "type": "text",
+      "default": "PAIR IT WITH:",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Size",
+      "description": "Size"
+    },
+    "heading_font_weight": {
+      "type": "text",
+      "default": "700",
+      "label": "Weight",
+      "description": "Weight"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Color",
+      "description": "Color"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Size",
+      "description": "Size"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Color",
+      "description": "Color"
+    },
+    "refresh_after_atc": {
+      "type": "text",
+      "default": "false",
+      "label": "Refresh page after add to cart",
+      "description": "Refresh page after add to cart"
+    },
+    "atc_text": {
+      "type": "text",
+      "default": "Add",
+      "label": "Text",
+      "description": "Text"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Size",
+      "description": "Size"
+    },
+    "price_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "price_text_color": {
+      "type": "color",
+      "default": "#FFF",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "atc-border-radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "promo_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Size",
+      "description": "Size"
+    },
+    "promo_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Color",
+      "description": "Color"
+    },
+    "variant_font_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Size",
+      "description": "Size"
+    },
+    "variant_price_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Color",
+      "description": "Color"
+    },
+    "variant_atc-border-radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "variant_font_family": {
+      "type": "text",
+      "default": "montserrat_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "soldout": {
+      "type": "text",
+      "default": "Sold Out",
+      "label": "Text",
+      "description": "Text"
+    },
+    "soldout_font_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Size",
+      "description": "Size"
+    },
+    "soldout_text_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Color",
+      "description": "Color"
+    },
+    "soldout_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background color",
+      "description": "Background color"
+    }
+  }
+}

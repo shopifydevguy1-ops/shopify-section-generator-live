@@ -1,0 +1,450 @@
+{
+  "id": "custom-product-review-2",
+  "name": "CUSTOM Product Reviews #2",
+  "description": "Section: CUSTOM Product Reviews #2",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign lazy = section.settings.lazy\n\n  assign reviews_position = section.settings.reviews_position\n  assign reviews_meta = section.settings.reviews_meta\n  assign reviews_radius = section.settings.review_radius\n  assign reviews_bg_color = section.settings.reviews_bg_color\n\n  assign review_padding_vertical = section.settings.review_padding_vertical\n  assign review_padding_horizontal = section.settings.review_padding_horizontal\n  assign review_radius = section.settings.review_radius\n  assign review_border_thickness = section.settings.review_border_thickness\n  assign review_border_color = section.settings.review_border_color\n  assign review_bg_color = section.settings.review_bg_color\n\n  assign image_width = section.settings.image_width\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_ratio = section.settings.image_ratio\n\n  assign stars_icon = section.settings.stars_icon\n  assign stars_color = section.settings.stars_color\n  assign stars_size = section.settings.stars_size\n\n  assign author_size = section.settings.author_size\n  assign author_size_mobile = section.settings.author_size_mobile\n  assign author_color = section.settings.author_color\n  assign author_custom = section.settings.author_custom\n  assign author_font = section.settings.author_font\n  assign author_height = section.settings.author_height\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_mt = section.settings.text_mt\n\n  assign arrow_size = section.settings.arrow_size\n  assign arrow_size_mobile = section.settings.arrow_size_mobile\n  assign arrow_icon_size = section.settings.arrow_icon_size\n  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n  assign arrow_bg_color = section.settings.arrow_bg_color\n  assign arrow_bg_hover_color = section.settings.arrow_bg_hover_color\n  assign arrow_border_thickness = section.settings.arrow_border_thickness\n  assign arrow_border_color = section.settings.arrow_border_color\n  assign arrow_border_hover_color = section.settings.arrow_border_hover_color\n  assign arrow_show_desktop = section.settings.arrow_show_desktop\n  assign arrow_show_mobile = section.settings.arrow_show_mobile\n\n  assign play_icon = section.settings.play_icon\n  assign play_icon_size = section.settings.play_icon_size\n  assign play_icon_color = section.settings.play_icon_color\n\n  assign modal_padding_horizontal = section.settings.modal_padding_horizontal\n  assign modal_padding_vertical = section.settings.modal_padding_vertical\n  assign modal_radius = section.settings.modal_radius\n  assign modal_border_thickness = section.settings.modal_border_thickness\n  assign modal_width = section.settings.modal_width\n  assign modal_width_mobile = section.settings.modal_width_mobile\n  assign modal_overlay = section.settings.modal_overlay\n  assign modal_border_color = section.settings.modal_border_color\n  assign modal_bg_color = section.settings.modal_bg_color\n\n  assign video_radius = section.settings.video_radius\n  assign video_border_thickness = section.settings.video_border_thickness\n  assign video_border_color = section.settings.video_border_color\n  assign video_ratio = section.settings.video_ratio\n  assign video_ratio_mobile = section.settings.video_ratio_mobile\n\n  assign modal_close_bg_color = section.settings.modal_close_bg_color\n  assign modal_close_icon_color = section.settings.modal_close_icon_color \n  \n-%}\n\n{%- style -%}\n\n  {{  author_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }}-settings {\n    border: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px !important;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px !important;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n    border-radius: {{ reviews_radius }}px;\n  }\n\n  .reviews-items-{{ section.id }} {\n    position: relative;\n    background-color: {{ reviews_bg_color }};\n  }\n\n  .reviews-slider-{{ section.id }} * {\n    box-sizing: border-box;\n  }\n\n  .reviews-slider-{{ section.id }} .swiper-wrapper {\n    align-items: stretch;\n  }\n\n  .reviews-slider-{{ section.id }} .swiper-slide {\n    height: auto;\n  }\n\n  .reviews-item-{{ section.id }} {\n    height: 100%;\n    display: flex;\n    align-items: center;\n    gap: 20px;\n    padding: {{ review_padding_vertical | times: 0.75 | round: 0 }}px {{ review_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border: {{ review_border_thickness }}px solid {{ review_border_color }};\n    background-color: {{ review_bg_color }};\n    border-radius: {{ review_radius }}px;\n  }\n\n  .reviews-content-{{ section.id }} {\n    flex: 1 1 auto;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n  }\n\n  .reviews-image-{{ section.id }} {\n    flex: 0 0 {{ image_width }}px;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-radius: {{ image_radius }}px;\n    position: relative;\n  }\n\n  .reviews-image-{{ section.id }} img,\n  .reviews-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: {{ image_radius }}px;\n  }\n\n  .reviews-image-{{ section.id }} > svg {\n    background-color: #DDDDDD;\n  }\n\n  .reviews-image-play-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: {{ play_icon_size }}px;\n    height: {{ play_icon_size }}px;\n    border-radius: 50%;\n    cursor: pointer;\n  }\n\n   .reviews-image-play-{{ section.id }} img,\n   .reviews-image-play-{{ section.id }} svg {\n     display: block;\n     object-fit: cover;\n     width: 100%;\n     height: 100%;\n   }\n\n  .reviews-image-play-{{ section.id }} svg path {\n    fill: {{ play_icon_color }};\n  }\n\n  .reviews-top-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n  }\n\n  .testimonials-stars-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n  }\n\n  .testimonials-stars-{{ section.id }} svg path {\n    fill: {{ stars_color }};\n  }\n\n  .testimonials-stars-{{ section.id }} svg,\n  .testimonials-stars-{{ section.id }} img {\n    display: block;\n    width: {{ stars_size }}px;\n    height: {{ stars_size }}px;\n    object-fit: cover;\n  }\n\n  .reviews-author-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ author_size_mobile }}px;\n    color: {{ author_color }};\n    line-height: {{ author_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .reviews-text-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ text_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n  }\n\n  .reviews-btn-prev-{{ section.id }},\n  .reviews-btn-next-{{ section.id }} {\n    display: flex;\n    position: absolute;\n    z-index: 2;\n    top: 50%;\n    transform: translateY(-50%);\n    width: {{ arrow_size_mobile }}px;\n    height: {{ arrow_size_mobile }}px;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_color }};\n    border-radius: 50%;\n    background: {{ arrow_bg_color }};\n    align-items: center;\n    justify-content: center;\n    transition: all 0.3s ease 0s;\n    cursor: pointer;\n    -webkit-appearance: none;\n    box-shadow: 0px -2px 12px rgba(0, 0, 0, .08);\n  }\n\n  .reviews-btn-prev-{{ section.id }} {\n    left: -{{ arrow_size_mobile | times: 0.5 }}px !important;\n  }\n\n  .reviews-btn-next-{{ section.id }} {\n    right: -{{ arrow_size_mobile | times: 0.5 }}px !important;\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg,\n  .reviews-btn-next-{{ section.id }} svg {\n    height: {{ arrow_icon_size_mobile }}px;\n    width: {{ arrow_icon_size_mobile }}px;\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg {\n    transform: rotate(180deg);\n  }\n\n  .reviews-btn-prev-{{ section.id }} svg path,\n  .reviews-btn-next-{{ section.id }} svg path {\n    fill: {{ arrow_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .reviews-btn-prev-{{ section.id }}:hover ,\n  .reviews-btn-next-{{ section.id }}:hover {\n    transition: all 0.3s ease 0s;\n    border: {{ arrow_border_thickness }}px solid {{ arrow_border_hover_color }};\n    background: {{ arrow_bg_hover_color }};\n  }\n\n  .reviews-btn-prev-{{ section.id }}:hover svg path,\n  .reviews-btn-next-{{ section.id }}:hover svg path {\n    fill: {{ arrow_hover_color }};\n    transition: all 0.3s ease 0s;\n  }\n\n  .reviews-btn-prev-{{ section.id }}.swiper-button-disabled,\n  .reviews-btn-next-{{ section.id }}.swiper-button-disabled {\n    opacity: 0;\n  }\n\n  .reviews-modal-{{ section.id }} {\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0;\n    position: fixed;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    opacity: 0;\n    overflow-y: scroll;\n    pointer-events: none;\n    background: rgba(0, 0, 0, {{ modal_overlay | times: 0.01 }});\n    padding: 20px;\n  }\n\n  .reviews-modal-{{ section.id }}.active {\n    opacity: 1;\n    z-index: 100;\n    pointer-events: all;\n    transition: all 250ms ease-in 0s;\n  }\n\n  .reviews-modal-inner-{{ section.id }} {\n    position: relative;\n    width: 100%;\n    max-width: {{ modal_width_mobile }}%;\n    padding: {{ modal_padding_vertical | times: 0.75 | round: 0 }}px {{ modal_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border: {{ modal_border_thickness }}px solid {{ modal_border_color }};\n    background-color: {{ modal_bg_color }};\n    border-radius: {{ modal_radius }}px;\n  }\n\n  .reviews-video-{{ section.id }} {\n    height: 100%;\n    border: {{ video_border_thickness }}px solid {{ video_border_color }};\n    border-radius: {{ video_radius }}px;\n  }\n\n  .reviews-video-{{ section.id }} video,\n  .reviews-video-{{ section.id }} iframe {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    box-shadow: none;\n    border: 0px;\n    border-radius: {{ video_radius }}px;\n  }\n\n  .reviews-video-close-wrapper-{{ section.id }} {\n    position: absolute;\n    display: flex;\n    align-items: flex-end;\n    flex-direction: column;\n    top: -11px;\n    right: -11px;\n  }\n\n  .reviews-video-close-{{ section.id }} {\n    box-shadow: 0 2px 4px #0003;\n    z-index: 2;\n    width: 22px;\n    height: 22px;\n    cursor: pointer;\n    transform-origin: 50%;\n    background: {{ modal_close_bg_color }};\n    border-radius: 20px;\n    justify-content: center;\n    align-items: center;\n    display: flex;\n    position: relative;\n  }\n\n  .reviews-video-close-{{ section.id }} svg {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%,-50%);\n    width: 10px;\n    height: 10px;\n  }\n\n  .reviews-video-close-{{ section.id }} svg path {\n    fill: {{ modal_close_icon_color }};\n  }\n  \n  @media(min-width: 1024px) {\n    \n    .section-{{ section.id }}-settings {\n      margin-top: {{ margin_top }}px !important;\n      margin-bottom: {{ margin_bottom }}px !important;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .reviews-item-{{ section.id }} {\n      padding: {{ review_padding_vertical }}px {{ review_padding_horizontal }}px;\n    }\n\n    .reviews-author-{{ section.id }} {\n      font-size: {{ author_size }}px;\n    }\n\n    .reviews-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      font-size: {{ text_size }}px;\n    }\n\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      width: {{ arrow_size }}px;\n      height: {{ arrow_size }}px;\n    }\n\n    .reviews-btn-prev-{{ section.id }} {\n      left: -{{ arrow_size | times: 0.5 }}px !important;\n    }\n  \n    .reviews-btn-next-{{ section.id }} {\n      right: -{{ arrow_size | times: 0.5 }}px !important;\n    }\n\n    .reviews-btn-prev-{{ section.id }} svg,\n    .reviews-btn-next-{{ section.id }} svg {\n      height: {{ arrow_icon_size }}px;\n      width: {{ arrow_icon_size }}px;\n    }\n\n    .reviews-modal-{{ section.id }} {\n      padding: 100px;\n    }\n\n    .reviews-modal-inner-{{ section.id }} {\n      max-width: {{ modal_width }}%;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% if author_custom %}\n  <style>\n    .reviews-author-{{ section.id }} {\n      font-family: {{ author_font.family }}, {{ author_font.fallback_families }};\n      font-weight: {{ author_font.weight }};\n      font-style: {{ author_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .reviews-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 12/8; \n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    .reviews-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% endif %}\n\n{% if video_ratio_mobile == \"portrait\" %}\n  <style>\n    .reviews-video-{{ section.id }} {\n     aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif video_ratio_mobile == \"landscape\" %}\n  <style>\n    .reviews-video-{{ section.id }} {\n     aspect-ratio: 12/8; \n    }\n  </style>\n{% elsif video_ratio_mobile == \"square\" %}\n  <style>\n    .reviews-video-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% endif %}\n\n{% if video_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .reviews-video-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n      }\n    }\n  </style>\n{% elsif video_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .reviews-video-{{ section.id }} {\n       aspect-ratio: 12/8; \n      }\n    }\n  </style>\n{% elsif video_ratio == \"square\" %}\n  <style>\n     @media(min-width: 1024px) {\n      .reviews-video-{{ section.id }}{\n       aspect-ratio: 12/12; \n      } \n     }\n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .reviews-video-{{ section.id }}{\n       aspect-ratio: auto; \n      }\n     }\n  </style>\n{% endif %}\n\n{% if arrow_show_mobile %}\n  <style>\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      display: flex;\n    }\n  </style>\n{% else %}\n  <style>\n    .reviews-btn-prev-{{ section.id }},\n    .reviews-btn-next-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if arrow_show_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .reviews-btn-prev-{{ section.id }},\n      .reviews-btn-next-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .reviews-btn-prev-{{ section.id }},\n      .reviews-btn-next-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n<script>\n  (function () {\n    function moreLoadProductForm() {\n      var productForm = document.querySelector('#custom-reviews-2');\n      if (!productForm){\n        var productForm = document.querySelector('{% if reviews_position == \"below_title\" or reviews_position == \"above_title\" %}.product__title{% elsif reviews_position == \"below_description\" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n        if (!productForm) return;\n        }\n        const templateContent = document.querySelector(\n          '#custom-reviews-2-{{ section.id }}'\n        ).content;\n\n        productForm.insertAdjacentElement(\n          '{% if reviews_position == \"below_buy\" or reviews_position == \"below_title\" or reviews_position == \"below_description\" %}afterend{% else %}beforebegin{% endif %}',\n          templateContent.firstElementChild\n        );\n    }\n    function moreUnloadProductForm() {\n      const productForm = document.querySelector('.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons');\n\n      if (!productForm) return;\n\n      const contentTemplateBuyWith = document.querySelector(\n        '#reviews-2-body-{{ section.id }}'\n      );\n\n      if (contentTemplateBuyWith) contentTemplateBuyWith.remove();\n\n    }\n    window.addEventListener('DOMContentLoaded', moreLoadProductForm);\n\n    // load and unload product form when in Shopify editor:\n    if (window.Shopify && Shopify.designMode) {\n      window.addEventListener('shopify:section:load', moreLoadProductForm);\n      window.addEventListener('shopify:section:unload', moreUnloadProductForm);\n    }\n  })();\n</script>\n\n<template class=\"section-{{ section.id }} reviews-{{ section.id }}\"  id=\"custom-reviews-2-{{ section.id }}\">\n    <div class=\"section-{{ section.id }}-settings\" id=\"reviews-2-body-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n      <div class=\"reviews-items-{{ section.id }}\">\n        <div class=\"reviews-slider-{{ section.id }} swiper\">\n          <div class=\"swiper-wrapper\">\n            {% assign reviews_title = reviews_meta | handleize %}\n            {% assign reviews = product.metafields.custom[reviews_title].value %}\n            {% if reviews_meta != blank and reviews != blank %}\n              {% for review in reviews %}\n                <div class=\"swiper-slide\">\n                  <div class=\"reviews-item-{{ section.id }}\">\n                    <div class=\"reviews-image-{{ section.id }}\">\n                      {% if review.image != blank %}\n                        <img src=\"{{ review.image | image_url }}\" alt=\"{{ review.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                      <div class=\"reviews-image-play-{{ section.id }}\" id=\"reviews-{{ section.id }}-{{ forloop.index }}\">\n                        {% if play_icon != blank %}\n                          <img src=\"{{ play_icon | image_url: width: 800 }}\" alt=\"\">\n                        {% else %}\n                          <svg fill=\"#000000\" version=\"1.1\" id=\"Capa_1\" width=\"800px\" height=\"800px\" viewBox=\"0 0 408.221 408.221\" xml:space=\"preserve\">\n                            <g><g><path d=\"M204.11,0C91.388,0,0,91.388,0,204.111c0,112.725,91.388,204.11,204.11,204.11c112.729,0,204.11-91.385,204.11-204.11\n                                      C408.221,91.388,316.839,0,204.11,0z M286.547,229.971l-126.368,72.471c-17.003,9.75-30.781,1.763-30.781-17.834V140.012\n                                      c0-19.602,13.777-27.575,30.781-17.827l126.368,72.466C303.551,204.403,303.551,220.217,286.547,229.971z\"/>\n                            </g></g>\n                          </svg>\n                        {% endif %}\n                      </div>\n                    </div>\n                    <div class=\"reviews-content-{{ section.id }}\">\n                      <div class=\"reviews-top-{{ section.id }}\">\n                        {% if review.author != blank %}\n                        <p class=\"reviews-author-{{ section.id }}\">{{ review.author }}</p>\n                        {% endif %}\n                        {% if review.rating != 0 %}\n                          <div class=\"testimonials-stars-{{ section.id }}\">\n                              {% if stars_icon != blank %}\n                                {% for item in (1..review.rating) %}\n                                  <img src=\"{{ stars_icon | image_url }}\" alt=\"{{ stars_icon.alt }}\">\n                                {% endfor %}\n                              {% else %}\n                                {% for item in (1..review.rating) %}\n                                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                                    <path d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"#1F448C\"></path>\n                                  </svg>\n                                {% endfor %}\n                              {% endif %}\n                          </div>\n                        {% endif %}\n                      </div>\n                      {% if review.text != blank %}\n                        <p class=\"reviews-text-{{ section.id }}\">{{ review.text }}</p>\n                      {% endif %}\n                    </div>\n                  </div>\n                </div>\n              {% endfor %}\n            {% else %}\n            {% for block in section.blocks %}\n              <div class=\"swiper-slide\">\n                <div class=\"reviews-item-{{ section.id }}\">\n                  <div class=\"reviews-image-{{ section.id }}\">\n                    {% if block.settings.image != blank %}\n                      <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                    {% else %}\n                      {{ 'image' | placeholder_svg_tag }}\n                    {% endif %}\n                    <div class=\"reviews-image-play-{{ section.id }}\" id=\"reviews-{{ section.id }}-{{ forloop.index }}\">\n                      {% if play_icon != blank %}\n                        <img src=\"{{ play_icon | image_url: width: 800 }}\" alt=\"\">\n                      {% else %}\n                        <svg fill=\"#000000\" version=\"1.1\" id=\"Capa_1\" width=\"800px\" height=\"800px\" viewBox=\"0 0 408.221 408.221\" xml:space=\"preserve\">\n                          <g><g><path d=\"M204.11,0C91.388,0,0,91.388,0,204.111c0,112.725,91.388,204.11,204.11,204.11c112.729,0,204.11-91.385,204.11-204.11\n                                    C408.221,91.388,316.839,0,204.11,0z M286.547,229.971l-126.368,72.471c-17.003,9.75-30.781,1.763-30.781-17.834V140.012\n                                    c0-19.602,13.777-27.575,30.781-17.827l126.368,72.466C303.551,204.403,303.551,220.217,286.547,229.971z\"/>\n                          </g></g>\n                        </svg>\n                      {% endif %}\n                    </div>\n                  </div>\n                  <div class=\"reviews-content-{{ section.id }}\">\n                    <div class=\"reviews-top-{{ section.id }}\">\n                      {% if block.settings.author != blank %}\n                      <p class=\"reviews-author-{{ section.id }}\">{{ block.settings.author }}</p>\n                      {% endif %}\n                      {% if block.settings.stars_count != 0 %}\n                        <div class=\"testimonials-stars-{{ section.id }}\">\n                            {% if stars_icon != blank %}\n                              {% for item in (1..block.settings.stars_count) %}\n                                <img src=\"{{ stars_icon | image_url }}\" alt=\"{{ stars_icon.alt }}\">\n                              {% endfor %}\n                            {% else %}\n                              {% for item in (1..block.settings.stars_count) %}\n                                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                                  <path d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"#1F448C\"></path>\n                                </svg>\n                              {% endfor %}\n                            {% endif %}\n                        </div>\n                      {% endif %}\n                    </div>\n                    {% if block.settings.text != blank %}\n                      <p class=\"reviews-text-{{ section.id }}\">{{ block.settings.text }}</p>\n                    {% endif %}\n                  </div>\n                </div>\n              </div>\n            {% endfor %}\n            {% endif %}\n          </div>\n        </div>\n        <div class=\"reviews-btn-prev-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path d=\"m13.172 12-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414 4.95-4.95Z\"></path>\n          </svg>\n        </div>\n        <div class=\"reviews-btn-next-{{ section.id }}\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path d=\"m13.172 12-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414 4.95-4.95Z\"></path>\n          </svg>\n        </div>\n      </div>\n    </div>\n</template>\n\n{% if reviews_meta != blank and reviews != blank %}\n  {% for review in reviews %}\n    <div class=\"reviews-modal-{{ section.id }}\" data-id=\"reviews-{{ section.id }}-{{ forloop.index }}\">\n      <div class=\"reviews-modal-inner-{{ section.id }}\">\n        <div class=\"reviews-video-close-wrapper-{{ section.id }}\">\n          <div class=\"reviews-video-close-{{ section.id }}\">\n            <svg style=\"width: 10px !important; height: 10px !important;\" width=\"11\" height=\"10\" viewBox=\"0 0 14 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M13.0547 12.5938C12.8203 12.8281 12.3906 12.8281 12.1562 12.5938L7 7.39844L1.80469 12.5938C1.57031 12.8281 1.14062 12.8281 0.90625 12.5938C0.671875 12.3594 0.671875 11.9297 0.90625 11.6953L6.10156 6.5L0.90625 1.34375C0.671875 1.10938 0.671875 0.679688 0.90625 0.445312C1.14062 0.210938 1.57031 0.210938 1.80469 0.445312L7 5.64062L12.1562 0.445312C12.3906 0.210938 12.8203 0.210938 13.0547 0.445312C13.2891 0.679688 13.2891 1.10938 13.0547 1.34375L7.85938 6.5L13.0547 11.6953C13.2891 11.9297 13.2891 12.3594 13.0547 12.5938Z\" fill=\"white\"></path>\n            </svg>\n          </div>\n        </div>\n        <div class=\"reviews-video-{{ section.id }}\">\n          {{ review.video.value | video_tag: controls: true, playsinline: true }}\n        </div>\n      </div>\n    </div>\n  {% endfor %}\n{% else %}                            \n  {% for block in section.blocks %}\n    <div class=\"reviews-modal-{{ section.id }}\" data-id=\"reviews-{{ section.id }}-{{ forloop.index }}\">\n      <div class=\"reviews-modal-inner-{{ section.id }}\">\n        <div class=\"reviews-video-close-wrapper-{{ section.id }}\">\n          <div class=\"reviews-video-close-{{ section.id }}\">\n            <svg style=\"width: 10px !important; height: 10px !important;\" width=\"11\" height=\"10\" viewBox=\"0 0 14 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M13.0547 12.5938C12.8203 12.8281 12.3906 12.8281 12.1562 12.5938L7 7.39844L1.80469 12.5938C1.57031 12.8281 1.14062 12.8281 0.90625 12.5938C0.671875 12.3594 0.671875 11.9297 0.90625 11.6953L6.10156 6.5L0.90625 1.34375C0.671875 1.10938 0.671875 0.679688 0.90625 0.445312C1.14062 0.210938 1.57031 0.210938 1.80469 0.445312L7 5.64062L12.1562 0.445312C12.3906 0.210938 12.8203 0.210938 13.0547 0.445312C13.2891 0.679688 13.2891 1.10938 13.0547 1.34375L7.85938 6.5L13.0547 11.6953C13.2891 11.9297 13.2891 12.3594 13.0547 12.5938Z\" fill=\"white\"></path>\n            </svg>\n          </div>\n        </div>\n        <div class=\"reviews-video-{{ section.id }}\">\n          {% assign video_id =  block.settings.video.id | default: block.settings.video_url.id %}\n            {%- if block.settings.video == null and block.settings.video_url != null -%}\n                \n                {%- if block.settings.video_url.type == 'youtube' -%}\n                  <iframe\n                    data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1\"\n                    class=\"lazy\"\n                    allow=\"autoplay; encrypted-media\"\n                    allowfullscreen\n                    title=\"Fixed Video\"\n                  ></iframe>\n                {%- else -%}\n                  <iframe\n                    data-src=\"https://player.vimeo.com/video/{{ video_id }}\"\n                    class=\"lazy\"\n                    allow=\"autoplay; encrypted-media\"\n                    allowfullscreen\n                    title=\"Fixed Video\"\n                  ></iframe>\n              {% endif %}\n            \n            {% else %}\n                \n              <video data-src=\"{{ block.settings.video.sources[1].url }}\" controls playsinline preload=\"none\" class=\"lazy\"></video>\n                \n            {% endif %}\n        </div>\n      </div>\n    </div>\n  {% endfor %}\n{% endif %}\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n\n<script>\n  function initProductReviews() {\n    setTimeout(() => {\n\n      let lazyLoadInstance = new LazyLoad();\n\n      window.addEventListener(\n        \"LazyLoad::Initialized\",\n        function (event) {\n          window.lazyLoadInstance = event.detail.instance;\n        },\n        false\n      );\n      \n      const slider = new Swiper('.reviews-slider-{{ section.id }}', {\n        speed: 200,\n        slidesPerView: 'auto',\n        navigation: {\n        nextEl: '.reviews-btn-next-{{ section.id }}',\n        prevEl: '.reviews-btn-prev-{{ section.id }}'\n      },\n      })\n\n      const btns = document.querySelectorAll('.reviews-image-play-{{ section.id }}');\n      const videos = document.querySelectorAll('.reviews-modal-{{ section.id }}');\n      btns.forEach(el => {\n        el.addEventListener('click', (e) => {\n          let id = el.id;\n          videos.forEach(element => {\n            let data_id = element.getAttribute('data-id');\n            let close = element.querySelector('.reviews-video-close-{{ section.id }}');\n            let video = element.querySelector('video');\n            let frame = element.querySelector('iframe');\n            let src;\n            if(frame) {\n              src = frame.src;\n            }\n            if(id == data_id ) {\n              document.body.style.overflow = 'hidden';\n              element.classList.add('active');\n              setTimeout(() => {\n                if(video) {\n                  video.play();\n                }\n                if(frame) {\n                  frame.src += \"&autoplay=1&mute=1\";\n                }\n              },200);\n            }\n            close.addEventListener('click', () => {\n              document.body.style.overflow = '';\n              element.classList.remove('active');\n              if(frame) {\n                frame.src = src; \n              }\n              if(video) {\n                video.pause();\n              }\n            })\n            document.addEventListener('click', (e) => {\n              if(e.target == element ) {\n                document.body.style.overflow = '';\n                element.classList.remove('active');\n                if(frame) {\n                  frame.src = src; \n                }\n                if(video) {\n                  video.pause();\n                }\n              }\n            })\n          })\n        })\n      })\n    },200)\n  }\n\n  document.addEventListener('DOMContentLoaded', initProductReviews);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initProductReviews);\n     document.addEventListener('shopify:section:load', initProductReviews);\n  }\n  \n</script>",
+  "variables": {
+    "reviews_position": {
+      "type": "text",
+      "default": "above_buy",
+      "label": "Reviews Position",
+      "description": "Reviews Position"
+    },
+    "reviews_meta": {
+      "type": "text",
+      "default": "",
+      "label": "Reviews Metafield",
+      "description": "If you want to display reviews using a metafield, then enter the key of the Metafield [Watch tutorial on setup](https://www.loom.com/share/63996d1ae32744cc9e33576ab2c6e141?sid=fc4405b5-3128-4f13-bd01-50526d7e5160)"
+    },
+    "reviews_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Reviews Border Radius",
+      "description": "Reviews Border Radius"
+    },
+    "review_padding_vertical": {
+      "type": "text",
+      "default": "8",
+      "label": "Review Padding Vertical",
+      "description": "Review Padding Vertical"
+    },
+    "review_padding_horizontal": {
+      "type": "text",
+      "default": "8",
+      "label": "Review Padding Horizontal",
+      "description": "Review Padding Horizontal"
+    },
+    "review_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Review Border Radius",
+      "description": "Review Border Radius"
+    },
+    "review_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Review Border Thickness",
+      "description": "Review Border Thickness"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "60",
+      "label": "Review Image Width",
+      "description": "Review Image Width"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Review Image Border Radius",
+      "description": "Review Image Border Radius"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Review Image Border Thickness",
+      "description": "Review Image Border Thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Review Image Aspect Ratio",
+      "description": "Review Image Aspect Ratio"
+    },
+    "play_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Play Icon",
+      "description": "Play Icon"
+    },
+    "play_icon_size": {
+      "type": "text",
+      "default": "30",
+      "label": "Play Icon Settings",
+      "description": "Play Icon Settings"
+    },
+    "stars_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Stars Icon",
+      "description": "Replaces the default stars icon"
+    },
+    "stars_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Stars Size",
+      "description": "Stars Size"
+    },
+    "author_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "author_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Review Author Font Family",
+      "description": "Review Author Font Family"
+    },
+    "author_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Review Author Size",
+      "description": "Review Author Size"
+    },
+    "author_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Review Author Size - Mobile",
+      "description": "Review Author Size - Mobile"
+    },
+    "author_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Card Author Line Height",
+      "description": "Card Author Line Height"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Review Text Font Family",
+      "description": "Review Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Review Text Size",
+      "description": "Review Text Size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Review Text Size - Mobile",
+      "description": "Review Text Size - Mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Review Text Line Height",
+      "description": "Review Text Line Height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "4",
+      "label": "Review Text Margin Top",
+      "description": "Review Text Margin Top"
+    },
+    "arrow_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Arrow Size",
+      "description": "Arrow Size"
+    },
+    "arrow_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Arrow Size - Mobile",
+      "description": "Arrow Size - Mobile"
+    },
+    "arrow_icon_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Arrow Icon Size",
+      "description": "Arrow Icon Size"
+    },
+    "arrow_icon_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Arrow Icon Size - Mobile",
+      "description": "Arrow Icon Size - Mobile"
+    },
+    "arrow_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Arrow Border Thickness",
+      "description": "Arrow Border Thickness"
+    },
+    "arrow_show_desktop": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on Desktop",
+      "description": "Show on Desktop"
+    },
+    "arrow_show_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on Mobile",
+      "description": "Show on Mobile"
+    },
+    "modal_width": {
+      "type": "text",
+      "default": "30",
+      "label": "Modal Width",
+      "description": "Modal Width"
+    },
+    "modal_width_mobile": {
+      "type": "text",
+      "default": "90",
+      "label": "Modal Width - Mobile",
+      "description": "Modal Width - Mobile"
+    },
+    "modal_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Modal Padding Vertical",
+      "description": "Modal Padding Vertical"
+    },
+    "modal_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Modal Padding Horizontal",
+      "description": "Modal Padding Horizontal"
+    },
+    "modal_radius": {
+      "type": "text",
+      "default": "16",
+      "label": "Modal Border Radius",
+      "description": "Modal Border Radius"
+    },
+    "modal_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Modal Border Thickness",
+      "description": "Modal Border Thickness"
+    },
+    "modal_overlay": {
+      "type": "text",
+      "default": "50",
+      "label": "Modal Overlay",
+      "description": "Modal Overlay"
+    },
+    "video_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Review Video Border Radius",
+      "description": "Review Video Border Radius"
+    },
+    "video_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Review Video Border Thickness",
+      "description": "Review Video Border Thickness"
+    },
+    "video_ratio": {
+      "type": "text",
+      "default": "original",
+      "label": "Review Video Aspect Ratio",
+      "description": "Review Video Aspect Ratio"
+    },
+    "video_ratio_mobile": {
+      "type": "text",
+      "default": "original",
+      "label": "Review Video Aspect Ratio - Mobile",
+      "description": "Review Video Aspect Ratio - Mobile"
+    },
+    "review_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Review Background Color",
+      "description": "Review Background Color"
+    },
+    "review_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Review Border Color",
+      "description": "Review Border Color"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Review Image Border Color",
+      "description": "Review Image Border Color"
+    },
+    "video_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Review Image Border Color",
+      "description": "Review Image Border Color"
+    },
+    "author_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Review Author Color",
+      "description": "Review Author Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Review Text Color",
+      "description": "Review Text Color"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow color",
+      "description": "Arrow color"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow Hover color",
+      "description": "Arrow Hover color"
+    },
+    "arrow_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Arrow Background color",
+      "description": "Arrow Background color"
+    },
+    "arrow_bg_hover_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Arrow Background Hover color",
+      "description": "Arrow Background Hover color"
+    },
+    "arrow_border_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Arrow Border color",
+      "description": "Arrow Border color"
+    },
+    "arrow_border_hover_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Arrow Border Hover color",
+      "description": "Arrow Border Hover color"
+    },
+    "modal_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Modal Background Color",
+      "description": "Modal Background Color"
+    },
+    "modal_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Modal Border Color",
+      "description": "Modal Border Color"
+    },
+    "modal_close_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Modal Close Background Color",
+      "description": "Modal Close Background Color"
+    },
+    "modal_close_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Modal Close Icon Color",
+      "description": "Modal Close Icon Color"
+    },
+    "stars_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Default Stars Color",
+      "description": "Default Stars Color"
+    },
+    "play_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Icon Play Color",
+      "description": "Icon Play Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "10",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "10",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

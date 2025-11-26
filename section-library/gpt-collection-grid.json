@@ -1,0 +1,13 @@
+{
+  "id": "gpt-collection-grid",
+  "name": "GPT Collection Grid",
+  "description": "Section: GPT Collection Grid",
+  "tags": [
+    "gpt",
+    "collection",
+    "grid"
+  ],
+  "type": "collection",
+  "liquid_code": "<!-- sections/collection-grid.liquid -->\n<style>\n    .collection-grid {\n        display: grid;\n        grid-template-columns: repeat(6, 1fr);\n    }\n    .grid-item {\n        border: 1px solid #e0e0e0;\n        padding: 10px;\n        text-align: center;\n    }\n    .grid-item img {\n        max-width: 100%;\n        height: auto;\n    }\n</style>\n\n<section class=\"collection-grid\">\n    {% for block in section.blocks %}\n    <div class=\"grid-item\">\n        <a href=\"{{ block.settings.link }}\">\n            <img src=\"{{ block.settings.image | img_url: '300x' }}\" alt=\"{{ block.settings.alt_text }}\">\n            <p>{{ block.settings.label }}</p>\n        </a>\n    </div>\n    {% endfor %}\n</section>",
+  "variables": {}
+}

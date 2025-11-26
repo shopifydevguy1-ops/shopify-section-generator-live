@@ -1,0 +1,91 @@
+{
+  "id": "clothing-faq",
+  "name": "CUSTOM Threads FAQ",
+  "description": "Section: CUSTOM Threads FAQ",
+  "tags": [
+    "clothing",
+    "faq"
+  ],
+  "type": "faq",
+  "liquid_code": "{% capture section_content %}\n<style>\n  .cs-faq-item {\n    cursor: pointer;\n    border: 1px solid var(--border-color);\n    padding: 16px 10px;\n    margin-bottom: 20px;\n  }\n  .cs-faq-item:last-child {\n    margin-bottom: 0;\n  }\n  .cs-faq-item.cs-faq-item-active,\n  .cs-faq-item:hover {\n    border: 1px solid var(--active-border-color);\n  }\n  .cs-faq-title {\n    font-size: calc(var(--title-size) * 0.75);\n    color: var(--title-color);\n    text-align: center;\n    margin-bottom: 16px;\n  }\n  @media screen and (min-width: 750px) {\n    .cs-faq-title {\n      font-size: var(--title-size);\n      margin-bottom: 30px;\n    }\n  }\n  .cs-faq-question {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    font-size: calc(var(--question-size) * 0.75);\n    color: var(--question-color);\n    padding: 0 5px;\n  }\n  @media screen and (min-width: 750px) {\n    .cs-faq-question {\n      font-size: var(--question-size);\n      padding: 5px 15px;\n    }\n  }\n  .cs-faq-answer {\n    display: none;\n    color: var(--answer-color);\n    font-size: calc(var(--answer-size) * 0.75);\n    padding: 5px 5px;\n  }\n  @media screen and (min-width: 750px) {\n    .cs-faq-answer {\n      font-size: var(--answer-size);\n      padding: 0 15px;\n    }\n  }\n  .cs-faq-item-active .cs-faq-answer {\n    display: block;\n  }\n</style>\n\n<div\n  class=\"cs-faq cs-faq-{{ section.id }}\" id=\"threads-faq\"\n  style=\"\n    --border-color: {{ section.settings.border_color }};\n    --active-border-color: {{ section.settings.active_border_color }};\n    --title-size: {{ section.settings.font_size }}px;\n    --title-color: {{ section.settings.font_color }};\n\n    --question-size: {{ section.settings.question_font_size }}px;\n    --question-color: {{ section.settings.question_font_color }};\n\n    --answer-size: {{ section.settings.answer_font_size }}px;\n    --answer-color: {{ section.settings.answer_font_color }};\n  \"\n>\n  <div class=\"cs-faq-title\">\n    {{ section.settings.title }}\n  </div>\n  {% for block in section.blocks %}\n    <div class=\"cs-faq-item\">\n      <div class=\"cs-faq-question\">\n        {{ block.settings.question }}\n        <span>+</span>\n      </div>\n      <div class=\"cs-faq-answer\">{{ block.settings.answer }}</div>\n    </div>\n  {% endfor %}\n</div>\n\n<script>\n  (function () {\n    var faq = document.querySelector('.cs-faq-{{ section.id }}');\n    var items = faq.querySelectorAll('.cs-faq-item');\n    var answers = faq.querySelectorAll('.cs-faq-answer');\n\n    items.forEach(function (item) {\n      item.addEventListener('click', function () {\n        const question = item.querySelector('.cs-faq-question');\n        const answer = item.querySelector('.cs-faq-answer');\n\n        item.classList.toggle('cs-faq-item-active');\n        if (item.classList.contains('cs-faq-item-active')) {\n          question.querySelector('span').innerHTML = '-';\n        } else {\n          question.querySelector('span').innerHTML = '+';\n        }\n      });\n    });\n  })();\n</script>\n{% endcapture %}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    max-width: {{section.settings.section-width}}rem;\n    margin: 0 auto;\n    padding: 0 1.5rem;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 5rem;\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};\">\n  <div class=\"page-width section-{{ section.id }}-padding\">\n    <div>{{ section_content }}</div>\n  </div>\n</div>",
+  "variables": {
+    "title": {
+      "type": "text",
+      "default": "FAQs",
+      "label": "Title",
+      "description": "Title"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#e5e5e5",
+      "label": "Border color",
+      "description": "Border color"
+    },
+    "active_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Active border color",
+      "description": "Active border color"
+    },
+    "font_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Title color",
+      "description": "Title color"
+    },
+    "question_font_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Question color",
+      "description": "Question color"
+    },
+    "answer_font_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Answer color",
+      "description": "Answer color"
+    },
+    "font_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Title font size",
+      "description": "Title font size"
+    },
+    "question_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Question font size",
+      "description": "Question font size"
+    },
+    "answer_font_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Answer font size",
+      "description": "Answer font size"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

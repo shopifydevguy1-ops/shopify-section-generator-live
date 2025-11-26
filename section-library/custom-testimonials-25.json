@@ -1,0 +1,853 @@
+{
+  "id": "custom-testimonials-25",
+  "name": "CUSTOM Testimonials #25",
+  "description": "Section: CUSTOM Testimonials #25",
+  "tags": [
+    "testimonials",
+    "testimonial"
+  ],
+  "type": "testimonial",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_color = section.settings.heading_color\n  assign heading_active_color = section.settings.heading_active_color\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign heading_horizontal_align = \"\"\n  if heading_align == \"center\"\n    assign heading_horizontal_align = \"center\"\n  elsif heading_align == \"right\"\n    assign heading_horizontal_align = \"end\"\n  else\n    assign heading_horizontal_align = \"start\"\n  endif\n\n  assign heading_horizontal_align_mobile = \"\"\n  if heading_align_mobile == \"center\"\n    assign heading_horizontal_align_mobile = \"center\"\n  elsif heading_align_mobile == \"right\"\n    assign heading_horizontal_align_mobile = \"end\"\n  else\n    assign heading_horizontal_align_mobile = \"start\"\n  endif\n\n  assign button = section.settings.button\n  assign button_url  = section.settings.button_url\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n  assign button_style = section.settings.button_style\n  assign button_align_mobile = section.settings.button_align_mobile\n  assign button_mt_mobile = section.settings.button_mt_mobile\n\n  assign button_horizontal_align_mobile = \"\"\n  if button_align_mobile == \"center\"\n    assign button_horizontal_align_mobile = \"center\"\n  elsif button_align_mobile == \"right\"\n    assign button_horizontal_align_mobile = \"end\"\n  else\n    assign button_horizontal_align_mobile = \"start\"\n  endif\n  \n  assign testimonials_gap = section.settings.testimonials_gap\n  assign testimonials_gap_mobile = section.settings.testimonials_gap_mobile\n  assign testimonials_mt = section.settings.testimonials_mt\n  assign testimonials_mt_mobile = section.settings.testimonials_mt_mobile\n  assign testimonials_shadow = section.settings.testimonials_shadow\n\n  assign card_radius = section.settings.card_radius\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_border_color = section.settings.card_border_color\n\n  assign review_padding_horizontal = section.settings.review_padding_horizontal\n  assign review_padding_horizontal_mobile = section.settings.review_padding_horizontal_mobile\n  assign review_padding_vertical = section.settings.review_padding_vertical\n  assign review_padding_vertical_mobile = section.settings.review_padding_vertical_mobile \n  assign review_bg_color = section.settings.review_bg_color\n  assign review_align = section.settings.review_align\n  assign review_align_mobile = section.settings.review_align_mobile\n\n  assign review_horizontal_align = \"\"\n  if review_align == \"center\"\n    assign review_horizontal_align = \"center\"\n  elsif review_align == \"right\"\n    assign review_horizontal_align = \"end\"\n  else\n    assign review_horizontal_align = \"start\"\n  endif\n\n  assign review_horizontal_align_mobile = \"\"\n  if review_align_mobile == \"center\"\n    assign review_horizontal_align_mobile = \"center\"\n  elsif review_align_mobile == \"right\"\n    assign review_horizontal_align_mobile = \"end\"\n  else\n    assign review_horizontal_align_mobile = \"start\"\n  endif\n\n  assign author_wrapper_gap = section.settings.author_wrapper_gap\n  assign author_wrapper_gap_mobile = section.settings.author_wrapper_gap_mobile\n\n  assign author_image_width = section.settings.author_image_width\n  assign author_image_width_mobile = section.settings.author_image_width_mobile\n  assign author_image_radius = section.settings.author_image_radius\n  assign author_image_border_thickness = section.settings.author_image_border_thickness\n  assign author_image_border_color = section.settings.author_image_border_color\n\n  assign author_custom = section.settings.author_custom\n  assign author_font = section.settings.author_font\n  assign author_size = section.settings.author_size\n  assign author_size_mobile = section.settings.author_size_mobile\n  assign author_height = section.settings.author_height\n  assign author_color = section.settings.author_color\n\n  assign author_username_custom = section.settings.author_username_custom\n  assign author_username_font = section.settings.author_username_font\n  assign author_username_size = section.settings.author_username_size\n  assign author_username_size_mobile = section.settings.author_username_size_mobile\n  assign author_username_height = section.settings.author_username_height\n  assign author_username_color = section.settings.author_username_color\n  assign author_username_mt = section.settings.author_username_mt\n  assign author_username_mt_mobile = section.settings.author_username_mt_mobile\n\n  assign author_time_custom = section.settings.author_time_custom\n  assign author_time_font = section.settings.author_time_font\n  assign author_time_size = section.settings.author_time_size\n  assign author_time_size_mobile = section.settings.author_time_size_mobile\n  assign author_time_height = section.settings.author_time_height\n  assign author_time_color = section.settings.author_time_color\n  assign author_time_mt = section.settings.author_time_mt\n  assign author_time_mt_mobile = section.settings.author_time_mt_mobile\n  \n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_color = section.settings.text_color\n  assign text_mt = section.settings.text_mt\n  assign text_mt_mobile = section.settings.text_mt_mobile\n\n  assign media_ratio = section.settings.media_ratio\n  assign media_ratio_mobile = section.settings.media_ratio_mobile\n  assign media_align = section.settings.media_align\n  assign media_content_align_mobile = section.settings.media_content_align_mobile\n\n  assign play_size = section.settings.play_size\n  assign play_size_mobile = section.settings.play_size_mobile\n  assign play_icon_color = section.settings.play_icon_color\n\n  assign mute_size = section.settings.mute_size\n  assign mute_size_mobile = section.settings.mute_size_mobile\n  assign mute_bg_color = section.settings.mute_bg_color\n  assign mute_icon_color = section.settings.mute_icon_color\n\n  assign media_content_align = section.settings.media_content_align\n  assign media_content_align_mobile = section.settings.media_content_align_mobile\n\n  assign media_title_custom = section.settings.media_title_custom\n  assign media_title_font = section.settings.media_title_font\n  assign media_title_size = section.settings.media_title_size\n  assign media_title_size_mobile = section.settings.media_title_size_mobile\n  assign media_title_height = section.settings.media_title_height\n  assign media_title_color = section.settings.media_title_color\n\n  assign media_text_custom = section.settings.media_text_custom\n  assign media_text_font = section.settings.media_text_font\n  assign media_text_size = section.settings.media_text_size\n  assign media_text_size_mobile = section.settings.media_text_size_mobile\n  assign media_text_height = section.settings.media_text_height\n  assign media_text_color = section.settings.media_text_color\n  assign media_text_mt = section.settings.media_text_mt\n  assign media_text_mt_mobile = section.settings.media_text_mt_mobile\n\n  assign media_review_bg_color = section.settings.media_review_bg_color\n  assign media_review_align = section.settings.media_review_align\n  assign media_review_align_mobile = section.settings.media_review_align_mobile\n\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n\n  assign media_review_tag_custom = section.settings.media_review_tag_custom\n  assign media_review_tag_font = section.settings.media_review_tag_font\n  assign media_review_tag_size = section.settings.media_review_tag_size\n  assign media_review_tag_size_mobile = section.settings.media_review_tag_size_mobile\n  assign media_review_tag_height = section.settings.media_review_tag_height\n  assign media_review_tag_color = section.settings.media_review_tag_color\n  assign media_review_tag_mt = section.settings.media_review_tag_mt\n  assign media_review_tag_mt_mobile = section.settings.media_review_tag_mt_mobile  \n\n  assign column_first_count = 0\n  assign column_second_count = 0\n  assign column_third_count = 0\n  assign column_fourth_count = 0\n\n  for block in section.blocks\n    if block.settings.column == \"1\"\n      assign column_first_count = column_first_count | plus: 1\n    elsif block.settings.column == \"2\"\n      assign column_second_count = column_second_count | plus: 1  \n    elsif block.settings.column == \"3\"\n      assign column_third_count = column_third_count | plus: 1  \n    elsif block.settings.column == \"4\"\n      assign column_fourth_count = column_fourth_count | plus: 1  \n    endif\n  endfor\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  button_font | font_face: font_display: 'swap' }}\n  {{  author_font | font_face: font_display: 'swap' }}\n  {{  author_username_font | font_face: font_display: 'swap' }}\n  {{  author_time_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  {{  media_title_font | font_face: font_display: 'swap' }}\n  {{  media_text_font | font_face: font_display: 'swap' }}\n  {{  media_review_tag_font | font_face: font_display: 'swap' }}  \n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n    position: relative;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  \n  .section-{{ section.id }}::after {\n    content: \"\";\n    display: block;\n    z-index: 1;\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: -32px;\n    pointer-events: none;\n    background: linear-gradient(180deg, {{ background_color }}00 40%, {{ background_color }}F2 90%);\n  }\n\n  .testimonials-top-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    flex-direction: column;\n    justify-content: {{ heading_horizontal_align_mobile }};\n  }\n\n  .testimonials-heading-{{ section.id }} {\n    width: 100%;\n  }\n\n  .testimonials-heading-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ heading_size_mobile }}px;\n    line-height: {{ heading_height }}%;\n    color: {{ heading_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .testimonials-heading-{{ section.id }} strong {\n    color: {{ heading_active_color }};\n  }\n\n  .testimonials-top-{{ section.id }} {\n    justify-content: {{ heading_horizontal_align_mobile }};\n  }\n\n  .testimonials-heading-{{ section.id }} * {\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .testimonials-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    width: 100%;\n    max-width: fit-content;\n    margin: 0;\n    font-size: {{ button_size_mobile }}px;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    transition: all 0.25s ease 0s;\n    background-color: transparent;\n    border: 0px;\n    cursor: pointer;\n    font-weight: 700;\n    margin-top: {{ button_mt_mobile }}px;\n  }\n\n  .testimonials-button-wrapper-{{ section.id }} {\n    display: flex;\n    width: 100%;\n    justify-content: {{ button_horizontal_align_mobile }};\n  }\n\n  .testimonials-button-mobile-{{ section.id }} {\n    position: relative;\n    z-index: 2;\n    display: block;\n  }\n\n  .testimonials-button-desktop-{{ section.id }} {\n    display: none;\n  }\n\n  .testimonials-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .testimonials-button-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n\n  .testimonials-button-{{ section.id }} svg path {\n    fill: {{ button_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-button-{{ section.id }}:hover svg path {\n    fill: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-reviews-{{ section.id }} {\n    display: flex;\n    gap: {{ testimonials_gap_mobile }}px;\n    position: relative;\n    margin-top: {{ testimonials_mt_mobile }}px;\n  }\n\n  .testimonials-reviews-column-{{ section.id }} {\n    width: 50%;\n    display: flex;\n    flex-direction: column;\n    gap: {{ testimonials_gap_mobile }}px;\n  }\n\n  .testimonials-column-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    gap: {{ testimonials_gap_mobile }}px;\n  }\n  \n  .testimonials-column-{{ section.id }}:first-child {\n    margin-top: 0px;\n  }\n\n  .testimonials-review-{{ section.id }} {\n    max-height: fit-content;\n    padding: {{ review_padding_vertical_mobile }}px {{ review_padding_horizontal_mobile }}px;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    border-radius: {{ card_radius }}px;\n    background-color: {{ review_bg_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-author-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n    justify-content: {{ review_horizontal_align_mobile }};\n    gap: {{ author_wrapper_gap_mobile }}px;\n  }\n\n  .testimonials-author-image-{{ section.id }} {\n    flex-shrink: 0;\n    border: {{ author_image_border_thickness }}px solid {{ author_image_border_color }};\n    max-width: {{ author_image_width_mobile }}px;    \n    width: 100%;\n    border-radius: {{ author_image_radius }}px;\n    overflow: hidden;\n    aspect-ratio: 1/1;\n  }\n  \n  .testimonials-author-image-{{ section.id }} img,\n  .testimonials-author-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .testimonials-author-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n\n  .testimonials-author-text-{{ section.id }} {    \n    margin: 0;\n    font-weight: 700;\n    font-size: {{ author_size_mobile }}px;\n    color: {{ author_color }};\n    line-height: {{ author_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n    text-align: {{ review_align_mobile }};\n  }\n\n  .testimonials-author-username-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ author_username_mt_mobile }}px;\n    font-size: {{ author_username_size_mobile }}px;\n    color: {{ author_username_color }};\n    line-height: {{ author_username_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n    text-align: {{ review_align_mobile }};\n  }\n\n  .testimonials-text-{{ section.id }} {\n    margin-top: {{ text_mt_mobile }}px;\n    text-align: {{ review_align_mobile }};\n  }\n\n  .testimonials-text-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n\n  .testimonials-author-time-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ author_time_mt_mobile }}px;\n    font-size: {{ author_time_size_mobile }}px;\n    color: {{ author_time_color }};\n    line-height: {{ author_time_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n    text-align: {{ review_align_mobile }};\n  }\n\n  .testimonials-media-{{ section.id }} {\n    position: relative;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    border-radius: {{ card_radius }}px;\n    overflow: hidden;\n    transition: all 0.25s ease 0s;\n  }\n  \n  .testimonials-media-{{ section.id }} img,\n  .testimonials-media-{{ section.id }} svg,\n  .testimonials-media-{{ section.id }} video,\n  .testimonials-media-{{ section.id }} iframe  {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    margin: 0;\n    border: 0;\n    box-shadow: 0;\n  }\n\n  .testimonials-media-{{ section.id }}::after {\n    content: \"\";\n    position: absolute;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    background: linear-gradient(180deg, transparent 40.63%, #000 94%);\n  }\n\n  .testimonials-mute-{{ section.id }} {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n    z-index: 2;\n    width: {{ mute_size_mobile }}px;\n    height: {{ mute_size_mobile }}px;\n    opacity: 1;\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-mute-{{ section.id }}.hidden {\n    opacity: 0 !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-mute-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .testimonials-mute-{{ section.id }} svg path:nth-child(1) {\n    fill: {{ mute_bg_color }};\n  }\n\n  .testimonials-mute-{{ section.id }} svg path:nth-child(2) {\n    fill: {{ mute_icon_color }};\n  }\n\n  .testimonials-mute-{{ section.id }} svg:nth-child(1) {\n    display: none;\n  }\n\n  .testimonials-mute-{{ section.id }}.active svg:nth-child(1) {\n    display: block;\n  }\n\n  .testimonials-mute-{{ section.id }}.active svg:nth-child(2) {\n    display: none;\n  }\n\n  .testimonials-play-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 2;\n    opacity: 1;\n    transition: all 0.25s ease 0s;\n    width: {{ play_size_mobile }}px;\n    height: {{ play_size_mobile }}px;\n    pointer-events: all;\n  }\n\n  .testimonials-play-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .testimonials-play-{{ section.id }} svg path {\n    fill: {{ play_icon_color }};\n  }\n\n  .testimonials-media-content-{{ section.id }} {\n    position: absolute;\n    bottom: 10px;\n    left: 0;\n    width: 100%;\n    padding: {{ review_padding_vertical_mobile }}px {{ review_padding_horizontal_mobile }}px;\n    z-index: 2;\n  }\n  \n  .testimonials-media-title-{{ section.id }} {\n    margin: 0;\n    font-size: {{ media_title_size_mobile }}px;\n    color: {{ media_title_color }};\n    line-height: {{ media_title_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n    text-align: {{ media_content_align_mobile }};\n  }\n\n  .testimonials-media-text-{{ section.id }} {\n    margin-top: {{ media_text_mt_mobile }}px;\n    text-align: {{ media_content_align_mobile }};\n  }\n\n  .testimonials-media-text-{{ section.id }} * {    \n    margin: 0;\n    font-size: {{ media_text_size_mobile }}px;\n    color: {{ media_text_color }};\n    line-height: {{ media_text_height }}%;\n    text-transform: unset;\n    word-wrap: break-word; \n  }\n\n  .testimonials-media-review-{{ section.id }} {\n    background-color: {{ media_review_bg_color }};\n    padding: {{ review_padding_vertical_mobile }}px {{ review_padding_horizontal_mobile }}px;\n    border-radius: {{ card_radius }}px;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .testimonials-media-review-image-{{ section.id }} {\n    width: 100%;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-radius: {{ image_radius }}px;\n    overflow: hidden;\n  }\n\n  .testimonials-media-review-image-{{ section.id }} img,\n  .testimonials-media-review-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .testimonials-media-review-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n\n  .testimonials-media-review-text-{{ section.id }} {\n    text-align: {{ media_review_align_mobile }};\n    margin-top: 12px;\n  }\n\n  .testimonials-media-review-author-text-{{ section.id }} {\n    text-align: {{ media_review_align_mobile }};\n    margin-top: 12px;\n  }\n\n  .testimonials-media-review-tag-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ media_review_tag_mt_mobile }}px;\n    font-size: {{ media_review_tag_size_mobile }}px;\n    color: {{ media_review_tag_color }};\n    line-height: {{ media_review_tag_height }}%;\n    text-transform: unset;\n    word-wrap: break-word;\n    text-align: {{ media_review_align_mobile }};\n  }  \n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .testimonials-top-{{ section.id }} {\n      flex-direction: row;\n      justify-content: space-between;\n    }   \n\n    .testimonials-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n      text-align: left;\n    }\n\n    .testimonials-button-{{ section.id }} {\n      margin-top: 0px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n      font-size: {{ button_size }}px;\n    }\n\n    .testimonials-button-mobile-{{ section.id }} {\n      display: none;      \n    }\n\n    .testimonials-button-desktop-{{ section.id }} {\n      display: block;\n    }\n    \n    .testimonials-button-{{ section.id }}:hover {\n      color: {{ button_hover_color }};\n      transition: all 0.25s ease 0s;\n    }\n\n    .testimonials-reviews-{{ section.id }} {\n      display: flex;\n      flex-wrap: nowrap;\n      gap: {{ testimonials_gap }}px;\n      margin-top: {{ testimonials_mt }}px;\n    }\n\n    .testimonials-reviews-column-{{ section.id }} {\n      display: flex;\n      flex-direction: row;\n      gap: {{ testimonials_gap }}px;\n    }\n\n    .testimonials-column-{{ section.id }} {\n      gap: {{ testimonials_gap }}px;\n      flex: 1 0;\n      margin-top: 0px;\n      width: 100%;\n    }\n\n    .testimonials-column-{{ section.id }}:first-child {\n      margin-top: 0px;\n    }\n\n    .testimonials-review-{{ section.id }} {\n      padding: {{ review_padding_vertical }}px {{ review_padding_horizontal }}px;\n    }\n    \n    .testimonials-author-{{ section.id }} {\n      justify-content: {{ review_horizontal_align }};\n      gap: {{ author_wrapper_gap }}px;\n    }\n\n    .testimonials-author-image-{{ section.id }} {\n      max-width: {{ author_image_width }}px;    \n    }\n\n    .testimonials-author-text-{{ section.id }} {    \n      font-size: {{ author_size }}px;\n      text-align: {{ review_align }};\n    }\n\n    .testimonials-author-username-{{ section.id }} {\n      margin-top: {{ author_username_mt }}px;\n      font-size: {{ author_username_size }}px;\n      text-align: {{ review_align }};\n    }\n\n    .testimonials-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      text-align: {{ review_align }};\n    }\n\n    .testimonials-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .testimonials-author-time-{{ section.id }} {\n      margin-top: {{ author_time_mt }}px;\n      font-size: {{ author_time_size }}px;\n      text-align: {{ review_align }};\n    }\n\n    .testimonials-media-{{ section.id }} {\n      break-inside: avoid;\n    }\n\n    .testimonials-mute-{{ section.id }} {\n      width: {{ mute_size }}px;\n      height: {{ mute_size }}px;\n    }\n\n    .testimonials-play-{{ section.id }} {\n      width: {{ play_size }}px;\n      height: {{ play_size }}px;\n    }\n\n    .testimonials-media-content-{{ section.id }} {\n      padding: {{ review_padding_vertical }}px {{ review_padding_horizontal }}px;\n    }\n\n    .testimonials-media-{{ section.id }}:hover .testimonials-play-{{ section.id }} {\n      opacity: 0;\n      pointer-events: none;\n      transition: all 0.25s ease 0s;\n    }\n\n    .testimonials-media-title-{{ section.id }} {\n      font-size: {{ media_title_size }}px;\n      text-align: {{ media_content_align }};\n    }\n\n    .testimonials-media-text-{{ section.id }} {\n      margin-top: {{ media_text_mt }}px;\n      text-align: {{ media_content_align }};\n    }\n\n    .testimonials-media-text-{{ section.id }} * {    \n      font-size: {{ media_text_size }}px;\n    }\n\n    .testimonials-media-review-{{ section.id }} {\n      overflow: visible;\n      padding: {{ review_padding_vertical }}px {{ review_padding_horizontal }}px;    \n    }\n\n    .testimonials-media-review-text-{{ section.id }} {\n      text-align: {{ media_review_align }};\n      margin-top: 16px;\n    }\n\n    .testimonials-media-review-author-text-{{ section.id }} {\n      text-align: {{ media_review_align }};\n      margin-top: 16px;\n    }\n\n    \n    .testimonials-media-review-tag-{{ section.id }} {\n      margin-top: {{ media_review_tag_mt }}px;\n      font-size: {{ media_review_tag_size }}px;\n      text-align: {{ media_review_align }};\n    }   \n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .testimonials-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .testimonials-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if author_custom %}\n  <style>\n    .testimonials-author-text-{{ section.id }} {\n      font-family: {{ author_font.family }}, {{ author_font.fallback_families }};\n      font-weight: {{ author_font.weight }};\n      font-style: {{ author_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if author_username_custom %}\n  <style>\n    .testimonials-author-username-{{ section.id }} {\n      font-family: {{ author_username_font.family }}, {{ author_username_font.fallback_families }};\n      font-weight: {{ author_username_font.weight }};\n      font-style: {{ author_username_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .testimonials-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if author_time_custom %}\n  <style>\n    .testimonials-author-time-{{ section.id }} {\n      font-family: {{ author_time_font.family }}, {{ author_time_font.fallback_families }};\n      font-weight: {{ author_time_font.weight }};\n      font-style: {{ author_time_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if media_title_custom %}\n  <style>\n    .testimonials-media-title-{{ section.id }} {\n      font-family: {{ media_title_font.family }}, {{ media_title_font.fallback_families }};\n      font-weight: {{ media_title_font.weight }};\n      font-style: {{ media_title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if media_text_custom %}\n  <style>\n    .testimonials-media-text-{{ section.id }} {\n      font-family: {{ media_text_font.family }}, {{ media_text_font.fallback_families }};\n      font-weight: {{ media_text_font.weight }};\n      font-style: {{ media_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if media_review_tag_custom %}\n  <style>\n    .testimonials-media-review-tag-{{ section.id }} {\n      font-family: {{ media_review_tag_font.family }}, {{ media_review_tag_font.fallback_families }};\n      font-weight: {{ media_review_tag_font.weight }};\n      font-style: {{ media_review_tag_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button == blank %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-top-{{ section.id }} {\n        justify-content: {{ heading_horizontal_align }};\n      }\n\n      .testimonials-heading-{{ section.id }} * {\n        text-align: {{ heading_align }};\n      }\n    }\n  </style>\n{% endif %}\n\n\n{% if button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\n  <style>\n    .testimonials-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n    }\n\n    .testimonials-button-{{ section.id }}:hover {\n      background-color: {{ button_bg_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"outline\" or button_style == \"outline_arrow\" %}\n  <style>\n    .testimonials-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    }\n\n    .testimonials-button-{{ section.id }}:hover {\n      background-color: {{ button_bg_hover_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"link\" %}\n  <style>\n    .testimonials-button-{{ section.id }} {\n      padding: 0px !important;\n    }\n  </style>\n{% endif %}\n\n{% if media_ratio_mobile == \"portrait\" %}\n  <style>\n    .testimonials-media-{{ section.id }} {\n      aspect-ratio: 9.6/13;\n    }\n  </style>\n{% elsif media_ratio_mobile == \"landscape\" %}\n  <style>\n  .testimonials-media-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif media_ratio_mobile == \"square\" %}\n  <style>\n    .testimonials-media-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .testimonials-media-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if media_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-{{ section.id }} {\n        aspect-ratio: 9.6/13;\n      }\n    }\n    \n  </style>\n{% elsif media_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }  \n  </style>\n{% elsif media_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }    \n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .testimonials-media-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .testimonials-media-review-image-{{ section.id }} {\n      aspect-ratio: 9.6/13;\n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n  .testimonials-media-review-image-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .testimonials-media-review-image-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .testimonials-media-review-image-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-review-image-{{ section.id }} {\n        aspect-ratio: 9.6/13;\n      }\n    }\n    \n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-review-image-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }  \n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-media-review-image-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }    \n  </style>\n{% else %}\n  <style>\n     @media(min-width: 1024px) {\n      .testimonials-media-review-image-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if testimonials_shadow %}\n  <style>\n    .testimonials-review-{{ section.id }} {\n      box-shadow: 2px 2px 12px rgba(0, 0, 0, .05);\n    }\n\n    .testimonials-media-{{ section.id }} {\n      box-shadow: 2px 2px 12px rgba(0, 0, 0, .05);\n    }\n      \n    .testimonials-media-review-{{ section.id }} {\n      box-shadow: 2px 2px 12px rgba(0, 0, 0, .05);\n    }\n\n    @media(min-width: 1024px) {\n      .testimonials-review-{{ section.id }}:hover {\n        z-index: 1;\n        box-shadow: 4px 4px 12px rgba(0,0,0, 0.25);\n        transition: all 0.25s ease 0s;\n      }  \n\n      .testimonials-media-{{ section.id }}:hover {\n        z-index: 1;\n        box-shadow: 4px 4px 12px rgba(0,0,0, 0.25);\n        transition: all 0.25s ease 0s;\n      }\n\n      .testimonials-media-review-{{ section.id }}:hover {\n        z-index: 1;\n        transition: all 0.25s ease 0s;\n        box-shadow: 4px 4px 12px rgba(0,0,0, 0.25);\n      }\n    }\n  </style>\n{% endif %}\n\n{% if review_align_mobile == \"right\" %}\n  <style>\n    .testimonials-author-{{ section.id }} {\n      flex-direction: row-reverse;\n    }\n  </style>\n{% endif %}\n\n{% if review_align == \"right\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-author-{{ section.id }} {\n        flex-direction: row-reverse;\n      } \n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .testimonials-author-{{ section.id }} {\n        flex-direction: row;\n      } \n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  {% case block.type %}\n    {% when 'review' %}\n      {% if block.settings.hide_mobile %}\n        <style>\n          .testimonials-review-{{ block.id }} {\n            display: none;\n          }\n\n          @media(min-width: 1024px) {\n            .testimonials-review-{{ block.id }} {\n              display: block;\n            }\n          }\n        </style>\n      {% endif %}\n    {% when 'media' %}\n      {% if block.settings.hide_mobile %}\n        <style>\n          .testimonials-media-{{ block.id }} {\n            display: none;\n          }\n\n          @media(min-width: 1024px) {\n            .testimonials-media-{{ block.id }} {\n              display: block;\n            }\n          }\n        </style>\n      {% endif %}\n    {% when 'media_review' %}\n      {% if block.settings.hide_mobile %}\n        <style>\n          .testimonials-media-review-{{ block.id }} {\n            display: none;\n          }\n\n          @media(min-width: 1024px) {\n            .testimonials-media-review-{{ block.id }} {\n              display: block;\n            }\n          }\n        </style>\n      {% endif %}\n    {% else %}\n      \n  {% endcase %}\n{% endfor %}\n\n<div class=\"section-{{ section.id }} testimonials-{{ section.id }}\" style=\"background-color:{{ background_color }}\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% if heading != blank or button != blank %}\n        <div class=\"testimonials-top-{{ section.id }}\">\n          {% if heading != blank %}\n            <div class=\"testimonials-heading-{{ section.id }}\">{{ heading }}</div>\n          {% endif %}\n          {% if button != blank %}\n            <{% if button_url != blank %}a href=\"{{ button_url }}\"{% else %}div{% endif %} class=\"testimonials-button-{{ section.id }} testimonials-button-desktop-{{ section.id }}\">\n              <p class=\"testimonials-button-inner-{{ section.id }}\">\n              {{ button }}\n               {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\n                  <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                    <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                  </svg>\n                {% endif %}\n              </p>\n            </{% if button_url != blank %}a{% else %}div{% endif %}>\n          {% endif %}\n        </div>\n      {% endif %}\n     \n      <div class=\"testimonials-reviews-{{ section.id }}\">\n        <div class=\"testimonials-reviews-column-{{ section.id }}\">\n          {% if column_first_count > 0 %}\n            <div class=\"testimonials-column-{{ section.id }}\">\n              {% for block in section.blocks %}\n                {% case block.type %}\n                  {% when 'review' %}\n                    {% if block.settings.column == '1' %}\n                      <div class=\"testimonials-review-{{ section.id }} testimonials-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-author-{{ section.id }}\">\n                          <div class=\"testimonials-author-image-{{ section.id }}\">\n                            {% if block.settings.author_image != blank %}\n                              <img src=\"{{ block.settings.author_image | image_url }}\" alt=\"{{ block.settings.author_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>                 \n                            {% else %}    \n                              {{ 'image' | placeholder_svg_tag }}\n                            {% endif %}\n                          </div>\n                          <div class=\"testimonials-author-content-{{ section.id }}\">\n                            {% if block.settings.author != blank %}\n                              <p class=\"testimonials-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                            {% endif %}\n                            {% if block.settings.username %}\n                              <p class=\"testimonials-author-username-{{ section.id }}\">{{ block.settings.username }}</p>\n                            {% endif %}                  \n                          </div>\n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.time %}\n                          <p class=\"testimonials-author-time-{{ section.id }}\">{{ block.settings.time }}</p>\n                        {% endif %}\n                      </div>\n                    {% endif %}               \n                  {% when 'media' %}  \n                    {% if block.settings.column == '1' %}\n                      <div class=\"testimonials-media-{{ section.id }} testimonials-media-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        {% if block.settings.media_type == 'image' %}                   \n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}                   \n                        {% elsif block.settings.media_type == 'video' %}            \n                          {% assign video_id = block.settings.video_url.id %}\n                          {% assign loop = '&loop=1&playlist=' | append: video_id %}\n                          {%- if block.settings.video_url != null -%}\n                            {%- if block.settings.video_url.type == 'youtube' -%}\n                              <iframe\n                                data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                                data-src1=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"      \n                                data-src2=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&showinfo=0{{ loop }}\"                          \n                                allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                                allowfullscreen\n                                class=\"lazy\"\n                              ></iframe>\n                              {%- else -%}\n                              <iframe\n                                data-src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                                data-src1=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"\n                                data-src2=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&shinfo=0{{ loop }}\"\n                                allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                                allowfullscreen\n                                class=\"lazy\"\n                              ></iframe>\n                            {% endif %}\n                          {% else %}\n                            {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\n                            <video data-src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted playsinline preload=\"none\" preload=\"none\" loop class=\"lazy\"></video>\n                          {% endif %}\n                          <div class=\"testimonials-mute-{{ section.id }} hidden\">\n                            <svg width=\"34\" height=\"35\" viewBox=\"0 0 34 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34.8701C26.3888 34.8701 34 27.259 34 17.8701C34 8.48128 26.3888 0.870117 17 0.870117C7.61116 0.870117 0 8.48128 0 17.8701C0 27.259 7.61116 34.8701 17 34.8701Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.7899 7.75018C18.6822 7.69862 18.5619 7.67876 18.4433 7.69292C18.3247 7.70709 18.2125 7.75469 18.1199 7.83018L11.3199 13.4702H6.80993C6.64285 13.4702 6.4826 13.5366 6.36445 13.6547C6.24631 13.7729 6.17993 13.9331 6.17993 14.1002V21.6402C6.17993 21.8073 6.24631 21.9675 6.36445 22.0857C6.4826 22.2038 6.64285 22.2702 6.80993 22.2702H11.3199L18.1199 27.9102C18.2337 28.0019 18.3739 28.0544 18.5199 28.0602C18.6134 28.0615 18.7058 28.0409 18.7899 28.0002C18.8978 27.949 18.9889 27.8683 19.0526 27.7674C19.1163 27.6665 19.1501 27.5495 19.1499 27.4302V8.31018C19.1494 8.19227 19.1152 8.07696 19.0515 7.97777C18.9877 7.87858 18.897 7.79963 18.7899 7.75018V7.75018ZM17.8999 9.65018V26.0902L12.1799 21.3402V14.4002L17.8999 9.65018ZM10.8999 14.7302V21.0002H7.43993V14.7302H10.8999ZM23.2599 17.8702C23.263 18.3451 23.1717 18.816 22.9915 19.2554C22.8112 19.6948 22.5456 20.0941 22.2099 20.4302C22.0773 20.5628 21.8975 20.6373 21.7099 20.6373C21.5224 20.6373 21.3425 20.5628 21.2099 20.4302C21.0773 20.2976 21.0028 20.1177 21.0028 19.9302C21.0028 19.7426 21.0773 19.5628 21.2099 19.4302C21.6325 19.0049 21.8697 18.4297 21.8697 17.8302C21.8697 17.2307 21.6325 16.6555 21.2099 16.2302C21.1449 16.1686 21.0934 16.0941 21.059 16.0114C21.0245 15.9287 21.0078 15.8397 21.0099 15.7502C21.0096 15.6609 21.0271 15.5724 21.0615 15.49C21.0958 15.4076 21.1463 15.3328 21.2099 15.2702C21.2751 15.2037 21.3529 15.1508 21.4388 15.1147C21.5246 15.0787 21.6168 15.0601 21.7099 15.0601C21.8031 15.0601 21.8953 15.0787 21.9811 15.1147C22.067 15.1508 22.1448 15.2037 22.2099 15.2702C22.5531 15.61 22.8247 16.0151 23.0085 16.4617C23.1922 16.9083 23.2846 17.3873 23.2799 17.8702H23.2599ZM26.1399 17.8702C26.1402 18.7225 25.9725 19.5666 25.6465 20.3542C25.3205 21.1417 24.8425 21.8574 24.2399 22.4602C24.1743 22.5258 24.0963 22.5779 24.0105 22.6135C23.9247 22.649 23.8328 22.6673 23.7399 22.6673C23.6471 22.6673 23.5551 22.649 23.4693 22.6135C23.3835 22.5779 23.3056 22.5258 23.2399 22.4602C23.1743 22.3945 23.1222 22.3166 23.0866 22.2308C23.0511 22.145 23.0328 22.053 23.0328 21.9602C23.0328 21.8673 23.0511 21.7754 23.0866 21.6896C23.1222 21.6038 23.1743 21.5258 23.2399 21.4602C24.2011 20.4966 24.7409 19.1912 24.7409 17.8302C24.7409 16.4692 24.2011 15.1637 23.2399 14.2002C23.1695 14.1373 23.1131 14.0603 23.0745 13.9741C23.0359 13.888 23.0159 13.7946 23.0159 13.7002C23.0159 13.6058 23.0359 13.5124 23.0745 13.4262C23.1131 13.3401 23.1695 13.263 23.2399 13.2002C23.3704 13.0789 23.5418 13.011 23.7199 13.0102C23.8086 13.008 23.8968 13.0237 23.9793 13.0563C24.0618 13.0889 24.1368 13.1379 24.1999 13.2002C24.823 13.8075 25.3176 14.5338 25.6543 15.3361C25.991 16.1384 26.1629 17.0001 26.1599 17.8702H26.1399Z\" fill=\"white\"/>\n                            </svg> \n                            <svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.8701 6.87982C18.7591 6.83098 18.6361 6.81631 18.5168 6.83768C18.3975 6.85905 18.2872 6.9155 18.2001 6.99982L11.3701 12.5998H6.85008C6.76834 12.5983 6.68715 12.6134 6.61149 12.6444C6.53583 12.6753 6.46729 12.7214 6.41008 12.7798C6.29125 12.8957 6.22297 13.0538 6.22008 13.2198V20.7598C6.21852 20.8416 6.23369 20.9227 6.26464 20.9984C6.2956 21.0741 6.34168 21.1426 6.40008 21.1998C6.45679 21.2596 6.52502 21.3072 6.60064 21.3398C6.67626 21.3725 6.75771 21.3895 6.84008 21.3898H11.3601L18.0901 26.9998C18.2023 27.0942 18.3435 27.1471 18.4901 27.1498C18.6572 27.1498 18.8174 27.0834 18.9356 26.9653C19.0537 26.8471 19.1201 26.6869 19.1201 26.5198L19.2301 7.40982C19.223 7.29735 19.1858 7.18886 19.1225 7.09564C19.0592 7.00242 18.972 6.92789 18.8701 6.87982V6.87982ZM18.0001 8.77982L17.9101 25.2098L12.2201 20.4398V13.4398L18.0001 8.77982ZM11.0001 13.7798V20.0598H7.52008V13.7898L11.0001 13.7798ZM27.6801 19.4998C27.7492 19.5635 27.8043 19.6408 27.842 19.7269C27.8797 19.8129 27.8992 19.9059 27.8992 19.9998C27.8992 20.0938 27.8797 20.1867 27.842 20.2728C27.8043 20.3588 27.7492 20.4361 27.6801 20.4998C27.6154 20.5629 27.5387 20.6122 27.4545 20.6449C27.3703 20.6775 27.2803 20.6928 27.1901 20.6898C27.1021 20.6911 27.0149 20.674 26.9339 20.6396C26.853 20.6051 26.7801 20.5541 26.7201 20.4898L24.1901 17.9998L21.6701 20.4898C21.5443 20.6123 21.3756 20.6805 21.2001 20.6798C21.0658 20.6795 20.9347 20.6394 20.8232 20.5647C20.7116 20.4899 20.6247 20.3839 20.5734 20.2598C20.5221 20.1358 20.5086 19.9993 20.5347 19.8676C20.5608 19.7359 20.6253 19.6149 20.7201 19.5198L23.2401 16.9998L20.7501 14.4998C20.6823 14.4354 20.6283 14.3578 20.5915 14.2719C20.5546 14.1859 20.5356 14.0933 20.5356 13.9998C20.5356 13.9063 20.5546 13.8137 20.5915 13.7278C20.6283 13.6418 20.6823 13.5643 20.7501 13.4998C20.8138 13.4307 20.8911 13.3756 20.9771 13.3379C21.0632 13.3002 21.1561 13.2807 21.2501 13.2807C21.344 13.2807 21.437 13.3002 21.523 13.3379C21.6091 13.3756 21.6864 13.4307 21.7501 13.4998L24.2401 16.0198L26.7601 13.5298C26.8201 13.4655 26.893 13.4145 26.9739 13.38C27.0549 13.3456 27.1421 13.3285 27.2301 13.3298C27.3202 13.3298 27.4095 13.3477 27.4926 13.3825C27.5758 13.4173 27.6512 13.4683 27.7145 13.5325C27.7778 13.5967 27.8276 13.6729 27.8612 13.7565C27.8948 13.8402 27.9114 13.9297 27.9101 14.0198C27.9114 14.1078 27.8943 14.195 27.8598 14.276C27.8254 14.3569 27.7744 14.4298 27.7101 14.4898L25.1601 16.9998L27.6801 19.4998Z\" fill=\"white\"/>\n                            </svg>  \n                          </div>\n                          <div class=\"testimonials-play-{{ section.id }}\">\n                            <svg viewBox=\"0 0 50 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14.8916 1.61031L45.5078 22.0275C46.8194 22.9021 47.8948 24.0965 48.6386 25.4864C49.3824 26.8763 49.7715 28.4284 49.7715 30.0048C49.7715 31.5812 49.3824 33.1333 48.6386 34.5232C47.8948 35.9131 46.8194 37.0979 45.5078 37.9725L14.8916 58.3897C13.4493 59.3519 11.7729 59.9046 10.0412 59.9887C8.30947 60.0728 6.58739 59.6852 5.05869 58.8673C3.52998 58.0494 2.252 56.8318 1.36109 55.3444C0.470179 53.8571 -0.000237311 52.1558 2.21654e-05 50.422V9.59716C-0.00371101 7.86176 0.464188 6.15797 1.3537 4.66789C2.24322 3.1778 3.52091 1.95742 5.05023 1.13719C6.57955 0.316964 8.30301 -0.0722825 10.0364 0.0110494C11.7698 0.0943813 13.448 0.647165 14.8916 1.61031Z\" fill=\"#F2F4F6\"></path></svg>\n                          </div>\n                        {% endif %}  \n                        <div class=\"testimonials-media-content-{{ section.id }}\">\n                          {% if block.settings.title != blank %}\n                            <div class=\"testimonials-media-title-{{ section.id }}\">{{ block.settings.title }}</div>\n                          {% endif %}\n                          {% if block.settings.media_text != blank %}\n                            <div class=\"testimonials-media-text-{{ section.id }}\">{{ block.settings.media_text }}</div>\n                          {% endif %}\n                        </div>\n                      </div>\n                    {% endif %}                \n                  {% when 'media_review' %}\n                    {% if block.settings.column == '1' %}\n                      <div class=\"testimonials-media-review-{{ section.id }} testimonials-media-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-media-review-image-{{ section.id }}\">\n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}   \n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }} testimonials-media-review-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.author != blank %}\n                          <p class=\"testimonials-author-text-{{ section.id }} testimonials-media-review-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                        {% endif %}\n                        {% if block.settings.review_tag %}\n                          <p class=\"testimonials-media-review-tag-{{ section.id }}\">{{ block.settings.review_tag }}</p>\n                        {% endif %}  \n                      </div>  \n                    {% endif %}                \n                {% endcase %}\n              {% endfor %}\n            </div>\n          {% endif %}\n          {% if column_second_count > 0 %}\n            <div class=\"testimonials-column-{{ section.id }}\">\n              {% for block in section.blocks %}\n                {% case block.type %}\n                  {% when 'review' %}\n                    {% if block.settings.column == '2' %}\n                      <div class=\"testimonials-review-{{ section.id }} testimonials-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-author-{{ section.id }}\">\n                          <div class=\"testimonials-author-image-{{ section.id }}\">\n                            {% if block.settings.author_image != blank %}\n                              <img src=\"{{ block.settings.author_image | image_url }}\" alt=\"{{ block.settings.author_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>                 \n                            {% else %}    \n                              {{ 'image' | placeholder_svg_tag }}\n                            {% endif %}\n                          </div>\n                          <div class=\"testimonials-author-content-{{ section.id }}\">\n                            {% if block.settings.author != blank %}\n                              <p class=\"testimonials-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                            {% endif %}\n                            {% if block.settings.username %}\n                              <p class=\"testimonials-author-username-{{ section.id }}\">{{ block.settings.username }}</p>\n                            {% endif %}                  \n                          </div>\n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.time %}\n                          <p class=\"testimonials-author-time-{{ section.id }}\">{{ block.settings.time }}</p>\n                        {% endif %}\n                      </div>\n                    {% endif %}               \n                  {% when 'media' %}  \n                    {% if block.settings.column == '2' %}\n                      <div class=\"testimonials-media-{{ section.id }} testimonials-media-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        {% if block.settings.media_type == 'image' %}                   \n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}                   \n                        {% elsif block.settings.media_type == 'video' %}            \n                          {% assign video_id = block.settings.video.id | default: block.settings.video_url.id %}\n                          {% assign loop = '&loop=1&playlist=' | append: video_id %}\n                          {%- if block.settings.video == null and block.settings.video_url != null -%}\n                          {%- if block.settings.video_url.type == 'youtube' -%}\n                          <iframe\n                            data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"      \n                            data-src2=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&showinfo=0{{ loop }}\"                          \n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {%- else -%}\n                          <iframe\n                            data-src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"\n                            data-src2=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=0&&autoplay=1&controls=0&shinfo=0{{ loop }}\"\n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {% endif %}\n                          {% else %}\n                          {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\n                          <video data-src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted playsinline preload=\"none\" preload=\"none\" loop class=\"lazy\"></video>\n                          {% endif %}\n                          <div class=\"testimonials-mute-{{ section.id }} hidden\">\n                            <svg width=\"34\" height=\"35\" viewBox=\"0 0 34 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34.8701C26.3888 34.8701 34 27.259 34 17.8701C34 8.48128 26.3888 0.870117 17 0.870117C7.61116 0.870117 0 8.48128 0 17.8701C0 27.259 7.61116 34.8701 17 34.8701Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.7899 7.75018C18.6822 7.69862 18.5619 7.67876 18.4433 7.69292C18.3247 7.70709 18.2125 7.75469 18.1199 7.83018L11.3199 13.4702H6.80993C6.64285 13.4702 6.4826 13.5366 6.36445 13.6547C6.24631 13.7729 6.17993 13.9331 6.17993 14.1002V21.6402C6.17993 21.8073 6.24631 21.9675 6.36445 22.0857C6.4826 22.2038 6.64285 22.2702 6.80993 22.2702H11.3199L18.1199 27.9102C18.2337 28.0019 18.3739 28.0544 18.5199 28.0602C18.6134 28.0615 18.7058 28.0409 18.7899 28.0002C18.8978 27.949 18.9889 27.8683 19.0526 27.7674C19.1163 27.6665 19.1501 27.5495 19.1499 27.4302V8.31018C19.1494 8.19227 19.1152 8.07696 19.0515 7.97777C18.9877 7.87858 18.897 7.79963 18.7899 7.75018V7.75018ZM17.8999 9.65018V26.0902L12.1799 21.3402V14.4002L17.8999 9.65018ZM10.8999 14.7302V21.0002H7.43993V14.7302H10.8999ZM23.2599 17.8702C23.263 18.3451 23.1717 18.816 22.9915 19.2554C22.8112 19.6948 22.5456 20.0941 22.2099 20.4302C22.0773 20.5628 21.8975 20.6373 21.7099 20.6373C21.5224 20.6373 21.3425 20.5628 21.2099 20.4302C21.0773 20.2976 21.0028 20.1177 21.0028 19.9302C21.0028 19.7426 21.0773 19.5628 21.2099 19.4302C21.6325 19.0049 21.8697 18.4297 21.8697 17.8302C21.8697 17.2307 21.6325 16.6555 21.2099 16.2302C21.1449 16.1686 21.0934 16.0941 21.059 16.0114C21.0245 15.9287 21.0078 15.8397 21.0099 15.7502C21.0096 15.6609 21.0271 15.5724 21.0615 15.49C21.0958 15.4076 21.1463 15.3328 21.2099 15.2702C21.2751 15.2037 21.3529 15.1508 21.4388 15.1147C21.5246 15.0787 21.6168 15.0601 21.7099 15.0601C21.8031 15.0601 21.8953 15.0787 21.9811 15.1147C22.067 15.1508 22.1448 15.2037 22.2099 15.2702C22.5531 15.61 22.8247 16.0151 23.0085 16.4617C23.1922 16.9083 23.2846 17.3873 23.2799 17.8702H23.2599ZM26.1399 17.8702C26.1402 18.7225 25.9725 19.5666 25.6465 20.3542C25.3205 21.1417 24.8425 21.8574 24.2399 22.4602C24.1743 22.5258 24.0963 22.5779 24.0105 22.6135C23.9247 22.649 23.8328 22.6673 23.7399 22.6673C23.6471 22.6673 23.5551 22.649 23.4693 22.6135C23.3835 22.5779 23.3056 22.5258 23.2399 22.4602C23.1743 22.3945 23.1222 22.3166 23.0866 22.2308C23.0511 22.145 23.0328 22.053 23.0328 21.9602C23.0328 21.8673 23.0511 21.7754 23.0866 21.6896C23.1222 21.6038 23.1743 21.5258 23.2399 21.4602C24.2011 20.4966 24.7409 19.1912 24.7409 17.8302C24.7409 16.4692 24.2011 15.1637 23.2399 14.2002C23.1695 14.1373 23.1131 14.0603 23.0745 13.9741C23.0359 13.888 23.0159 13.7946 23.0159 13.7002C23.0159 13.6058 23.0359 13.5124 23.0745 13.4262C23.1131 13.3401 23.1695 13.263 23.2399 13.2002C23.3704 13.0789 23.5418 13.011 23.7199 13.0102C23.8086 13.008 23.8968 13.0237 23.9793 13.0563C24.0618 13.0889 24.1368 13.1379 24.1999 13.2002C24.823 13.8075 25.3176 14.5338 25.6543 15.3361C25.991 16.1384 26.1629 17.0001 26.1599 17.8702H26.1399Z\" fill=\"white\"/>\n                            </svg> \n                            <svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.8701 6.87982C18.7591 6.83098 18.6361 6.81631 18.5168 6.83768C18.3975 6.85905 18.2872 6.9155 18.2001 6.99982L11.3701 12.5998H6.85008C6.76834 12.5983 6.68715 12.6134 6.61149 12.6444C6.53583 12.6753 6.46729 12.7214 6.41008 12.7798C6.29125 12.8957 6.22297 13.0538 6.22008 13.2198V20.7598C6.21852 20.8416 6.23369 20.9227 6.26464 20.9984C6.2956 21.0741 6.34168 21.1426 6.40008 21.1998C6.45679 21.2596 6.52502 21.3072 6.60064 21.3398C6.67626 21.3725 6.75771 21.3895 6.84008 21.3898H11.3601L18.0901 26.9998C18.2023 27.0942 18.3435 27.1471 18.4901 27.1498C18.6572 27.1498 18.8174 27.0834 18.9356 26.9653C19.0537 26.8471 19.1201 26.6869 19.1201 26.5198L19.2301 7.40982C19.223 7.29735 19.1858 7.18886 19.1225 7.09564C19.0592 7.00242 18.972 6.92789 18.8701 6.87982V6.87982ZM18.0001 8.77982L17.9101 25.2098L12.2201 20.4398V13.4398L18.0001 8.77982ZM11.0001 13.7798V20.0598H7.52008V13.7898L11.0001 13.7798ZM27.6801 19.4998C27.7492 19.5635 27.8043 19.6408 27.842 19.7269C27.8797 19.8129 27.8992 19.9059 27.8992 19.9998C27.8992 20.0938 27.8797 20.1867 27.842 20.2728C27.8043 20.3588 27.7492 20.4361 27.6801 20.4998C27.6154 20.5629 27.5387 20.6122 27.4545 20.6449C27.3703 20.6775 27.2803 20.6928 27.1901 20.6898C27.1021 20.6911 27.0149 20.674 26.9339 20.6396C26.853 20.6051 26.7801 20.5541 26.7201 20.4898L24.1901 17.9998L21.6701 20.4898C21.5443 20.6123 21.3756 20.6805 21.2001 20.6798C21.0658 20.6795 20.9347 20.6394 20.8232 20.5647C20.7116 20.4899 20.6247 20.3839 20.5734 20.2598C20.5221 20.1358 20.5086 19.9993 20.5347 19.8676C20.5608 19.7359 20.6253 19.6149 20.7201 19.5198L23.2401 16.9998L20.7501 14.4998C20.6823 14.4354 20.6283 14.3578 20.5915 14.2719C20.5546 14.1859 20.5356 14.0933 20.5356 13.9998C20.5356 13.9063 20.5546 13.8137 20.5915 13.7278C20.6283 13.6418 20.6823 13.5643 20.7501 13.4998C20.8138 13.4307 20.8911 13.3756 20.9771 13.3379C21.0632 13.3002 21.1561 13.2807 21.2501 13.2807C21.344 13.2807 21.437 13.3002 21.523 13.3379C21.6091 13.3756 21.6864 13.4307 21.7501 13.4998L24.2401 16.0198L26.7601 13.5298C26.8201 13.4655 26.893 13.4145 26.9739 13.38C27.0549 13.3456 27.1421 13.3285 27.2301 13.3298C27.3202 13.3298 27.4095 13.3477 27.4926 13.3825C27.5758 13.4173 27.6512 13.4683 27.7145 13.5325C27.7778 13.5967 27.8276 13.6729 27.8612 13.7565C27.8948 13.8402 27.9114 13.9297 27.9101 14.0198C27.9114 14.1078 27.8943 14.195 27.8598 14.276C27.8254 14.3569 27.7744 14.4298 27.7101 14.4898L25.1601 16.9998L27.6801 19.4998Z\" fill=\"white\"/>\n                            </svg>  \n                          </div>\n                          <div class=\"testimonials-play-{{ section.id }}\">\n                            <svg viewBox=\"0 0 50 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14.8916 1.61031L45.5078 22.0275C46.8194 22.9021 47.8948 24.0965 48.6386 25.4864C49.3824 26.8763 49.7715 28.4284 49.7715 30.0048C49.7715 31.5812 49.3824 33.1333 48.6386 34.5232C47.8948 35.9131 46.8194 37.0979 45.5078 37.9725L14.8916 58.3897C13.4493 59.3519 11.7729 59.9046 10.0412 59.9887C8.30947 60.0728 6.58739 59.6852 5.05869 58.8673C3.52998 58.0494 2.252 56.8318 1.36109 55.3444C0.470179 53.8571 -0.000237311 52.1558 2.21654e-05 50.422V9.59716C-0.00371101 7.86176 0.464188 6.15797 1.3537 4.66789C2.24322 3.1778 3.52091 1.95742 5.05023 1.13719C6.57955 0.316964 8.30301 -0.0722825 10.0364 0.0110494C11.7698 0.0943813 13.448 0.647165 14.8916 1.61031Z\" fill=\"#F2F4F6\"></path></svg>\n                          </div>\n                        {% endif %}  \n                        <div class=\"testimonials-media-content-{{ section.id }}\">\n                          {% if block.settings.title != blank %}\n                            <div class=\"testimonials-media-title-{{ section.id }}\">{{ block.settings.title }}</div>\n                          {% endif %}\n                          {% if block.settings.media_text != blank %}\n                            <div class=\"testimonials-media-text-{{ section.id }}\">{{ block.settings.media_text }}</div>\n                          {% endif %}\n                        </div>\n                      </div>\n                    {% endif %}                \n                  {% when 'media_review' %}\n                    {% if block.settings.column == '2' %}\n                      <div class=\"testimonials-media-review-{{ section.id }} testimonials-media-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-media-review-image-{{ section.id }}\">\n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}   \n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }} testimonials-media-review-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.author != blank %}\n                          <p class=\"testimonials-author-text-{{ section.id }} testimonials-media-review-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                        {% endif %}\n                        {% if block.settings.review_tag %}\n                          <p class=\"testimonials-media-review-tag-{{ section.id }}\">{{ block.settings.review_tag }}</p>\n                        {% endif %}  \n                      </div>  \n                    {% endif %}                \n                {% endcase %}\n              {% endfor %}\n            </div>\n          {% endif %}\n        </div>\n        <div class=\"testimonials-reviews-column-{{ section.id }}\">\n          {% if column_third_count > 0 %}\n            <div class=\"testimonials-column-{{ section.id }}\">\n              {% for block in section.blocks %}\n                {% case block.type %}\n                  {% when 'review' %}\n                    {% if block.settings.column == '3' %}\n                      <div class=\"testimonials-review-{{ section.id }} testimonials-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-author-{{ section.id }}\">\n                          <div class=\"testimonials-author-image-{{ section.id }}\">\n                            {% if block.settings.author_image != blank %}\n                              <img src=\"{{ block.settings.author_image | image_url }}\" alt=\"{{ block.settings.author_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>                 \n                            {% else %}    \n                              {{ 'image' | placeholder_svg_tag }}\n                            {% endif %}\n                          </div>\n                          <div class=\"testimonials-author-content-{{ section.id }}\">\n                            {% if block.settings.author != blank %}\n                              <p class=\"testimonials-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                            {% endif %}\n                            {% if block.settings.username %}\n                              <p class=\"testimonials-author-username-{{ section.id }}\">{{ block.settings.username }}</p>\n                            {% endif %}                  \n                          </div>\n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.time %}\n                          <p class=\"testimonials-author-time-{{ section.id }}\">{{ block.settings.time }}</p>\n                        {% endif %}\n                      </div>\n                    {% endif %}               \n                  {% when 'media' %}  \n                    {% if block.settings.column == '3' %}\n                      <div class=\"testimonials-media-{{ section.id }} testimonials-media-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        {% if block.settings.media_type == 'image' %}                   \n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}                   \n                        {% elsif block.settings.media_type == 'video' %}            \n                          {% assign video_id = block.settings.video.id | default: block.settings.video_url.id %}\n                          {% assign loop = '&loop=1&playlist=' | append: video_id %}\n                          {%- if block.settings.video == null and block.settings.video_url != null -%}\n                          {%- if block.settings.video_url.type == 'youtube' -%}\n                          <iframe\n                            data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&playsinline=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&playsinline=1&showinfo=0{{ loop }}\"      \n                            data-src2=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&playsinline=1&showinfo=0{{ loop }}\"                          \n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {%- else -%}\n                          <iframe\n                            data-src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&playsinline=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&playsinline=1&showinfo=0{{ loop }}\"\n                            data-src2=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&playsinline=1&shinfo=0{{ loop }}\"\n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {% endif %}\n                          {% else %}\n                            {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\n                            <video data-src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted playsinline preload=\"none\" preload=\"none\" loop class=\"lazy\"></video>\n                          {% endif %}\n                          <div class=\"testimonials-mute-{{ section.id }} hidden\">\n                            <svg width=\"34\" height=\"35\" viewBox=\"0 0 34 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34.8701C26.3888 34.8701 34 27.259 34 17.8701C34 8.48128 26.3888 0.870117 17 0.870117C7.61116 0.870117 0 8.48128 0 17.8701C0 27.259 7.61116 34.8701 17 34.8701Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.7899 7.75018C18.6822 7.69862 18.5619 7.67876 18.4433 7.69292C18.3247 7.70709 18.2125 7.75469 18.1199 7.83018L11.3199 13.4702H6.80993C6.64285 13.4702 6.4826 13.5366 6.36445 13.6547C6.24631 13.7729 6.17993 13.9331 6.17993 14.1002V21.6402C6.17993 21.8073 6.24631 21.9675 6.36445 22.0857C6.4826 22.2038 6.64285 22.2702 6.80993 22.2702H11.3199L18.1199 27.9102C18.2337 28.0019 18.3739 28.0544 18.5199 28.0602C18.6134 28.0615 18.7058 28.0409 18.7899 28.0002C18.8978 27.949 18.9889 27.8683 19.0526 27.7674C19.1163 27.6665 19.1501 27.5495 19.1499 27.4302V8.31018C19.1494 8.19227 19.1152 8.07696 19.0515 7.97777C18.9877 7.87858 18.897 7.79963 18.7899 7.75018V7.75018ZM17.8999 9.65018V26.0902L12.1799 21.3402V14.4002L17.8999 9.65018ZM10.8999 14.7302V21.0002H7.43993V14.7302H10.8999ZM23.2599 17.8702C23.263 18.3451 23.1717 18.816 22.9915 19.2554C22.8112 19.6948 22.5456 20.0941 22.2099 20.4302C22.0773 20.5628 21.8975 20.6373 21.7099 20.6373C21.5224 20.6373 21.3425 20.5628 21.2099 20.4302C21.0773 20.2976 21.0028 20.1177 21.0028 19.9302C21.0028 19.7426 21.0773 19.5628 21.2099 19.4302C21.6325 19.0049 21.8697 18.4297 21.8697 17.8302C21.8697 17.2307 21.6325 16.6555 21.2099 16.2302C21.1449 16.1686 21.0934 16.0941 21.059 16.0114C21.0245 15.9287 21.0078 15.8397 21.0099 15.7502C21.0096 15.6609 21.0271 15.5724 21.0615 15.49C21.0958 15.4076 21.1463 15.3328 21.2099 15.2702C21.2751 15.2037 21.3529 15.1508 21.4388 15.1147C21.5246 15.0787 21.6168 15.0601 21.7099 15.0601C21.8031 15.0601 21.8953 15.0787 21.9811 15.1147C22.067 15.1508 22.1448 15.2037 22.2099 15.2702C22.5531 15.61 22.8247 16.0151 23.0085 16.4617C23.1922 16.9083 23.2846 17.3873 23.2799 17.8702H23.2599ZM26.1399 17.8702C26.1402 18.7225 25.9725 19.5666 25.6465 20.3542C25.3205 21.1417 24.8425 21.8574 24.2399 22.4602C24.1743 22.5258 24.0963 22.5779 24.0105 22.6135C23.9247 22.649 23.8328 22.6673 23.7399 22.6673C23.6471 22.6673 23.5551 22.649 23.4693 22.6135C23.3835 22.5779 23.3056 22.5258 23.2399 22.4602C23.1743 22.3945 23.1222 22.3166 23.0866 22.2308C23.0511 22.145 23.0328 22.053 23.0328 21.9602C23.0328 21.8673 23.0511 21.7754 23.0866 21.6896C23.1222 21.6038 23.1743 21.5258 23.2399 21.4602C24.2011 20.4966 24.7409 19.1912 24.7409 17.8302C24.7409 16.4692 24.2011 15.1637 23.2399 14.2002C23.1695 14.1373 23.1131 14.0603 23.0745 13.9741C23.0359 13.888 23.0159 13.7946 23.0159 13.7002C23.0159 13.6058 23.0359 13.5124 23.0745 13.4262C23.1131 13.3401 23.1695 13.263 23.2399 13.2002C23.3704 13.0789 23.5418 13.011 23.7199 13.0102C23.8086 13.008 23.8968 13.0237 23.9793 13.0563C24.0618 13.0889 24.1368 13.1379 24.1999 13.2002C24.823 13.8075 25.3176 14.5338 25.6543 15.3361C25.991 16.1384 26.1629 17.0001 26.1599 17.8702H26.1399Z\" fill=\"white\"/>\n                            </svg> \n                            <svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.8701 6.87982C18.7591 6.83098 18.6361 6.81631 18.5168 6.83768C18.3975 6.85905 18.2872 6.9155 18.2001 6.99982L11.3701 12.5998H6.85008C6.76834 12.5983 6.68715 12.6134 6.61149 12.6444C6.53583 12.6753 6.46729 12.7214 6.41008 12.7798C6.29125 12.8957 6.22297 13.0538 6.22008 13.2198V20.7598C6.21852 20.8416 6.23369 20.9227 6.26464 20.9984C6.2956 21.0741 6.34168 21.1426 6.40008 21.1998C6.45679 21.2596 6.52502 21.3072 6.60064 21.3398C6.67626 21.3725 6.75771 21.3895 6.84008 21.3898H11.3601L18.0901 26.9998C18.2023 27.0942 18.3435 27.1471 18.4901 27.1498C18.6572 27.1498 18.8174 27.0834 18.9356 26.9653C19.0537 26.8471 19.1201 26.6869 19.1201 26.5198L19.2301 7.40982C19.223 7.29735 19.1858 7.18886 19.1225 7.09564C19.0592 7.00242 18.972 6.92789 18.8701 6.87982V6.87982ZM18.0001 8.77982L17.9101 25.2098L12.2201 20.4398V13.4398L18.0001 8.77982ZM11.0001 13.7798V20.0598H7.52008V13.7898L11.0001 13.7798ZM27.6801 19.4998C27.7492 19.5635 27.8043 19.6408 27.842 19.7269C27.8797 19.8129 27.8992 19.9059 27.8992 19.9998C27.8992 20.0938 27.8797 20.1867 27.842 20.2728C27.8043 20.3588 27.7492 20.4361 27.6801 20.4998C27.6154 20.5629 27.5387 20.6122 27.4545 20.6449C27.3703 20.6775 27.2803 20.6928 27.1901 20.6898C27.1021 20.6911 27.0149 20.674 26.9339 20.6396C26.853 20.6051 26.7801 20.5541 26.7201 20.4898L24.1901 17.9998L21.6701 20.4898C21.5443 20.6123 21.3756 20.6805 21.2001 20.6798C21.0658 20.6795 20.9347 20.6394 20.8232 20.5647C20.7116 20.4899 20.6247 20.3839 20.5734 20.2598C20.5221 20.1358 20.5086 19.9993 20.5347 19.8676C20.5608 19.7359 20.6253 19.6149 20.7201 19.5198L23.2401 16.9998L20.7501 14.4998C20.6823 14.4354 20.6283 14.3578 20.5915 14.2719C20.5546 14.1859 20.5356 14.0933 20.5356 13.9998C20.5356 13.9063 20.5546 13.8137 20.5915 13.7278C20.6283 13.6418 20.6823 13.5643 20.7501 13.4998C20.8138 13.4307 20.8911 13.3756 20.9771 13.3379C21.0632 13.3002 21.1561 13.2807 21.2501 13.2807C21.344 13.2807 21.437 13.3002 21.523 13.3379C21.6091 13.3756 21.6864 13.4307 21.7501 13.4998L24.2401 16.0198L26.7601 13.5298C26.8201 13.4655 26.893 13.4145 26.9739 13.38C27.0549 13.3456 27.1421 13.3285 27.2301 13.3298C27.3202 13.3298 27.4095 13.3477 27.4926 13.3825C27.5758 13.4173 27.6512 13.4683 27.7145 13.5325C27.7778 13.5967 27.8276 13.6729 27.8612 13.7565C27.8948 13.8402 27.9114 13.9297 27.9101 14.0198C27.9114 14.1078 27.8943 14.195 27.8598 14.276C27.8254 14.3569 27.7744 14.4298 27.7101 14.4898L25.1601 16.9998L27.6801 19.4998Z\" fill=\"white\"/>\n                            </svg>  \n                          </div>\n                          <div class=\"testimonials-play-{{ section.id }}\">\n                            <svg viewBox=\"0 0 50 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14.8916 1.61031L45.5078 22.0275C46.8194 22.9021 47.8948 24.0965 48.6386 25.4864C49.3824 26.8763 49.7715 28.4284 49.7715 30.0048C49.7715 31.5812 49.3824 33.1333 48.6386 34.5232C47.8948 35.9131 46.8194 37.0979 45.5078 37.9725L14.8916 58.3897C13.4493 59.3519 11.7729 59.9046 10.0412 59.9887C8.30947 60.0728 6.58739 59.6852 5.05869 58.8673C3.52998 58.0494 2.252 56.8318 1.36109 55.3444C0.470179 53.8571 -0.000237311 52.1558 2.21654e-05 50.422V9.59716C-0.00371101 7.86176 0.464188 6.15797 1.3537 4.66789C2.24322 3.1778 3.52091 1.95742 5.05023 1.13719C6.57955 0.316964 8.30301 -0.0722825 10.0364 0.0110494C11.7698 0.0943813 13.448 0.647165 14.8916 1.61031Z\" fill=\"#F2F4F6\"></path></svg>\n                          </div>\n                        {% endif %}  \n                        <div class=\"testimonials-media-content-{{ section.id }}\">\n                          {% if block.settings.title != blank %}\n                            <div class=\"testimonials-media-title-{{ section.id }}\">{{ block.settings.title }}</div>\n                          {% endif %}\n                          {% if block.settings.media_text != blank %}\n                            <div class=\"testimonials-media-text-{{ section.id }}\">{{ block.settings.media_text }}</div>\n                          {% endif %}\n                        </div>\n                      </div>\n                    {% endif %}                \n                  {% when 'media_review' %}\n                    {% if block.settings.column == '3' %}\n                      <div class=\"testimonials-media-review-{{ section.id }} testimonials-media-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-media-review-image-{{ section.id }}\">\n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}   \n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }} testimonials-media-review-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.author != blank %}\n                          <p class=\"testimonials-author-text-{{ section.id }} testimonials-media-review-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                        {% endif %}\n                        {% if block.settings.review_tag %}\n                          <p class=\"testimonials-media-review-tag-{{ section.id }}\">{{ block.settings.review_tag }}</p>\n                        {% endif %}  \n                      </div>  \n                    {% endif %}                \n                {% endcase %}\n              {% endfor %}\n            </div>\n          {% endif %}\n          {% if column_fourth_count > 0 %}\n            <div class=\"testimonials-column-{{ section.id }}\">\n              {% for block in section.blocks %}\n                {% case block.type %}\n                  {% when 'review' %}\n                    {% if block.settings.column == '4' %}\n                      <div class=\"testimonials-review-{{ section.id }} testimonials-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-author-{{ section.id }}\">\n                          <div class=\"testimonials-author-image-{{ section.id }}\">\n                            {% if block.settings.author_image != blank %}\n                              <img src=\"{{ block.settings.author_image | image_url }}\" alt=\"{{ block.settings.author_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>                 \n                            {% else %}    \n                              {{ 'image' | placeholder_svg_tag }}\n                            {% endif %}\n                          </div>\n                          <div class=\"testimonials-author-content-{{ section.id }}\">\n                            {% if block.settings.author != blank %}\n                              <p class=\"testimonials-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                            {% endif %}\n                            {% if block.settings.username %}\n                              <p class=\"testimonials-author-username-{{ section.id }}\">{{ block.settings.username }}</p>\n                            {% endif %}                  \n                          </div>\n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.time %}\n                          <p class=\"testimonials-author-time-{{ section.id }}\">{{ block.settings.time }}</p>\n                        {% endif %}\n                      </div>\n                    {% endif %}               \n                  {% when 'media' %}  \n                    {% if block.settings.column == '4' %}\n                      <div class=\"testimonials-media-{{ section.id }} testimonials-media-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        {% if block.settings.media_type == 'image' %}                   \n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}                   \n                        {% elsif block.settings.media_type == 'video' %}            \n                          {% assign video_id = block.settings.video.id | default: block.settings.video_url.id %}\n                          {% assign loop = '&loop=1&playlist=' | append: video_id %}\n                          {%- if block.settings.video == null and block.settings.video_url != null -%}\n                          {%- if block.settings.video_url.type == 'youtube' -%}\n                          <iframe\n                            data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"      \n                            data-src2=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&showinfo=0{{ loop }}\"                          \n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {%- else -%}\n                          <iframe\n                            data-src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=0&controls=0&showinfo=0{{ loop }}\"\n                            data-src1=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&muted=1&autoplay=1&controls=0&showinfo=0{{ loop }}\"\n                            data-src2=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=0&autoplay=1&controls=0&shinfo=0{{ loop }}\"\n                            allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                            allowfullscreen\n                            class=\"lazy\"\n                          ></iframe>\n                          {% endif %}\n                          {% else %}\n                          {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}\n                          <video data-src=\"{% if block.settings.video != blank %}{{ block.settings.video.sources[1].url }}{% else %}{{ placeholder_video }}{% endif %}\" muted playsinline preload=\"none\" preload=\"none\" loop class=\"lazy\"></video>\n                          {% endif %}\n                          <div class=\"testimonials-mute-{{ section.id }} hidden\">\n                            <svg width=\"34\" height=\"35\" viewBox=\"0 0 34 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34.8701C26.3888 34.8701 34 27.259 34 17.8701C34 8.48128 26.3888 0.870117 17 0.870117C7.61116 0.870117 0 8.48128 0 17.8701C0 27.259 7.61116 34.8701 17 34.8701Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.7899 7.75018C18.6822 7.69862 18.5619 7.67876 18.4433 7.69292C18.3247 7.70709 18.2125 7.75469 18.1199 7.83018L11.3199 13.4702H6.80993C6.64285 13.4702 6.4826 13.5366 6.36445 13.6547C6.24631 13.7729 6.17993 13.9331 6.17993 14.1002V21.6402C6.17993 21.8073 6.24631 21.9675 6.36445 22.0857C6.4826 22.2038 6.64285 22.2702 6.80993 22.2702H11.3199L18.1199 27.9102C18.2337 28.0019 18.3739 28.0544 18.5199 28.0602C18.6134 28.0615 18.7058 28.0409 18.7899 28.0002C18.8978 27.949 18.9889 27.8683 19.0526 27.7674C19.1163 27.6665 19.1501 27.5495 19.1499 27.4302V8.31018C19.1494 8.19227 19.1152 8.07696 19.0515 7.97777C18.9877 7.87858 18.897 7.79963 18.7899 7.75018V7.75018ZM17.8999 9.65018V26.0902L12.1799 21.3402V14.4002L17.8999 9.65018ZM10.8999 14.7302V21.0002H7.43993V14.7302H10.8999ZM23.2599 17.8702C23.263 18.3451 23.1717 18.816 22.9915 19.2554C22.8112 19.6948 22.5456 20.0941 22.2099 20.4302C22.0773 20.5628 21.8975 20.6373 21.7099 20.6373C21.5224 20.6373 21.3425 20.5628 21.2099 20.4302C21.0773 20.2976 21.0028 20.1177 21.0028 19.9302C21.0028 19.7426 21.0773 19.5628 21.2099 19.4302C21.6325 19.0049 21.8697 18.4297 21.8697 17.8302C21.8697 17.2307 21.6325 16.6555 21.2099 16.2302C21.1449 16.1686 21.0934 16.0941 21.059 16.0114C21.0245 15.9287 21.0078 15.8397 21.0099 15.7502C21.0096 15.6609 21.0271 15.5724 21.0615 15.49C21.0958 15.4076 21.1463 15.3328 21.2099 15.2702C21.2751 15.2037 21.3529 15.1508 21.4388 15.1147C21.5246 15.0787 21.6168 15.0601 21.7099 15.0601C21.8031 15.0601 21.8953 15.0787 21.9811 15.1147C22.067 15.1508 22.1448 15.2037 22.2099 15.2702C22.5531 15.61 22.8247 16.0151 23.0085 16.4617C23.1922 16.9083 23.2846 17.3873 23.2799 17.8702H23.2599ZM26.1399 17.8702C26.1402 18.7225 25.9725 19.5666 25.6465 20.3542C25.3205 21.1417 24.8425 21.8574 24.2399 22.4602C24.1743 22.5258 24.0963 22.5779 24.0105 22.6135C23.9247 22.649 23.8328 22.6673 23.7399 22.6673C23.6471 22.6673 23.5551 22.649 23.4693 22.6135C23.3835 22.5779 23.3056 22.5258 23.2399 22.4602C23.1743 22.3945 23.1222 22.3166 23.0866 22.2308C23.0511 22.145 23.0328 22.053 23.0328 21.9602C23.0328 21.8673 23.0511 21.7754 23.0866 21.6896C23.1222 21.6038 23.1743 21.5258 23.2399 21.4602C24.2011 20.4966 24.7409 19.1912 24.7409 17.8302C24.7409 16.4692 24.2011 15.1637 23.2399 14.2002C23.1695 14.1373 23.1131 14.0603 23.0745 13.9741C23.0359 13.888 23.0159 13.7946 23.0159 13.7002C23.0159 13.6058 23.0359 13.5124 23.0745 13.4262C23.1131 13.3401 23.1695 13.263 23.2399 13.2002C23.3704 13.0789 23.5418 13.011 23.7199 13.0102C23.8086 13.008 23.8968 13.0237 23.9793 13.0563C24.0618 13.0889 24.1368 13.1379 24.1999 13.2002C24.823 13.8075 25.3176 14.5338 25.6543 15.3361C25.991 16.1384 26.1629 17.0001 26.1599 17.8702H26.1399Z\" fill=\"white\"/>\n                            </svg> \n                            <svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                              <path d=\"M17 34C26.3888 34 34 26.3888 34 17C34 7.61116 26.3888 0 17 0C7.61116 0 0 7.61116 0 17C0 26.3888 7.61116 34 17 34Z\" fill=\"#8C8985\" fill-opacity=\"0.5\"/>\n                              <path d=\"M18.8701 6.87982C18.7591 6.83098 18.6361 6.81631 18.5168 6.83768C18.3975 6.85905 18.2872 6.9155 18.2001 6.99982L11.3701 12.5998H6.85008C6.76834 12.5983 6.68715 12.6134 6.61149 12.6444C6.53583 12.6753 6.46729 12.7214 6.41008 12.7798C6.29125 12.8957 6.22297 13.0538 6.22008 13.2198V20.7598C6.21852 20.8416 6.23369 20.9227 6.26464 20.9984C6.2956 21.0741 6.34168 21.1426 6.40008 21.1998C6.45679 21.2596 6.52502 21.3072 6.60064 21.3398C6.67626 21.3725 6.75771 21.3895 6.84008 21.3898H11.3601L18.0901 26.9998C18.2023 27.0942 18.3435 27.1471 18.4901 27.1498C18.6572 27.1498 18.8174 27.0834 18.9356 26.9653C19.0537 26.8471 19.1201 26.6869 19.1201 26.5198L19.2301 7.40982C19.223 7.29735 19.1858 7.18886 19.1225 7.09564C19.0592 7.00242 18.972 6.92789 18.8701 6.87982V6.87982ZM18.0001 8.77982L17.9101 25.2098L12.2201 20.4398V13.4398L18.0001 8.77982ZM11.0001 13.7798V20.0598H7.52008V13.7898L11.0001 13.7798ZM27.6801 19.4998C27.7492 19.5635 27.8043 19.6408 27.842 19.7269C27.8797 19.8129 27.8992 19.9059 27.8992 19.9998C27.8992 20.0938 27.8797 20.1867 27.842 20.2728C27.8043 20.3588 27.7492 20.4361 27.6801 20.4998C27.6154 20.5629 27.5387 20.6122 27.4545 20.6449C27.3703 20.6775 27.2803 20.6928 27.1901 20.6898C27.1021 20.6911 27.0149 20.674 26.9339 20.6396C26.853 20.6051 26.7801 20.5541 26.7201 20.4898L24.1901 17.9998L21.6701 20.4898C21.5443 20.6123 21.3756 20.6805 21.2001 20.6798C21.0658 20.6795 20.9347 20.6394 20.8232 20.5647C20.7116 20.4899 20.6247 20.3839 20.5734 20.2598C20.5221 20.1358 20.5086 19.9993 20.5347 19.8676C20.5608 19.7359 20.6253 19.6149 20.7201 19.5198L23.2401 16.9998L20.7501 14.4998C20.6823 14.4354 20.6283 14.3578 20.5915 14.2719C20.5546 14.1859 20.5356 14.0933 20.5356 13.9998C20.5356 13.9063 20.5546 13.8137 20.5915 13.7278C20.6283 13.6418 20.6823 13.5643 20.7501 13.4998C20.8138 13.4307 20.8911 13.3756 20.9771 13.3379C21.0632 13.3002 21.1561 13.2807 21.2501 13.2807C21.344 13.2807 21.437 13.3002 21.523 13.3379C21.6091 13.3756 21.6864 13.4307 21.7501 13.4998L24.2401 16.0198L26.7601 13.5298C26.8201 13.4655 26.893 13.4145 26.9739 13.38C27.0549 13.3456 27.1421 13.3285 27.2301 13.3298C27.3202 13.3298 27.4095 13.3477 27.4926 13.3825C27.5758 13.4173 27.6512 13.4683 27.7145 13.5325C27.7778 13.5967 27.8276 13.6729 27.8612 13.7565C27.8948 13.8402 27.9114 13.9297 27.9101 14.0198C27.9114 14.1078 27.8943 14.195 27.8598 14.276C27.8254 14.3569 27.7744 14.4298 27.7101 14.4898L25.1601 16.9998L27.6801 19.4998Z\" fill=\"white\"/>\n                            </svg>  \n                          </div>\n                          <div class=\"testimonials-play-{{ section.id }}\">\n                            <svg viewBox=\"0 0 50 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14.8916 1.61031L45.5078 22.0275C46.8194 22.9021 47.8948 24.0965 48.6386 25.4864C49.3824 26.8763 49.7715 28.4284 49.7715 30.0048C49.7715 31.5812 49.3824 33.1333 48.6386 34.5232C47.8948 35.9131 46.8194 37.0979 45.5078 37.9725L14.8916 58.3897C13.4493 59.3519 11.7729 59.9046 10.0412 59.9887C8.30947 60.0728 6.58739 59.6852 5.05869 58.8673C3.52998 58.0494 2.252 56.8318 1.36109 55.3444C0.470179 53.8571 -0.000237311 52.1558 2.21654e-05 50.422V9.59716C-0.00371101 7.86176 0.464188 6.15797 1.3537 4.66789C2.24322 3.1778 3.52091 1.95742 5.05023 1.13719C6.57955 0.316964 8.30301 -0.0722825 10.0364 0.0110494C11.7698 0.0943813 13.448 0.647165 14.8916 1.61031Z\" fill=\"#F2F4F6\"></path></svg>\n                          </div>\n                        {% endif %}  \n                        <div class=\"testimonials-media-content-{{ section.id }}\">\n                          {% if block.settings.title != blank %}\n                            <div class=\"testimonials-media-title-{{ section.id }}\">{{ block.settings.title }}</div>\n                          {% endif %}\n                          {% if block.settings.media_text != blank %}\n                            <div class=\"testimonials-media-text-{{ section.id }}\">{{ block.settings.media_text }}</div>\n                          {% endif %}\n                        </div>\n                      </div>\n                    {% endif %}                \n                  {% when 'media_review' %}\n                    {% if block.settings.column == '4' %}\n                      <div class=\"testimonials-media-review-{{ section.id }} testimonials-media-review-{{ block.id }} testimonials-card-{{ section.id }}\">\n                        <div class=\"testimonials-media-review-image-{{ section.id }}\">\n                          {% if block.settings.image != blank %}\n                            <img src=\"{{ block.settings.image | img_url: \"400x400\" }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                          {% else %}\n                            {{ 'image' | placeholder_svg_tag }}\n                          {% endif %}   \n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"testimonials-text-{{ section.id }} testimonials-media-review-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                        {% if block.settings.author != blank %}\n                          <p class=\"testimonials-author-text-{{ section.id }} testimonials-media-review-author-text-{{ section.id }}\">{{ block.settings.author }}</p>\n                        {% endif %}\n                        {% if block.settings.review_tag %}\n                          <p class=\"testimonials-media-review-tag-{{ section.id }}\">{{ block.settings.review_tag }}</p>\n                        {% endif %}  \n                      </div>  \n                    {% endif %}                \n                {% endcase %}\n              {% endfor %}\n            </div>\n          {% endif %}\n        </div>\n        \n      </div>\n\n      {% if button != blank %}\n        <div class=\"testimonials-button-wrapper-{{ section.id }}\">\n          <{% if button_url != blank %}a href=\"{{ button_url }}\"{% else %}div{% endif %} class=\"testimonials-button-{{ section.id }} testimonials-button-mobile-{{ section.id }}\">\n            <p class=\"testimonials-button-inner-{{ section.id }}\">\n            {{ button }}\n            {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\n                <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                  <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                  <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                </svg>\n              {% endif %}\n            </p>\n          </{% if button_url != blank %}a{% else %}div{% endif %}>\n        </div>    \n      {% endif %}\n    </div>\n</div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n\n<script>\n  function initTestimonials25() {\n    let lazyLoadInstance = new LazyLoad();\n\n    window.addEventListener(\n      \"LazyLoad::Initialized\",\n      function (event) {\n        window.lazyLoadInstance = event.detail.instance;\n      },\n      false\n    );\n\n    const testimonialsMedia = document.querySelectorAll('.testimonials-media-{{ section.id }}');\n\n    function handleMediaActions() {\n      const isMobile = window.innerWidth <= 1024;\n\n      testimonialsMedia.forEach((media) => {\n        const muteButton = media.querySelector('.testimonials-mute-{{ section.id }}');\n        const video = media.querySelector('video');\n        const iframe = media.querySelector('iframe');\n        const play = media.querySelector('.testimonials-play-{{ section.id }}');\n\n        const playMedia = () => {\n          testimonialsMedia.forEach((otherMedia) => {\n            if (otherMedia !== media) {\n              const otherVideo = otherMedia.querySelector('video');\n              const otherIframe = otherMedia.querySelector('iframe');\n              const otherMuteButton = otherMedia.querySelector('.testimonials-mute-{{ section.id }}');\n              const otherPlay = otherMedia.querySelector('.testimonials-play-{{ section.id }}');\n\n              if (otherVideo) {\n                otherVideo.pause();\n              }\n\n              if (otherIframe) {\n                otherIframe.src = otherIframe.getAttribute('data-src');\n              }\n\n              if (otherPlay) {\n                otherPlay.classList.remove('hidden');\n              }\n\n              if (otherMuteButton) {\n                otherMuteButton.classList.add('hidden');\n              }\n            }\n          });\n\n          if (video) {\n            video.play();\n            play.classList.add('hidden');\n            muteButton.classList.remove('hidden');\n          }\n\n          if (iframe) {\n            const src = muteButton.classList.contains('active') \n              ? iframe.getAttribute('data-src2') \n              : iframe.getAttribute('data-src1');\n            iframe.src = src;\n            play.classList.add('hidden');\n            muteButton.classList.remove('hidden');\n          }\n        };\n\n        const pauseMedia = () => {\n          if (video) {\n            video.pause();\n            play.classList.remove('hidden');\n            muteButton.classList.add('hidden');\n          }\n\n          if (iframe) {\n            iframe.src = iframe.getAttribute('data-src');\n            play.classList.remove('hidden');\n            muteButton.classList.add('hidden');\n          }\n        };\n\n        if (isMobile) {\n          media.addEventListener('click', (event) => {\n            event.stopPropagation();\n            if ((video && !video.paused) || (iframe && iframe.src !== iframe.getAttribute('data-src'))) {\n              pauseMedia();\n            } else {\n              playMedia();\n            }\n          });\n        } else {\n          media.addEventListener('mouseenter', playMedia);\n          media.addEventListener('mouseleave', pauseMedia);\n        }\n\n        if (muteButton) {\n          muteButton.addEventListener('click', function (event) {\n            event.stopPropagation(); \n\n            if (muteButton.classList.contains('active')) {\n              if (video) {\n                video.muted = true;\n              }\n              if (iframe) {               \n                iframe.contentWindow?.postMessage(\n                  '{\"event\":\"command\",\"func\":\"mute\",\"args\":\"\"}', '*'\n                );\n              }\n            } else {\n              if (video) {\n                video.muted = false;\n              }\n              if (iframe) {\n                iframe.contentWindow?.postMessage(\n                  '{\"event\":\"command\",\"func\":\"unMute\",\"args\":\"\"}', '*'\n                );\n              }\n            }\n            muteButton.classList.toggle('active');\n          });\n        }\n\n      });\n    }\n\n    handleMediaActions();\n\n    window.addEventListener('resize', () => {\n      handleMediaActions();\n    });\n\n    const cards = document.querySelectorAll('.testimonials-card-{{ section.id }}');\n\n    cards.forEach((el) => {\n      const width = el.clientWidth;\n      const height = el.clientHeight;\n\n      el.addEventListener('mousemove', (e) => {\n        const xVal = e.layerX;\n        const yVal = e.layerY;\n\n        const yRotation = 15 * ((xVal - width / 2) / width);\n        const xRotation = -15 * ((yVal - height / 2) / height);\n\n        const transformString = `perspective(500px) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;\n\n        el.style.transform = transformString;\n      });\n\n      el.addEventListener('mouseout', () => {\n        el.style.transform = 'perspective(500px) rotateX(0) rotateY(0)';\n      });\n\n      el.addEventListener('mousedown', () => {\n        el.style.transform = 'perspective(500px) rotateX(0) rotateY(0)';\n      });\n\n      el.addEventListener('mouseup', () => {\n        el.style.transform = 'perspective(500px) rotateX(0) rotateY(0)';\n      });\n    });\n  }\n\n\n  document.addEventListener('DOMContentLoaded', initTestimonials25);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initTestimonials25);\n     document.addEventListener('shopify:section:load', initTestimonials25);\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Testimonials <strong>#25</strong></h2>",
+      "label": "Text",
+      "description": "Use bold formatting to apply the accent color"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "44",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "If button is hidden"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "button": {
+      "type": "text",
+      "default": "View more reviews",
+      "label": "Button label",
+      "description": "Leave the label blank to hide the button."
+    },
+    "button_url": {
+      "type": "text",
+      "default": "",
+      "label": "Button link",
+      "description": "Button link"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_mt_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "button_style": {
+      "type": "text",
+      "default": "outline_arrow",
+      "label": "Button style",
+      "description": "Button style"
+    },
+    "button_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "testimonials_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "testimonials_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "testimonials_mt": {
+      "type": "text",
+      "default": "64",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "testimonials_mt_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "testimonials_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use shadow",
+      "description": "Use shadow"
+    },
+    "review_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "review_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "review_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "review_padding_vertical_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "review_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "review_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "author_wrapper_gap": {
+      "type": "text",
+      "default": "8",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "author_wrapper_gap_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "author_image_width": {
+      "type": "text",
+      "default": "40",
+      "label": "Size",
+      "description": "Size"
+    },
+    "author_image_width_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "author_image_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "author_image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "author_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "author_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "author_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "author_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "author_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "author_username_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "author_username_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "author_username_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "author_username_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "author_username_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "author_username_mt": {
+      "type": "text",
+      "default": "2",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "author_username_mt_mobile": {
+      "type": "text",
+      "default": "2",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "author_time_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "author_time_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "author_time_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "author_time_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "author_time_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "author_time_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "author_time_mt_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "media_review_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "media_review_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "landscape",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "landscape",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "media_review_tag_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "media_review_tag_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "media_review_tag_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "media_review_tag_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "media_review_tag_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "media_review_tag_mt": {
+      "type": "text",
+      "default": "2",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "media_review_tag_mt_mobile": {
+      "type": "text",
+      "default": "2",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "media_ratio": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "media_ratio_mobile": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "play_size": {
+      "type": "text",
+      "default": "64",
+      "label": "Size",
+      "description": "Size"
+    },
+    "play_size_mobile": {
+      "type": "text",
+      "default": "64",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "mute_size": {
+      "type": "text",
+      "default": "36",
+      "label": "Size",
+      "description": "Size"
+    },
+    "mute_size_mobile": {
+      "type": "text",
+      "default": "36",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "media_content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "media_content_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "media_title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "media_title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "media_title_size": {
+      "type": "text",
+      "default": "22",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "media_title_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "media_title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "media_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "media_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "media_text_size": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "media_text_size_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "media_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "media_text_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "media_text_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Primary",
+      "description": "Primary"
+    },
+    "heading_active_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Accent",
+      "description": "Use bold formatting to apply the accent color"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "author_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Author's name",
+      "description": "Author's name"
+    },
+    "author_username_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Username",
+      "description": "Username"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "author_time_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Time",
+      "description": "Time"
+    },
+    "author_image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Author's image border",
+      "description": "Author's image border"
+    },
+    "review_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "media_review_tag_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Tag",
+      "description": "Tag"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image border",
+      "description": "Image border"
+    },
+    "media_review_bg_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Background",
+      "description": "Background"
+    },
+    "media_title_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Title",
+      "description": "Title"
+    },
+    "media_text_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "play_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Play icon",
+      "description": "Play icon"
+    },
+    "mute_icon_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Mute icon",
+      "description": "Mute icon"
+    },
+    "mute_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Mute background",
+      "description": "Mute background"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

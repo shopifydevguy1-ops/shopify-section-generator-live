@@ -1,0 +1,55 @@
+{
+  "id": "clothing-image-grid",
+  "name": "CUSTOM Threads Image Grid",
+  "description": "Section: CUSTOM Threads Image Grid",
+  "tags": [
+    "clothing",
+    "grid"
+  ],
+  "type": "custom",
+  "liquid_code": "{% capture section_content %}\n<style>\n  .cs-grid-image-section {\n    display: grid;\n    grid-auto-rows: 1fr;\n  }\n  .cs-grid-image-section.cs-grid-image-section--more-than-2 {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  @media screen and (min-width: 750px) {\n    .cs-grid-image-section {\n      grid-template-columns: repeat(2, minmax(0, 1fr));\n    }\n    .cs-grid-image-section.cs-grid-image-section--more-than-2 {\n      grid-template-columns: repeat(4, minmax(0, 1fr));\n    }\n  }\n  .cs-grid-image-link {\n    position: relative;\n  }\n  .cs-grid-image-link img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n  .cs-grid-image-link__overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n  }\n  .cs-grid-image-link__text {\n    position: absolute;\n    left: 4%;\n    top: 1%;\n    color: var(--font-color);\n    font-size: calc(var(--font-size) * 0.75);\n  }\n  @media screen and (min-width: 750px) {\n    .cs-grid-image-link__text {\n      font-size: var(--font-size);\n    }\n  }\n</style>\n\n<div\n  class=\"\n    cs-grid-image-section\n    {% if section.blocks.size > 2 %} cs-grid-image-section--more-than-2 {% endif %}\n  \"\n  style=\"\n    --font-size: {{ section.settings.font_size }}px;\n    --font-color: {{ section.settings.font_color }};\n  \"\n>\n  {% for block in section.blocks %}\n    <a\n      href=\"{{ block.settings.url }}\"\n      class=\"cs-grid-image-link\"\n    >\n      {% assign image = block.settings.image %}\n      <img\n        src=\"{{ image | img_url: '500x' }}\"\n        srcset=\"\n          {{ image | img_url: '300x' }} 500w,\n          {{ image | img_url: '500x' }} 800w,\n          {{ image | img_url: '800x' }} 1200w,\n          {{ image | img_url: '1000x' }} 1600w,\n          {{ image | img_url: 'master' }} 2400w\n        \"\n        alt=\"{{ image.alt }}\"\n      >\n      <div\n        class=\"cs-grid-image-link__overlay\"\n        style=\"background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity }}); display: block;\"\n      ></div>\n      <div\n        class=\"cs-grid-image-link__text\"\n      >\n        {{ block.settings.text }}\n      </div>\n    </a>\n  {% endfor %}\n</div>\n{% endcapture %}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    max-width: {{section.settings.section-width}}rem;\n    margin: 0 auto;\n    padding: 0 {{ section.settings.padding_vertical | times: 0.25 | round: 0}}rem;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 {{ section.settings.padding_vertical }}rem;\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};\" id=\"image-grid\">\n  <div class=\"section-{{ section.id }}-padding\">\n    <div>{{ section_content }}</div>\n  </div>\n</div>",
+  "variables": {
+    "font_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "font_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Font color",
+      "description": "Font color"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_vertical": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "200",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

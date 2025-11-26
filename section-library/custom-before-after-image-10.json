@@ -1,0 +1,540 @@
+{
+  "id": "custom-before-after-image-10",
+  "name": "CUSTOM Before/after #10",
+  "description": "Section: CUSTOM Before/after #10",
+  "tags": [
+    "before"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign cards_view = section.settings.cards_view\n  assign cards_view_mobile = section.settings.cards_view_mobile\n  assign cards_gap = section.settings.cards_gap\n  assign cards_gap_mobile = section.settings.cards_gap_mobile  \n  assign cards_mt = section.settings.cards_mt\n  assign cards_mt_mobile = section.settings.cards_mt_mobile  \n\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_border_color = section.settings.card_border_color\n  assign card_radius = section.settings.card_radius\n  assign card_align = section.settings.card_align\n  assign card_align_mobile = section.settings.card_align_mobile\n\n  assign card_horizontal_align = \"\"\n  if card_align == \"center\"\n    assign card_horizontal_align = \"center\"\n  elsif card_align == \"right\"\n    assign card_horizontal_align = \"end\"\n  else\n    assign card_horizontal_align = \"start\"\n  endif\n\n  assign card_horizontal_align_mobile = \"\"\n  if card_align_mobile == \"center\"\n    assign card_horizontal_align_mobile = \"center\"\n  elsif card_align_mobile == \"right\"\n    assign card_horizontal_align_mobile = \"end\"\n  else\n    assign card_horizontal_align_mobile = \"start\"\n  endif\n\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n  assign image_overlay_color = section.settings.image_overlay_color\n  assign image_overlay = section.settings.image_overlay\n\n  assign sub_title_size = section.settings.sub_title_size\n  assign sub_title_size_mobile = section.settings.sub_title_size_mobile\n  assign sub_title_color = section.settings.sub_title_color\n  assign sub_title_custom = section.settings.sub_title_custom\n  assign sub_title_font = section.settings.sub_title_font\n  assign sub_title_height = section.settings.sub_title_height\n  assign sub_title_padding_vertical = section.settings.sub_title_padding_vertical\n  assign sub_title_padding_vertical_mobile = section.settings.sub_title_padding_vertical_mobile\n  assign sub_title_padding_horizontal = section.settings.sub_title_padding_horizontal\n  assign sub_title_padding_horizontal_mobile = section.settings.sub_title_padding_horizontal_mobile\n  assign sub_title_radius = section.settings.sub_title_radius\n  assign sub_title_border_thickness = section.settings.sub_title_border_thickness\n  assign sub_title_border_color = section.settings.sub_title_border_color\n  assign sub_title_bg_color = section.settings.sub_title_bg_color\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_mt = section.settings.title_mt\n  assign title_mt_mobile = section.settings.title_mt_mobile\n\n  assign toggles_padding_vertical = section.settings.toggles_padding_vertical\n  assign toggles_padding_vertical_mobile = section.settings.toggles_padding_vertical_mobile\n  assign toggles_padding_horizontal = section.settings.toggles_padding_horizontal\n  assign toggles_padding_horizontal_mobile = section.settings.toggles_padding_horizontal_mobile\n  assign toggles_radius = section.settings.toggles_radius\n  assign toggles_border_thickness = section.settings.toggles_border_thickness\n  assign toggles_border_color = section.settings.toggles_border_color\n  assign toggles_bg_color = section.settings.toggles_bg_color\n  assign toggles_active = section.settings.toggles_active\n\n  assign before_text = section.settings.before_text\n  assign after_text = section.settings.after_text\n  assign toggle_size = section.settings.toggle_size\n  assign toggle_size_mobile = section.settings.toggle_size_mobile\n  assign toggle_color = section.settings.toggle_color\n  assign toggle_active_color = section.settings.toggle_active_color\n  assign toggle_custom = section.settings.toggle_custom\n  assign toggle_font = section.settings.toggle_font\n  assign toggle_height = section.settings.toggle_height\n  assign toggle_padding_vertical = section.settings.toggle_padding_vertical\n  assign toggle_padding_vertical_mobile = section.settings.toggle_padding_vertical_mobile\n  assign toggle_padding_horizontal = section.settings.toggle_padding_horizontal\n  assign toggle_padding_horizontal_mobile = section.settings.toggle_padding_horizontal_mobile\n  assign toggle_radius = section.settings.toggle_radius\n  assign toggle_border_thickness = section.settings.toggle_border_thickness\n  assign toggle_border_active_color = section.settings.toggle_border_active_color\n  assign toggle_bg_active_color = section.settings.toggle_bg_active_color\n\n  assign lazy_load_setting = 'lazy'\n  unless lazy\n    assign lazy_load_setting = 'eiger'\n  endunless\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  sub_title_font | font_face: font_display: 'swap' }}\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  toggle_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .before-heading-{{ section.id }} {\n    text-align: {{ heading_align_mobile }};\n  }\n  \n  .before-heading-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ heading_size_mobile }}px;\n    line-height: {{ heading_height }}%;\n    color: {{ heading_color }};\n    text-transform: unset;\n    word-break: break-word;\n    font-weight: 700;\n  }\n\n  .before-cards-{{ section.id }} {\n    display: grid;\n    grid-template-columns: repeat({{ cards_view_mobile }}, 1fr);\n    gap: {{ cards_gap_mobile }}px;\n    margin-top: {{ cards_mt_mobile }}px;\n  }\n  \n  .before-card-{{ section.id }} {\n    position: relative;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    border-radius: {{ card_radius }}px;\n    overflow: hidden;\n  }\n\n  .before-card-image-{{ section.id }} {\n    display: none;\n  }\n\n  .before-card-image-{{ section.id }}.active {\n    display: block;\n  }\n\n  .before-card-image-{{ section.id }} {\n    position: relative;\n  }\n\n  .before-card-image-{{ section.id }} img,\n  .before-card-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .before-card-image-{{ section.id }}::after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    z-index: 1;\n    background-color: {{ image_overlay_color | hex_to_rgba: image_overlay }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .before-card-image-{{ section.id }} svg {\n    background: #AFAFAF;\n  }\n\n  .before-card-content-{{ section.id }} {\n    position: absolute;\n    padding: 10px;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    z-index: 2;\n    justify-content: center;\n    align-items: {{ card_horizontal_align_mobile }};\n  }\n\n  .before-card-subtitle-{{ section.id }} {\n    margin: 0px;\n    padding: {{ sub_title_padding_vertical_mobile }}px {{ sub_title_padding_horizontal_mobile }}px;\n    border: {{ sub_title_border_thickness }}px solid {{ sub_title_border_color }};\n    background: {{ sub_title_bg_color }};\n    border-radius: {{ sub_title_radius }}px;\n    font-size: {{ sub_title_size_mobile }}px;\n    line-height: {{ sub_title_height }}%;\n    color: {{ sub_title_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .before-card-title-{{ section.id }} {\n    margin: 0px;\n    text-align: {{ card_align_mobile }};\n    margin-top: {{ title_mt_mobile }}px;\n    font-size: {{ title_size_mobile }}px;\n    line-height: {{ title_height }}%;\n    color: {{ title_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .before-card-toggles-wrapper-{{ section.id }} {\n    position: absolute;\n    bottom: 20px;\n    left: 0;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    z-index: 2;\n  }\n\n  .before-card-toggles-{{ section.id }} {    \n    border: {{ toggles_border_thickness }}px solid {{ toggles_border_color }};\n    padding: {{ toggles_padding_vertical_mobile }}px {{ toggles_padding_horizontal_mobile }}px;\n    background-color: {{ toggles_bg_color }};\n    border-radius: {{ toggles_radius }}px;\n    display: flex;\n    align-items: center;\n    gap: 5px;\n  }\n\n  .before-card-toggles-text-{{ section.id }} {\n    margin: 0px;\n    position: relative;\n    z-index: 2;\n    cursor: pointer;\n    padding: {{ toggle_padding_vertical_mobile }}px {{ toggle_padding_horizontal_mobile }}px;\n    font-size: {{ toggle_size_mobile }}px;\n    line-height: {{ toggle_height }}%;\n    color: {{ toggle_color }};\n    text-transform: unset;\n    word-break: break-word;\n    transition: all 0.25s ease 0s;\n  }\n\n  .before-card-toggles-text-{{ section.id }}.active {\n    color: {{ toggle_active_color }};\n  }\n\n  .before-card-toggles-bg-{{ section.id }} {\n    display: block !important;\n    position: absolute;\n    left: 0;\n    width: 0;\n    height: 100%;\n    border: {{ toggle_border_thickness }}px solid {{ toggle_border_active_color }};\n    border-radius: {{ toggle_radius }}px;\n    background: {{ toggle_bg_active_color }};\n    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;\n    z-index: 1;\n  } \n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .before-heading-{{ section.id }} {\n      text-align: {{ heading_align }};\n    }\n    \n    .before-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n    }\n\n    .before-cards-{{ section.id }} {\n      grid-template-columns: repeat({{ cards_view }}, 1fr);\n      gap: {{ cards_gap }}px;\n      margin-top: {{ cards_mt }}px;\n    }\n\n    .before-card-content-{{ section.id }} {\n      align-items: {{ card_horizontal_align }};\n      padding: 20px;\n    }\n\n    .before-card-subtitle-{{ section.id }} {\n      padding: {{ sub_title_padding_vertical }}px {{ sub_title_padding_horizontal }}px;     \n      font-size: {{ sub_title_size }}px;\n    }\n\n    .before-card-title-{{ section.id }} {\n       text-align: {{ card_align }};\n      margin-top: {{ title_mt }}px;\n      font-size: {{ title_size }}px;\n    }\n\n    .before-card-toggles-{{ section.id }} {\n      padding: {{ toggles_padding_vertical }}px {{ toggles_padding_horizontal }}px;\n    }\n\n    .before-card-toggles-text-{{ section.id }} {\n      padding: {{ toggle_padding_vertical }}px {{ toggle_padding_horizontal }}px;\n      font-size: {{ toggle_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .before-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_title_custom %}\n  <style>\n    .before-card-subtitle-{{ section.id }} {\n      font-family: {{ sub_title_font.family }}, {{ sub_title_font.fallback_families }};\n      font-weight: {{ sub_title_font.weight }};\n      font-style: {{ sub_title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if title_custom %}\n  <style>\n    .before-card-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if toggle_custom %}\n  <style>\n    .before-card-toggles-text-{{ section.id }} {\n      font-family: {{ toggle_font.family }}, {{ toggle_font.fallback_families }};\n      font-weight: {{ toggle_font.weight }};\n      font-style: {{ toggle_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .before-card-image-{{ section.id }} {\n      aspect-ratio: 9.6/13;\n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n  .before-card-image-{{ section.id }} {\n    aspect-ratio: 12/8;\n  }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .before-card-image-{{ section.id }} {\n      aspect-ratio: 12/12;\n    }\n  </style>\n{% else %}\n  <style>\n    .before-card-image-{{ section.id }} {\n      aspect-ratio: auto;\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media (min-width: 1024px) {\n      .before-card-image-{{ section.id }} {\n        aspect-ratio: 9.6/13;\n      }\n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media (min-width: 1024px) {\n      .before-card-image-{{ section.id }} {\n        aspect-ratio: 12/8;\n      }\n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media (min-width: 1024px) {\n      .before-card-image-{{ section.id }} {\n        aspect-ratio: 12/12;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media (min-width: 1024px) {\n      .before-card-image-{{ section.id }} {\n        aspect-ratio: auto;\n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} before-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      {% if heading != blank %}\n        <div class=\"before-heading-{{ section.id }}\">{{ heading }}</div>\n      {% endif %}\n      <div class=\"before-cards-{{ section.id }}\">\n        {% for block in section.blocks %}\n          <div class=\"before-card-{{ section.id }}\">\n            <div class=\"before-card-images-{{ section.id }}\">\n              <div class=\"before-card-image-{{ section.id }} before-card-image-before-{{ section.id }} {% if toggles_active == 'before' %}active{% endif %}\">\n               {% if block.settings.before_image != blank %}\n                  {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                    {{ block.settings.before_image | image_url: width: 1000 | image_tag:\n                      loading: lazy_load_setting,\n                      sizes: sizes,\n                      widths: '165, 360, 535, 750, 1070, 1500'\n                    }}\n                {% else %}\n                  {{ 'image' | placeholder_svg_tag }}\n                {% endif %}  \n              </div>\n              <div class=\"before-card-image-{{ section.id }} before-card-image-after-{{ section.id }} {% if toggles_active == 'after' %}active{% endif %}\">\n                {% if block.settings.after_image != blank %}\n                  {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}\n                    {{ block.settings.after_image | image_url: width: 1000 | image_tag:\n                      loading: 'lazy',\n                      sizes: sizes,\n                      widths: '165, 360, 535, 750, 1070, 1500'\n                    }}\n                {% else %}\n                  {{ 'image' | placeholder_svg_tag }}\n                {% endif %}  \n              </div>\n            </div>\n            <div class=\"before-card-content-{{ section.id }}\">\n              {% if block.settings.sub_title != blank %}\n                <p class=\"before-card-subtitle-{{ section.id }}\">{{ block.settings.sub_title }}</p>\n              {% endif %}\n              {% if block.settings.title != blank %}\n                <p class=\"before-card-title-{{ section.id }}\">{{ block.settings.title }}</p>\n              {% endif %}\n            </div>\n            <div class=\"before-card-toggles-wrapper-{{ section.id }}\">\n              <div class=\"before-card-toggles-{{ section.id }}\">\n                {% if before_text != blank %}\n                  <p class=\"before-card-toggles-text-{{ section.id }} {% if toggles_active == 'before' %}active{% endif %}\">{{ before_text }}</p>\n                {% endif %}\n                {% if after_text != blank %}\n                  <p class=\"before-card-toggles-text-{{ section.id }} {% if toggles_active == 'after' %}active{% endif %}\">{{ after_text }}</p>\n                {% endif %}\n              </div>\n            </div>           \n          </div>\n        {% endfor %}\n      </div>\n    </div>\n</div>\n\n<script>\n  function initBeforeAfterImage10() {\n   document.querySelectorAll('.before-card-{{ section.id }}').forEach(card => {\n    const toggles = card.querySelectorAll('.before-card-toggles-text-{{ section.id }}');\n    const beforeImage = card.querySelector('.before-card-image-before-{{ section.id }}');\n    const afterImage = card.querySelector('.before-card-image-after-{{ section.id }}');\n    const togglesWrapper = card.querySelector('.before-card-toggles-{{ section.id }}');\n    const bgIndicator = document.createElement('div');\n    bgIndicator.classList.add('before-card-toggles-bg-{{ section.id }}');\n    togglesWrapper.appendChild(bgIndicator);\n\n    function updateBgPosition() {\n        requestAnimationFrame(() => {\n            const activeToggle = togglesWrapper.querySelector('.active');\n            if (!activeToggle) return;\n            \n            const toggleBounds = activeToggle.offsetLeft;\n            bgIndicator.style.width = `${activeToggle.offsetWidth}px`;\n            bgIndicator.style.height = `${activeToggle.offsetHeight}px`;\n            bgIndicator.style.transform = `translateX(${toggleBounds}px)`;\n        });\n    }\n\n    if (!toggles.length || !beforeImage || !afterImage || !togglesWrapper) return;\n\n    toggles.forEach((toggle, index) => {\n        toggle.addEventListener('click', function () {\n            toggles.forEach(t => t.classList.remove('active'));\n            this.classList.add('active');\n            updateBgPosition();\n\n            if (index === 0) {\n                beforeImage.classList.add('active');\n                afterImage.classList.remove('active');\n            } else {\n                beforeImage.classList.remove('active');\n                afterImage.classList.add('active');\n            }\n        });\n    });\n\n    window.addEventListener('resize', () => {\n        setTimeout(updateBgPosition, 200);\n    });\n\n    updateBgPosition();\n});\n\n  }\n\n  document.addEventListener('DOMContentLoaded', initBeforeAfterImage10);\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initBeforeAfterImage10);\n    document.addEventListener('shopify:section:load', initBeforeAfterImage10);\n  }\n</script>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Before/after image #10</h2>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "36",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "cards_view": {
+      "type": "text",
+      "default": "4",
+      "label": "Cards per row",
+      "description": "Cards per row"
+    },
+    "cards_view_mobile": {
+      "type": "text",
+      "default": "1",
+      "label": "Cards per row - mobile",
+      "description": "Cards per row - mobile"
+    },
+    "cards_gap": {
+      "type": "text",
+      "default": "14",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "cards_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "cards_mt": {
+      "type": "text",
+      "default": "40",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "cards_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "card_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "card_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "image_overlay": {
+      "type": "text",
+      "default": "0.2",
+      "label": "Overlay",
+      "description": "Overlay"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "sub_title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "sub_title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "sub_title_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "sub_title_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "sub_title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "sub_title_padding_vertical": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "sub_title_padding_vertical_mobile": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "sub_title_padding_horizontal": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "sub_title_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "sub_title_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "sub_title_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "28",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "title_mt": {
+      "type": "text",
+      "default": "14",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "title_mt_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "toggles_padding_vertical": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "toggles_padding_vertical_mobile": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "toggles_padding_horizontal": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "toggles_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "toggles_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "toggles_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "toggles_active": {
+      "type": "text",
+      "default": "before",
+      "label": "Active toggle",
+      "description": "Active toggle"
+    },
+    "before_text": {
+      "type": "text",
+      "default": "Before",
+      "label": "Before text",
+      "description": "Before text"
+    },
+    "after_text": {
+      "type": "text",
+      "default": "After",
+      "label": "After text",
+      "description": "After text"
+    },
+    "toggle_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "toggle_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "toggle_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "toggle_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "toggle_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "toggle_padding_vertical": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "toggle_padding_vertical_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "toggle_padding_horizontal": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "toggle_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "toggle_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "toggle_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "sub_title_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Subtitle",
+      "description": "Subtitle"
+    },
+    "sub_title_bg_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Subtitle background",
+      "description": "Subtitle background"
+    },
+    "sub_title_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Subtitle border",
+      "description": "Subtitle border"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Title",
+      "description": "Title"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "image_overlay_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image overlay",
+      "description": "Image overlay"
+    },
+    "toggle_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "toggle_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text active",
+      "description": "Text active"
+    },
+    "toggle_bg_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Toggle active background",
+      "description": "Toggle active background"
+    },
+    "toggle_border_active_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Toggle active border",
+      "description": "Toggle active border"
+    },
+    "toggles_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "toggles_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

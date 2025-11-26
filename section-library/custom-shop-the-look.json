@@ -1,0 +1,186 @@
+{
+  "id": "custom-shop-the-look",
+  "name": "CUSTOM Shop the look",
+  "description": "Section: CUSTOM Shop the look",
+  "tags": [
+    "shop"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n  .desktop-only-{{ section.id }} {\n    display: none;\n  }\n  @media screen and (min-width: 750px) {\n    .mobile-only-{{ section.id }} {\n      display: none;\n    }\n    .desktop-only-{{ section.id }} {\n      display: block;\n    }\n  }\n  .placeholder-{{ section.id }} {\n    background: rgb(26 26 26 / .3);\n    fill: rgb(26 26 26 / .7);\n    color: rgb(26 26 26 / .7);\n    display: block;\n  }\n  .rounded-{{ section.id }} {\n    border-radius: 12px;\n  }\n  .relative-{{ section.id }} {\n    position: relative;\n  }\n  .sr-only-{{ section.id }} {\n    width: 1px;\n    height: 1px;\n    clip: rect(0,0,0,0);\n    white-space: nowrap;\n    border-width: 0;\n    margin: -1px;\n    padding: 0;\n    position: absolute;\n    overflow: hidden;\n  }\n</style>\n<style>\n  .section-{{ section.id }}-padding {\n    max-width: var(--max-width);\n    margin: var(--mt) auto var(--mb);\n    padding: 0 var(--px, 1.5rem);\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n  }\n  .section-{{ section.id }} a {\n    text-decoration: none;\n  }\n  .section-{{ section.id }} * {\n    color: var(--color);\n    font-size: var(--mobile-font-size, calc(var(--font-size) * 0.85));\n    line-height: 1.2;\n    box-sizing: border-box;\n  }\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 var(--px-desktop, 5rem);\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n    .section-{{ section.id }} * {\n      font-size: var(--font-size);\n    }\n  }\n</style>\n<div\n  style=\"\n    background-color:{{ section.settings.background-color }};\n    background: {{ section.settings.background }};\n    --mobile-product-card-bg: {{ section.settings.product_card_bg_mobile }};\n    --product-card-bg: {{ section.settings.product_card_bg }};\n    --mobile-product-card-text-color: {{ section.settings.product_card_text_color_mobile }};\n    --product-card-text-color: {{ section.settings.product_card_text_color }};\n    --mobile-product-card-atc-bg: {{ section.settings.product_card_atc_bg_mobile }};\n    --product-card-atc-bg: {{ section.settings.product_card_atc_bg }};\n    --mobile-product-card-atc-text-color: {{ section.settings.product_card_atc_text_color_mobile }};\n    --product-card-atc-text-color: {{ section.settings.product_card_atc_text_color }};\n  \"\n>\n  <div\n    class=\"section-{{ section.id }} section-{{ section.id }}-padding\"\n    style=\"\n      --max-width: {{ section.settings.section-width }}rem;\n      --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n      --pt-desktop: {{ section.settings.padding_top }}px;\n      --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n      --pb-desktop: {{ section.settings.padding_bottom }}px;\n      --px: {{ section.settings.padding_x }}rem;\n      --px-desktop: {{ section.settings.padding_x_desktop }}rem;\n      --mt: {{ section.settings.margin_top }}px;\n      --mb: {{ section.settings.margin_bottom }}px;\n    \"\n  >\n    <style>\n      .title-wrapper-{{ section.id }} {\n        margin-bottom: 32px;\n      }\n      @media screen and (min-width: 750px) {\n        .title-wrapper-{{ section.id }} {\n          margin-bottom: 48px;\n        }\n      }\n    </style>\n    {% if section.settings.title != blank\n      or section.settings.subtitle != blank\n    %}\n      <div class=\"title-wrapper-{{ section.id }}\">\n        {% comment %} Title: {% endcomment %}\n        {% if section.settings.title != blank %}\n          <div\n            class=\"title-{{ section.id }}\"\n            style=\"\n              font-weight: 700;\n              --font-size: {{ section.settings.title_font_size }}px;\n              color: {{ section.settings.title_color }};\n            \"\n          >\n            {{ section.settings.title }}\n          </div>\n        {% endif %}\n\n        {% comment %} Subtitle: {% endcomment %}\n        {% if section.settings.subtitle != blank %}\n          {% if section.settings.title != blank %}\n            <style>\n              .subtitle-{{ section.id }} {\n                margin-top: 20px;\n              }\n              @media screen and (min-width: 750px) {\n                .subtitle-{{ section.id }} {\n                  margin-top: 24px;\n                }\n              }\n            </style>\n          {% endif %}\n          <div\n            class=\"subtitle-{{ section.id }}\"\n            style=\"\n              --font-size: {{ section.settings.subtitle_font_size }}px;\n              color: {{ section.settings.subtitle_color }};\n            \"\n          >\n            {{ section.settings.subtitle }}\n          </div>\n        {% endif %}\n      </div>\n    {% endif %}\n\n    <style>\n      .grid-{{ section.id }} {\n        display: grid;\n        grid-template-columns: minmax(0, 1fr);\n        gap: 20px;\n      }\n      @media screen and (min-width: 750px) {\n        .grid-{{ section.id }} {\n          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);\n          gap: 0;\n        }\n      }\n    </style>\n    <div class=\"grid-{{ section.id }}\">\n      <div>\n        <div\n          class=\"relative-{{ section.id }}\"\n          style=\"\n            {% if section.settings.object_fit == 'cover' %}\n              height: 100%;\n            {% endif %}\n          \"\n        >\n          {% if section.settings.image != blank %}\n            <img\n              class=\"rounded-{{ section.id }}\"\n              style=\"\n                width: 100%;\n                object-fit: {{ section.settings.object_fit }};\n                {% if section.settings.object_fit == 'cover' %}\n                  height: 100%;\n                {% endif %}\n              \"\n              src=\"{{ section.settings.image | img_url: 'master' }}\"\n              alt=\"{{ section.settings.image.alt }}\"\n            >\n          {% else %}\n            {% assign class_name = 'placeholder-'\n              | append: section.id\n              | append: ' rounded-'\n              | append: section.id\n            %}\n            {{ 'image' | placeholder_svg_tag: class_name }}\n          {% endif %}\n\n          <style>\n            .button-on-image-{{ section.id }} {\n              width: 10px;\n              height: 10px;\n              border-radius: 50%;\n              position: absolute;\n              transition: transform .2s ease-in-out;\n              transform-origin: center;\n              cursor: pointer;\n            }\n            .button-on-image-{{ section.id }}:hover,\n            .button-on-image--active-{{ section.id }} {\n              transform: scale(1.3);\n            }\n            .button-on-image-{{ section.id }}::after {\n              content: \"\";\n              top: calc(50% + (24px * -1));\n              left: calc(50% + (24px * -1));\n              width: 48px;\n              height: 48px;\n              --shop-the-look-dot-background: 255 255 255;\n              background: radial-gradient(50% 50% at 50% 50%,rgb(var(--shop-the-look-dot-background) / 0),rgb(var(--shop-the-look-dot-background) / .3));\n              border-radius: 50%;\n              animation: 2s ease-in-out infinite alternate ping-custom;\n              position: absolute;\n            }\n            @keyframes ping-custom {\n              from {\n                transform: scale(0.8);\n              }\n              to {\n                transform: scale(1);\n              }\n            }\n          </style>\n          {% for block in section.blocks %}\n            <div\n              class=\"\n                button-on-image-{{ section.id }}\n                {% if forloop.index == 1 %}\n                  button-on-image--active-{{ section.id }}\n                {% endif %}\n              \"\n              style=\"\n                background: white;\n                top: calc({{ block.settings.vertical_position }}% + (10px / 2));\n                left: calc({{ block.settings.horizontal_position }}% + (10px / 2));\n              \"\n            >\n              <span class=\"sr-only-{{ section.id }}\"\n                >Go to item {{ forloop.index -}}\n              </span>\n            </div>\n          {% endfor %}\n        </div>\n      </div>\n\n      <div>\n        {% comment %} Two Mobile Layouts: {% endcomment %}\n        <div class=\"mobile-only-{{ section.id }}\">\n          <style>\n            .product-mobile-card-wrapper-{{ section.id }} {\n              border: 1px solid rgb(26 26 26 / .12);\n            }\n            .product-mobile-card-wrapper-not-stacked-{{ section.id }} {\n              display: flex;\n              gap: 16px;\n            }\n            .product-mobile-card-wrapper-not-stacked-{{ section.id }} .product-mobile-card-{{ section.id }} {\n              flex-grow: 1;\n              flex-shrink: 0;\n            }\n            .product-mobile-card-{{ section.id }} {\n              padding: 16px;\n              gap: 16px;\n              display: flex;\n              align-items: center;\n              background: var(--mobile-product-card-bg);\n              color: var(--mobile-product-card-text-color);\n            }\n            .product-mobile-card-atc-{{ section.id }} {\n              border-radius: 60px;\n              width: fit-content;\n              background: var(--mobile-product-card-atc-bg, #E5E5E5);\n              color: var(--mobile-product-card-atc-text-color);\n              padding: 8px 20px;\n              margin-top: 6px;\n            }\n          </style>\n\n          {% capture products %}\n            {% for block in section.blocks %}\n              {% assign product = block.settings.product %}\n              {% if product != blank %}\n                <a\n                  class=\"product-mobile-card-{{ section.id }}\"\n                  href=\"{{ product.url }}\"\n                >\n                  <img\n                    style=\"width: 64px; height: 64px; object-fit: contain;\"\n                    src=\"{{ product.featured_image | img_url: '700x' }}\"\n                    alt=\"{{ product.featured_image.alt }}\"\n                  >\n                  <div>\n                    <div class=\"product-title-{{ section.id }}\">\n                      {{ product.title }}\n                    </div>\n                    <div class=\"price-{{ section.id }}\">\n                      {{ product.price | money }}\n                    </div>\n                    <div \n                      class=\"product-mobile-card-atc-{{ section.id }}\"\n                      style=\"--font-size: {{ section.settings.atc_font_size }}px\"\n                    >\n                      More Details\n                    </div>\n                  </div>\n                </a>\n              {% else %}\n                <div\n                  class=\"product-mobile-card-{{ section.id }}\"\n                >\n                  <div\n                    style=\"\n                      width: 64px;\n                      height: 64px;\n                      background: rgb(26 26 26 / .12);\n                    \"\n                  >\n                    {{ 'product-1' | placeholder_svg_tag }}\n                  </div>\n                  <div>\n                    <div class=\"product-title-{{ section.id }}\">\n                      Product Title\n                    </div>\n                    <div class=\"price-{{ section.id }}\">\n                      $45.00\n                    </div>\n                  </div>\n                </div>\n              {% endif %}\n            {% endfor %}\n          {% endcapture %}\n\n          {% if section.settings.stack_on_mobile %}\n            <div class=\"product-mobile-card-wrapper-{{ section.id }}\">\n              {{ products }}\n            </div>\n          {% else %}\n            <style>\n              .scroll-area-bleed-{{ section.id }} {\n                scrollbar-width: none;\n                position: relative;\n                scroll-snap-type: x mandatory;\n                overscroll-behavior-x: contain;\n                overflow-x: auto;\n                overflow-y: hidden;\n                scroll-padding-inline: 20px;\n                margin-inline-start: -20px;\n                /*margin-inline-end: -20px;*/\n                padding-inline-start: 20px;\n                /*padding-inline-end: 20px;*/\n                display: grid;\n              }\n              /* hide scroll bar: */\n              .scroll-area-bleed-{{ section.id }}::-webkit-scrollbar {\n                display: none;\n              }\n              .scroll-area-bleed-{{ section.id }} .product-mobile-card-{{ section.id }} {\n                scroll-snap-align: start;\n                scroll-snap-stop: always;\n                /*width: calc(100% - 40px - 20px);*/\n                width: 70vw;\n                flex-shrink: 0;\n                border-right: 1px solid rgb(26 26 26 / .12);\n                border-top: 1px solid rgb(26 26 26 / .12);\n                border-bottom: 1px solid rgb(26 26 26 / .12);\n              }\n            </style>\n            <div style=\"display: grid;\">\n              <div\n                class=\"scroll-area-bleed-{{ section.id }}\"\n              >\n                <div style=\"display: flex; border-left: 1px solid rgb(26 26 26 / .12);\">\n                  {{ products }}\n                </div>\n              </div>\n            </div>\n          {% endif %}\n        </div>\n        {% comment %} One Desktop Carousel: {% endcomment %}\n        <div class=\"desktop-only-{{ section.id }}\" style=\"height: 100%;\">\n          <div style=\"display: flex; justify-content: space-between; flex-direction: column; height: 100%; gap: 20px;\">\n            <style>\n              .product-card-{{ section.id }} {\n                position: relative;\n                display: grid;\n                align-content: start;\n                border-radius: 6px;\n                overflow: hidden;\n                grid-template-columns: minmax(0,1fr);\n                width: 60%;\n                margin: 0 auto;\n                background: white;\n                opacity: 0;\n                transition: opacity .4s ease-in-out;\n                background: var(--product-card-bg);\n                color: var(--product-card-text-color);\n              }\n              .product-card-{{ section.id }}:not(:first-child) {\n                position: absolute;\n                top: 0;\n                left: 50%;\n                transform: translateX(-50%);\n              }\n              .product-card--active-{{ section.id }} {\n                z-index: 1;\n                opacity: 1;\n              }\n              .product-content-{{ section.id }} {\n                padding: 20px;\n              }\n              .product-title-{{ section.id }} {\n                font-weight: 700;\n                text-decoration: none;\n                margin-bottom: 6px;\n                display: block;\n                --font-size: 16px;\n              }\n              .price-{{ section.id }} {\n                --mobile-font-size: 12px;\n              }\n              .product-image-{{ section.id }} {\n                object-fit:cover;\n                width: 100%;\n                height: 100%;\n              }\n              .product-hover-image-{{ section.id }} {\n                transition: opacity .4s ease-in-out;\n                opacity: 0;\n                position: absolute;\n                top: 0;\n                left: 0;\n                pointer-events: none;\n                background: var(--product-card-bg, white);\n              }\n              .product-image-wrapper-{{ section.id }}:hover .product-hover-image-{{ section.id }} {\n                opacity: 1;\n              }\n              .more-detail-{{ section.id }} {\n                background: var(--product-card-atc-bg, black);\n                border-radius: 60px;\n                position: absolute;\n                right: 16px;\n                bottom: 16px;\n                color: var(--product-card-atc-text-color, white);\n                padding: 12px 24px;\n                font-weight: 700;\n                font-size: 14px;\n                opacity: 0;\n                transform: translateY(5px);\n                transition: all .2s ease-in-out;\n              }\n              .product-image-wrapper-{{ section.id }}:hover .more-detail-{{ section.id }} {\n                opacity: 1;\n                transform: translateY(0);\n              }\n              .more-detail-{{ section.id }}:hover {\n                background: rgba(0,0,0,.85);\n              }\n              .product-save-amount-tag-{{ section.id }} {\n                position: absolute;\n                top: 16px;\n                left: 16px;\n                background: rgb(248 58 58);\n                --color: white;\n                color: white;\n                padding: 4px 8px;\n                border-radius: 60px;\n                font-size: 12px;\n                font-weight: 700;\n                z-index: 5;\n                pointer-events: none;\n              }\n            </style>\n            <div class=\"relative-{{ section.id }}\" style=\"height: 100%;\">\n              {% for block in section.blocks %}\n                {% if block.settings.product != blank %}\n                  {% assign product = block.settings.product %}\n                  <div\n                    class=\"\n                      product-card-{{ section.id }}\n                      {% if forloop.first %} product-card--active-{{ section.id }} {% endif %}\n                    \"\n                  >\n                    <a\n                      class=\"relative-{{ section.id }} product-image-wrapper-{{ section.id }}\"\n                      href=\"{{ product.url }}\"\n                    >\n                      <img\n                        class=\"product-image-{{ section.id }}\"\n                        src=\"{{ product.images[0] | img_url: '1000x' }}\"\n                        alt=\"{{ product.images[0].alt }}\"\n                      >\n                      {% comment %} Hover image: {% endcomment %}\n                      {% if product.images[1] != blank %}\n                        <img\n                          class=\"product-image-{{ section.id }} product-hover-image-{{ section.id }}\"\n                          src=\"{{ product.images[1] | img_url: '1000x' }}\"\n                          alt=\"{{ product.images[1].alt }}\"\n                          loading=\"lazy\"\n                        >\n                      {% endif %}\n\n                      {% comment %} Save amount tag: {% endcomment %}\n                      {% if product.compare_at_price_max > product.price %}\n                        <div class=\"product-save-amount-tag-{{ section.id }}\">\n                          Save\n                          {{\n                            product.compare_at_price_max\n                            | minus: product.price\n                            | money\n                          }}\n                        </div>\n                      {% endif %}\n\n                      {% comment %} More Details button: {% endcomment %}\n                      <div\n                        class=\"more-detail-{{ section.id }}\"\n                        style=\"--font-size: {{ section.settings.atc_font_size }}px\"\n                      >\n                        More Details\n                      </div>\n                    </a>\n                    <div class=\"product-content-{{ section.id }}\">\n                      <a\n                        href=\"{{ product.url }}\"\n                        class=\"product-title-{{ section.id }}\"\n                      >\n                        {{ product.title }}\n                      </a>\n                      <div class=\"price-{{ section.id }}\">\n                        <span\n                          style=\"\n                            {% if product.compare_at_price_max > product.price %}\n                              color: red;\n                            {% endif %}\n                          \"\n                        >\n                          {{ product.price | money }}\n                        </span>\n\n                        {% if product.compare_at_price_max > product.price %}\n                          <span\n                            style=\"\n                              text-decoration: line-through;\n                              color: rgba(26, 26, 26, 0.7);\n                            \"\n                          >\n                            {{ product.compare_at_price_max | money }}\n                          </span>\n                        {% endif %}\n                      </div>\n                    </div>\n                  </div>\n                {% else %}\n                  <div\n                    class=\"\n                      product-card-{{ section.id }}\n                      {% if forloop.first %} product-card--active-{{ section.id }} {% endif %}\n                    \"\n                  >\n                    <div>\n                      {% assign class_name = 'placeholder-'\n                        | append: section.id\n                      %}\n                      {{ 'product-1' | placeholder_svg_tag: class_name }}\n                    </div>\n                    <div class=\"product-content-{{ section.id }}\">\n                      <a href=\"\" class=\"product-title-{{ section.id }}\"\n                        >Product</a\n                      >\n                      <div class=\"price-{{ section.id }}\">$45.00</div>\n                    </div>\n                  </div>\n                {% endif %}\n              {% endfor %}\n            </div>\n            <style>\n              .arrow-wrapper-{{ section.id }} {\n                display: flex;\n                justify-content: center;\n                gap: 16px;\n              }\n              .arrow-{{ section.id }} {\n                width: 48px;\n                height: 48px;\n                border-radius: 50%;\n                place-items: center;\n                transition: opacity .15s ease-in;\n                display: grid;\n                box-shadow: 0 0 0 1px rgb(var(--text-color) / .12);\n                cursor: pointer;\n                overflow: hidden;\n              }\n              .animated-arrow-{{ section.id }} {\n                pointer-events: none;\n                place-items: center;\n                display: grid;\n              }\n              .animated-arrow-{{ section.id }}:before, .animated-arrow-{{ section.id }}:after {\n                content: \"\";\n                grid-area: 1 / -1;\n                transition: all .2s ease-in-out;\n                border-style: solid;\n                border-width: 0;\n                --transform-logical-flip: 1;\n              }\n              .animated-arrow-{{ section.id }}:before {\n                width: 6px;\n                width: 8px;\n                height: 6px;\n                height: 8px;\n                transform: rotate(calc(1 * 45deg));\n                border-color: currentColor;\n                border-block-start-width: 2px;\n                border-inline-end-width: 2px;\n                position: relative;\n\n                left: -1px;\n              }\n              .animated-arrow-{{ section.id }}:after {\n                width: 10px;\n                height: 2px;\n                transform-origin: center;\n                opacity: 0;\n                background: currentColor;\n                transform: scaleX(.5);\n              }\n              .arrow-{{ section.id }}:hover .animated-arrow-{{ section.id }}:before {\n                transform: translate(calc(var(--transform-logical-flip) * 2px)) rotate(calc(var(--transform-logical-flip) * 45deg))\n              }\n              .arrow-{{ section.id }}:hover .animated-arrow-{{ section.id }}:after {\n                opacity: 1;\n                transform: scaleX(1);\n              }\n            </style>\n            <div\n              class=\"arrow-wrapper-{{ section.id }}\"\n              style=\"--text-color: 26 26 26; color: black;\"\n            >\n              <div class=\"arrow-{{ section.id }}\" data-prev>\n                {% if section.settings.arrow_left != blank %}\n                  <img\n                    style=\"width: 100%; height: 100%; object-fit: contain;\"\n                    src=\"{{ section.settings.arrow_left | img_url: '100x' }}\"\n                    alt=\"Previous\"\n                  >\n                {% else %}\n                  <span class=\"sr-only-{{ section.id }}\">Previous</span>\n                  <span\n                    class=\"animated-arrow-{{ section.id }}\"\n                    style=\"transform: rotate(180deg);\"\n                  ></span>\n                {% endif %}\n              </div>\n              <div class=\"arrow-{{ section.id }}\" data-next>\n                {% if section.settings.arrow_right != blank %}\n                  <img\n                    style=\"width: 100%; height: 100%; object-fit: contain;\"\n                    src=\"{{ section.settings.arrow_right | img_url: '100x' }}\"\n                    alt=\"Next\"\n                  >\n                {% else %}\n                  <span class=\"sr-only-{{ section.id }}\">Next</span>\n                  <span\n                    class=\"animated-arrow-{{ section.id }}\"\n                  ></span>\n                {% endif %}\n              </div>\n            </div>\n          </div>\n        </div>\n        <script>\n          (function () {\n            function sliderInit() {\n              let activeSlideIndex = 0;\n\n              const productCards = document.querySelectorAll(\n                '.product-card-{{ section.id }}'\n              );\n              const imageButtons = document.querySelectorAll(\n                '.button-on-image-{{ section.id }}'\n              );\n              function switchProduct(index) {\n                // use .product-card--active-{{ section.id }} to toggle active class:\n                productCards.forEach((card, i) => {\n                  if (i === index) {\n                    card.classList.add('product-card--active-{{ section.id }}');\n                  } else {\n                    card.classList.remove(\n                      'product-card--active-{{ section.id }}'\n                    );\n                  }\n                });\n                // toggle button-on-image--active-{{ section.id }}\n                imageButtons.forEach((button, i) => {\n                  if (i === index) {\n                    button.classList.add(\n                      'button-on-image--active-{{ section.id }}'\n                    );\n                  } else {\n                    button.classList.remove(\n                      'button-on-image--active-{{ section.id }}'\n                    );\n                  }\n                });\n                activeSlideIndex = index;\n\n                // check if .scroll-area-bleed-{{ section.id }} exists, if so, scroll to the product card:\n                const scrollArea = document.querySelector(\n                  '.scroll-area-bleed-{{ section.id }}'\n                );\n                if (scrollArea) {\n                  // scroll to the product-mobile-card-{{ section.id }}:\n                  const productCards = document.querySelectorAll(\n                    '.product-mobile-card-{{ section.id }}'\n                  );\n                  // use the activeSlideIndex to find the product card to scroll to:\n                  const productCard = productCards[activeSlideIndex];\n                  scrollArea.scrollTo({\n                    left: productCard.offsetLeft,\n                    behavior: 'smooth',\n                  });\n                }\n              }\n              imageButtons.forEach((button, i) => {\n                button.addEventListener('click', () => {\n                  switchProduct(i);\n                });\n              });\n              // find .arrow-{{ section.id }} data-prev, data-next, on click:\n              const prevArrow = document.querySelector(\n                '.arrow-{{ section.id }}[data-prev]'\n              );\n              const nextArrow = document.querySelector(\n                '.arrow-{{ section.id }}[data-next]'\n              );\n              prevArrow.addEventListener('click', () => {\n                if (activeSlideIndex === 0) {\n                  switchProduct(productCards.length - 1);\n                } else {\n                  switchProduct(activeSlideIndex - 1);\n                }\n              });\n              nextArrow.addEventListener('click', () => {\n                if (activeSlideIndex === productCards.length - 1) {\n                  switchProduct(0);\n                } else {\n                  switchProduct(activeSlideIndex + 1);\n                }\n              });\n            }\n            sliderInit();\n            if (window.Shopify && Shopify.designMode) {\n              document.addEventListener('shopify:section:load', sliderInit);\n            }\n          })();\n        </script>\n      </div>\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "stack_on_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Stack on mobile",
+      "description": "Stack on mobile"
+    },
+    "object_fit": {
+      "type": "text",
+      "default": "contain",
+      "label": "Image fit",
+      "description": "Image fit"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "title": {
+      "type": "text",
+      "default": "Shop the look",
+      "label": "Title",
+      "description": "Title"
+    },
+    "title_font_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Title font size",
+      "description": "Title font size"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Title color",
+      "description": "Title color"
+    },
+    "subtitle": {
+      "type": "textarea",
+      "default": "",
+      "label": "Subtitle",
+      "description": "Subtitle"
+    },
+    "subtitle_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Subtitle color",
+      "description": "Subtitle color"
+    },
+    "subtitle_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Subtitle font size",
+      "description": "Subtitle font size"
+    },
+    "arrow_left": {
+      "type": "text",
+      "default": "",
+      "label": "Left arrow icon",
+      "description": "Left arrow icon"
+    },
+    "arrow_right": {
+      "type": "text",
+      "default": "",
+      "label": "Right arrow icon",
+      "description": "Right arrow icon"
+    },
+    "product_card_text_color_mobile": {
+      "type": "color",
+      "default": "",
+      "label": "Product card Text color (M)",
+      "description": "For Mobile"
+    },
+    "product_card_text_color": {
+      "type": "color",
+      "default": "",
+      "label": "Product card Text color",
+      "description": "For Desktop"
+    },
+    "product_card_bg_mobile": {
+      "type": "color",
+      "default": "",
+      "label": "Product card Background (M)",
+      "description": "For Mobile"
+    },
+    "product_card_bg": {
+      "type": "color",
+      "default": "",
+      "label": "Product card Background",
+      "description": "For Desktop"
+    },
+    "product_card_atc_bg": {
+      "type": "color",
+      "default": "#000",
+      "label": "Product card 'More info' BG",
+      "description": "Product card 'More info' BG"
+    },
+    "product_card_atc_bg_mobile": {
+      "type": "color",
+      "default": "#E5E5E5",
+      "label": "Product card 'More info' BG (M)",
+      "description": "Product card 'More info' BG (M)"
+    },
+    "product_card_atc_text_color": {
+      "type": "color",
+      "default": "#FFF",
+      "label": "Product card 'More info' text",
+      "description": "Product card 'More info' text"
+    },
+    "product_card_atc_text_color_mobile": {
+      "type": "color",
+      "default": "#000",
+      "label": "Product card 'More info' text (M)",
+      "description": "Product card 'More info' text (M)"
+    },
+    "atc_font_size": {
+      "type": "text",
+      "default": "14",
+      "label": "'More info' font size",
+      "description": "'More info' font size"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#f0f0f0",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "background": {
+      "type": "color",
+      "default": "",
+      "label": "Background gradient",
+      "description": "Background gradient"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_x_desktop": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_x": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

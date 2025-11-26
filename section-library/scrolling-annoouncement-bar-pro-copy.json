@@ -1,0 +1,120 @@
+{
+  "id": "scrolling-annoouncement-bar-pro-copy",
+  "name": "CUSTOM Scrolling ann bar",
+  "description": "Section: CUSTOM Scrolling ann bar",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\r\n  {{ section.settings.ss_font_family | font_face: font_display: 'swap' }}\r\n\r\n  .ss-announcement-bar-{{ section.id }} {\r\n    {% if section.settings.background_style == 'solid' %}\r\n        background-color:{{ section.settings.background_color }};\r\n    {% else %}\r\n        background-image: {{ section.settings.background_gradient }};\r\n    {% endif %}\r\n  }\r\n\r\n  .ss-announcement-bar,\r\n  .ss-announcement-bar__message {\r\n    overflow: hidden;\r\n  }\r\n  .ss-announcement-bar:hover {\r\n    opacity: {{ section.settings.hover_opacity | divided_by: 100.0 }};\r\n  }\r\n  .ss-announcement-bar__link {\r\n    display: block;\r\n    width: 100%;\r\n    padding: {{ section.settings.padding_vertical }}rem {{section.settings.padding_horizontal}}rem;\r\n    text-decoration: none;\r\n    color: var(--text-color);\r\n    line-height: 0;\r\n  }\r\n  .ss-announcement-bar__link:hover {\r\n    color: var(--text-color);\r\n  }\r\n  #marq {\r\n    width: 100%;\r\n    border: inset;\r\n    overflow: hidden;\r\n    white-space: nowrap;\r\n    box-shadow: unset;\r\n    border: 0;\r\n    box-shadow: unset;\r\n    border-color: currentcolor;\r\n    vertical-align: middle;\r\n  }\r\n  {% if section.settings.animation_direction == \"left\" %}\r\n  @keyframes marquesina-{{ section.id }} {\r\n    from {\r\n      transform: translateX(0%);\r\n    }\r\n    to {\r\n      transform: translateX(-50%);\r\n    }\r\n  }\r\n  @keyframes marquesina-reverse-{{ section.id }} {\r\n    from {\r\n      transform: translateX(50%);\r\n    }\r\n    to {\r\n      transform: translateX(0%);\r\n    }\r\n  }\r\n  {% else %}\r\n  @keyframes marquesina-{{ section.id }} {\r\n    from {\r\n      transform: translateX(-50%);\r\n    }\r\n    to {\r\n      transform: translateX(0%);\r\n    }\r\n  }\r\n  @keyframes marquesina-reverse-{{ section.id }} {\r\n    from {\r\n      transform: translateX(0%);\r\n    }\r\n    to {\r\n      transform: translateX(50%);\r\n    }\r\n  }\r\n  {% endif %}\r\n  .ss-announcement-bar-{{ section.id }} #orig {\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    transform: translate(0);\r\n  }\r\n\r\n  .ss-announcement-bar__message {\r\n    text-align: center;\r\n    padding: 0;\r\n    margin: 0;\r\n    line-height: {{ section.settings.text_height }}%;\r\n    font-size: {{section.settings.text_size_mobile }}px;\r\n  }\r\n  #orig.reverse .announcement-bar__message {\r\n    display: flex;\r\n    flex-direction: row-reverse;\r\n  }\r\n  .ss-announcement-bar__message li {\r\n    line-height: {{ section.settings.text_height }}%;\r\n    font-size: {{section.settings.text_size_mobile }}px;\r\n    display: inline-block;\r\n    padding-right: 114px;\r\n    position: relative;\r\n\r\n  }\r\n  .ss-announcement-bar__message li::after {\r\n    content: '';\r\n    width: 3.5px;\r\n    height: 3.5px;\r\n    background-color: var(--text-color);\r\n    background-image: none;\r\n    opacity: 0.3;\r\n    border-radius: 50%;\r\n    position: absolute;\r\n    top: 40%;\r\n    right: 50px;\r\n  }\r\n  @media (max-width: 480px) {\r\n    #marq {\r\n      max-height: 39px;\r\n    }\r\n    .ss-announcement-bar__message li {\r\n      padding-right: 55px;\r\n    }\r\n    .ss-announcement-bar__message li::after {\r\n      right: 25px;\r\n    }\r\n  }\r\n  .ss-announcement-bar-{{ section.id }} #orig {\r\n    animation: marquesina-{{ section.id }} var(--animation-duration-mobile, 45s) infinite normal linear 1s;\r\n  }\r\n\r\n  .ss-announcement-bar-{{ section.id }} #orig.reverse {\r\n   animation: marquesina-reverse-{{ section.id }} var(--animation-duration-mobile, 45s) infinite normal linear 2s;\r\n  }\r\n\r\n  @media(min-width: 1024px) {\r\n    .ss-announcement-bar__message {\r\n        font-size: {{section.settings.text_size }}px;\r\n    }\r\n\r\n    .ss-announcement-bar__message li {\r\n        font-size: {{section.settings.text_size }}px;\r\n    }\r\n\r\n    .ss-announcement-bar-{{ section.id }} #orig {\r\n        animation: marquesina-{{ section.id }} var(--animation-duration, 45s) infinite normal linear 1s;\r\n    }\r\n\r\n    .ss-announcement-bar-{{ section.id }} #orig.reverse {\r\n    animation: marquesina-reverse-{{ section.id }} var(--animation-duration, 45s) infinite normal linear 2s;\r\n    }\r\n  }\r\n</style>\r\n\r\n{% if section.settings.pause_hover %}\r\n  <style>\r\n    .ss-announcement-bar:hover #orig {\r\n      animation-play-state: paused\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if section.settings.text_custom %}\r\n  <style>\r\n    .ss-announcement-bar__message {\r\n      font-family: {{section.settings.ss_font_family.family}};\r\n      font-weight: {{section.settings.ss_font_family.weight}};\r\n    }\r\n\r\n    .ss-announcement-bar__message li {\r\n      font-family: {{section.settings.ss_font_family.family}};\r\n      font-weight: {{section.settings.ss_font_family.weight}};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n<template id=\"marquee-announcement-bar-{{ section.id }}\">\r\n  <div\r\n    class=\"ss-announcement-bar ss-announcement-bar-{{ section.id }}\"\r\n    aria-label=\"Announcement\"\r\n    style=\"--text-color: {{ section.settings.text_color }}; --animation-duration: {{ section.settings.animation_duration }}s; --animation-duration-mobile: {{ section.settings.animation_duration_mobile }}s;\"\r\n  >\r\n    {%- if section.settings.link != blank -%}\r\n      <a\r\n        href=\"{{ section.settings.link }}\"\r\n        style=\"cursor: pointer;\"\r\n      >\r\n    {% endif %}\r\n    <div class=\"ss-announcement-bar__link\">\r\n      <div class=\"\" id=\"marq\">\r\n        <span id=\"orig\">\r\n          <ul class=\"ss-announcement-bar__message\">\r\n            {% if section.blocks > 1 %}\r\n              {% for i in (1..6) %}\r\n                {% for block in section.blocks %}\r\n                  <li>{{ block.settings.text }}</li>\r\n                {% endfor %}\r\n              {% endfor %}\r\n\r\n              {% for block in section.blocks limit: 1 %}\r\n                <!-- <li>{{ block.settings.text }}</li> -->\r\n              {% endfor %}\r\n            {% else %}\r\n              {% for i in (1..12) %}\r\n                {% for block in section.blocks %}\r\n                  <li>{{ block.settings.text }}</li>\r\n                {% endfor %}\r\n              {% endfor %}\r\n\r\n              {% for block in section.blocks limit: 1 %}\r\n                <!-- <li>{{ block.settings.text }}</li> -->\r\n              {% endfor %}\r\n            {% endif %}\r\n          </ul>\r\n        </span>\r\n      </div>\r\n    </div>\r\n    {%- if section.settings.link != blank -%}</a>{% endif %}\r\n  </div>\r\n</template>\r\n\r\n<div id=\"marquee-local-target-{{ section.id }}\"></div>\r\n\r\n<script>\r\n  window.addEventListener('DOMContentLoaded', (event) => {\r\n    let cssTarget = '{{ section.settings.insert_css_class_target }}';\r\n    let productForm = cssTarget\r\n      ? document.querySelector(cssTarget)\r\n      : document.querySelector('#marquee-local-target-{{ section.id }}');\r\n\r\n    if (!productForm) return;\r\n\r\n    const templateContent = document.querySelector(\r\n      '#marquee-announcement-bar-{{ section.id }}'\r\n    ).content;\r\n\r\n    productForm.insertAdjacentElement(\r\n      'beforebegin',\r\n      templateContent.firstElementChild\r\n    );\r\n\r\n    setTimeout(()=> {\r\n      var htmlElement = document.documentElement;\r\n\r\n      if (window.getComputedStyle(htmlElement).getPropertyValue('direction') === 'rtl') {\r\n          document.querySelector('#orig').classList.add('reverse');\r\n      }\r\n    }, 1000);\r\n  });\r\n</script>",
+  "variables": {
+    "insert_css_class_target": {
+      "type": "text",
+      "default": ".header, .pageheader, .section-header, #announcement, .toolbar, .header__wrapper",
+      "label": "Target CSS class",
+      "description": "Empty text field this to display where you drag it. If you want to display the announcement bar in a specific place, you can add the CSS class of the target element here. Default is above header as announcement bar."
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "ss_font_family": {
+      "type": "text",
+      "default": "montserrat_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "link": {
+      "type": "text",
+      "default": "",
+      "label": "Link",
+      "description": "Link"
+    },
+    "animation_duration": {
+      "type": "text",
+      "default": "44",
+      "label": "Scrolling speed",
+      "description": "🐇 ———●——— 🐢"
+    },
+    "animation_duration_mobile": {
+      "type": "text",
+      "default": "44",
+      "label": "Scrolling speed - mobile",
+      "description": "🐇 ———●——— 🐢"
+    },
+    "animation_direction": {
+      "type": "text",
+      "default": "right",
+      "label": "Direction",
+      "description": "Direction"
+    },
+    "pause_hover": {
+      "type": "text",
+      "default": "false",
+      "label": "Pause on hover",
+      "description": "Pause on hover"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "background_style": {
+      "type": "text",
+      "default": "solid",
+      "label": "Background style",
+      "description": "Background style"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1) 100%)",
+      "label": "Gradient",
+      "description": "Gradient"
+    },
+    "hover_opacity": {
+      "type": "text",
+      "default": "90",
+      "label": "Background color hover opacity",
+      "description": "Background color hover opacity"
+    },
+    "padding_vertical": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Vertical",
+      "description": "Vertical"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Sides",
+      "description": "Sides"
+    }
+  }
+}

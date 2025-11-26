@@ -1,0 +1,78 @@
+{
+  "id": "feature-3",
+  "name": "Feature Section #3",
+  "description": "Section: Feature Section #3",
+  "tags": [
+    "feature"
+  ],
+  "type": "feature",
+  "liquid_code": "{% style %}\r\n\r\n{{ section.settings.type_header_font | font_face: font_display: 'swap' }}\r\n\r\n.feature-type3 {\r\n    font-family: {{section.settings.type_header_font.family}};\r\n    font-weight: {{section.settings.type_header_font.weight}};\r\n    margin: 0;\r\n    padding: 50px 0;\r\n}\r\n.feature-type3 .container {\r\n    max-width: {{section.settings.max_container_width}};\r\n    margin: 0 auto;\r\n}\r\n.feature-type3 .box__title {\r\n    font-size: {{ section.settings.feature_title_font_size }}px;\r\n    color: {{ section.settings.feature_title_color }};\r\n}\r\n.feature-type3 .box__description {\r\n    font-size: {{ section.settings.feature_text_font_size }}px;\r\n    color: {{ section.settings.feature_text_color }};\r\n}\r\n@media (max-width: 768px) {\r\n    .feature-type3 .box__title {\r\n        font-size: {{ section.settings.feature_title_font_mob_size }}px;\r\n    }\r\n    .feature-type3 .box__description {\r\n        font-size: {{ section.settings.feature_text_font_mob_size }}px;\r\n    }\r\n}\r\n\r\n\r\n  .feature-type3 .wrapper-box {\r\n    background-color: {{ section.settings.section_bg_color }}; \r\n    border: 1px solid {{section.settings.section_border_color}};\r\n    box-shadow: 4px 4px 20px rgba(196, 196, 196, 0.04);\r\n    border-radius: 15px;\r\n      padding: 46px 20px 47px 56px;\r\n      display: flex;\r\n      justify-content: space-between;\r\n  }\r\n  .feature-type3 .box:not(:nth-child(2)) .box__content-wrapper {\r\n      padding-right: 10px;\r\n  }\r\n  .feature-type3 .box {\r\n      display: flex;\r\n      align-items: center;\r\n      flex: 0 0 30%;\r\n      position: relative;\r\n  }\r\n  .feature-type3 .box:nth-child(2) {\r\n      flex: 0 0 33%;\r\n      padding: 0 4%;\r\n      border-left: 1px solid {{section.settings.section_vl_color}};\r\n      border-right: 1px solid {{section.settings.section_vl_color}};\r\n  }\r\n\r\n  .feature-type3 .box__title {\r\n    font-weight: bold;\r\n  }\r\n  .feature-type3 .box__image {\r\n    margin-right: 30px;\r\n  }\r\n\r\n  .feature-type3 .box__image img {\r\n    width: {{block.settings.feature_image_width}};\r\n  }\r\n\r\n  @media (max-width: 1024px) {\r\n      .feature-type3 .container {\r\n          padding: 0 15px\r\n      }\r\n  }\r\n\r\n  @media (max-width: 768px) {\r\n      .feature-type3 .wrapper-box {\r\n          flex-direction: column;\r\n      }\r\n\r\n      .feature-type3 .wrapper-box {\r\n          padding: 23px 10px 20px 20px;\r\n      }\r\n\r\n      .feature-type3 .box {\r\n          flex: 0 0 100%;\r\n          position: relative;\r\n          margin-bottom: 40px;\r\n      }\r\n\r\n      .feature-type3 .box:last-child {\r\n          margin-bottom: 0;\r\n      }\r\n\r\n      .feature-type3 .box:nth-child(2) {\r\n          flex: 0 0 100%;\r\n          padding: 0;\r\n          border-left: none;\r\n          border-right: none;\r\n      }\r\n  }\r\n{% endstyle %}\r\n\r\n<div class=\"container\">\r\n    <div class=\"wrapper-box\">\r\n        {%- for block in section.blocks -%}\r\n            <div class=\"box\">\r\n                <div class=\"box__image\" style=\"width: {{block.settings.feature_image_width}};\">\r\n                    {%- if block.settings.feature_image and block.settings.feature_use_svg == false -%}\r\n                        {{ block.settings.feature_image | image_url: width: block.settings.feature_image_width | image_tag:  alt: section.settings.feature_title }}\r\n                    {%- elsif  block.settings.feature_use_svg == true -%}\r\n                        {{ block.settings.feature_svg_code }}\r\n                    {%- else -%}\r\n                        {{ 'image' | placeholder_svg_tag }}\r\n                    {%- endif -%}\r\n                </div>\r\n                <div class=\"box__content-wrapper\">\r\n                    <div class=\"box__title\">{{ block.settings.feature_title }}</div>\r\n                    <div class=\"box__description\">{{ block.settings.feature_text }}</div>\r\n                </div>\r\n            </div>\r\n        {%- endfor -%}\r\n    </div>\r\n</div>",
+  "variables": {
+    "feature_title_color": {
+      "type": "color",
+      "default": "#000",
+      "label": "Item Title Color",
+      "description": "Item Title Color"
+    },
+    "feature_title_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Item Title Font Size",
+      "description": "Item Title Font Size"
+    },
+    "feature_title_font_mob_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Mobile Item Title Font Size",
+      "description": "Mobile Item Title Font Size"
+    },
+    "feature_text_color": {
+      "type": "color",
+      "default": "#4B4B4B",
+      "label": "Item Text Color",
+      "description": "Item Text Color"
+    },
+    "feature_text_font_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Item Text Font Size",
+      "description": "Item Text Font Size"
+    },
+    "feature_text_font_mob_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Mobile Item Text Font Size",
+      "description": "Mobile Item Text Font Size"
+    },
+    "type_header_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "t:settings_schema.typography.settings.type_header_font.label",
+      "description": "t:settings_schema.typography.settings.type_header_font.info"
+    },
+    "section_bg_color": {
+      "type": "color",
+      "default": "#fff",
+      "label": "Section Background Color",
+      "description": "Section Background Color"
+    },
+    "section_vl_color": {
+      "type": "color",
+      "default": "#000",
+      "label": "Section Vertical Line Color",
+      "description": "Section Vertical Line Color"
+    },
+    "section_border_color": {
+      "type": "color",
+      "default": "#e5e5e5",
+      "label": "Section Border Color",
+      "description": "Section Border Color"
+    },
+    "max_container_width": {
+      "type": "text",
+      "default": "120rem",
+      "label": "Max Conainer Width",
+      "description": "Max Conainer Width"
+    }
+  }
+}

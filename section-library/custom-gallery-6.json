@@ -1,0 +1,414 @@
+{
+  "id": "custom-gallery-6",
+  "name": "CUSTOM Gallery #6",
+  "description": "Section: CUSTOM Gallery #6",
+  "tags": [
+    "gallery"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign video = section.settings.video\n  assign video_position = section.settings.video_position\n\n  assign video_text = section.settings.video_text\n  assign video_text_size = section.settings.video_text_size\n  assign video_text_size_mobile = section.settings.video_text_size_mobile\n  assign video_text_custom = section.settings.video_text_custom\n  assign video_text_font = section.settings.video_text_font\n  assign video_text_height = section.settings.video_text_height\n  assign video_text_color = section.settings.video_text_color\n  assign video_text_align = section.settings.video_text_align\n  assign video_text_align_mobile = section.settings.video_text_align_mobile\n\n  assign image = section.settings.image\n  assign image_padding_vertical = section.settings.image_padding_vertical\n  assign image_padding_vertical_mobile = section.settings.image_padding_vertical_mobile\n  assign image_padding_horizontal = section.settings.image_padding_horizontal\n  assign image_padding_horizontal_mobile = section.settings.image_padding_horizontal_mobile\n  assign image_bg_color = section.settings.image_bg_color\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_radius = section.settings.image_radius\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n  assign image_width = section.settings.image_width\n  assign image_width_mobile = section.settings.image_width_mobile\n\n  assign image_position = 2\n\n  if video_position == 1\n    assign image_position = 2\n  else\n   assign image_position = 1\n  endif\n\n  assign image_text = section.settings.image_text\n  assign image_text_size = section.settings.image_text_size\n  assign image_text_size_mobile = section.settings.image_text_size_mobile\n  assign image_text_mt = section.settings.image_text_mt\n  assign image_text_mt_mobile = section.settings.image_text_mt_mobile\n  assign image_text_custom = section.settings.image_text_custom\n  assign image_text_font = section.settings.image_text_font\n  assign image_text_height = section.settings.image_text_height\n  assign image_text_color = section.settings.image_text_color\n  assign image_text_align = section.settings.image_text_align\n  assign image_text_align_mobile = section.settings.image_text_align_mobile\n  assign image_text_width_mobile = section.settings.image_text_width_mobile\n  assign image_text_width = section.settings.image_text_width\n\n  assign btn_play = section.settings.btn_play\n  assign btn_pause = section.settings.btn_pause\n  assign btn_size = section.settings.btn_size\n  assign btn_size_mobile = section.settings.btn_size_mobile\n  assign btn_custom = section.settings.btn_custom\n  assign btn_font = section.settings.btn_font\n  assign btn_height = section.settings.btn_height\n  assign btn_color = section.settings.btn_color\n\n  assign timer_size = section.settings.timer_size\n  assign timer_size_mobile = section.settings.timer_size_mobile\n  assign timer_custom = section.settings.timer_custom\n  assign timer_font = section.settings.timer_font\n  assign timer_height = section.settings.timer_height\n  assign timer_color = section.settings.timer_color\n  \n-%}\n\n{%- style -%}\n\n  {{  video_text_font | font_face: font_display: 'swap' }}\n  {{  image_text_font | font_face: font_display: 'swap' }}\n  {{  btn_font | font_face: font_display: 'swap' }}\n  {{  timer_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .gallery-body-{{ section.id }} {\n    display: grid;\n    grid-template-columns: 1fr;\n  }\n\n  .gallery-video-{{ section.id }} {\n    position: relative;\n    aspect-ratio: 1/1;\n  }\n\n  .gallery-video-{{ section.id }} video,\n  .gallery-video-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    box-shadow: none;\n    border: 0px;\n  }\n\n  .gallery-video-{{ section.id }} svg {\n    background-color: #ebebeb;\n  }\n\n  .gallery-image-wrapper-{{ section.id }} {\n    padding: {{ image_padding_vertical_mobile }}px {{ image_padding_horizontal_mobile }}px;\n    background-color: {{ image_bg_color }};\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n  }\n\n  .gallery-image-{{ section.id }} {\n    width: 100%;\n    max-width: {{ image_width_mobile }}%;\n    overflow: hidden;\n    border-radius: {{ image_radius }}px;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n  }\n\n  .gallery-image-{{ section.id }} img,\n  .gallery-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .gallery-image-{{ section.id }} svg {\n    background-color: #FAFAFA;\n  }\n\n  .gallery-video-text-{{ section.id }} {\n    position: absolute;\n    bottom: 20px;\n    left: 20px;\n    z-index: 2;\n    width: calc(100% - 40px);\n    text-align: {{ video_text_align_mobile }};\n  }\n\n  .gallery-video-text-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ video_text_size_mobile }}px;\n    line-height: {{ video_text_height }}%;\n    color: {{ video_text_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .gallery-image-text-{{ section.id }} {\n    margin-top: {{ image_text_mt_mobile }}px;\n    max-width: {{ image_text_width_mobile }}px;\n    text-align: {{ image_text_align_mobile }};\n  }\n\n  .gallery-image-text-{{ section.id }} * {\n    margin: 0px;\n    font-size: {{ image_text_size_mobile }}px;\n    line-height: {{ image_text_height }}%;\n    color: {{ image_text_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .gallery-controls-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    max-width: fit-content;\n    position: absolute;\n    top: 20px;\n    left: 20px;\n    z-index: 2;\n    gap: 10px;\n  }\n\n  .gallery-btn-{{ section.id }} {\n    background-color: transparent;\n    border: 0px;\n    padding: 0px;\n    margin: 0px;\n    font-size: {{ btn_size_mobile }}px;\n    line-height: {{ btn_height }}%;\n    color: {{ btn_color }};\n    text-transform: unset;\n    cursor: pointer;\n  }\n\n  .gallery-btn-{{ section.id }} .play {\n    display: none;\n  }\n\n  .gallery-btn-{{ section.id }}.active .play {\n    display: inline;\n  }\n\n  .gallery-btn-{{ section.id }}.active .pause {\n    display: none;\n  }\n\n  .gallery-timer-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ timer_size_mobile }}px;\n    line-height: {{ timer_height }}%;\n    color: {{ timer_color }};\n    text-transform: unset;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .gallery-body-{{ section.id }} {\n      grid-template-columns: 1fr 1fr;\n    }\n\n    .gallery-video-{{ section.id }} {\n      order: {{ video_position }};\n    }\n\n    .gallery-video-text-{{ section.id }} {\n      text-align: {{ video_text_align }};\n    }\n\n    .gallery-video-text-{{ section.id }} * {\n      font-size: {{ video_text_size }}px;\n    }\n\n    .gallery-image-wrapper-{{ section.id }} {\n      padding: {{ image_padding_vertical }}px {{ image_padding_horizontal }}px;\n      order: {{ image_position }};\n    }\n\n    .gallery-image-{{ section.id }} {\n      max-width: {{ image_width }}%;\n    }\n\n    .gallery-image-text-{{ section.id }} {\n      margin-top: {{ image_text_mt }}px;\n      max-width: {{ image_text_width }}px;\n      text-align: {{ image_text_align }};\n    }\n\n    .gallery-image-text-{{ section.id }} * {\n      font-size: {{ image_text_size }}px;\n    }\n\n    .gallery-btn-{{ section.id }} {\n      font-size: {{ btn_size }}px;\n    }\n\n    .gallery-timer-{{ section.id }} {\n      font-size: {{ timer_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if video_text_custom %}\n  <style>\n    .gallery-video-text-{{ section.id }} * {\n      font-family: {{ video_text_font.family }}, {{ video_text_font.fallback_families }};\n      font-weight: {{ video_text_font.weight }};\n      font-style: {{ video_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_text_custom %}\n  <style>\n    .gallery-image-text-{{ section.id }} * {\n      font-family: {{ image_text_font.family }}, {{ image_text_font.fallback_families }};\n      font-weight: {{ image_text_font.weight }};\n      font-style: {{ image_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if btn_custom %}\n  <style>\n    .gallery-btn-{{ section.id }} {\n      font-family: {{ btn_font.family }}, {{ btn_font.fallback_families }};\n      font-weight: {{ btn_font.weight }};\n      font-style: {{ btn_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if timer_custom %}\n  <style>\n    .gallery-timer-{{ section.id }} {\n      font-family: {{ timer_font.family }}, {{ timer_font.fallback_families }};\n      font-weight: {{ timer_font.weight }};\n      font-style: {{ timer_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .gallery-image-{{ section.id }} {\n     aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n    .gallery-image-{{ section.id }}{\n     aspect-ratio: 12/6; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .gallery-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else %}\n  <style>\n    .gallery-image-{{ section.id }} {\n       aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .gallery-image-{{ section.id }} {\n       aspect-ratio: 9.6/12; \n      } \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .gallery-image-{{ section.id }}{\n       aspect-ratio: 12/6; \n      }\n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .gallery-image-{{ section.id }} {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .gallery-image-{{ section.id }} {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} gallery-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"gallery-body-{{ section.id }}\">\n        <div class=\"gallery-video-{{ section.id }}\">\n          {% if video != blank %}\n            <video data-src=\"{{ video.sources[1].url }}\" muted autoplay playsinline preload=\"none\" loop class=\"lazy gallery-video-element-{{ section.id }}\"></video>\n          {% else %}\n            {{ 'image' | placeholder_svg_tag }}\n          {% endif %}\n          {% if video_text != blank %}\n            <div class=\"gallery-video-text-{{ section.id }}\">{{ video_text }}</div>\n          {% endif %}\n\n          <div class=\"gallery-controls-{{ section.id }}\">\n            <p class=\"gallery-timer-{{ section.id }}\">00:00:00</p>\n            <button class=\"gallery-btn-{{ section.id }}\">\n              <span class=\"play\">{{ btn_play }}</span>\n              <span class=\"pause\">{{ btn_pause }}</span>\n            </button>\n          </div>\n        </div>\n        <div class=\"gallery-image-wrapper-{{ section.id }}\">\n          <div class=\"gallery-image-{{ section.id }}\">\n            {% if image != blank %}\n              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n            {% else %}\n              {{ 'image' | placeholder_svg_tag }}\n            {% endif %}\n          </div>\n\n          {% if image_text != blank %}\n            <div class=\"gallery-image-text-{{ section.id }}\">{{ image_text }}</div>\n          {% endif %}\n        </div>\n      </div>\n    </div>\n</div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n\n<script>\n  function initGallery6() {\n\n    let btn = document.querySelector('.gallery-btn-{{ section.id }}');\n    let timer = document.querySelector('.gallery-timer-{{ section.id }}');\n    let video = document.querySelector('.gallery-video-element-{{ section.id }}');\n    let timerInterval;\n    \n    if (video) {\n      updateTimer();\n      timerInterval = setInterval(updateTimer, 1000);\n    }\n    \n    // Обработчик события клика на кнопку\n    if (btn) {\n      btn.addEventListener('click', () => {\n        if (btn.classList.contains('active')) {\n          if (video) {\n            video.play();\n          }\n        } else {\n          if (video) {\n            video.pause();\n          }\n        }\n    \n        btn.classList.toggle('active');\n      });\n    }\n    \n    function updateTimer() {\n      let hours = Math.floor(video.currentTime / 3600);\n      let minutes = Math.floor((video.currentTime % 3600) / 60);\n      let seconds = Math.floor(video.currentTime % 60);\n    \n      let formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;\n      timer.textContent = formattedTime;\n    }\n    \n    var lazyLoadInstance = new LazyLoad();\n\n    window.addEventListener(\n      \"LazyLoad::Initialized\",\n      function (event) {\n        window.lazyLoadInstance = event.detail.instance;\n      },\n      false\n    );\n  }\n\n  document.addEventListener('DOMContentLoaded', initGallery6);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initGallery6);\n     document.addEventListener('shopify:section:load', initGallery6);\n  }\n</script>",
+  "variables": {
+    "video": {
+      "type": "text",
+      "default": "",
+      "label": "Video",
+      "description": "Video"
+    },
+    "video_position": {
+      "type": "text",
+      "default": "1",
+      "label": "Video position - desktop",
+      "description": "Video position - desktop"
+    },
+    "video_text": {
+      "type": "textarea",
+      "default": "<p>Pair text with a video to focus on your chosen product or collection.</p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "video_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "video_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "video_text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "video_text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "video_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "video_text_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "video_text_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "image_padding_vertical": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "image_padding_vertical_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "image_padding_horizontal": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "image_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "70",
+      "label": "Width",
+      "description": "Width"
+    },
+    "image_width_mobile": {
+      "type": "text",
+      "default": "70",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Aspect ratio - mobile",
+      "description": "Aspect ratio - mobile"
+    },
+    "image_text": {
+      "type": "textarea",
+      "default": "<p>Write some content about your products, collections or brand. Use image to create an impactful layout.</p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "image_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "image_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "image_text_width": {
+      "type": "text",
+      "default": "260",
+      "label": "Width",
+      "description": "Width"
+    },
+    "image_text_width_mobile": {
+      "type": "text",
+      "default": "260",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "image_text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "image_text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "image_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "image_text_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "image_text_mt_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "image_text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "image_text_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "btn_play": {
+      "type": "text",
+      "default": "PLAY",
+      "label": "Play text",
+      "description": "Play text"
+    },
+    "btn_pause": {
+      "type": "text",
+      "default": "PAUSE",
+      "label": "Pause text",
+      "description": "Pause text"
+    },
+    "btn_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "btn_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "btn_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "btn_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "btn_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "timer_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "timer_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "timer_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "timer_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "timer_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "video_text_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Video text color",
+      "description": "Video text color"
+    },
+    "btn_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button color",
+      "description": "Button color"
+    },
+    "timer_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Timer color",
+      "description": "Timer color"
+    },
+    "image_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Image wrapper background",
+      "description": "Image wrapper background"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Image border",
+      "description": "Image border"
+    },
+    "image_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Image text",
+      "description": "Image text"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

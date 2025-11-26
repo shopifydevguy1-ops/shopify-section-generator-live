@@ -1,0 +1,109 @@
+{
+  "id": "candy-banner",
+  "name": "CUSTOM Banner",
+  "description": "Section: CUSTOM Banner",
+  "tags": [
+    "candy",
+    "banner"
+  ],
+  "type": "banner",
+  "liquid_code": "{%- style -%}\n  .section-{{ section.id }}-padding {\n    max-width: {{ section.settings.section-width }}rem;\n    margin: 0 auto;\n    padding: 0 1.5rem;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 5rem;\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<style>\n  .banner-svg {\n    display: block;\n    width: 100%;\n    height: auto;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    z-index: -1;\n  }\n  .banner-svg--tablet,\n  .banner-svg--desktop {\n    display: none;\n  }\n  @media screen and (min-width: 750px) {\n    .banner-svg--mobile {\n      display: none;\n    }\n    .banner-svg--tablet {\n      display: block;\n      top: 0;\n      bottom: unset;\n    }\n  }\n  @media screen and (min-width: 750px) {\n    .banner-svg--tablet {\n      display: none;\n    }\n    .banner-svg--desktop {\n      display: block;\n    }\n  }\n  .banner-heading {\n    font-size: calc(var(--heading-size) * 0.5625);\n    font-weight: 800;\n    line-height: 106%;\n    color: var(--text-color);\n    margin: 0;\n  }\n  .banner-subheading {\n    font-size: calc(var(--subheading-size) * 0.75);\n    line-height: 140%;\n    color: var(--text-color);\n    margin-bottom: 2rem;\n  }\n  @media screen and (min-width: 750px) {\n    .banner-heading {\n      font-size: calc(var(--heading-size) * 1);\n    }\n    .banner-subheading {\n      font-size: calc(var(--subheading-size) * 1);\n      margin-bottom: 1.5rem;\n    }\n  }\n  .banner-cta {\n    width: 291px;\n    height: 78px;\n    background: var(--button-bg);\n    color: var(--button-text-color);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 24px;\n    font-weight: 700;\n    border-radius: 45px;\n    text-decoration: none;\n  }\n  .banner-image {\n    width: 100%;\n    height: auto;\n    padding: {{section.settings.image_padding}}px 0;\n  }\n  .banner-image--desktop {\n    display: none;\n  }\n  @media screen and (min-width: 750px) {\n    .banner-image--mobile-and-tablet {\n      display: none;\n    }\n    .banner-image--desktop {\n      display: block;\n    }\n  }\n  .banner-content {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    text-align: center;\n  }\n  @media screen and (min-width: 750px) {\n    .banner-content {\n      text-align: left; \n      align-items: flex-start;\n      gap: 20px;\n    }\n    .banner-desktop-flex {\n      display: grid;\n      grid-template-columns: 50% auto;\n    }\n  }\n  .banner-{{ section.id }} {\n    background: var(--mobile-bg);\n    background-size: cover;\n    background-position: bottom;\n  }\n  @media screen and (min-width: 750px) {\n    .banner-{{ section.id }} {\n      background: var(--desktop-bg);\n      background-size: cover;\n      background-position: bottom;\n    }\n  }\n</style>\n\n<div \n  style=\"\n    background-color:{{ section.settings.background-color }};\n    position: relative;\n    z-index: 1;\n    overflow: hidden;\n    --text-color: {{ section.settings.text-color }};\n    --heading-size: {{ section.settings.heading-size }}px;\n    --subheading-size: {{ section.settings.subheading-size }}px;\n    --button-bg: {{ section.settings.button-bg }};\n    --button-text-color: {{ section.settings.button-text-color }};\n  \"\n  class=\"banner-{{ section.id }}\"\n>\n  {% assign svg_bg_color = section.settings.svg-bg-color %}\n  <template id=\"banner-bg-mobile\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"390\"\n      height=\"667\"\n      viewBox=\"0 0 390 667\"\n      fill=\"none\"\n    >\n      <g clip-path=\"url(#clip0_1_290)\">\n      <path d=\"M227.253 665.562C105.765 671.909 2.62593 645.287 -33.7578 631.182V-49.8032H507.246C551.011 169.699 612.283 609.232 507.246 611.348C375.949 613.993 379.113 657.629 227.253 665.562Z\" \n        fill=\"{{ svg_bg_color }}\" stroke=\"{{ svg_bg_color }}\"/>\n      </g>\n      <defs>\n      <clipPath id=\"clip0_1_290\">\n      <rect width=\"390\" height=\"667\" fill=\"white\"/>\n      </clipPath>\n      </defs>\n    </svg>\n  </template>\n  <template id=\"banner-bg-desktop\">\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width=\"1512\"\n      height=\"589\"\n      viewBox=\"0 0 1512 589\"\n      fill=\"none\"\n    >\n      <g clip-path=\"url(#clip0_1_275)\">\n      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M1545 0H-25V147H-10V487.137L-42 487.137L-66 555.439H-12C99.3333 529.606 398.8 491.34 706 544.931C1090 611.919 1342 594.844 1534 544.931V487.137V147H1545V0Z\" \n        fill=\"{{ svg_bg_color }}\"/>\n      </g>\n      <defs>\n      <clipPath id=\"clip0_1_275\">\n      <rect width=\"1512\" height=\"589\" fill=\"white\"/>\n      </clipPath>\n      </defs>\n    </svg>\n  </template>  \n  <script>\n    (function() {\n      // use #banner-bg-mobile if screen width is less than 750px\n      // use #banner-bg-desktop if screen width is greater than 750px\n      var banner = document.querySelector('.banner-{{ section.id }}');\n      var bannerBgMobile = document.querySelector('#banner-bg-mobile').content.cloneNode(true);\n      var bannerBgDesktop = document.querySelector('#banner-bg-desktop').content.cloneNode(true);\n      \n      var serializer = new XMLSerializer();\n      var bannerBgMobileString = serializer.serializeToString(bannerBgMobile);\n      var bannerBgDesktopString = serializer.serializeToString(bannerBgDesktop);\n\n      var encodedBannerBgMobile = encodeURIComponent(bannerBgMobileString);\n      var encodedBannerBgDesktop = encodeURIComponent(bannerBgDesktopString);\n    \n      // set --mobile-bg and --desktop-bg css variables\n      banner.style.setProperty('--mobile-bg', 'url(\"data:image/svg+xml,' + encodedBannerBgMobile + '\")');\n      banner.style.setProperty('--desktop-bg', 'url(\"data:image/svg+xml,' + encodedBannerBgDesktop + '\")');\n    })()\n  </script>\n  \n  <div class=\"page-width section-{{ section.id }}-padding banner-desktop-flex\">\n    <div class=\"banner-content\">\n      <h1 class=\"banner-heading\">{{ section.settings.heading }}</h1>\n      <img\n        class=\"banner-image banner-image--mobile-and-tablet\"\n        src=\"{{ section.settings.image | img_url: '500x' }}\"\n        srcset=\"\n          {{ section.settings.image | img_url: '500x' }} 500w,\n          {{ section.settings.image | img_url: '800x' }} 800w,\n          {{ section.settings.image | img_url: '1200x' }} 1200w,\n          {{ section.settings.image | img_url: '1600x' }} 1600w,\n          {{ section.settings.image | img_url: '2000x' }} 2000w,\n          {{ section.settings.image | img_url: 'master' }} 2400w\n        \"\n        alt=\"{{ section.settings.image.alt }}\"\n      >\n      <div class=\"banner-subheading\">{{ section.settings.subheading }}</div>\n      <a class=\"banner-cta\" href=\"{{ section.settings.url }}\">{{ section.settings.url_text }}</a>\n    </div>\n    <img \n      class=\"banner-image banner-image--desktop\"\n      src=\"{{ section.settings.image | img_url: '500x' }}\"\n      srcset=\"\n        {{ section.settings.image | img_url: '500x' }} 500w,\n        {{ section.settings.image | img_url: '800x' }} 800w,\n        {{ section.settings.image | img_url: '1200x' }} 1200w,\n        {{ section.settings.image | img_url: '1600x' }} 1600w,\n        {{ section.settings.image | img_url: '2000x' }} 2000w,\n        {{ section.settings.image | img_url: 'master' }} 2400w\n      \"\n      alt=\"{{ section.settings.image.alt }}\"\n    />\n  </div>\n</div>",
+  "variables": {
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "heading": {
+      "type": "text",
+      "default": "BUBBLE TEA TIME CHAMPS N’ VIBERS",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "subheading": {
+      "type": "text",
+      "default": "Get that bubbly feeling going with our fantastic bubble tea!",
+      "label": "Subheading",
+      "description": "Subheading"
+    },
+    "url_text": {
+      "type": "text",
+      "default": "SHOP NOW",
+      "label": "URL text",
+      "description": "URL text"
+    },
+    "url": {
+      "type": "text",
+      "default": "",
+      "label": "URL",
+      "description": "URL"
+    },
+    "svg-bg-color": {
+      "type": "color",
+      "default": "#F7EAF9",
+      "label": "SVG background color",
+      "description": "SVG background color"
+    },
+    "text-color": {
+      "type": "color",
+      "default": "#432A54",
+      "label": "Heading color",
+      "description": "Heading color"
+    },
+    "button-bg": {
+      "type": "color",
+      "default": "#432A54",
+      "label": "Button background color",
+      "description": "Button background color"
+    },
+    "button-text-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Button text color",
+      "description": "Button text color"
+    },
+    "heading-size": {
+      "type": "text",
+      "default": "64",
+      "label": "Heading font size",
+      "description": "Heading font size"
+    },
+    "subheading-size": {
+      "type": "text",
+      "default": "24",
+      "label": "Subheading font size",
+      "description": "Subheading font size"
+    },
+    "image_padding": {
+      "type": "text",
+      "default": "10",
+      "label": "Image padding",
+      "description": "Image padding"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "48",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "100",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

@@ -85,7 +85,14 @@ export default function GeneratorPage() {
   }
 
   const generateSection = async () => {
-    if (!selectedTemplate) return
+    if (!selectedTemplate) {
+      toast({
+        title: "Error",
+        description: "Please select a template first",
+        variant: "destructive",
+      })
+      return
+    }
 
     setLoading(true)
     try {
@@ -98,10 +105,19 @@ export default function GeneratorPage() {
         }),
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (jsonError) {
+        throw new Error(`Server error: ${response.status} ${response.statusText}`)
+      }
       
       if (!response.ok) {
-        throw new Error(data.error || "Failed to generate section")
+        throw new Error(data.error || `Failed to generate section: ${response.status}`)
+      }
+
+      if (!data.liquidCode) {
+        throw new Error("No code generated. Please try again.")
       }
 
       setGeneratedCode(data.liquidCode)
@@ -110,9 +126,10 @@ export default function GeneratorPage() {
         description: "Section generated successfully!",
       })
     } catch (error: any) {
+      console.error("Error generating section:", error)
       toast({
         title: "Error",
-        description: error.message || "Failed to generate section",
+        description: error.message || "Failed to generate section. Please try again.",
         variant: "destructive",
       })
     } finally {

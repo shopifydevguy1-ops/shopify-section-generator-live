@@ -1,0 +1,54 @@
+{
+  "id": "main-blog",
+  "name": "t:sections.main-blog.name",
+  "description": "Section: t:sections.main-blog.name",
+  "tags": [
+    "main"
+  ],
+  "type": "custom",
+  "liquid_code": "{{ 'component-article-card.css' | asset_url | stylesheet_tag }}\n{{ 'component-card.css' | asset_url | stylesheet_tag }}\n{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n{%- paginate blog.articles by 6 -%}\n  <div class=\"main-blog page-width section-{{ section.id }}-padding\">\n    <h1 class=\"title--primary\">{{ blog.title | escape }}</h1>\n\n    <div class=\"blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}\">\n      {%- for article in blog.articles -%}\n        <div class=\"blog-articles__article article\">\n          {%- render 'article-card',\n            article: article,\n            media_height: section.settings.image_height,\n            media_aspect_ratio: article.image.aspect_ratio,\n            show_image: section.settings.show_image,\n            show_date: section.settings.show_date,\n            show_author: section.settings.show_author,\n            show_excerpt: true \n          -%}\n        </div>\n      {%- endfor -%}\n    </div>\n\n    {%- if paginate.pages > 1 -%}\n      {%- render 'pagination', paginate: paginate -%}\n    {%- endif -%}\n  </div>\n{%- endpaginate -%}",
+  "variables": {
+    "layout": {
+      "type": "text",
+      "default": "collage",
+      "label": "t:sections.main-blog.settings.layout.label",
+      "description": "t:sections.main-blog.settings.layout.info"
+    },
+    "show_image": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.main-blog.settings.show_image.label",
+      "description": "t:sections.main-blog.settings.show_image.label"
+    },
+    "image_height": {
+      "type": "text",
+      "default": "medium",
+      "label": "t:sections.main-blog.settings.image_height.label",
+      "description": "t:sections.main-blog.settings.image_height.info"
+    },
+    "show_date": {
+      "type": "text",
+      "default": "true",
+      "label": "t:sections.main-blog.settings.show_date.label",
+      "description": "t:sections.main-blog.settings.show_date.label"
+    },
+    "show_author": {
+      "type": "text",
+      "default": "false",
+      "label": "t:sections.main-blog.settings.show_author.label",
+      "description": "t:sections.main-blog.settings.show_author.label"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

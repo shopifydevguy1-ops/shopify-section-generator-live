@@ -1,0 +1,1182 @@
+{
+  "id": "custom-build-box",
+  "name": "CUSTOM Build a Bundle",
+  "description": "Section: CUSTOM Build a Bundle",
+  "tags": [
+    "build"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign first_collection = section.settings.first_collection\n  assign first_collection_title = section.settings.first_collection_title\n  assign second_collection = section.settings.second_collection\n  assign second_collection_title = section.settings.second_collection_title\n  \n  assign use_variants = section.settings.use_variants\n  assign box_variants = section.settings.box_variants\n\n  assign products_row_mobile = section.settings.products_row_mobile\n  assign products_row = section.settings.products_row\n  assign products_gap_mobile = section.settings.products_gap_mobile\n  assign products_gap = section.settings.products_gap\n\n  assign card_padding_vertical = section.settings.card_padding_vertical\n  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile\n  assign card_padding_horizontal = section.settings.card_padding_horizontal\n  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile\n  assign card_radius = section.settings.card_radius\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_border_color = section.settings.card_border_color\n  assign card_border_hover_color = section.settings.card_border_hover_color\n  assign card_bg_color = section.settings.card_bg_color\n  assign card_bg_hover_color = section.settings.card_bg_hover_color\n  assign card_shadow = section.settings.card_shadow\n  assign card_shadow_hover = section.settings.card_shadow_hover\n  assign card_shadow_color = section.settings.card_shadow_color\n  assign card_shadow_hover_color = section.settings.card_shadow_hover_color\n  assign card_second_hover = section.settings.card_second_hover\n\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_border_color = section.settings.image_border_color\n  assign image_ratio = section.settings.image_ratio\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_mt = section.settings.title_mt\n  assign title_uppercase = section.settings.title_uppercase\n\n  assign vendor_size = section.settings.vendor_size\n  assign vendor_size_mobile = section.settings.vendor_size_mobile\n  assign vendor_color = section.settings.vendor_color\n  assign vendor_custom = section.settings.vendor_custom\n  assign vendor_font = section.settings.vendor_font\n  assign vendor_height = section.settings.vendor_height\n  assign vendor_mt = section.settings.vendor_mt\n  assign vendor_uppercase = section.settings.vendor_uppercase\n\n  assign button = section.settings.button\n  assign button_soldout = section.settings.button_soldout\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_mt = section.settings.button_mt\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n\n  assign box_width = section.settings.box_width\n  assign box_border_color = section.settings.box_border_color\n  assign box_border_thickness = section.settings.box_border_thickness\n  assign box_radius = section.settings.box_radius\n\n  assign header_padding_vertical = section.settings.header_padding_vertical\n  assign header_padding_vertical_mobile = section.settings.header_padding_vertical_mobile\n  assign header_padding_horizontal = section.settings.header_padding_horizontal\n  assign header_padding_horizontal_mobile = section.settings.header_padding_horizontal_mobile\n  assign header_bg_color = section.settings.header_bg_color\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_color_mobile = section.settings.heading_color_mobile\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign sub_heading = section.settings.sub_heading\n  assign sub_heading_size = section.settings.sub_heading_size\n  assign sub_heading_size_mobile = section.settings.sub_heading_size_mobile\n  assign sub_heading_color = section.settings.sub_heading_color\n  assign sub_heading_color_mobile = section.settings.sub_heading_color_mobile\n  assign sub_heading_custom = section.settings.sub_heading_custom\n  assign sub_heading_font = section.settings.sub_heading_font\n  assign sub_heading_height = section.settings.sub_heading_height\n  assign sub_heading_align = section.settings.sub_heading_align\n  assign sub_heading_align_mobile = section.settings.sub_heading_align_mobile\n  assign sub_heading_mt = section.settings.sub_heading_mt\n\n  assign body_padding_vertical = section.settings.body_padding_vertical\n  assign body_padding_vertical_mobile = section.settings.body_padding_vertical_mobile\n  assign body_padding_horizontal = section.settings.body_padding_horizontal\n  assign body_padding_horizontal_mobile = section.settings.body_padding_horizontal_mobile\n\n  assign pick = section.settings.pick\n  assign pick_size = section.settings.pick_size\n  assign pick_size_mobile = section.settings.pick_size_mobile\n  assign pick_color = section.settings.pick_color\n  assign pick_custom = section.settings.pick_custom\n  assign pick_font = section.settings.pick_font\n  assign pick_height = section.settings.pick_height\n  assign pick_align = section.settings.pick_align\n  assign pick_align_mobile = section.settings.pick_align_mobile\n  assign pick_mt = section.settings.pick_mt\n  assign pick_mt_mobile = section.settings.pick_mt_mobile\n\n  assign tabs_border_color = section.settings.tabs_border_color\n  assign tabs_border_thickness = section.settings.tabs_border_thickness\n  assign tabs_radius = section.settings.tabs_radius\n  assign tabs_mt = section.settings.tabs_mt\n\n  assign tab_size = section.settings.tab_size\n  assign tab_size_mobile = section.settings.tab_size_mobile\n  assign tab_color = section.settings.tab_color\n  assign tab_hover_color = section.settings.tab_hover_color\n  assign tab_active_color = section.settings.tab_active_color\n  assign tab_custom = section.settings.tab_custom\n  assign tab_font = section.settings.tab_font\n  assign tab_height = section.settings.tab_height\n  assign tab_padding_vertical = section.settings.tab_padding_vertical\n  assign tab_padding_vertical_mobile = section.settings.tab_padding_vertical_mobile\n  assign tab_padding_horizontal = section.settings.tab_padding_horizontal\n  assign tab_padding_horizontal_mobile = section.settings.tab_padding_horizontal_mobile\n  assign tab_bg_color = section.settings.tab_bg_color\n  assign tab_bg_hover_color = section.settings.tab_bg_hover_color\n  assign tab_bg_active_color = section.settings.tab_bg_active_color\n\n  assign checkboxes_mt = section.settings.checkboxes_mt\n\n  assign first_checkbox_discount = section.settings.first_checkbox_discount\n  assign first_checkbox_discount_second = section.settings.first_checkbox_discount_second\n  assign first_checkbox = section.settings.first_checkbox\n  assign second_checkbox_discount = section.settings.second_checkbox_discount\n  assign second_checkbox_discount_second  = section.settings.second_checkbox_discount_second \n  assign second_checkbox = section.settings.second_checkbox\n  assign third_checkbox_discount = section.settings.third_checkbox_discount\n  assign third_checkbox_discount_second = section.settings.third_checkbox_discount_second\n  assign third_checkbox = section.settings.third_checkbox\n\n  assign checkbox_size = section.settings.checkbox_size\n  assign checkbox_size_mobile = section.settings.checkbox_size_mobile\n  assign checkbox_color = section.settings.checkbox_color\n  assign checkbox_custom = section.settings.checkbox_custom\n  assign checkbox_font = section.settings.checkbox_font\n  assign checkbox_height = section.settings.checkbox_height\n  assign checkbox_bg_color = section.settings.checkbox_bg_color\n  assign checkbox_circle_color = section.settings.checkbox_circle_color\n\n  assign price_size = section.settings.price_size\n  assign price_size_mobile = section.settings.price_size_mobile\n  assign price_strikethrough_size = section.settings.price_strikethrough_size\n  assign price_strikethrough_size_mobile = section.settings.price_strikethrough_size_mobile\n  assign price_color = section.settings.price_color\n  assign price_strikethrough_color = section.settings.price_strikethrough_color\n  assign price_custom = section.settings.price_custom\n  assign price_font = section.settings.price_font\n  assign price_height = section.settings.price_height\n\n  assign main_button = section.settings.main_button\n  assign main_left_button = section.settings.main_left_button\n  assign main_right_button = section.settings.main_right_button\n  assign main_button_size = section.settings.main_button_size\n  assign main_button_size_mobile = section.settings.main_button_size_mobile\n  assign main_button_color = section.settings.main_button_color\n  assign main_button_hover_color = section.settings.main_button_hover_color\n  assign main_button_custom = section.settings.main_button_custom\n  assign main_button_font = section.settings.main_button_font\n  assign main_button_height = section.settings.main_button_height\n  assign main_button_mt = section.settings.main_button_mt\n  assign main_button_padding_vertical = section.settings.main_button_padding_vertical\n  assign main_button_padding_vertical_mobile = section.settings.main_button_padding_vertical_mobile\n  assign main_button_padding_horizontal = section.settings.main_button_padding_horizontal\n  assign main_button_padding_horizontal_mobile = section.settings.main_button_padding_horizontal_mobile\n  assign main_button_radius = section.settings.main_button_radius\n  assign main_button_border_thickness = section.settings.main_button_border_thickness\n  assign main_button_border_color = section.settings.main_button_border_color\n  assign main_button_border_hover_color = section.settings.main_button_border_hover_color\n  assign main_button_bg_color = section.settings.main_button_bg_color\n  assign main_button_bg_hover_color = section.settings.main_button_bg_hover_color\n\n  assign close_bg_color = section.settings.close_bg_color\n\n  assign select_color = section.settings.select_color\n  assign select_bg_color = section.settings.select_bg_color\n  assign select_border_color = section.settings.select_border_color\n  \n-%}\n\n{%- style -%}\n\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  vendor_font | font_face: font_display: 'swap' }}\n  {{  button_font | font_face: font_display: 'swap' }}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  sub_heading_font | font_face: font_display: 'swap' }}\n  {{  pick_font | font_face: font_display: 'swap' }}\n  {{  tab_font | font_face: font_display: 'swap' }}\n  {{  checkbox_font | font_face: font_display: 'swap' }}\n  {{  price_font | font_face: font_display: 'swap' }}\n  {{  main_button_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .box-body-{{ section.id }} {\n    display: flex;\n    flex-direction: column-reverse;\n    gap: {{ products_gap_mobile }}px;\n    position: relative;\n  }\n\n  .box-products-grid-{{ section.id }} {\n    display: none;\n    grid-template-columns: repeat({{ products_row_mobile }}, 1fr);\n    gap: {{ products_gap_mobile }}px;\n  }\n\n  .box-products-grid-{{ section.id }}.active {\n    display: grid;\n  }\n\n  .box-product-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;\n    border-radius: {{ card_radius }}px;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    background-color: {{ card_bg_color }};\n    cursor: pointer;\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-product-{{ section.id }}:hover {\n    background-color: {{ card_bg_hover_color }};\n    border: {{ card_border_thickness }}px solid {{ card_border_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-product-image-{{ section.id }} {\n    border-radius: {{ image_radius }}px;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    overflow: hidden;\n    position: relative;\n  }\n\n  .box-product-image-{{ section.id }} svg,\n  .box-product-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .box-product-image-{{ section.id }}.has-secondary-{{ section.id }} {\n    position: relative;\n  }\n  \n  .box-product-image-{{ section.id }}.has-secondary-{{ section.id }} .box-product-second-image-{{ section.id }} {\n    position: absolute;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    margin: 0 auto;\n    display: none;\n  }\n\n  .box-product-title-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ title_size_mobile }}px;\n    color: {{ title_color }};\n    line-height: {{ title_height }}%;\n    text-transform: unset;\n    text-align: center;\n  }\n\n  .box-product-vendor-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ vendor_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ vendor_size_mobile }}px;\n    color: {{ vendor_color }};\n    line-height: {{ vendor_height }}%;\n    text-transform: unset;\n    text-align: center;\n  }\n\n  .box-variants-select-wrapper-{{ section.id }} {\n    position: relative;\n  }\n\n  .box-variants-select-{{ section.id }} {\n    margin-top: 10px;\n    position: relative;\n    cursor: pointer;\n    font-size: 14px;\n    line-height: 100%;\n    color: {{ select_color }};\n    font-weight: 500;\n    border: 1px solid {{ select_border_color }};\n    background-color: {{ select_bg_color }};\n    border-radius: {{ button_radius }}px;\n    padding: 10px 30px 10px 10px;\n    width: 100%;\n    appearance: none;\n    outline: none;\n    box-shadow: none;\n    box-sizing: border-box;\n  }\n\n  .box-variants-select-wrapper-{{ section.id }} > span {\n    pointer-events: none;\n    position: absolute;\n    right: 5px;\n    bottom: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 35px;\n    height: calc(100% - 10px);\n  }\n\n  .box-variants-select-wrapper-{{ section.id }} > span svg {\n    stroke: unset;\n    fill: {{ select_color }};\n  }\n\n  .box-product-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    margin: 0;\n    margin-top: {{ button_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ button_size_mobile }}px;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    background-color: transparent;\n    background-color: {{ button_bg_color }};\n    transition: all 0.25s ease 0s;\n    cursor: pointer;\n  }\n\n  .box-product-button-{{ section.id }}:hover {\n    color: {{ button_hover_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    background-color: {{ button_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-info-{{ section.id }} {\n    overflow: hidden;\n    flex: 0 0 100%;\n    max-height: 95vh;\n    overflow-y: auto;\n  }\n\n  .box-header-{{ section.id }} {\n    padding: {{ header_padding_vertical_mobile }}px {{ header_padding_horizontal_mobile }}px;\n  }\n\n  .box-heading-{{ section.id }} {\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .box-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color_mobile }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n  }\n\n  .box-subheading-{{ section.id }} {\n    margin-top: {{ sub_heading_mt }}px;\n    text-align: {{ sub_heading_align_mobile }};\n  }\n\n  .box-subheading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ sub_heading_size_mobile }}px;\n    color: {{ sub_heading_color_mobile }};\n    line-height: {{ sub_heading_height }}%;\n    text-transform: unset;\n  }\n\n  .box-inner-{{ section.id }} {\n    padding: {{ body_padding_vertical_mobile }}px {{ body_padding_horizontal_mobile }}px;\n  }\n\n  .box-desktop-items-{{ section.id }} {\n    display: none;\n  }\n\n  .box-items-default-{{ section.id }} {\n    display: none;\n    justify-content: space-around;\n    gap: 20px;\n    padding: 0px 20px;\n  }\n\n  .box-items-default-{{ section.id }}:not(:first-child) {\n    margin-top: 20px;\n  }\n\n  .box-items-default-{{ section.id }}.active {\n    display: flex;\n  }\n\n  .box-items-default-{{ section.id }} > div {\n    position: relative;\n    flex: 1 0;\n    min-height: 118px;\n  }\n\n  .box-items-default-{{ section.id }} > div > img,\n  .box-items-default-{{ section.id }} > div > .not-empty,\n  .box-items-default-{{ section.id }} > div > .not-empty svg,\n  .box-items-default-{{ section.id }} > div svg:nth-child(2) {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .box-items-default-{{ section.id }} > div > .not-empty svg {\n    background-color: #AFAFAF;\n  }\n\n  .box-pick-{{ section.id }} {\n    margin-top: {{ pick_mt_mobile }}px;\n    text-align: {{ pick_align_mobile }};\n  }\n\n  .box-pick-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ pick_size_mobile }}px;\n    color: {{ pick_color }};\n    line-height: {{ pick_height }}%;\n    text-transform: unset;\n  }\n\n  .box-tabs-{{ section.id }} {\n    margin-top: {{ tabs_mt }}px;\n    display: flex;\n  }\n\n  .box-tab-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex: 1 0;\n    font-size: {{ tab_size_mobile }}px;\n    color: {{ tab_color }};\n    line-height: {{ tab_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ tab_padding_vertical_mobile }}px {{ tab_padding_horizontal_mobile }}px;\n    background-color: transparent;\n    background-color: {{ tab_bg_color }};\n    transition: all 0.25s ease 0s;\n    cursor: pointer;\n    border: 0px;\n    box-shadow: none;\n    border: {{ tabs_border_thickness }}px solid {{ tabs_border_color }};\n    font-weight: 700;\n  }\n\n  .box-tab-{{ section.id }}:first-child {\n    border-top-left-radius: {{ tabs_radius }}px;\n    border-bottom-left-radius: {{ tabs_radius }}px;\n  }\n\n  .box-tab-{{ section.id }}:nth-child(2) {\n    border-top-right-radius: {{ tabs_radius }}px;\n    border-bottom-right-radius: {{ tabs_radius }}px;\n    border-left: 0px;\n  }\n\n  .box-tab-only-{{ section.id }} {\n    border-radius: {{ tabs_radius }}px;\n  }\n\n  .box-tab-{{ section.id }}:hover {\n    color: {{ tab_hover_color }};\n    background-color: {{ tab_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-tab-{{ section.id }}.active {\n    color: {{ tab_active_color }};\n    background-color: {{ tab_bg_active_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-check-items-{{ section.id }} {\n    margin-top: {{ checkboxes_mt }}px;\n  }\n\n  .box-check-item-{{ section.id }} {\n    width: 100%;\n    padding: 1rem;\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n    cursor: pointer;\n    opacity: 0.9;\n  }\n\n  .box-check-item-{{ section.id }}:hover {\n    opacity: 1;\n  }\n\n  .box-check-item-{{ section.id }}.active {\n    background-color: {{ checkbox_bg_color }};\n    box-shadow: 0 2px 4px #0003;\n  }\n\n  .box-checked-{{ section.id }} {\n    display: none;\n  }\n\n  .box-check-item-{{ section.id }}.active .box-unchecked-{{ section.id }} {\n    display: none;\n  }\n\n  .box-check-item-{{ section.id }}.active .box-checked-{{ section.id }} {\n    display: block;\n  }\n\n  .box-label-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ checkbox_size_mobile }}px;\n    color: {{ checkbox_color }};\n    line-height: {{ checkbox_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .box-price-{{ section.id }} {\n    margin-left: auto;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n  }\n\n  .box-main-button-{{ section.id }} .box-price-{{ section.id }} {\n    margin: 0px;\n    margin-left: 10px;\n  }\n\n  .box-regular-price-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ price_strikethrough_size_mobile }}px;\n    color: {{ price_strikethrough_color }};\n    line-height: {{ price_height }}%;\n    text-transform: unset;\n    text-decoration: line-through;\n  }\n\n  .box-main-button-{{ section.id }} .box-regular-price-{{ section.id }} {\n    font-size: {{ main_button_size_mobile }}px;\n    color: #f0f0f0;\n  }\n\n  .box-sale-price-{{ section.id }} {\n    margin: 0px;\n    font-size: {{ price_size_mobile }}px;\n    color: {{ price_color }};\n    line-height: {{ price_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n  \n  .box-main-button-{{ section.id }} .box-sale-price-{{ section.id }} {\n    font-size: {{ main_button_size_mobile }}px;\n    color: {{ main_button_color }};\n  }\n\n  .box-main-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 100%;\n    margin: 0;\n    margin-top: {{ main_button_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ main_button_size_mobile }}px;\n    color: {{ main_button_color }};\n    line-height: {{ main_button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ main_button_padding_vertical_mobile }}px {{ main_button_padding_horizontal_mobile }}px;\n    border-radius: {{ main_button_radius }}px;\n    border: 0px;\n    border: {{ main_button_border_thickness }}px solid {{ main_button_border_color }};\n    background-color: transparent;\n    background-color: {{ main_button_bg_color }};\n    transition: all 0.25s ease 0s;\n    cursor: pointer;\n    box-shadow: none;\n  }\n\n  .box-main-button-{{ section.id }}:hover {\n    color: {{ main_button_hover_color }};\n    border: {{ main_button_border_thickness }}px solid {{ main_button_border_hover_color }};\n    background-color: {{ main_button_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .box-main-button-{{ section.id }}[disabled] {\n    cursor: not-allowed;\n  }\n\n  .box-count-{{ section.id }} {\n    margin: 0px 3px;\n  }\n\n  .box-form-{{ section.id }} {\n    display: none;\n  }\n\n  .box-footer-{{ section.id }} {\n    position: fixed;\n    z-index: 9999;\n    width: 100%;\n    box-sizing: border-box;\n    bottom: 0;\n    left: 0;\n    padding: 1.25rem;\n    background: #ffffffe6;\n  }\n\n  .box-footer-{{ section.id }} .box-main-button-{{ section.id }} {\n    min-height: 60px;\n  }\n\n  .box-close-{{ section.id }} {\n    display: none;\n    position: absolute;\n    bottom: 0;\n    left: 50%;\n    transform: translate(-50%,20%);\n    width: 20px;\n    height: 20px;\n    cursor: pointer;\n  }\n\n  .box-footer-{{ section.id }} .box-items-{{ section.id }} {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    width: 95%;\n    margin: 0px auto;\n    gap: 12px;\n  }\n\n  .box-item-{{ section.id }} {\n    width: 100%;\n    max-width: 70px;\n    min-height: 90px;\n    position: relative;\n    display: none;\n  }\n\n  .box-item-{{ section.id }}.active {\n    display: flex;\n    flex-direction: column;\n  }\n\n  .box-item-{{ section.id }} .not-empty {\n    display: block;\n    width: 100%;\n    flex: 1 1 100%;\n    object-fit: cover;\n  }\n\n  .box-item-{{ section.id }} .not-empty svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .box-item-{{ section.id }} .not-empty svg {\n    background-color: #AFAFAF;\n  }\n\n  \n\n  @media(min-width: 576px) {\n    .box-products-grid-{{ section.id }} {\n      grid-template-columns: repeat({{ products_row | times: 0.5 | round: 0 }}, 1fr);\n    }\n  }\n\n  @media(min-width: 768px) {\n    .box-products-grid-{{ section.id }} {\n      grid-template-columns: repeat({{ products_row }}, 1fr);\n    }\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .box-body-{{ section.id }} {\n      flex-direction: row;\n      gap: {{ products_gap }}px;\n      align-items: start;\n    }\n\n    .box-products-{{ section.id }} {\n      flex: 0 1 calc(100% - {{ box_width }}px);\n    }\n\n    .box-info-{{ section.id }} {\n      position: sticky;\n      top: 0px;\n      flex: 0 0 {{ box_width }}px;\n      border-radius: {{ box_radius }}px;\n      border: {{ box_border_thickness }}px solid {{ box_border_color }};\n    }\n\n    .box-products-grid-{{ section.id }} {\n      grid-template-columns: repeat({{ products_row | times: 0.5 | round: 0 }}, 1fr);\n      gap: {{ products_gap }}px;\n    }\n\n    .box-product-{{ section.id }} {\n      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;\n    }\n\n    .box-product-title-{{ section.id }} {\n      margin-top: {{ title_mt }}px;\n      font-size: {{ title_size }}px;\n    }\n\n    .box-product-vendor-{{ section.id }} {\n      margin-top: {{ vendor_mt }}px;\n      font-size: {{ vendor_size }}px;\n    }\n\n    .box-product-button-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n      font-size: {{ button_size }}px;\n    }\n\n    .box-header-{{ section.id }} {\n      padding: {{ header_padding_vertical }}px {{ header_padding_horizontal }}px;\n      background-color: {{ header_bg_color }};\n    }\n\n    .box-heading-{{ section.id }} {\n      text-align: {{ heading_align }};\n    }\n  \n    .box-heading-{{ section.id }} * {\n      color: {{ heading_color }};\n      font-size: {{ heading_size }}px;\n    }\n\n    .box-subheading-{{ section.id }} {\n      margin-top: {{ sub_heading_mt }}px;\n      text-align: {{ sub_heading_align }};\n    }\n  \n    .box-subheading-{{ section.id }} * {\n      color: {{ sub_heading_color }};\n      font-size: {{ sub_heading_size }}px;\n    }\n\n    .box-inner-{{ section.id }} {\n      padding: {{ body_padding_vertical }}px {{ body_padding_horizontal }}px;\n    }\n\n    .box-desktop-items-{{ section.id }} {\n      display: block;\n    }\n\n    .box-pick-{{ section.id }} {\n      margin-top: {{ pick_mt }}px;\n      text-align: {{ pick_align }};\n    }\n  \n    .box-pick-{{ section.id }} * {\n      font-size: {{ pick_size }}px;\n    }\n\n    .box-tabs-{{ section.id }} {\n      margin-top: {{ tabs_mt }}px;\n    }\n\n    .box-tab-{{ section.id }} {\n      padding: {{ tab_padding_vertical }}px {{ tab_padding_horizontal }}px;\n      font-size: {{ tab_size }}px;\n    }\n\n    .box-check-items-{{ section.id }} {\n      margin-top: {{ checkboxes_mt }}px;\n    }\n\n    .box-label-{{ section.id }} {\n      font-size: {{ checkbox_size }}px;\n    }\n\n    .box-regular-price-{{ section.id }} {\n      font-size: {{ price_strikethrough_size }}px;\n    }\n\n    .box-sale-price-{{ section.id }} {\n      font-size: {{ price_size }}px;\n    }\n\n    .box-main-button-{{ section.id }} {\n      margin-top: {{ main_button_mt }}px;\n      padding: {{ main_button_padding_vertical }}px {{ main_button_padding_horizontal }}px;\n      font-size: {{ main_button_size }}px;\n    }\n\n    .box-main-button-{{ section.id }} .box-price-{{ section.id }} {\n      display: none;\n    }\n\n    .box-form-{{ section.id }} {\n      display: block;\n    }\n\n    .box-footer-{{ section.id }} {\n      display: none;\n    }\n\n    .box-close-{{ section.id }} {\n      width: 24px;\n      height: 24px;\n      top: -12px;\n      left: -12px;\n      transform: none;\n    }\n  }\n\n  @media(min-width: 1200px) {\n    .box-products-grid-{{ section.id }} {\n      grid-template-columns: repeat({{ products_row }}, 1fr);\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if title_custom %}\n  <style>\n    .box-product-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if vendor_custom %}\n  <style>\n    .box-product-vendor-{{ section.id }} {\n      font-family: {{ vendor_font.family }}, {{ vendor_font.fallback_families }};\n      font-weight: {{ vendor_font.weight }};\n      font-style: {{ vendor_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .box-product-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if heading_custom %}\n  <style>\n    .box-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_heading_custom %}\n  <style>\n    .box-subheading-{{ section.id }} * {\n      font-family: {{ sub_heading_font.family }}, {{ sub_heading_font.fallback_families }};\n      font-weight: {{ sub_heading_font.weight }};\n      font-style: {{ sub_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if pick_custom %}\n  <style>\n    .box-pick-{{ section.id }} * {\n      font-family: {{ pick_font.family }}, {{ pick_font.fallback_families }};\n      font-weight: {{ pick_font.weight }};\n      font-style: {{ pick_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if tab_custom %}\n  <style>\n    .box-tab-{{ section.id }} {\n      font-family: {{ tab_font.family }}, {{ tab_font.fallback_families }};\n      font-weight: {{ tab_font.weight }};\n      font-style: {{ tab_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if checkbox_custom %}\n  <style>\n    .box-label-{{ section.id }} {\n      font-family: {{ checkbox_font.family }}, {{ checkbox_font.fallback_families }};\n      font-weight: {{ checkbox_font.weight }};\n      font-style: {{ checkbox_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if price_custom %}\n  <style>\n    .box-regular-price-{{ section.id }},\n    .box-sale-price-{{ section.id }} {\n      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};\n      font-weight: {{ price_font.weight }};\n      font-style: {{ price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if main_button_custom %}\n  <style>\n    .box-main-button-{{ section.id }},\n    .box-main-button-{{ section.id }} {\n      font-family: {{ main_button_font.family }}, {{ main_button_font.fallback_families }};\n      font-weight: {{ main_button_font.weight }};\n      font-style: {{ main_button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if card_shadow %}\n  <style>\n    .box-product-{{ section.id }} {\n      box-shadow: {{ card_shadow_color | hex_to_rgba: 0.15 }} 0px 2px 8px;\n    }\n  </style>\n{% endif %}\n\n{% if card_shadow_hover %}\n  <style>\n    .box-product-{{ section.id }}:hover {\n      box-shadow: {{ card_shadow_hover_color | hex_to_rgba: 0.15 }} 0px 2px 8px;\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .box-product-image-{{ section.id }} {\n     aspect-ratio: 9.6/14; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n    .box-product-image-{{ section.id }}{\n     aspect-ratio: 12/9; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .box-product-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else%}\n  <style>\n    .box-product-image-{{ section.id }} {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .box-product-image-{{ section.id }} {\n       aspect-ratio: 9.6/14; \n      } \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .box-product-image-{{ section.id }}{\n       aspect-ratio: 12/9; \n      }\n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .box-product-image-{{ section.id }} {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else%}\n  <style>\n    @media(min-width: 1024px) {\n      .box-product-image-{{ section.id }} {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n{% if title_uppercase %}\n  <style>\n    .box-product-title-{{ section.id }} {\n      text-transform: uppercase;\n    }\n  </style>\n{% endif %}\n\n{% if vendor_uppercase %}\n  <style>\n    .box-product-vendor-{{ section.id }} {\n      text-transform: uppercase;\n    }\n  </style>\n{% endif %}\n\n{% if card_second_hover %}\n  <style>\n    @keyframes fade-in-{{ section.id }} {\n      from {\n        opacity: 0;\n      }\n      to {\n        opacity: 1;\n      }\n    }\n\n    .box-product-{{ section.id }}:hover .box-product-second-image-{{ section.id }} {\n      display: block !important;\n      position: static !important;\n      -webkit-animation: fade-in-{{ section.id }} 0.5s;\n      animation: fade-in-{{ section.id }} 0.5s;\n    }\n\n    .box-product-{{ section.id }}:hover .has-secondary-{{ section.id }} .box-product-first-image-{{ section.id }} {\n      display: none;\n    }\n\n    .box-product-{{ section.id }}:hover .box-product-second-image-{{ section.id }} {\n      display: block !important;\n      position: static !important;\n      -webkit-animation: fade-in-{{ section.id }} 0.5s;\n      animation: fade-in-{{ section.id }} 0.5s;\n    }\n\n    .box-product-{{ section.id }}:hover .has-secondary-{{ section.id }} .box-product-first-image-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} box-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"box-body-{{ section.id }}\">\n        <div class=\"box-products-{{ section.id }}\">\n          {% if first_collection != blank %}\n            <div class=\"box-products-grid-{{ section.id }} active\" data-id=\"box-products-grid-first-{{ section.id }}\">\n              {% for product in collections[first_collection].products %}\n                <div class=\"box-product-{{ section.id }}\" data-price=\"{{ product.selected_or_first_available_variant.price }}\"  data-product-id=\"{{ product.id }}\" data-id=\"{{ product.selected_or_first_available_variant.id }}\">\n                \n                  <div cllass=\"box-product-top-{{ section.id }}\">\n                    \n                    <div class=\"box-product-image-{{ section.id }} {% if product.images.size > 1 %} has-secondary-{{ section.id }} {% endif %}\">\n                      {% if product.selected_or_first_available_variant.featured_image != blank %}\n                        <img src=\"{{ product.selected_or_first_available_variant.featured_image | image_url }}\" alt=\"{{ product.selected_or_first_available_variant.featured_image.alt }}\" class=\"box-product-main-image-{{ section.id }} {% if product.images.size > 1 and card_second_hover %}box-product-first-image-{{ section.id }}{% endif %}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                        \n                        {% if product.images.size > 1 and card_second_hover %}\n                          {% for image in product.images %}\n                            {% if forloop.index == 2 %}\n                              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" class=\"box-product-second-image-{{ section.id }}\">\n                            {% endif %}\n                          {% endfor %}\n                        {% endif %}\n\n                      {% elsif product.featured_image != blank %}\n\n                        <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" class=\"box-product-main-image-{{ section.id }} {% if product.images.size > 1 and card_second_hover %}box-product-first-image-{{ section.id }}{% endif %}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                        \n                        {% if product.images.size > 1 and card_second_hover %}\n                          {% for image in product.images %}\n                            {% if forloop.index == 2 %}\n                              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" class=\"box-product-second-image-{{ section.id }}\">\n                            {% endif %}\n                          {% endfor %}\n                        {% endif %}\n                        \n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                    </div>\n                    \n                    <h2 class=\"box-product-title-{{ section.id }}\">{{ product.title }}</h2>\n                    \n                    {% if product.vendor != blank %}\n                      <p class=\"box-product-vendor-{{ section.id }}\">{{ product.vendor }}</p>\n                    {% endif %}\n                  </div>\n                  \n                  <div class=\"box-product-bottom-{{ section.id }}\">\n                    {% if use_variants %}\n                      {% unless product.variants.size < 2 %}\n                        <div class=\"box-variants-select-wrapper-{{ section.id }}\">\n                          <select\n                            class=\"box-variants-select-{{ section.id }}\"\n                            {% if product.variants.size < 2 %}\n                            style=\"display: none;\"\n                            {% endif %}\n                          >\n                            {% for variant in product.variants %}\n                              <option value=\"{{ variant.id }}-{{ variant.price }}\">{{ variant.title }}</option>\n                            {% endfor %}\n                          </select>\n                          <span>\n                            <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokelinejoin=\"2\" strokelinecap=\"round\" class=\"feather feather-chevron-down\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n                          </span>\n                        </div>\n                      {% endunless %}\n                    {% endif %}\n                    \n                    <button {% unless product.available %}disabled{% endunless %} class=\"box-product-button-{{ section.id }}\">\n                      {% if product.available %}\n                        {{ button }}\n                      {% else %}\n                        {{ button_soldout }}\n                      {% endif %}\n                    </button>\n                    \n                  </div>\n                </div>\n              {% endfor %}\n            </div>\n          {% endif %}\n          {% if second_collection != blank %}\n            <div class=\"box-products-grid-{{ section.id }}\" data-id=\"box-products-grid-second-{{ section.id }}\">\n              {% for product in collections[second_collection].products %}\n                <div class=\"box-product-{{ section.id }}\" data-price=\"{{ product.selected_or_first_available_variant.price }}\" data-product-id=\"{{ product.id }}\" data-id=\"{{ product.selected_or_first_available_variant.id }}\">\n                \n                  <div cllass=\"box-product-top-{{ section.id }}\">\n                    \n                    <div class=\"box-product-image-{{ section.id }} {% if product.images.size > 1 %} has-secondary-{{ section.id }} {% endif %}\">\n                      {% if product.selected_or_first_available_variant.featured_image != blank %}\n                        <img src=\"{{ product.selected_or_first_available_variant.featured_image | image_url }}\" alt=\"{{ product.selected_or_first_available_variant.featured_image.alt }}\" class=\"box-product-main-image-{{ section.id }} {% if product.images.size > 1 and card_second_hover %}box-product-first-image-{{ section.id }}{% endif %}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                        \n                        {% if product.images.size > 1 and card_second_hover %}\n                          {% for image in product.images %}\n                            {% if forloop.index == 2 %}\n                              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" class=\"box-product-second-image-{{ section.id }}\">\n                            {% endif %}\n                          {% endfor %}\n                        {% endif %}\n\n                      {% elsif product.featured_image != blank %}\n\n                        <img src=\"{{ product.featured_image | image_url }}\" alt=\"{{ product.featured_image.alt }}\" class=\"box-product-main-image-{{ section.id }} {% if product.images.size > 1 and card_second_hover %}box-product-first-image-{{ section.id }}{% endif %}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                        \n                        {% if product.images.size > 1 and card_second_hover %}\n                          {% for image in product.images %}\n                            {% if forloop.index == 2 %}\n                              <img src=\"{{ image | image_url }}\" alt=\"{{ image.alt }}\" class=\"box-product-second-image-{{ section.id }}\">\n                            {% endif %}\n                          {% endfor %}\n                        {% endif %}\n                        \n                      {% else %}\n                        {{ 'image' | placeholder_svg_tag }}\n                      {% endif %}\n                    </div>\n                    \n                    <h2 class=\"box-product-title-{{ section.id }}\">{{ product.title }}</h2>\n                    \n                    {% if product.vendor != blank %}\n                      <p class=\"box-product-vendor-{{ section.id }}\">{{ product.vendor }}</p>\n                    {% endif %}\n                  </div>\n                  \n                  <div class=\"box-product-bottom-{{ section.id }}\">\n                    {% if use_variants %}\n                      {% unless product.variants.size < 2 %}\n                        <div class=\"box-variants-select-wrapper-{{ section.id }}\">\n                          <select\n                            class=\"box-variants-select-{{ section.id }}\"\n                            {% if product.variants.size < 2 %}\n                            style=\"display: none;\"\n                            {% endif %}\n                          >\n                            {% for variant in product.variants %}\n                              <option value=\"{{ variant.id }}-{{ variant.price }}\">{{ variant.title }}</option>\n                            {% endfor %}\n                          </select>\n                          <span>\n                            <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokelinejoin=\"2\" strokelinecap=\"round\" class=\"feather feather-chevron-down\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>\n                          </span>\n                        </div>\n                      {% endunless %}\n                    {% endif %}\n                  \n                    <button {% unless product.available %}disabled{% endunless %} class=\"box-product-button-{{ section.id }}\">\n                      {% if product.available %}\n                        {{ button }}\n                      {% else %}\n                        {{ button_soldout }}\n                      {% endif %}\n                    </button>\n                  </div>\n                  \n                </div>\n              {% endfor %}\n            </div>\n          {% endif %}\n        </div>\n        <div class=\"box-info-{{ section.id }}\">\n          <div class=\"box-header-{{ section.id }}\">\n            {% if heading != blank %}\n              <div class=\"box-heading-{{ section.id }}\">{{ heading }}</div>\n            {% endif %}\n\n            {% if sub_heading != blank %}\n              <div class=\"box-subheading-{{ section.id }}\">{{ sub_heading }}</div>\n            {% endif %}\n          </div>\n          <div class=\"box-inner-{{ section.id }}\">\n            <div class=\"box-items-{{ section.id }} box-desktop-items-{{ section.id }}\">\n              <div class=\"box-first-items-{{ section.id }} box-items-default-{{ section.id }} active\">\n\n                <div class=\"box-first-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n\n                </div>\n                <div class=\"box-second-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n\n                </div>\n                {% if box_variants == \"3_6_9\" %}\n                  <div class=\"box-third-item-{{ section.id }}\">\n                    <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                              <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                  <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                  <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                      <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                      <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                  </g>\n                              </g>\n                          </g>\n                      </g>\n                    </svg>\n                    <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                      <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                      <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                      </mask>\n                      <g mask=\"url(#mask0_4_10)\">\n                      <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                      </g>\n                      <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                    </svg>\n                  </div>\n                {% endif %}\n              </div>\n              <div class=\"box-second-items-{{ section.id }} box-items-default-{{ section.id }}\">\n                <div class=\"box-first-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n                </div>\n                <div class=\"box-second-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n                </div>\n                {% if box_variants == \"3_6_9\" %}\n                  <div class=\"box-third-item-{{ section.id }}\">\n                    <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                              <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                  <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                  <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                      <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                      <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                  </g>\n                              </g>\n                          </g>\n                      </g>\n                    </svg>\n                    <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                      <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                      <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                      </mask>\n                      <g mask=\"url(#mask0_4_10)\">\n                      <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                      </g>\n                      <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                    </svg>\n                  </div>\n                {% endif %}\n              </div>\n              <div class=\"box-third-items-{{ section.id }} box-items-default-{{ section.id }}\">\n                <div class=\"box-first-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n                </div>\n                <div class=\"box-second-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n                </div>\n                {% if box_variants == \"3_6_9\" %}\n                <div class=\"box-third-item-{{ section.id }}\">\n                  <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                    <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                        <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                            <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                                <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                                <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                                    <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                                    <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                                </g>\n                            </g>\n                        </g>\n                    </g>\n                  </svg>\n                  <svg class=\"box-default-{{ section.id }}\" width=\"102\" height=\"132\" viewBox=\"0 0 102 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <mask id=\"mask0_4_10\" style=\"mask-type:luminance\" maskUnits=\"userSpaceOnUse\" x=\"1\" y=\"0\" width=\"100\" height=\"132\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" fill=\"white\"/>\n                    </mask>\n                    <g mask=\"url(#mask0_4_10)\">\n                    <path d=\"M1 12L1.14578 11.9998C3.11002 5.28747 24.6801 0 51 0C77.3199 0 98.89 5.28747 100.854 11.9998L101 12V119C101 126.18 78.6142 132 51 132C23.3858 132 1 126.18 1 119V12Z\" stroke=\"#979797\" stroke-width=\"2\" stroke-dasharray=\"4 4\"/>\n                    </g>\n                    <path d=\"M1 13C1 20.1797 23.3858 26 51 26C78.6142 26 101 20.1797 101 13\" stroke=\"#979797\" stroke-dasharray=\"4 4\"/>\n                  </svg>\n                </div>\n                {% endif %}\n              </div>\n            </div>\n            {% if pick != blank %}\n              <div class=\"box-pick-{{ section.id }}\">\n                {{ pick }}\n              </div>\n            {% endif %}\n            <div class=\"box-tabs-{{ section.id }}\">\n              {% if first_collection != blank %}\n                <button class=\"box-tab-{{ section.id }} {% if second_collection == blank %}box-tab-only-{{ section.id }}{% endif %} active\" data-type=\"first_type\" id=\"box-products-grid-first-{{ section.id }}\">\n                  {% if first_collection_title != blank %}\n                    {{ first_collection_title }}\n                  {% else %}\n                    {{ first_collection.title }}\n                  {% endif %}\n                </button>\n              {% endif %}\n              {% if second_collection != blank %}\n                <button class=\"box-tab-{{ section.id }} {% if first_collection == blank %}box-tab-only-{{ section.id }}{% endif %}\" data-type=\"second_type\" id=\"box-products-grid-second-{{ section.id }}\">\n                  {% if second_collection_title != blank %}\n                    {{ second_collection_title }}\n                  {% else %}\n                    {{ second_collection.title }}\n                  {% endif %}\n                </button>\n              {% endif %}\n            </div>\n            <div class=\"box-check-items-{{ section.id }}\">\n              {% if first_checkbox != blank %}\n                <div class=\"box-check-item-{{ section.id }} active\" id=\"box-check-first-item-{{ section.id }}\">\n                  <svg class=\"box-unchecked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -607.000000)\" stroke=\"#C2C2C2\">\n                              <circle id=\"Oval-Copy-2\" cx=\"956\" cy=\"620\" r=\"12.5\"></circle>\n                          </g>\n                      </g>\n                  </svg>\n                  <svg class=\"box-checked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -530.000000)\">\n                              <g id=\"Group-4\" transform=\"translate(943.000000, 530.000000)\">\n                                  <circle id=\"Oval\" stroke=\"#C2C2C2\" cx=\"13\" cy=\"13\" r=\"12.5\"></circle>\n                                  <circle id=\"Oval\" fill=\"{{ checkbox_circle_color }}\" cx=\"13\" cy=\"13\" r=\"8\"></circle>\n                              </g>\n                          </g>\n                      </g>\n                  </svg>\n                  <p class=\"box-label-{{ section.id }}\">{{ first_checkbox }}</p>\n                  <p class=\"box-price-{{ section.id }}\">\n                    <span class=\"box-regular-price-{{ section.id }}\"></span>\n                    <span class=\"box-sale-price-{{ section.id }}\"></span>\n                  </p>\n                </div>\n              {% endif %}\n              {% if second_checkbox != blank %}\n                <div class=\"box-check-item-{{ section.id }}\" id=\"box-check-second-item-{{ section.id }}\">\n                  <svg class=\"box-unchecked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -607.000000)\" stroke=\"#C2C2C2\">\n                              <circle id=\"Oval-Copy-2\" cx=\"956\" cy=\"620\" r=\"12.5\"></circle>\n                          </g>\n                      </g>\n                  </svg>\n                  <svg class=\"box-checked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -530.000000)\">\n                              <g id=\"Group-4\" transform=\"translate(943.000000, 530.000000)\">\n                                  <circle id=\"Oval\" stroke=\"#C2C2C2\" cx=\"13\" cy=\"13\" r=\"12.5\"></circle>\n                                  <circle id=\"Oval\" fill=\"{{ checkbox_circle_color }}\" cx=\"13\" cy=\"13\" r=\"8\"></circle>\n                              </g>\n                          </g>\n                      </g>\n                  </svg>\n                  <p class=\"box-label-{{ section.id }}\">{{ second_checkbox }}</p>\n                  <p class=\"box-price-{{ section.id }}\">\n                    <span class=\"box-regular-price-{{ section.id }}\"></span>\n                    <span class=\"box-sale-price-{{ section.id }}\"></span>\n                  </p>\n                </div>\n              {% endif %}\n              {% if third_checkbox != blank %}\n                <div class=\"box-check-item-{{ section.id }}\" id=\"box-check-third-item-{{ section.id }}\">\n                  <svg class=\"box-unchecked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -607.000000)\" stroke=\"#C2C2C2\">\n                              <circle id=\"Oval-Copy-2\" cx=\"956\" cy=\"620\" r=\"12.5\"></circle>\n                          </g>\n                      </g>\n                  </svg>\n                  <svg class=\"box-checked-{{ section.id }}\" width=\"26px\" height=\"26px\" viewBox=\"0 0 26 26\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n                      <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n                          <g id=\"Build-a-Box---Desktop\" transform=\"translate(-943.000000, -530.000000)\">\n                              <g id=\"Group-4\" transform=\"translate(943.000000, 530.000000)\">\n                                  <circle id=\"Oval\" stroke=\"#C2C2C2\" cx=\"13\" cy=\"13\" r=\"12.5\"></circle>\n                                  <circle id=\"Oval\" fill=\"{{ checkbox_circle_color }}\" cx=\"13\" cy=\"13\" r=\"8\"></circle>\n                              </g>\n                          </g>\n                      </g>\n                  </svg>\n                  <p class=\"box-label-{{ section.id }}\">{{ third_checkbox }}</p>\n                  <p class=\"box-price-{{ section.id }}\">\n                    <span class=\"box-regular-price-{{ section.id }}\"></span>\n                    <span class=\"box-sale-price-{{ section.id }}\"></span>\n                  </p>\n                </div>\n              {% endif %}\n            </div>\n            <form class=\"box-form-{{ section.id }}\" method=\"post\" action=\"/cart/add\" accept-charset=\"UTF-8\" enctype=\"multipart/form-data\" novalidate=\"novalidate\" data-type=\"add-to-cart-form\">\n              \n              <button type=\"submit\" disabled data-all=\"{{ main_button }}\" class=\"box-main-button-{{ section.id }}\">{{ main_left_button }} <span class=\"box-count-{{ section.id }}\">{% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}</span> {{ main_right_button }}</button>\n            </form>\n          </div>\n        </div>\n      </div>\n    </div>\n</div>\n\n<div class=\"box-footer-{{ section.id }}\">\n  <div class=\"box-items-{{ section.id }}\">\n    {% for item in (1..9) %}\n      <div class=\"box-item-{{ section.id }}\">\n        <svg class=\"box-close-{{ section.id }}\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n          <g id=\"Wireframes\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n              <g id=\"Build-a-Box---Desktop\" transform=\"translate(-932.000000, -312.000000)\">\n                  <g id=\"close\" transform=\"translate(932.000000, 312.000000)\">\n                      <circle id=\"Oval\" fill=\"{{ close_bg_color }}\" cx=\"12\" cy=\"12\" r=\"12\"></circle>\n                      <g id=\"Group\" transform=\"translate(8.000000, 8.714155)\" stroke=\"#FFFFFF\" stroke-linecap=\"square\" stroke-width=\"1.5\">\n                          <line x1=\"0.539869254\" y1=\"0.561464944\" x2=\"6.97012749\" y2=\"6.27725004\" id=\"Line-3\" transform=\"translate(3.754998, 3.419385) rotate(3.366461) translate(-3.754998, -3.419385) \"></line>\n                          <line x1=\"0.713240223\" y1=\"6.46111732\" x2=\"6.79675978\" y2=\"0.377597765\" id=\"Line-3\"></line>\n                      </g>\n                  </g>\n              </g>\n          </g>\n        </svg>\n      </div>\n    {% endfor %}\n  </div>\n  <form class=\"box-footer-form-{{ section.id }}\" method=\"post\" action=\"/cart/add\" accept-charset=\"UTF-8\" enctype=\"multipart/form-data\" novalidate=\"novalidate\" data-type=\"add-to-cart-form\">\n    <button type=\"submit\" disabled data-all=\"{{ main_button }}\" class=\"box-main-button-{{ section.id }} box-main-button-footer-{{ section.id }}\">{{ main_left_button }} <span class=\"box-count-{{ section.id }}\">{% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}</span> {{ main_right_button }}</button>\n  </form>\n</div>\n\n<script>\n  var formayMoneyForBuyItWith = function(cents, format) {\n    if (typeof cents == 'string') { cents = cents.replace('.',''); }\n    var value = '';\n    var placeholderRegex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/;\n    var formatString = (format || this.money_format);\n  \n    function defaultOption(opt, def) {\n       return (typeof opt == 'undefined' ? def : opt);\n    }\n  \n    function formatWithDelimiters(number, precision, thousands, decimal) {\n      precision = defaultOption(precision, 2);\n      thousands = defaultOption(thousands, ',');\n      decimal   = defaultOption(decimal, '.');\n  \n      if (isNaN(number) || number == null) { return 0; }\n  \n      number = (number/100.0).toFixed(precision);\n  \n      var parts   = number.split('.'),\n          dollars = parts[0].replace(/(\\d)(?=(\\d\\d\\d)+(?!\\d))/g, '$1' + thousands),\n          cents   = parts[1] ? (decimal + parts[1]) : '';\n  \n      return dollars + cents;\n    }\n  \n    switch(formatString.match(placeholderRegex)[1]) {\n      case 'amount':\n        value = formatWithDelimiters(cents, 2);\n        break;\n      case 'amount_no_decimals':\n        value = formatWithDelimiters(cents, 0);\n        break;\n      case 'amount_with_comma_separator':\n        value = formatWithDelimiters(cents, 2, '.', ',');\n        break;\n      case 'amount_no_decimals_with_comma_separator':\n        value = formatWithDelimiters(cents, 0, '.', ',');\n        break;\n    }\n  \n    return formatString.replace(placeholderRegex, value);\n  };\n  \n  function initBuildBox() {\n\n    let countItems{{ section.id | replace: '-', '' }} = 0;\n    let limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %};\n    let discountType = \"first_type\";\n    let sum = 0;\n    let saleSum = 0;\n    \n    const productElements = document.querySelectorAll('.box-product-{{ section.id }}');\n    let first_collection_array = {{ first_collection.products | json | default: '[]' }};\n    let second_collection_array = {{ second_collection.products | json | default: '[]' }};\n\n    first_collection_array = first_collection_array || [];\n    second_collection_array = second_collection_array || [];\n\n    let all_products = [];\n  \n    if (first_collection_array.length === 0 && second_collection_array.length === 0) {\n      all_products = [];\n    } else if (first_collection_array.length === 0) {\n      all_products = second_collection_array;\n    } else if (second_collection_array.length === 0) {\n      all_products = first_collection_array;\n    } else {\n      all_products = [...first_collection_array, ...second_collection_array];\n    }\n    \n    productElements.forEach((productElement, index) => {\n\n        let this_product;\n        let productId = productElement.getAttribute('data-product-id');\n        let id = productElement.getAttribute('data-id');\n\n        all_products.forEach(el => {\n          if(el.id == productId) {\n            this_product = el;\n          } else if (el.id == id) {\n            this_product = el;\n          }\n        })\n\n        let select = productElement.querySelector('.box-variants-select-{{ section.id }}');\n\n        if(select) {\n           select.addEventListener('change', () => {\n            let btn = productElement.querySelector('.box-product-button-{{ section.id }}');\n            const value = select.value;\n            const valueId = value.split('-')[0];\n            console.log(all_products);\n            let variants = this_product.variants;\n            variants.forEach(el => {\n              if(el.id == valueId) {\n                if(el.available) {\n                  const parts = value.split('-');\n                  const variantId = parts[0];\n                  const variantPrice = parts[1];\n                  productElement.setAttribute(\"data-id\", variantId);\n                  productElement.setAttribute(\"data-price\", variantPrice);\n\n                  if(btn) {\n                    btn.innerText = \"{{ button }}\";\n                    btn.removeAttribute('disabled');\n                  }\n                } else {\n                  if(btn) {\n                    btn.innerText = \"{{ button_soldout }}\";\n                    btn.setAttribute('disabled', true);\n                  }\n                }\n              }\n            })\n          }) \n        }\n      \n        let toggle = productElement.querySelector('.box-product-button-{{ section.id }}');\n        toggle.addEventListener('click', () => {\n            const mainImage = productElement.querySelector('.box-product-main-image-{{ section.id }}');\n            const mainSVG = productElement.querySelector('.box-product-image-{{ section.id }} svg');\n            let dataId = productElement.getAttribute('data-id');\n            let price = productElement.getAttribute('data-price');\n            let salePrice;\n            if(discountType == \"first_type\") {\n              if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ first_checkbox_discount }}, 10) / 100);\n              } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ second_checkbox_discount }}, 10) / 100);\n              } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ third_checkbox_discount }}, 10) / 100);\n              }\n            } else if(discountType == \"second_type\") {\n              if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ first_checkbox_discount_second }}, 10) / 100);\n              } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ second_checkbox_discount_second }}, 10) / 100);\n              } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}) {\n                salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ third_checkbox_discount_second }}, 10) / 100);\n              }\n            }\n            \n            const defaultItems = document.querySelectorAll('.box-items-default-{{ section.id }} > *');\n            const defaultItems2 = document.querySelectorAll('.box-item-{{ section.id }}');\n            if (countItems{{ section.id | replace: '-', '' }} < limitItems{{ section.id | replace: '-', '' }}) {\n                const emptyItem = Array.from(defaultItems).find(item => !item.querySelector('.not-empty'));\n                const emptyItem2 = Array.from(defaultItems2).find(item => !item.querySelector('.not-empty'));\n                if (window.innerWidth > 1024) {\n                  if (emptyItem) {\n                    if(mainImage) {\n                      const img = document.createElement('img');\n                      img.src = mainImage.src;\n                      img.classList.add('not-empty');\n                      emptyItem.appendChild(img); \n                    } else {\n                      const div = document.createElement('div');\n                      div.classList.add('not-empty');\n                      const svg = mainSVG.cloneNode(true);\n                      div.appendChild(svg); \n                      emptyItem.appendChild(div); \n                    }\n                    emptyItem.querySelector('.box-default-{{ section.id }}').style.display = \"none\";\n                    emptyItem.querySelector('.box-close-{{ section.id }}').style.display = \"block\";\n                    countItems{{ section.id | replace: '-', '' }}++;\n  \n                    emptyItem.setAttribute('data-id', dataId);\n                  \n                    emptyItem.setAttribute('data-price', price);\n                    emptyItem.setAttribute('data-saleprice', salePrice);\n                    sum = sum + Number(price);\n                    saleSum = saleSum + Number(salePrice);\n  \n                    if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                      document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                        let count = limitItems{{ section.id | replace: '-', '' }} - countItems{{ section.id | replace: '-', '' }};\n                        el.innerText = count;\n                      })\n                    }\n                }\n              } else {\n                  if (emptyItem2) {\n                    if(mainImage) {\n                      const img = document.createElement('img');\n                      img.src = mainImage.src;\n                      img.classList.add('not-empty');\n                      emptyItem2.appendChild(img); \n                    } else {\n                      const div = document.createElement('div');\n                      div.classList.add('not-empty');\n                      const svg = mainSVG.cloneNode(true);\n                      div.appendChild(svg); \n                      emptyItem.appendChild(div); \n                    }\n                    emptyItem2.classList.add('active');\n                    emptyItem2.querySelector('.box-close-{{ section.id }}').style.display = \"block\";\n                    countItems{{ section.id | replace: '-', '' }}++;\n  \n                    emptyItem2.setAttribute('data-id', dataId);\n                  \n                    emptyItem2.setAttribute('data-price', price);\n                    emptyItem2.setAttribute('data-saleprice', salePrice);\n                    sum = sum + Number(price);\n                    saleSum = saleSum + Number(salePrice);\n  \n                    if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                      document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                        let count = limitItems{{ section.id | replace: '-', '' }} - countItems{{ section.id | replace: '-', '' }};\n                        el.innerText = count;\n                      })\n                    }\n                }                  \n              }\n\n\n              if(document.querySelector('.box-form-{{ section.id }}')) {\n                var productIdInput = document.createElement('input');\n                productIdInput.type = 'hidden';\n                productIdInput.name = 'items[' + countItems{{ section.id | replace: '-', '' }} + '][id]';\n                productIdInput.id = productElement.getAttribute('data-id');\n                productIdInput.value = productElement.getAttribute('data-id');\n    \n                var quantityInput = document.createElement('input');\n                quantityInput.type = 'hidden';\n                quantityInput.name = 'items[' + countItems{{ section.id | replace: '-', '' }} + '][quantity]';\n                quantityInput.value = '1';\n                quantityInput.id = productElement.getAttribute('data-id');\n    \n                document.querySelector('.box-form-{{ section.id }}').appendChild(productIdInput);\n                document.querySelector('.box-form-{{ section.id }}').appendChild(quantityInput);\n              }\n\n              if(document.querySelector('.box-footer-form-{{ section.id }}')) {\n                var productIdInput = document.createElement('input');\n                productIdInput.type = 'hidden';\n                productIdInput.name = 'items[' + countItems{{ section.id | replace: '-', '' }} + '][id]';\n                productIdInput.id = productElement.getAttribute('data-id');\n                productIdInput.value = productElement.getAttribute('data-id');\n    \n                var quantityInput = document.createElement('input');\n                quantityInput.type = 'hidden';\n                quantityInput.name = 'items[' + countItems{{ section.id | replace: '-', '' }} + '][quantity]';\n                quantityInput.value = '1';\n                quantityInput.id = productElement.getAttribute('data-id');\n    \n                document.querySelector('.box-footer-form-{{ section.id }}').appendChild(productIdInput);\n                document.querySelector('.box-footer-form-{{ section.id }}').appendChild(quantityInput);\n              }\n            }\n\n          if(countItems{{ section.id | replace: '-', '' }} == limitItems{{ section.id | replace: '-', '' }}) {\n            let priceElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-regular-price-{{ section.id }}');\n            let priceSaleElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-sale-price-{{ section.id }}');\n            priceElement.innerHTML = formayMoneyForBuyItWith(sum, \"{{ shop.money_format }}\");\n            priceSaleElement.innerHTML = formayMoneyForBuyItWith(saleSum, \"{{ shop.money_format }}\");\n            if(document.querySelectorAll('.box-main-button-{{ section.id }}')) {\n              document.querySelectorAll('.box-main-button-{{ section.id }}').forEach(el => {\n                let text = el.getAttribute(\"data-all\");\n                el.innerHTML = text;\n                el.removeAttribute('disabled');\n                el.innerHTML += \"<p class='box-price-{{ section.id }}'> ● <span class='box-regular-price-{{ section.id }}'>\" + formayMoneyForBuyItWith(sum, \"{{ shop.money_format }}\") + \"</span> - <span class='box-sale-price-{{ section.id }}'> \" + formayMoneyForBuyItWith(saleSum, \"{{ shop.money_format }}\") + \"</span>\";\n              })\n            }\n          }\n          \n        });\n    });\n\n    const closeButtons = document.querySelectorAll('.box-close-{{ section.id }}');\n\n    let buttonHtml;\n    if(document.querySelector('.box-main-button-{{ section.id }}')) {\n      buttonHtml = document.querySelector('.box-main-button-{{ section.id }}').innerHTML;\n    }\n\n    closeButtons.forEach(closeButton => {\n        \n        closeButton.addEventListener('click', () => {\n            const parentElement = closeButton.parentNode;\n            const image = parentElement.querySelector('.not-empty');\n            if (image) {\n                let dataId = parentElement.getAttribute('data-id');\n                if(document.querySelectorAll('.box-form-{{ section.id }} input')) {\n                  document.querySelectorAll('.box-form-{{ section.id }} input').forEach(el => {\n                      if(el.id == dataId) {\n                        if(el.name.includes(countItems{{ section.id | replace: '-', '' }})) {\n                         el.parentNode.removeChild(el); \n                        }\n                      }\n                  })\n                }\n\n                if(document.querySelectorAll('.box-footer-form-{{ section.id }} input')) {\n                  document.querySelectorAll('.box-footer-form-{{ section.id }} input').forEach(el => {\n                      if(el.id == dataId) {\n                        if(el.name.includes(countItems{{ section.id | replace: '-', '' }})) {\n                         el.parentNode.removeChild(el); \n                        }\n                      }\n                  })\n                }\n              \n                image.remove();\n                closeButton.style.display = \"none\";\n                if(parentElement.querySelector('.box-default-{{ section.id }}')) {\n                 parentElement.querySelector('.box-default-{{ section.id }}').style.display = \"block\"; \n                }\n                parentElement.classList.remove('active');\n                countItems{{ section.id | replace: '-', '' }}--;\n                let price = parentElement.getAttribute('data-price');\n                let salePrice = parentElement.getAttribute('data-saleprice');\n                sum = sum - Number(price);\n                saleSum = saleSum - Number(salePrice);\n                let priceElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-regular-price-{{ section.id }}');\n                let priceSaleElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-sale-price-{{ section.id }}');\n                priceElement.innerHTML = \"\";\n                priceSaleElement.innerHTML = \"\";\n                if(document.querySelectorAll('.box-main-button-{{ section.id }}')) {\n                  document.querySelectorAll('.box-main-button-{{ section.id }}').forEach(el => {\n                    el.innerHTML = buttonHtml;\n                    el.setAttribute('disabled', '');\n                  })\n                }\n                if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                  document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                    let count = limitItems{{ section.id | replace: '-', '' }} - countItems{{ section.id | replace: '-', '' }};\n                    el.innerText = count;\n                  })\n                }\n            }\n\n        });\n    });\n    \n    if(document.querySelectorAll('.box-tab-{{ section.id }}')) {\n      document.querySelectorAll('.box-tab-{{ section.id }}').forEach(el => {\n        el.addEventListener('click', () => {\n          if(!el.classList.contains('active')) {\n            let priceElements = document.querySelectorAll('.box-check-item-{{ section.id }} .box-regular-price-{{ section.id }}');\n            let priceSaleElement = document.querySelectorAll('.box-check-item-{{ section.id }} .box-sale-price-{{ section.id }}');\n            countItems{{ section.id | replace: '-', '' }} = 0;\n            sum = 0;\n            saleSum = 0;\n            priceElements.forEach(el => {\n              el.innerText = \"\";\n            })\n            priceSaleElement.forEach(el => {\n              el.innerText = \"\";\n            })\n            if(document.querySelectorAll('.box-main-button-{{ section.id }}')) {\n              document.querySelectorAll('.box-main-button-{{ section.id }}').forEach(el => {\n                el.innerHTML = buttonHtml;\n                el.setAttribute('disabled', '');\n              })\n            }\n            if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n              document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                let count = limitItems{{ section.id | replace: '-', '' }} - countItems{{ section.id | replace: '-', '' }};\n                el.innerText = count;  \n              })\n            }\n            \n            let items = document.querySelectorAll('.box-items-default-{{ section.id }}');\n              if(items) {\n                items.forEach(el => {\n                  let innerItems = el.querySelectorAll('div');\n                  if(innerItems) {\n                    innerItems.forEach(element => {\n                      const image = element.querySelector('.not-empty');\n                      const closeButton = element.querySelector('.box-close-{{ section.id }}');\n                      const itemDefault = element.querySelector('.box-default-{{ section.id }}');\n                      if (image) {\n                        image.remove();\n                        closeButton.style.display = \"none\";\n                        itemDefault.style.display = \"block\";\n                      }\n                    })\n                  }\n                })\n              }\n\n              let itemsSecond = document.querySelectorAll('.box-item-{{ section.id }}');\n              if(itemsSecond) {\n                itemsSecond.forEach(el => {\n                  el.classList.remove('active');\n                  let closeButton = el.querySelector('.box-close-{{ section.id }}');\n                  if(closeButton) {\n                    closeButton.style.display = \"none\";\n                  }\n                  if(el.querySelector('.not-empty')) {\n                    el.querySelector('.not-empty').remove();\n                  }\n                })\n              }\n\n              if(document.querySelectorAll('.box-form-{{ section.id }} input')) {\n                document.querySelectorAll('.box-form-{{ section.id }} input').forEach(el => {\n                    el.parentNode.removeChild(el); \n                })\n              }\n\n              if(document.querySelectorAll('.box-footer-form-{{ section.id }} input')) {\n                document.querySelectorAll('.box-footer-form-{{ section.id }} input').forEach(el => {\n                    el.parentNode.removeChild(el); \n                })\n              }\n          }\n          \n          document.querySelectorAll('.box-tab-{{ section.id }}').forEach(element => {\n            element.classList.remove('active');\n          })\n          el.classList.add('active');\n          if(document.querySelectorAll('.box-products-grid-{{ section.id }}')) {\n            document.querySelectorAll('.box-products-grid-{{ section.id }}').forEach(element => {\n              element.classList.remove('active');\n              let dataId = element.getAttribute('data-id');\n              if(el.id == dataId) {\n                element.classList.add('active');\n              }\n            })\n          }\n            \n        })\n      })\n    }\n\n    if(document.querySelectorAll('.box-check-item-{{ section.id }}')) {\n      document.querySelectorAll('.box-check-item-{{ section.id }}').forEach(el => {\n        el.addEventListener('click', () => {\n          document.querySelectorAll('.box-check-item-{{ section.id }}').forEach(element => {\n            element.classList.remove('active');\n          })\n          el.classList.add('active');\n          let priceElements = document.querySelectorAll('.box-check-item-{{ section.id }} .box-regular-price-{{ section.id }}');\n          let priceSaleElement = document.querySelectorAll('.box-check-item-{{ section.id }} .box-sale-price-{{ section.id }}');\n          priceElements.forEach(el => {\n            el.innerText = \"\";\n          })\n          priceSaleElement.forEach(el => {\n            el.innerText = \"\";\n          })\n          if (window.innerWidth > 1024) {\n            if(document.querySelectorAll('.box-items-default-{{ section.id }}')) {\n              document.querySelectorAll('.box-items-default-{{ section.id }}').forEach(element => {\n                element.classList.remove('active');\n                if(el.id == \"box-check-first-item-{{ section.id }}\") {\n                  if(element.classList.contains('box-first-items-{{ section.id }}')) {\n                    element.classList.add('active');\n                    if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                      document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                        document.querySelectorAll('.box-count-{{ section.id }}').innerText = \"{% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}\";\n                      })\n                    }\n                    limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %};\n                  } else {\n                    let items = element.querySelectorAll('div');\n                    if(items) {\n                      items.forEach(el => {\n                        if(document.querySelectorAll('.box-form-{{ section.id }} input')) {\n                          document.querySelectorAll('.box-form-{{ section.id }} input').forEach(el => {\n                              const name = el.getAttribute('name');\n                              const match = name.match(/\\[(\\d+)\\]/);\n                            \n                              if (match && parseInt(match[1]) > limitItems{{ section.id | replace: '-', '' }}) {\n                                  el.remove();\n                              }\n                          });\n                        }\n  \n                        if(document.querySelectorAll('.box-footer-form-{{ section.id }} input')) {\n                          document.querySelectorAll('.box-footer-form-{{ section.id }} input').forEach(el => {\n                              const name = el.getAttribute('name');\n                              const match = name.match(/\\[(\\d+)\\]/);\n                            \n                              if (match && parseInt(match[1]) > limitItems{{ section.id | replace: '-', '' }}) {\n                                  el.remove();\n                              }\n                          });\n                        }\n                        const price = el.getAttribute('data-price');\n                        const salePrice = el.getAttribute('data-saleprice');\n                        const image = el.querySelector('img');\n                        const closeButton = el.querySelector('.box-close-{{ section.id }}');\n                        const itemDefault = el.querySelector('.box-default-{{ section.id }}');\n                        if (image) {\n                          image.remove();\n                          closeButton.style.display = \"none\";\n                          itemDefault.style.display = \"block\";\n                          sum = sum - Number(price);\n                          saleSum = saleSum - Number(salePrice);\n                        }\n                      })\n                    }\n                  }\n                  \n                } else if (el.id == \"box-check-second-item-{{ section.id }}\") {\n                  if(element.classList.contains('box-first-items-{{ section.id }}') || element.classList.contains('box-second-items-{{ section.id }}')) {\n                    element.classList.add('active');\n                    if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                      document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                        el.innerHTML = \"{% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}\";\n                      })\n                    }\n                    limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %};\n                  } else {\n                    let items = element.querySelectorAll('div');\n                    if(items) {\n                      items.forEach(el => {\n                        if(document.querySelectorAll('.box-form-{{ section.id }} input')) {\n                          document.querySelectorAll('.box-form-{{ section.id }} input').forEach(el => {\n                              const name = el.getAttribute('name');\n                              const match = name.match(/\\[(\\d+)\\]/);\n                            \n                              if (match && parseInt(match[1]) > limitItems{{ section.id | replace: '-', '' }}) {\n                                  el.remove();\n                              }\n                          });\n                        }\n                        \n                        const price = el.getAttribute('data-price');\n                        const salePrice = el.getAttribute('data-saleprice');\n                        const image = el.querySelector('.not-empty');\n                        const closeButton = el.querySelector('.box-close-{{ section.id }}');\n                        const itemDefault = el.querySelector('.box-default-{{ section.id }}');\n                        if (image) {\n                          image.remove();\n                          closeButton.style.display = \"none\";\n                          itemDefault.style.display = \"block\";\n                          sum = sum - Number(price);\n                          saleSum = saleSum - Number(salePrice);\n                        }\n                      })\n                    }\n                  }\n                } else if (el.id == \"box-check-third-item-{{ section.id }}\") {\n                  if(element.classList.contains('box-first-items-{{ section.id }}') || element.classList.contains('box-second-items-{{ section.id }}') || element.classList.contains('box-third-items-{{ section.id }}')) {\n                    element.classList.add('active');\n                    if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                      document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                        el.innerHTML = \"{% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}\";\n                      })\n                    }\n                    limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %};\n                  }\n                }\n              })\n            }\n          } else {\n            if(el.id == \"box-check-first-item-{{ section.id }}\") {\n\n              limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %};\n\n              if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                  el.innerHTML = \"{% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}\";\n                })\n              }\n\n              if(document.querySelectorAll('.box-footer-form-{{ section.id }} input')) {\n                document.querySelectorAll('.box-footer-form-{{ section.id }} input').forEach(el => {\n                    const name = el.getAttribute('name');\n                    const match = name.match(/\\[(\\d+)\\]/);\n                  \n                    if (match && parseInt(match[1]) > limitItems{{ section.id | replace: '-', '' }}) {\n                        console.log('minus');\n                        el.remove();\n                    }\n                });\n              }\n\n              if(document.querySelectorAll('.box-item-{{ section.id }} .not-empty')) {\n                document.querySelectorAll('.box-item-{{ section.id }} .not-empty').forEach((el, index) => {\n                  index++;\n                  let parentElement = el.parentNode;\n                  const closeButton = parentElement.querySelector('.box-close-{{ section.id }}');\n                  const price = parentElement.getAttribute('data-price');\n                  const salePrice = parentElement.getAttribute('data-saleprice');\n                  if(index > limitItems{{ section.id | replace: '-', '' }}) {\n                    parentElement.classList.remove('active');\n                    el.remove();\n                    closeButton.style.display = \"none\";\n                    sum = sum - Number(price);\n                    saleSum = saleSum - Number(salePrice);\n                  }\n                })\n              }\n              \n              \n            } else if (el.id == \"box-check-second-item-{{ section.id }}\") {\n              if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                  el.innerHTML = \"{% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}\";\n                })\n              }\n              limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %};\n\n              if(document.querySelectorAll('.box-footer-form-{{ section.id }} input')) {\n                document.querySelectorAll('.box-footer-form-{{ section.id }} input').forEach(el => {\n                    const name = el.getAttribute('name');\n                    const match = name.match(/\\[(\\d+)\\]/);\n                  \n                    if (match && parseInt(match[1]) > limitItems{{ section.id | replace: '-', '' }}) {\n                        el.remove();\n                    }\n                });\n              }\n\n              if(document.querySelectorAll('.box-item-{{ section.id }} .not-empty')) {\n                document.querySelectorAll('.box-item-{{ section.id }} .not-empty').forEach((el, index) => {\n                  index++;\n                  let parentElement = el.parentNode;\n                  const closeButton = parentElement.querySelector('.box-close-{{ section.id }}');\n                  const price = parentElement.getAttribute('data-price');\n                  const salePrice = parentElement.getAttribute('data-saleprice');\n                  if(index > limitItems{{ section.id | replace: '-', '' }}) {\n                    parentElement.classList.remove('active');\n                    el.remove();\n                    closeButton.style.display = \"none\";\n                    sum = sum - Number(price);\n                    saleSum = saleSum - Number(salePrice);\n                  }\n                })\n              }\n            \n            } else if (el.id == \"box-check-third-item-{{ section.id }}\") {\n              if(document.querySelectorAll('.box-count-{{ section.id }}')) {\n                document.querySelectorAll('.box-count-{{ section.id }}').forEach(el => {\n                  el.innerHTML = \"{% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}\";\n                })\n              }\n              limitItems{{ section.id | replace: '-', '' }} = {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %};\n            }\n          }\n\n          let notEmptyItems = document.querySelectorAll('.box-items-{{ section.id }} .not-empty');\n          saleSum = 0;\n          if(notEmptyItems) {\n            notEmptyItems.forEach(el => {\n              let parentElement = el.parentNode;\n              const price = parentElement.getAttribute('data-price');\n              let salePrice;\n              if(discountType == \"first_type\") {\n                if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ first_checkbox_discount }}, 10) / 100);\n                } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ second_checkbox_discount }}, 10) / 100);\n                } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ third_checkbox_discount }}, 10) / 100);\n                }\n              } else if(discountType == \"second_type\") {\n                if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}3{% else %}2{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ first_checkbox_discount_second }}, 10) / 100);\n                } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}6{% else %}4{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ second_checkbox_discount_second }}, 10) / 100);\n                } else if(limitItems{{ section.id | replace: '-', '' }} == {% if box_variants == \"3_6_9\" %}9{% else %}6{% endif %}) {\n                  salePrice = parseInt(price, 10) - (parseInt(price, 10) * parseInt({{ third_checkbox_discount_second }}, 10) / 100);\n                }\n              }\n\n              parentElement.setAttribute('data-saleprice', salePrice);\n              saleSum = saleSum + Number(parentElement.getAttribute('data-saleprice'));\n              console.log(saleSum);\n            })\n          }\n          \n\n          if (window.innerWidth > 1024) {\n          countItems{{ section.id | replace: '-', '' }} = document.querySelectorAll('.box-items-default-{{ section.id }} .not-empty').length;\n          } else {\n            countItems{{ section.id | replace: '-', '' }} = document.querySelectorAll('.box-item-{{ section.id }} .not-empty').length;\n          }\n\n          if(document.querySelectorAll('.box-main-button-{{ section.id }}')) {\n            document.querySelectorAll('.box-main-button-{{ section.id }}').forEach(el => {\n              el.innerHTML = buttonHtml;\n            })\n          }\n          if(document.querySelector('.box-count-{{ section.id }}')) {\n            let count = limitItems{{ section.id | replace: '-', '' }} - countItems{{ section.id | replace: '-', '' }};\n            document.querySelector('.box-count-{{ section.id }}').innerText = count;\n          }\n\n          if(countItems{{ section.id | replace: '-', '' }} == limitItems{{ section.id | replace: '-', '' }}) {\n            let priceElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-regular-price-{{ section.id }}');\n            let priceSaleElement = document.querySelector('.box-check-item-{{ section.id }}.active .box-sale-price-{{ section.id }}');\n            priceElement.innerHTML = formayMoneyForBuyItWith(sum, \"{{ shop.money_format }}\");\n            priceSaleElement.innerHTML = formayMoneyForBuyItWith(saleSum, \"{{ shop.money_format }}\");\n            if(document.querySelectorAll('.box-main-button-{{ section.id }}')) {\n              document.querySelectorAll('.box-main-button-{{ section.id }}').forEach(el => {\n                let text = el.getAttribute(\"data-all\");\n                el.innerHTML = text;\n                el.removeAttribute('disabled');\n              })\n            }\n          }\n          \n        })\n      })\n    }\n  }\n\n  document.addEventListener('DOMContentLoaded', initBuildBox);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initBuildBox);\n     document.addEventListener('shopify:section:load', initBuildBox);\n  }\n</script>",
+  "variables": {
+    "first_collection": {
+      "type": "text",
+      "default": "",
+      "label": "First Collection",
+      "description": "First Collection"
+    },
+    "first_collection_title": {
+      "type": "text",
+      "default": "",
+      "label": "First Collection Title",
+      "description": "For Tabs in a Box. Replaces the Main Title of the Collection"
+    },
+    "second_collection": {
+      "type": "text",
+      "default": "",
+      "label": "Second Collection",
+      "description": "Second Collection"
+    },
+    "second_collection_title": {
+      "type": "text",
+      "default": "",
+      "label": "Second Collection Title",
+      "description": "For Tabs in a Box. Replaces the Main Title of the Collection"
+    },
+    "use_variants": {
+      "type": "text",
+      "default": "",
+      "label": "Use Product Variant Selector",
+      "description": "Use Product Variant Selector"
+    },
+    "box_variants": {
+      "type": "text",
+      "default": "3_6_9",
+      "label": "Number of products in box",
+      "description": "Remember to set automatic collection discounts for number of products. You can change the text in 'Box Checkbox Settings'"
+    },
+    "products_row": {
+      "type": "text",
+      "default": "3",
+      "label": "Products per Row - Desktop",
+      "description": "Products per Row - Desktop"
+    },
+    "products_row_mobile": {
+      "type": "text",
+      "default": "1",
+      "label": "Products per Row - Mobile",
+      "description": "Products per Row - Mobile"
+    },
+    "products_gap": {
+      "type": "text",
+      "default": "26",
+      "label": "Products Grid Gap - Desktop",
+      "description": "Products Grid Gap - Desktop"
+    },
+    "products_gap_mobile": {
+      "type": "text",
+      "default": "26",
+      "label": "Products Grid Gap - Mobile",
+      "description": "Products Grid Gap - Mobile"
+    },
+    "card_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Padding Vertical",
+      "description": "Card Padding Vertical"
+    },
+    "card_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Padding Vertical - Mobile",
+      "description": "Card Padding Vertical - Mobile"
+    },
+    "card_padding_horizontal": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Padding Horizontal",
+      "description": "Card Padding Horizontal"
+    },
+    "card_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Padding Horizontal - Mobile",
+      "description": "Card Padding Horizontal - Mobile"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Card Border Radius",
+      "description": "Card Border Radius"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Card Border Thickness",
+      "description": "Card Border Thickness"
+    },
+    "card_shadow": {
+      "type": "text",
+      "default": "",
+      "label": "Card Shadow",
+      "description": "Card Shadow"
+    },
+    "card_shadow_hover": {
+      "type": "text",
+      "default": "true",
+      "label": "Card Shadow on Hover",
+      "description": "Card Shadow on Hover"
+    },
+    "card_second_hover": {
+      "type": "text",
+      "default": "true",
+      "label": "Second Image on Hover",
+      "description": "Second Image on Hover"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Image Border Radius",
+      "description": "Image Border Radius"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Image Border Thickness",
+      "description": "Image Border Thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Image Aspect Ratio",
+      "description": "Image Aspect Ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "portrait",
+      "label": "Image Aspect Ratio - Mobile",
+      "description": "Image Aspect Ratio - Mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Product Title Font Family",
+      "description": "Product Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Product Title Size",
+      "description": "Product Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Product Title Size - Mobile",
+      "description": "Product Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Product Title Line Height",
+      "description": "Product Title Line Height"
+    },
+    "title_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Product Title Margin Top",
+      "description": "Product Title Margin Top"
+    },
+    "title_uppercase": {
+      "type": "text",
+      "default": "true",
+      "label": "Product Title Uppercase",
+      "description": "Product Title Uppercase"
+    },
+    "vendor_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "vendor_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Product Vendor Font Family",
+      "description": "Product Vendor Font Family"
+    },
+    "vendor_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Product Vendor Size",
+      "description": "Product Vendor Size"
+    },
+    "vendor_size_mobile": {
+      "type": "text",
+      "default": "13",
+      "label": "Product  Vendor Size - Mobile",
+      "description": "Product  Vendor Size - Mobile"
+    },
+    "vendor_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Product Vendor Line Height",
+      "description": "Product Vendor Line Height"
+    },
+    "vendor_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Product Vendor Margin Top",
+      "description": "Product Vendor Margin Top"
+    },
+    "vendor_uppercase": {
+      "type": "text",
+      "default": "true",
+      "label": "Product Vendor Uppercase",
+      "description": "Product Vendor Uppercase"
+    },
+    "button": {
+      "type": "text",
+      "default": "ADD",
+      "label": "Button Text",
+      "description": "Button Text"
+    },
+    "button_soldout": {
+      "type": "text",
+      "default": "SOLDOUT",
+      "label": "Button Soldout Text",
+      "description": "Button Soldout Text"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Button Font Family",
+      "description": "Button Font Family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size",
+      "description": "Button Size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size - Mobile",
+      "description": "Button Size - Mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Line Height",
+      "description": "Button Line Height"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Margin Top",
+      "description": "Button Margin Top"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Padding Vertical",
+      "description": "Button Padding Vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Padding Vertical - Mobile",
+      "description": "Button Padding Vertical - Mobile"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Button Padding Horizontal",
+      "description": "Button Padding Horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Button Padding Horizontal - Mobile",
+      "description": "Button Padding Horizontal - Mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Button Border Radius",
+      "description": "Button Border Radius"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Button Border Thickness",
+      "description": "Button Border Thickness"
+    },
+    "box_width": {
+      "type": "text",
+      "default": "480",
+      "label": "Box Width - Desktop",
+      "description": "Box Width - Desktop"
+    },
+    "box_radius": {
+      "type": "text",
+      "default": "32",
+      "label": "Box Border Radius",
+      "description": "Box Border Radius"
+    },
+    "box_border_thickness": {
+      "type": "text",
+      "default": "3",
+      "label": "Box Border Thickness",
+      "description": "Box Border Thickness"
+    },
+    "header_padding_vertical": {
+      "type": "text",
+      "default": "24",
+      "label": "Box Header Padding Vertical",
+      "description": "Box Header Padding Vertical"
+    },
+    "header_padding_vertical_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Box Header Padding Vertical - Mobile",
+      "description": "Box Header Padding Vertical - Mobile"
+    },
+    "header_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Box Header Padding Horizontal",
+      "description": "Box Header Padding Horizontal"
+    },
+    "header_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Box Header Padding Horizontal - Mobile",
+      "description": "Box Header Padding Horizontal - Mobile"
+    },
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Build a Box</h2>",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "50",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "34",
+      "label": "Heading Size - Mobile",
+      "description": "Heading Size - Mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align - Mobile",
+      "description": "Heading Text Align - Mobile"
+    },
+    "sub_heading": {
+      "type": "textarea",
+      "default": "<p>Create your vibe and save money.</p>",
+      "label": "Sub-Heading",
+      "description": "Sub-Heading"
+    },
+    "sub_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "sub_heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Sub-Heading Font Family",
+      "description": "Sub-Heading Font Family"
+    },
+    "sub_heading_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-Heading Size",
+      "description": "Sub-Heading Size"
+    },
+    "sub_heading_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-Heading Size - Mobile",
+      "description": "Sub-Heading Size - Mobile"
+    },
+    "sub_heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Sub-Heading Line Height",
+      "description": "Sub-Heading Line Height"
+    },
+    "sub_heading_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Sub-Heading Margin Top",
+      "description": "Sub-Heading Margin Top"
+    },
+    "sub_heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Sub-Heading Text Align",
+      "description": "Sub-Heading Text Align"
+    },
+    "sub_heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Sub-Heading Text Align - Mobile",
+      "description": "Sub-Heading Text Align - Mobile"
+    },
+    "body_padding_vertical": {
+      "type": "text",
+      "default": "48",
+      "label": "Box Body Padding Vertical",
+      "description": "Box Body Padding Vertical"
+    },
+    "body_padding_vertical_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Box Body Padding Vertical - Mobile",
+      "description": "Box Body Padding Vertical - Mobile"
+    },
+    "body_padding_horizontal": {
+      "type": "text",
+      "default": "60",
+      "label": "Box Body Padding Horizontal",
+      "description": "Box Body Padding Horizontal"
+    },
+    "body_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Box Body Padding Horizontal - Mobile",
+      "description": "Box Body Padding Horizontal - Mobile"
+    },
+    "pick": {
+      "type": "textarea",
+      "default": "<p><strong>PICK YOUR PACKAGING</strong></p>",
+      "label": "Pick Text",
+      "description": "Pick Text"
+    },
+    "pick_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "pick_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Pick Text Font Family",
+      "description": "Pick Text Font Family"
+    },
+    "pick_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Pick Text Size",
+      "description": "Pick Text Size"
+    },
+    "pick_size_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Pick Text Size - Mobile",
+      "description": "Pick Text Size - Mobile"
+    },
+    "pick_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Pick Text Line Height",
+      "description": "Pick Text Line Height"
+    },
+    "pick_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Pick Text Margin Top",
+      "description": "Pick Text Margin Top"
+    },
+    "pick_mt_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Pick Text Margin Top - Mobile",
+      "description": "Pick Text Margin Top - Mobile"
+    },
+    "pick_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Pick Text Text Align",
+      "description": "Pick Text Text Align"
+    },
+    "pick_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Pick Text Text Align - Mobile",
+      "description": "Pick Text Text Align - Mobile"
+    },
+    "tabs_radius": {
+      "type": "text",
+      "default": "32",
+      "label": "Tabs Border Radius",
+      "description": "Tabs Border Radius"
+    },
+    "tabs_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Tabs Border Thickness",
+      "description": "Tabs Border Thickness"
+    },
+    "tabs_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Tabs Margin Top",
+      "description": "Tabs Margin Top"
+    },
+    "tab_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "tab_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Tab Font Family",
+      "description": "Tab Font Family"
+    },
+    "tab_size": {
+      "type": "text",
+      "default": "23",
+      "label": "Tab Size",
+      "description": "Tab Size"
+    },
+    "tab_size_mobile": {
+      "type": "text",
+      "default": "23",
+      "label": "Tab Size - Mobile",
+      "description": "Tab Size - Mobile"
+    },
+    "tab_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Tab Line Height",
+      "description": "Tab Line Height"
+    },
+    "tab_padding_vertical": {
+      "type": "text",
+      "default": "10",
+      "label": "Tab Padding Vertical",
+      "description": "Tab Padding Vertical"
+    },
+    "tab_padding_vertical_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Tab Padding Vertical - Mobile",
+      "description": "Tab Padding Vertical - Mobile"
+    },
+    "tab_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Tab Padding Horizontal",
+      "description": "Tab Padding Horizontal"
+    },
+    "tab_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Tab Padding Horizontal - Mobile",
+      "description": "Tab Padding Horizontal - Mobile"
+    },
+    "checkboxes_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Checkboxes Margin Top",
+      "description": "Checkboxes Margin Top"
+    },
+    "first_checkbox": {
+      "type": "text",
+      "default": "3-Pack",
+      "label": "First Checkbox Text",
+      "description": "First Checkbox Text"
+    },
+    "first_checkbox_discount": {
+      "type": "text",
+      "default": "5",
+      "label": "First Checkbox Discount(First Tab)",
+      "description": "First Checkbox Discount(First Tab)"
+    },
+    "first_checkbox_discount_second": {
+      "type": "text",
+      "default": "5",
+      "label": "First Checkbox Discount(Second Tab)",
+      "description": "First Checkbox Discount(Second Tab)"
+    },
+    "second_checkbox": {
+      "type": "text",
+      "default": "6-Pack",
+      "label": "Second Checkbox",
+      "description": "Second Checkbox"
+    },
+    "second_checkbox_discount": {
+      "type": "text",
+      "default": "10",
+      "label": "Second Checkbox Discount(First Tab)",
+      "description": "Second Checkbox Discount(First Tab)"
+    },
+    "second_checkbox_discount_second": {
+      "type": "text",
+      "default": "10",
+      "label": "Second Checkbox Discount(Second Tab)",
+      "description": "Second Checkbox Discount(Second Tab)"
+    },
+    "third_checkbox": {
+      "type": "text",
+      "default": "9-Pack",
+      "label": "Third Checkbox",
+      "description": "Third Checkbox"
+    },
+    "third_checkbox_discount": {
+      "type": "text",
+      "default": "15",
+      "label": "Third Checkbox Discount(First Tab)",
+      "description": "Third Checkbox Discount(First Tab)"
+    },
+    "third_checkbox_discount_second": {
+      "type": "text",
+      "default": "15",
+      "label": "Third Checkbox Discount(Second Tab)",
+      "description": "Third Checkbox Discount(Second Tab)"
+    },
+    "checkbox_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "checkbox_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Checkbox Font Family",
+      "description": "Checkbox Font Family"
+    },
+    "checkbox_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Checkbox Text Size",
+      "description": "Checkbox Text Size"
+    },
+    "checkbox_size_mobile": {
+      "type": "text",
+      "default": "17",
+      "label": "Checkbox Text Size - Mobile",
+      "description": "Checkbox Text Size - Mobile"
+    },
+    "checkbox_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Checkbox Line Height",
+      "description": "Checkbox Line Height"
+    },
+    "price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "price_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Price Font Family",
+      "description": "Price Font Family"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Price Size",
+      "description": "Price Size"
+    },
+    "price_size_mobile": {
+      "type": "text",
+      "default": "17",
+      "label": "Price Size - Mobile",
+      "description": "Price Size - Mobile"
+    },
+    "price_strikethrough_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Strikethrough Price Size",
+      "description": "Strikethrough Price Size"
+    },
+    "price_strikethrough_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Strikethrough Price Size - Mobile",
+      "description": "Strikethrough Price Size - Mobile"
+    },
+    "price_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Price Line Height",
+      "description": "Price Line Height"
+    },
+    "main_button": {
+      "type": "text",
+      "default": "ADD TO CART",
+      "label": "Button Text",
+      "description": "Button Text"
+    },
+    "main_left_button": {
+      "type": "text",
+      "default": "PICK",
+      "label": "Button Left Text",
+      "description": "Button Left Text"
+    },
+    "main_right_button": {
+      "type": "text",
+      "default": "MORE PRODUCTS",
+      "label": "Button Right Text",
+      "description": "Button Right Text"
+    },
+    "main_button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "main_button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Button Font Family",
+      "description": "Button Font Family"
+    },
+    "main_button_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Size",
+      "description": "Button Size"
+    },
+    "main_button_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Size - Mobile",
+      "description": "Button Size - Mobile"
+    },
+    "main_button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Line Height",
+      "description": "Button Line Height"
+    },
+    "main_button_mt": {
+      "type": "text",
+      "default": "32",
+      "label": "Button Margin Top",
+      "description": "Button Margin Top"
+    },
+    "main_button_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Padding Vertical",
+      "description": "Button Padding Vertical"
+    },
+    "main_button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Padding Vertical - Mobile",
+      "description": "Button Padding Vertical - Mobile"
+    },
+    "main_button_padding_horizontal": {
+      "type": "text",
+      "default": "50",
+      "label": "Button Padding Horizontal",
+      "description": "Button Padding Horizontal"
+    },
+    "main_button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "50",
+      "label": "Button Padding Horizontal - Mobile",
+      "description": "Button Padding Horizontal - Mobile"
+    },
+    "main_button_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Button Border Radius",
+      "description": "Button Border Radius"
+    },
+    "main_button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Button Border Thickness",
+      "description": "Button Border Thickness"
+    },
+    "card_bg_color": {
+      "type": "color",
+      "default": "#FFFAF5",
+      "label": "Card Background Color",
+      "description": "Card Background Color"
+    },
+    "card_bg_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Background Hover Color",
+      "description": "Card Background Hover Color"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Border Color",
+      "description": "Card Border Color"
+    },
+    "card_border_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Border Hover Color",
+      "description": "Card Border Hover Color"
+    },
+    "card_shadow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Shadow Color",
+      "description": "Card Shadow Color"
+    },
+    "card_shadow_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Shadow Hover Color",
+      "description": "Card Shadow Hover Color"
+    },
+    "close_bg_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Card Close Background Color",
+      "description": "Card Close Background Color"
+    },
+    "select_color": {
+      "type": "color",
+      "default": "#E6989C",
+      "label": "Card Select Color",
+      "description": "Card Select Color"
+    },
+    "select_bg_color": {
+      "type": "color",
+      "default": "",
+      "label": "Card Select Background Color",
+      "description": "Card Select Background Color"
+    },
+    "select_border_color": {
+      "type": "color",
+      "default": "#E6989C",
+      "label": "Card Select Border Color",
+      "description": "Card Select Border Color"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Image Border Color",
+      "description": "Image Border Color"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product Title Color",
+      "description": "Product Title Color"
+    },
+    "vendor_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Product Vendor Color",
+      "description": "Product Vendor Color"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Color",
+      "description": "Button Color"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Hover Color",
+      "description": "Button Hover Color"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "",
+      "label": "Button Background Color",
+      "description": "Button Background Color"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Background Hover Color",
+      "description": "Button Background Hover Color"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Border Color",
+      "description": "Button Border Color"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Border Hover Color",
+      "description": "Button Border Hover Color"
+    },
+    "box_border_color": {
+      "type": "color",
+      "default": "#E6989C",
+      "label": "Box Border Color",
+      "description": "Box Border Color"
+    },
+    "header_bg_color": {
+      "type": "color",
+      "default": "#E6989C",
+      "label": "Box Header Background Color",
+      "description": "Box Header Background Color"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Box Heading Color",
+      "description": "Box Heading Color"
+    },
+    "heading_color_mobile": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Box Heading Color - Mobile",
+      "description": "Box Heading Color - Mobile"
+    },
+    "sub_heading_color": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Box Sub-Heading Color",
+      "description": "Box Sub-Heading Color"
+    },
+    "sub_heading_color_mobile": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Box Sub-Heading Color - Mobile",
+      "description": "Box Sub-Heading Color - Mobile"
+    },
+    "pick_color": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Box Pick Text Color",
+      "description": "Box Pick Text Color"
+    },
+    "tabs_border_color": {
+      "type": "color",
+      "default": "#896367",
+      "label": "Tabs Border Color",
+      "description": "Tabs Border Color"
+    },
+    "tab_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Tab Color",
+      "description": "Tab Color"
+    },
+    "tab_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Tab Hover Color",
+      "description": "Tab Hover Color"
+    },
+    "tab_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Tab Active Color",
+      "description": "Tab Active Color"
+    },
+    "tab_bg_color": {
+      "type": "color",
+      "default": "",
+      "label": "Tab Background Color",
+      "description": "Tab Background Color"
+    },
+    "tab_bg_hover_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Tab Background Hover Color",
+      "description": "Tab Background Hover Color"
+    },
+    "tab_bg_active_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Tab Background Ative Color",
+      "description": "Tab Background Ative Color"
+    },
+    "checkbox_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Checkbox Item Background Active Color",
+      "description": "Checkbox Item Background Active Color"
+    },
+    "checkbox_circle_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Checkbox Circle Active Color",
+      "description": "Checkbox Circle Active Color"
+    },
+    "checkbox_color": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Checkbox Text Color",
+      "description": "Checkbox Text Color"
+    },
+    "price_color": {
+      "type": "color",
+      "default": "#484646",
+      "label": "Price Color",
+      "description": "Price Color"
+    },
+    "price_strikethrough_color": {
+      "type": "color",
+      "default": "#AAA6A4",
+      "label": "Strikethrough Price Color",
+      "description": "Strikethrough Price Color"
+    },
+    "main_button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Color",
+      "description": "Button Color"
+    },
+    "main_button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Hover Color",
+      "description": "Button Hover Color"
+    },
+    "main_button_bg_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Background Color",
+      "description": "Button Background Color"
+    },
+    "main_button_bg_hover_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Background Hover Color",
+      "description": "Button Background Hover Color"
+    },
+    "main_button_border_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Border Color",
+      "description": "Button Border Color"
+    },
+    "main_button_border_hover_color": {
+      "type": "color",
+      "default": "#e6989c",
+      "label": "Button Border Hover Color",
+      "description": "Button Border Hover Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFAF5",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "64",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "32",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "125",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

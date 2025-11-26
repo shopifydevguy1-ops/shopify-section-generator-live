@@ -1,0 +1,534 @@
+{
+  "id": "custom-product-coupon-2",
+  "name": "CUSTOM Product coupon #2",
+  "description": "Section: CUSTOM Product coupon #2",
+  "tags": [
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign lazy = section.settings.lazy\n\n  assign coupon_position = section.settings.coupon_position\n\n  assign body_padding_horizontal = section.settings.body_padding_horizontal\n  assign body_padding_horizontal_mobile = section.settings.body_padding_horizontal_mobile\n  assign body_padding_vertical = section.settings.body_padding_vertical\n  assign body_padding_vertical_mobile = section.settings.body_padding_vertical_mobile\n  assign body_border_radius = section.settings.body_border_radius\n  assign body_border_thickness = section.settings.body_border_thickness\n  assign body_border_style = section.settings.body_border_style\n  assign body_border_color = section.settings.body_border_color\n  assign body_bg_color = section.settings.body_bg_color\n\n  assign custom_coupon_icon = section.settings.custom_coupon_icon\n  assign coupon_width = section.settings.coupon_width\n  assign coupon_width_mobile = section.settings.coupon_width_mobile\n  assign coupon_color = section.settings.coupon_color\n  assign hide_coupon = section.settings.hide_coupon\n\n  assign content_align = section.settings.content_align\n  assign content_align_mobile = section.settings.content_align_mobile\n\n  assign content_horizontal_align = \"\"\n  if content_align == \"center\"\n    assign content_horizontal_align = \"center\"\n  elsif content_align == \"right\"\n    assign content_horizontal_align = \"end\"\n  else\n    assign content_horizontal_align = \"start\"\n  endif\n\n  assign content_horizontal_align_mobile = \"\"\n  if content_align_mobile == \"center\"\n    assign content_horizontal_align_mobile = \"center\"\n  elsif content_align_mobile == \"right\"\n    assign content_horizontal_align_mobile = \"end\"\n  else\n    assign content_horizontal_align_mobile = \"start\"\n  endif\n\n  assign heading = section.settings.heading\n  assign heading_padding_horizontal = section.settings.heading_padding_horizontal\n  assign heading_padding_horizontal_mobile = section.settings.heading_padding_horizontal_mobile\n  assign heading_padding_vertical = section.settings.heading_padding_vertical\n  assign heading_padding_vertical_mobile = section.settings.heading_padding_vertical_mobile\n  assign heading_border_thickness = section.settings.heading_border_thickness\n  assign heading_border_color = section.settings.heading_border_color\n  assign heading_radius = section.settings.heading_radius\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_height = section.settings.heading_height\n  assign heading_color = section.settings.heading_color\n  assign heading_bg_color = section.settings.heading_bg_color\n\n  assign text = section.settings.text\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_color = section.settings.text_color\n  assign text_mt = section.settings.text_mt\n  assign text_mt_mobile = section.settings.text_mt_mobile\n\n  assign discount_mt = section.settings.discount_mt\n  assign discount_mt_mobile = section.settings.discount_mt_mobile\n\n  assign discount_text = section.settings.discount_text\n  assign discount_text_custom = section.settings.discount_text_custom\n  assign discount_text_font = section.settings.discount_text_font\n  assign discount_text_size = section.settings.discount_text_size\n  assign discount_text_size_mobile = section.settings.discount_text_size_mobile\n  assign discount_text_height = section.settings.discount_text_height\n  assign discount_text_color = section.settings.discount_text_color\n\n  assign discount_code = section.settings.discount_code\n  assign discount_code_custom = section.settings.discount_code_custom\n  assign discount_code_font = section.settings.discount_code_font\n  assign discount_code_size = section.settings.discount_code_size\n  assign discount_code_size_mobile = section.settings.discount_code_size_mobile\n  assign discount_code_height = section.settings.discount_code_height\n  assign discount_code_color = section.settings.discount_code_color\n\n  assign copy_icon_width = section.settings.copy_icon_width\n  assign copy_icon_width_mobile = section.settings.copy_icon_width_mobile\n  assign copy_icon_color = section.settings.copy_icon_color\n  assign hide_copy_icon = section.settings.hide_copy_icon\n\n  assign message = section.settings.message\n  assign message_padding_horizontal = section.settings.message_padding_horizontal\n  assign message_padding_horizontal_mobile = section.settings.message_padding_horizontal_mobile\n  assign message_padding_vertical = section.settings.message_padding_vertical\n  assign message_padding_vertical_mobile = section.settings.message_padding_vertical_mobile\n  assign message_border_thickness = section.settings.message_border_thickness\n  assign message_border_color = section.settings.message_border_color\n  assign message_radius = section.settings.message_radius\n  assign message_custom = section.settings.message_custom\n  assign message_font = section.settings.message_font\n  assign message_size = section.settings.message_size\n  assign message_size_mobile = section.settings.message_size_mobile\n  assign message_height = section.settings.message_height\n  assign message_color = section.settings.message_color\n  assign message_bg_color = section.settings.message_bg_color\n  \n-%}\n\n{%- style -%}\n\n\n  {{ heading_font | font_face: font_display: 'swap' }}\n  {{ text_font | font_face: font_display: 'swap' }}\n  {{ discount_text_font | font_face: font_display: 'swap' }}\n  {{ discount_code_font | font_face: font_display: 'swap' }}\n  {{ message_font | font_face: font_display: 'swap' }}\n\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px !important;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px !important;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .coupon-body-{{ section.id }} {\n    display: flex;    \n    align-items: center;\n    gap: 15px;\n    padding: {{ body_padding_vertical_mobile }}px {{ body_padding_horizontal_mobile }}px;\n    background-color: {{ body_bg_color }};\n    border: {{ body_border_thickness }}px {{  body_border_style }} {{ body_border_color }};\n    border-radius: {{ body_border_radius }}px;\n  }\n\n  .coupon-icon-{{ section.id }} {\n    flex-shrink: 0;\n    width: {{ coupon_width_mobile }}px;\n  }\n\n  .coupon-icon-{{ section.id }} img,\n  .coupon-icon-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .coupon-icon-{{ section.id }} svg path {\n    fill: {{ coupon_color }};\n  }\n\n  .coupon-content-{{ section.id }} {\n    flex: 1 1 auto;\n  }\n\n  .coupon-heading-{{ section.id }} {\n    max-width: fit-content;\n    background-color: {{ heading_bg_color }};\n    padding: {{ heading_padding_vertical_mobile }}px {{ heading_padding_horizontal_mobile }}px;\n    border: {{ heading_border_thickness }}px solid {{ heading_border_color }};\n    border-radius: {{ heading_radius }}px;\n    text-align: {{ content_align_mobile }};\n  }\n\n  .coupon-heading-{{ section.id }} * {\n    margin: 0;    \n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;   \n    text-transform: unset;\n    text-decoration: none;\n    word-break: break-word;\n    font-weight: 700;\n  }\n\n  .coupon-text-{{ section.id }} {\n    text-align: {{ content_align_mobile }};\n    margin-top: {{ text_mt_mobile }}px;\n  }\n\n  .coupon-text-{{ section.id }} * {\n    margin: 0;    \n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;   \n    text-transform: unset;\n    text-decoration: none;\n    word-break: break-word;\n  }\n\n  .coupon-discount-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    justify-content: {{ content_horizontal_align_mobile }};\n    margin-top: {{ discount_mt_mobile }}px;\n    position: relative;\n  }\n\n  .coupon-discount-text-{{ section.id }} {\n    margin: 0;    \n    font-size: {{ discount_text_size_mobile }}px;\n    color: {{ discount_text_color }};\n    line-height: {{ discount_text_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    word-break: break_word;\n  }\n\n  .coupon-discount-code-{{ section.id }} {\n    margin: 0;    \n    font-size: {{ discount_code_size_mobile }}px;\n    color: {{ discount_code_color }};\n    line-height: {{ discount_code_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    word-break: break-word;\n    cursor: pointer;\n    font-weight: 700;\n  }\n\n  .coupon-discount-copy-icon-{{ section.id }} {\n    cursor: pointer;\n    width: {{ copy_icon_width_mobile }}px;\n  }\n\n  .coupon-discount-copy-icon-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n  \n  .coupon-discount-copy-icon-{{ section.id }} svg path {\n    fill: {{ copy_icon_color }};\n  }\n\n  .coupon-message-{{ section.id }} {\n    display: none;\n    max-width: fit-content;\n    position: absolute;\n    top: 50%;\n    left: 0;\n    transform: translateY(-50%);\n    z-index: 2;\n    max-width: fit-content;\n    background-color: {{ message_bg_color }};\n    padding: {{ message_padding_vertical_mobile }}px {{ message_padding_horizontal_mobile }}px;\n    border: {{ message_border_thickness }}px solid {{ message_border_color }};\n    border-radius: {{ message_radius }}px;\n    text-align: cener;\n  }\n\n  .coupon-message-{{ section.id }} * {\n    margin: 0;    \n    font-size: {{ message_size_mobile }}px;\n    color: {{ message_color }};\n    line-height: {{ message_height }}%;   \n    text-transform: unset;\n    text-decoration: none;\n    word-break: break-word;\n  }\n\n  .coupon-message-{{ section.id }}.active {\n    display: block;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px !important;\n      margin-bottom: {{ margin_bottom }}px !important;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .coupon-body-{{ section.id }} {\n      display: flex;\n      padding: {{ body_padding_vertical }}px {{ body_padding_horizontal }}px;\n    }\n\n    .coupon-icon-{{ section.id }} {\n      width: {{ coupon_width }}px;\n    }\n\n    .coupon-heading-{{ section.id }} {\n      padding: {{ heading_padding_vertical }}px {{ heading_padding_horizontal }}px;\n      text-align: {{ content_align }};\n    }\n\n    .coupon-heading-{{ section.id }} * {    \n      font-size: {{ heading_size }}px;\n    }\n\n    .coupon-text-{{ section.id }} {\n      text-align: {{ content_align }};\n      margin-top: {{ text_mt }}px;\n    }\n\n    .coupon-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .coupon-discount-{{ section.id }} {\n      justify-content: {{ content_horizontal_align }};\n      margin-top: {{ discount_mt }}px;\n    }\n\n    .coupon-discount-text-{{ section.id }} {    \n      font-size: {{ discount_text_size }}px;\n    }\n\n    .coupon-discount-code-{{ section.id }} {\n      font-size: {{ discount_code_size }}px;\n    }\n\n    .coupon-discount-copy-icon-{{ section.id }} {\n      width: {{ copy_icon_width }}px;\n    }\n\n    .coupon-message-{{ section.id }} {\n      padding: {{ message_padding_vertical }}px {{ message_padding_horizontal }}px;\n      text-align: {{ content_align }};\n    }\n\n    .coupon-message-{{ section.id }} * {    \n      font-size: {{ message_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% if heading_custom %}\n  <style>\n    .coupon-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .coupon-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if discount_text_custom %}\n  <style>\n    .coupon-discount-text-{{ section.id }} {\n      font-family: {{ discount_text_font.family }}, {{ discount_text_font.fallback_families }};\n      font-weight: {{ discount_text_font.weight }};\n      font-style: {{ discount_text_font.style }};\n    }\n  </style>\n\n\n<style>\n  .coupon-heading-{{ section.id }} {\n    background: {% if heading_bg_color contains 'linear-gradient' %} {{ heading_bg_color }} {% else %} {{ heading_bg_color }} {% endif %};\n  }\n</style>\n{% endif %}\n\n{% if discount_code_custom %}\n  <style>\n    .coupon-discount-code-{{ section.id }} {\n      font-family: {{ discount_code_font.family }}, {{ discount_code_font.fallback_families }};\n      font-weight: {{ discount_code_font.weight }};\n      font-style: {{ discount_code_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if message_custom %}\n  <style>\n    .coupon-message-{{ section.id }} * {\n      font-family: {{ message_font.family }}, {{ message_font.fallback_families }};\n      font-weight: {{ message_font.weight }};\n      font-style: {{ message_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if content_align_mobile == 'center' %}\n  <style>\n    .coupon-heading-{{ section.id }} {\n      margin: 0 auto;\n    }\n  </style>\n{% elsif content_align_mobile == 'right' %}\n  <style>\n    .coupon-heading-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style> \n{% endif %}\n\n{% if content_align == 'left' %}\n  <style>\n    @media(min-width: 1024px) {\n      .coupon-heading-{{ section.id }} {\n        margin-left: 0;\n        margin-right: 0;\n      }\n    }   \n  </style>\n{% elsif content_align == 'center' %}\n  <style>\n    @media(min-width: 1024px) {\n      .coupon-heading-{{ section.id }} {\n        margin: 0 auto;\n      }\n    }   \n  </style>\n{% elsif content_align == 'right' %}\n  <style>\n    @media(min-width: 1024px) {\n      .coupon-heading-{{ section.id }} {\n        margin-left: auto;\n      }\n    }  \n  </style> \n{% endif %}\n\n{% if hide_coupon %}\n  <style>\n    .coupon-icon-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n{% if hide_copy_icon %}\n  <style>\n    .coupon-discount-copy-icon-{{ section.id }} {\n      display: none;\n    }\n  </style>\n{% endif %}\n\n<script>\n  (function () {\n    function moreLoadProductForm() {\n      var productForm = document.querySelector('#custom-product-coupon-2');\n      if (!productForm){\n        var productForm = document.querySelector('{% if coupon_position == \"below_title\" or coupon_position == \"above_title\" %}.product__title{% elsif coupon_position == \"below_description\" or coupon_position == \"above_description\" %}.product__description{% elsif coupon_position == \"below_price\" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');\n        if (!productForm) return;\n        }\n        const templateContent = document.querySelector(\n          '#custom-product-coupon-{{ section.id }}'\n        ).content;\n\n        productForm.insertAdjacentElement(\n          '{% if coupon_position == \"below_buy\" or coupon_position == \"below_title\" or coupon_position == \"below_description\" or coupon_position == \"below_price\" %}afterend{% else %}beforebegin{% endif %}',\n          templateContent.firstElementChild\n        );     \n    }\n    window.addEventListener('DOMContentLoaded', moreLoadProductForm);\n  })();\n</script>\n\n<template id=\"custom-product-coupon-{{ section.id }}\">\n  <div class=\"section-{{ section.id }} coupon-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"coupon-body-{{ section.id }}\">\n        <div class=\"coupon-icon-{{ section.id }}\">\n          {% if custom_coupon_icon != blank %}\n            <img src=\"{{ custom_coupon_icon | image_url }}\" alt=\"{{ custom_coupon_icon.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>    \n          {% else %}  \n            <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\" enable-background=\"new 0 0 256 256\" xml:space=\"preserve\">\n              <g><g><path fill=\"#000000\" d=\"M192.9,49c-11.4-9.8-28.5-7.8-37.8,3.6c-9.3,11.4-7.8,28.5,3.6,38.3c11.4,9.8,28.5,7.8,38.3-3.6C206.4,75.4,204.8,58.3,192.9,49z M186.2,78.5c-4.7,5.7-13.5,6.7-19.2,1.6c-5.7-4.7-6.7-13.5-1.6-19.2c4.7-5.7,13.5-6.7,19.2-1.6C190.3,64,190.8,72.8,186.2,78.5z\"/><path fill=\"#000000\" d=\"M245.7,83.2L245.7,83.2l-14-67.9l0,0c-1-5.7-5.7-10.4-11.4-10.9c-0.5,0-0.5,0-1,0h-0.5h-68.9l0,0c-4.1,0-7.8,1.6-10.4,4.7L13.1,160.4l0,0c-4.7,5.7-4.1,14.5,1.6,19.2l83.4,68.9l0,0c5.7,4.7,14.5,4.1,19.2-1.6l0,0L243.6,95.1C246.2,91.5,246.2,87.3,245.7,83.2z M229.7,89.4l-118.6,143l0,0c-2.6,3.1-6.7,3.1-9.3,1l0,0l-72.5-60.1c-3.1-2.6-3.1-6.7-1-9.3l0,0L146.8,21.5c2.1-2.6,5.7-4.1,8.8-3.6h57l0,0c0.5,0,0.5,0,1,0c2.6,0.5,4.7,2.6,5.7,5.2l0,0l12.4,57.5l0,0C232.3,83.7,231.7,86.8,229.7,89.4z\"/></g></g>\n            </svg>\n          {% endif %}\n        </div>\n        <div class=\"coupon-content-{{ section.id }}\">\n          {% if heading != blank %}\n            <div class=\"coupon-heading-{{ section.id }}\">{{ heading }}</div>\n          {% endif %}      \n          {% if text != blank %}\n            <div class=\"coupon-text-{{ section.id }}\">{{ text }}</div>\n          {% endif %}\n          {% if discount_code != blank %}\n            <div class=\"coupon-discount-{{ section.id }}\">\n              <p class=\"coupon-discount-text-{{ section.id }}\">\n                {{ discount_text }}\n                <span class=\"coupon-discount-code-{{ section.id }}\">{{ discount_code }}</span>\n              </p>   \n              <div class=\"coupon-discount-copy-icon-{{ section.id }}\">\n                <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\">\n                  <path d=\"M 4 4 L 4 5 L 4 23 L 4 24 L 5 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 5 L 20 4 L 19 4 L 5 4 L 4 4 z M 12 8 L 12 9 L 12 27 L 12 28 L 13 28 L 27 28 L 28 28 L 28 27 L 28 9 L 28 8 L 27 8 L 13 8 L 12 8 z M 14 10 L 26 10 L 26 26 L 14 26 L 14 10 z\"/>\n                </svg>\n              </div> \n\n              {% if message != blank %}\n                <div class=\"coupon-message-{{ section.id }}\">\n                  {{ message }}\n                </div>\n              {% endif %}\n            </div>\n          {% endif %}         \n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n\n<script>\n  function initProductCoupon2() {\n  setTimeout(() => {\n    const discountCodes = document.querySelectorAll(\".coupon-discount-code-{{ section.id }}\");\n    const copyIcons = document.querySelectorAll(\".coupon-discount-copy-icon-{{ section.id }}\");\n    const message = document.querySelector(\".coupon-message-{{ section.id }}\");\n\n    function copyToClipboard(text) {\n      // Create temporary textarea\n      const tempInput = document.createElement(\"textarea\");\n      tempInput.value = text;\n      document.body.appendChild(tempInput);\n\n      // Select and copy text\n      tempInput.select();\n      document.execCommand(\"copy\");\n\n      // Remove temporary element\n      document.body.removeChild(tempInput);\n\n      // Show message\n      message.classList.add('active');\n\n      // Hide message after delay\n      setTimeout(() => {\n        message.classList.remove('active');\n      }, 1000);\n    }\n\n    // Add click handler for discount codes\n    discountCodes.forEach(codeElement => {\n      codeElement.addEventListener(\"click\", () => {\n        copyToClipboard(codeElement.innerText);\n      });\n    });\n\n    // Add click handler for copy icons\n    copyIcons.forEach((copyIcon, index) => {\n      copyIcon.addEventListener(\"click\", () => {\n        // Find the corresponding discount code element\n        const codeElement = discountCodes[index];\n        if (codeElement) {\n          copyToClipboard(codeElement.innerText);\n        }\n      });\n    });\n  }, 400);\n}\n\n// Initialize on document load\ndocument.addEventListener('DOMContentLoaded', initProductCoupon2);\n\n// Handle Shopify theme editor events\nif (Shopify.designMode) {\n  document.addEventListener('shopify:section:unload', initProductCoupon2);\n  document.addEventListener('shopify:section:load', initProductCoupon2);\n}\n</script>",
+  "variables": {
+    "coupon_position": {
+      "type": "text",
+      "default": "below_title",
+      "label": "Position",
+      "description": "Position"
+    },
+    "body_padding_horizontal": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "body_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "body_padding_vertical": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "body_padding_vertical_mobile": {
+      "type": "text",
+      "default": "10",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "body_border_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "body_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "body_border_style": {
+      "type": "text",
+      "default": "dashed",
+      "label": "Border style",
+      "description": "Border style"
+    },
+    "custom_coupon_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Custom icon",
+      "description": "Custom icon"
+    },
+    "coupon_width": {
+      "type": "text",
+      "default": "22",
+      "label": "Width",
+      "description": "Width"
+    },
+    "coupon_width_mobile": {
+      "type": "text",
+      "default": "22",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "hide_coupon": {
+      "type": "text",
+      "default": "",
+      "label": "Hide icon",
+      "description": "Hide icon"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "heading_padding_horizontal": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "heading_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "heading_padding_vertical": {
+      "type": "text",
+      "default": "4",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "heading_padding_vertical_mobile": {
+      "type": "text",
+      "default": "4",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "heading_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "heading_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "heading": {
+      "type": "textarea",
+      "default": "<p>Product coupon #2</p>",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "15",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text": {
+      "type": "textarea",
+      "default": "<p>Describe a new promotion</p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "text_mt_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "discount_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "discount_mt_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "discount_text": {
+      "type": "text",
+      "default": "Use code:",
+      "label": "Text",
+      "description": "Text"
+    },
+    "discount_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "discount_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "discount_text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "discount_text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "discount_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "discount_code": {
+      "type": "text",
+      "default": "XDATVD",
+      "label": "Code",
+      "description": "Code"
+    },
+    "discount_code_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "discount_code_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "discount_code_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "discount_code_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "discount_code_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "copy_icon_width": {
+      "type": "text",
+      "default": "20",
+      "label": "Width",
+      "description": "Width"
+    },
+    "copy_icon_width_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "hide_copy_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Hide icon",
+      "description": "Hide icon"
+    },
+    "message": {
+      "type": "textarea",
+      "default": "<p>Great, you copied the discount code!</p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "message_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "message_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "message_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "message_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "message_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "message_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "message_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "message_padding_vertical": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "message_padding_vertical_mobile": {
+      "type": "text",
+      "default": "6",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "message_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "message_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "coupon_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Coupon icon",
+      "description": "Coupon icon"
+    },
+    "body_bg_color": {
+      "type": "color",
+      "default": "#f2f2f2",
+      "label": "Background",
+      "description": "Background"
+    },
+    "body_border_color": {
+      "type": "color",
+      "default": "#C6C6C6",
+      "label": "Border",
+      "description": "Border"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_bg_color": {
+      "type": "color",
+      "default": "#F7DE6A",
+      "label": "Background",
+      "description": "Background"
+    },
+    "heading_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Primary text",
+      "description": "Primary text"
+    },
+    "discount_text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Secondary text",
+      "description": "Secondary text"
+    },
+    "discount_code_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Discount code",
+      "description": "Discount code"
+    },
+    "copy_icon_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Copy icon",
+      "description": "Copy icon"
+    },
+    "message_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "message_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Background",
+      "description": "Background"
+    },
+    "message_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Border",
+      "description": "Border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

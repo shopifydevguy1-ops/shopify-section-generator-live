@@ -1,0 +1,708 @@
+{
+  "id": "custom-contact-form-3",
+  "name": "CUSTOM Contact form #3",
+  "description": "Section: CUSTOM Contact form #3",
+  "tags": [
+    "contact"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \r\n  assign padding_horizontal = section.settings.padding_horizontal\r\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\r\n  assign padding_top = section.settings.padding_top\r\n  assign padding_bottom = section.settings.padding_bottom\r\n  assign border_color = section.settings.border_color\r\n  assign border_thickness = section.settings.border_thickness\r\n  assign margin_top = section.settings.margin_top\r\n  assign margin_bottom = section.settings.margin_bottom\r\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\r\n  assign margin_horizontal = section.settings.margin_horizontal\r\n  assign background_color = section.settings.background_color\r\n  assign background_gradient = section.settings.background_gradient\r\n  assign full_width = section.settings.full_width\r\n  assign content_width = section.settings.content_width\r\n  assign section_radius = section.settings.section_radius\r\n\r\n  assign layout = section.settings.layout\r\n  assign layout_mobile = section.settings.layout_mobile\r\n  assign layout_gap = section.settings.layout_gap\r\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\r\n\r\n  assign content_align = section.settings.content_align\r\n  assign content_align_mobile = section.settings.content_align_mobile\r\n  assign content_vertical_align = section.settings.content_vertical_align\r\n\r\n  assign form_gap = section.settings.form_gap\r\n  assign form_gap_mobile = section.settings.form_gap_mobile\r\n\r\n  assign success_text = section.settings.success_text\r\n  assign success_text_size = section.settings.success_text_size\r\n  assign success_text_size_mobile = section.settings.success_text_size_mobile\r\n  assign success_text_color = section.settings.success_text_color\r\n  assign success_text_custom = section.settings.success_text_custom\r\n  assign success_text_font = section.settings.success_text_font\r\n  assign success_text_height = section.settings.success_text_height\r\n  assign success_text_align = section.settings.success_text_align\r\n  assign success_text_align_mobile = section.settings.success_text_align_mobile\r\n\r\n  assign title_size = section.settings.title_size\r\n  assign title_size_mobile = section.settings.title_size_mobile\r\n  assign title_color = section.settings.title_color\r\n  assign title_custom = section.settings.title_custom\r\n  assign title_font = section.settings.title_font\r\n  assign title_height = section.settings.title_height\r\n\r\n  assign label_size = section.settings.label_size\r\n  assign label_size_mobile = section.settings.label_size_mobile\r\n  assign label_color = section.settings.label_color\r\n  assign label_custom = section.settings.label_custom\r\n  assign label_font = section.settings.label_font\r\n  assign label_height = section.settings.label_height\r\n  assign label_mt = section.settings.label_mt\r\n  assign label_mt_mobile = section.settings.label_mt_mobile\r\n\r\n  assign required_text  = section.settings.required_text\r\n  assign required_size = section.settings.required_size\r\n  assign required_size_mobile = section.settings.required_size_mobile\r\n  assign required_color = section.settings.required_color\r\n  assign required_custom = section.settings.required_custom\r\n  assign required_font = section.settings.required_font\r\n  assign required_height = section.settings.required_height\r\n\r\n  assign input_size = section.settings.input_size\r\n  assign input_size_mobile = section.settings.input_size_mobile\r\n  assign input_color = section.settings.input_color\r\n  assign input_custom = section.settings.input_custom\r\n  assign input_font = section.settings.input_font\r\n  assign input_height = section.settings.input_height\r\n  assign input_mt = section.settings.input_mt\r\n  assign input_mt_mobile = section.settings.input_mt_mobile\r\n  assign input_padding_vertical = section.settings.input_padding_vertical\r\n  assign input_padding_vertical_mobile = section.settings.input_padding_vertical_mobile\r\n  assign input_padding_horizontal = section.settings.input_padding_horizontal\r\n  assign input_padding_horizontal_mobile = section.settings.input_padding_horizontal_mobile\r\n  assign input_radius = section.settings.input_radius\r\n  assign input_border_thickness = section.settings.input_border_thickness\r\n  assign input_bg_color = section.settings.input_bg_color\r\n  assign input_border_color = section.settings.input_border_color\r\n  assign input_border_hover_color = section.settings.input_border_hover_color\r\n  assign input_active_color = section.settings.input_active_color\r\n  assign select_icon_color = section.settings.select_icon_color\r\n\r\n  assign placeholder_color = section.settings.placeholder_color\r\n\r\n  assign checkbox_bg_color = section.settings.checkbox_bg_color\r\n  assign checkbox_bg_active_color = section.settings.checkbox_bg_active_color\r\n  assign checkbox_border_color = section.settings.checkbox_border_color\r\n  assign checkbox_border_active_color = section.settings.checkbox_border_active_color\r\n  assign checkbox_checkmar_color = section.settings.checkbox_checkmar_color\r\n\r\n  assign checkbox_size = section.settings.checkbox_size\r\n  assign checkbox_size_mobile = section.settings.checkbox_size_mobile\r\n  assign checkbox_color = section.settings.checkbox_color\r\n  assign checkbox_custom = section.settings.checkbox_custom\r\n  assign checkbox_font = section.settings.checkbox_font\r\n  assign checkbox_height = section.settings.checkbox_height\r\n  assign checkbox_radius = section.settings.checkbox_radius\r\n\r\n  assign error_text_size = section.settings.error_text_size\r\n  assign error_text_size_mobile = section.settings.error_text_size_mobile\r\n  assign error_text_color = section.settings.error_text_color\r\n  assign error_text_custom = section.settings.error_text_custom\r\n  assign error_text_font = section.settings.error_text_font\r\n  assign error_text_height = section.settings.error_text_height\r\n  assign error_text_align = section.settings.error_text_align\r\n  assign error_text_align_mobile = section.settings.error_text_align_mobile\r\n\r\n  assign submit = section.settings.submit\r\n  assign submit_size = section.settings.submit_size\r\n  assign submit_size_mobile = section.settings.submit_size_mobile\r\n  assign submit_color = section.settings.submit_color\r\n  assign submit_hover_color = section.settings.submit_hover_color\r\n  assign submit_custom = section.settings.submit_custom\r\n  assign submit_font = section.settings.submit_font\r\n  assign submit_height = section.settings.submit_height\r\n  assign submit_mt = section.settings.submit_mt\r\n  assign submit_mt_mobile = section.settings.submit_mt_mobile\r\n  assign submit_padding_vertical = section.settings.submit_padding_vertical\r\n  assign submit_padding_vertical_mobile = section.settings.submit_padding_vertical_mobile\r\n  assign submit_padding_horizontal = section.settings.submit_padding_horizontal\r\n  assign submit_padding_horizontal_mobile = section.settings.submit_padding_horizontal_mobile\r\n  assign submit_radius = section.settings.submit_radius\r\n  assign submit_border_thickness = section.settings.submit_border_thickness\r\n  assign submit_border_color = section.settings.submit_border_color\r\n  assign submit_border_hover_color = section.settings.submit_border_hover_color\r\n  assign submit_bg_color = section.settings.submit_bg_color\r\n  assign submit_bg_hover_color = section.settings.submit_bg_hover_color\r\n  assign submit_horizontal_align = section.settings.submit_horizontal_align\r\n  assign submit_horizontal_align_mobile = section.settings.submit_horizontal_align_mobile\r\n-%}\r\n\r\n{%- style -%}\r\n  {{  title_font | font_face: font_display: 'swap' }}\r\n  {{  label_font | font_face: font_display: 'swap' }}\r\n  {{  input_font | font_face: font_display: 'swap' }}\r\n  {{  required_font | font_face: font_display: 'swap' }}\r\n  {{  error_text_font | font_face: font_display: 'swap' }}\r\n  {{  success_text_font | font_face: font_display: 'swap' }}\r\n  {{  submit_font | font_face: font_display: 'swap' }}\r\n  {{  checkbox_font | font_face: font_display: 'swap' }}  \r\n\r\n  .section-{{ section.id }} {\r\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\r\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\r\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\r\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\r\n    margin-left: {{ margin_horizontal_mobile }}rem;\r\n    margin-right: {{ margin_horizontal_mobile }}rem;\r\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\r\n    overflow: hidden;\r\n  }\r\n  \r\n  .section-{{ section.id }}-settings {\r\n    margin: 0 auto;\r\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\r\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\r\n    padding-left: {{ padding_horizontal_mobile }}rem;\r\n    padding-right: {{ padding_horizontal_mobile }}rem;\r\n  }\r\n\r\n  .contact-content-{{ section.id }} {\r\n    grid-area: content;\r\n    display: flex;\r\n    flex-direction: column;\r\n    position: relative;\r\n    justify-content: {{ content_vertical_align }};\r\n    align-items: {{ content_horizontal_align_mobile }};\r\n  }\r\n\r\n  .contact-form-{{ section.id }} {\r\n    grid-area: form;\r\n  }\r\n\r\n  .contact-body-{{ section.id }} {\r\n    display: grid;\r\n    grid-template-columns: 1fr;\r\n    gap: {{ layout_gap_mobile }}px;\r\n  }\r\n\r\n  .contact-fields-{{ section.id }} {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\r\n    align-items: stretch;\r\n    gap: {{ form_gap_mobile }}px;\r\n  }\r\n\r\n  .contact-success-{{ section.id }} {\r\n    display: block;\r\n    margin: 0;\r\n    margin-bottom: 12px;\r\n    font-size: {{ success_text_size_mobile }}px;\r\n    color: {{ success_text_color }};\r\n    line-height: {{ success_text_height }}%;\r\n    text-align: {{ success_text_align_mobile }};\r\n    text-transform: unset;\r\n  }\r\n\r\n  .contact-field-label-{{ section.id }} {\r\n    display: block;\r\n    margin-top: {{ label_mt_mobile }}px;\r\n    font-size: {{ label_size_mobile }}px;\r\n    color: {{ label_color }};\r\n    line-height: {{ label_height }}%;\r\n    text-transform: unset;\r\n    font-weight: 400;\r\n  }\r\n\r\n  .contact-field-title-{{ section.id }} + .contact-field-checkbox-{{ section.id }},\r\n  .contact-field-label-{{ section.id }} + .contact-field-checkbox-{{ section.id }} {\r\n    margin-top: {{ label_mt_mobile }}px;\r\n  }\r\n  \r\n  .contact-field-title-{{ section.id }} {\r\n    display: flex;\r\n    align-items: flex-start;\r\n    margin: 0;\r\n    font-size: {{ title_size_mobile }}px;\r\n    color: {{ title_color }};\r\n    line-height: {{ title_height }}%;\r\n    text-transform: unset;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .contact-field-required-{{ section.id }} {\r\n    margin: 0;\r\n    font-size: {{ required_size_mobile }}px;\r\n    color: {{ required_color }};\r\n    line-height: {{ required_height }}%;\r\n    text-transform: unset;\r\n  }\r\n\r\n  .contact-{{ section.id }} .errors ul {\r\n    padding: 0;\r\n    list-style: none;\r\n  }\r\n\r\n  .contact-{{ section.id }} .errors * {\r\n    margin: 0;\r\n    font-size: {{ error_text_size_mobile }}px;\r\n    color: {{ error_text_color }};\r\n    line-height: {{ error_text_height }}%;\r\n    text-align: {{ error_text_align_mobile }};\r\n    text-transform: unset;\r\n  }\r\n\r\n  .contact-field-input-{{ section.id }} {\r\n    display: block;\r\n    width: 100%;\r\n    margin: 0;\r\n    font-size: {{ input_size_mobile }}px;\r\n    color: {{ input_color }};\r\n    line-height: {{ input_height }}%;\r\n    text-transform: unset;\r\n    margin-top: {{ input_mt_mobile }}px;\r\n    padding: {{ input_padding_vertical_mobile }}px {{ input_padding_horizontal_mobile }}px;\r\n    border: {{ input_border_thickness }}px solid {{ input_border_color }};\r\n    border-radius: {{ input_radius }}px;\r\n    background-color: {{ input_bg_color }};\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .contact-field-input-{{ section.id }}:hover {\r\n    transition: all 0.25s ease 0s;\r\n    border: {{ input_border_thickness }}px solid {{ input_border_hover_color }};\r\n  }\r\n\r\n  .contact-field-input-{{ section.id }}:after,\r\n  .contact-field-input-{{ section.id }}:before {\r\n    display: none;\r\n  }\r\n\r\n  .contact-field-input-{{ section.id }}:focus,\r\n  .contact-field-input-{{ section.id }}:focus-visible {\r\n    outline-offset: unset;\r\n    box-shadow: none;\r\n    outline: 0px;\r\n    border-color: {{ input_active_color }};\r\n  }\r\n\r\n  .contact-field-input-{{ section.id }}::placeholder {\r\n    color: {{ placeholder_color }};\r\n  }\r\n\r\n  .contact-field-select-{{ section.id }} {\r\n    position: relative;\r\n  }\r\n\r\n  .contact-field-select-svg-{{ section.id }} {\r\n    position: absolute;\r\n    top: 50%;\r\n    transform: translateY(-50%);\r\n    right: 15px;\r\n    width: 12px;  \r\n  }\r\n\r\n  .contact-field-select-svg-{{ section.id }} path {\r\n    fill: {{ select_icon_color }};\r\n  }\r\n\r\n  .contact-field-input-select-{{ section.id }} {\r\n    appearance: none;\r\n    -webkit-appearance: none;\r\n    -moz-appearance: none;\r\n    color: {{ input_color }};\r\n  }\r\n\r\n  .contact-field-title-{{ section.id }} + .contact-field-checkbox-{{ section.id }},\r\n  .contact-field-label-{{ section.id }} + .contact-field-checkbox-{{ section.id }} {\r\n    margin-top: {{ label_mt_mobile }}px;\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} input[type=\"checkbox\"] {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} label {\r\n    position: relative;\r\n    padding-left: {{ checkbox_size_mobile | plus: 8 }}px;\r\n    cursor: pointer;\r\n    margin: 0;\r\n    font-size: {{ checkbox_size_mobile }}px;\r\n    color: {{ checkbox_color }};\r\n    line-height: {{ checkbox_height }}%;\r\n    text-transform: unset;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} label:before {\r\n    margin: 0;\r\n    content: '';\r\n    position: absolute;\r\n    {% if checkbox_size_mobile < 20 %}\r\n    left: {{ checkbox_size_mobile | times: 0.13 | round: 0 }}px;\r\n    {% else %}\r\n    left: {{ checkbox_size_mobile | times: 0.18 | round: 0 }}px;\r\n    {% endif %}\r\n    {% if checkbox_size_mobile < 10 %}\r\n    top: {{ checkbox_size_mobile | times: 0.4 | round: 0 }}px;\r\n    {% elsif checkbox_size_mobile < 20 %}\r\n    top: {{ checkbox_size_mobile | times: 0.3 | round: 0 }}px;\r\n    {% elsif checkbox_size_mobile < 30 %}\r\n    top: {{ checkbox_size_mobile | times: 0.25 | round: 0 }}px;\r\n    {% else %}\r\n    top: {{ checkbox_size_mobile | times: 0.18 | round: 0 }}px;\r\n    {% endif %}\r\n    width: {{ checkbox_size_mobile | times: 0.7 | round: 0 }}px;\r\n    height: {{ checkbox_size_mobile | times: 0.7 | round: 0 }}px;\r\n    transform: scale(0);\r\n    z-index: 2;\r\n    background-color: {{ checkbox_checkmar_color }};\r\n    clip-path: polygon(13.29% 49.19%,3.89% 59.8%,40.98% 90%,96.95% 21.23%,86.94% 13.08%,85.97% 12.29%,38.95% 70.07%);\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} label:after {\r\n    content: '';\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    width: {{ checkbox_size_mobile }}px;\r\n    height: {{ checkbox_size_mobile }}px;\r\n    margin-top: 3px;\r\n    z-index: 1;\r\n    background-color: {{ checkbox_bg_color }};\r\n    border: 1px solid {{ checkbox_border_color }};\r\n    border-radius: {{ checkbox_radius }}px;\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} input:checked + label:before {\r\n    transform: scale(1);\r\n  }\r\n\r\n  .contact-field-checkbox-{{ section.id }} input:checked + label:after {\r\n    background-color: {{ checkbox_bg_active_color }};\r\n    border: 1px solid {{ checkbox_border_active_color }};\r\n  }\r\n\r\n  .contact-field-inner-{{ section.id }} textarea {\r\n    min-height: 100px;\r\n    resize: vertical;\r\n  }\r\n\r\n  .contact-submit-button-{{ section.id }} {\r\n    display: flex;\r\n    width: 100%;\r\n    margin-top: {{ submit_mt_mobile }}px;\r\n    justify-content: {{ submit_horizontal_align_mobile }};\r\n  }\r\n\r\n  .contact-submit-{{ section.id }} {\r\n    display: block;\r\n    max-width: fit-content;\r\n    width: 100%;\r\n    font-size: {{ submit_size_mobile }}px;\r\n    color: {{ submit_color }};\r\n    line-height: {{ submit_height }}%;\r\n    text-transform: unset;    \r\n    padding: {{ submit_padding_vertical_mobile }}px {{ submit_padding_horizontal_mobile }}px;\r\n    border: {{ submit_border_thickness }}px solid {{ submit_border_color }};\r\n    border-radius: {{ submit_radius }}px;\r\n    background-color: {{ submit_bg_color }};\r\n    cursor: pointer;\r\n    transition: all 0.25s ease 0s;\r\n  }\r\n\r\n  .contact-submit-{{ section.id }}:hover {\r\n    transition: all 0.25s ease 0s;\r\n    color: {{ submit_hover_color }};\r\n    background-color: {{ submit_bg_hover_color }};\r\n    border: {{ submit_border_thickness }}px solid {{ submit_border_hover_color }};\r\n  }\r\n  \r\n  @media(min-width: 1024px) {\r\n\r\n    .section-{{ section.id }} {\r\n      margin-top: {{ margin_top }}px;\r\n      margin-bottom: {{ margin_bottom }}px;\r\n      margin-left: {{ margin_horizontal }}rem;\r\n      margin-right: {{ margin_horizontal }}rem;\r\n      border-radius: {{ section_radius }}px;\r\n    }\r\n    \r\n    .section-{{ section.id }}-settings {\r\n      padding: 0 5rem;\r\n      padding-top: {{ padding_top }}px;\r\n      padding-bottom: {{ padding_bottom }}px;\r\n      padding-left: {{ padding_horizontal }}rem;\r\n      padding-right: {{ padding_horizontal }}rem;\r\n    }\r\n\r\n    .contact-body-{{ section.id }} {\r\n      {% if layout == 'content_form' %}\r\n      grid-template-columns: 0.8fr 1.2fr;\r\n      {% else %}\r\n      grid-template-columns: 1.2fr 0.8fr;\r\n      {% endif %}\r\n      gap: {{ layout_gap }}px;\r\n    }\r\n\r\n    .contact-fields-{{ section.id }} {\r\n      gap: {{ form_gap }}px;\r\n    }\r\n\r\n    .contact-field-label-{{ section.id }} {\r\n      margin-top: {{ label_mt }}px;\r\n      font-size: {{ label_size }}px;\r\n    }\r\n\r\n    .contact-field-title-{{ section.id }} {\r\n      font-size: {{ title_size }}px;\r\n    }\r\n\r\n    .contact-field-title-{{ section.id }} + .contact-field-checkbox-{{ section.id }},\r\n    .contact-field-label-{{ section.id }} + .contact-field-checkbox-{{ section.id }} {\r\n      margin-top: {{ label_mt }}px;\r\n    }\r\n\r\n    .contact-field-label-file-{{ section.id }} {\r\n      margin-top: {{ label_mt }}px !important;\r\n      padding: {{ input_padding_vertical }}px {{ input_padding_horizontal }}px {{ input_padding_vertical | plus: 50 }}px;\r\n    }\r\n\r\n    .contact-field-required-{{ section.id }} {\r\n      font-size: {{ required_size }}px;\r\n    }\r\n\r\n    .contact-success-{{ section.id }} {\r\n      font-size: {{ success_text_size }}px;\r\n      text-align: {{ success_text_align }};\r\n    }\r\n\r\n    .contact-{{ section.id }} .errors * {\r\n      text-align: {{ error_text_align }};\r\n      font-size: {{ error_text_size }}px;\r\n    }\r\n\r\n    .contact-field-input-{{ section.id }} {\r\n      margin-top: {{ input_mt }}px;\r\n      font-size: {{ input_size }}px;\r\n      padding: {{ input_padding_vertical }}px {{ input_padding_horizontal }}px;\r\n    }\r\n\r\n    .contact-field-title-{{ section.id }} + .contact-field-checkbox-{{ section.id }},\r\n    .contact-field-label-{{ section.id }} + .contact-field-checkbox-{{ section.id }} {\r\n      margin-top: {{ label_mt }}px;\r\n    }\r\n\r\n    .contact-field-checkbox-{{ section.id }} label {\r\n      padding-left: {{ checkbox_size | plus: 8 }}px;\r\n      font-size: {{ checkbox_size }}px;\r\n    }\r\n\r\n    .contact-field-checkbox-{{ section.id }} label:before {\r\n      {% if checkbox_size < 10 %}\r\n      left: {{ checkbox_size | times: 0.2 | round: 0 }}px;\r\n      {% elsif checkbox_size < 20 %}\r\n      left: {{ checkbox_size | times: 0.2 | round: 0 }}px;\r\n      {% else %}\r\n      left: {{ checkbox_size | times: 0.18 | round: 0 }}px;\r\n      {% endif %}    \r\n      {% if checkbox_size_mobile < 10 %}\r\n      top: {{ checkbox_size_mobile | times: 0.4 | round: 0 }}px;  \r\n      {% elsif checkbox_size < 20 %}\r\n      top: {{ checkbox_size | times: 0.3 | round: 0 }}px;\r\n      {% elsif checkbox_size < 30 %}\r\n      top: {{ checkbox_size | times: 0.25 | round: 0 }}px;\r\n      {% else %}\r\n      top: {{ checkbox_size | times: 0.18 | round: 0 }}px;\r\n      {% endif %}\r\n      width: {{ checkbox_size | times: 0.7 | round: 0 }}px;\r\n      height: {{ checkbox_size | times: 0.7 | round: 0 }}px;\r\n    }\r\n\r\n    .contact-field-checkbox-{{ section.id }} label:after {\r\n      width: {{ checkbox_size }}px;\r\n      height: {{ checkbox_size }}px;\r\n    }\r\n\r\n    .contact-submit-button-{{ section.id }} {\r\n      margin-top: {{ submit_mt }}px;\r\n      justify-content: {{ submit_horizontal_align }};\r\n    }\r\n\r\n    .contact-submit-{{ section.id }} {      \r\n      font-size: {{ submit_size }}px;\r\n      padding: {{ submit_padding_vertical }}px {{ submit_padding_horizontal }}px;\r\n    }\r\n  }\r\n  \r\n{%- endstyle -%}\r\n\r\n{% unless full_width %}\r\n  <style>\r\n    .section-{{ section.id }}-settings {\r\n      max-width: {{ content_width }}px;\r\n    }\r\n  </style>\r\n{% endunless %}\r\n\r\n{% if margin_horizontal_mobile > 0 %}\r\n  <style>\r\n    .section-{{ section.id }} {\r\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n    }\r\n    \r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: 0px;\r\n        border-right: 0px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if margin_horizontal > 0 %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .section-{{ section.id }} {\r\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\r\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\r\n      }\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if success_text_custom %}\r\n  <style>\r\n    .contact-success-{{ section.id }} {\r\n      font-family: {{ success_text_font.family }}, {{ success_text_font.fallback_families }};\r\n      font-weight: {{ success_text_font.weight }};\r\n      font-style: {{ success_text_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if title_custom %}\r\n  <style>\r\n    .contact-field-title-{{ section.id }} {\r\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\r\n      font-weight: {{ title_font.weight }};\r\n      font-style: {{ title_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if label_custom %}\r\n  <style>\r\n    .contact-field-label-{{ section.id }} {\r\n      font-family: {{ label_font.family }}, {{ label_font.fallback_families }};\r\n      font-weight: {{ label_font.weight }};\r\n      font-style: {{ label_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if required_custom %}\r\n  <style>\r\n    .contact-field-required-{{ section.id }} {\r\n      font-family: {{ required_font.family }}, {{ required_font.fallback_families }};\r\n      font-weight: {{ required_font.weight }};\r\n      font-style: {{ required_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if input_custom %}\r\n  <style>\r\n    .contact-field-input-{{ section.id }},\r\n    .contact-field-input-{{ section.id }}::placeholder,\r\n    .contact-field-inner--{{ section.id }} textarea {\r\n      font-family: {{ input_font.family }}, {{ input_font.fallback_families }};\r\n      font-weight: {{ input_font.weight }};\r\n      font-style: {{ input_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if checkbox_custom %}\r\n  <style>\r\n    .contact-field-checkbox-{{ section.id }} label {\r\n      font-family: {{ checkbox_font.family }}, {{ checkbox_font.fallback_families }};\r\n      font-weight: {{ checkbox_font.weight }};\r\n      font-style: {{ checkbox_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if error_text_custom %}\r\n  <style>\r\n    .contact-{{ section.id }} .errors * {\r\n      font-family: {{ error_text_font.family }}, {{ error_text_font.fallback_families }};\r\n      font-weight: {{ error_text_font.weight }};\r\n      font-style: {{ error_text_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if submit_custom %}\r\n  <style>\r\n    .contact-submit-{{ section.id }} {\r\n      font-family: {{ submit_font.family }}, {{ submit_font.fallback_families }};\r\n      font-weight: {{ submit_font.weight }};\r\n      font-style: {{ submit_font.style }};\r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n\r\n{% if layout_mobile == 'content_form'%}\r\n  <style>\r\n    .contact-body-{{ section.id }} {\r\n      grid-template-areas: \r\n        \"content\"\r\n        \"form\";     \r\n    }\r\n  </style>\r\n{% elsif layout_mobile == 'form_content' %}\r\n  <style>\r\n    .contact-body-{{ section.id }} {\r\n      grid-template-areas: \r\n        \"form\"\r\n        \"content\";     \r\n    }\r\n  </style>\r\n{% endif %}\r\n\r\n{% if layout == 'content_form'%}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .contact-body-{{ section.id }} {\r\n        grid-template-areas: \"content form\";    \r\n      }\r\n    }    \r\n  </style>\r\n{% elsif layout == 'form_content' %}\r\n  <style>\r\n    @media(min-width: 1024px) {\r\n      .contact-body-{{ section.id }} {\r\n        grid-template-areas: \"form content\";   \r\n      }\r\n    }   \r\n  </style>\r\n{% endif %}\r\n\r\n{% for block in section.blocks %}\r\n  {% case block.type %}\r\n    {% when 'heading' %}  \r\n      <style>\r\n        {{  block.settings.heading_font | font_face: font_display: 'swap' }}\r\n\r\n        .contact-heading-{{ block.id }} {\r\n          margin-top: {{ block.settings.heading_mt_mobile }}px;\r\n          text-align: {{ content_align_mobile }};\r\n        }\r\n      \r\n        .contact-heading-{{ block.id }} * {\r\n          margin: 0;\r\n          font-size: {{ block.settings.heading_size_mobile }}px;\r\n          color: {{ block.settings.heading_color }};\r\n          line-height: {{ block.settings.heading_height }}%;\r\n          text-transform: unset;\r\n          word-break: break-word;\r\n          font-weight: 700;\r\n        }\r\n\r\n        .contact-heading-{{ block.id }} * strong {\r\n          text-decoration: underline {{ block.settings.heading_border_color }};\r\n        }\r\n\r\n        @media(min-width: 1024px) {\r\n          \r\n          .contact-heading-{{ block.id }} {\r\n            margin-top: {{ block.settings.heading_mt }}px;\r\n            text-align: {{ content_align }};\r\n          }\r\n        \r\n          .contact-heading-{{ block.id }} * {\r\n            font-size: {{ block.settings.heading_size }}px;\r\n          }\r\n        }          \r\n      </style>\r\n        \r\n      {% if block.settings.heading_custom %}\r\n        <style>\r\n          .contact-heading-{{ block.id }} * {\r\n            font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};\r\n            font-weight: {{ block.settings.heading_font.weight }};\r\n            font-style: {{ block.settings.heading_font.style }};\r\n          }\r\n        </style>\r\n      {% endif %}\r\n\r\n    {% when 'content' %}   \r\n      <style>\r\n        {{  block.settings.text_font | font_face: font_display: 'swap' }}\r\n        \r\n        .contact-text-{{ block.id }} {\r\n          margin-top: {{ block.settings.text_mt_mobile }}px;\r\n          text-align: {{ content_align_mobile }};\r\n          position: relative;\r\n          z-index: 2;\r\n        }\r\n      \r\n        .contact-text-{{ block.id }} * {\r\n          margin: 0;\r\n          font-size: {{ block.settings.text_size_mobile }}px;\r\n          color: {{ block.settings.text_color }};\r\n          line-height: {{ block.settings.text_height }}%;\r\n          text-transform: unset;\r\n        }\r\n\r\n        @media(min-width: 1024px) {\r\n          \r\n          .contact-text-{{ block.id }} {\r\n            margin-top: {{ block.settings.text_mt }}px;\r\n            text-align: {{  content_align }};\r\n          }\r\n      \r\n          .contact-text-{{ block.id }} * {\r\n            font-size: {{ block.settings.text_size }}px;\r\n          }\r\n          \r\n        }\r\n      </style>\r\n\r\n      {% if block.settings.text_custom %}\r\n        <style>\r\n          .contact-text-{{ block.id }} * {\r\n            font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};\r\n            font-weight: {{ block.settings.text_font.weight }};\r\n            font-style: {{ block.settings.text_font.style }};\r\n          }\r\n        </style>          \r\n      {% endif %}  \r\n  {% endcase %}\r\n{% endfor %}\r\n\r\n{% for block in section.blocks %}\r\n  <style>\r\n    .contact-field-{{ block.id }} {\r\n      flex: 0 1 100%;\r\n    }\r\n\r\n    .contact-field-{{ block.id }}.contact-field-date-{{ block.id }} input {\r\n      width: 100%;\r\n    }\r\n    \r\n    @media(min-width: 1024px) {\r\n      {% if block.settings.half_width %}\r\n        .contact-field-{{ block.id }}.contact-field-date-{{ block.id }} {\r\n          flex: 0 1 calc(50% - {{ form_gap | times: 0.5 }}px);\r\n        }\r\n      {% else %}\r\n        .contact-field-{{ block.id }}.contact-field-date-{{ block.id }} {\r\n          flex: 0 1 100%;\r\n        }\r\n      {% endif %}\r\n\r\n      .contact-field-{{ block.id }}.contact-field-date-{{ block.id }} input {\r\n        width: 100%;\r\n      }\r\n      \r\n      {% if block.settings.half_width %}\r\n        .contact-field-{{ block.id }} {\r\n          flex: 0 1 calc(50% - {{ form_gap | times: 0.5 }}px);\r\n        }\r\n      {% else %}\r\n        .contact-field-{{ block.id }} {\r\n          flex: 0 1 100%;\r\n        }\r\n      {% endif %}\r\n    }\r\n  </style>\r\n{% endfor %}\r\n\r\n<div class=\"section-{{ section.id }} contact-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\r\n    <div class=\"section-{{ section.id }}-settings\">\r\n      <div class=\"contact-body-{{ section.id }}\">\r\n        <div class=\"contact-content-{{ section.id }}\">\r\n          {% for block in section.blocks %}\r\n            {% case block.type %}\r\n              {% when 'heading'%}\r\n                {% if block.settings.heading != blank %}\r\n                  <div class=\"contact-heading-{{ block.id }}\">\r\n                    {{ block.settings.heading }}\r\n                  </div>\r\n                {% endif %}\r\n              {% when 'content' %}\r\n                {% if block.settings.text != blank %}\r\n                  <div class=\"contact-text-{{ block.id }}\">\r\n                    {{ block.settings.text }}\r\n                  </div>\r\n                {% endif %}  \r\n            {% endcase %}\r\n          {% endfor %}   \r\n        </div> \r\n        <div class=\"contact-form-{{ section.id }}\">\r\n          {% form 'contact'%}\r\n          \r\n            {% if form.posted_successfully? %}\r\n              {% comment %} Successful message {% endcomment %}\r\n              <p class=\"contact-success-{{ section.id }}\">{{ success_text }}</p>\r\n            {% endif %}\r\n            \r\n            {{ form.errors | default_errors }}\r\n  \r\n            <div class=\"contact-fields-{{ section.id }}\">\r\n              {% for block in section.blocks %}               \r\n                {% unless block.type == \"heading\" or block.type == \"content\" %}\r\n                  <div class=\"contact-field-{{ section.id }} contact-field-{{ block.id }} {% if block.type == \"date\" %} contact-field-date-{{ block.id }}{% endif %}\">\r\n                    {% case block.type %}\r\n                      {% when 'date' %}\r\n                        {% if block.settings.title != blank %}\r\n                          <p class=\"contact-field-title-{{ section.id }} contact-field-title-{{ block.id }}\">              \r\n                            {{ block.settings.title }} {% if block.settings.required %}<span class=\"contact-field-required-{{ section.id }}\">{{ required_text }}</span>{% endif %}</p>\r\n                        {% endif %}\r\n                        <div class=\"contact-field-inner-{{ section.id }}\">\r\n                          {% if block.settings.label != blank %}\r\n                            <label for=\"ContactForm{{ block.settings.name }}\" class=\"contact-field-label-{{ section.id }} contact-field-label-{{ block.id }}\">                  \r\n                              {{ block.settings.label }}\r\n                            </label>\r\n                          {% endif %}\r\n                          <input type=\"date\" class=\"contact-field-input-{{ section.id }}\" id=\"ContactForm{{ block.settings.name }}\" name=\"contact[{{ block.settings.name }}]\" {% if block.settings.required %}required{% endif %}>\r\n                        </div>\r\n                      {% when 'text' %}\r\n                        {% if block.settings.title != blank %}\r\n                          <p class=\"contact-field-title-{{ section.id }} contact-field-title-{{ block.id }}\">              \r\n                            {{ block.settings.title }} {% if block.settings.required %}<span class=\"contact-field-required-{{ section.id }}\">{{ required_text }}</span>{% endif %}</p>\r\n                        {% endif %}\r\n                        <div class=\"contact-field-inner-{{ section.id }}\">\r\n                          {% if block.settings.label != blank %}\r\n                            <label for=\"ContactForm{{ block.settings.name }}\" class=\"contact-field-label-{{ section.id }} contact-field-label-{{ block.id }}\">           \r\n                              {{ block.settings.label }}\r\n                            </label>\r\n                          {% endif %}\r\n                          <input type=\"{% if block.settings.type == \"tel\" %}tel{% elsif block.settings.type == \"email\" %}email{% else %}text{% endif %}\" {% if block.settings.placeholder != blank %}placeholder=\"{{ block.settings.placeholder }}\"{% endif %} class=\"contact-field-input-{{ section.id }}\" id=\"ContactForm{{ block.settings.name }}\" name=\"{% if block.settings.type == \"email\" %}contact[email]{% else %}contact[{{ block.settings.name }}]{% endif %}\" {% if block.settings.required %}required{% endif %}>\r\n                        </div>\r\n                      {% when 'textarea' %}\r\n                        {% if block.settings.title != blank %}\r\n                          <p class=\"contact-field-title-{{ section.id }} contact-field-title-{{ block.id }}\">                        \r\n                            {{ block.settings.title }} {% if block.settings.required %}<span class=\"contact-field-required-{{ section.id }}\">{{ required_text }}</span>{% endif %}</p>\r\n                        {% endif %}\r\n                        <div class=\"contact-field-inner-{{ section.id }}\">\r\n                          {% if block.settings.label != blank %}\r\n                            <label for=\"ContactForm{{ block.settings.name }}\" class=\"contact-field-label-{{ section.id }} contact-field-label-{{ block.id }}\">{{ block.settings.label }}</label>\r\n                          {% endif %}\r\n                          <textarea {% if block.settings.placeholder != blank %}placeholder=\"{{ block.settings.placeholder }}\"{% endif %} class=\"contact-field-input-{{ section.id }}\" style=\"font-family: inherit\" id=\"ContactForm{{ block.settings.name }}\" name=\"{% if block.settings.type == \"message\" %}contact[message]{% else %}contact[{{ block.settings.name }}]{% endif %}\" {% if block.settings.required %}required{% endif %}></textarea>\r\n                        </div>\r\n                      {% when 'dropdown' %}\r\n                        {% assign options = block.settings.dropdown_options | strip | split: ',' %}\r\n                        {% if block.settings.title != blank %}\r\n                          <p class=\"contact-field-title-{{ section.id }} contact-field-title-{{ block.id }}\">                        \r\n                            {{ block.settings.title }} {% if block.settings.required %}<span class=\"contact-field-required-{{ section.id }}\">{{ required_text }}</span>{% endif %}</p>\r\n                        {% endif %}\r\n                        <div class=\"contact-field-inner-{{ section.id }}\">\r\n                          {% if block.settings.label != blank %}\r\n                            <label for=\"ContactForm{{ block.settings.name }}\" class=\"contact-field-label-{{ section.id }} contact-field-label-{{ block.id }}\">{{ block.settings.label }}</label>\r\n                          {% endif %}\r\n                          <div class=\"contact-field-select-{{ section.id }}\">\r\n                            <svg class=\"contact-field-select-svg-{{ section.id }}\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M512 581.5l273.1-273.1c25-25 65.5-25 90.5 0s25 65.5 0 90.5l-316.7 316.7c-12.9 12.9-30 19.2-47 18.7-16.9 0.4-33.9-5.8-46.8-18.699l-316.8-316.8c-25-25-25-65.5 0-90.5s65.5-25 90.5 0l273.2 273.2z\"/></svg>\r\n                            <select class=\"contact-field-input-{{ section.id }} contact-field-input-select-{{ section.id }}\" id=\"ContactForm{{ block.settings.name }}\" name=\"contact[{{block.settings.name}}]\" {% if block.settings.required %}required{% endif %}>\r\n                              {% if block.settings.placeholder  %}\r\n                                <option value = \"\" disabled selected>{% if block.settings.placeholder != blank %}{{ block.settings.placeholder }}{% endif %}</option>\r\n                              {% endif %}\r\n                              \r\n                              {% for option in options %}\r\n                                <option value = \"{{option}}\">{{option}}</option>\r\n                              {% endfor %}\r\n                            </select>  \r\n                          </div>\r\n                          \r\n                        </div>\r\n                      {% when 'checkbox' %}\r\n                        {% assign optionscheckbox = block.settings.checkbox_options | strip | split: ',' %}\r\n                        {% if block.settings.title != blank %}\r\n                          <p class=\"contact-field-title-{{ section.id }} contact-field-title-{{ block.id }}\">                       \r\n                            {{ block.settings.title }} {% if block.settings.required %}<span class=\"contact-field-required-{{ section.id }}\">{{ required_text }}</span>{% endif %}</p>\r\n                        {% endif %}\r\n                        <div class=\"contact-field-inner-{{ section.id }}\">\r\n                          {% if block.settings.label != blank %}\r\n                            <p class=\"contact-field-label-{{ section.id }} contact-field-label-{{ block.id }}\">{{ block.settings.label }}</p>\r\n                          {% endif %}\r\n                          {% for option in optionscheckbox %}\r\n                            <div class=\"contact-field-checkbox-{{ section.id }}\">\r\n                              <input type=\"checkbox\" {% if block.settings.required %}required{% endif %} id=\"ContactForm{{ block.settings.name }}{{ forloop.index }}{{ section.id }}\" name=\"{% if block.settings.use_newsletter and forloop.first %}customer[accepts_marketing]{% else %}contact[{{ block.settings.name }}-{{ option }}]{% endif %}\">\r\n                              <label for=\"ContactForm{{ block.settings.name }}{{ forloop.index }}{{ section.id }}\" class=\"contact-field-label-{{ block.id }}\">{{ option }}</label>\r\n                            </div>\r\n                          {% endfor %}\r\n                        </div>\r\n                    {% endcase %}\r\n                  </div>    \r\n                {% endunless %}                 \r\n              {% endfor %}\r\n            </div>\r\n            \r\n            <div class=\"contact-submit-button-{{ section.id }}\">\r\n              <input type=\"submit\" class=\"contact-submit-{{ section.id }}\" value=\"{% if submit != blank %}{{ submit }}{% else %}Submit{% endif %}\">\r\n            </div>        \r\n  \r\n          {% endform %}\r\n        </div>        \r\n      </div>\r\n    </div>\r\n</div>",
+  "variables": {
+    "layout": {
+      "type": "text",
+      "default": "content_form",
+      "label": "Layout",
+      "description": "Layout"
+    },
+    "layout_mobile": {
+      "type": "text",
+      "default": "content_form",
+      "label": "Layout - mobile",
+      "description": "Layout - mobile"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "72",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "36",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "content_vertical_align": {
+      "type": "text",
+      "default": "start",
+      "label": "Vertical align - desktop",
+      "description": "Vertical align - desktop"
+    },
+    "form_gap": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "form_gap_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "required_text": {
+      "type": "text",
+      "default": "*",
+      "label": "Required text",
+      "description": "Required text"
+    },
+    "required_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "required_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "required_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "required_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "required_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "label_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "label_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "label_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "label_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "label_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "label_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "label_mt_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "input_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "input_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "input_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "input_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "input_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "input_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "input_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "input_padding_vertical": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "input_padding_vertical_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "input_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "input_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "input_mt": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "input_mt_mobile": {
+      "type": "text",
+      "default": "8",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "checkbox_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "checkbox_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "checkbox_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "checkbox_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "checkbox_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "checkbox_radius": {
+      "type": "text",
+      "default": "4",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "success_text": {
+      "type": "text",
+      "default": "Thank you!",
+      "label": "Text",
+      "description": "Text"
+    },
+    "success_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "success_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "success_text_size": {
+      "type": "text",
+      "default": "28",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "success_text_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "success_text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "success_text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "success_text_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "error_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "error_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "error_text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "error_text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "error_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "error_text_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "error_text_align_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "submit": {
+      "type": "text",
+      "default": "Submit",
+      "label": "Button label",
+      "description": "Button label"
+    },
+    "submit_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "submit_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "submit_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "submit_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "submit_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "submit_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "submit_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "submit_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "submit_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "submit_radius": {
+      "type": "text",
+      "default": "100",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "submit_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "submit_mt": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "submit_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "submit_horizontal_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "submit_horizontal_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Title",
+      "description": "Title"
+    },
+    "required_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Required text",
+      "description": "Required text"
+    },
+    "label_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Label",
+      "description": "Label"
+    },
+    "input_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "placeholder_color": {
+      "type": "color",
+      "default": "#b3b3b3",
+      "label": "Placeholder",
+      "description": "Placeholder"
+    },
+    "input_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "input_border_color": {
+      "type": "color",
+      "default": "#DEDEDE",
+      "label": "Border",
+      "description": "Border"
+    },
+    "input_border_hover_color": {
+      "type": "color",
+      "default": "#A8A8A8",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "input_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border active",
+      "description": "Border active"
+    },
+    "select_icon_color": {
+      "type": "color",
+      "default": "#676879",
+      "label": "Arrow icon",
+      "description": "Arrow icon"
+    },
+    "checkbox_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "checkbox_checkmar_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Checkmark",
+      "description": "Checkmark"
+    },
+    "checkbox_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "checkbox_bg_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background active",
+      "description": "Background active"
+    },
+    "checkbox_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "checkbox_border_active_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border active",
+      "description": "Border active"
+    },
+    "submit_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "submit_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "submit_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "submit_bg_hover_color": {
+      "type": "color",
+      "default": "#222222",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "submit_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "submit_border_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "success_text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Success message",
+      "description": "Success message"
+    },
+    "error_text_color": {
+      "type": "color",
+      "default": "#c70a24",
+      "label": "Error message",
+      "description": "Error message"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    }
+  }
+}

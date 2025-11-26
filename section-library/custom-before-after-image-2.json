@@ -1,0 +1,480 @@
+{
+  "id": "custom-before-after-image-2",
+  "name": "Before/After Image #2",
+  "description": "Section: Before/After Image #2",
+  "tags": [
+    "before"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign content_width = section.settings.content_width\n  assign full_width = section.settings.full_width\n  assign lazy = section.settings.lazy\n\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\n  assign layout_gap = section.settings.layout_gap\n  assign layout = section.settings.layout\n  assign layout_mobile = section.settings.layout_mobile\n  assign layout_bg_color = section.settings.layout_bg_color\n  assign layout_padding_vertical_mobile = section.settings.layout_padding_vertical_mobile\n  assign layout_padding_vertical = section.settings.layout_padding_vertical\n  assign layout_padding_horizontal = section.settings.layout_padding_horizontal\n  assign layout_padding_horizontal_mobile = section.settings.layout_padding_horizontal_mobile\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n  assign heading_align_mobile = section.settings.heading_align_mobile\n\n  assign sub_heading = section.settings.sub_heading\n  assign sub_heading_size = section.settings.sub_heading_size\n  assign sub_heading_size_mobile = section.settings.sub_heading_size_mobile\n  assign sub_heading_color = section.settings.sub_heading_color\n  assign sub_heading_custom = section.settings.sub_heading_custom\n  assign sub_heading_font = section.settings.sub_heading_font\n  assign sub_heading_height = section.settings.sub_heading_height\n  assign sub_heading_align = section.settings.sub_heading_align\n  assign sub_heading_align_mobile = section.settings.sub_heading_align_mobile\n  assign sub_heading_mt = section.settings.sub_heading_mt\n\n  assign button = section.settings.button\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_align = section.settings.button_align\n  assign button_align_mobile = section.settings.button_align_mobile\n  assign button_url = section.settings.button_url\n  assign button_mt = section.settings.button_mt\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n\n  assign left_image_mobile = section.settings.left_image_mobile\n  assign left_image = section.settings.left_image\n  assign right_image_mobile = section.settings.right_image_mobile\n  assign right_image = section.settings.right_image\n  assign image_ratio_mobile = section.settings.image_ratio_mobile\n  assign image_ratio = section.settings.image_ratio\n  assign image_border_color = section.settings.image_border_color\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_radius = section.settings.image_radius\n\n  assign btn_size_mobile = section.settings.btn_size_mobile\n  assign btn_size = section.settings.btn_size\n  assign btn_border_thickness = section.settings.btn_border_thickness\n  assign btn_border_color = section.settings.btn_border_color\n  assign btn_arrow_color = section.settings.btn_arrow_color\n  assign line_color = section.settings.line_color\n  assign btn_arrow_size_mobile = section.settings.btn_arrow_size_mobile\n  assign btn_arrow_size = section.settings.btn_arrow_size\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  sub_heading_font | font_face: font_display: 'swap' }}\n  {{  button_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .image-grid-{{ section.id }} {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    align-items: center;\n    gap: {{ layout_gap_mobile }}px;\n    background-color: {{ layout_bg_color }};\n    padding: {{ layout_padding_vertical_mobile }}px {{ layout_padding_horizontal_mobile }}px;\n  }\n\n  .image-heading-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    text-align: {{ heading_align_mobile }};\n  }\n\n  .image-subheading-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ sub_heading_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ sub_heading_size_mobile }}px;\n    color: {{ sub_heading_color }};\n    line-height: {{ sub_heading_height }}%;\n    text-transform: unset;\n    text-align: {{ sub_heading_align_mobile }};\n  }\n\n  .image-btn-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    max-width: fit-content;\n    margin: 0;\n    margin-top: {{ button_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ button_size_mobile }}px;\n    font-weight: 700;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical | times: 0.75 | round: 0 }}px {{ button_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border-radius: {{ button_radius }}px;\n    border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    background-color: {{ button_bg_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .image-btn-{{ section.id }}:hover {\n    color: {{ button_hover_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    background-color: {{ button_bg_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .image-slider-button-{{ section.id }} {\n    width: {{ btn_size_mobile }}px;\n    height: {{ btn_size_mobile }}px;\n    border-radius: 50%;\n    border: {{ btn_border_thickness }}px solid {{ btn_border_color }};\n    backdrop-filter: blur(7px);\n    -webkit-backdrop-filter: blur(7px);\n    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n    z-index: 3;\n    position: relative;\n  }\n\n  .image-slider-button-{{ section.id }}::after {\n    content: '';\n    padding: calc(3px + {{ btn_arrow_size_mobile | times: 0.02 | round: 0 }}px);\n    display: inline-block;\n    border: solid {{ btn_arrow_color }};\n    border-width: 0 2px 2px 0;\n    transform: rotate(-45deg) scale({{ btn_arrow_size_mobile }}%);\n  }\n\n  .image-slider-button-{{ section.id }}::before {\n    content: '';\n    padding: calc(3px + {{ btn_arrow_size_mobile | times: 0.02 | round: 0 }}px);\n    display: inline-block;\n    border: solid {{ btn_arrow_color }};\n    border-width: 0 2px 2px 0;\n    transform: rotate(135deg) scale({{ btn_arrow_size_mobile }}%);\n  }\n\n  .section-{{ section.id }}  .before-after-image-wrapper {\n    position: relative;\n    --text-primary: 26 26 26;\n    --shadow: 0 5px 15px rgb(var(--text-primary) / 0.1);\n      filter: drop-shadow(var(--shadow));\n    user-select: none;\n    overflow: hidden;\n  }\n  .section-{{ section.id }} .filter-invert {\n    filter: invert(1);\n  }\n  .section-{{ section.id }} .placeholder {\n    fill: black;\n    background-color: white;\n    display: block;\n  }\n  .section-{{ section.id }} .before-after-image-text {\n    position: absolute;\n    font-weight: 700;\n  }\n  .section-{{ section.id }} .bg-text {\n    background: white;\n  }\n  .section-{{ section.id }} .before-after-image {\n    width: 100%;\n    height: 100%;\n    display: block;\n    object-fit: cover;\n    background-color: {% if layout_bg_color != blank %}{{ layout_bg_color }}{% else %}{{ background_color }}{% endif %};\n  }\n  .section-{{ section.id }} .before-after-image--cover {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    object-position: center;\n    background-color: {% if layout_bg_color != blank %}{{ layout_bg_color }}{% else %}{{ background_color }}{% endif %};\n  }\n  .section-{{ section.id }} .before-after-image-relative {\n     aspect-ratio: 1/1;\n  }\n\n  .section-{{ section.id }} .before-after__cursor {\n    height: 100%;\n    width: max-content;\n    touch-action: none;\n    --transform-logical-flip: 1;\n    transform: translate(calc(var(--transform-logical-flip) * -50% + var(--clip-path-offset, 0px)),-50%);\n    cursor: grab;\n    will-change: transform;\n    place-items: center;\n    display: grid;\n    position: relative;\n    top: 50%;\n    left: var(--before-after-initial-drag-position, 0px);\n  }\n  \n  .section-{{ section.id }} .before-after__cursor:before {\n    content: '';\n    height: calc(50% - {{ btn_size_mobile | times: 0.5 | round: 0 }}px);\n    top: 0;\n    width: 3px;\n    background: {{ line_color }};\n    z-index: -1;\n    position: absolute;\n  }\n  \n  .section-{{ section.id }} .before-after__cursor:after {\n    content: '';\n    height: calc(50% - {{ btn_size_mobile | times: 0.5 | round: 0 }}px);\n    bottom: 0;\n    width: 3px;\n    background: {{ line_color }};\n    z-index: -1;\n    position: absolute;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .image-grid-{{ section.id }} {\n      grid-template-columns: repeat(2, 1fr);\n      gap: {{ layout_gap }}px;\n      padding: {{ layout_padding_vertical }}px {{ layout_padding_horizontal }}px;\n    }\n\n    .image-heading-{{ section.id }} * {\n      font-size: {{ heading_size }}px;\n      text-align: {{ heading_align }};\n    }\n\n    .image-subheading-{{ section.id }} {\n      margin-top: {{ sub_heading_mt }}px;\n      font-size: {{ sub_heading_size }}px;\n      text-align: {{ sub_heading_align }};\n    }\n\n    .image-btn-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n      font-size: {{ button_size }}px;\n    }\n\n    .image-slider-button-{{ section.id }} {\n      width: {{ btn_size }}px;\n      height: {{ btn_size }}px;\n    }\n\n    .image-slider-button-{{ section.id }}::after {\n      padding: calc(3px + {{ btn_arrow_size | times: 0.02 | round: 0 }}px);\n      transform: rotate(-45deg) scale({{ btn_arrow_size }}%);\n    }\n\n    .image-slider-button-{{ section.id }}::before {\n      padding: calc(3px + {{ btn_arrow_size | times: 0.02 | round: 0 }}px);\n      transform: rotate(135deg) scale({{ btn_arrow_size }}%);\n    }\n\n    /* .section-{{ section.id }} .before-after-image-relative {\n      height: var(--desktop-height);\n    } */\n\n    .section-{{ section.id }} .before-after__cursor:before {\n      height: calc(50% - {{ btn_size | times: 0.5 | round: 0 }}px);\n    }\n\n    .section-{{ section.id }} .before-after__cursor:after {\n      height: calc(50% - {{ btn_size | times: 0.5 | round: 0 }}px);\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if heading_custom %}\n  <style>\n    .image-heading-{{ section.id }} * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_heading_custom %}\n  <style>\n    .image-subheading-{{ section.id }} {\n      font-family: {{ sub_heading_font.family }}, {{ sub_heading_font.fallback_families }};\n      font-weight: {{ sub_heading_font.weight }};\n      font-style: {{ sub_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .image-btn-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if layout_mobile == \"image_text\" %}\n  <style>\n    .image-left-{{ section.id }} {\n      order: 2;\n    }\n    \n    .image-right-{{ section.id }} {\n      order: 1;\n    }\n  </style>\n{% else %}\n  <style>\n    .image-left-{{ section.id }} {\n      order: 1;\n    }\n    \n    .image-right-{{ section.id }} {\n      order: 2;\n    }\n  </style>\n{% endif %}\n\n{% if layout == \"image_text\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .image-left-{{ section.id }} {\n        order: 2;\n      }\n      \n      .image-right-{{ section.id }} {\n        order: 1;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .image-left-{{ section.id }} {\n        order: 1;\n      }\n      \n      .image-right-{{ section.id }} {\n        order: 2;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if button_align_mobile == \"center\" %}\n  <style>\n   .image-btn-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    } \n  </style>\n{% elsif button_align_mobile == \"right\" %}\n  <style>\n   .image-btn-{{ section.id }} {\n      margin-left: auto;\n    } \n  </style>\n{% endif %}\n\n{% if button_align == \"center\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .image-btn-{{ section.id }} {\n        margin-left: auto;\n        margin-right: auto;\n      } \n    }\n  </style>\n{% elsif button_align == \"right\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .image-btn-{{ section.id }} {\n        margin-left: auto;\n      } \n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n     .image-btn-{{ section.id }} {\n        margin-left: 0px;\n        margin-right: 0px;\n      } \n    }\n  </style>\n{% endif %}\n\n{% if left_image_mobile != blank %}\n  <style>\n    .section-{{ section.id }} .before-after-image-first {\n      display: none;\n    }\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} .before-after-image-first {\n        display: block;\n      }\n      .section-{{ section.id }} .before-after-image-mobile {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if right_image_mobile != blank %}\n  <style>\n    .section-{{ section.id }} .before-after-image-second {\n      display: none;\n    }\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} .before-after-image-second {\n        display: block;\n      }\n      .section-{{ section.id }} .before-after-image-mobile-second {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if image_ratio_mobile == \"portrait\" %}\n  <style>\n    .section-{{ section.id }} .before-after-image-relative {\n     aspect-ratio: 9.6/14; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"landscape\" %}\n  <style>\n    .section-{{ section.id }} .before-after-image-relative{\n     aspect-ratio: 12/9; \n    }\n  </style>\n{% elsif image_ratio_mobile == \"square\" %}\n  <style>\n    .section-{{ section.id }} .before-after-image-relative {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else%}\n  <style>\n    .section-{{ section.id }} .before-after-image-relative {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if image_ratio == \"portrait\" %}\n  <style>\n    @media(min-width: 1024px) {\n     .section-{{ section.id }} .before-after-image-relative {\n       aspect-ratio: 9.6/14; \n      } \n    }\n  </style>\n{% elsif image_ratio == \"landscape\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} .before-after-image-relative{\n       aspect-ratio: 12/9; \n      }\n    }\n  </style>\n{% elsif image_ratio == \"square\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} .before-after-image-relative {\n       aspect-ratio: 12/12; \n      }\n    }\n  </style>\n{% else%}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} .before-after-image-relative {\n       aspect-ratio: auto; \n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} image-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings \">\n      <div class=\"image-grid-{{ section.id }}\">\n        <div class=\"image-left-{{ section.id }}\">\n          {% if heading != blank %}\n            <div class=\"image-heading-{{ section.id }}\">{{ heading }}</div>\n          {% endif %}\n          {% if sub_heading != blank %}\n            <p class=\"image-subheading-{{ section.id }}\">{{ sub_heading }}</p>\n          {% endif %}\n          {% if button != blank %}\n            <a href=\"{{ button_url }}\" class=\"image-btn-{{ section.id }}\">{{ button }}</a>\n          {% endif %}\n        </div>\n        <div class=\"image-right-{{ section.id }}\">\n          <div\n            class=\"before-after-image-wrapper\"\n            style=\"\n              --before-after-initial-drag-position: 50%;\n              --clip-path-offset: 0px;\n              border-radius: {{ image_radius }}px;\n            \"\n          >\n            {% assign before_image = left_image %}\n            {% assign before_image_mobile = left_image_mobile %}\n            {% assign after_image = right_image %}\n            {% assign after_image_mobile = right_image_mobile %}\n            <div\n              class=\"before-after-image-relative\"\n              style=\"\n                position: relative;\n                --mobile-height: {{ image_height_mobile }}px;\n                --desktop-height: {{ image_height }}px;\n              \"\n            >\n              {% if before_image_mobile != blank %}\n                <img\n                  src=\"{{ before_image_mobile | image_url }}\"\n                  alt=\"{{ before_image_mobile.alt }}\"\n                  {% if lazy %}loading=\"lazy\"{% endif %}\n                  draggable=\"false\"\n                  class=\"\n                    before-after-image\n                    before-after-image-mobile\n                  \"\n                >\n              {% endif %}\n              {% if before_image != blank %}\n                <img\n                  src=\"{{ before_image | image_url }}\"\n                  alt=\"{{ before_image.alt }}\"\n                 {% if lazy %}loading=\"lazy\"{% endif %}\n                  draggable=\"false\"\n                  class=\"\n                    before-after-image\n                    before-after-image-first\n                  \"\n                >\n              {% else %}\n                {{\n                  'lifestyle-1'\n                  | placeholder_svg_tag: 'placeholder before-after-image--cover'\n                }}\n              {% endif %}\n            </div>\n            <div\n              style=\"\n                clip-path: inset(0 0 0 calc(var(--before-after-initial-drag-position, 50%) + var(--clip-path-offset, 0px)));\n                position: absolute;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              \"\n            >\n              {% if after_image_mobile != blank %}\n                <img\n                  src=\"{{ after_image_mobile | image_url }}\"\n                  alt=\"{{ after_image_mobile.alt }}\"\n                  {% if lazy %}loading=\"lazy\"{% endif %}\n                  draggable=\"false\"\n                  class=\"\n                    before-after-image\n                    before-after-image-mobile-second\n                  \"\n                >\n              {% endif %}\n              {% if after_image != blank %}\n                <img\n                  src=\"{{ after_image | image_url }}\"\n                  alt=\"{{ after_image.alt }}\"\n                  {% if lazy %}loading=\"lazy\"{% endif %}\n                  draggable=\"false\"\n                  class=\"\n                    before-after-image\n                    before-after-image-second\n                  \"\n                >\n              {% else %}\n                {{\n                  'lifestyle-2'\n                  | placeholder_svg_tag: 'filter-invert bg-text before-after-image--cover'\n                }}\n              {% endif %}\n            </div>\n            {% comment %} Cursor: {% endcomment %}\n            <div\n              style=\"\n                position: absolute;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              \"\n            >\n              <split-cursor\n                class=\"before-after__cursor\"\n                style=\"--background: white; \"\n              >\n                <div class=\"image-slider-button-{{ section.id }}\"></div>\n              </split-cursor>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<script>\n  (function () {\n    function setup() {\n      const cursor = document.querySelector(\n        '.section-{{ section.id }} .before-after__cursor'\n      );\n      const imageWrapper = document.querySelector(\n        '.section-{{ section.id }} .before-after-image-wrapper'\n      );\n\n      let xStart, xEnd, xDiff, originalOffset;\n      function dragStart(event) {\n        xStart = event.clientX;\n        originalOffset = imageWrapper.style\n          .getPropertyValue('--clip-path-offset')\n          .slice(0, -2);\n        //xStart = imageWrapper.style\n        //  .getPropertyValue('--clip-path-offset')\n        //  .slice(0, -2);\n        document.addEventListener('pointermove', dragMove);\n        document.addEventListener('pointerup', dragEnd);\n      }\n\n      function dragMove(event) {\n        xEnd = event.clientX;\n        xDiff = xEnd - xStart;\n\n        let result = xDiff + parseInt(originalOffset);\n        let cursorOffsetPercent = parseFloat(getComputedStyle(imageWrapper).getPropertyValue('--before-after-initial-drag-position'));\n        let containerWidth = imageWrapper.offsetWidth;\n        let pixelsOffset = (cursorOffsetPercent / 100) * containerWidth;\n        \n        const negativeMax = -1 * (pixelsOffset);\n        const positiveMax = imageWrapper.offsetWidth - pixelsOffset;\n        if (result < negativeMax) {\n          result = negativeMax;\n        } else if (result > positiveMax) {\n          result = positiveMax;\n        }\n        imageWrapper.style.setProperty(\n          '--clip-path-offset',\n          result + 'px'\n        );\n      }\n\n      function dragEnd(event) {\n        document.removeEventListener('pointermove', dragMove);\n        document.removeEventListener('pointerup', dragEnd);\n      }\n\n      cursor.addEventListener('pointerdown', dragStart);\n    }\n    setup();\n    if (Shopify.designMode) {\n      document.addEventListener('shopify:section:load', setup);\n    }\n  })();\n  \n</script>",
+  "variables": {
+    "left_image": {
+      "type": "text",
+      "default": "",
+      "label": "Left Image",
+      "description": "Left Image"
+    },
+    "left_image_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Left Image - Mobile (optional)",
+      "description": "Left Image - Mobile (optional)"
+    },
+    "right_image": {
+      "type": "text",
+      "default": "",
+      "label": "Right Image",
+      "description": "Right Image"
+    },
+    "right_image_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Right Image - Mobile (optional)",
+      "description": "Right Image - Mobile (optional)"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Image Border Radius",
+      "description": "Image Border Radius"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Image Border Thickness",
+      "description": "Image Border Thickness"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Image Aspect Ratio",
+      "description": "Image Aspect Ratio"
+    },
+    "image_ratio_mobile": {
+      "type": "text",
+      "default": "square",
+      "label": "Image Aspect Ratio - Mobile",
+      "description": "Image Aspect Ratio - Mobile"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "20",
+      "label": "Layout Gap",
+      "description": "Layout Gap"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Layout Gap - Mobile",
+      "description": "Layout Gap - Mobile"
+    },
+    "layout": {
+      "type": "text",
+      "default": "text_image",
+      "label": "Layout",
+      "description": "Layout"
+    },
+    "layout_mobile": {
+      "type": "text",
+      "default": "image_text",
+      "label": "Layout Mobile",
+      "description": "Layout Mobile"
+    },
+    "layout_padding_vertical": {
+      "type": "text",
+      "default": "50",
+      "label": "Layout Padding Vertical",
+      "description": "Layout Padding Vertical"
+    },
+    "layout_padding_vertical_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Layout Padding Vertical - Mobile",
+      "description": "Layout Padding Vertical - Mobile"
+    },
+    "layout_padding_horizontal": {
+      "type": "text",
+      "default": "100",
+      "label": "Layout Padding Horizontal",
+      "description": "Layout Padding Horizontal"
+    },
+    "layout_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Layout Padding Horizontal - Mobile",
+      "description": "Layout Padding Horizontal - Mobile"
+    },
+    "heading": {
+      "type": "textarea",
+      "default": "<h2>Seeking a Plush, Luxurious Carpet?</h2>",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "40",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "30",
+      "label": "Heading Size - Mobile",
+      "description": "Heading Size - Mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align - Mobile",
+      "description": "Heading Text Align - Mobile"
+    },
+    "sub_heading": {
+      "type": "text",
+      "default": "Introducing our latest Plush Carpets – where comfort meets style. There's no need to remove your shoes, yet the irresistible softness of these carpets, being three times thicker than our traditional Flatweave Carpets, might just tempt you to",
+      "label": "Sub-heading",
+      "description": "Sub-heading"
+    },
+    "sub_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "sub_heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Sub-heading Font Family",
+      "description": "Sub-heading Font Family"
+    },
+    "sub_heading_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-heading Size",
+      "description": "Sub-heading Size"
+    },
+    "sub_heading_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-heading Size - Mobile",
+      "description": "Sub-heading Size - Mobile"
+    },
+    "sub_heading_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Sub-heading Line Height",
+      "description": "Sub-heading Line Height"
+    },
+    "sub_heading_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Sub-heading Text Align",
+      "description": "Sub-heading Text Align"
+    },
+    "sub_heading_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Sub-heading Text Align - Mobile",
+      "description": "Sub-heading Text Align - Mobile"
+    },
+    "sub_heading_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Sub-heading Margin Top",
+      "description": "Sub-heading Margin Top"
+    },
+    "button": {
+      "type": "text",
+      "default": "",
+      "label": "Button",
+      "description": "Button"
+    },
+    "button_url": {
+      "type": "text",
+      "default": "",
+      "label": "Button URL",
+      "description": "Button URL"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Button Font Family",
+      "description": "Button Font Family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Size",
+      "description": "Button Size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size - Mobile",
+      "description": "Button Size - Mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Line Height",
+      "description": "Button Line Height"
+    },
+    "button_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Button Text Align",
+      "description": "Button Text Align"
+    },
+    "button_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Button Text Align - Mobile",
+      "description": "Button Text Align - Mobile"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Margin Top",
+      "description": "Button Margin Top"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "20",
+      "label": "Button Padding Vertical",
+      "description": "Button Padding Vertical"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Padding Horizontal",
+      "description": "Button Padding Horizontal"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Button Border Radius",
+      "description": "Button Border Radius"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Button Border Thickness",
+      "description": "Button Border Thickness"
+    },
+    "btn_size": {
+      "type": "text",
+      "default": "56",
+      "label": "Button Slider Size",
+      "description": "Button Slider Size"
+    },
+    "btn_size_mobile": {
+      "type": "text",
+      "default": "56",
+      "label": "Button Slider Size - Mobile",
+      "description": "Button Slider Size - Mobile"
+    },
+    "btn_arrow_size": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Slider Arrow Size",
+      "description": "Button Slider Arrow Size"
+    },
+    "btn_arrow_size_mobile": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Slider Arrow Size - Mobile",
+      "description": "Button Slider Arrow Size - Mobile"
+    },
+    "btn_border_thickness": {
+      "type": "text",
+      "default": "2",
+      "label": "Button Slider Border Thickness",
+      "description": "Button Slider Border Thickness"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "sub_heading_color": {
+      "type": "color",
+      "default": "#B3B3B3",
+      "label": "Sub-Heading Color",
+      "description": "Sub-Heading Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Color",
+      "description": "Button Color"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Hover Color",
+      "description": "Button Hover Color"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button Background Color",
+      "description": "Button Background Color"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button Background Hover Color",
+      "description": "Button Background Hover Color"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Border Color",
+      "description": "Button Border Color"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Border Hover Color",
+      "description": "Button Border Hover Color"
+    },
+    "layout_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Layout Background Colorr",
+      "description": "Layout Background Colorr"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Image Border Colorr",
+      "description": "Image Border Colorr"
+    },
+    "btn_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Slider Border Color",
+      "description": "Button Slider Border Color"
+    },
+    "btn_arrow_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Slider Arrow Color",
+      "description": "Button Slider Arrow Color"
+    },
+    "line_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Vertical Line Color",
+      "description": "Vertical Line Color"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "160",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

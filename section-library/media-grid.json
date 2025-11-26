@@ -1,0 +1,109 @@
+{
+  "id": "media-grid",
+  "name": "CUSTOM Media Grid",
+  "description": "Section: CUSTOM Media Grid",
+  "tags": [
+    "media",
+    "grid"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n\n  assign items_gap = section.settings.items_gap\n  assign items_gap_mobile = section.settings.items_gap_mobile\n\n  assign row_height = section.settings.row_height\n  assign row_height_mobile = section.settings.row_height_mobile\n  \n-%}\n\n{%- style -%}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .media-grid-items-{{ section.id }} {\n    display: grid;\n    align-items: start;\n    grid: auto-flow dense {{ row_height_mobile }}px / repeat(2,minmax(0,1fr));\n    gap: {{ items_gap_mobile }}px;\n  }\n  \n  @media(min-width: 768px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .media-grid-items-{{ section.id }} {\n      gap: {{ items_gap }}px;\n      --calculated-row-height: max(150px, min(100vw / 5, {{ row_height }}px));\n      grid: auto-flow dense var(--calculated-row-height) / repeat(4,minmax(0,1fr));\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% for block in section.blocks %}\n  <style>\n\n    {{ block.settings.heading_font | font_face: font_display: 'swap' }}\n    {{ block.settings.link_font | font_face: font_display: 'swap' }}\n    \n    .media-grid-item-{{ block.id }} {\n      display: flex;\n      position: relative;\n      height: 100%;\n      grid-area: span min(2, {{ block.settings.row_width }}) / span min(2,{{ block.settings.column_width }});\n      border-radius: {{ block.settings.image_radius }}px;\n      text-decoration: none;\n      overflow: hidden;\n    }\n\n    .media-grid-item-{{ block.id }}::after {\n      content: '';\n      position: absolute;\n      left: 0;\n      right: 0;\n      top: 0;\n      bottom: 0;\n      background-color: {{ block.settings.overlay_color }};\n      border-radius: {{ block.settings.image_radius }}px;\n      opacity: {{ block.settings.image_overlay }}%;\n    }\n\n    .media-grid-image-{{ block.id }} {\n      position: absolute;\n      left: 0;\n      right: 0;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      height: 100%;\n      display: block;\n      object-fit: cover;\n      border-radius: {{ block.settings.image_radius }}px;\n      transition: all 0.2s ease 0s;\n    }\n  \n    .media-grid-item-{{ block.id }}:hover .media-grid-image-{{ block.id }} {\n      transition: all 0.2s ease 0s;\n      transform: scale(105%);\n    }\n\n    .media-grid-video-{{ block.id }} {\n      position: absolute;\n      left: 0;\n      right: 0;\n      top: 0;\n      bottom: 0;\n      width: 100%;\n      height: 100%;\n      display: block;\n      border-radius: {{ block.settings.image_radius }}px;\n    }\n\n    .media-grid-video-{{ block.id }} video,\n    .media-grid-video-{{ block.id }} iframe {\n      display: block;\n      width: 100%;\n      height: 100%;\n      object-fit: cover;\n      border-radius: {{ block.settings.image_radius }}px;\n      border: 0px !important;\n    }\n\n    .media-grid-content-{{ block.id }} {\n      width: fit-content;\n      position: relative;\n      z-index: 2;\n      text-align: center;\n      padding: {{ block.settings.content_padding_vertical | times: 0.75 | round: 0 }}px {{ block.settings.content_padding_horizontal | times: 0.75 | round: 0 }}px;\n    }\n\n    .media-grid-heading-{{ block.id }} {\n      margin: 0px;\n      font-size: {{ block.settings.heading_size | times: 0.85 }}px;\n      color: {{ block.settings.heading_color }};\n      line-height: {{ block.settings.heading_height }}%;\n      text-transform: unset;\n    }\n\n    .media-grid-link-{{ block.id }} {\n      display: block;\n      width: fit-content;\n      margin: 0px;\n      margin-top: {{ block.settings.link_mt | times: 0.75 | round: 0 }}px;\n      margin-left: auto;\n      margin-right: auto;\n      font-size: {{ block.settings.link_size | times: 0.85 }}px;\n      color: {{ block.settings.link_color }};\n      line-height: {{ block.settings.link_height }}%;\n      text-transform: unset;\n      text-decoration: none;\n    }\n\n    @media(min-width: 768px) {\n      .media-grid-item-{{ block.id }} {\n        grid-area: span {{ block.settings.row_width }} / span {{ block.settings.column_width }};\n      }\n\n      .media-grid-content-{{ block.id }} {\n        padding: {{ block.settings.content_padding_vertical }}px {{ block.settings.content_padding_horizontal }}px;\n      }\n      \n      .media-grid-heading-{{ block.id }} {\n        font-size: {{ block.settings.heading_size }}px;\n      }\n\n      .media-grid-link-{{ block.id }} {\n        margin-top: {{ block.settings.link_mt }}px;\n        font-size: {{ block.settings.link_size }}px;\n      }\n    }\n  </style>\n\n  {% if block.settings.heading_custom %}\n    <style>\n      .media-grid-heading-{{ block.id }} {\n        font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};\n        font-weight: {{ block.settings.heading_font.weight }};\n        font-style: {{ block.settings.heading_font.style }};\n      }\n    </style>\n  {% endif %}\n\n  {% if block.settings.link_custom %}\n    <style>\n      .media-grid-link-{{ block.id }} {\n        font-family: {{ block.settings.link_font.family }}, {{ block.settings.link_font.fallback_families }};\n        font-weight: {{ block.settings.link_font.weight }};\n        font-style: {{ block.settings.link_font.style }};\n      }\n    </style>\n  {% endif %}\n\n  {% if block.settings.content_align_mobile == \"top-left\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: start;\n        justify-content: start;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"top-center\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: start;\n        justify-content: center;\n      }\n    </style>\n    \n  {% elsif block.settings.content_align_mobile == \"top-right\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: start;\n        justify-content: end;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"middle-left\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: center;\n        justify-content: start;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"middle-center\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: center;\n        justify-content: center;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"middle-right\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: center;\n        justify-content: end;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"bottom-left\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: end;\n        justify-content: start;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"bottom-center\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: end;\n        justify-content: center;\n      }\n    </style>\n\n  {% elsif block.settings.content_align_mobile == \"bottom-right\" %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        align-items: end;\n        justify-content: end;\n      }\n    </style>\n  {% endif %}\n\n  {% if block.settings.content_align == \"top-left\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: start;\n          justify-content: start;\n        }\n      }\n    </style>\n    \n  {% elsif block.settings.content_align == \"top-center\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: start;\n          justify-content: center;\n        }\n      }\n    </style>\n    \n  {% elsif block.settings.content_align == \"top-right\" %}\n    <style>\n        @media(min-width: 768px) {\n          .media-grid-item-{{ block.id }} {\n          align-items: start;\n          justify-content: end;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"middle-left\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: center;\n          justify-content: start;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"middle-center\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: center;\n          justify-content: center;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"middle-right\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: center;\n          justify-content: end;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"bottom-left\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: end;\n          justify-content: start;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"bottom-center\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: end;\n          justify-content: center;\n        }\n      }\n    </style>\n\n  {% elsif block.settings.content_align == \"bottom-right\" %}\n    <style>\n      @media(min-width: 768px) {\n        .media-grid-item-{{ block.id }} {\n          align-items: end;\n          justify-content: end;\n        }\n      }\n    </style>\n  {% endif %}\n\n  {% if block.settings.image == blank %}\n    <style>\n      .media-grid-item-{{ block.id }} {\n        background-color: {{ block.settings.bg_color }};\n      }\n    </style>\n  {% endif %}\n  \n{% endfor %}\n\n<div class=\"section-{{ section.id }} media-grid-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings media-grid-items-{{ section.id }}\">\n\n      {% for block in section.blocks %}\n        \n        {% if block.settings.link == blank and block.settings.link_url != blank %}\n          <a href=\"{{ block.settings.link_url }}\" class=\"media-grid-item-{{ block.id }}\">\n          \n        {% else %}\n          <div class=\"media-grid-item-{{ block.id }}\">   \n        {% endif %}\n\n          {% if block.type == \"image\" %}\n            \n          {% if block.settings.image != blank %}\n            <img src=\"{{ block.settings.image | image_url }}\" class=\"media-grid-image-{{ block.id }}\" alt=\"media-grid-image-{{ forloop.index }}\">\n          {% endif %}\n\n          {% else %}\n\n            {% assign video_id = block.settings.video.id | default: block.settings.video_url.id %}\n\n            {%- if block.settings.video == null and block.settings.video_url != null -%}\n              \n              <div class=\"media-grid-video-{{ block.id }}\">\n                {%- if block.settings.video_url.type == 'youtube' -%}\n\n                  <iframe\n                    data-src=\"https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1\"\n                    allow=\"encrypted-media\"\n                    allowfullscreen\n                    title=\"Grid Section Video\"\n                    class=\"lazy\"\n                  ></iframe>\n                {%- else -%}\n                  <iframe\n                    data-src=\"https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&mute=1&autoplay=1\"\n                    allow=\" encrypted-media\"\n                    allowfullscreen\n                    title=\"Grid Section Video\"\n                    class=\"lazy\"\n                  ></iframe>\n                {% endif %}\n              </div>\n            \n            {% else %}\n              \n            <div class=\"media-grid-video-{{ block.id }}\">\n              <video data-src=\"{{ block.settings.video.sources[1].url }}\" loop autoplay muted playsinline preload=\"none\" class=\"lazy\"></video>\n            </div>\n            \n            {% endif %}\n            \n          {% endif %}\n\n          <div class=\"media-grid-content-{{ block.id }}\">\n\n            {% if block.settings.heading != blank %}\n              <h2 class=\"media-grid-heading-{{ block.id }}\">{{ block.settings.heading }}</h2>\n            {% endif %}\n\n            {% if block.settings.link != blank %}\n              <a href=\"{{ block.settings.link_url }}\" class=\"media-grid-link-{{ block.id }}\">{{ block.settings.link }}</a>\n            {% endif %}\n        \n          </div>\n        \n        {% if block.settings.link == blank and block.settings.link_url != blank %}\n          </a>\n            \n        {% else %}\n          </div>\n        {% endif %}\n        \n      {% endfor %}\n      \n    </div>\n</div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js\"></script>\n\n<script>\n  function initMediaGrid() {\n    let lazyLoadInstance = new LazyLoad();\n\n    window.addEventListener(\n      \"LazyLoad::Initialized\",\n      function (event) {\n        window.lazyLoadInstance = event.detail.instance;\n      },\n      false\n    );\n  }\n\n  document.addEventListener('DOMContentLoaded', initMediaGrid);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initMediaGrid);\n     document.addEventListener('shopify:section:load', initMediaGrid);\n  }\n  \n</script>",
+  "variables": {
+    "items_gap": {
+      "type": "text",
+      "default": "20",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "items_gap_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Gap - Mobile",
+      "description": "Gap - Mobile"
+    },
+    "row_height": {
+      "type": "text",
+      "default": "300",
+      "label": "Desktop Row Max-Height",
+      "description": "Desktop Row Max-Height"
+    },
+    "row_height_mobile": {
+      "type": "text",
+      "default": "200",
+      "label": "Mobile Row Height",
+      "description": "Mobile Row Height"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "When Selected to Replace 'Background Color'"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Before You Need to Choose 'Border Thickness'"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

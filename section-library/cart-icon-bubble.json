@@ -1,0 +1,11 @@
+{
+  "id": "cart-icon-bubble",
+  "name": "Cart Icon Bubble",
+  "description": "Section: Cart Icon Bubble",
+  "tags": [
+    "cart"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid\n  if cart == empty\n    render 'icon-cart-empty'\n  else\n    render 'icon-cart'\n  endif\n-%}\n<span class=\"visually-hidden\">{{ 'templates.cart.cart' | t }}</span>\n{%- if cart != empty -%}\n  <div class=\"cart-count-bubble\">\n      {%- if cart.item_count < 100 -%}\n        <span aria-hidden=\"true\">{{ cart.item_count }}</span>\n      {%- endif -%}\n      <span class=\"visually-hidden\">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>\n  </div>\n{%- endif -%}",
+  "variables": {}
+}

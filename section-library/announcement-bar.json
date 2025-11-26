@@ -1,0 +1,11 @@
+{
+  "id": "announcement-bar",
+  "name": "t:sections.announcement-bar.name",
+  "description": "Section: t:sections.announcement-bar.name",
+  "tags": [
+    "announcement"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- for block in section.blocks -%}\n  {%- case block.type -%}\n    {%- when 'announcement' -%}\n      <div class=\"announcement-bar color-{{ block.settings.color_scheme }} gradient\" role=\"region\" aria-label=\"{{ 'sections.header.announcement' | t }}\" {{ block.shopify_attributes }}>\n        {%- if block.settings.text != blank -%}\n          {%- if block.settings.link != blank -%}\n            <a href=\"{{ block.settings.link }}\" class=\"ss-announcement-bar__link link link--text focus-inset animate-arrow\">\n          {%- endif -%}\n              <div class=\"page-width\">\n                <p class=\"announcement-bar__message {{ block.settings.text_alignment }} h5\">\n                  {{ block.settings.text | escape }}\n                  {%- if block.settings.link != blank -%}\n                    {% render 'icon-arrow' %}\n                  {%- endif -%}\n                </p>\n              </div>\n          {%- if block.settings.link != blank -%}\n            </a>\n          {%- endif -%}\n        {%- endif -%}\n      </div>\n  {%- endcase -%}\n{%- endfor -%}",
+  "variables": {}
+}

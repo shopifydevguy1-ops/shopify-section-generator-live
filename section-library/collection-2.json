@@ -1,0 +1,66 @@
+{
+  "id": "collection-2",
+  "name": "CUSTOM Collection #2",
+  "description": "Section: CUSTOM Collection #2",
+  "tags": [
+    "collection"
+  ],
+  "type": "collection",
+  "liquid_code": "{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n\n  .collection-2-title {\n    font-size: {{section.settings.section_title_font_size}}px;\n    line-height: 1.32;\n    letter-spacing: 0.5px;\n    color: {{section.settings.section_title_color}};\n    padding: 0 0 50px 0;\n    text-align:center;\n  }\n  {% if section.settings.heading_custom %}\n    .collection-2-title {\n      font-family: {{section.settings.type_header_font.family}}, {{ section.settings.type_header_font.fallback_families }};\n      font-weight: {{section.settings.type_header_font.weight}};\n      font-style:  {{ section.settings.type_header_font.style }};\n    }\n  {% endif %}\n\n  .collection-2-wrapper {\n\tdisplay:flex;\n  \tflex-wrap:wrap;\n    justify-content:center;\n  }\n\n  .box-{{ section.id }} {\n    flex: 0 0 calc(33% - 40px);\n  \tposition: relative;\n    width: 100%;\n    min-height: 1px;\n  \tmargin-bottom:60px;\n    margin-right: 20px;\n    margin-left: 20px;\n  \theight: 115px;\n    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  \tbackground-color:#fafafa;\n    transition: all 0.2s;\n  }\n\n    .box-{{ section.id }} img {\n      max-height: 130px;\n      max-width: 130px;\n      position:absolute;\n      left: -20px;\n      top: -7.5px;\n  }\n\n  .collection-2-name-box {\n    position: absolute;\n    top: 50%;\n    left: 65%;\n    -moz-transform: translate(-50%,-50%);\n    -o-transform: translate(-50%,-50%);\n    -ms-transform: translate(-50%,-50%);\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n    width: 70%;\n    text-align: center;\n    font-weight: 600;\n    line-height:1.2;\n  }\n\n  @media (max-width: 1070px) {\n\n     .box-{{ section.id }} {\n       height:100px;\n     }\n      \n    .box-{{ section.id }} img {\n      max-height: 100px;\n      max-width: 100px;\n      left: -15px;\n      top: 0px;\n    }\n  }\n\n  @media (max-width: 767px) {\n    .collection-2-title {\n      padding: 0 0 20px 0;\n    }\n    \n    .collection-2-name-box {\n      left: 60%;\n    }\n    \n    .box-{{ section.id }} {\n      flex: 0 0 calc(50% - 20px);\n      margin:20px 10px;\n      height: 60px;\n    }\n    .collection-2-wrapper {\n      justify-content:space-between;\n    }\n\n    .box-{{ section.id }} img {\n      max-height: 50px;\n      max-width: 50px;\n      left: -10px;\n      top: 5px;\n    }\n  }\n\n  .box-{{ section.id }}:hover {\n    transform: scale(1.1);\n  }\n\n   .box-{{ section.id }} svg {\n    max-height: 130%;\n    max-width: 100%;\n    position: absolute;\n    top: -15px;\n    left: -15px;\n  }\n\n\n  \n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};\">\n  <div class=\"page-width section-{{ section.id }}-padding\">\n    <div class=\"collection-2-title\">{{section.settings.header}}</div>\n    <div class=\"collection-2-wrapper\">\n      {%- for block in section.blocks -%}\n        <a style=\"display:contents;text-decoration:none;color:{{ section.settings.link-color }}\" href=\"{{ block.settings.link }}\">\n        <div class=\"box-{{ section.id }}\">\n          <div>\n             {%- if block.settings.collection.featured_image -%}\n                {{ block.settings.collection.featured_image | image_url: width: block.settings.collection.featured_image.width | image_tag: loading: 'lazy', alt: block.settings.collection.title }}\n             {%- elsif block.settings.image -%}\n                 {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.collection.title }}\n             {%- else -%}\n                {{ 'image' | placeholder_svg_tag }}\n             {%- endif -%}\n      \n            <div class=\"collection-2-name-box\"><p>{{ block.settings.collection_name }}</p></div>\n          </div>\n        </div></a>\n      {%- endfor -%}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "header": {
+      "type": "text",
+      "default": "Shop by category",
+      "label": "Section Header",
+      "description": "Section Header"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "type_header_font": {
+      "type": "text",
+      "default": "assistant_n7",
+      "label": "Select Section Header Font",
+      "description": "Select Section Header Font"
+    },
+    "section_title_font_size": {
+      "type": "text",
+      "default": "32",
+      "label": "Section Title Font Size",
+      "description": "Section Title Font Size"
+    },
+    "section_title_color": {
+      "type": "color",
+      "default": "#1a1b18",
+      "label": "Section Title Color",
+      "description": "Section Title Color"
+    },
+    "link-color": {
+      "type": "color",
+      "default": "#5E5E5E",
+      "label": "Link color",
+      "description": "Link color"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_top",
+      "description": "t:sections.all.padding.padding_top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "t:sections.all.padding.padding_bottom",
+      "description": "t:sections.all.padding.padding_bottom"
+    }
+  }
+}

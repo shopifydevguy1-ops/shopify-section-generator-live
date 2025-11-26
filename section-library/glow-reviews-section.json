@@ -1,0 +1,96 @@
+{
+  "id": "glow-reviews-section",
+  "name": "CUSTOM Glow Testimonial",
+  "description": "Section: CUSTOM Glow Testimonial",
+  "tags": [
+    "glow"
+  ],
+  "type": "custom",
+  "liquid_code": "<div class=\"reviews\">\n  <div class=\"reviews_title\">\n    <p>\n      {{ section.settings.header_before_gradient }}\n      <span>{{ section.settings.header_gradient }}</span>\n      {{ section.settings.header }}\n    </p>\n  </div>\n  <div\n    class=\"parer-wrapper-{{ section.id }}\"\n    style=\"position: relative; height: 172px;\"\n  >\n    <div class=\"parer\">\n      <div class=\"reviews_block\">\n        {%- liquid\n          assign block_size = section.blocks.size | divided_by: 2\n          assign section_width = block_size | times: 463\n          assign animatuion_time = section.settings.animation_time | default: 25\n        -%}\n        {% comment %} loop twice: {% endcomment %}\n        {% for i in (1..section.settings.loop_amount) %}\n          {%- for block in section.blocks limit: block_size -%}\n            <div class=\"reviews_item\">\n              <div class=\"item_wrap\">\n                <div class=\"item_wrap-icon\">\n                  <img\n                    src=\"{{ block.settings.review_icon | img_url: '50x' }}\"\n                    class=\"item_wrap-icon__icon\"\n                  >\n                  <div class=\"item_icon-review\">\n                    {{ block.settings.review_rating }}\n                    <img\n                      style=\"width:9px\"\n                      src=\"https://cdn.shopify.com/s/files/1/0581/1306/5129/t/1/assets/review-star.svg?v=8681932030933659819\"\n                      alt=\"\"\n                    >\n                  </div>\n                </div>\n                <div class=\"item_wrap-text\">\n                  <p>{{ block.settings.review_text }}</p>\n                </div>\n              </div>\n            </div>\n          {%- endfor -%}\n        {% endfor %}\n      </div>\n      <div class=\"reviews_block-bottom\">\n        {% comment %} loop twice: {% endcomment %}\n        {% for i in (1..section.settings.loop_amount) %}\n          {%- for block in section.blocks offset: block_size -%}\n            <div class=\"reviews_item\">\n              <div class=\"item_wrap\">\n                <div class=\"item_wrap-icon\">\n                  <img\n                    class=\"item_wrap-icon__icon\"\n                    src=\"{{ block.settings.review_icon | img_url: '50x' }}\"\n                  >\n                  <div class=\"item_icon-review\">\n                    {{ block.settings.review_rating }}\n                    <img\n                      style=\"width:9px\"\n                      src=\"https://cdn.shopify.com/s/files/1/0581/1306/5129/t/1/assets/review-star.svg?v=8681932030933659819\"\n                      alt=\"\"\n                    >\n                  </div>\n                </div>\n                <div class=\"item_wrap-text\">\n                  <p>{{ block.settings.review_text }}</p>\n                </div>\n              </div>\n            </div>\n          {%- endfor -%}\n        {%- endfor -%}\n      </div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      // set the .parer-wrapper-{{ section.id }} height to the height of the .parer:\n      function setHeight() {\n        var parer = document.querySelector(\n          '.parer-wrapper-{{ section.id }} .parer'\n        );\n        var parerHeight = parer.getBoundingClientRect().height;\n        var parerWrapper = document.querySelector(\n          '.parer-wrapper-{{ section.id }}'\n        );\n        parerWrapper.style.height = parerHeight + 'px';\n      }\n      // DOMContentLoaded:\n      document.addEventListener('DOMContentLoaded', setHeight);\n      window.addEventListener('resize', setHeight);\n      document.addEventListener('shopify:section:load', setHeight);\n    })();\n  </script>\n\n  <style>\n    .reviews {\n      overflow: visible;\n      overflow-x: hidden;\n      padding: 0;\n      display: block;\n      margin: 0px auto;\n      margin-top: 5rem;\n      margin-bottom: 5rem;\n    }\n    .reviews * {\n      font-size: var(--font-size);\n    }\n    @media (max-width: 767px) {\n      .reviews * {\n        font-size: var(--mobile-font-size, calc(var(--font-size) * 0.85));\n      }\n    }\n    .reviews_title {\n      text-align: center;\n    }\n    .reviews_title p {\n      line-height: 1.3;\n      font-weight:600;\n      margin-bottom: 50px;\n      margin-top: 0px;\n      padding: 0px 3rem;\n      --font-size: {{ section.settings.header_font_size }}px;\n      color: {{ section.settings.header_color }};\n    }\n    .reviews_title span {\n      background: linear-gradient(to right, {{section.settings.gradient_color_1}} 0%,{{section.settings.gradient_color_2}} 50%, {{section.settings.gradient_color_3}});\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n    }\n    .parer {\n      position: absolute;\n      top: 0;\n      left: 0;\n      animation: CarouselSlider {{animatuion_time}}s linear infinite;\n    }\n    .reviews_block {\n\n      display: flex;\n      width: {{section_width}}px;\n      transform:translateX(50px);\n    }\n    .reviews_block-bottom {\n      transform:translateX(-180px);\n      display: flex;\n      width: {{section_width}}px;\n    }\n    .reviews_item {\n      min-width: 419px;\n      padding: 15px 0;\n      background-color: #fff;\n      display: flex;\n      align-items: center;\n      padding: 0 59px 0 22px;\n      margin-left: 22px;\n      margin-right: 22px;\n      margin-bottom: 30px;\n      box-shadow: 4px 4px 20px {{section.settings.blur_color}};\n      border-radius: 43px;\n    }\n    .item_wrap {\n      display: flex;\n      align-items: center;\n    }\n    .item_wrap-icon {\n      position: relative;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n    .item_wrap-icon img {\n      border-radius: 50%;\n      width: 45px;\n    }\n    .item_wrap-icon__icon {\n      height: 45px;\n      object-fit: cover;\n    }\n    .item_icon-review {\n      --font-size: 8px;\n      --mobile-font-size: 8px;\n      color: #ffffff;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      width: 20px;\n      height: 20px;\n      border-radius: 50%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      background: linear-gradient(to right, {{section.settings.gradient_color_1}} 0%,{{section.settings.gradient_color_2}} 50%, {{section.settings.gradient_color_3}});\n    }\n    .item_wrap-text {\n      line-height: 1.5;\n      padding-left: 18px;\n      --font-size: {{section.settings.review_font_size}}px;\n      color: {{section.settings.review_font_color}};\n    }\n\n    @media (max-width: 767px) {\n      .reviews_title p {\n        --mobile-font-size: {{ section.settings.header_mob_font_size }}px;\n      }\n\n    }\n\n    @keyframes CarouselSlider {\n      0%\n      {\n        transform:translateX(0)\n      }\n      to\n      {\n        transform:translateX(-100%)\n      }\n    }\n  </style>",
+  "variables": {
+    "animation_time": {
+      "type": "text",
+      "default": "30",
+      "label": "Animation time",
+      "description": "Animation time"
+    },
+    "loop_amount": {
+      "type": "text",
+      "default": "2",
+      "label": "Loop amount",
+      "description": "Loop amount"
+    },
+    "header_before_gradient": {
+      "type": "text",
+      "default": "Our customers ",
+      "label": "Header Before Gradient part",
+      "description": "Header Before Gradient part"
+    },
+    "header_gradient": {
+      "type": "text",
+      "default": "love",
+      "label": "Gradient header part",
+      "description": "Gradient header part"
+    },
+    "header": {
+      "type": "text",
+      "default": "the product",
+      "label": "Without gradient header",
+      "description": "Without gradient header"
+    },
+    "header_color": {
+      "type": "color",
+      "default": "#0B1128",
+      "label": "Header Font color",
+      "description": "Header Font color"
+    },
+    "header_font_size": {
+      "type": "text",
+      "default": "42",
+      "label": "Header Font Size",
+      "description": "Header Font Size"
+    },
+    "header_mob_font_size": {
+      "type": "text",
+      "default": "28",
+      "label": "Header Mobile Font Size",
+      "description": "Header Mobile Font Size"
+    },
+    "review_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Review Font Size",
+      "description": "Review Font Size"
+    },
+    "review_font_color": {
+      "type": "color",
+      "default": "#0B1128",
+      "label": "Review Font color",
+      "description": "Review Font color"
+    },
+    "gradient_color_1": {
+      "type": "color",
+      "default": "#4222DE",
+      "label": "Gradient color 1",
+      "description": "Gradient color 1"
+    },
+    "gradient_color_2": {
+      "type": "color",
+      "default": "#659BFF",
+      "label": "Gradient color 2",
+      "description": "Gradient color 2"
+    },
+    "gradient_color_3": {
+      "type": "color",
+      "default": "#7FF6E8",
+      "label": "Gradient color 3",
+      "description": "Gradient color 3"
+    },
+    "blur_color": {
+      "type": "color",
+      "default": "#B8B1DC",
+      "label": "Review Item  Blur color",
+      "description": "Review Item  Blur color"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "id": "cookie-banner",
+  "name": "SL - Cookie Banner",
+  "description": "Section: SL - Cookie Banner",
+  "tags": [
+    "cookie",
+    "banner"
+  ],
+  "type": "banner",
+  "liquid_code": "<style>\n    .popup-{{ section.id }} {\n      position: fixed;\n      z-index: 9999;\n      overflow: hidden;\n      max-width: 340px;\n    }\n  \n    .popup-{{ section.id }} {\n      @media (min-width: 750px) {\n        max-width: {{ section.settings.max_width }}px;\n      }\n    }\n  \n    .popup-{{ section.id }} .popup-text,\n    .popup-{{ section.id }} .popup-text p {\n      font-size:  {{ section.settings.text_size }}px;\n      margin-top: 0;\n      margin-bottom: 20px;\n    }\n  \n    .btn-{{ section.id }} {\n      padding: 10px 20px;\n      cursor: pointer;\n      text-decoration: none;\n      text-align: center;\n      width: fit-content;\n    }\n    .btn-wrapper-{{ section.id }} {\n      display: flex;\n      gap: 12px;\n    }\n  </style>\n  \n  <div\n    class=\"popup-{{ section.id }}\"\n    style=\"\n      background-color: {{ section.settings.background_color }};\n  \n      border-radius: {{ section.settings.border_radius }}px;\n      padding: {{ section.settings.vertical_padding }}px {{ section.settings.horizontal_padding }}px;\n  \n      {% if section.settings.placement == 'bottom-left' %}\n        bottom: 20px;\n        left: 20px;\n      {% elsif section.settings.placement == 'bottom-right' %}\n        bottom: 20px;\n        right: 20px;\n      {% endif %}\n  \n      {% if section.settings.enable_shadow %}\n          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);\n      {% endif %}\n    \"\n  >\n    {% if section.settings.text != blank %}\n      <div\n        class=\"popup-text\"\n        style=\"color: {{ section.settings.text_color }};font-size: {{ section.settings.text_size }}px;\"\n      >\n        {{ section.settings.text }}\n      </div>\n    {% endif %}\n    <div class=\"btn-wrapper-{{ section.id }}\">\n      {% for block in section.blocks %}\n        {% if block.type == 'accept_button' or block.type == 'decline_button' %}\n        {% endif %}\n        {% if block.settings.redirect_url != blank %}\n          <a\n            class=\"btn-{{ section.id }}\"\n            href=\"{{ block.settings.redirect_url }}\"\n            style=\"\n              background-color: {{ block.settings.button_color }};\n              color: {{ block.settings.button_text_color }};\n              border-color: {{ block.settings.button_border_color }};\n              border-width: {{ block.settings.button_border_width }}px;\n              border-style: solid;\n              border-radius: {{ block.settings.button_border_radius }}px;\n            \"\n          >\n            {{ block.settings.button_text }}\n          </a>\n        {% else %}\n          <div\n            class=\"btn-{{ section.id }}\"\n            data-button-type=\"{{ block.type }}\"\n            style=\"\n              background-color: {{ block.settings.button_color }};\n              color: {{ block.settings.button_text_color }};\n              border-color: {{ block.settings.button_border_color }};\n              border-width: {{ block.settings.button_border_width }}px;\n              border-style: solid;\n              border-radius: {{ block.settings.button_border_radius }}px;\n            \"\n          >\n            {{ block.settings.button_text }}\n          </div>\n        {% endif %}\n      {% endfor %}\n    </div>\n  </div>\n  \n  <script>\n    // handle accept or decline button click:\n    (function () {\n      // check if cookie_consent cookie is set:\n      const cookieConsent = document.cookie\n        .split('; ')\n        .find((row) => row.startsWith('cookie_consent='));\n      if (cookieConsent && cookieConsent.split('=')[1] == '1') {\n        // cookie_consent cookie is set, hide popup:\n        document.querySelector('.popup-{{ section.id }}').style.display = 'none';\n        return;\n      }\n      const allButtons = document.querySelectorAll('.btn-{{ section.id }}');\n      allButtons.forEach((button) => {\n        button.addEventListener('click', (event) => {\n          const buttonType = event.target.dataset.buttonType;\n          if (buttonType == 'accept_button') {\n            // expire in 30 days:\n            const date = new Date();\n            date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);\n            document.cookie = `cookie_consent=1; expires=${date.toUTCString()}; path=/`;\n          } else if (buttonType == 'decline_button') {\n            document.cookie = 'cookie_consent=0; path=/';\n          }\n          // hide popup:\n          document.querySelector('.popup-{{ section.id }}').style.display =\n            'none';\n        });\n      });\n    })();\n  </script>",
+  "variables": {
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text Color",
+      "description": "Text Color"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Text size",
+      "description": "Text size"
+    },
+    "text": {
+      "type": "textarea",
+      "default": "<p>🍪 We use cookies to ensure the best possible user experience. Please agree to our cookies policy by clicking 'Accept'.</p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "max_width": {
+      "type": "text",
+      "default": "400",
+      "label": "Max width",
+      "description": "Max width"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Background Color",
+      "description": "Background Color"
+    },
+    "border_radius": {
+      "type": "text",
+      "default": "24",
+      "label": "Border radius",
+      "description": "Border radius"
+    },
+    "vertical_padding": {
+      "type": "text",
+      "default": "20",
+      "label": "Vertical padding",
+      "description": "Vertical padding"
+    },
+    "horizontal_padding": {
+      "type": "text",
+      "default": "20",
+      "label": "Horizontal padding",
+      "description": "Horizontal padding"
+    },
+    "placement": {
+      "type": "text",
+      "default": "bottom-left",
+      "label": "Placement",
+      "description": "Placement"
+    },
+    "enable_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Enable shadow",
+      "description": "Enable shadow"
+    }
+  }
+}

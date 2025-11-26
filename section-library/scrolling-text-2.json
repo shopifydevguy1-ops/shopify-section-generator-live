@@ -1,0 +1,96 @@
+{
+  "id": "scrolling-text-2",
+  "name": "CUSTOM Scrolling text 2",
+  "description": "Section: CUSTOM Scrolling text 2",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- style -%}\n  .section-{{ section.id }}-padding {\n    margin: 0 auto;\n    padding: 0;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n    border-top: solid {{section.settings.border-color}} {{section.settings.border-thickness}}px;\n    border-bottom: solid {{section.settings.border-color}} {{section.settings.border-thickness}}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0;\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n  \n  .track-horizontal-{{section.id}} {\n    /* will-change: transform;\n    backface-visibility: hidden;\n    -webkit-perspective: 1000;\n    -webkit-backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform: translate3d(0, 0, 0); */\n    animation: marquee-horizontal-{{section.settings.direction}} {{section.settings.scrolling_speed}}s linear infinite;\n  }\n  .compound-item-{{section.id}} h3 {\n    color: {{ section.settings.heading_color}};\n    font-size: {{ section.settings.heading_size }}px;\n    {% unless section.settings.heading_gradient == blank %}\n      background-image: {{section.settings.heading_gradient}};\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n    {% endunless %}\n  }\n  .compound-item-{{section.id}} p {\n    color: {{ section.settings.sub_heading_color}};\n    font-size: {{ section.settings.sub_heading_size }}px;\n    {% unless section.settings.subheading_gradient == blank %}\n      background-image: {{section.settings.subheading_gradient}};\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n    {% endunless %}\n  }\n\n    .compound-section {\n    overflow: hidden;\n  }\n  .compound-slider .swiper-wrapper{\n     -webkit-transition-timing-function:linear!important; \n    -o-transition-timing-function:linear!important;\n    transition-timing-function:linear!important; \n  }\n  .compound-item {\n    display: flex;\n    align-items:center;\n    justify-content:center;\n    gap: 10px;\n  }\n  .compound-item.normal {\n    flex-direction: column;\n  }\n  .compound-item.reverse {\n    flex-direction: column-reverse;\n  }\n  .compound-item h3 {\n    margin: 0;\n    font-weight: bold;\n    line-height: normal;\n    text-transform: uppercase;\n    letter-spacing: 0.06rem;\n  }\n  .compound-item p {\n    margin: 0;\n    font-weight: bold;\n    line-height: normal;\n    text-transform: uppercase;\n    letter-spacing: 0.06rem;\n  }\n  \n  \n  .marquee-horizontal {\n      position: relative;\n      z-index: 200;\n      display: -webkit-box;\n      display: -webkit-flex;\n      display: -ms-flexbox;\n      display: flex;\n      overflow: hidden;\n      width: 100%;\n      height: 110px;\n      -webkit-box-pack: start;\n      -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n      justify-content: flex-start;\n      -webkit-box-align: center;\n      -webkit-align-items: center;\n      -ms-flex-align: center;\n      align-items: center;\n  }\n  .track-horizontal {\n      position: absolute;\n      white-space: nowrap;\n      top: 0;\n      bottom: 0;\n      will-change: transform;\n  }\n  .track-horizontal {\n      display: -webkit-box;\n      display: -webkit-flex;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: start;\n      -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n      justify-content: flex-start;\n      -webkit-box-align: center;\n      -webkit-align-items: center;\n      -ms-flex-align: center;\n      align-items: center;\n  }\n  .marquee-text {\n      margin-right: 8vw;\n      -webkit-box-flex: 0;\n      -webkit-flex: 0 0 auto;\n      -ms-flex: 0 0 auto;\n      flex: 0 0 auto;\n      color: #fff;\n      text-transform: uppercase;\n      text-align: center;\n      /* backface-visibility: hidden;\n      -webkit-perspective: 1000;\n      -webkit-backface-visibility: hidden;\n      -webkit-transform-style: preserve-3d;\n      transform: translate3d(0, 0, 0); */\n  }\n  @media screen and (max-width: 767px) {\n    .marquee-text {\n      margin-right: 13vw;\n    } \n  }\n  \n  @keyframes marquee-horizontal-left {\n    from { transform: translateX(0); }\n    to { transform: translateX(-50%); }\n  }\n  \n  @keyframes marquee-horizontal-right {\n    from { transform:translateX(-50%); }\n    to {transform:translateX(0%); }\n  }\n    \n  @media screen and (max-width: 481px) { \n    .marquee-horizontal {\n      margin-top: 0px;\n    }\n  }\n  @media screen and (max-width: 767px) {\n    .compound-item-{{section.id}} h3 {\n        font-size: {{ section.settings.heading_size | times: 0.85 | round: 0 }}px;\n    }\n    .compound-item-{{section.id}} p {\n        font-size: {{ section.settings.sub_heading_size | times: 0.85 | round: 0  }}px;\n    }\n    .marquee-horizontal {\n      height:90px;\n    }\n  }\n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};background-image: {{section.settings.background_gradient}};\">\n  <div class=\"section-{{ section.id }}-padding compound-section\">\n    <div class=\"marquee-horizontal marquee-{{ section.settings.direction }}\">\n      <div class=\"track-horizontal track-horizontal-{{section.id}} outer_flex\">\n        {% for block in section.blocks %}\n            <div class=\"marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}\">\n                <h3>{{ block.settings.heading }}</h3>\n                <p>{{ block.settings.sub_heading }}</p>\n            </div>\n        {% endfor %}\n        {% for block in section.blocks %}\n            <div class=\"marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}\">\n                <h3>{{ block.settings.heading }}</h3>\n                <p>{{ block.settings.sub_heading }}</p>\n            </div>\n        {% endfor %}\n        {% for block in section.blocks %}\n            <div class=\"marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}\">\n                <h3>{{ block.settings.heading }}</h3>\n                <p>{{ block.settings.sub_heading }}</p>\n            </div>\n        {% endfor %}\n        {% for block in section.blocks %}\n            <div class=\"marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}\">\n                <h3>{{ block.settings.heading }}</h3>\n                <p>{{ block.settings.sub_heading }}</p>\n            </div>\n        {% endfor %}\n      </div>\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "heading_size": {
+      "type": "text",
+      "default": "28",
+      "label": "Heading size",
+      "description": "Heading size"
+    },
+    "sub_heading_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-Heading size",
+      "description": "Sub-Heading size"
+    },
+    "border-thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "scrolling_speed": {
+      "type": "text",
+      "default": "45",
+      "label": "Scrolling speed",
+      "description": "Scrolling speed"
+    },
+    "direction": {
+      "type": "text",
+      "default": "left",
+      "label": "Direction",
+      "description": "Direction"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#612323",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "heading_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Heading gradient",
+      "description": "Heading gradient"
+    },
+    "sub_heading_color": {
+      "type": "color",
+      "default": "#a73814",
+      "label": "Sub-Heading",
+      "description": "Sub-Heading"
+    },
+    "subheading_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Sub-Heading gradient",
+      "description": "Sub-Heading gradient"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#FFD1A7",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border-color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "4",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "4",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    }
+  }
+}

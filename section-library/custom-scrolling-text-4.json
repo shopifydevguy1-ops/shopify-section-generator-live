@@ -1,0 +1,222 @@
+{
+  "id": "custom-scrolling-text-4",
+  "name": "CUSTOM Scrolling Text #4",
+  "description": "Section: CUSTOM Scrolling Text #4",
+  "tags": [
+    "scrolling"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign scrolling_velocity = section.settings.scrolling_velocity\n  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile\n  assign scrolling_gap = section.settings.scrolling_gap\n  assign scrolling_gap_mobile = section.settings.scrolling_gap_mobile\n\n  assign reverse_direction = section.settings.reverse_direction\n\n  assign text = section.settings.text\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_color = section.settings.text_color\n  assign text_gradient = section.settings.text_gradient\n\n  assign icon = section.settings.icon\n  assign icon_size_mobile = section.settings.icon_size_mobile\n  assign icon_size = section.settings.icon_size\n  assign icon_color = section.settings.icon_color\n  assign hide_icon = section.settings.hide_icon\n  assign animate_icon = section.settings.animate_icon\n  \n-%}\n\n{%- style -%}\n  \n  {{ text_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .image-text-scrolling-wrap-{{ section.id }} {\n    position: relative;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: hidden;\n    -ms-flex-wrap: nowrap;\n    flex-wrap: nowrap;\n    background-attachment: scroll !important;\n  }\n\n  .image-text-scrolling-list-{{ section.id }} {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    white-space: nowrap;\n    background-attachment: scroll !important;\n    -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\n    animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;\n    flex-shrink: 0;\n  }\n\n  .image-text-scrolling-item-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    background-attachment: scroll !important;\n    margin-right: {{ scrolling_gap_mobile }}px;\n    flex-shrink: 0;\n  }\n\n  .image-text-scrolling-text-{{ section.id }} {\n    display: inline-block;\n    margin: 0;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n    margin-right: {{ scrolling_gap_mobile }}px;\n    font-weight: 700;\n  }\n\n  .image-text-scrolling-icon-{{ section.id }} {\n    display: inline-block;\n    width: {{ icon_size_mobile }}px;\n  }\n\n  .image-text-scrolling-icon-{{ section.id }} img,\n  .image-text-scrolling-icon-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .image-text-scrolling-icon-{{ section.id }} svg path {\n    fill: {{ icon_color }};\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n    \n    .image-text-scrolling-list-{{ section.id }} {\n      animation-duration: {{ scrolling_velocity }}s;\n    }\n\n    .image-text-scrolling-item-{{ section.id }} {\n      margin-right: {{ scrolling_gap }}px;\n    }\n    \n    .image-text-scrolling-text-{{ section.id }} {\n      font-size: {{ text_size }}px;\n      margin-right: {{ scrolling_gap }}px;\n    }\n\n    .image-text-scrolling-icon-{{ section.id }} {\n      width: {{ icon_size }}px;\n    }\n    \n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .image-text-scrolling-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if reverse_direction %}\n  <style>\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\n      0% {\n        transform: translateX(-50%);\n      }\n      100% {\n        transform: translateX(0%);\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    @keyframes ticker{{ section.id | replace: '-', '' }} {\n      0% {\n        transform: translateX(0%);\n      }\n      100% {\n        transform: translateX(-50%);\n      }\n    }\n  </style>\n{% endif %}\n\n{% if animate_icon == \"animate\" %}\n  <style>\n    .image-text-scrolling-icon-{{ section.id }} img,\n    .image-text-scrolling-icon-{{ section.id }} svg {\n      -webkit-animation: rotate{{ section.id | replace: '-', '' }} 10s infinite linear;\n      animation: rotate{{ section.id | replace: '-', '' }} 10s infinite linear;\n    }\n    \n    @keyframes rotate{{ section.id | replace: '-', '' }} {\n      0% {\n        transform: rotate(0deg);\n      }\n      100% {\n        transform: rotate(360deg);\n      }\n    }\n  </style>\n{% endif %}\n\n{% if text_gradient != blank %}\n  <style>\n    .image-text-scrolling-text-{{ section.id }} {\n      background: {{ text_gradient }};\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n    }\n  </style>\n{% endif %}\n\n\n<div class=\"section-{{ section.id }} scrolling-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"image-text-scrolling-wrap-{{ section.id }}\">\n        <div class=\"image-text-scrolling-list-{{ section.id }}\">\n          {% for item in (1..10) %}\n            <div class=\"image-text-scrolling-item-{{ section.id }}\">\n              {% if text != blank %}\n                <p class=\"image-text-scrolling-text-{{ section.id }}\">{{ text }}</p>\n              {% endif %}\n              {% unless hide_icon %}\n                <div class=\"image-text-scrolling-icon-{{ section.id }}\">\n                  {% if icon != blank %}\n                    <img src=\"{{ icon | image_url }}\" alt=\"{{ icon }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                  {% else %}\n                    <svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 25.72 25.72\"><path d=\"M12.38.41c.07-.55.87-.55.94,0l.6,4.73c.07.45.66.57.89.18l2.37-4.14c.28-.48,1.01-.18.87.36l-1.25,4.6c-.12.44.39.78.75.5l3.77-2.92c.44-.34,1,.23.67.67l-2.92,3.76c-.28.36.06.87.5.75l4.6-1.25c.54-.14.84.6.36.87l-4.14,2.37c-.39.23-.27.82.18.88l4.73.61c.55.07.55.87,0,.94l-4.73.6c-.26.02-.46.24-.44.5.01.17.11.32.26.39l4.14,2.37c.48.28.18,1.01-.36.87l-4.6-1.25c-.25-.08-.51.06-.59.31-.05.15-.01.32.09.44l2.92,3.77c.34.44-.23,1-.67.67l-3.77-2.92c-.2-.17-.5-.14-.66.06-.1.12-.14.29-.09.44l1.25,4.6c.14.54-.6.84-.87.36l-2.37-4.14c-.12-.23-.41-.31-.64-.19-.14.07-.23.21-.24.37l-.61,4.73c-.07.55-.87.55-.94,0l-.6-4.73c-.02-.26-.24-.46-.5-.44-.17.01-.32.11-.39.26l-2.37,4.16c-.28.48-1.01.18-.87-.36l1.25-4.6c.08-.25-.06-.51-.31-.59-.15-.05-.32-.01-.44.09l-3.77,2.92c-.44.34-1-.23-.67-.67l2.92-3.77c.17-.2.14-.5-.06-.66-.12-.1-.29-.14-.44-.09l-4.59,1.23c-.54.14-.84-.6-.36-.87l4.14-2.37c.23-.12.31-.41.19-.64-.07-.14-.21-.23-.37-.24l-4.73-.61c-.55-.07-.55-.87,0-.94l4.73-.6c.26-.02.46-.24.44-.5-.01-.17-.11-.32-.26-.39l-4.15-2.36c-.48-.28-.18-1.01.36-.87l4.6,1.25c.44.12.78-.39.5-.75l-2.92-3.77c-.34-.44.23-1,.67-.67l3.76,2.93c.36.28.87-.06.75-.5l-1.24-4.6c-.14-.54.6-.84.87-.36l2.37,4.14c.23.39.82.27.88-.18l.61-4.73h0Z\" style=\"stroke-width:0px;\"/></svg>\n                  {% endif %}\n                </div>\n              {% endunless %}\n            </div>\n          {% endfor %}\n        </div>\n        <div class=\"image-text-scrolling-list-{{ section.id }}\">\n          {% for item in (1..10) %}\n            <div class=\"image-text-scrolling-item-{{ section.id }}\">\n              {% if text != blank %}\n                <p class=\"image-text-scrolling-text-{{ section.id }}\">{{ text }}</p>\n              {% endif %}\n              {% unless hide_icon %}\n                <div class=\"image-text-scrolling-icon-{{ section.id }}\">\n                  {% if icon != blank %}\n                    <img src=\"{{ icon | image_url }}\" alt=\"{{ icon }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                  {% else %}\n                    <svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 25.72 25.72\"><path d=\"M12.38.41c.07-.55.87-.55.94,0l.6,4.73c.07.45.66.57.89.18l2.37-4.14c.28-.48,1.01-.18.87.36l-1.25,4.6c-.12.44.39.78.75.5l3.77-2.92c.44-.34,1,.23.67.67l-2.92,3.76c-.28.36.06.87.5.75l4.6-1.25c.54-.14.84.6.36.87l-4.14,2.37c-.39.23-.27.82.18.88l4.73.61c.55.07.55.87,0,.94l-4.73.6c-.26.02-.46.24-.44.5.01.17.11.32.26.39l4.14,2.37c.48.28.18,1.01-.36.87l-4.6-1.25c-.25-.08-.51.06-.59.31-.05.15-.01.32.09.44l2.92,3.77c.34.44-.23,1-.67.67l-3.77-2.92c-.2-.17-.5-.14-.66.06-.1.12-.14.29-.09.44l1.25,4.6c.14.54-.6.84-.87.36l-2.37-4.14c-.12-.23-.41-.31-.64-.19-.14.07-.23.21-.24.37l-.61,4.73c-.07.55-.87.55-.94,0l-.6-4.73c-.02-.26-.24-.46-.5-.44-.17.01-.32.11-.39.26l-2.37,4.16c-.28.48-1.01.18-.87-.36l1.25-4.6c.08-.25-.06-.51-.31-.59-.15-.05-.32-.01-.44.09l-3.77,2.92c-.44.34-1-.23-.67-.67l2.92-3.77c.17-.2.14-.5-.06-.66-.12-.1-.29-.14-.44-.09l-4.59,1.23c-.54.14-.84-.6-.36-.87l4.14-2.37c.23-.12.31-.41.19-.64-.07-.14-.21-.23-.37-.24l-4.73-.61c-.55-.07-.55-.87,0-.94l4.73-.6c.26-.02.46-.24.44-.5-.01-.17-.11-.32-.26-.39l-4.15-2.36c-.48-.28-.18-1.01.36-.87l4.6,1.25c.44.12.78-.39.5-.75l-2.92-3.77c-.34-.44.23-1,.67-.67l3.76,2.93c.36.28.87-.06.75-.5l-1.24-4.6c-.14-.54.6-.84.87-.36l2.37,4.14c.23.39.82.27.88-.18l.61-4.73h0Z\" style=\"stroke-width:0px;\"/></svg>\n                  {% endif %}\n                </div>\n              {% endunless %}\n            </div>\n          {% endfor %}\n        </div>\n      </div>\n    </div>\n</div>\n\n{% if animate_icon == \"animate_scroll\" %}\n  <script>\n    function initScrollingText4() {\n      var lastScrollTop = window.scrollY;\n      var totalRotation = 0;\n      var coeff = 0.05;\n      \n      var icons = document.querySelectorAll('.image-text-scrolling-icon-{{ section.id }}');\n      \n      icons.forEach(icon => {\n          window.addEventListener('scroll', () => {\n              var scrollDirection = window.scrollY > lastScrollTop ? 'down' : 'up';\n              \n              if(scrollDirection === 'down') {\n                  totalRotation += coeff;\n              } else {\n                  totalRotation -= coeff;\n              }\n              \n              icon.style.transform = `rotate(${totalRotation}deg)`;\n              \n              lastScrollTop = window.scrollY;\n          });\n      });\n    };\n    \n    document.addEventListener('DOMContentLoaded', initScrollingText4);\n  \n    if (Shopify.designMode) {\n       document.addEventListener('shopify:section:unload', initScrollingText4);\n       document.addEventListener('shopify:section:load', initScrollingText4);\n    }\n  </script>\n{% endif %}",
+  "variables": {
+    "scrolling_velocity": {
+      "type": "text",
+      "default": "20",
+      "label": "Scrolling Speed",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_velocity_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Scrolling Speed Mobile",
+      "description": "⚡ <----------------> 🐌"
+    },
+    "scrolling_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Scrolling Gap",
+      "description": "Scrolling Gap"
+    },
+    "scrolling_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Scrolling Gap - Mobile",
+      "description": "Scrolling Gap - Mobile"
+    },
+    "reverse_direction": {
+      "type": "text",
+      "default": "",
+      "label": "Reverse the Scrolling Direction",
+      "description": "Reverse the Scrolling Direction"
+    },
+    "text": {
+      "type": "text",
+      "default": "just in",
+      "label": "Text",
+      "description": "Text"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Text Font Family",
+      "description": "Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "60",
+      "label": "Text Size",
+      "description": "Text Size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Text Size - Mobile",
+      "description": "Text Size - Mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Text Line Height",
+      "description": "Text Line Height"
+    },
+    "icon": {
+      "type": "text",
+      "default": "",
+      "label": "Custom Icon",
+      "description": "Custom Icon"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "32",
+      "label": "Icon Size",
+      "description": "Icon Size"
+    },
+    "icon_size_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Icon Size - Mobile",
+      "description": "Icon Size - Mobile"
+    },
+    "animate_icon": {
+      "type": "text",
+      "default": "animate",
+      "label": "Animate Icon",
+      "description": "Animate Icon"
+    },
+    "hide_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Hide Icon",
+      "description": "Hide Icon"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#67645E",
+      "label": "Text Color",
+      "description": "Text Color"
+    },
+    "text_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Text Gradient",
+      "description": "Text Gradient"
+    },
+    "icon_color": {
+      "type": "color",
+      "default": "#67645E",
+      "label": "Icon Color",
+      "description": "Icon Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#F1F0ED",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section Roundness",
+      "description": "Section Roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

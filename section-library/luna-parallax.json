@@ -1,0 +1,72 @@
+{
+  "id": "luna-parallax",
+  "name": "💫 Parallax Image Banner",
+  "description": "Section: 💫 Parallax Image Banner",
+  "tags": [
+    "luna"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- capture minify -%}\n{%- style -%}\n\n#LT--bgImage-{{ section.id }} {\n  background-image: url('{{ section.settings.image_bg | image_url: width: 2500 }}');\n  background-size: cover;\n  background-position: {{ section.settings.image_bg.presentation.focal_point }};\n  padding-top: {{ section.settings.section_padding | divided_by: 2 }}px;\n  padding-bottom: {{ section.settings.section_padding | divided_by: 2 }}px;\n}\n\n.LT-parallax-on {\n  background-attachment: fixed;\n}\n\n#LT--bgImage-{{ section.id }} img {\n  height: 100%;\n  width: 100%;\n}\n\n#LT--{{ section.id }} .luna-templates__parallax-text-container {\n  padding: 20px;\n  margin: 0 auto;\n  text-align: center;\n  background-color: {{ section.settings.color_bg }};\n  width: 90%;\n  position: relative;\n  z-index: 2\n}\n\n#LT--{{ section.id }} .luna-templates__parallax-text-container * {\n  color: {{ section.settings.color_text }};\n}\n\n#LT--{{ section.id }} .luna-templates__parallax-text-container.round {\n  \tborder-radius: 30px;\n}\n\n@media (min-width: 750px) {\n  #LT--{{ section.id }} {\n    background-size: cover;\n  }\n\n  #LT--bgImage-{{ section.id }} {\n    padding-top: {{ section.settings.section_padding }}px;\n    padding-bottom: {{ section.settings.section_padding }}px;\n  }\n\n  #LT--{{ section.id }} .luna-templates__parallax-text-container {\n    padding: 30px 40px;\n    width: {{ section.settings.text_width }}%;\n  }\n}\n\n@media (max-width: 749px) {\n  #LT--bgImage-{{ section.id }} {\n    {% if section.settings.image_bg_mobile != blank %}\n      background-image: url('{{ section.settings.image_bg_mobile | image_url: width: 800 }}');\n    {% endif %}\n  }\n}\n\n@media only screen and (hover: none) and (pointer: coarse){\n  .LT-parallax-on {\n      background-attachment: scroll;\n  }\n}  \n\n/* Custom CSS */\n{{ section.settings.custom_css }}\n\n{%- endstyle -%}\n\n<!-- This section is designed and built by Luna Templates. Find more at https://lunatemplates.co -->\n\n<section id=\"LT--{{ section.id }}\" class=\"LT__section luna-templates__parallax-image-banner {{ section.settings.css_class }}\" >\n  <div id=\"LT--bgImage-{{ section.id }}\" {% if section.settings.parallax_on %}class=\"LT-parallax-on\"{% endif %}>\n    <div class=\"luna-templates__parallax-text-container {% if section.settings.container_shape == 'rounded' %}round{% endif %}\">\n      {%- for block in section.blocks -%}\n        <div id=\"LT--{{ block.id }}\" class=\"luna-templates__block--{{ block.type }}\" {{ block.shopify_attributes }}>\n          {%- case block.type -%}\n            {%- when 'heading' -%}\n              <style>\n                #LT--{{ section.id }} .luna-templates__heading {\n                  font-size: {{ block.settings.font_size_mobile }}px;\n                  margin: 15px 0;\n                  line-height: 1.1;\n                }\n                @media (min-width: 750px) {\n                  #LT--{{ section.id }} .luna-templates__heading {\n                    font-size: {{ block.settings.font_size_desktop | divided_by: 1.2 }}px;\n                  }\n                }\n                @media (min-width: 1201px) {\n                  #LT--{{ section.id }} .luna-templates__heading {\n                    font-size: {{ block.settings.font_size_desktop }}px;\n                  }\n                }\n              </style>\n              {%- if block.settings.title != blank -%}\n                <{{ block.settings.heading_tag }} class=\"luna-templates__heading\">\n                  {{ block.settings.title | replace: 'p>', 'span>' }}\n                </{{ block.settings.heading_tag }}>\n              {%- endif -%}\n            {%- when 'text' -%}\n              <style>\n                #LT--{{ section.id }} .luna-templates__text {\n                  margin: 15px 0;\n                  font-size: {{ block.settings.font_size_mobile }}px;\n                  line-height: 1.2;\n                }\n                @media (min-width: 750px) {\n                  #LT--{{ section.id }} .luna-templates__text {\n                    font-size: {{ block.settings.font_size_desktop | divided_by: 1.2 }}px;; \n                  }   \n                }\n                @media (min-width: 1200px) {\n                  #LT--{{ section.id }} .luna-templates__text {\n                    font-size: {{ block.settings.font_size_desktop }}px;\n                  }\n                }                \n              </style>\n              {%- if block.settings.text != blank -%}\n                <div class=\"luna-templates__text\">\n                  {{ block.settings.text }}\n                </div>\n              {%- endif -%}\n            {%- when 'button' -%}\n              {% style %}\n                #LT--{{ section.id }} .luna-templates__block--button {\n                  display: inline-block;\n                  margin: 0 10px;\n                }\n                #LT--{{ block.id }} .luna-templates__button-container {\n                    margin: 20px 0;\n                    {%- if block.settings.btn_shape == \"oval\" -%}\n                    margin: 30px 0;\n                    {%- endif -%}\n                }\n                #LT--{{ block.id }} .luna-templates__button {\n                    padding: 0.5rem 2rem;\n                    margin: 20px 0;\n                    background-color: {{ block.settings.color_btn_fill }};\n                    border: 1px solid {{ block.settings.color_btn_border }};\n                    color: {{ block.settings.color_btn_text }} !important;\n                    font-size: {{ block.settings.font_size_btn_desktop }}px;\n                    transition: background-color 0.3s, border-color 0.3s, color 0.3s;\n                    text-decoration: none;\n                }\n                @media screen and (max-width: 749px) {\n                  #LT--{{ block.id }} .luna-templates__button {\n                      font-size: {{ block.settings.font_size_btn_mobile }}px;\n                  }\n                }                    \n                #LT--{{ block.id }} .luna-templates__button:hover {\n                    background-color: {{ block.settings.color_btn_fill_hover }};\n                    border: 1px solid {{ block.settings.color_btn_border_hover }};\n                    color: {{ block.settings.color_btn_text_hover }} !important;\n                    transition: background-color 0.3s, border-color 0.3s, color 0.3s;\n                } \n                #LT--{{ section.id }} .LT__btn-rounded {\n                    border-radius: 5px;\n                }\n                #LT--{{ section.id }} .LT__btn-pill {\n                    border-radius: 50px;\n                }\n                #LT--{{ section.id }} .LT__btn-oval {\n                    padding: 20px 40px;          \n                    border-radius: 50%;\n                }\n              {% endstyle %}\n              {%- if block.settings.link_text != blank -%}\n                <div class=\"luna-templates__button-container\">\n                    <a class=\"luna-templates__button LT__btn-{{ block.settings.btn_shape }}\" href=\"{{ block.settings.link_url }}\">{{ block.settings.link_text }}</a>\n                </div>\n              {%- endif -%}\n            {%- when 'image' -%}\n              <style>\n                #LT--{{ block.id }} .luna-templates__image-wrapper {\n                  width: {{ block.settings.image_width }}px;\n                  margin: 10px auto;\n                  line-height: 0;\n                }\n                #LT--{{ block.id }} .luna-templates__image-wrapper img {\n                  width: 100%;\n                  object-fit: contain;\n                }\n              </style>\n              {%- if block.settings.image != blank -%}\n                <div class=\"luna-templates__image-wrapper\">\n                  <img src=\"{{ block.settings.image | image_url: width: 500 }}\" alt=\"{{ block.settings.image.alt }}\" >\n                </div>\n              {%- endif -%}\n            {%- when 'html' -%}\n              {{ block.settings.html }}\n          {%- endcase -%}\n        </div>\n      {%- endfor -%}\n    </div>\n  </div>\n</section>\n{%- endcapture -%}\n{{ minify | strip_newlines }}",
+  "variables": {
+    "parallax_on": {
+      "type": "text",
+      "default": "true",
+      "label": "Enable parallax effect (Desktop only)",
+      "description": "Enable parallax effect (Desktop only)"
+    },
+    "image_bg": {
+      "type": "text",
+      "default": "",
+      "label": "Image Desktop",
+      "description": "A width of 2500px .jpg is recommended"
+    },
+    "image_bg_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Image Mobile",
+      "description": "Optional"
+    },
+    "color_text": {
+      "type": "color",
+      "default": "#000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "color_bg": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Text Background",
+      "description": "For a transparent background, delete the color code."
+    },
+    "text_width": {
+      "type": "text",
+      "default": "60",
+      "label": "Container Width (Desktop)",
+      "description": "Container Width (Desktop)"
+    },
+    "container_shape": {
+      "type": "text",
+      "default": "rounded",
+      "label": "Text Box Shape",
+      "description": "Text Box Shape"
+    },
+    "section_padding": {
+      "type": "text",
+      "default": "100",
+      "label": "Top & bottom padding",
+      "description": "Changes the section height"
+    },
+    "css_class": {
+      "type": "text",
+      "default": "",
+      "label": "CSS Class",
+      "description": "CSS Class"
+    },
+    "custom_css": {
+      "type": "text",
+      "default": "",
+      "label": "Custom CSS",
+      "description": "Write your CSS here. Use !important when necessary."
+    }
+  }
+}

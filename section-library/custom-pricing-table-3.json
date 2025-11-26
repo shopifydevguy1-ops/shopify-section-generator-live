@@ -1,0 +1,930 @@
+{
+  "id": "custom-pricing-table-3",
+  "name": "CUSTOM Pricing Table #3",
+  "description": "Section: CUSTOM Pricing Table #3",
+  "tags": [
+    "pricing"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n\n  assign heading = section.settings.heading\n  assign heading_size = section.settings.heading_size\n  assign heading_size_mobile = section.settings.heading_size_mobile\n  assign heading_color = section.settings.heading_color\n  assign heading_other_color = section.settings.heading_other_color\n  assign heading_custom = section.settings.heading_custom\n  assign heading_font = section.settings.heading_font\n  assign heading_height = section.settings.heading_height\n  assign heading_align = section.settings.heading_align\n\n  assign sub_heading = section.settings.sub_heading\n  assign sub_heading_size = section.settings.sub_heading_size\n  assign sub_heading_size_mobile = section.settings.sub_heading_size_mobile\n  assign sub_heading_color = section.settings.sub_heading_color\n  assign sub_heading_custom = section.settings.sub_heading_custom\n  assign sub_heading_font = section.settings.sub_heading_font\n  assign sub_heading_height = section.settings.sub_heading_height\n  assign sub_heading_align = section.settings.sub_heading_align\n  assign sub_heading_mt = section.settings.sub_heading_mt\n  assign sub_heading_border = section.settings.sub_heading_border\n  assign sub_heading_border_color = section.settings.sub_heading_border_color\n\n  assign table_mt = section.settings.table_mt\n  assign table_width_mobile = section.settings.table_width_mobile\n  assign table_width = section.settings.table_width\n  assign table_gap = section.settings.table_gap\n  assign table_gap_mobile = section.settings.table_gap_mobile\n\n  assign card_padding_vertical = section.settings.card_padding_vertical\n  assign card_padding_horizontal = section.settings.card_padding_horizontal\n  assign card_radius = section.settings.card_radius\n  assign card_border_thickness = section.settings.card_border_thickness\n  assign card_bg_color = section.settings.card_bg_color\n  assign card_bg_active_color = section.settings.card_bg_active_color\n  assign card_border_color = section.settings.card_border_color\n  assign card_border_active_color = section.settings.card_border_active_color\n  assign card_active_color = section.settings.card_active_color\n  assign card_shadow = section.settings.card_shadow\n\n  assign image_width = section.settings.image_width\n  assign image_width_mobile = section.settings.image_width_mobile\n  assign image_radius = section.settings.image_radius\n  assign image_border_thickness = section.settings.image_border_thickness\n  assign image_bg_color = section.settings.image_bg_color\n  assign image_bg_active_color = section.settings.image_bg_active_color\n  assign image_border_color = section.settings.image_border_color\n  assign image_border_active_color = section.settings.image_border_active_color\n  assign image_mt = section.settings.image_mt\n\n  assign budges_size = section.settings.budges_size\n  assign budges_size_mobile = section.settings.budges_size_mobile\n  assign budges_color = section.settings.budges_color\n  assign budges_active_color = section.settings.budges_active_color\n  assign budges_second_color = section.settings.budges_second_color\n  assign budges_second_active_color = section.settings.budges_second_active_color\n  assign budges_custom = section.settings.budges_custom\n  assign budges_font = section.settings.budges_font\n  assign budges_height = section.settings.budges_height\n  assign budges_padding_vertical = section.settings.budges_padding_vertical\n  assign budges_padding_horizontal = section.settings.budges_padding_horizontal\n  assign budges_radius = section.settings.budges_radius\n  assign budges_border_thickness = section.settings.budges_border_thickness\n  assign budges_bg_color  = section.settings.budges_bg_color\n  assign budges_bg_active_color  = section.settings.budges_bg_active_color\n  assign budges_bg_second_color = section.settings.budges_bg_second_color\n  assign budges_bg_second_active_color = section.settings.budges_bg_second_active_color\n  assign budges_border_color = section.settings.budges_border_color\n  assign budges_border_active_color = section.settings.budges_border_active_color\n  assign budges_border_second_color = section.settings.budges_border_second_color\n  assign budges_border_second_active_color = section.settings.budges_border_second_active_color\n  assign budges_top = section.settings.budges_top\n  assign budges_weight = section.settings.budges_weight\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_active_color = section.settings.title_active_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_align = section.settings.title_align\n  assign title_mt = section.settings.title_mt\n\n  assign price_size = section.settings.price_size\n  assign price_size_mobile = section.settings.price_size_mobile\n  assign price_color = section.settings.price_color\n  assign price_active_color = section.settings.price_active_color\n  assign price_custom = section.settings.price_custom\n  assign price_font = section.settings.price_font\n  assign price_height = section.settings.price_height\n  assign price_mt = section.settings.price_mt\n  assign price_align = section.settings.price_align\n  assign price_time_under = section.settings.price_time_under\n  assign price_color_gradient = section.settings.price_color_gradient\n  assign price_active_color_gradient = section.settings.price_active_color_gradient\n\n  assign elements_size = section.settings.elements_size\n  assign elements_size_mobile = section.settings.elements_size_mobile\n  assign elements_color = section.settings.elements_color\n  assign elements_active_color = section.settings.elements_active_color\n  assign elements_custom = section.settings.elements_custom\n  assign elements_font = section.settings.elements_font\n  assign elements_height = section.settings.elements_height\n  assign elements_mt = section.settings.elements_mt\n  assign elements_gap = section.settings.elements_gap\n  assign elements_align = section.settings.elements_align\n  assign elements_icon = section.settings.elements_icon\n  assign elements_active_icon = section.settings.elements_active_icon\n  assign elements_position = section.settings.elements_position\n\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_active_color = section.settings.button_active_color\n  assign button_active_hover_color = section.settings.button_active_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_mt = section.settings.button_mt\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_border_active_color = section.settings.button_border_active_color\n  assign button_border_active_hover_color = section.settings.button_border_active_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_active_color = section.settings.button_bg_active_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n  assign button_bg_active_hover_color = section.settings.button_bg_active_hover_color\n  assign button_align = section.settings.button_align\n  assign button_width = section.settings.button_width\n  assign button_icon = section.settings.button_icon\n  assign button_bg_color_gradient = section.settings.button_bg_color_gradient\n  assign button_bg_active_color_gradient = section.settings.button_bg_active_color_gradient\n  assign button_bg_hover_color_gradient = section.settings.button_bg_hover_color_gradient\n  assign button_bg_active_hover_color_gradient = section.settings.button_bg_active_hover_color_gradient\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_align = section.settings.text_align\n  assign text_mt = section.settings.text_mt\n-%}\n\n{%- style -%}\n  {{  heading_font | font_face: font_display: 'swap' }}\n  {{  sub_heading_font | font_face: font_display: 'swap' }}\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  price_font | font_face: font_display: 'swap' }}\n  {{  elements_font | font_face: font_display: 'swap' }}\n  {{  button_font | font_face: font_display: 'swap' }}\n  {{  budges_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .pricing-table-heading-{{ section.id }} > * {\n    margin: 0;\n    font-size: {{ heading_size_mobile }}px;\n    color: {{ heading_color }};\n    line-height: {{ heading_height }}%;\n    text-transform: unset;\n    text-align: {{ heading_align }};\n  }\n\n  .pricing-table-heading-{{ section.id }} strong {\n     color: {{ heading_other_color }};\n  }\n\n  .pricing-table-subheading-{{ section.id }} {\n    margin-top: {{ sub_heading_mt | times: 0.75 | round: 0 }}px;\n    max-width: fit-content;\n    width: 100%;\n  }\n\n  .pricing-table-subheading-{{ section.id }} > * {\n    margin: 0;\n    font-size: {{ sub_heading_size_mobile }}px;\n    color: {{ sub_heading_color }};\n    line-height: {{ sub_heading_height }}%;\n    text-transform: unset;\n    text-align: {{ sub_heading_align }};\n  }\n\n  .pricing-table-items-{{ section.id }} {\n    margin-top: {{ table_mt | times: 0.75 | round: 0 }}px;\n    width: 100%;\n    max-width: {{ table_width_mobile }}%;\n    margin-left: auto;\n    margin-right: auto;\n  }\n\n  .pricing-table-item-{{ section.id }} {\n    height: fit-content;\n    padding: {{ card_padding_vertical | times: 0.75 | round: 0 }}px {{ card_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border: {{ card_border_thickness }}px solid {{ card_border_color }};\n    background-color: {{ card_bg_color }};\n    transition: all 0.25s ease 0s;\n    border-radius: {{ card_radius }}px; \n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} {\n    background-color: {{ card_bg_active_color }};\n    border: {{ card_border_thickness }}px solid {{ card_border_active_color }};\n  }\n\n  .pricing-table-item-{{ section.id }}:not(:first-child) {\n    margin-top: {{ table_gap_mobile  }}px;\n  }\n  \n  .pricing-table-title-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ title_size_mobile }}px;\n    color: {{ title_color }};\n    line-height: {{ title_height }}%;\n    text-transform: none;\n    text-align: {{ title_align }};\n    font-weight: 700;\n    position: relative;\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-title-{{ section.id }} {\n    color: {{ title_active_color }}; \n  }\n\n  .pricing-table-price-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ price_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ price_size_mobile }}px;\n    color: {{ price_color }};\n    line-height: {{ price_height }}%;\n    text-transform: none;\n    font-weight: 700;\n    display: flex;\n    align-items: center;\n    justify-content: {{ price_align }};\n    gap: 5px;\n    {% if price_color_gradient != blank %}\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    background-image: {{ price_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-price-{{ section.id }} {\n    color: {{ price_active_color }};\n    {% if price_active_color_gradient != blank  %}\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    background-image: {{ price_active_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-price-{{ section.id }} span {\n    max-width: 70px;\n    line-height: 100%;\n    font-size: {{ price_size_mobile | times: 0.35 | round: 0 }}px;\n    opacity: 0.6;\n    font-weight: 400;\n    {% if price_color_gradient != blank  %}\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    background-image: {{ price_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-price-{{ section.id }} span {\n    {% if price_active_color_gradient != blank  %}\n    -webkit-background-clip: text;\n    -webkit-text-fill-color: transparent;\n    background-image: {{ price_active_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-price-sale-{{ section.id }} {\n    opacity: 0.6;\n    text-decoration: line-through;\n    font-size: {{ price_sale_size_mobile }}px;\n    font-weight: 700;\n  }\n\n  .pricing-table-list-{{ section.id }} {\n    margin-top: {{ elements_mt | times: 0.75 | round: 0 }}px;\n  }\n\n  .pricing-table-list-{{ section.id }} ul {\n    margin: 0px;\n    padding: 0px;\n    list-style: none;\n  }\n\n  .pricing-table-list-{{ section.id }} p,\n  .pricing-table-list-{{ section.id }} li {\n    margin: 0px;\n    font-size: {{ elements_size_mobile }}px;\n    color: {{ elements_color }};\n    line-height: {{ elements_height }}%;\n    text-transform: unset;\n    text-align: {{ elements_align }};\n    list-style: none;\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-list-{{ section.id }} p,\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-list-{{ section.id }} li {\n    color: {{ elements_active_color }};\n  }\n\n  .pricing-table-list-{{ section.id }} p:not(:first-child),\n  .pricing-table-list-{{ section.id }} li {\n    margin-top: {{ elements_gap | times: 0.75 | round: 0 }}px;\n  }\n\n  .pricing-table-btn-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ button_mt | times: 0.75 | round: 0 }}px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 5px;\n    width: 100%;\n    max-width: 100%;\n    font-size: {{ button_size_mobile }}px;\n    font-weight: 700;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical | times: 0.75 | round: 0 }}px {{ button_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border-radius: {{ button_radius }}px;\n    border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    background-color: {{ button_bg_color }};\n    transition: all 0.25s ease 0s;\n    {% if button_bg_color_gradient != blank %}\n      background-image: {{ button_bg_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-btn-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ button_hover_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    background-color: {{ button_bg_hover_color }};\n    {% if button_bg_hover_color_gradient != blank %}\n      background-image: {{ button_bg_hover_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-btn-{{ section.id }} {\n    color: {{ button_active_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_active_color }};\n    background-color: {{ button_bg_active_color }};\n    {% if button_bg_active_color_gradient != blank %}\n      background-image: {{ button_bg_active_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-btn-{{ section.id }}:hover {\n    transition: all 0.25s ease 0s;\n    color: {{ button_active_hover_color }};\n    border: {{ button_border_thickness }}px solid {{ button_border_active_hover_color }};\n    background-color: {{ button_bg_active_hover_color }};\n    {% if button_bg_active_hover_color_gradient != blank %}\n      background-image: {{ button_bg_active_hover_color_gradient }};\n    {% endif %}\n  }\n\n  .pricing-table-btn-{{ section.id }} img {\n    display: block;\n    width: 16px;\n    height: 16px;\n    object-fit: cover;\n  }\n\n  .pricing-table-image-{{ section.id }} {\n    margin-top: {{ image_mt | times: 0.75 | round: 0 }}px;\n    margin:auto;\n    width: 100%;\n    max-width: {{ image_width_mobile }}%;\n    border: {{ image_border_thickness }}px solid {{ image_border_color }};\n    border-radius: {{ image_radius }}px;\n    background-color: {{ image_bg_color }};\n    aspect-ratio: 1 / 1;\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-image-{{ section.id }} {\n    background-color: {{ image_bg_active_color }};\n    border: {{ image_border_thickness }}px solid {{ image_border_active_color }};\n  }\n\n  .pricing-table-image-{{ section.id }} img {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    border-radius: {{ image_radius }}px;\n  }\n\n  .pricing-table-budges-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n  }\n\n  .pricing-table-budge-{{ section.id }} {\n    width: 100%;\n    max-width: fit-content;\n    font-size: {{ budges_size_mobile }}px;\n    line-height: {{ budges_height }}%;\n    text-transform: unset;\n    padding: {{ budges_padding_vertical | times: 0.75 | round: 0 }}px {{ budges_padding_horizontal | times: 0.75 | round: 0 }}px;\n    border-radius: {{ budges_radius }}px;\n    border: {{ budges_border_thickness }}px solid {{ budges_border_color }};\n    background-color: {{ budges_bg_color }};\n    color: {{ budges_color }};\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-budge-{{ section.id }} {\n    color: {{ budges_active_color }};\n    border: {{ budges_border_thickness }}px solid {{ budges_border_active_color }};\n    background-color: {{ budges_bg_active_color }};\n  }\n\n  .pricing-table-budge-{{ section.id }}:last-child {\n    border: {{ budges_border_thickness }}px solid {{ budges_border_second_color }};\n    background-color: {{ budges_bg_second_color }};\n    color: {{ budges_second_color }};\n  }\n\n  .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-budge-{{ section.id }}:last-child {\n    color: {{ budges_second_active_color }};\n    border: {{ budges_border_thickness }}px solid {{ budges_border_second_active_color }};\n    background-color: {{ budges_bg_second_active_color }};\n  }\n\n  .pricing-table-text-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ text_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ text_size_mobile }}px;\n    line-height: {{ text_height }}%;\n    color: {{ text_color }};\n  }\n  \n  @media(min-width: 992px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .pricing-table-heading-{{ section.id }} > * {\n      font-size: {{ heading_size }}px; \n    }\n\n    .pricing-table-subheading-{{ section.id }} {\n      margin-top: {{ sub_heading_mt }}px;\n    }\n\n    .pricing-table-subheading-{{ section.id }} > * {\n      font-size: {{ sub_heading_size }}px; \n    }\n\n    .pricing-table-items-{{ section.id }} {\n      margin-top: {{ table_mt  }}px;\n      max-width: {{ table_width }}%;\n      display: grid;\n      grid-template-columns: repeat({{ section.blocks.size }}, 1fr);\n      gap: {{ table_gap }}px;\n    }\n\n    .pricing-table-item-{{ section.id }} {\n      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;\n    }\n\n    .pricing-table-item-{{ section.id }}:not(:first-child) {\n      margin-top: 0px;\n    }\n\n    .pricing-table-title-{{ section.id }} {\n      margin-top: {{ title_mt }}px;\n      font-size: {{ title_size }}px;\n    }\n\n    .pricing-table-price-{{ section.id }} {\n      margin-top: {{ price_mt }}px;\n      font-size: {{ price_size }}px;\n    }\n\n    .pricing-table-price-sale-{{ section.id }} {\n      font-size: {{ price_sale_size }}px;\n    }\n\n    .pricing-table-price-{{ section.id }} span {\n      font-size: {{ price_size | times: 0.35 | round: 0 }}px;\n    }\n\n    .pricing-table-list-{{ section.id }} {\n      margin-top: {{ elements_mt }}px;\n    }\n\n    .pricing-table-list-{{ section.id }} p,\n    .pricing-table-list-{{ section.id }} li {\n      font-size: {{ elements_size }}px;\n    }\n\n    .pricing-table-list-{{ section.id }} p:not(:first-child),\n    .pricing-table-list-{{ section.id }} li {\n      margin-top: {{ elements_gap }}px;\n    }\n\n    .pricing-table-btn-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      font-size: {{ button_size }}px;\n      max-width: {{ button_width }}%;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n    }\n\n    .pricing-table-image-{{ section.id }} {\n      margin-top: {{ image_mt }}px;\n      max-width: {{ image_width }}%;\n    }\n\n    .pricing-table-budge-{{ section.id }} {\n      font-size: {{ budges_size }}px;\n    }\n\n    .pricing-table-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      font-size: {{ text_size}}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}rem;\n    }\n  </style>\n{% endunless %}\n\n{% if heading_custom %}\n  <style>\n    .pricing-table-heading-{{ section.id }} > * {\n      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};\n      font-weight: {{ heading_font.weight }};\n      font-style: {{ heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_heading_custom %}\n  <style>\n    .pricing-table-subheading-{{ section.id }} > * {\n      font-family: {{ sub_heading_font.family }}, {{ sub_heading_font.fallback_families }};\n      font-weight: {{ sub_heading_font.weight }};\n      font-style: {{ sub_heading_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if title_custom %}\n  <style>\n    .pricing-table-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if elements_custom %}\n  <style>\n    .pricing-table-list-{{ section.id }} p,\n    .pricing-table-list-{{ section.id }} li {\n      font-family: {{ elements_font.family }}, {{ elements_font.fallback_families }};\n      font-weight: {{ elements_font.weight }};\n      font-style: {{ elements_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_custom %}\n  <style>\n    .pricing-table-btn-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if budges_custom %}\n  <style>\n    .pricing-table-budge-{{ section.id }} {\n      font-family: {{ budges_font.family }}, {{ budges_font.fallback_families }};\n      font-weight: {{ budges_font.weight }};\n      font-style: {{ budges_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .pricing-table-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if sub_heading_align == \"center\" %}\n  <style>\n    .pricing-table-subheading-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif sub_heading_align == \"right\" %}\n  <style>\n    .pricing-table-subheading-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if sub_heading_border %}\n  <style>\n    .pricing-table-subheading-{{ section.id }} {\n      position: relative;\n    }\n\n    .pricing-table-subheading-{{ section.id }}::after {\n      content: '';\n      position: absolute;\n      left: 50%;\n      transform: translateX(-50%);\n      bottom: -15px;\n      width: 50px;\n      height: 2px;\n      background-color: {{ sub_heading_border_color }};\n    }\n  </style>\n{% endif %}\n\n{% if card_shadow %}\n  <style>\n    .pricing-table-item-{{ section.id }} {\n      moz-box-shadow: 0 0 10px #cccccc;\n      -webkit-box-shadow: 0 0 10px #cccccc;\n      -o-box-shadow: 0 0 10px #cccccc;\n      box-shadow: 0 0 10px #cccccc;\n    }\n  </style>\n{% endif %}\n\n{% if button_align == \"center\" %}\n  <style>\n    .pricing-table-btn-{{ section.id }} {\n      margin-left: auto;\n      margin-right: auto;\n    }\n  </style>\n{% elsif button_align == \"right\" %}\n  <style>\n    .pricing-table-btn-{{ section.id }} {\n      margin-left: auto;\n    }\n  </style>\n{% endif %}\n\n{% if elements_icon != blank %}\n  <style>\n    .pricing-table-list-{{ section.id }} li {\n      position: relative;\n      padding-left: {{ section.settings.icon_size | times: 1.5 }}px;\n    }\n    .pricing-table-list-{{ section.id }} li:before {\n      content: '';\n      position: absolute;\n      left: 0;\n      top: 50%;\n      transform: translateY(-50%);\n      width: {{ section.settings.icon_size }}px;\n      height: {{ section.settings.icon_size }}px;\n      background-image: url('{{ elements_icon | image_url }}');\n      background-size: cover;\n      background-position: center;\n      background-repeat: no-repeat;\n    }\n  </style>\n{% endif %}\n\n{% if elements_active_icon != blank %}\n  <style>\n    .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-list-{{ section.id }} li {\n      position: relative;\n      padding-left: {{ section.settings.icon_size | times: 1.5 }}px;\n    }\n    .pricing-table-item-{{ section.id }}.active-item-{{ section.id }} .pricing-table-list-{{ section.id }} li:before {\n      content: '';\n      position: absolute;\n      left: 0;\n      top: 50%;\n      transform: translateY(-50%);\n      width: {{ section.settings.icon_size }}px;\n      height: {{ section.settings.icon_size }}px;\n      background-image: url('{{ elements_active_icon | image_url }}');\n      background-size: cover;\n      background-position: center;\n      background-repeat: no-repeat;\n    }\n  </style>\n{% endif %}\n\n{% if budges_top %}\n  <style>\n    .pricing-table-item-{{ section.id }} {\n      position: relative;\n    }\n\n    .pricing-table-budges-{{ section.id }} {\n      position: absolute;\n      left: 0px;\n      width: 100%;\n      top: -{{ budges_size_mobile | times: 0.8 | round: 0 | plus: budges_padding_vertical | times: 0.75 }}px;\n      justify-content: center;\n    }\n\n    @media(min-width: 992px) {\n      .pricing-table-budges-{{ section.id }} {\n        top: -{{ budges_size | times: 0.6 | round: 0 | plus: budges_padding_vertical | times: 0.75 }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if price_time_under %}\n  <style>\n    .pricing-table-price-{{ section.id }} {\n      flex-direction: column;\n    }\n    .pricing-table-price-{{ section.id }} span {\n      max-width: fit-content;\n    }\n  </style>\n{% endif %}\n\n{% if budges_weight == \"bold\" %}\n  <style>\n    .pricing-table-budge-{{ section.id }} {\n      font-weight: 700;\n    }\n  </style>\n{% endif %}\n\n<div class=\"section-{{ section.id }} pricing-table-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings \">\n      {% if heading != blank %}\n        <div class=\"pricing-table-heading-{{ section.id }}\">{{ heading }}</div>\n      {% endif %}\n\n      {% if sub_heading != blank %}\n        <div class=\"pricing-table-subheading-{{ section.id }}\">{{ sub_heading }}</div>\n      {% endif %}\n\n      <div class=\"pricing-table-items-{{ section.id }}\">\n        {% for block in section.blocks %}\n          <div class=\"pricing-table-item-{{ section.id }} {% if block.settings.active %}active-item-{{ section.id }}{% endif %}\">\n            {% if block.settings.budges != blank %}\n              {% assign budges = block.settings.budges | split: ',' %}\n              <div class=\"pricing-table-budges-{{ section.id }}\">\n                {% for budge in budges %}\n                  <div class=\"pricing-table-budge-{{ section.id }}\">{{ budge }}</div>\n                {% endfor %}\n              </div>\n            {% endif %}\n            {% if block.settings.image != blank %}\n              <div class=\"pricing-table-image-{{ section.id }}\">\n                <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n              </div>\n            {% endif %}\n            {% if block.settings.heading != blank %}\n              <p class=\"pricing-table-title-{{ section.id }}\">{{ block.settings.heading }}</p>\n            {% endif %}\n            <p class=\"pricing-table-price-{{ section.id }}\">{% if block.settings.price_sale != blank %}<span class=\"pricing-table-price-sale-{{ section.id }}\">{% if block.settings.currency != blank %}{{ block.settings.currency }}{% endif %}{{ block.settings.price_sale }}</span>{% endif %}{% if block.settings.currency != blank %}{{ block.settings.currency }}{% endif %}{{ block.settings.price }}{% if block.settings.time != blank %}<span>{{ block.settings.time }}</span>{% endif %}</p>\n            {% if elements_position == \"before\" %}\n              <div class=\"pricing-table-list-{{ section.id }}\">\n                {{ block.settings.elements }}\n              </div>\n            {% endif %}\n            {% if block.settings.button_text != blank %}\n              <a href=\"{{ block.settings.button_url }}\" class=\"pricing-table-btn-{{ section.id }}\">\n                {% if button_icon != blank %}\n                  <img src=\"{{ button_icon | image_url }}\" alt=\"{{ button_icon.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                {% endif %}\n                {{ block.settings.button_text }}\n              </a>\n            {% endif %}\n            {% if block.settings.text != blank %}\n              <p class=\"pricing-table-text-{{ section.id }}\">\n                {{ block.settings.text }}\n              </p>\n            {% endif %}\n            {% if elements_position == \"after\" %}\n              <div class=\"pricing-table-list-{{ section.id }}\">\n                {{ block.settings.elements }}\n              </div>\n            {% endif %}\n          </div>\n        {% endfor %}\n      </div>\n    </div>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "textarea",
+      "default": "",
+      "label": "Heading",
+      "description": "Make a word bold to replace color"
+    },
+    "heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Heading Font Family",
+      "description": "Heading Font Family"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "32",
+      "label": "Heading Size",
+      "description": "Heading Size"
+    },
+    "heading_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Heading Size - Mobile",
+      "description": "Heading Size - Mobile"
+    },
+    "heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Heading Line Height",
+      "description": "Heading Line Height"
+    },
+    "heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Heading Text Align",
+      "description": "Heading Text Align"
+    },
+    "sub_heading": {
+      "type": "textarea",
+      "default": "",
+      "label": "Sub-Heading",
+      "description": "Sub-Heading"
+    },
+    "sub_heading_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "sub_heading_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Sub-Heading Font Family",
+      "description": "Sub-Heading Font Family"
+    },
+    "sub_heading_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Sub-Heading Size",
+      "description": "Sub-Heading Size"
+    },
+    "sub_heading_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Sub-Heading Size - Mobile",
+      "description": "Sub-Heading Size - Mobile"
+    },
+    "sub_heading_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Sub-Heading Line Height",
+      "description": "Sub-Heading Line Height"
+    },
+    "sub_heading_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Sub-Heading Text Align",
+      "description": "Sub-Heading Text Align"
+    },
+    "sub_heading_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Sub-Heading Margin Top",
+      "description": "Sub-Heading Margin Top"
+    },
+    "sub_heading_border": {
+      "type": "text",
+      "default": "true",
+      "label": "Sub-Heading Border Bottom",
+      "description": "Sub-Heading Border Bottom"
+    },
+    "table_mt": {
+      "type": "text",
+      "default": "0",
+      "label": "Table Margin Top",
+      "description": "Table Margin Top"
+    },
+    "table_width": {
+      "type": "text",
+      "default": "90",
+      "label": "Table Width",
+      "description": "Table Width"
+    },
+    "table_width_mobile": {
+      "type": "text",
+      "default": "100",
+      "label": "Table Width - Mobile",
+      "description": "Table Width - Mobile"
+    },
+    "table_gap": {
+      "type": "text",
+      "default": "20",
+      "label": "Table Gap",
+      "description": "Table Gap"
+    },
+    "table_gap_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Table Gap - Mobile",
+      "description": "Table Gap - Mobile"
+    },
+    "card_padding_vertical": {
+      "type": "text",
+      "default": "32",
+      "label": "Card Padding Vertical",
+      "description": "Card Padding Vertical"
+    },
+    "card_padding_horizontal": {
+      "type": "text",
+      "default": "32",
+      "label": "Card Padding Horizontal",
+      "description": "Card Padding Horizontal"
+    },
+    "card_radius": {
+      "type": "text",
+      "default": "26",
+      "label": "Card Border Radius",
+      "description": "Card Border Radius"
+    },
+    "card_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Card Border Thickness",
+      "description": "Card Border Thickness"
+    },
+    "card_shadow": {
+      "type": "text",
+      "default": "false",
+      "label": "Card Use Shadow",
+      "description": "Card Use Shadow"
+    },
+    "budges_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "budges_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Card Budges Font Family",
+      "description": "Card Budges Font Family"
+    },
+    "budges_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Budges Size",
+      "description": "Card Budges Size"
+    },
+    "budges_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Budges Size - Mobile",
+      "description": "Card Budges Size - Mobile"
+    },
+    "budges_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Card Budges Line Height",
+      "description": "Card Budges Line Height"
+    },
+    "budges_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Budges Padding Vertical",
+      "description": "Card Budges Padding Vertical"
+    },
+    "budges_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Card Budges Padding Horizontal",
+      "description": "Card Budges Padding Horizontal"
+    },
+    "budges_radius": {
+      "type": "text",
+      "default": "20",
+      "label": "Card Budges Border Radius",
+      "description": "Card Budges Border Radius"
+    },
+    "budges_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Card Budges Border Thickness",
+      "description": "Card Budges Border Thickness"
+    },
+    "budges_weight": {
+      "type": "text",
+      "default": "bold",
+      "label": "Budges Font Weight",
+      "description": "Budges Font Weight"
+    },
+    "budges_top": {
+      "type": "text",
+      "default": "true",
+      "label": "Budges on Top",
+      "description": "Budges on Top"
+    },
+    "image_width": {
+      "type": "text",
+      "default": "35",
+      "label": "Card Image Width - Desktop",
+      "description": "Card Image Width - Desktop"
+    },
+    "image_width_mobile": {
+      "type": "text",
+      "default": "60",
+      "label": "Card Image Width - Mobile",
+      "description": "Card Image Width - Mobile"
+    },
+    "image_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Card Image Margin Top",
+      "description": "Card Image Margin Top"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "8",
+      "label": "Card Image Border Radius",
+      "description": "Card Image Border Radius"
+    },
+    "image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Card Image Border Thickness",
+      "description": "Card Image Border Thickness"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Card Title Font Family",
+      "description": "Card Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Card Title Size",
+      "description": "Card Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Card Title Size - Mobile",
+      "description": "Card Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Card Title Line Height",
+      "description": "Card Title Line Height"
+    },
+    "title_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Card Title Text Align",
+      "description": "Card Title Text Align"
+    },
+    "title_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Card Title Margin Top",
+      "description": "Card Title Margin Top"
+    },
+    "price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "price_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Card Price Font Family",
+      "description": "Card Price Font Family"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "72",
+      "label": "Card Price Size",
+      "description": "Card Price Size"
+    },
+    "price_size_mobile": {
+      "type": "text",
+      "default": "72",
+      "label": "Card Price Size - Mobile",
+      "description": "Card Price Size - Mobile"
+    },
+    "price_sale_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Card Price Sale Size",
+      "description": "Card Price Sale Size"
+    },
+    "price_sale_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Card Price Sale Size - Mobile",
+      "description": "Card Price Sale Size - Mobile"
+    },
+    "price_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Card Price Line Height",
+      "description": "Card Price Line Height"
+    },
+    "price_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Card Price Text Align",
+      "description": "Card Price Text Align"
+    },
+    "price_mt": {
+      "type": "text",
+      "default": "10",
+      "label": "Card Price Margin Top",
+      "description": "Card Price Margin Top"
+    },
+    "price_time_under": {
+      "type": "text",
+      "default": "true",
+      "label": "Price Time Under",
+      "description": "Price Time Under"
+    },
+    "elements_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "elements_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Card Elements Font Family",
+      "description": "Card Elements Font Family"
+    },
+    "elements_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Card Elements Size",
+      "description": "Card Elements Size"
+    },
+    "elements_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Card Elements Size - Mobile",
+      "description": "Card Elements Size - Mobile"
+    },
+    "elements_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Card Elements Line Height",
+      "description": "Card Elements Line Height"
+    },
+    "elements_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Card Elements Text Align",
+      "description": "Card Elements Text Align"
+    },
+    "elements_position": {
+      "type": "text",
+      "default": "before",
+      "label": "Card Elements Position",
+      "description": "Card Elements Position"
+    },
+    "elements_mt": {
+      "type": "text",
+      "default": "38",
+      "label": "Card Elements Margin Top",
+      "description": "Card Elements Margin Top"
+    },
+    "elements_gap": {
+      "type": "text",
+      "default": "16",
+      "label": "Card Elements Gap",
+      "description": "Card Elements Gap"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Card Elements Icon Size",
+      "description": "Card Elements Icon Size"
+    },
+    "elements_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Card Elements Icon",
+      "description": "Card Elements Icon"
+    },
+    "elements_active_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Card Elements Active Icon",
+      "description": "Card Elements Active Icon"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Button Font Family",
+      "description": "Button Font Family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Size",
+      "description": "Button Size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Button Size - Mobile",
+      "description": "Button Size - Mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Button Line Height",
+      "description": "Button Line Height"
+    },
+    "button_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Card Button Align",
+      "description": "Card Button Align"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Button Margin Top",
+      "description": "Button Margin Top"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Button Padding Vertical",
+      "description": "Button Padding Vertical"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "20",
+      "label": "Button Padding Horizontal",
+      "description": "Button Padding Horizontal"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "20",
+      "label": "Button Border Radius",
+      "description": "Button Border Radius"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Button Border Thickness",
+      "description": "Button Border Thickness"
+    },
+    "button_width": {
+      "type": "text",
+      "default": "100",
+      "label": "Button Width - Desktop",
+      "description": "Button Width - Desktop"
+    },
+    "button_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Button Icon",
+      "description": "Button Icon"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Text Font Family",
+      "description": "Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Text Size",
+      "description": "Text Size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "14",
+      "label": "Text Size - Mobile",
+      "description": "Text Size - Mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Text Line Height",
+      "description": "Text Line Height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Card Text Align",
+      "description": "Card Text Align"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Text Margin Top",
+      "description": "Text Margin Top"
+    },
+    "heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading Color",
+      "description": "Heading Color"
+    },
+    "heading_other_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Heading Other Color",
+      "description": "Heading Other Color"
+    },
+    "sub_heading_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Sub-Heading Color",
+      "description": "Sub-Heading Color"
+    },
+    "sub_heading_border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Sub-Heading Border Color",
+      "description": "Sub-Heading Border Color"
+    },
+    "card_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Background Color",
+      "description": "Card Background Color"
+    },
+    "card_bg_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Background Active Color",
+      "description": "Card Background Active Color"
+    },
+    "card_border_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Card Border Color",
+      "description": "Card Border Color"
+    },
+    "card_border_active_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Card Border Active Color",
+      "description": "Card Border Active Color"
+    },
+    "budges_color": {
+      "type": "color",
+      "default": "#545a69",
+      "label": "Card Budges Color",
+      "description": "Card Budges Color"
+    },
+    "budges_active_color": {
+      "type": "color",
+      "default": "#545a69",
+      "label": "Card Budges Active Color",
+      "description": "Card Budges Active Color"
+    },
+    "budges_second_color": {
+      "type": "color",
+      "default": "#CA73E0",
+      "label": "Card Budges Second Color",
+      "description": "Card Budges Second Color"
+    },
+    "budges_second_active_color": {
+      "type": "color",
+      "default": "#38A9F3",
+      "label": "Card Budges Second Active Color",
+      "description": "Card Budges Second Active Color"
+    },
+    "budges_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Budges Background Color",
+      "description": "Card Budges Background Color"
+    },
+    "budges_bg_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Budges Background Active Color",
+      "description": "Card Budges Background Active Color"
+    },
+    "budges_bg_second_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Budges Background Second Color",
+      "description": "Card Budges Background Second Color"
+    },
+    "budges_bg_second_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Budges Background Second Active Color",
+      "description": "Card Budges Background Second Active Color"
+    },
+    "budges_border_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Card Budges Border Color",
+      "description": "Card Budges Border Color"
+    },
+    "budges_border_active_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Card Budges Border Active Color",
+      "description": "Card Budges Border Active Color"
+    },
+    "budges_border_second_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Card Budges Border Second Color",
+      "description": "Card Budges Border Second Color"
+    },
+    "budges_border_second_active_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Card Budges Border Second Active Color",
+      "description": "Card Budges Border Second Active Color"
+    },
+    "image_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Image Background Color",
+      "description": "Card Image Background Color"
+    },
+    "image_bg_active_color": {
+      "type": "color",
+      "default": "#DDDDDD",
+      "label": "Card Image Background Active Color",
+      "description": "Card Image Background Active Color"
+    },
+    "image_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Image Border Color",
+      "description": "Card Image Border Color"
+    },
+    "image_border_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Card Image Border Active Color",
+      "description": "Card Image Border Active Color"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#9C9898",
+      "label": "Card Title Color",
+      "description": "Card Title Color"
+    },
+    "title_active_color": {
+      "type": "color",
+      "default": "#9C9898",
+      "label": "Card Title Active Color",
+      "description": "Card Title Active Color"
+    },
+    "price_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Price Color",
+      "description": "Card Price Color"
+    },
+    "price_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Card Price Gradient Color",
+      "description": "Card Price Gradient Color"
+    },
+    "price_active_color": {
+      "type": "color",
+      "default": "#1D6BFF",
+      "label": "Card Price Active Color",
+      "description": "Card Price Active Color"
+    },
+    "price_active_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Card Price Active Gradient Color",
+      "description": "Card Price Active Gradient Color"
+    },
+    "elements_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Elements Color",
+      "description": "Card Elements Color"
+    },
+    "elements_active_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Card Elements Active Color",
+      "description": "Card Elements Active Color"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Color",
+      "description": "Button Color"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Hover Color",
+      "description": "Button Hover Color"
+    },
+    "button_active_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Active Color",
+      "description": "Button Active Color"
+    },
+    "button_active_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button Active Hover Color",
+      "description": "Button Active Hover Color"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button Background Color",
+      "description": "Button Background Color"
+    },
+    "button_bg_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Button Background Gradient Color",
+      "description": "Button Background Gradient Color"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#425466",
+      "label": "Button Background Hover Color",
+      "description": "Button Background Hover Color"
+    },
+    "button_bg_hover_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Button Background Hover Gradient Color",
+      "description": "Button Background Hover Gradient Color"
+    },
+    "button_bg_active_color": {
+      "type": "color",
+      "default": "#1D6BFF",
+      "label": "Button Background Active Color",
+      "description": "Button Background Active Color"
+    },
+    "button_bg_active_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Button Background Active Gradient Color",
+      "description": "Button Background Active Gradient Color"
+    },
+    "button_bg_active_hover_color": {
+      "type": "color",
+      "default": "#1D6BFF",
+      "label": "Button Background Active Hover Color",
+      "description": "Button Background Active Hover Color"
+    },
+    "button_bg_active_hover_color_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Button Background Active Hover Gradient Color",
+      "description": "Button Background Active Hover Gradient Color"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#425466",
+      "label": "Button Border Color",
+      "description": "Button Border Color"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#425466",
+      "label": "Button Border Hover Color",
+      "description": "Button Border Hover Color"
+    },
+    "button_border_active_color": {
+      "type": "color",
+      "default": "#38A9F3",
+      "label": "Button Border Active Color",
+      "description": "Button Border Active Color"
+    },
+    "button_border_active_hover_color": {
+      "type": "color",
+      "default": "#425466",
+      "label": "Button Border Active Hover Color",
+      "description": "Button Border Active Hover Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#1A1A1A",
+      "label": "Card Text Color",
+      "description": "Card Text Color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full Width",
+      "description": "Full Width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "custom-featured-review-slider",
+  "name": "CUSTOM Review Slider",
+  "description": "Section: CUSTOM Review Slider",
+  "tags": [
+    "featured",
+    "feature",
+    "slider"
+  ],
+  "type": "feature",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css\"\n>\n{% style %}\n  [data-review-quote-slider-target] p {\n    margin: 0;\n    text-align: center;\n  }\n  [data-review-quote-slider-target] .swiper {\n    padding-bottom: 60px;\n    --swiper-pagination-color: {{ section.settings.pagination_color }};\n    --swiper-pagination-bullet-inactive-color: {{ section.settings.pagination_color }};\n    color: {{ section.settings.text_color }};\n  }\n  [data-review-quote-slider-target] .custom-swiper-container {\n    background-color: {{ section.settings.bg_color }};\n    border-radius: 2rem;\n    padding: 3rem 3rem 1.5rem;\n  }\n{% endstyle %}\n\n<script\n  defer\n  src=\"https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js\"\n></script>\n\n<script>\n  document.addEventListener('DOMContentLoaded', function () {\n    const template = document.querySelector('[data-review-quote-slider]');\n    const target = document.querySelector('[data-review-quote-slider-target]');\n    if (target) {\n      target.appendChild(template.content.cloneNode(true));\n      const swiperEl = target.querySelector('.swiper');\n      new Swiper(swiperEl, {\n        slidesPerView: 1,\n        spaceBetween: 0,\n        loop: true,\n        autoplay: {\n          delay: 7000,\n        },\n        pagination: {\n          el: '.swiper-pagination',\n          clickable: true,\n        },\n        speed: 1000,\n      });\n    }\n  });\n</script>\n\n{%- comment -%}\n  Add this to target location:\n  <div data-review-quote-slider-target></div>\n{%- endcomment -%}\n\n<template data-review-quote-slider>\n  <div class=\"custom-swiper-container {{ section.settings.custom_classes }}\">\n    <div class=\"swiper\">\n      <div class=\"swiper-wrapper\">\n        {% for block in section.blocks %}\n          <div class=\"swiper-slide\">\n            {{ block.settings.quote }}\n          </div>\n        {% endfor %}\n      </div>\n\n      <div class=\"swiper-pagination\"></div>\n    </div>\n  </div>\n</template>",
+  "variables": {
+    "example": {
+      "type": "textarea",
+      "default": "<div data-review-quote-slider-target></div>",
+      "label": "Target example",
+      "description": "Copy this code into the target area you want to display the slider."
+    },
+    "pagination_color": {
+      "type": "color",
+      "default": "#db877b",
+      "label": "Pagination Color",
+      "description": "Pagination Color"
+    },
+    "bg_color": {
+      "type": "color",
+      "default": "#f4d9d5",
+      "label": "Background color",
+      "description": "Background color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#d87e71",
+      "label": "Text color",
+      "description": "Text color"
+    },
+    "custom_classes": {
+      "type": "text",
+      "default": "",
+      "label": "Custom classes",
+      "description": "Custom classes"
+    }
+  }
+}

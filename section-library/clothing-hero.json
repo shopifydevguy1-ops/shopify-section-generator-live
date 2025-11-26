@@ -1,0 +1,79 @@
+{
+  "id": "clothing-hero",
+  "name": "CUSTOM Threads Hero",
+  "description": "Section: CUSTOM Threads Hero",
+  "tags": [
+    "clothing",
+    "hero"
+  ],
+  "type": "hero",
+  "liquid_code": "{% capture section_content %}\n{% assign font_size = section.settings.font_size %}\n{% assign font_color = section.settings.font_color %}\n<style>\n  .cs-banner {\n    position: relative;\n    width: 100%;\n    overflow: hidden;\n  }\n  .cs-banner-image {\n    width: 100%;\n    object-fit: cover;\n  }\n  .cs-banner-image--desktop {\n    display: none;\n  }\n  @media screen and (min-width: 750px) {\n    .cs-banner-image--desktop {\n      display: block;\n    }\n    .cs-banner-image--mobile {\n      display: none;\n    }\n  }\n  .cs-banner-link {\n    position: absolute;\n    top: 30px;\n    left: 30px;\n    text-decoration: none;\n    color: black;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    gap: 10px;\n    font-size: calc(var(--font-size) * 0.75);\n    color: var(--font-color);\n  }\n  @media screen and (min-width: 750px) {\n    .cs-banner-link {\n      top: 45px;\n      left: 45px;\n      font-size: var(--font-size);\n    }\n  }\n  .cs-banner-overlay {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n  }\n\n  .arrow {\n    border: solid black;\n    border-width: 0 2px 2px 0;\n    display: inline-block;\n    padding: 3px;\n  }\n\n  .right {\n    transform: rotate(-45deg);\n    -webkit-transform: rotate(-45deg);\n  }\n</style>\n\n<div\n  class=\"cs-banner\"\n  style=\"\n    --font-size: {{ font_size }}px;\n    --font-color: {{ font_color }};\n  \"\n>\n  {% assign image = section.settings.image %}\n  <img\n    class=\"cs-banner-image cs-banner-image--desktop\"\n    src=\"{{ image | img_url: '500x' }}\"\n    srcset=\"\n      {{ image | img_url: '500x' }} 500w,\n      {{ image | img_url: '800x' }} 800w,\n      {{ image | img_url: '1200x' }} 1200w,\n      {{ image | img_url: '1600x' }} 1600w,\n      {{ image | img_url: '2000x' }} 2000w,\n      {{ image | img_url: 'master' }} 2400w\n    \"\n    alt=\"{{ image.alt }}\"\n    style=\"aspect-ratio: {{ image.aspect_ratio }};\"\n  >\n  {% comment %} mobile: {% endcomment %}\n  {% if section.settings.image_mobile != blank %}\n    {% assign image = section.settings.image_mobile %}\n  {% endif %}\n  <img\n    class=\"cs-banner-image cs-banner-image--mobile\"\n    src=\"{{ image | img_url: '500x' }}\"\n    srcset=\"\n      {{ image | img_url: '400x' }} 400w,\n      {{ image | img_url: '500x' }} 500w,\n      {{ image | img_url: '800x' }} 800w,\n      {{ image | img_url: 'master' }} 1000w\n    \"\n    alt=\"{{ image.alt }}\"\n    style=\"aspect-ratio: {{ image.aspect_ratio }};\"\n  >\n  {% comment %} Overlay: {% endcomment %}\n  <div\n    class=\"cs-banner-overlay\"\n    style=\"background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity }}); display: block;\"\n  ></div>\n  <a class=\"cs-banner-link\" href=\"{{ section.settings.link }}\">\n    {{ section.settings.link_text }}\n    {% comment %} icon: {% endcomment %}\n    {% if section.settings.icon != blank %}\n    <img\n      style=\"width: 24px; height: 24px;\"\n      src=\"{{ section.settings.icon | img_url: '30x' }}\"\n      alt=\"{{ section.settings.icon.alt }}\"\n    >\n    {% endif %}\n  <i class=\"arrow right\"></i></a>\n</div>\n{% endcapture %}\n\n{%- style -%}\n  .section-{{ section.id }}-padding {\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n{%- endstyle -%}\n\n<div style=\"background-color:{{section.settings.background-color}};\">\n  <div class=\"section-{{ section.id }}-padding\">\n    <div>{{ section_content }}</div>\n  </div>\n</div>",
+  "variables": {
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "image_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Image mobile",
+      "description": "Image mobile"
+    },
+    "icon": {
+      "type": "text",
+      "default": "",
+      "label": "Icon",
+      "description": "Best image size: 24x24px"
+    },
+    "link_text": {
+      "type": "text",
+      "default": "Shop all",
+      "label": "Link text",
+      "description": "Link text"
+    },
+    "link": {
+      "type": "text",
+      "default": "",
+      "label": "Link",
+      "description": "Link"
+    },
+    "font_size": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "font_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Font color",
+      "description": "Font color"
+    },
+    "overlay_opacity": {
+      "type": "text",
+      "default": "0",
+      "label": "Overlay opacity",
+      "description": "Overlay opacity"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    }
+  }
+}

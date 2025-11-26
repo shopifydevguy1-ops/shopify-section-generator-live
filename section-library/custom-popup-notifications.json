@@ -1,0 +1,354 @@
+{
+  "id": "custom-popup-notifications",
+  "name": "CUSTOM Popup Notifications",
+  "description": "Section: CUSTOM Popup Notifications",
+  "tags": [
+    "popup"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign lazy = section.settings.lazy\n\n  assign start_popup = section.settings.start_popup\n  assign hide_message = section.settings.hide_message\n  assign send_message = section.settings.send_message\n  assign loop_messages = section.settings.loop_messages\n\n  assign bar_horizontal_position = section.settings.bar_horizontal_position\n  assign bar_vertical_position_mobile = section.settings.bar_vertical_position_mobile\n  assign bar_vertical_position = section.settings.bar_vertical_position\n  assign bar_horizontal_offset_mobile = section.settings.bar_horizontal_offset_mobile\n  assign bar_horizontal_offset = section.settings.bar_horizontal_offset\n  assign bar_vertical_offset_mobile = section.settings.bar_vertical_offset_mobile\n  assign bar_vertical_offset = section.settings.bar_vertical_offset\n  assign bar_width = section.settings.bar_width\n  assign bar_space = section.settings.bar_space\n\n  assign item_padding_vertical = section.settings.item_padding_vertical\n  assign item_padding_vertical_mobile = section.settings.item_padding_vertical_mobile\n  assign item_padding_horizontal = section.settings.item_padding_horizontal\n  assign item_padding_horizontal_mobile = section.settings.item_padding_horizontal_mobile\n  assign item_radius = section.settings.item_radius\n  assign item_border_thickness = section.settings.item_border_thickness\n  assign item_border_color = section.settings.item_border_color\n  assign item_bg_color = section.settings.item_bg_color\n  assign item_shadow = section.settings.item_shadow\n  assign item_bg_gradient = section.settings.item_bg_gradient\n  assign item_gap = section.settings.item_gap\n  assign item_blur = section.settings.item_blur\n  assign item_animation = section.settings.item_animation\n\n  assign image_size_mobile = section.settings.image_size_mobile\n  assign image_size = section.settings.image_size\n  assign image_radius = section.settings.image_radius\n  assign hide_image = section.settings.hide_image\n  assign image_vertical_align_mobile = section.settings.image_vertical_align_mobile\n  assign image_vertical_align = section.settings.image_vertical_align\n\n  assign title_size = section.settings.title_size\n  assign title_size_mobile = section.settings.title_size_mobile\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_mt = section.settings.title_mt\n\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_color = section.settings.text_color\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_height = section.settings.text_height\n  assign text_mt = section.settings.text_mt\n\n  assign date_size = section.settings.date_size\n  assign date_size_mobile = section.settings.date_size_mobile\n  assign date_color = section.settings.date_color\n  assign date_custom = section.settings.date_custom\n  assign date_font = section.settings.date_font\n  assign date_height = section.settings.date_height\n\n  assign stars_icon = section.settings.stars_icon\n  assign stars_size = section.settings.stars_size\n  assign stars_color = section.settings.stars_color\n  \n-%}\n\n{%- style -%}\n\n  {{  title_font | font_face: font_display: 'swap' }}\n  {{  text_font | font_face: font_display: 'swap' }}\n  {{  date_font | font_face: font_display: 'swap' }}\n  \n  .notifications-body-{{ section.id }} {\n    position: fixed;\n    z-index: 999;\n    width: 100%;\n    max-width: calc(100% - {{ bar_horizontal_offset_mobile | times: 2 }}px);\n    left: {{ bar_horizontal_offset_mobile }}px;\n    right: {{ bar_horizontal_offset_mobile }}px;\n    overflow: hidden;\n    padding: 10px;\n  }\n\n  .notifications-item-{{ section.id }} {\n    max-height: 0px;\n    width: 100%;\n    display: flex;\n    align-items: stretch;\n    gap: {{ item_gap }}px;\n    padding-left: {{ item_padding_horizontal_mobile }}px;\n    padding-right: {{ item_padding_horizontal_mobile }}px;\n    border-radius: {{ item_radius }}px;\n    background-color: {{ item_bg_color }};\n    box-sizing: border-box !important; \n    overflow: hidden;\n  }\n\n  .notifications-item-{{ section.id }}.active {\n    transform: translateY(0px);\n    border: {{ item_border_thickness }}px solid {{ item_border_color }};\n    max-height: 100vh;\n    padding-top: {{ item_padding_vertical_mobile }}px;\n    padding-bottom: {{ item_padding_vertical_mobile }}px;\n  }\n\n  .notifications-image-{{ section.id }} {\n    flex: 0 0 {{ image_size_mobile }}px;\n    height: {{ image_size_mobile }}px;\n    border-radius: {{ image_radius }}px;\n    overflow: hidden;\n    align-self: {{ image_vertical_align_mobile }};\n  }\n\n  .notifications-image-{{ section.id }} img,\n  .notifications-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n\n  .notifications-title-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ title_size_mobile }}px;\n    color: {{ title_color }};\n    line-height: {{ title_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .notifications-text-{{ section.id }} {\n    margin: 0;\n    margin-top: {{ text_mt | times: 0.75 | round: 0 }}px;\n    font-size: {{ text_size_mobile }}px;\n    color: {{ text_color }};\n    line-height: {{ text_height }}%;\n    text-transform: unset;\n  }\n\n  .notifications-date-{{ section.id }} {\n    margin: 0;\n    margin-left: auto;\n    font-size: {{ date_size_mobile }}px;\n    color: {{ date_color }};\n    line-height: {{ date_height }}%;\n    text-transform: unset;\n    font-weight: 700;\n  }\n\n  .notifications-item-hide-mobile-{{ section.id }} {\n    display: none !important;\n  }\n\n  .notifications-stars-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 1px;\n  }\n\n  .notifications-stars-{{ section.id }} svg,\n  .notifications-stars-{{ section.id }} img {\n    display: block;\n    width: {{ stars_size }}px;\n    height: {{ stars_size }}px;\n    object-fit: cover;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .notifications-body-{{ section.id }} {\n      max-width: {{ bar_width }}px;\n    }\n\n    .notifications-item-{{ section.id }} {\n      padding-left: {{ item_padding_horizontal }}px;\n      padding-right: {{ item_padding_horizontal }}px;\n    }\n\n    .notifications-item-{{ section.id }}.active {\n      padding-top: {{ item_padding_vertical }}px;\n      padding-bottom: {{ item_padding_vertical }}px;\n    }\n\n    .notifications-image-{{ section.id }} {\n      flex: 0 0 {{ image_size }}px;\n      height: {{ image_size }}px;\n      align-self: {{ image_vertical_align }};\n    }\n\n    .notifications-title-{{ section.id }} {\n      margin-top: {{ title_mt }}px;\n      font-size: {{ title_size }}px;\n    }\n\n    .notifications-text-{{ section.id }} {\n      margin-top: {{ text_mt }}px;\n      font-size: {{ text_size }}px;\n    }\n\n    .notifications-date-{{ section.id }} {\n      font-size: {{ date_size }}px;\n    }\n\n    .notifications-item-hide-mobile-{{ section.id }} {\n      display: flex !important;\n    }\n    \n  }\n  \n{%- endstyle -%}\n\n{% if title_custom %}\n  <style>\n    .notifications-title-{{ section.id }} {\n      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};\n      font-weight: {{ title_font.weight }};\n      font-style: {{ title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if text_custom %}\n  <style>\n    .notifications-text-{{ section.id }} {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if date_custom %}\n  <style>\n    .notifications-date-{{ section.id }} {\n      font-family: {{ date_font.family }}, {{ date_font.fallback_families }};\n      font-weight: {{ date_font.weight }};\n      font-style: {{ date_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if bar_horizontal_position == \"left\" %}\n  <style>\n    @media(min-width: 1024px) {\n      .notifications-body-{{ section.id }} {\n        left: {{ bar_horizontal_offset }}px;\n        right: unset !important;\n      } \n    }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .notifications-body-{{ section.id }} {\n        left: unset !important;\n        right: {{ bar_horizontal_offset }}px;\n      } \n    }\n  </style>\n{% endif %}\n\n{% if bar_vertical_position_mobile == \"top\" %}\n  <style>\n    .notifications-body-{{ section.id }} {\n      top: {{ bar_vertical_offset_mobile }}px;\n    }\n    \n    .notifications-item-{{ section.id }}.active:not(:last-child) {\n      margin-bottom: {{ bar_space | times: 0.75 | round: 0 }}px;\n    }\n  </style>\n{% else %}\n  <style>\n    .notifications-body-{{ section.id }} {\n      bottom: {{ bar_vertical_offset_mobile }}px;\n    }\n    \n    .notifications-item-{{ section.id }}.active:not(:first-child) {\n      margin-top: {{ bar_space | times: 0.75 | round: 0 }}px;\n    }\n  </style>\n{% endif %}\n\n{% if bar_vertical_position == \"top\" %}\n  <style>\n    \n    @media(min-width: 1024px) {\n      .notifications-body-{{ section.id }} {\n        top: {{ bar_vertical_offset }}px;\n        bottom: unset;\n      }\n\n      .notifications-item-{{ section.id }}.active:not(:last-child) {\n        margin-bottom: {{ bar_space }}px;\n        margin-top: 0px;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    \n    @media(min-width: 1024px) {\n      .notifications-body-{{ section.id }} {\n        top: unset;\n        bottom: {{ bar_vertical_offset }}px;\n      }\n\n      .notifications-item-{{ section.id }}.active:not(:first-child) {\n        margin-top: {{ bar_space }}px;\n        margin-bottom: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if item_shadow %}\n  <style>\n    .notifications-item-{{ section.id }} {\n      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;\n    }\n  </style>\n{% endif %}\n\n{% if item_blur %}\n  <style>\n    .notifications-item-{{ section.id }} {\n      opacity: 0.8;\n    }\n  </style>\n{% endif %}\n\n{% if item_bg_gradient != blank %}\n  <style>\n    .notifications-item-{{ section.id }} {\n      background-image: {{ item_bg_gradient }};\n      opacity: 0.8;\n    }\n  </style>\n{% endif %}\n\n{% if item_animation != blank %}\n  <style>\n\n    .notifications-item-{{ section.id }} {\n      transition: all 0.3s linear 0s;\n    }\n\n    .notifications-item-{{ section.id }}.active {\n      transition: all 0.3s linear 0s;\n    }\n\n    .notifications-item-{{ section.id }}.active {\n      transform: translateY(0);\n    }\n  </style>\n\n  {% if bar_vertical_position_mobile == \"top\" %}\n    <style>\n      .notifications-item-{{ section.id }} {\n        transform: translateY(-100%);\n      }\n    </style>\n  {% else %}\n    <style>\n      .notifications-item-{{ section.id }} {\n        transform: translateY(100%);\n      }\n    </style>\n  {% endif %}\n\n  {% if bar_vertical_position == \"top\" %}\n    <style>\n      @media(min-width: 1024px) {\n         .notifications-item-{{ section.id }} {\n          transform: translateY(-100%);\n        } \n      }\n    </style>\n  {% else %}\n    <style>\n      @media(min-width: 1024px) {\n         .notifications-item-{{ section.id }} {\n          transform: translateY(100%);\n        } \n      }\n    </style>\n  {% endif %}\n{% endif %}\n\n{% capture svg_example_1 %}\n <svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"60\" height=\"60\" viewBox=\"0 0 120 120\"><polygon points=\"84,21 74,11 60,27.64 46,11 36,21 54.464,36.535 60,31 65.536,36.535\" opacity=\".35\"></polygon><rect width=\"84\" height=\"72\" x=\"18\" y=\"34\" opacity=\".35\"></rect><polygon fill=\"#ffc400\" points=\"65.536,32.535 58.464,25.465 74,7 84,17\"></polygon><polygon fill=\"#ffc400\" points=\"54.464,32.535 36,17 46,7 61.536,25.465\"></polygon><rect width=\"84\" height=\"72\" x=\"18\" y=\"30\" fill=\"#ff1200\"></rect><rect width=\"94\" height=\"19\" x=\"13\" y=\"28\" opacity=\".35\"></rect><rect width=\"94\" height=\"19\" x=\"13\" y=\"24\" fill=\"#ff7461\"></rect><rect width=\"16\" height=\"78\" x=\"52\" y=\"24\" fill=\"#ffc400\"></rect></svg>\n  {% endcapture %}\n{% capture svg_example_2 %}\n<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"60\" height=\"60\" viewBox=\"0 0 120 120\"><rect width=\"10\" height=\"4\" x=\"91\" y=\"96\" opacity=\".35\"></rect><circle cx=\"98\" cy=\"52\" r=\"14\" fill=\"#0037ff\"></circle><circle cx=\"98\" cy=\"56\" r=\"14\" opacity=\".35\"></circle><circle cx=\"98\" cy=\"52\" r=\"14\" fill=\"#0037ff\"></circle><rect width=\"12\" height=\"14\" x=\"37\" y=\"68\" opacity=\".35\"></rect><rect width=\"12\" height=\"14\" x=\"37\" y=\"64\" fill=\"#ff1200\"></rect><polygon points=\"46,106 30.775,111.8 21.775,67.8 38,71\" opacity=\".35\"></polygon><polygon fill=\"#0037ff\" points=\"46,102 30,108 21,64 38,67\"></polygon><path d=\"M49,41H23c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h26l42,24V17L49,41z\" opacity=\".35\"></path><path fill=\"#0075ff\" d=\"M49,67H23c-8.284,0-15-6.716-15-15v0c0-8.284,6.716-15,15-15h26V67z\"></path><polygon fill=\"#a4e2f1\" points=\"91,91 49,67 49,37 91,13\"></polygon><rect width=\"10\" height=\"88\" x=\"91\" y=\"8\" fill=\"#0075ff\"></rect></svg>\n  {% endcapture %}\n{% capture svg_example_3 %}\n <svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"60\" height=\"60\" viewBox=\"0 0 120 120\"><polygon points=\"113,65 101.545,76.136 105.904,91.508 90.405,95.406 86.507,110.905 71.136,106.545 60,118 48.864,106.545 33.492,110.904 29.594,95.405 14.095,91.507 18.455,76.136 7,65 18.455,53.864 14.096,38.492 29.595,34.594 33.493,19.095 48.864,23.455 60,12 71.136,23.455 86.508,19.096 90.406,34.595 105.905,38.493 101.545,53.864\" opacity=\".35\"></polygon><polygon fill=\"#ff1200\" points=\"113,60 101.545,71.136 105.904,86.508 90.405,90.406 86.507,105.905 71.136,101.545 60,113 48.864,101.545 33.492,105.904 29.594,90.405 14.095,86.507 18.455,71.136 7,60 18.455,48.864 14.096,33.492 29.595,29.594 33.493,14.095 48.864,18.455 60,7 71.136,18.455 86.508,14.096 90.406,29.595 105.905,33.493 101.545,48.864\"></polygon><path d=\"M44.746,39c6.986,0,12.372,5.13,12.372,12.63c0,7.37-5.386,12.563-12.372,12.563s-12.5-5.13-12.5-12.563 C32.246,44.13,37.76,39,44.746,39z M50.45,51.63c0-4.165-2.884-6.409-5.705-6.409c-2.884,0-5.77,2.244-5.77,6.409 c0,4.04,2.821,6.409,5.77,6.409C47.567,58.04,50.45,55.67,50.45,51.63z M71.859,40.153h7.821L48.206,87.909h-7.818L71.859,40.153z M75.385,63.744c6.986,0,12.37,5.125,12.37,12.625c0,7.437-5.384,12.63-12.37,12.63s-12.5-5.193-12.5-12.63 C62.885,68.87,68.399,63.744,75.385,63.744z M75.385,82.784c2.821,0,5.705-2.312,5.705-6.414c0-4.165-2.884-6.341-5.705-6.341 c-2.884,0-5.77,2.176-5.77,6.341C69.615,80.472,72.436,82.784,75.385,82.784z\" opacity=\".35\"></path><path fill=\"#fff\" d=\"M44.746,35c6.986,0,12.372,5.13,12.372,12.63c0,7.37-5.386,12.563-12.372,12.563 s-12.5-5.13-12.5-12.563C32.246,40.13,37.76,35,44.746,35z M50.45,47.63c0-4.165-2.884-6.409-5.705-6.409 c-2.884,0-5.77,2.244-5.77,6.409c0,4.04,2.821,6.409,5.77,6.409C47.567,54.04,50.45,51.67,50.45,47.63z M71.859,36.153h7.821 L48.206,83.909h-7.818L71.859,36.153z M75.385,59.744c6.986,0,12.37,5.125,12.37,12.625c0,7.437-5.384,12.63-12.37,12.63 s-12.5-5.193-12.5-12.63C62.885,64.87,68.399,59.744,75.385,59.744z M75.385,78.784c2.821,0,5.705-2.312,5.705-6.414 c0-4.165-2.884-6.341-5.705-6.341c-2.884,0-5.77,2.176-5.77,6.341C69.615,76.472,72.436,78.784,75.385,78.784z\"></path></svg>\n{% endcapture %}\n{% capture svg_example_4 %}\n  <svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"60\" height=\"60\" viewBox=\"0 0 120 120\"><circle cx=\"50\" cy=\"102.999\" r=\"10\" opacity=\".35\"></circle><circle cx=\"86\" cy=\"102.999\" r=\"10\" opacity=\".35\"></circle><polygon points=\"101,93.999 36.5,93.999 24.5,24.999 8,24.999 8,14.999 32.205,14.999 44.205,83.999 101,83.999\" opacity=\".35\"></polygon><polygon points=\"100.067,72.999 35,72.999 29,27.999 111.067,27.999\" opacity=\".35\"></polygon><polygon fill=\"#44bf00\" points=\"101,68.999 35,68.999 29,23.999 112,23.999\"></polygon><polygon fill=\"#008d00\" points=\"101,89.999 35.795,89.999 23.795,20.999 8,20.999 8,10.999 32.205,10.999 44.205,79.999 101,79.999\"></polygon><circle cx=\"50\" cy=\"99.999\" r=\"10\" fill=\"#0037ff\"></circle><circle cx=\"86\" cy=\"99.999\" r=\"10\" fill=\"#0037ff\"></circle></svg>\n{% endcapture %}\n\n<div class=\"notifications-{{ section.id }}\">\n    <div class=\"notifications-body-{{ section.id }}\">\n      {% assign reversed_blocks = section.blocks | reverse %}\n      {% for block in reversed_blocks %}\n        <{% if block.settings.url != blank %}a href=\"{{ block.settings.url }}\"{% else %}div{% endif %} class=\"notifications-item-{{ section.id }} {% if block.settings.hide_mobile %}notifications-item-hide-mobile-{{ section.id }}{% endif %}\">\n          {% unless hide_image %}\n            <div class=\"notifications-image-{{ section.id }}\">\n              {% if block.settings.image != blank %}\n                <img src=\"{{ block.settings.image | image_url }}\" alt=\"{{ block.settings.image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n              {% else %}\n                {% case forloop.index{{ section.id | replace: '-', '' }} %}\n                  {% when 1 %}\n                    {{ svg_example_1 }}\n                  {% when 2 %}\n                    {{ svg_example_2 }}\n                  {% when 3 %}\n                    {{ svg_example_3 }}\n                  {% when 4 %}\n                    {{ svg_example_4 }}\n                  {% else %}\n                    {{ svg_example_1 }}\n                  {% endcase %}\n              {% endif %}\n            </div>\n          {% endunless %}\n          <div class=\"notifications-content-{{ section.id }}\" style=\"align-content:center;\">\n            {% if block.settings.stars_count != 0 %}\n              <div class=\"notifications-stars-{{ section.id }}\">\n                {% if stars_icon != blank %}\n                  {% for item in (1..block.settings.stars_count) %}\n                    <img src=\"{{ stars_icon | image_url }}\" alt=\"{{ stars_icon.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                  {% endfor %}\n                {% else %}\n                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                    {% if block.settings.stars_count > 0 and block.settings.stars_count < 1  %}\n                      <defs>\n                        <linearGradient id=\"grad{{ section.id }}1\">\n                          <stop offset=\"0%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"white\" />\n                          <stop offset=\"100%\" stop-color=\"white\" />\n                        </linearGradient>\n                      </defs>\n                    {% endif %}\n                    <path {% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}stroke=\"{{ stars_color }}\"{% endif %} d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"{% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}url(#grad{{ section.id }}1){% elsif block.settings.stars_count > 0.5 %}{{ stars_color }}{% endif %}\"></path>\n                  </svg>\n                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                    {% if block.settings.stars_count > 1 and block.settings.stars_count < 2  %}\n                      <defs>\n                        <linearGradient id=\"grad{{ section.id }}2\">\n                          <stop offset=\"0%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"white\" />\n                          <stop offset=\"100%\" stop-color=\"white\" />\n                        </linearGradient>\n                      </defs>\n                    {% endif %}\n                    <path {% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}stroke=\"{{ stars_color }}\"{% endif %} d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"{% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}url(#grad{{ section.id }}2){% elsif block.settings.stars_count > 1.5 %}{{ stars_color }}{% endif %}\"></path>\n                  </svg>\n                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                    {% if block.settings.stars_count > 2 and block.settings.stars_count < 3  %}\n                      <defs>\n                        <linearGradient id=\"grad{{ section.id }}3\">\n                          <stop offset=\"0%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"white\" />\n                          <stop offset=\"100%\" stop-color=\"white\" />\n                        </linearGradient>\n                      </defs>\n                    {% endif %}\n                    <path {% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}stroke=\"{{ stars_color }}\"{% endif %} d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"{% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}url(#grad{{ section.id }}3){% elsif block.settings.stars_count > 2.5 %}{{ stars_color }}{% endif %}\"></path>\n                  </svg>\n                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                    {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}\n                      <defs>\n                        <linearGradient id=\"grad{{ section.id }}4\">\n                          <stop offset=\"0%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"white\" />\n                          <stop offset=\"100%\" stop-color=\"white\" />\n                        </linearGradient>\n                      </defs>\n                    {% endif %}\n                    <path {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}stroke=\"{{ stars_color }}\"{% endif %} d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"{% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}url(#grad{{ section.id }}4){% elsif block.settings.stars_count > 3.5 %}{{ stars_color }}{% endif %}\"></path>\n                  </svg>\n                  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" fill=\"none\">\n                    {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}\n                      <defs>\n                        <linearGradient id=\"grad{{ section.id }}5\">\n                          <stop offset=\"0%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"{{ stars_color }}\" />\n                          <stop offset=\"50%\" stop-color=\"white\" />\n                          <stop offset=\"100%\" stop-color=\"white\" />\n                        </linearGradient>\n                      </defs>\n                    {% endif %}\n                    <path {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}stroke=\"{{ stars_color }}\"{% endif %} d=\"M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z\" fill=\"{% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}url(#grad{{ section.id }}5){% elsif block.settings.stars_count > 4.5 %}{{ stars_color }}{% endif %}\"></path>\n                  </svg>\n                {% endif %}\n              </div>\n            {% endif %}\n            {% if block.settings.title != blank %}\n              <p class=\"notifications-title-{{ section.id }}\">\n                {{ block.settings.title }}\n              </p>\n            {% endif %}\n            {% if block.settings.text != blank %}\n              <p class=\"notifications-text-{{ section.id }}\">\n                {{ block.settings.text }}\n              </p>\n            {% endif %}\n          </div>\n          {% if block.settings.date != blank %}\n            <p class=\"notifications-date-{{ section.id }}\">{{ block.settings.date }}</p>\n          {% endif %}\n        </{% if block.settings.url != blank %}a{% else %}div{% endif %}>\n      {% endfor %}\n    </div>\n</div>\n\n<script>\n  function initPopupNotifications{{ section.id | replace: '-', '' }}() {\n    function showNotificationItems{{ section.id | replace: '-', '' }}() {\n      var items{{ section.id | replace: '-', '' }};\n      if (window.innerWidth < 1024) {\n        items{{ section.id | replace: '-', '' }} = document.querySelectorAll('.notifications-item-{{ section.id }}:not(.notifications-item-hide-mobile-{{ section.id }})');\n      } else {\n        items{{ section.id | replace: '-', '' }} = document.querySelectorAll('.notifications-item-{{ section.id }}');\n      }\n      var index{{ section.id | replace: '-', '' }} = items{{ section.id | replace: '-', '' }}.length - 1;\n  \n      function showNext{{ section.id | replace: '-', '' }}() {\n        if (index{{ section.id | replace: '-', '' }} >= 0 && index{{ section.id | replace: '-', '' }} < items{{ section.id | replace: '-', '' }}.length) {\n          var currentItem = items{{ section.id | replace: '-', '' }}[index{{ section.id | replace: '-', '' }}];\n          if (currentItem) {\n            currentItem.classList.add('active');\n            setTimeout(function() {\n              currentItem.classList.remove('active');\n            }, {{ hide_message | times: 1000 }});\n          }\n          index{{ section.id | replace: '-', '' }}--;\n          setTimeout(showNext{{ section.id | replace: '-', '' }}, {{ send_message | times: 1000 }});\n        }\n      }\n  \n      setTimeout(showNext{{ section.id | replace: '-', '' }}, {{ start_popup | times: 1000 }});\n    }\n  \n    function hideNotificationItems{{ section.id | replace: '-', '' }}() {\n      var items{{ section.id | replace: '-', '' }};\n      if (window.innerWidth < 1024) {\n        items{{ section.id | replace: '-', '' }} = document.querySelectorAll('.notifications-item-{{ section.id }}:not(.notifications-item-hide-mobile-{{ section.id }})');\n      } else {\n        items{{ section.id | replace: '-', '' }} = document.querySelectorAll('.notifications-item-{{ section.id }}');\n      }\n      var index{{ section.id | replace: '-', '' }} = items{{ section.id | replace: '-', '' }}.length - 1;\n  \n      function hideNext{{ section.id | replace: '-', '' }}() {\n        if (index{{ section.id | replace: '-', '' }} >= 0 && index{{ section.id | replace: '-', '' }} < items{{ section.id | replace: '-', '' }}.length) {\n          var currentItem = items{{ section.id | replace: '-', '' }}[index{{ section.id | replace: '-', '' }}];\n          if (currentItem) {\n            setTimeout(function() {\n              currentItem.classList.remove('active');\n            }, {{ hide_message | times: 1000 }});\n          }\n          index{{ section.id | replace: '-', '' }}--;\n          setTimeout(hideNext{{ section.id | replace: '-', '' }}, {{ send_message | times: 1000 }});\n        } else {\n          {% if loop_messages %}\n            setTimeout(function() {\n              showNotificationItems{{ section.id | replace: '-', '' }}();\n              hideNotificationItems{{ section.id | replace: '-', '' }}();\n            }, {{ start_popup | times: 2000 }});\n          {% endif %}\n        }\n      }\n  \n      setTimeout(hideNext{{ section.id | replace: '-', '' }}, {{ start_popup | times: 1000 }});\n    }\n  \n    showNotificationItems{{ section.id | replace: '-', '' }}();\n    hideNotificationItems{{ section.id | replace: '-', '' }}();\n  }\n  \n  document.addEventListener(\"DOMContentLoaded\", function() {\n    initPopupNotifications{{ section.id | replace: '-', '' }}();\n  \n    if (Shopify && Shopify.designMode) {\n      document.addEventListener('shopify:section:unload', initPopupNotifications{{ section.id | replace: '-', '' }});\n      document.addEventListener('shopify:section:load', initPopupNotifications{{ section.id | replace: '-', '' }});\n    }\n  });\n</script>",
+  "variables": {
+    "start_popup": {
+      "type": "text",
+      "default": "5",
+      "label": "Start PopUp after (s)",
+      "description": "Start PopUp after (s)"
+    },
+    "send_message": {
+      "type": "text",
+      "default": "12",
+      "label": "Send message every (s)",
+      "description": "Send message every (s)"
+    },
+    "hide_message": {
+      "type": "text",
+      "default": "6",
+      "label": "Hide message after (s)",
+      "description": "Hide message after (s)"
+    },
+    "loop_messages": {
+      "type": "text",
+      "default": "true",
+      "label": "Loop Notifications",
+      "description": "Loop Notifications"
+    },
+    "bar_vertical_position": {
+      "type": "text",
+      "default": "bottom",
+      "label": "Notifications Bar Vertical Position",
+      "description": "Notifications Bar Vertical Position"
+    },
+    "bar_vertical_position_mobile": {
+      "type": "text",
+      "default": "bottom",
+      "label": "Notifications Bar Vertical Position - Mobile",
+      "description": "Notifications Bar Vertical Position - Mobile"
+    },
+    "bar_horizontal_position": {
+      "type": "text",
+      "default": "left",
+      "label": "Notifications Bar Horizontal Position",
+      "description": "Notifications Bar Horizontal Position"
+    },
+    "bar_width": {
+      "type": "text",
+      "default": "350",
+      "label": "Notifications Bar Width - Desktop",
+      "description": "Notifications Bar Width - Desktop"
+    },
+    "bar_vertical_offset": {
+      "type": "text",
+      "default": "20",
+      "label": "Notifications Bar Vertical Offset",
+      "description": "Notifications Bar Vertical Offset"
+    },
+    "bar_vertical_offset_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Notifications Bar Vertical Offset - Mobile",
+      "description": "Notifications Bar Vertical Offset - Mobile"
+    },
+    "bar_horizontal_offset": {
+      "type": "text",
+      "default": "20",
+      "label": "Notifications Bar Horizontal Offset",
+      "description": "Notifications Bar Horizontal Offset"
+    },
+    "bar_horizontal_offset_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Notifications Bar Horizontal Offset - Mobile",
+      "description": "Notifications Bar Horizontal Offset - Mobile"
+    },
+    "bar_space": {
+      "type": "text",
+      "default": "12",
+      "label": "Notifications Bar Space Between Items",
+      "description": "Notifications Bar Space Between Items"
+    },
+    "item_padding_vertical": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Padding Vertical",
+      "description": "Item Padding Vertical"
+    },
+    "item_padding_vertical_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Padding Vertical - Mobile",
+      "description": "Item Padding Vertical - Mobile"
+    },
+    "item_padding_horizontal": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Padding Horizontal",
+      "description": "Item Padding Horizontal"
+    },
+    "item_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Padding Horizontal - Mobile",
+      "description": "Item Padding Horizontal - Mobile"
+    },
+    "item_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Roundness",
+      "description": "Item Roundness"
+    },
+    "item_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Item Border Thickness",
+      "description": "Item Border Thickness"
+    },
+    "item_gap": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Gap",
+      "description": "Item Gap"
+    },
+    "item_shadow": {
+      "type": "text",
+      "default": "true",
+      "label": "Use Item Shadow",
+      "description": "Use Item Shadow"
+    },
+    "item_blur": {
+      "type": "text",
+      "default": "true",
+      "label": "Use Item Blur",
+      "description": "Use Item Blur"
+    },
+    "item_animation": {
+      "type": "text",
+      "default": "true",
+      "label": "Use Item Animation",
+      "description": "Use Item Animation"
+    },
+    "image_size": {
+      "type": "text",
+      "default": "48",
+      "label": "Item Image Size",
+      "description": "Item Image Size"
+    },
+    "image_size_mobile": {
+      "type": "text",
+      "default": "48",
+      "label": "Item Image Size - Mobile",
+      "description": "Item Image Size - Mobile"
+    },
+    "image_radius": {
+      "type": "text",
+      "default": "12",
+      "label": "Item Image Roundness",
+      "description": "Item Image Roundness"
+    },
+    "image_vertical_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Image Vertical Align",
+      "description": "Image Vertical Align"
+    },
+    "image_vertical_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Image Vertical Align - Mobile",
+      "description": "Image Vertical Align - Mobile"
+    },
+    "hide_image": {
+      "type": "text",
+      "default": "",
+      "label": "Hide Item Image",
+      "description": "Hide Item Image"
+    },
+    "stars_icon": {
+      "type": "text",
+      "default": "",
+      "label": "Stars Icon",
+      "description": "Replaces the default stars icon"
+    },
+    "stars_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Stars Size",
+      "description": "Stars Size"
+    },
+    "title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Notification Title Font Family",
+      "description": "Notification Title Font Family"
+    },
+    "title_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Title Size",
+      "description": "Notification Title Size"
+    },
+    "title_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Title Size - Mobile",
+      "description": "Notification Title Size - Mobile"
+    },
+    "title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Notification Title Line Height",
+      "description": "Notification Title Line Height"
+    },
+    "title_mt": {
+      "type": "text",
+      "default": "4",
+      "label": "Notification Title Margin Top",
+      "description": "Notification Title Margin Top"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Notification Text Font Family",
+      "description": "Notification Text Font Family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Text Size",
+      "description": "Notification Text Size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Text Size - Mobile",
+      "description": "Notification Text Size - Mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Notification Text Line Height",
+      "description": "Notification Text Line Height"
+    },
+    "text_mt": {
+      "type": "text",
+      "default": "0",
+      "label": "Notification Text Margin Top",
+      "description": "Notification Text Margin Top"
+    },
+    "date_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use Custom Font",
+      "description": "Use Custom Font"
+    },
+    "date_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Notification Date Font Family",
+      "description": "Notification Date Font Family"
+    },
+    "date_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Date Size",
+      "description": "Notification Date Size"
+    },
+    "date_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Notification Date Size - Mobile",
+      "description": "Notification Date Size - Mobile"
+    },
+    "date_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Notification Date Line Height",
+      "description": "Notification Date Line Height"
+    },
+    "item_bg_color": {
+      "type": "color",
+      "default": "#EBEAE9",
+      "label": "Item Background Color",
+      "description": "Item Background Color"
+    },
+    "item_bg_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Item Background Gradient",
+      "description": "Item Background Gradient"
+    },
+    "item_border_color": {
+      "type": "color",
+      "default": "#DCDCDC",
+      "label": "Item Border Color",
+      "description": "Item Border Color"
+    },
+    "item_shadow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Item Shadow Color",
+      "description": "Item Shadow Color"
+    },
+    "stars_color": {
+      "type": "color",
+      "default": "#EE921E",
+      "label": "Item Stars Color",
+      "description": "Item Stars Color"
+    },
+    "title_color": {
+      "type": "color",
+      "default": "#030712",
+      "label": "Item Title Color",
+      "description": "Item Title Color"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#374151",
+      "label": "Item Text Color",
+      "description": "Item Text Color"
+    },
+    "date_color": {
+      "type": "color",
+      "default": "#4B5563",
+      "label": "Item Date Color",
+      "description": "Item Date Color"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

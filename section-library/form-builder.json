@@ -1,0 +1,180 @@
+{
+  "id": "form-builder",
+  "name": "CUSTOM Contact Form",
+  "description": "Section: CUSTOM Contact Form",
+  "tags": [
+    "form"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- style -%}\n  \n  .section-{{ section.id }}-padding {\n    max-width: {{section.settings.section-width}}rem;\n    margin: 0 auto;\n    padding: 0 1.5rem;\n    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding: 0 5rem;\n      padding-top: {{ section.settings.padding_top }}px;\n      padding-bottom: {{ section.settings.padding_bottom }}px;\n    }\n  }\n\n  .ss-form-field:focus {\n    outline: none;\n    box-shadow: none;\n    /* Add any other properties you want to override */\n  }\n\n  .ss-form-field {\n    border: 1px solid {{section.settings.field_border_color}};\n    outline: none;\n    color: {{section.settings.field_color}};\n    margin: 0;\n    width: 100%;\n    padding:15px 10px;\n    display: block;\n    margin-bottom: 20px;\n    background: #fff;\n    font-size: {{section.settings.font_size_placeholder}}px;\n    line-height:1.3;\n    border-radius: {{section.settings.input_border_radius}}px;\n  } \n\n  @media screen and (min-width: 750px) {\n    .ss-form-field {\n      padding:15px;\n    }\n  }\n  \n\n  .section-{{ section.id }}-padding label {\n    color: {{section.settings.field_title_color}};\n    font-size: {{section.settings.font_size_label}}px;\n    line-height:1;\n    margin-bottom:10px;\n  }\n\n  .ss-form-field::placeholder { /* Most modern browsers support this */\n    font-size: {{section.settings.font_size_placeholder}}px;\n    color: {{section.settings.field_color}}; /* Change to desired color */\n    opacity: 1; /* Firefox requires this to not be 0 */\n  }\n  \n  .ss-form-field::-ms-input-placeholder { /* Internet Explorer 10-11 */\n    font-size: {{section.settings.font_size_placeholder}}px;\n    color: {{section.settings.field_color}};\n  }\n  \n  .ss-form-field::-ms-input-placeholder { /* Microsoft Edge */\n    font-size: {{section.settings.font_size_placeholder}}px;\n    color: {{section.settings.field_color}};\n  }\n\n  .ss-submit-button:hover {\n     color: {{ section.settings.button_color_hover }};\n     background: {{ section.settings.button_background_color_hover }};\n  }\n  \n  .ss-submit-button {\n\n    height: {{ section.settings.button_height }}px;\n    {% if section.settings.button_full_width %}\n      width: 100%;\n    {% else %}\n       width: {{ section.settings.button_width }}px;\n    {% endif %}\n    color: {{ section.settings.button_color }};\n    background: {{ section.settings.button_background_color }};\n    font-size: {{ section.settings.button_font_size | times: 0.85 }}px;\n    border-radius: {{ section.settings.button_border_radius }}px;\n    border: {{ section.settings.button_border_thickness }}px {{ section.settings.button_border_color }} solid;\n    display: inline-block;\n    font-weight: 700;\n    text-decoration: none;\n    cursor: pointer;\n    margin-bottom: 20px;\n    line-height: 1;\n    padding: 0 10px! important;\n    -webkit-appearance: none;\n    \n  }\n\n  .ss-text-area {\n    height: 150px;\n  }\n\n{%- endstyle -%}\n\n\n<div style=\"background-color:{{section.settings.background-color}};\">\n  <div class=\"page-width section-{{ section.id }}-padding\">\n    <div style=\"\">\n          \n      {% if section.settings.title %}\n        <h1 style=\"color:{{ section.settings.header_color }};text-align: {{ section.settings.text_align }};font-size:{{ section.settings.font_size_title }}\">\n          {{section.settings.title}}\n        </h1>\n      {% endif %}\n      \n      {% if section.settings.text %} \n        <div style=\"color:{{ section.settings.header_color }};text-align: {{ section.settings.text_align }};margin-bottom:20px;\">\n          {{ section.settings.text }}\n        </div>\n      {% endif %} \n           \n      {% form 'contact' %}\n      \n        {% comment %}\n        Successful message\n        {% endcomment %}\n        {% if form.posted_successfully? %}\n        <p class=\"note form-success\">\n        {{ section.settings.form_success }}\n        </p>\n        {% endif %}\n        \n        {{ form.errors | default_errors }}\n        \n        \n        <div style=\"display: flex; flex-wrap: wrap;justify-content: space-between;\">\n        \n          {% for block in section.blocks %}\n             <div style=\"width: {% if block.settings.width == 'half' %}49{% else %}100{% endif %}%;\">      \n            {% if block.type == 'text' %}\n            \n            <div>\n            \n              {% if block.settings.type == 'text' %}\n                {% if block.settings.use_label %}\n                  <label for=\"ContactFormName\">\n                  {{ block.settings.title }}{% if block.settings.required and block.settings.title != blank %}*{% endif %}\n                  </label>\n                {% endif %}\n                <input class=\"ss-form-field\" type=\"text\" id=\"ContactFormName\" name=\"contact[{{block.settings.title}}]\" placeholder=\"{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}\" autocapitalize=\"words\" value=\"\"\n                {% if block.settings.required %}required{% endif %}>\n              \n                           \n              {% elsif block.settings.type == 'email' %}\n\n                {% if block.settings.use_label %}\n                  <label for=\"ContactFormEmail\">\n                  {{block.settings.title}}{% if block.settings.required %}*{% endif %}\n                  </label>\n                {% endif %}\n                <input class=\"ss-form-field\" type=\"email\" id=\"ContactFormEmail\" name=\"contact[email]\" placeholder=\"{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}\" autocorrect=\"off\" autocapitalize=\"off\" value=\"\"\n                {% if block.settings.required %}required{% endif %}>\n                           \n              \n              {% elsif block.settings.type == 'tel' %}\n\n                {% if block.settings.use_label %}\n                  <label for=\"ContactFormPhone\">\n                  {{block.settings.title}}{% if block.settings.required %}*{% endif %}\n                  </label>\n                {% endif %}\n                <input class=\"ss-form-field\" type=\"tel\" id=\"ContactFormPhone\" name=\"contact[{{block.settings.title}}]\" placeholder=\"{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}\" pattern=\"[0-9\\-]*\" value=\"\"\n                {% if block.settings.required %}required{% endif %}>\n              \n              \n              {% endif %}      \n            </div>\n            \n            \n            {% elsif block.type == 'textarea' %}\n            \n            <div>\n              {% if block.settings.use_label %}\n                <label for=\"ContactFormMessage\">\n                  {{block.settings.title}}{% if block.settings.required %}*{% endif %}\n                </label>\n              {% endif %}\n              <textarea class=\"ss-form-field ss-text-area\" rows=\"10\" id=\"ContactFormMessage\" name=\"contact[{{block.settings.title}}]\" placeholder=\"{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}\"\n              {% if block.settings.required %}required{% endif %}></textarea>\n            </div>\n            \n            \n            {% elsif block.type == 'dropdown' %}\n            \n              <div>\n                {% assign options = block.settings.dropdown_options | strip | split: ',' %}\n\n                {% if block.settings.use_label %}\n                <label for=\"ContactFormDropdown\">\n                  {{block.settings.title}}{% if block.settings.required %}*{% endif %}\n                </label>\n                {% endif %}\n                <select class=\"ss-form-field\" {% if block.settings.required %}required{% endif %} id=\"ContactFormSelect\" name=\"contact[{{block.settings.title}}]\">\n                \n                {% if block.settings.placeholder %}\n                  <option value = \"\" disabled selected>{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}</option>\n                {% endif %}\n                \n                {% for option in options %}\n                  <option value = \"{{option}}\">{{option}}</option>\n                {% endfor %}\n                </select>              \n              </div>\n            \n            \n            {% elsif block.type == 'message' %}\n                        \n              <div style=\"margin-bottom:20px\">\n                         \n                {{block.settings.message}}\n                \n                <style>\n                p {\n                font-size:{{block.settings.font_size}}px;\n                margin:0;\n                line-height:1.3;\n                }\n                </style>\n              </div>\n            {% endif %}\n            </div>\n          {% endfor %}      \n\n          <div style=\"display:flex;width:100%;{% if section.settings.text_align == \"center\" %}justify-content:center;{% endif %}\">\n          <input type=\"submit\" class=\"ss-submit-button\" \n                 value=\"{% if section.settings.submit_btn_label != blank%}{{ section.settings.submit_btn_label }}{% else %}Send{% endif %}\">\n          </div>\n        </div>\n      {% endform %}\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "title": {
+      "type": "text",
+      "default": "",
+      "label": "Page title",
+      "description": "Page title"
+    },
+    "text": {
+      "type": "textarea",
+      "default": "",
+      "label": "Sub-text",
+      "description": "Sub-text"
+    },
+    "form_success": {
+      "type": "textarea",
+      "default": "",
+      "label": "Form success message",
+      "description": "Form success message"
+    },
+    "input_border_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Input field border radius",
+      "description": "Input field border radius"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "left",
+      "label": "Page title, sub-text & button alignment",
+      "description": "Page title, sub-text & button alignment"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button text color",
+      "description": "Button text color"
+    },
+    "button_background_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button background color",
+      "description": "Button background color"
+    },
+    "button_color_hover": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button text color hover",
+      "description": "Button text color hover"
+    },
+    "button_background_color_hover": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button background color hover",
+      "description": "Button background color hover"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Button text border color",
+      "description": "Button text border color"
+    },
+    "submit_btn_label": {
+      "type": "text",
+      "default": "",
+      "label": "Submit button label",
+      "description": "Submit button label"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "44",
+      "label": "Button height",
+      "description": "Button height"
+    },
+    "button_width": {
+      "type": "text",
+      "default": "200",
+      "label": "Button width",
+      "description": "Button width"
+    },
+    "button_full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Make button full width",
+      "description": "Make button full width"
+    },
+    "button_font_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Button font size",
+      "description": "Button font size"
+    },
+    "button_border_radius": {
+      "type": "text",
+      "default": "2",
+      "label": "Button radius",
+      "description": "Button radius"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Button border thickness",
+      "description": "Button border thickness"
+    },
+    "font_size_title": {
+      "type": "text",
+      "default": "42",
+      "label": "Title font size",
+      "description": "Title font size"
+    },
+    "font_size_label": {
+      "type": "text",
+      "default": "16",
+      "label": "Label font size",
+      "description": "Label font size"
+    },
+    "font_size_placeholder": {
+      "type": "text",
+      "default": "16",
+      "label": "Placeholder font size",
+      "description": "Placeholder font size"
+    },
+    "header_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Header",
+      "description": "Header"
+    },
+    "field_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Placeholder",
+      "description": "Placeholder"
+    },
+    "field_title_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Field title",
+      "description": "Field title"
+    },
+    "field_border_color": {
+      "type": "color",
+      "default": "#d5d5d5",
+      "label": "Field border",
+      "description": "Field border"
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "section-width": {
+      "type": "text",
+      "default": "75",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

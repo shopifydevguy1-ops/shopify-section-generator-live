@@ -1,0 +1,822 @@
+{
+  "id": "custom-header-10",
+  "name": "CUSTOM Header #10",
+  "description": "Section: CUSTOM Header #10",
+  "tags": [
+    "header"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_color_mobile = section.settings.border_color_mobile\n  assign border_thickness = section.settings.border_thickness\n  assign border_bottom = section.settings.border_bottom\n  assign margin_top = section.settings.margin_top\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign lazy = section.settings.lazy\n  assign section_radius = section.settings.section_radius\n\n  assign announcement_bar_selector = section.settings.announcement_bar_selector\n\n  assign show_type = section.settings.show_type\n\n  assign transparent_bg = section.settings.transparent_bg\n\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\n  assign layout_gap = section.settings.layout_gap\n\n  assign menu = section.settings.menu\n  assign mobile_menu_divider_color = section.settings.mobile_menu_divider_color\n\n  assign submenu_gap = section.settings.submenu_gap\n  assign submenu_link_hover_color = section.settings.submenu_link_hover_color\n  assign submenu_link_color = section.settings.submenu_link_color\n\n  assign list_gap_mobile = section.settings.list_gap_mobile\n  assign list_gap = section.settings.list_gap\n\n  assign link_size = section.settings.link_size\n  assign link_size_mobile = section.settings.link_size_mobile\n  assign link_color = section.settings.link_color\n  assign link_hover_color = section.settings.link_hover_color\n  assign link_hero_color = section.settings.link_hero_color\n  assign link_hover_hero_color = section.settings.link_hover_hero_color\n  assign link_custom = section.settings.link_custom\n  assign link_font = section.settings.link_font\n  assign link_height = section.settings.link_height\n\n  assign submenu_item_align = section.settings.submenu_item_align\n  \n  assign submenu_item_horizontal_align = \"\"\n  if submenu_item_align == \"center\"\n    assign submenu_item_horizontal_align = \"center\"\n  elsif submenu_item_align == \"right\"\n    assign submenu_item_horizontal_align = \"end\"\n  else\n    assign submenu_item_horizontal_align = \"start\"\n  endif\n  \n  assign submenu_button = section.settings.submenu_button\n  assign submenu_button_size = section.settings.submenu_button_size\n  assign submenu_button_size_mobile = section.settings.submenu_button_size_mobile\n  assign submenu_button_color = section.settings.submenu_button_color\n  assign submenu_button_hover_color = section.settings.submenu_button_hover_color\n  assign submenu_button_custom = section.settings.submenu_button_custom\n  assign submenu_button_font = section.settings.submenu_button_font\n  assign submenu_button_height = section.settings.submenu_button_height\n  assign submenu_button_padding_vertical = section.settings.submenu_button_padding_vertical\n  assign submenu_button_padding_horizontal = section.settings.submenu_button_padding_horizontal\n  assign submenu_button_padding_vertical_mobile = section.settings.submenu_button_padding_vertical_mobile\n  assign submenu_button_padding_horizontal_mobile = section.settings.submenu_button_padding_horizontal_mobile\n  assign submenu_button_radius = section.settings.submenu_button_radius\n  assign submenu_button_border_thickness = section.settings.submenu_button_border_thickness\n  assign submenu_button_border_color = section.settings.submenu_button_border_color\n  assign submenu_button_border_hover_color = section.settings.submenu_button_border_hover_color\n  assign submenu_button_bg_color = section.settings.submenu_button_bg_color\n  assign submenu_button_bg_hover_color = section.settings.submenu_button_bg_hover_color\n  assign submenu_button_style = section.settings.submenu_button_style\n  assign submenu_button_mt = section.settings.submenu_button_mt\n  assign submenu_button_mt_mobile = section.settings.submenu_button_mt_mobile\n\n  assign menu_icon_size_mobile = section.settings.menu_icon_size_mobile\n\n  assign title_size = section.settings.title_size\n  assign title_color = section.settings.title_color\n  assign title_custom = section.settings.title_custom\n  assign title_font = section.settings.title_font\n  assign title_height = section.settings.title_height\n  assign title_mt = section.settings.title_mt\n  assign title_align = section.settings.title_align\n\n  assign product_image_border_thickness = section.settings.product_image_border_thickness\n  assign product_image_border_color = section.settings.product_image_border_color\n  assign product_image_ratio = section.settings.product_image_ratio\n  assign product_image_radius = section.settings.product_image_radius\n\n  assign content_align = section.settings.content_align\n  \n  assign content_horizontal_align = \"\"\n  if content_align == \"center\"\n    assign content_horizontal_align = \"center\"\n  elsif content_align == \"right\"\n    assign content_horizontal_align = \"end\"\n  else\n    assign content_horizontal_align = \"start\"\n  endif\n\n  assign product_title_size = section.settings.product_title_size\n  assign product_title_color = section.settings.product_title_color\n  assign product_title_custom = section.settings.product_title_custom\n  assign product_title_font = section.settings.product_title_font\n  assign product_title_height = section.settings.product_title_height\n  assign product_title_mt = section.settings.product_title_mt\n\n  assign price_size = section.settings.price_size\n  assign price_color = section.settings.price_color\n  assign price_original_color = section.settings.price_original_color\n  assign price_custom = section.settings.price_custom\n  assign price_font = section.settings.price_font\n  assign price_height = section.settings.price_height\n  assign price_compare = section.settings.price_compare\n  assign price_mt = section.settings.price_mt\n    \n  assign button = section.settings.button\n  assign button_size = section.settings.button_size\n  assign button_size_mobile = section.settings.button_size_mobile\n  assign button_color = section.settings.button_color\n  assign button_hover_color = section.settings.button_hover_color\n  assign button_custom = section.settings.button_custom\n  assign button_font = section.settings.button_font\n  assign button_height = section.settings.button_height\n  assign button_padding_vertical = section.settings.button_padding_vertical\n  assign button_padding_horizontal = section.settings.button_padding_horizontal\n  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile\n  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile\n  assign button_radius = section.settings.button_radius\n  assign button_border_thickness = section.settings.button_border_thickness\n  assign button_border_color = section.settings.button_border_color\n  assign button_border_hover_color = section.settings.button_border_hover_color\n  assign button_bg_color = section.settings.button_bg_color\n  assign button_bg_hover_color = section.settings.button_bg_hover_color\n  assign button_style = section.settings.button_style\n  assign button_mt = section.settings.button_mt\n\n  assign logo = section.settings.logo\n  assign second_logo = section.settings.second_logo\n  assign logo_mobile = section.settings.logo_mobile\n  assign second_logo_mobile = section.settings.second_logo_mobile\n  assign logo_width = section.settings.logo_width\n  assign logo_width_mobile = section.settings.logo_width_mobile\n\n  assign name_size = section.settings.name_size\n  assign name_size_mobile = section.settings.name_size_mobile\n  assign name_color = section.settings.name_color\n  assign name_hover_color = section.settings.name_hover_color\n  assign name_hero_color = section.settings.name_hero_color\n  assign name_hover_hero_color = section.settings.name_hover_hero_color\n  assign name_custom = section.settings.name_custom\n  assign name_font = section.settings.name_font\n  assign name_height = section.settings.name_height\n\n  assign right_gap_mobile = section.settings.right_gap_mobile\n  assign right_gap = section.settings.right_gap\n\n  assign right_link_size = section.settings.right_link_size\n  assign right_link_color = section.settings.right_link_color\n  assign right_link_hover_color = section.settings.right_link_hover_color\n  assign right_link_hero_color = section.settings.right_link_hero_color\n  assign right_link_hover_hero_color = section.settings.right_link_hover_hero_color\n  assign right_link_custom = section.settings.right_link_custom\n  assign right_link_font = section.settings.right_link_font\n  assign right_link_height = section.settings.right_link_height\n\n  assign icon_size_mobile = section.settings.icon_size_mobile\n  assign icon_size = section.settings.icon_size  \n\n  assign use_search = section.settings.use_search\n  assign search_text  = section.settings.search_text\n  assign search_icon_desktop  = section.settings.search_icon_desktop\n  assign search_menu_mobile = section.settings.search_menu_mobile\n\n  assign use_account = section.settings.use_account\n  assign account_text  = section.settings.account_text\n  assign account_icon_desktop  = section.settings.account_icon_desktop\n  assign account_menu_mobile = section.settings.account_menu_mobile\n\n  assign cart_text  = section.settings.cart_text\n  assign cart_icon_desktop  = section.settings.cart_icon_desktop\n\n  assign mobile_menu_button = section.settings.mobile_menu_button\n  assign mobile_menu_button_url = section.settings.mobile_menu_button_url\n-%}\n\n{%- style -%}\n\n  {{ link_font | font_face: font_display: 'swap' }}\n  {{ button_font | font_face: font_display: 'swap' }}\n  {{ name_font | font_face: font_display: 'swap' }}\n  {{ right_link_font | font_face: font_display: 'swap' }}\n  {{ product_title_font | font_face: font_display: 'swap' }}\n  {{ button_font | font_face: font_display: 'swap' }}\n  {{ submenu_button_font | font_face: font_display: 'swap' }}\n  \n  \n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color_mobile }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n  \n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    position: relative;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n  \n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}.transparent {\n      background-color: transparent !important;\n      background-image: none !important;\n      position: absolute;\n      width: calc(100% - {{margin_horizontal_mobile | times: 2 }}rem);\n      top: 0;\n      left: 0;\n      z-index: 999;\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n    .header-{{ section.id }}.transparent {\n      background-color: transparent !important;\n      background-image: none !important;\n      position: absolute;\n      width: calc(100% - {{margin_horizontal_mobile | times: 2 }}rem);\n      top: 0;\n      left: 0;\n      z-index: 999;\n    }\n    {% endif %}\n  {% endif %}\n\n  .header-{{ section.id }}.onscroll {\n    background-color:{{ background_color }} !important;\n    background-image: {{ background_gradient }} !important;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: calc(100% - {{margin_horizontal_mobile | times: 2 }}rem);\n    z-index: 999;\n  }\n\n  .header-{{ section.id }}.scroll {\n    transform: translateY(-150%);\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.scroll.active {\n    transform: translateY(0);\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.open {\n    background-color:{{ background_color }} !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-body-{{ section.id }} {\n    display: grid;\n    align-items: center;\n    gap: {{ layout_gap_mobile }}px;\n    grid-template-columns: 1fr {{ logo_width_mobile }}px 1fr;\n  }\n\n  .header-logo-{{ section.id }} {\n    text-align: center;\n  }\n\n  .header-submenu-menu-{{ section.id }} {\n    padding: 25px 0px;\n    position: relative;\n    flex: 1 1 auto;\n    display: flex;\n    flex-direction: column;\n    overflow-y: scroll;\n    scrollbar-width: none;\n    justify-content: space-between;\n  }\n  \n  .header-menu-list-{{ section.id }} {\n    padding: 0px;\n    margin: 0px;\n    display: none;\n    align-items: center;\n    gap: 0px;\n    flex-wrap: wrap;\n    list-style: none;\n  }\n\n  .header-menu-mobile-{{ section.id }} .header-menu-list-{{ section.id }} {\n    display: flex;\n    flex-direction: column;\n    align-items: start;\n  }\n\n  .header-menu-item-{{ section.id }} {\n    line-height: 100%;\n    cursor: pointer;\n    box-sizing: border-box;\n    padding-bottom: 3px;\n  }\n\n  .header-menu-sublinks-{{ section.id }} {\n    padding: 0;\n    padding-top: 20px;\n    display: flex;\n    flex-direction: column;\n    list-style: none;\n    gap: {{ list_gap_mobile }}px;\n  }\n\n  .header-menu-sublinks-{{ section.id }} .header-menu-link-{{ section.id }} {\n    margin: 0;\n    font-size: {{ link_size_mobile | minus: 2 }}px;\n    color: {{ link_color }};\n    line-height: {{ link_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    transition: all 0.25s ease 0s;\n    position: relative;\n    font-weight: 700;\n  }\n\n  .header-menu-sublinks-{{ section.id }} .header-menu-sublinks-{{ section.id }} .header-menu-link-{{ section.id }} {\n    font-size: {{ link_size_mobile | minus: 4 }}px;\n    font-weight: 400;\n  }\n\n  .header-menu-sublinks-{{ section.id }} svg {\n    width: 16px;\n  }\n\n  .header-menu-link-wrapper-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n  }\n  \n  .header-menu-link-wrapper-{{ section.id }} svg {\n    width: 16px;\n  }\n\n  .header-menu-link-{{ section.id }} {\n    margin: 0;\n    font-size: {{ link_size_mobile }}px;\n    color: {{ link_color }};\n    line-height: {{ link_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    transition: all 0.25s ease 0s;\n    position: relative;\n    font-weight: 700;\n    z-index: 3;\n  }\n\n  .header-menu-link-{{ section.id }}:after {\n    content: '';\n    position: absolute;\n    bottom: -2px;\n    left: 0;\n    width: 100%;\n    height: 1px;\n    background-color: {{ link_hover_color }};\n    opacity: 0;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-list-{{ section.id }} {\n    display: flex;\n    flex-direction: column !important;\n    gap: {{ submenu_gap }}px;\n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-menu-link-{{ section.id }} {\n      color: {{ link_hero_color }};\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-menu-link-{{ section.id }} {\n      color: {{ link_hero_color }};\n    }\n    {% endif %}\n  {% endif %}\n\n  .header-{{ section.id }}.open.transparent .header-menu-link-{{ section.id }} {\n    color: {{ link_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-menu-link-open-{{ section.id }} path {\n    stroke: {{ link_color }};\n  }\n\n  .header-submenu-{{ section.id }} .header-menu-link-{{ section.id }} {\n    color: {{ submenu_link_color }} !important;\n    font-weight: 400;\n  }\n\n  .header-menu-item-parent-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    max-width: fit-content;\n    flex-basis: 0;\n  }\n\n  .header-menu-item-icon-{{ section.id }} {\n    display: block;\n    flex: 0 0 8px;\n    width: 8px;\n    transition: all 0.25s ease 0s;\n    color: {{ link_color }};\n  }\n\n  .header-menu-item-icon-{{ section.id }} svg path {\n    stroke: {{ link_color }}\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent.open .header-menu-item-icon-{{ section.id }} svg path {\n    stroke: {{ link_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-menu-item-icon-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .header-submenu-{{ section.id }} {\n    position: absolute;\n    z-index: 3;\n    top: calc(100% - {{ padding_bottom | times: 2 }}px);\n    left: 0;\n    width: 100%;\n    opacity: 0;\n    pointer-events: none;\n    transition: all 0.25s ease 0s;\n    list-style: none;\n    margin: 0px;\n  }\n\n  .header-submenu-{{ section.id }}::after {\n    content: \"\";\n    position: absolute;\n    left: 0;\n    top: calc({{ padding_bottom | times: 2 }}px - {{ border_thickness }}px);\n    height: {{ border_thickness }}px;\n    background-color: {{ border_color }};\n    width: 100%;\n  }\n\n  .header-submenu-bg-{{ section.id }} {\n    display: block !important;\n    height: {{ padding_bottom }}px;\n    pointer-events: none;\n  }\n\n  .header-submenu-inner-{{ section.id }} {\n    background-color: {{ background_color }};\n    background-image: {{ background_gradient }};\n    border-bottom: {{ border_thickness }}px solid {{ border_color }};\n  }\n\n  .header-submenu-{{ section.id }} .section-{{ section.id }}-settings {\n    margin-top: {{ padding_top }}px;\n    padding-top: 0px;\n    padding-right: 0;\n    padding-bottom: 0;\n    overflow: hidden;  \n    display: flex;\n  }\n\n  .header-menu-item-parent-{{ section.id }}.active .header-submenu-{{ section.id }} {\n    opacity: 1;\n    pointer-events: all;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-menu-burger-{{ section.id }} {\n    display: block;\n    width: {{ menu_icon_size_mobile }}px;\n    height: 16px;\n    position: relative;\n    z-index: 3;\n    transition: all 0.25s ease 0s;\n    cursor: pointer;\n    background-color: transparent;\n    border: 0px;\n    box-shadow: none;\n  }\n\n  .header-menu-burger-icon-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 0;\n    margin-top: -1px;\n    width: 100%;\n    height: 1px;\n    background: {{ link_color }};\n    transition: transform .25s ease; \n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }} {\n      background: {{ link_hero_color }};\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }} {\n        background: {{ link_hero_color }};\n      }\n    {% endif %}\n  {% endif %}\n\n  .header-{{ section.id }}.open .header-menu-burger-icon-{{ section.id }} {\n    transform: rotate(45deg);\n    transition-delay: .25s;\n    background: {{ link_color }} !important;\n  }\n\n  .header-menu-burger-icon-{{ section.id }}::before,\n  .header-menu-burger-icon-{{ section.id }}::after{\n    content: \"\";\n    display: block;\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    background-color: inherit;\n    background: {{ link_color }};\n  }\n\n  .header-menu-burger-icon-{{ section.id }}::before {\n    top: -7px;\n    transition: top .25s ease .27s, opacity .25s ease, width .25s ease;\n  }\n\n  .header-{{ section.id }}.open .header-menu-burger-icon-{{ section.id }}::before {\n    top: 0;\n    opacity: 0;\n    width: 100%;\n    transition: top .2s ease, opacity .2s ease .22s, width .1s ease;\n    background: {{ link_color }};\n  }\n\n  .header-menu-burger-icon-{{ section.id }}::after {\n    bottom: -7px;\n    transition: bottom .25s ease .27s, transform .25s ease, width .25s ease;\n  }\n\n  .header-{{ section.id }}.open .header-menu-burger-icon-{{ section.id }}::after {\n    bottom: 0;\n    transform: rotate(-90deg);\n    width: 100%;\n    transition: bottom .2s ease, transform .2s ease .22s, width .1s ease;\n    background: {{ link_color }} !important;\n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }}::before,\n    .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }}::after{\n      background: {{ link_hero_color }};\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }}::before,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-burger-icon-{{ section.id }}::after{\n        background: {{ link_hero_color }};\n      }\n    {% endif %}\n  {% endif %}\n\n  .header-logo-{{ section.id }} {\n    width: 100%;\n    text-align: center;\n    position: relative;\n    z-index: 3;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.open .header-logo-{{ section.id }} {\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-logo-image-{{ section.id }} {\n    max-width: {{ logo_width_mobile }}px;\n  }\n\n  .header-logo-image-{{ section.id }} img,\n  .header-logo-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .header-logo-image-desktop-{{ section.id }} {\n    display: none;\n  }\n\n  .header-logo-text-{{ section.id }} {\n    margin: 0;\n    font-size: {{ name_size_mobile }}px;\n    color: {{ name_color }};\n    line-height: {{ name_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    transition: all 0.25s ease 0s;\n  }\n  {% if transparent_bg == \"all\" %}\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-text-{{ section.id }} {\n    color: {{ name_hero_color }};\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-first-{{ section.id }} {\n    display: none !important;\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-second-{{ section.id }} {\n    display: block !important;\n  }\n{% elsif transparent_bg == \"home\" and template.name == \"index\" %}\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-text-{{ section.id }} {\n    color: {{ name_hero_color }};\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-first-{{ section.id }} {\n    display: none !important;\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent .header-logo-second-{{ section.id }} {\n    display: block !important;\n  }\n{% endif %}\n\n.header-{{ section.id }}.open.transparent .header-logo-text-{{ section.id }} {\n  color: {{ name_color }};\n  transition: all 0.25s ease 0s;\n}\n\n.header-{{ section.id }} .header-logo-first-{{ section.id }} {\n  display: block !important;\n}\n\n.header-{{ section.id }} .header-logo-second-{{ section.id }} {\n  display: none !important;\n}\n\n.header-{{ section.id }}.open.transparent .header-logo-first-{{ section.id }} {\n  display: block !important;\n}\n\n.header-{{ section.id }}.open.transparent .header-logo-second-{{ section.id }} {\n  display: none !important;\n}\n\n  .header-right-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: end;\n    gap: {{ right_gap_mobile }}px;\n    flex-wrap: nowrap;\n    position: relative;\n    z-index: 3;\n    order: 3;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.open .header-right-{{ section.id }} {\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-search-{{ section.id }},\n  .header-account-{{ section.id }},\n  .header-cart-{{ section.id }}{\n    position: relative;\n  }\n\n  .header-search-text-{{ section.id }},\n  .header-account-text-{{ section.id }},\n  .header-cart-text-{{ section.id }}{\n    display: none;\n    margin: 0;\n    color: {{ right_link_color }};\n    line-height: {{ right_link_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    transition: all 0.25s cubic-bezier(.76,0,.24,1);\n  }\n\n  .header-search-{{ section.id }}:after,\n  .header-account-{{ section.id }}:after,\n  .header-cart-{{ section.id }}:after {\n    content: '';\n    position: absolute;\n    bottom: -2px;\n    left: 0;\n    width: 100%;\n    height: 1px;\n    background-color: {{ link_hover_color }};\n    opacity: 0;\n    transition: all 0.25s ease 0s;\n  }  \n\n  .cart-count-bubble {\n    position: initial !important;\n  }\n\n  .header-cart-{{ section.id }} .cart-count-bubble span {\n    margin: 0;  \n    font-size: {{ right_link_size }}px;\n    color: {{ right_link_color }};\n    line-height: {{ right_link_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n    font-weight: 400;\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }},\n    .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }},\n    .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }} {\n      color: {{ right_link_hero_color }};\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }},\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }},\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }} {\n        color: {{ right_link_hero_color }};\n      }\n    {% endif %}\n  {% endif %}\n\n  .header-{{ section.id }}.open.transparent .header-search-text-{{ section.id }},\n  .header-{{ section.id }}.open.transparent .header-account-text-{{ section.id }},\n  .header-{{ section.id }}.open.transparent .header-cart-text-{{ section.id }} {\n    color: {{ right_link_color }};\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-cart-{{ section.id }} .cart-count-bubble span{\n      color: {{ right_link_hero_color }};\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-{{ section.id }} .cart-count-bubble span{\n        color: {{ right_link_hero_color }};\n      }\n    {% endif %}\n  {% endif %}\n\n  .header-{{ section.id }}.open.transparent .header-cart-{{ section.id }} .cart-count-bubble span{\n    color: {{ right_link_color }};\n  }\n\n  \n  .header-{{ section.id }} .header-search-{{ section.id }}:after,\n  .header-{{ section.id }} .header-account-{{ section.id }}:after,\n  .header-{{ section.id }} .header-cart-{{ section.id }}:after {\n    content: '';\n    position: absolute;\n    bottom: -2px;\n    left: 0;\n    width: 100%;\n    height: 1px;\n    background-color: {{ right_link_hover_hero_color }};\n    opacity: 0;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-{{ section.id }}.onscroll .header-search-{{ section.id }}:after,\n  .header-{{ section.id }}.onscroll .header-account-{{ section.id }}:after,\n  .header-{{ section.id }}.onscroll .header-cart-{{ section.id }}:after {\n    background-color: {{ right_link_hover_color }};\n  }\n\n  .header-search-icon-{{ section.id }},\n  .header-account-icon-{{ section.id }},\n  .header-cart-icon-{{ section.id }} {\n    display: block;\n    width: {{ icon_size_mobile }}px;\n  }\n\n  .header-search-icon-{{ section.id }} svg,\n  .header-account-icon-{{ section.id }} svg,\n  .header-cart-icon-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .header-search-icon-{{ section.id }} svg path,\n  .header-account-icon-{{ section.id }} svg path {\n    stroke: {{ right_link_color }};\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n\n  .header-cart-icon-{{ section.id }} svg path {\n    stroke: {{ right_link_color }};\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n\n  {% if transparent_bg == \"all\" %}\n    .header-{{ section.id }}:not(.onscroll).transparent .header-search-icon-{{ section.id }} svg path,\n    .header-{{ section.id }}:not(.onscroll).transparent .header-account-icon-{{ section.id }} svg path {\n      stroke: {{ right_link_hero_color }};\n    }\n\n    .header-{{ section.id }}:not(.onscroll).transparent .header-cart-icon-{{ section.id }} svg path {\n      stroke: {{ right_link_hero_color }}\n    }\n  {% elsif transparent_bg == \"home\"  %}\n    {% if template.name == \"index\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-icon-{{ section.id }} svg path,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-icon-{{ section.id }} svg path {\n        stroke: {{ right_link_hero_color }};\n      }\n\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-icon-{{ section.id }} svg path {\n        stroke: {{ right_link_hero_color }}\n      }\n    {% endif %}\n  {% endif %}\n  \n  .header-{{ section.id }}:not(.onscroll).transparent.open .header-search-icon-{{ section.id }} svg path,\n  .header-{{ section.id }}:not(.onscroll).transparent.open .header-account-icon-{{ section.id }} svg path {\n    stroke: {{ right_link_color }};\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n\n  .header-{{ section.id }}:not(.onscroll).transparent.open .header-cart-icon-{{ section.id }} svg path{\n    stroke: {{ right_link_color }};\n    transition: all .25s cubic-bezier(.76,0,.24,1);\n  }\n  \n  .header-cart-{{ section.id }},\n  .header-account-{{ section.id }} {\n    text-decoration: none;\n  }\n  \n  .header-search-{{ section.id }} {\n    padding: 0px;\n    margin: 0px;\n    background-color: transparent;\n    border: 0px;\n    box-shadow: none;\n    cursor: pointer;\n    text-decoration: none;\n  }\n\n  .header-cart-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    position: relative;\n  }\n\n  .header-cart-{{ section.id }} .cart-count-bubble {\n    padding: 0px;\n    background-color: transparent;\n    border: 0px;\n    margin: 0px;\n    width: fit-content;\n    height: fit-content;\n  }\n\n  .header-menu-mobile-{{ section.id }} {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    width: 100%;\n    height: 100dvh;\n    overflow-y: auto;\n    opacity: 0;\n    background-color: rgba(0,0,0,0.5);\n    pointer-events: none;\n    transition: all 0.25s ease 0s;\n    z-index: -1;\n  }\n  \n  .header-{{ section.id }}.open .header-menu-mobile-{{ section.id }} {\n    pointer-events: all;\n    opacity: 1;\n    z-index: 99;\n  }\n\n  .header-menu-mobile-inner-{{ section.id }} {\n    background-color: {{ background_color }};\n    max-width: 100%;\n    height: 100%;\n    padding: 20px;\n    padding-bottom: 100px;\n    position: relative;\n    overflow-x: hidden;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n  }\n\n  .header-mobile-menu-item-parent-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n  }\n\n  .header-menu-mobile-{{ section.id }} .header-menu-item-{{ section.id }} {\n    max-width: 100%;\n    width: 100%;\n    justify-content: space-between;\n    position: static;\n    padding: 16px 0px;\n    border-bottom: 1px solid {{ mobile_menu_divider_color }};\n  }\n\n  .header-menu-mobile-{{ section.id }} .header-menu-item-{{ section.id }}:first-child {\n    border-top: 1px solid {{ mobile_menu_divider_color }};\n  }\n\n  .header-menu-mobile-{{ section.id }} .header-menu-item-icon-{{ section.id }} {\n    flex: 0 0 18px;\n    width: 18px;\n  }\n\n  .header-mobile-submenu-list-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ list_gap_mobile }}px;\n    display: flex;\n    flex-direction: column;\n    gap: {{ list_gap_mobile }}px;\n    padding: 0px;\n    list-style: none;\n  }\n\n  .header-logo-desktop-{{ section.id }} {\n    display: none;\n  }\n\n  .header-menu-card-{{ section.id }} {\n    display: block;\n    text-decoration: none;\n  }\n\n  .header-menu-card-image-{{ section.id }} {\n    border: {{ product_image_border_thickness }}px solid {{ product_image_border_color }};\n    border-radius: {{ product_image_radius }}px;\n    overflow: hidden;\n   }\n\n  .header-menu-card-image-{{ section.id }} img,\n  .header-menu-card-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-menu-card-image-{{ section.id }} svg {\n    background-color: #AEAEAE;\n  }\n\n  .header-right-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .header-right-button-inner-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n  \n  {% if transparent_bg == \"all\" %}   \n    .header-{{ section.id }}.onscroll .header-right-button-inner-{{ section.id }} svg path {\n      fill: {{ button_color }};\n      transition: all 0.25s ease 0s;\n    }\n  {% elsif transparent_bg == \"home\" %}\n    {% if template.name == \"index\" %}    \n      .header-{{ section.id }}.onscroll .header-right-button-inner-{{ section.id }} svg path {\n        fill: {{ button_color }};\n        transition: all 0.25s ease 0s;\n      }\n    {% endif %}\n  {% endif %}\n\n  .header-right-button-inner-{{ section.id }} svg path {\n    fill: {{ button_over_hero_color }};\n    transition: all 0.25s ease 0s;\n  }\n    \n  .header-right-button-inner-{{ section.id }}:hover svg path {\n    fill: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-product-{{ section.id }} {\n    display: block;\n    position: relative;\n    overflow: hidden;\n    text-decoration: none;\n    padding: 25px;\n    flex: 0 1 350px;\n  }\n\n  .header-submenu-product-image-{{ section.id }} {\n    position: relative;\n    display: block;\n    z-index: 1;\n  }\n\n  .header-submenu-product-image-{{ section.id }} {\n    border: {{ product_image_border_thickness }}px solid {{ product_image_border_color }};\n    border-radius: {{ product_image_radius }}px;\n    overflow: hidden;\n  }\n\n  .header-submenu-product-image-{{ section.id }} img,\n  .header-submenu-product-image-{{ section.id }} svg {  \n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-product-title-{{ section.id }} {\n    margin: 0px;\n    margin-top: {{ product_title_mt }}px;\n    text-align: {{ content_align }};\n    font-size: {{ product_title_size }}px;\n    color: {{ product_title_color }};\n    line-height: {{ product_title_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n\n  .header-submenu-product-price-{{ section.id }} {\n    margin-top: {{ price_mt }}px;\n    display: flex;\n    align-items: center;\n    justify-content: {{ content_horizontal_align }};\n    gap: 5px;\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-product-price-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ price_size }}px;\n    color: {{ price_color }};\n    line-height: {{ price_height }}%;\n    text-transform: unset;\n    font-style: normal;\n  }\n\n  .header-submenu-product-compare-price-{{ section.id }} {\n    color: {{ price_original_color }};\n    text-decoration: line-through !important;\n  }\n\n  .header-submenu-product-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    width: 100%;\n    margin: 0;\n    margin-top: 16px;\n    font-size: {{ button_size_mobile }}px;\n    color: {{ button_color }};\n    line-height: {{ button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;\n    border-radius: {{ button_radius }}px;\n    transition: all 0.25s ease 0s;\n    background-color: transparent;\n    border: 0px;\n    cursor: pointer;\n    font-weight: 700;\n  }\n\n  .header-submenu-product-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .header-submenu-product-button-{{ section.id }}:hover {\n    color: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-product-button-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n\n  .header-submenu-product-button-{{ section.id }} svg path {\n    fill: {{ button_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-product-button-{{ section.id }}:hover svg path {\n    fill: {{ button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-menu-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    width: 100%;\n    margin: 0;\n    margin-top: {{ submenu_button_mt_mobile }}px;\n    font-size: {{ submenu_button_size_mobile }}px;\n    color: {{ submenu_button_color }};\n    line-height: {{ submenu_button_height }}%;\n    text-align: center;\n    text-transform: unset;\n    text-decoration: none;\n    padding: {{ submenu_button_padding_vertical_mobile }}px {{ submenu_button_padding_horizontal_mobile }}px;\n    border-radius: {{ submenu_button_radius }}px;\n    transition: all 0.25s ease 0s;\n    background-color: transparent;\n    border: 0px;\n    cursor: pointer;\n    font-weight: 700;\n  }\n\n  .header-submenu-menu-button-inner-{{ section.id }} {\n    margin: 0px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n  }\n\n  .header-submenu-menu-button-{{ section.id }}:hover {\n    color: {{ submenu_button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-menu-button-{{ section.id }} svg {\n    width: 14px;\n    height: 14px;\n  }\n\n  .header-submenu-menu-button-{{ section.id }} svg path {\n    fill: {{ submenu_button_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-menu-button-{{ section.id }}:hover svg path {\n    fill: {{ submenu_button_hover_color }};\n    transition: all 0.25s ease 0s;\n  }\n\n  .header-submenu-image-{{ section.id }} {\n    width: 100%;\n    flex: 0 1 50%;\n    aspect-ratio: 12/5;\n  }\n\n  .header-submenu-image-{{ section.id }} img,\n  .header-submenu-image-{{ section.id }} svg {\n    display: block;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n  }\n\n  .header-submenu-image-{{ section.id }} svg {\n    background-color: #AFAFAF;\n  }\n  \n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n      border-bottom: 0;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .header-{{ section.id }}.transparent {\n      width: calc(100% - {{ margin_horizontal | times: 2 }}rem);\n    }\n  \n    .header-{{ section.id }}.fixed {\n      width: calc(100% - {{ margin_horizontal | times: 2 }}rem);\n    }\n\n    .header-body-{{ section.id }} {\n      display: grid;\n      gap: {{ layout_gap }}px;\n      grid-template-columns: 1fr {{ logo_width }}px 1fr;\n    }\n\n\n    .header-logo-{{ section.id }} {\n      text-align: left;\n    }\n\n    .header-menu-burger-{{ section.id }} {\n      display: none;\n    }\n\n    .header-menu-list-{{ section.id }} {\n      display: flex;\n      gap: {{ list_gap }}px;\n    }\n\n    .header-submenu-menu-{{ section.id }} .header-menu-list-{{ section.id }} {\n       gap: {{ submenu_gap }}px;\n    }\n\n    .header-submenu-menu-{{ section.id }} > .header-menu-list-{{ section.id }} {\n      align-items: start;\n    }\n\n    .header-submenu-menu-{{ section.id }} > .header-menu-list-{{ section.id }} > .header-menu-item-{{ section.id }} {\n      display: flex;\n      flex-direction: column;\n      align-items: {{ submenu_item_horizontal_align }};\n      flex: 1 1 auto;\n    }\n\n    .header-submenu-menu-{{ section.id }} > .header-menu-list-{{ section.id }} > .header-menu-item-{{ section.id }} > .header-menu-list-{{ section.id }} {\n      margin-top: {{ submenu_gap | plus: 4 }}px;\n      align-items: {{ submenu_item_horizontal_align }};\n    }\n\n    .header-submenu-menu-{{ section.id }} > .header-menu-list-{{ section.id }} > .header-menu-item-{{ section.id }} > .header-menu-list-{{ section.id }} > .header-menu-link-{{ section.id }} {\n      text-align: {{ submenu_item_align }};\n    }\n\n    .header-menu-link-{{ section.id }} {\n      font-size: {{ link_size }}px;\n      font-weight: 400;\n      transition: all 0.25s ease;\n    }\n\n    .header-menu-link-title-{{ section.id }} {\n      font-size: {{ link_size | plus: 5 }}px;\n      font-weight: 700 !important;\n    }\n\n    .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }} {\n      transition: all 0.25s ease;\n      color: {{ link_hover_color }};\n    }\n\n    .header-submenu-{{ section.id }} .header-menu-item-parent-{{ section.id }} {\n      max-width: 100%;\n    }\n\n    .header-submenu-{{ section.id }} .header-menu-item-{{ section.id }}::after {\n      display: none;\n    }\n\n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }}{\n        color: {{ link_hover_hero_color }};\n      }\n\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }}:after {\n        background-color: {{ link_hover_hero_color }};\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }}:after {\n          background-color: {{ link_hover_hero_color }};\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }}:after {\n      opacity: 1;\n    }\n\n    .header-menu-item-parent-{{ section.id }}.active > .header-menu-item-icon-{{ section.id }} {\n      transform: rotate(180deg);\n      transition: all 0.25s ease 0s;\n    }\n\n    .header-logo-image-{{ section.id }} {\n      max-width: {{ logo_width }}px;\n    }\n\n    .header-logo-image-desktop-{{ section.id }} {\n      display: block;\n    }\n\n    .header-logo-image-mobile-{{ section.id }} {\n      display: none;\n    }\n\n    .header-logo-text-{{ section.id }} {\n      font-size: {{ name_size }}px;\n      transition: all 0.25s ease;\n    }    \n  \n    .header-submenu-{{ section.id }} .header-menu-item-{{ section.id }}:hover > .header-menu-link-{{ section.id }} {\n      color: {{ submenu_link_hover_color }} !important;\n      text-decoration: none;\n    }\n\n    .header-submenu-{{ section.id }} .header-menu-item-{{ section.id }} > .header-menu-link-{{ section.id }}:after {\n      display: none !important; \n    }\n    \n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-menu-item-{{ section.id }}:hover .header-menu-item-icon-{{ section.id }} {\n        color: {{ link_hover_hero_color }} !important;\n        transition: all 0.25s ease 0s;\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-menu-item-{{ section.id }}:hover .header-menu-item-icon-{{ section.id }} {\n          color: {{ link_hover_hero_color }} !important;\n          transition: all 0.25s ease 0s;\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-search-icon-{{ section.id }}:hover svg path,\n    .header-account-icon-{{ section.id }}:hover svg path {\n      stroke: {{ right_link_hover_color }};\n      transition: all .25s cubic-bezier(.76,0,.24,1);\n    }\n\n    .header-cart-icon-{{ section.id }}:hover svg path {\n      stroke: {{ right_link_hover_color }};\n    }\n\n    .header-logo-text-{{ section.id }}:hover {\n      transition: all 0.25s ease;\n      color: {{ name_hover_color }};\n    }\n\n    .header-submenu-product-button-{{ section.id }} {\n      margin-top: {{ button_mt }}px;\n      font-size: {{ button_size }}px;\n      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;\n    }\n\n    .header-submenu-menu-button-{{ section.id }} {\n      max-width: 300px;\n      margin-top: {{ submenu_button_mt }}px;\n      font-size: {{ submenu_button_size }}px;\n      padding: {{ submenu_button_padding_vertical }}px {{ submenu_button_padding_horizontal }}px;\n    }\n\n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-logo-text-{{ section.id }}:hover {\n        color: {{ name_hover_hero_color }}!important;\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-logo-text-{{ section.id }}:hover {\n          color: {{ name_hover_hero_color }}!important;\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-right-{{ section.id }} {\n      gap: {{ right_gap }}px;\n      order: 3;\n    }\n\n    .header-search-text-{{ section.id }},\n    .header-account-text-{{ section.id }},\n    .header-cart-text-{{ section.id }} {\n      display: inline;\n      font-size: {{ right_link_size }}px;\n      font-weight: 400;\n    }\n\n    .header-search-text-{{ section.id }}:hover,\n    .header-account-text-{{ section.id }}:hover,\n    .header-cart-text-{{ section.id }}:hover {\n      transition: all .25s cubic-bezier(.76,0,.24,1);\n      color: {{ right_link_hover_color }}!important;\n    }\n\n    .header-search-text-{{ section.id }}:after:hover,\n    .header-account-text-{{ section.id }}:after:hover,\n    .header-cart-text-{{ section.id }}:after:hover {\n      transition: all .25s cubic-bezier(.76,0,.24,1);\n      background: {{ right_link_hover_color }}!important;\n    }\n\n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }}:hover,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }}:hover,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }}:hover {\n        color: {{ right_link_hover_hero_color }}!important;\n      }\n\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }}:after:hover,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }}:after:hover,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }}:after:hover {\n        color: {{ right_link_hover_color }}!important;\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }}:hover,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }}:hover,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }}:hover {\n          color: {{ right_link_hover_color }}!important;\n        }\n\n        .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }}:after:hover,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }}:after:hover,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }}:after:hover {\n          color: {{ right_link_hover_color }}!important;\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-search-icon-{{ section.id }},\n    .header-account-icon-{{ section.id }},\n    .header-cart-icon-{{ section.id }} {\n      display: none;\n      width: {{ icon_size }}px;\n    }\n\n    .header-search-icon-{{ section.id }}:hover svg path,\n    .header-account-icon-{{ section.id }}:hover svg path {\n      stroke: {{ right_link_hover_color }};\n      transition: all .25s cubic-bezier(.76,0,.24,1);\n    }\n\n    .header-cart-icon-{{ section.id }}:hover svg path {\n      stroke: {{ right_link_hover_color }};\n    }\n\n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-icon-{{ section.id }}:hover svg path,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-icon-{{ section.id }}:hover svg path {\n        stroke: {{ right_link_hover_hero_color }};\n      }\n\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-icon-{{ section.id }}:hover svg path {\n        stroke: {{ right_link_hover_hero_color }};\n      }\n\n      .header-{{ section.id }}:not(.onscroll).transparent .header-search-{{ section.id }}:hover:after,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-account-{{ section.id }}:hover:after,\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-{{ section.id }}:hover:after {\n        opacity: 1;\n        transition: all 0.25s ease 0s;\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-search-icon-{{ section.id }}:hover svg path,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-account-icon-{{ section.id }}:hover svg path {\n          stroke: {{ right_link_hover_hero_color }};\n        }\n        .header-{{ section.id }}:not(.onscroll).transparent .header-cart-icon-{{ section.id }}:hover svg path {\n          stroke: {{ right_link_hover_hero_color }};\n        }\n\n        .header-{{ section.id }}:not(.onscroll).transparent .header-search-text-{{ section.id }}:hover:after,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-account-text-{{ section.id }}:hover:after,\n        .header-{{ section.id }}:not(.onscroll).transparent .header-cart-text-{{ section.id }}:hover:after {\n          opacity: 1;\n          transition: all 0.25s ease 0s;\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-{{ section.id }}.onscroll .header-search-{{ section.id }}:hover:after,\n    .header-{{ section.id }}.onscroll .header-account-{{ section.id }}:hover:after,\n    .header-{{ section.id }}.onscroll .header-cart-{{ section.id }}:hover:after {\n      opacity: 1;\n      transition: all 0.25s ease 0s;\n    }\n\n    .header-cart-{{ section.id }} .cart-count-bubble span {\n      font-size: {{ right_link_size }}px;\n      position: relative;\n    }\n\n    .header-cart-{{ section.id }} .cart-count-bubble {\n      position: static;\n      transform: translateX(0);\n    }\n\n    .header-cart-{{ section.id }}:hover .cart-count-bubble span {\n      transition: all .25s cubic-bezier(.76,0,.24,1);\n      color: {{ right_link_hover_color }};\n    }\n\n    {% if transparent_bg == \"all\" %}\n      .header-{{ section.id }}:not(.onscroll).transparent .header-cart-{{ section.id }}:hover .cart-count-bubble span {\n        color: {{ right_link_hover_hero_color }};\n      }\n    {% elsif transparent_bg == \"home\"  %}\n      {% if template.name == \"index\" %}\n        .header-{{ section.id }}:not(.onscroll).transparent .header-cart-{{ section.id }}:hover .cart-count-bubble span {\n          color: {{ right_link_hover_hero_color }};\n        }\n      {% endif %}\n    {% endif %}\n\n    .header-menu-mobile-{{ section.id }} {\n      display: none;\n    }\n\n    .header-logo-desktop-{{ section.id }} {\n      display: block;\n    }\n\n    .header-logo-mobile-{{ section.id }} {\n      display: none;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if link_custom %}\n  <style>\n    .header-menu-link-{{ section.id }} {\n      font-family: {{ link_font.family }}, {{ link_font.fallback_families }};\n      font-weight: {{ link_font.weight }};\n      font-style: {{ link_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if name_custom %}\n  <style>\n    .header-logo-text-{{ section.id }} {\n      font-family: {{ name_font.family }}, {{ name_font.fallback_families }};\n      font-weight: {{ name_font.weight }};\n      font-style: {{ name_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if product_title_custom %}\n  <style>\n    .header-submenu-product-title-{{ section.id }} {\n      font-family: {{ product_title_font.family }}, {{ product_title_font.fallback_families }};\n      font-weight: {{ product_title_font.weight }};\n      font-style: {{ product_title_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if price_custom %}\n  <style>\n    .header-submenu-product-regular-price-{{ section.id }} {\n      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};\n      font-weight: {{ price_font.weight }};\n      font-style: {{ price_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if right_link_custom %}\n  <style>\n    .header-search-text-{{ section.id }},\n    .header-account-text-{{ section.id }},\n    .header-cart-text-{{ section.id }},\n    .cart-count-bubble span {\n      font-family: {{ right_link_font.family }}, {{ right_link_font.fallback_families }};\n      font-weight: {{ right_link_font.weight }};\n      font-style: {{ right_link_font.style }};\n    }\n  </style>\n{% endif %}\n\n\n{% if button_custom %}\n  <style>\n    .header-submenu-product-button-{{ section.id }} {\n      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};\n      font-weight: {{ button_font.weight }};\n      font-style: {{ button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if submenu_button_custom %}\n  <style>\n    .header-submenu-menu-button-{{ section.id }} {\n      font-family: {{ submenu_button_font.family }}, {{ submenu_button_font.fallback_families }};\n      font-weight: {{ submenu_button_font.weight }};\n      font-style: {{ submenu_button_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if button_style == \"non_outline\" or button_style == \"non_outline_arrow\" %}\n  <style>\n    .header-submenu-product-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n    }\n\n    .header-submenu-product-button-{{ section.id }}:hover {\n      background-color: {{ button_bg_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"outline\" or button_style == \"outline_arrow\" %}\n  <style>\n    .header-submenu-product-button-{{ section.id }} {\n      background-color: {{ button_bg_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_color }};\n    }\n\n    .header-submenu-product-button-{{ section.id }}:hover {\n      background-color: {{ button_bg_hover_color }};\n      border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};\n    }\n  </style>\n{% elsif button_style == \"link\" %}\n  <style>\n    .header-submenu-product-button-{{ section.id }} {\n      padding: 0px !important;\n    }\n  </style>\n{% endif %}\n\n{% if submenu_button_style == \"non_outline\" or submenu_button_style == \"non_outline_arrow\" %}\n  <style>\n    .header-submenu-menu-button-{{ section.id }} {\n      background-color: {{ submenu_button_bg_color }};\n    }\n\n    .header-submenu-menu-button-{{ section.id }}:hover {\n      background-color: {{ submenu_button_bg_hover_color }};\n    }\n  </style>\n{% elsif submenu_button_style == \"outline\" or submenu_button_style == \"outline_arrow\" %}\n  <style>\n    .header-submenu-menu-button-{{ section.id }} {\n      background-color: {{ submenu_button_bg_color }};\n      border: {{ submenu_button_border_thickness }}px solid {{ submenu_button_border_color }};\n    }\n\n    .header-submenu-menu-button-{{ section.id }}:hover {\n      background-color: {{ submenu_button_bg_hover_color }};\n      border: {{ submenu_button_border_thickness }}px solid {{ submenu_button_border_hover_color }};\n    }\n  </style>\n{% elsif submenu_button_style == \"link\" %}\n  <style>\n    .header-submenu-menu-button-{{ section.id }} {\n      padding: 0px !important;\n    }\n  </style>\n{% endif %}\n\n{% if border_bottom %}\n  <style>\n    .section-{{ section.id }} {\n      border-top: 0px;\n    }\n  </style>\n{% endif %}\n\n{% if search_icon_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .header-search-icon-{{ section.id }} {\n        display: block;\n      }\n\n      .header-search-text-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if account_icon_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .header-account-icon-{{ section.id }} {\n        display: block;\n      }\n\n      .header-account-text-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if cart_icon_desktop %}\n  <style>\n    @media(min-width: 1024px) {\n      .header-cart-icon-{{ section.id }} {\n        display: block;\n      }\n\n      .header-cart-text-{{ section.id }} {\n        display: none;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if product_image_ratio == \"portrait\" %}\n  <style>\n    .header-submenu-product-image-{{ section.id }} {\n     aspect-ratio: 9.6/12; \n    }\n  </style>\n{% elsif product_image_ratio == \"landscape\" %}\n  <style>\n    .header-submenu-product-image-{{ section.id }} {\n     aspect-ratio: 12/9; \n    }\n  </style>\n{% elsif product_image_ratio == \"square\" %}\n  <style>\n    .header-submenu-product-image-{{ section.id }} {\n     aspect-ratio: 12/12; \n    }\n  </style>\n{% else %}\n  <style>\n    .header-submenu-product-image-{{ section.id }} {\n     aspect-ratio: auto; \n    }\n  </style>\n{% endif %}\n\n{% if search_menu_mobile %}\n  <style>\n    .header-right-{{ section.id }} .header-search-{{ section.id }} {\n      display: none;\n    }\n\n    @media(min-width: 1024px) {\n      .header-right-{{ section.id }} .header-search-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if account_menu_mobile %}\n  <style>\n    .header-right-{{ section.id }} .header-account-{{ section.id }} {\n      display: none;\n    }\n\n    @media(min-width: 1024px) {\n      .header-right-{{ section.id }} .header-account-{{ section.id }} {\n        display: flex;\n      }\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  {% if block.settings.product != blank %}\n    <style>\n      .header-submenu-menu-{{ section.id }}:after {\n        content: \"\";\n        position: absolute;\n        right: 0;\n        top: 0px;\n        height: 150%;\n        width: {{ border_thickness }}px;\n        background-color: {{ border_color }};\n      }\n    </style>\n  {% endif %}\n{% endfor %}\n\n{% comment %} FOR FREE THEMES{% endcomment %}\n{%- if settings.cart_type == \"drawer\" -%}\n  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}\n  {{ 'component-cart.css' | asset_url | stylesheet_tag }}\n  {{ 'component-totals.css' | asset_url | stylesheet_tag }}\n  {{ 'component-price.css' | asset_url | stylesheet_tag }}\n  {{ 'component-discounts.css' | asset_url | stylesheet_tag }}\n{%- endif -%}\n{% comment %} FOR FREE THEMES{% endcomment %}\n\n<div class=\"section-{{ section.id }} header-{{ section.id }} {% if transparent_bg != \"none\" %}transparent{% endif %} {% if show_type == \"always\" %}fixed{% elsif show_type == \"scroll_up\" %}scroll active fixed{% else %}top{% endif %}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"header-body-{{ section.id }}\">\n        <div class=\"header-menu-{{ section.id }}\">\n          {% if section.blocks.size > 0 %}\n            <button class=\"header-menu-burger-{{ section.id }}\">\n              <span class=\"header-menu-burger-icon-{{ section.id }}\"></span>\n            </button>\n            <ul class=\"header-menu-list-{{ section.id }}\">\n              {% for block in section.blocks %}\n                <li class=\"header-menu-item-{{ section.id }} header-menu-item-main-{{ section.id }} {% if block.settings.submenu != blank or block.settings.product != blank %}header-menu-item-parent-{{ section.id }}{% endif %}\">\n                  <{% if block.settings.submenu != blank or block.settings.product != blank %}p{% else %}a href=\"{{ block.settings.url }}\"{% endif %} class=\"header-menu-link-{{ section.id }}\">\n                    {{ block.settings.text }}\n                  </{% if block.settings.submenu != blank or block.settings.product != blank %}p{% else %}a{% endif %}>\n                  {% if block.settings.submenu != blank or block.settings.product != blank %}  \n                    <div class=\"header-submenu-{{ section.id }}\">\n                      <div class=\"header-submenu-bg-{{ section.id }}\"></div>\n                      <div class=\"header-submenu-inner-{{ section.id }}\">\n                        <div class=\"section-{{ section.id }}-settings\">\n                          <div class=\"header-submenu-menu-{{ section.id }}\">\n                            {% if block.settings.submenu != blank %}\n                              <ul class=\"header-menu-list-{{ section.id }}\">\n                                {% for link in block.settings.submenu.links %}\n                                  <li class=\"header-menu-item-{{ section.id }} {% if link.links.size > 0 %}header-menu-item-with-submenu-{{ section.id }}{% endif %}\">\n                                    <a href=\"{{ link.url }}\" class=\"header-menu-link-{{ section.id }} header-menu-link-title-{{ section.id }}\">{{ link.title }}</a>\n\n                                    {% if link.links.size > 0 %}\n                                      <ul class=\"header-menu-list-{{ section.id }} header-submenu-list-{{ section.id }}\">\n                                        {% for sub_link in link.links %}\n                                          <li class=\"header-menu-item-{{ section.id }}\">\n                                            <a href=\"{{ sub_link.url }}\" class=\"header-menu-link-{{ section.id }}\">{{ sub_link.title }}</a>\n                                          </li>\n                                        {% endfor %}\n                                      </ul>\n                                    {% endif %}\n                                  </li>\n                                {% endfor %}\n                              </ul>\n                            {% endif %}\n                            {% if block.settings.submenu_button != blank %}\n                              <a href=\"{{ block.settings.button_url }}\" class=\"header-submenu-menu-button-{{ section.id }}\">\n                                <p class=\"header-submenu-menu-button-inner-{{ section.id }}\">\n                                {{ block.settings.submenu_button }}\n                                 {% if submenu_button_style == \"non_outline_arrow\" or submenu_button_style == \"outline_arrow\" %}\n                                    <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                                      <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                                      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                                      <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                                    </svg>\n                                  {% endif %}\n                                </p>\n                              </a>\n                            {% endif %} \n                          </div>                        \n                          {% if block.settings.product != blank %}                                                       \n                            <div class=\"header-submenu-product-{{ section.id }}\">\n                              <{% if block.settings.product != blank %}a href=\"{{ block.settings.product.url }}\"{% else %}div{% endif %} class=\"header-submenu-product-image-{{ section.id }}\">\n                                {% if block.settings.product.featured_image != blank %}\n                                  <img src=\"{{ block.settings.product.featured_image | image_url }}\" alt=\"{{ block.settings.product.featured_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>\n                                {% endif %}\n                              </{% if block.settings.product != blank %}a{% else %}div{% endif %}>                                 \n                              {% if block.settings.product.title %}\n                                <p class=\"header-submenu-product-title-{{ section.id }}\">{{ block.settings.product.title }}</p>\n                              {% endif %}\n                              {% if block.settings.product != blank %}\n                                <div class=\"header-submenu-product-price-{{ section.id }}\">\n                                  <p class=\"header-submenu-product-regular-price-{{ section.id }}\">{% if block.settings.product.price_max > block.settings.product.price_min %}From {% if price_compare %}<span class=\"header-submenu-product-compare-price-{{ section.id }}\">{{ block.settings.product.compare_at_price | money }}</span>{% endif %} {{ block.settings.product.price_min | money }}{% else %} {{ block.settings.product.price | money }}{% endif %}</p>\n                                </div> \n                              {% endif %}   \n                              {% if block.settings.button != blank %}\n                                <a href=\"{{ block.settings.product.url }}\" class=\"header-submenu-product-button-{{ section.id }}\">\n                                  <p class=\"header-submenu-product-button-inner-{{ section.id }}\">\n                                  {{ block.settings.button }}\n                                   {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\n                                      <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                                        <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                                        <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                                      </svg>\n                                    {% endif %}\n                                  </p>\n                                </a>\n                              {% endif %} \n                            </div>                                                 \n                          {% endif %}   \n                          {% if block.settings.submenu_image != blank %}\n                          <div class=\"header-submenu-image-{{ section.id }}\">                         \n                            <img src=\"{{ block.settings.submenu_image | image_url }}\" alt=\"{{ block.settings.submenu_image.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %}>                                                      \n                          </div>   \n                        {% endif %}              \n                        </div>\n                      </div>\n                    </div>\n                  {% endif %}\n                </li>\n              {% endfor %}\n            </ul>\n\n          <div class=\"header-menu-mobile-{{ section.id }}\">\n            <div class=\"header-menu-mobile-inner-{{ section.id }}\">\n              <ul class=\"header-menu-list-{{ section.id }}\">\n                {% for block in section.blocks %}\n                  <li class=\"header-menu-item-{{ section.id }}\">\n                    {% if block.settings.submenu != blank %}                      \n                      <div class=\"header-menu-link-wrapper-{{ section.id }}\">\n                        <a href=\"{{ block.settings.url }}\" class=\"header-menu-link-{{ section.id }}\">\n                          {{ block.settings.text }}\n                        </a>\n                        <svg class=\"header-menu-link-open-{{ section.id }}\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\">\n                          <path d=\"M11 1V21\" stroke=\"black\" stroke-linecap=\"square\" stroke-linejoin=\"round\"></path>\n                          <path d=\"M1 11H21\" stroke=\"black\" stroke-linecap=\"square\" stroke-linejoin=\"round\"></path>\n                        </svg>\n                      </div>        \n                      <div class=\"header-mobile-submenu-{{ section.id }}\">\n                        <ul class=\"header-menu-sublinks-{{ section.id }}\">\n                          {% for link in block.settings.submenu.links %}\n                            <li>\n                              {% if link.links.size > 0 %}\n                                <div class=\"header-menu-link-wrapper-{{ section.id }}\">\n                                  <a href=\"{{ link.url }}\" class=\"header-menu-link-{{ section.id }}\">\n                                    {{ link.title }}\n                                  </a>\n                                  <svg class=\"header-menu-link-open-{{ section.id }}\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\">\n                                    <path d=\"M11 1V21\" stroke=\"black\" stroke-linecap=\"square\" stroke-linejoin=\"round\"></path>\n                                    <path d=\"M1 11H21\" stroke=\"black\" stroke-linecap=\"square\" stroke-linejoin=\"round\"></path>\n                                  </svg>\n                                </div>  \n                                <div class=\"header-mobile-submenu-{{ section.id }}\">\n                                  <ul class=\"header-menu-sublinks-{{ section.id }}\">\n                                    {% for sub_link in link.links %}\n                                      <li><a href=\"{{ sub_link.url }}\" class=\"header-menu-link-{{ section.id }}\">{{ sub_link.title }}</a></li>\n                                    {% endfor %}\n                                  </ul>\n                                </div>\n                              {% else %}  \n                                <a href=\"{{ link.url }}\" class=\"header-menu-link-{{ section.id }}\">{{ link.title }}</a>      \n                              {% endif %}                                                    \n                            </li>\n                          {% endfor %}\n                        </ul>\n                        {% if block.settings.submenu_button != blank %}\n                          <a href=\"{{ block.settings.button_url }}\" class=\"header-submenu-menu-button-{{ section.id }}\">\n                            <p class=\"header-submenu-menu-button-inner-{{ section.id }}\">\n                            {{ block.settings.submenu_button }}\n                             {% if submenu_button_style == \"non_outline_arrow\" or submenu_button_style == \"outline_arrow\" %}\n                                <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                                  <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                                  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                                  <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                                </svg>\n                              {% endif %}\n                            </p>\n                          </a>\n                        {% endif %}   \n                      </div>         \n                    \n                    {% else %}\n                      <a href=\"{{ block.settings.url }}\" class=\"header-menu-link-{{ section.id }}\">{{ block.settings.text }}</a>\n                    {% endif %}\n                  </li>\n                {% endfor %}\n                \n                {% if use_search and search_menu_mobile %}\n                  <li class=\"header-menu-item-{{ section.id }}\">\n                    <a href=\"{{ routes.search_url }}\" class=\"header-menu-link-{{ section.id }}\">{{ search_text }}</a>\n                  </li>\n                {% endif %}\n                \n                {% if use_account and account_menu_mobile %}\n                  <li class=\"header-menu-item-{{ section.id }}\">\n                    <a href=\"{{ routes.account_url }}\" class=\"header-menu-link-{{ section.id }}\">{{ account_text }}</a>\n                  </li>\n                {% endif %}\n              </ul>     \n              {% if mobile_menu_button != blank %}\n                <a href=\"{{ mobile_menu_button_url }}\" class=\"header-submenu-product-button-{{ section.id }}\">\n                  <p class=\"header-submenu-product-button-inner-{{ section.id }}\">\n                  {{ mobile_menu_button }}\n                   {% if button_style == \"non_outline_arrow\" or button_style == \"outline_arrow\" %}\n                      <svg width=\"192\" height=\"192\" viewBox=\"0 0 192 192\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z\" fill=\"black\"></path>\n                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11\" fill=\"black\"></path>\n                        <path d=\"M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z\" fill=\"black\"></path>\n                      </svg>\n                    {% endif %}\n                  </p>\n                </a>\n              {% endif %}                 \n            </div>\n          </div>\n          {% endif %}\n        </div>      \n\n        <div class=\"header-logo-{{ section.id }}\">\n          {% if logo != blank %}\n            <a href=\"{{ shop.url }}\" class=\"header-logo-image-{{ section.id }} {% if logo_mobile != blank %}header-logo-desktop-{{ section.id }}{% endif %}\">\n              <img src=\"{{ logo | image_url }}\" alt=\"{{ logo.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %} {% if second_logo != blank %}class=\"header-logo-first-{{ section.id }}\"{% endif %}>\n              {% if second_logo != blank %}\n                <img src=\"{{ second_logo | image_url }}\" alt=\"{{ second_logo.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %} class=\"header-logo-second-{{ section.id }}\">\n              {% endif %}\n            </a>\n            {% if logo_mobile != blank %}\n              <a href=\"{{ shop.url }}\" class=\"header-logo-image-{{ section.id }} header-logo-mobile-{{ section.id }}\">\n                <img src=\"{{ logo_mobile | image_url }}\" alt=\"{{ logo_mobile.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %} {% if second_logo_mobile != blank %}class=\"header-logo-first-{{ section.id }}\"{% endif %}>\n                {% if second_logo_mobile != blank %}\n                  <img src=\"{{ second_logo_mobile | image_url }}\" alt=\"{{ second_logo_mobile.alt }}\" {% if lazy %}loading=\"lazy\"{% endif %} class=\"header-logo-second-{{ section.id }}\">\n                {% endif %}\n              </a>\n            {% endif %}\n          {% else %}\n            <a href=\"{{ shop.url }}\" class=\"header-logo-text-{{ section.id }}\">{{ shop.name }}</a>\n          {% endif %}\n        </div>\n\n        <div class=\"header-right-{{ section.id }}\">\n          {% if use_search %}\n            <a href=\"{{ routes.search_url }}\" class=\"header-search-{{ section.id }}\">\n              <span class=\"header-search-icon-{{ section.id }}\">\n                <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"#121212\" height=\"16\" width=\"16\"><path d=\"m10.558125 10.575000000000001 1.925 1.925m-0.555625 -5.261875c0 2.6168750000000003 -2.114375 4.738125 -4.721875 4.738125 -2.6081250000000002 0 -4.7225 -2.12125 -4.7225 -4.7375C2.483125 4.6206249999999995 4.5975 2.5 7.205 2.5c2.6081250000000002 0 4.7225 2.12125 4.7225 4.738125\" stroke-width=\"1\"></path></svg>\n              </span>\n              <span class=\"header-search-text-{{ section.id }}\">{{ search_text }}</span>\n            </a>\n          {% endif %}\n\n          {%- if shop.customer_accounts_enabled and use_account -%}\n            <a href=\"{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}\" class=\"header-account-{{ section.id }}\">\n              <span class=\"header-account-icon-{{ section.id }}\">\n                <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"#121212\" height=\"16\" width=\"16\"><path d=\"M5.625 4.6875a1.875 1.875 0 1 0 3.75 0 1.875 1.875 0 1 0 -3.75 0\" stroke-width=\"1\"></path><path d=\"M12.1875 12.8125c-0.296875 -5.833125 -9.078125 -5.833125 -9.375 0\" stroke-width=\"1\"></path></svg>\n             </span>\n              <span class=\"header-account-text-{{ section.id }}\">{{ account_text }}</span>\n            </a>\n          {%- endif -%}\n\n          <a href=\"{{ routes.cart_url }}\" class=\"header-cart-{{ section.id }}\">\n            <span class=\"header-cart-icon-{{ section.id }}\">\n              <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-0.5 -0.5 16 16\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"#121212\" height=\"16\" width=\"16\"><path d=\"M10.3125 13.125a0.9375 0.9375 0 1 0 0 -1.875 0.9375 0.9375 0 0 0 0 1.875m-5 0a0.9375 0.9375 0 1 0 0 -1.875 0.9375 0.9375 0 0 0 0 1.875M2.31875 3.375h9.508750000000001c0.86125 0 1.4831250000000002 0.79375 1.2468750000000002 1.5925l-1.03375 3.5C11.881250000000001 9.004999999999999 11.3725 9.375 10.79375 9.375H5.07c-0.579375 0 -1.08875 -0.370625 -1.2475 -0.9075zm0 0L1.875 1.875\" stroke-width=\"1\"></path></svg>\n            </span>\n            <span class=\"header-cart-text-{{ section.id }}\">{{ cart_text }}</span>       \n            <div class=\"cart-count-bubble\">\n              {%- if cart.item_count < 100 -%}\n                <span aria-hidden=\"true\">({{ cart.item_count }})</span>\n              {%- endif -%}\n            </div>      \n          </a>\n        </div>\n      </div>\n    </div>\n</div>\n                                \n<script>\n  function initHeader10() {\n    let header = document.querySelector('.header-{{ section.id }}');\n    let menuMobile = document.querySelector('.header-menu-mobile-{{ section.id }}');\n\n    let mobileSubMenu = document.querySelectorAll('.header-menu-mobile-submenu-{{ section.id }}');\n    let parentItems = document.querySelectorAll('.header-menu-item-parent-{{ section.id }}');\n    if (header) {\n      {% if show_type != 'top' %}\n        if (window.scrollY > 0) {\n            header.classList.add('onscroll');\n        } else {\n          header.classList.add('top');\n        }\n    \n        let lastScrollTop = window.scrollY;\n    \n        document.addEventListener('scroll', () => {\n          if (parentItems) {\n            parentItems.forEach(el => el.classList.remove('active'));\n          }\n          const currentScrollTop = window.scrollY;\n          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;  \n          if (currentScrollTop === 0) {\n            console.log(\"✅ At the TOP of the page\");\n            header.classList.add('top');\n            header.style.transition = \"margin-top 0.3s ease-in-out\";\n            header.style.marginTop = \"{{ section.settings.margin_top }}px\";\n          } else {\n            header.classList.remove('top');\n          }\n          if (currentScrollTop >= maxScroll) {\n            console.log(\"✅ At the BOTTOM of the page\");\n            header.classList.remove('active');\n            return;   \n          }\n          let announcementBar = document.querySelector('.{{ announcement_bar_selector }}');\n          if (announcementBar) {\n            let announcementHeight = announcementBar.offsetHeight;\n            let rect = announcementBar.getBoundingClientRect();\n            let isVisible = rect.bottom > 0;\n            header.style.transition = \"margin-top 0.3s ease-in-out\";\n            if (!isVisible) {\n              console.log(\"❌ Announcement bar is NOT visible, removing margin\");\n              header.style.marginTop = \"0px\";\n            }\n          } else {\n            header.style.marginTop = \"0px\";\n          }\n          if (currentScrollTop > lastScrollTop) {\n            header.classList.remove('active');\n          } else {\n            header.classList.add('active');\n            if (currentScrollTop < 20) {\n              header.style.transition = \"margin-top 0.3s ease-in-out\"; \n              header.style.marginTop = \"\";\n            }   \n          }\n          lastScrollTop = currentScrollTop;\n          if (header.classList.contains('transparent')) {\n            if (currentScrollTop < 20) {\n              header.classList.remove('onscroll');\n              header.classList.add('top');\n            } else {\n              header.classList.add('onscroll');\n              header.classList.remove('top');\n            }\n          }\n        });\n      {% endif %}\n\n      let burger_icon = header.querySelector('.header-menu-burger-{{ section.id }}');\n      if(burger_icon) {\n        burger_icon.addEventListener('click', () => {\n          header.classList.toggle('open');\n          header.classList.remove('onscroll');\n          if(header.classList.contains('open')) {\n            document.body.style.overflow = 'hidden';\n          } else {\n            document.body.style.overflow = '';\n          }\n        })\n      }\n\n      document.addEventListener('click', (e) => {\n        if(e.target == menuMobile) {\n          document.body.style.overflow = '';\n          header.classList.remove('open');           \n        }\n      });\n\n      if (parentItems) {\n        parentItems.forEach(el => {\n          el.addEventListener('mouseenter', () => {\n            header.classList.add('onscroll');\n            el.classList.add('active');\n          });\n\n          el.addEventListener('mouseleave', () => {\n            el.classList.remove('active');\n            if (window.scrollY === 0) {\n              header.classList.remove('onscroll');\n            }\n          });\n\n          document.addEventListener('click', (event) => {\n            if (!el.contains(event.target) && !el.classList.contains('active')) {  \n              return;\n            }  \n          \n            if (!el.contains(event.target) && el.classList.contains('active')) {  \n              el.classList.remove('active');  \n            }   \n          });\n        });\n      }\n    }\n    \n    const openButtons = document.querySelectorAll('.header-menu-link-open-{{ section.id }}');\n    const submenus = document.querySelectorAll('.header-mobile-submenu-{{ section.id }}');\n    \n    const submenuHierarchy = {};\n\n    submenus.forEach(submenu => {\n      submenu.style.display = 'none';\n      submenu.style.opacity = '0';\n      submenu.style.height = '0';\n      submenu.style.overflow = 'hidden';\n\n      submenu.isOpen = false;\n\n      const parentSubmenu = submenu.parentElement.closest('.header-mobile-submenu-{{ section.id }}');\n      if (parentSubmenu) {\n        submenu.setAttribute('data-level', 'nested');\n        \n        const parentIndex = Array.from(submenus).indexOf(parentSubmenu);\n        const childIndex = Array.from(submenus).indexOf(submenu);\n        \n        if (!submenuHierarchy[parentIndex]) {\n          submenuHierarchy[parentIndex] = [];\n        }\n        submenuHierarchy[parentIndex].push(childIndex);\n      } else {\n        submenu.setAttribute('data-level', 'root');\n      }\n    });\n\n    openButtons.forEach((button, index) => {\n      const listItem = button.closest('li');\n      if (!listItem) return;\n\n      const targetSubmenu = listItem.querySelector('.header-mobile-submenu-{{ section.id }}');\n      if (!targetSubmenu) return;\n\n      button.submenuIndex = Array.from(submenus).indexOf(targetSubmenu);\n      \n      button.addEventListener('click', (e) => {\n        e.stopPropagation();\n        toggleSubmenu(button.submenuIndex);\n      });\n    });\n    \n    function openSubmenu(index) {\n      const submenu = submenus[index];\n      if (!submenu) return;\n\n      if (submenu.isOpen) return;\n      \n      const isNested = submenu.getAttribute('data-level') === 'nested';\n      const parentSubmenu = isNested ? submenu.parentElement.closest('.header-mobile-submenu-{{ section.id }}') : null;\n      \n\n      submenu.style.display = 'block';\n      submenu.isOpen = true;\n      \n      submenu.style.height = 'auto';\n      const submenuHeight = submenu.offsetHeight + 10;\n      submenu.style.height = '0';\n      \n      setTimeout(() => {\n        submenu.style.transition = 'all 0.25s ease 0s';\n        submenu.style.height = `${submenuHeight}px`;\n\n        if (isNested && parentSubmenu && parentSubmenu.isOpen) {\n          const parentCurrentHeight = parseInt(parentSubmenu.style.height);\n          const newParentHeight = parentCurrentHeight + submenuHeight;\n          parentSubmenu.style.height = `${newParentHeight}px`;\n        }\n        \n        setTimeout(() => {\n          submenu.style.opacity = '1';\n        }, 10);\n      }, 10);\n      \n      const button = findButtonForSubmenu(index);\n      if (button) {\n        button.classList.add('active');\n        const paths = button.querySelectorAll('path');\n        if (paths.length > 0) {\n          paths[0].style.opacity = '0';\n        }\n      }\n    }\n\n    function closeSubmenu(index) {\n      const submenu = submenus[index];\n      if (!submenu) return;\n      \n\n      if (!submenu.isOpen) return;\n\n      const isNested = submenu.getAttribute('data-level') === 'nested';\n      const parentSubmenu = isNested ? submenu.parentElement.closest('.header-mobile-submenu-{{ section.id }}') : null;\n\n      const submenuHeight = parseInt(submenu.style.height);\n\n      if (submenuHierarchy[index]) {\n        submenuHierarchy[index].forEach(nestedIndex => {\n          closeSubmenu(nestedIndex);\n        });\n      }\n\n      const button = findButtonForSubmenu(index);\n      if (button) {\n        button.classList.remove('active');\n        const paths = button.querySelectorAll('path');\n        if (paths.length > 0) {\n          paths[0].style.opacity = '1';\n        }\n      }\n\n      submenu.style.transition = 'all 0.25s ease 0s';\n      submenu.style.height = '0';\n\n      if (isNested && parentSubmenu && parentSubmenu.isOpen) {\n        const parentCurrentHeight = parseInt(parentSubmenu.style.height);\n        const newParentHeight = parentCurrentHeight - submenuHeight;\n        parentSubmenu.style.height = `${newParentHeight}px`;\n      }\n      \n      setTimeout(() => {\n        submenu.style.opacity = '0';\n      }, 250);\n      \n      setTimeout(() => {\n        submenu.style.display = 'none';\n        submenu.isOpen = false;\n      }, 300);\n    }\n\n    function toggleSubmenu(index) {\n      const submenu = submenus[index];\n      if (!submenu) return;\n      \n      if (submenu.isOpen) {\n        closeSubmenu(index);\n      } else {\n        openSubmenu(index);\n      }\n    }\n\n    function findButtonForSubmenu(submenuIndex) {\n      for (let i = 0; i < openButtons.length; i++) {\n        if (openButtons[i].submenuIndex === submenuIndex) {\n          return openButtons[i];\n        }\n      }\n      return null;\n    }\n    \n    let resizeTimer;\n    window.addEventListener('resize', () => {\n      clearTimeout(resizeTimer);\n      resizeTimer = setTimeout(() => {\n\n        submenus.forEach((submenu, index) => {\n          if (submenu.isOpen) {\n\n            const currentHeight = submenu.style.height;\n            submenu.style.height = 'auto';\n            let calculatedHeight = submenu.offsetHeight;\n   \n            submenu.style.height = currentHeight;\n            setTimeout(() => {\n              submenu.style.transition = 'all 0.25s ease 0s';\n              submenu.style.height = `${calculatedHeight}px`;\n              \n              if (submenu.getAttribute('data-level') === 'root' && submenuHierarchy[index]) {\n                let additionalHeight = 0;\n                submenuHierarchy[index].forEach(nestedIndex => {\n                  const nestedSubmenu = submenus[nestedIndex];\n                  if (nestedSubmenu.isOpen) {\n                    additionalHeight += parseInt(nestedSubmenu.style.height);\n                  }\n                });\n                \n                submenu.style.height = `${calculatedHeight + additionalHeight}px`;\n              }\n            }, 10);\n          }\n        });\n      }, 250);\n    });\n  }\n\n  document.addEventListener('DOMContentLoaded', initHeader10);\n  \n  if (Shopify.designMode) {\n     document.addEventListener('shopify:section:unload', initHeader10);\n     document.addEventListener('shopify:section:load', initHeader10);\n  }\n</script>",
+  "variables": {
+    "show_type": {
+      "type": "text",
+      "default": "always",
+      "label": "Reveal menu",
+      "description": "Reveal menu"
+    },
+    "transparent_bg": {
+      "type": "text",
+      "default": "all",
+      "label": "Transparent background",
+      "description": "Transparent background"
+    },
+    "announcement_bar_selector": {
+      "type": "text",
+      "default": "announcement-bar-section",
+      "label": "Selector of announcement bar",
+      "description": "Selector of announcement bar"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "32",
+      "label": "Logo spacing",
+      "description": "Logo spacing"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Logo spacing - mobile",
+      "description": "Logo spacing - mobile"
+    },
+    "logo": {
+      "type": "text",
+      "default": "",
+      "label": "Logo",
+      "description": "Logo"
+    },
+    "second_logo": {
+      "type": "text",
+      "default": "",
+      "label": "Second logo",
+      "description": "Use for transparent header"
+    },
+    "logo_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Logo - mobile",
+      "description": "Logo - mobile"
+    },
+    "second_logo_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Second logo - mobile",
+      "description": "Use for transparent header"
+    },
+    "logo_width": {
+      "type": "text",
+      "default": "180",
+      "label": "Width",
+      "description": "Width"
+    },
+    "logo_width_mobile": {
+      "type": "text",
+      "default": "160",
+      "label": "Width - mobile",
+      "description": "Width - mobile"
+    },
+    "name_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "name_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "name_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "name_size_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "name_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "list_gap": {
+      "type": "text",
+      "default": "32",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "list_gap_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "link_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "link_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "link_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "link_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "link_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "submenu_item_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "submenu_gap": {
+      "type": "text",
+      "default": "12",
+      "label": "List gap",
+      "description": "List gap"
+    },
+    "menu_icon_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Size",
+      "description": "Size"
+    },
+    "product_image_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "product_image_border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "product_image_ratio": {
+      "type": "text",
+      "default": "square",
+      "label": "Aspect ratio",
+      "description": "Aspect ratio"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "product_title_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "product_title_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "product_title_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "product_title_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "product_title_mt": {
+      "type": "text",
+      "default": "12",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "price_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "price_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "price_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "price_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "price_mt": {
+      "type": "text",
+      "default": "6",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "price_compare": {
+      "type": "text",
+      "default": "true",
+      "label": "Show compare-at price",
+      "description": "Show compare-at price"
+    },
+    "mobile_menu_button": {
+      "type": "text",
+      "default": "Shop now",
+      "label": "Mobile menu button label",
+      "description": "Leave the label blank to hide the button."
+    },
+    "mobile_menu_button_url": {
+      "type": "text",
+      "default": "",
+      "label": "Mobile menu button link",
+      "description": "Mobile menu button link"
+    },
+    "button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "button_size_mobile": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "button_padding_vertical": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "button_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "button_radius": {
+      "type": "text",
+      "default": "6",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "button_style": {
+      "type": "text",
+      "default": "outline",
+      "label": "Button style",
+      "description": "Button style"
+    },
+    "submenu_button_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "submenu_button_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "submenu_button_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "submenu_button_size_mobile": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "submenu_button_height": {
+      "type": "text",
+      "default": "100",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "submenu_button_padding_vertical": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical",
+      "description": "Padding vertical"
+    },
+    "submenu_button_padding_vertical_mobile": {
+      "type": "text",
+      "default": "18",
+      "label": "Padding vertical - mobile",
+      "description": "Padding vertical - mobile"
+    },
+    "submenu_button_padding_horizontal": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "submenu_button_padding_horizontal_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Padding horizontal - mobile",
+      "description": "Padding horizontal - mobile"
+    },
+    "submenu_button_radius": {
+      "type": "text",
+      "default": "6",
+      "label": "Roundness",
+      "description": "Roundness"
+    },
+    "submenu_button_border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "submenu_button_mt": {
+      "type": "text",
+      "default": "16",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "submenu_button_mt_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "submenu_button_style": {
+      "type": "text",
+      "default": "outline",
+      "label": "Button style",
+      "description": "Button style"
+    },
+    "right_gap": {
+      "type": "text",
+      "default": "32",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "right_gap_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "right_link_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "right_link_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "right_link_size": {
+      "type": "text",
+      "default": "14",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "right_link_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "icon_size": {
+      "type": "text",
+      "default": "22",
+      "label": "Size",
+      "description": "Size"
+    },
+    "icon_size_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "use_search": {
+      "type": "text",
+      "default": "true",
+      "label": "Use search",
+      "description": "Use search"
+    },
+    "search_text": {
+      "type": "text",
+      "default": "Search",
+      "label": "Text",
+      "description": "Text"
+    },
+    "search_icon_desktop": {
+      "type": "text",
+      "default": "false",
+      "label": "Icon on dekstop",
+      "description": "Icon on dekstop"
+    },
+    "search_menu_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Move search link to burger menu (mobile)",
+      "description": "Move search link to burger menu (mobile)"
+    },
+    "use_account": {
+      "type": "text",
+      "default": "true",
+      "label": "Use account link",
+      "description": "Use account link"
+    },
+    "account_text": {
+      "type": "text",
+      "default": "Login",
+      "label": "Text",
+      "description": "Text"
+    },
+    "account_icon_desktop": {
+      "type": "text",
+      "default": "false",
+      "label": "Icon on dekstop",
+      "description": "Icon on dekstop"
+    },
+    "account_menu_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Move account link to burger menu (mobile)",
+      "description": "Move account link to burger menu (mobile)"
+    },
+    "cart_text": {
+      "type": "text",
+      "default": "Cart",
+      "label": "Text",
+      "description": "Text"
+    },
+    "cart_icon_desktop": {
+      "type": "text",
+      "default": "false",
+      "label": "Icon on dekstop",
+      "description": "Icon on dekstop"
+    },
+    "link_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Link",
+      "description": "Link"
+    },
+    "link_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Link hover",
+      "description": "Link hover"
+    },
+    "link_hero_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link over hero",
+      "description": "For transparent background"
+    },
+    "link_hover_hero_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link over hero hover",
+      "description": "For transparent background"
+    },
+    "submenu_link_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Mega menu link",
+      "description": "Mega menu link"
+    },
+    "submenu_link_hover_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Mega menu link hover",
+      "description": "Mega menu link hover"
+    },
+    "mobile_menu_divider_color": {
+      "type": "color",
+      "default": "#E7E7E7",
+      "label": "Mobile menu divider",
+      "description": "Mobile menu divider"
+    },
+    "product_title_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Title",
+      "description": "Title"
+    },
+    "price_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Price",
+      "description": "Price"
+    },
+    "price_original_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Compare-at price",
+      "description": "Compare-at price"
+    },
+    "product_image_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Image border",
+      "description": "Image border"
+    },
+    "button_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text",
+      "description": "Text"
+    },
+    "button_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "button_bg_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Background",
+      "description": "Background"
+    },
+    "button_bg_hover_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "button_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "button_border_hover_color": {
+      "type": "color",
+      "default": "#4D4D4D",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "submenu_button_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "submenu_button_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Hover text",
+      "description": "Hover text"
+    },
+    "submenu_button_bg_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background",
+      "description": "Background"
+    },
+    "submenu_button_bg_hover_color": {
+      "type": "color",
+      "default": "transparent",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "submenu_button_border_color": {
+      "type": "color",
+      "default": "#CECECE",
+      "label": "Button border",
+      "description": "Button border"
+    },
+    "submenu_button_border_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border hover",
+      "description": "Border hover"
+    },
+    "name_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "name_hover_color": {
+      "type": "color",
+      "default": "#666666",
+      "label": "Text hover",
+      "description": "Text hover"
+    },
+    "name_hero_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Text over hero",
+      "description": "For transparent background"
+    },
+    "right_link_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Link",
+      "description": "Link"
+    },
+    "right_link_hover_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Link hover",
+      "description": "Link hover"
+    },
+    "right_link_hero_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link over hero",
+      "description": "For transparent background"
+    },
+    "right_link_hover_hero_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Link over hero hover",
+      "description": "For transparent background"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Section background gradient"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#afa9a7",
+      "label": "Border",
+      "description": "Border"
+    },
+    "border_color_mobile": {
+      "type": "color",
+      "default": "#afa9a7",
+      "label": "Border mobile",
+      "description": "For transparent background"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "20",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1400",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "1",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "border_bottom": {
+      "type": "text",
+      "default": "true",
+      "label": "Only border bottom",
+      "description": "Only border bottom"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    },
+    "lazy": {
+      "type": "text",
+      "default": "false",
+      "label": "Lazy load",
+      "description": "Lazy load images for speed optimisation"
+    }
+  }
+}

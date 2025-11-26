@@ -1,0 +1,96 @@
+{
+  "id": "custom-back-to-top-2",
+  "name": "CUSTOM Back to top #3",
+  "description": "Section: CUSTOM Back to top #3",
+  "tags": [
+    "back"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- liquid \n  assign horizontal_position = section.settings.horizontal_position\n  assign horizontal_dst_to_edge = section.settings.horizontal_dst_to_edge\n  assign horizontal_dst_to_edge_mobile = section.settings.horizontal_dst_to_edge_mobile\n  assign vertical_dst_to_edge = section.settings.vertical_dst_to_edge\n  assign vertical_dst_to_edge_mobile = section.settings.vertical_dst_to_edge_mobile\n\n  assign circle_size = section.settings.circle_size\n  assign circle_size_mobile = section.settings.circle_size_mobile\n  assign progress_thickness = section.settings.progress_thickness\n\n  assign circle_bg_color = section.settings.circle_bg_color\n  assign circle_bg_hover_color = section.settings.circle_bg_hover_color\n\n  assign progress_color = section.settings.progress_color\n  assign progress_active_color = section.settings.progress_active_color\n\n  assign arrow_color = section.settings.arrow_color\n  assign arrow_hover_color = section.settings.arrow_hover_color\n-%}\n\n{%- style -%}  \n  .top-{{ section.id }} {\n    position: fixed;\n    z-index: 2;\n    bottom: {{ vertical_dst_to_edge_mobile }}px;\n    opacity: 0;\n    transition: all 0.5s ease 0s;\n  }\n\n  .top-circle-{{ section.id }} {\n    position: relative;\n    width: {{ circle_size_mobile }}px;\n    height: {{ circle_size_mobile }}px;\n    border-radius: 100%;\n    cursor: pointer;\n  }\n\n  .top-circle-{{ section.id }}::after {\n    position: absolute;\n    content: \"\";\n    text-align: center;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    z-index: -1;\n    border-radius: 50%;\n    -webkit-border-radius: 50%;\n    -moz-border-radius: 50%;\n    -ms-border-radius: 50%;\n    -o-border-radius: 50%;\n    background: {{ circle_bg_color }};\n    border: {{ progress_thickness }}px solid {{ progress_color }};\n  }\n\n  .top-{{ section.id }}:hover .top-circle-{{ section.id }}::after {\n    background: {{ circle_bg_hover_color }};\n  }\n\n  .top-progress-circle-{{ section.id }} {\n    width: 100%;\n    height: 100%;\n    overflow: visible;\n  }\n\n  .top-progress-circle-{{ section.id }} path {\n    stroke: {{ progress_active_color }};\n    stroke-width: {{ progress_thickness }};\n    box-sizing: border-box;\n    fill: none;\n  }\n\n  .top-arrow-{{ section.id }} {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 2;\n    width: {{ circle_size_mobile | times: 0.35 }}px;\n    height: {{ circle_size_mobile | times: 0.35 }}px;\n  }\n\n  .top-arrow-{{ section.id }} path {\n    stroke: {{ arrow_color }}\n  }\n\n  .top-{{ section.id }}:hover .top-arrow-{{ section.id }} path {\n    stroke: {{ arrow_hover_color }};\n  }\n\n  @media(min-width: 1024px) {\n    .top-{{ section.id }} {\n      bottom: {{ vertical_dst_to_edge }}px;\n    }\n\n    .top-circle-{{ section.id }} {\n      width: {{ circle_size }}px;\n      height: {{ circle_size }}px;\n    }\n\n    .top-arrow-{{ section.id }} {\n      width: {{ circle_size | times: 0.35 }}px;\n      height: {{ circle_size | times: 0.35 }}px;\n    }\n  }\n{%- endstyle -%}  \n\n{% if horizontal_position == \"left\" %}\n  <style>\n    .top-{{ section.id }} {\n      left: {{ horizontal_dst_to_edge_mobile }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .top-{{ section.id }} {          \n        left: {{ horizontal_dst_to_edge }}px;\n        right: unset;\n      }\n    }\n  </style>\n{% elsif horizontal_position == \"right\" %}\n  <style>\n    .top-{{ section.id }} {\n      right: {{ horizontal_dst_to_edge_mobile }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .top-{{ section.id }} {\n        right: {{ horizontal_dst_to_edge }}px;\n        left: unset;\n      }\n    }\n  </style>\n{% elsif horizontal_position == \"center\" %}\n  <style>\n    .top-{{ section.id }} {\n      left: 50%;\n      transform: translateX(-50%);\n    }\n    \n    @media(min-width: 1024px) {\n      .top-{{ section.id }} {\n        left: 50%;\n        transform: translateX(-50%);\n        right: unset;\n      }\n    }\n  </style>\n{% endif %}\n\n<div class=\"top-{{ section.id }}\">\n  <div class=\"top-circle-{{ section.id }}\">\n    <svg class=\"top-progress-circle-{{ section.id }}\" width=\"100%\" height=\"100%\" viewBox=\"-1 -1 102 102\">\n      <path\n        class=\"progress-path-{{ section.id }}\"\n        d=\"M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98\"\n        style=\"stroke-dasharray: 307.919; stroke-dashoffset: 307.919; transition: stroke-dashoffset 10ms linear;\">\n      </path>\n    </svg>\n    <svg class=\"top-arrow-{{ section.id }}\" width=\"15px\" height=\"15px\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\" fill=\"none\">\n      <path stroke=\"#000000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 18V2m0 0l7 7m-7-7L3 9\" />\n    </svg>\n  </div>\n</div>\n\n<script>\n  function initBackToTop2() {\n    const topElement = document.querySelector('.top-{{ section.id }}');\n    const progressPath = document.querySelector('.progress-path-{{ section.id }}');\n    const totalScrollHeight = document.documentElement.scrollHeight - window.innerHeight;\n    const startOpacityScroll = 50;\n\n    const pathLength = progressPath.getTotalLength();\n    progressPath.style.strokeDasharray = pathLength; \n    progressPath.style.strokeDashoffset = pathLength;\n\n    function handleScroll() {\n      const scrollTop = window.scrollY;\n\n      if (scrollTop > startOpacityScroll) {\n        topElement.style.opacity = 1;\n        topElement.style.pointerEvents = 'all';\n      } else {\n        topElement.style.opacity = 0;\n        topElement.style.pointerEvents = 'none';\n      }\n\n      const progress = Math.min(scrollTop / totalScrollHeight, 1);\n      let dashoffset = pathLength * (1 - progress);\n\n      if (scrollTop === totalScrollHeight) {\n        dashoffset = 0;\n      }\n\n      progressPath.style.strokeDashoffset = dashoffset;\n    }\n\n    window.addEventListener('scroll', handleScroll);\n    topElement.addEventListener('click', () => {\n      window.scrollTo({\n        top: 0,\n        behavior: 'smooth'\n      });\n    });\n  }\n\n  document.addEventListener('DOMContentLoaded', initBackToTop2);\n\n  if (Shopify.designMode) {\n    document.addEventListener('shopify:section:unload', initBackToTop2);\n    document.addEventListener('shopify:section:load', initBackToTop2);\n  }\n</script>",
+  "variables": {
+    "horizontal_position": {
+      "type": "text",
+      "default": "right",
+      "label": "Horizontal position",
+      "description": "Horizontal position"
+    },
+    "horizontal_dst_to_edge": {
+      "type": "text",
+      "default": "30",
+      "label": "Horizontal edge distance",
+      "description": "Horizontal edge distance"
+    },
+    "horizontal_dst_to_edge_mobile": {
+      "type": "text",
+      "default": "20",
+      "label": "Horizontal edge distance - mobile",
+      "description": "Horizontal edge distance - mobile"
+    },
+    "vertical_dst_to_edge": {
+      "type": "text",
+      "default": "50",
+      "label": "Vertical edge distance",
+      "description": "Vertical edge distance"
+    },
+    "vertical_dst_to_edge_mobile": {
+      "type": "text",
+      "default": "50",
+      "label": "Vertical edge distance - mobile",
+      "description": "Vertical edge distance - mobile"
+    },
+    "circle_size": {
+      "type": "text",
+      "default": "46",
+      "label": "Size",
+      "description": "Size"
+    },
+    "circle_size_mobile": {
+      "type": "text",
+      "default": "46",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "progress_thickness": {
+      "type": "text",
+      "default": "4",
+      "label": "Progress thickness",
+      "description": "Progress thickness"
+    },
+    "circle_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "circle_bg_hover_color": {
+      "type": "color",
+      "default": "#cbbeb0",
+      "label": "Background hover",
+      "description": "Background hover"
+    },
+    "progress_color": {
+      "type": "color",
+      "default": "#F5F5F5",
+      "label": "Default",
+      "description": "Default"
+    },
+    "progress_active_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Active",
+      "description": "Active"
+    },
+    "arrow_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Arrow",
+      "description": "Arrow"
+    },
+    "arrow_hover_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Arrow hover",
+      "description": "Arrow hover"
+    }
+  }
+}

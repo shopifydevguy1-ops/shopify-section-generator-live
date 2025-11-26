@@ -1,0 +1,169 @@
+{
+  "id": "custom-nft-hero",
+  "name": "NFT Hero 👾",
+  "description": "Section: NFT Hero 👾",
+  "tags": [
+    "nft",
+    "hero"
+  ],
+  "type": "hero",
+  "liquid_code": "<header class=\"header\">\n    <div class=\"container\">\n      <div class=\"cover\">\n        <div class=\"cover__image image\">\n          <div class=\"image__cover\">\n                {%- if section.settings.section_image -%}\n                    {{ section.settings.section_image | image_url: width: section.settings.section_image.width | image_tag: class: \"image__nft\", alt: section.settings.heading }}\n                {%- else -%}\n                    {{ 'image' | placeholder_svg_tag }}\n                {%- endif -%}\n          </div>\n        </div>\n        <div class=\"cover__content nft\">\n          <h1 class=\"nft__title\">{{section.settings.heading}}</h1>\n          <div class=\"nft__author-wrapper\">\n            <div class=\"nft__author-logo-wrapper\">\n                {%- if section.settings.author_logo -%}\n                    {{ section.settings.author_logo | image_url: width: section.settings.author_logo.width | image_tag: class: \"nft__author-logo\", alt: section.settings.heading }}\n                {%- else -%}\n                    {{ 'image' | placeholder_svg_tag }}\n                {%- endif -%}\n            </div>\n            <div class=\"nft__author-nickname\">{{section.settings.author_nickname}}</div>\n          </div>\n          <div class=\"nft__price-wrapper\">\n            <div class=\"current-price\">\n              <div class=\"current-price__title\">Current Price</div>\n              <div class=\"current-price__eth\">\n                {{section.settings.price__eth}}\n                <span>{{section.settings.price__eth_units}}</span>\n              </div>\n              <div class=\"current-price__usd\">{{section.settings.price_usd}}</div>\n            </div>\n            <div class=\"collection-info\">\n              <div class=\"collection-info__title\">Collection Info</div>\n              <div class=\"collection-info__wrapper-quantity-marketcap\">\n                <div class=\"collection-info__quantity-wrapper\">\n                  <div class=\"collection-info__quantity-all\">{{section.settings.collection_quantity_all}}</div>\n                  <div class=\"collection-info__quantity-name\">{{section.settings.collection_quantity_name}}</div>\n                </div>\n                <div class=\"collection-info__marketcap-wrapper\">\n                  <div class=\"collection-info__marketcap-all\">{{section.settings.collection_marketcap_all}}</div>\n                  <div class=\"collection-info__marketcap-name\">{{section.settings.collection_marketcap_name}}</div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"collection-info__button-wrapper\">\n            <div class=\"button-wrapper\">\n              <a href=\"{{section.settings.buynow_url}}\" class=\"button button__buy-now\">{{section.settings.buynow_text}}</a>\n            </div>\n            <div class=\"button-wrapper\">\n              <a href=\"{{section.settings.seeall_url}}\" class=\"button button__see-all\">{{section.settings.seeall_text}}</a>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </header>",
+  "variables": {
+    "section_image": {
+      "type": "text",
+      "default": "",
+      "label": "Logo Image",
+      "description": "Logo Image"
+    },
+    "heading": {
+      "type": "text",
+      "default": "Bored champ collection",
+      "label": "Section Heading",
+      "description": "Section Heading"
+    },
+    "author_logo": {
+      "type": "text",
+      "default": "",
+      "label": "Author Logo Image",
+      "description": "Author Logo Image"
+    },
+    "author_nickname": {
+      "type": "text",
+      "default": "@tommychief",
+      "label": "Author nickname",
+      "description": "Author nickname"
+    },
+    "author_url": {
+      "type": "text",
+      "default": "",
+      "label": "Author url",
+      "description": "Author url"
+    },
+    "collection": {
+      "type": "text",
+      "default": "",
+      "label": "Product Collection",
+      "description": "Product Collection"
+    },
+    "collection_quantity_all": {
+      "type": "text",
+      "default": "800",
+      "label": "Collection Quantity All",
+      "description": "Collection Quantity All"
+    },
+    "collection_quantity_name": {
+      "type": "text",
+      "default": "NFTs",
+      "label": "Collection Quantity Name",
+      "description": "Collection Quantity Name"
+    },
+    "collection_marketcap_all": {
+      "type": "text",
+      "default": "1.4M",
+      "label": "Collection Marketplace All",
+      "description": "Collection Marketplace All"
+    },
+    "collection_marketcap_name": {
+      "type": "text",
+      "default": "marketcap",
+      "label": "Collection Marketplace Name",
+      "description": "Collection Marketplace Name"
+    },
+    "product": {
+      "type": "text",
+      "default": "",
+      "label": "Landing Product",
+      "description": "Landing Product"
+    },
+    "price__eth": {
+      "type": "text",
+      "default": "5.00",
+      "label": "Current Price",
+      "description": "Current Price"
+    },
+    "price__eth_units": {
+      "type": "text",
+      "default": "ETH",
+      "label": "Current Price Units",
+      "description": "Current Price Units"
+    },
+    "price_usd": {
+      "type": "text",
+      "default": "$25.220",
+      "label": "Current Price USD",
+      "description": "Current Price USD"
+    },
+    "buynow_text": {
+      "type": "text",
+      "default": "Buy now",
+      "label": "Button Text",
+      "description": "Button Text"
+    },
+    "buynow_url": {
+      "type": "text",
+      "default": "/",
+      "label": "Button BUYNOW URL",
+      "description": "Button BUYNOW URL"
+    },
+    "seeall_text": {
+      "type": "text",
+      "default": "See all",
+      "label": "Button Text",
+      "description": "Button Text"
+    },
+    "seeall_url": {
+      "type": "text",
+      "default": "/",
+      "label": "Button SEE ALL URL",
+      "description": "Button SEE ALL URL"
+    },
+    "body_gradient_color_1": {
+      "type": "color",
+      "default": "#621f64",
+      "label": "Gradient color 1",
+      "description": "Gradient color 1"
+    },
+    "body_gradient_color_2": {
+      "type": "color",
+      "default": "#1a0421",
+      "label": "Gradient color 2",
+      "description": "Gradient color 2"
+    },
+    "button_gradient_color_1": {
+      "type": "color",
+      "default": "#ea3bca",
+      "label": "Gradient color 1",
+      "description": "Gradient color 1"
+    },
+    "button_gradient_color_2": {
+      "type": "color",
+      "default": "#a931ee",
+      "label": "Gradient color 2",
+      "description": "Gradient color 2"
+    },
+    "button_gradient_color_3": {
+      "type": "color",
+      "default": "#7f5aec",
+      "label": "Gradient color 3",
+      "description": "Gradient color 3"
+    },
+    "button_gradient_color_4": {
+      "type": "color",
+      "default": "#82a3f7",
+      "label": "Gradient color 4",
+      "description": "Gradient color 4"
+    },
+    "use_othore_font": {
+      "type": "text",
+      "default": "false",
+      "label": "Use selected fonts",
+      "description": "Use selected fonts"
+    },
+    "type_header_font": {
+      "type": "text",
+      "default": "assistant_n4",
+      "label": "t:settings_schema.typography.settings.type_header_font.label",
+      "description": "t:settings_schema.typography.settings.type_header_font.info"
+    }
+  }
+}

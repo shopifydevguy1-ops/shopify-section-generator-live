@@ -1,0 +1,156 @@
+{
+  "id": "shine-pages-beauty-our-team",
+  "name": "🧩 Beauty Team",
+  "description": "Section: 🧩 Beauty Team",
+  "tags": [
+    "shine"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- if section.settings.override_font != blank -%}\n  {%- capture font_settings_list -%}\n    {{ section.settings.body_font | font_face: font_display: 'swap' }}~\n    {{ section.settings.body_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~\n    {{ section.settings.body_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~\n    {{ section.settings.body_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~\n    {{ section.settings.heading_font | font_face: font_display: 'swap' }}~\n    {{ section.settings.heading_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~\n    {{ section.settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~\n    {{ section.settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}\n  {%- endcapture -%}\n  {%- assign font_array = font_settings_list | split: '~' -%}\n{% endif %}\n<style>\n  {%- if section.settings.override_font != blank -%}\n    {%- for font in font_array -%}\n      {%- unless font contains 'error' -%}\n        {{ font }}{%- endunless -%}\n    {%- endfor -%}\n    #sp-{{ section.id }}{\n      --heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};\n      --heading-font-weight: {{ section.settings.heading_font.weight }};\n      --heading-font-style: {{ section.settings.heading_font.style }};\n      --body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};\n      --body-font-weight: {{ section.settings.body_font.weight }};\n      --body-font-style: {{ section.settings.body_font.style }};\n    }\n  {% endif %}\n  #sp-{{ section.id }}{\n    --background: {{ section.settings.background_color }};\n    --heading-max-width: {{ section.settings.heading_max_width }}px;\n    --container-max-width: {{ section.settings.container_max_width }}px;\n    --heading-alignment: {{ section.settings.heading_alignment }};\n    --content-alignment: {{ section.settings.content_alignment }};\n\n    --content-background: {{ section.settings.content_background_color }};\n    --number_item: {{ section.settings.number_item }};\n    --mobile-top-padding: {{ section.settings.mobile_top_padding }}px;\n    --mobile-bottom-padding: {{ section.settings.mobile_bottom_padding }}px;\n    --desktop-top-padding: {{ section.settings.desktop_top_padding }}px;\n    --desktop-bottom-padding: {{ section.settings.desktop_bottom_padding }}px;\n    --heading-color: {{ section.settings.content_color }};\n    {% comment %}\n      setting font size{% endcomment %}\n    --heading-size: calc({{ section.settings.heading_size }} / 100);\n    --body-size: calc({{ section.settings.body_size }} / 100);\n    --space: calc({{ section.settings.space }} / 100);\n    {% comment %}\n      end setting font size{% endcomment %}\n    --content-border-radius: {{ section.settings.content_boder-radius }}px;\n    --rating-color: {{ section.settings.rating_color }};\n    {%- if section.settings.heading_alignment == \"auto auto auto 0px\" -%}\n      --heading-text-align: left;\n    {% elsif section.settings.heading_alignment == \"auto\" %}\n      --heading-text-align: center;\n    {% else %}\n      --heading-text-align: right;\n    {% endif %}\n    --sub-infor-align: auto auto auto 0;\n    --image-ratio: {{ section.settings.image_ratio }};\n    {% comment %}\n      --space-between-image: {{ section.settings.space_betwwen_image }}\n      px;\n    {% endcomment %}\n    --image-border-radius: {{ section.settings.image_border_radius }}px;\n  }\n</style>\n\n{% comment %} groupCells {% endcomment %}\n{% assign desktop_items = section.settings.number_item %}\n{% assign tablet_items = 2 %}\n{% if desktop_items == 1 %}\n  {% assign tablet_items = 1 %}\n{% endif %}\n\n{% if section.settings.slide_on_desktop == false %}\n  {% assign display_slide_item = false %}\n  {% assign display_grid_item = true %}\n{% else %}\n  {% assign display_slide_item = true %}\n  {% assign display_grid_item = false %}\n{% endif %}\n\n{% if section.settings.slide_on_mobile == false %}\n  {% assign display_slide_item_mobile = false %}\n  {% assign display_grid_item_mobile = true %}\n{% else %}\n  {% assign display_slide_item_mobile = true %}\n  {% assign display_grid_item_mobile = false %}\n{% endif %}\n\n{% comment %} Autoplay {% endcomment %}\n{% assign auto_play = false %}\n{% if section.settings.slider_auto_change != blank %}\n  {% assign auto_play = section.settings.slider_loop %}\n{% endif %}\n\n<div\n  id=\"sp-{{ section.id }}\"\n  class=\"sp-{{ section.id }} sp-section sp-section-beauty-our-team sp-override-font-{{ section.settings.override_font }}\"\n>\n  <div\n    {%- if section.settings.check_full_width == true -%}\n      class=\"sp-container sp-container-padding sp-container-fullwidth\"\n    {% else %}\n      class=\"sp-container sp-container-padding sp-container-maxwidth\"\n    {% endif %}\n  >\n    <div class=\"sp-heading-container\">\n      <h2 class=\"sp-heading\">\n        {{ section.settings.heading_content }}\n      </h2>\n    </div>\n    <div class=\"sp-sub-heading\">{{ section.settings.sub_heading_content }}</div>\n\n    <div class=\"grid-container display-grid-item-{{ display_grid_item }} display-grid-item-mobile-{{ display_grid_item_mobile }}\">\n      {% for block in section.blocks %}\n        {% if block.type == 'item' %}\n          <div class=\"grid-item\" {{ block.shopify_attributes }}>\n              <div class=\"sp-image\">\n                {% if block.settings.avatar %}\n                  <img src=\"{{ block.settings.avatar | image_url }}\" alt=\"testimonial image\">\n                {% else %}\n                  {% assign default_svg = 'image' | placeholder_svg_tag: 'sp-default-image' | escape  %}\n                  {% assign image_content = \"data:image/svg+xml;utf8,\" | append: default_svg %}\n                  <img src=\"{{ image_content }}\" class=\"sp-default-image\"/>\n                {% endif %}\n              </div>\n              <div class=\"team-member\">\n                <h5 class=\"team-member-name\">{{ block.settings.member_name }}</h5>\n                <span class=\"team-member-role\">{{ block.settings.member_role }}</span>\n              </div>\n          </div>\n        {% endif %}\n      {% endfor %}\n    </div>\n\n    <div\n      class=\"sp-carousel display-slide-item-{{ display_slide_item }} display-slide-item-mobile-{{ display_slide_item_mobile }}\"\n      data-slider='{ \"autoPlay\": {{ auto_play }}, \"cellAlign\": \"left\", \"contain\": true, \"prevNextButtons\": false, \"pageDots\": true, \"groupCells\": {\"desktop\": {{ desktop_items }}, \"tablet\": {{ tablet_items }}, \"mobile\": 1} }'\n      data=\"sp-slider\"\n    >\n      {%- for block in section.blocks -%}\n        {%- if block.type == 'item' -%}\n          <div class=\"sp-item\" {{ block.shopify_attributes }}>\n              <div class=\"sp-image\">\n                {% if block.settings.avatar %}\n                  <img src=\"{{ block.settings.avatar | image_url }}\" alt=\"testimonial image\">\n                {% else %}\n                  {% assign default_svg = 'image' | placeholder_svg_tag: 'sp-default-image' | escape  %}\n                  {% assign image_content = \"data:image/svg+xml;utf8,\" | append: default_svg %}\n                  <img src=\"{{ image_content }}\" class=\"sp-default-image\"/>\n                {% endif %}\n              </div>\n              <div class=\"team-member\">\n                <h5 class=\"team-member-name\">{{ block.settings.member_name }}</h5>\n                <span class=\"team-member-role\">{{ block.settings.member_role }}</span>\n              </div>\n            {% comment %}\n              <div class=\"sp-item-container\">\n              <div>\n              {%- if block.settings.avatar != blank -%}\n              <div class=\"avatar\">{{ block.settings.avatar | image_url: width: 150 | image_tag }}</div>\n              {% else %}\n              <div class=\"avatar none\"></div>\n              {% endif %}\n              </div>\n              <div>\n              {% if section.settings.show_rating != blank %}\n              <div class=\"sp-item-star\">\n              {% assign number_star = block.settings.rating | times: 1 %}\n              {% for i in (1..number_star) %}\n              <span class=\"sp-icon-star\"></span>\n              {% endfor %}\n              {% assign number_sub_star = 5 | minus: number_star %}\n              {% for i in (1..number_sub_star) %}\n              <div class=\"sp-sub-star-wrapper\">\n              <span class=\"sp-icon-star sub-star\"></span>\n              <span class=\"sp-icon-star sub-star\"></span>\n              </div>\n              {% endfor %}\n              </div>\n              {% endif %}\n              {%- if block.settings.content != blank -%}\n              <p class=\"description\" sp-key=\"blocks.item.content\">{{ block.settings.content }}</p>\n              {% endif %}\n\n\n              <div class=\"sub-infor\">\n              {%- if block.settings.customer_name != blank -%}\n              <span class=\"customer-name\" >{{ block.settings.customer_name }}</span>\n              {% endif %}\n              {%- if block.settings.customer_info != blank -%}\n              <span class=\"customer-info\" >&nbsp;-&nbsp;{{ block.settings.customer_info }}</span>\n              {% endif %}\n              </div>\n              </div>\n              </div>\n            {% endcomment %}\n          </div>\n        {% endif %}\n      {% endfor %}\n    </div>\n  </div>\n</div>\n<script src=\"https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js\" defer=\"defer\"></script>",
+  "variables": {
+    "heading_content": {
+      "type": "text",
+      "default": "Meet our team",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "sub_heading_content": {
+      "type": "text",
+      "default": "Introduce their employees to site visitors and showcase the highlights of their organization's personnel our team.",
+      "label": "Description",
+      "description": "Description"
+    },
+    "heading_alignment": {
+      "type": "text",
+      "default": "auto",
+      "label": "Heading alignment",
+      "description": "Heading alignment"
+    },
+    "heading_max_width": {
+      "type": "text",
+      "default": "570",
+      "label": "Heading max width",
+      "description": "Heading max width"
+    },
+    "image_ratio": {
+      "type": "text",
+      "default": "1.1",
+      "label": "Image ratio",
+      "description": "Image ratio"
+    },
+    "image_border_radius": {
+      "type": "text",
+      "default": "20",
+      "label": "Border radius",
+      "description": "Border radius"
+    },
+    "content_alignment": {
+      "type": "text",
+      "default": "center",
+      "label": "Content alignment",
+      "description": "Content alignment"
+    },
+    "number_item": {
+      "type": "text",
+      "default": "3",
+      "label": "Members per row",
+      "description": "Members per row"
+    },
+    "slide_on_desktop": {
+      "type": "text",
+      "default": "false",
+      "label": "Slide on desktop",
+      "description": "Slide on desktop"
+    },
+    "slide_on_mobile": {
+      "type": "text",
+      "default": "false",
+      "label": "Slide on mobile",
+      "description": "Slide on mobile"
+    },
+    "check_full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full-width",
+      "description": "Full-width"
+    },
+    "container_max_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Container max width",
+      "description": "This option is only applied when you uncheck \"Full-width\""
+    },
+    "space": {
+      "type": "text",
+      "default": "100",
+      "label": "Space between elements",
+      "description": "Space between elements"
+    },
+    "desktop_top_padding": {
+      "type": "text",
+      "default": "120",
+      "label": "Top padding",
+      "description": "Top padding"
+    },
+    "desktop_bottom_padding": {
+      "type": "text",
+      "default": "120",
+      "label": "Bottom padding",
+      "description": "Bottom padding"
+    },
+    "mobile_top_padding": {
+      "type": "text",
+      "default": "80",
+      "label": "Top padding",
+      "description": "Top padding"
+    },
+    "mobile_bottom_padding": {
+      "type": "text",
+      "default": "80",
+      "label": "Bottom padding",
+      "description": "Bottom padding"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background",
+      "description": "Background"
+    },
+    "content_color": {
+      "type": "color",
+      "default": "#252422",
+      "label": "Content text",
+      "description": "Content text"
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "100",
+      "label": "Heading size",
+      "description": "Heading size"
+    },
+    "body_size": {
+      "type": "text",
+      "default": "100",
+      "label": "Body size",
+      "description": "Body size"
+    },
+    "override_font": {
+      "type": "text",
+      "default": "false",
+      "label": "Override fonts of the theme",
+      "description": "If you uncheck this option, the fonts of the section will work"
+    },
+    "heading_font": {
+      "type": "text",
+      "default": "crimson_text_n6",
+      "label": "Heading font",
+      "description": "Heading font"
+    },
+    "body_font": {
+      "type": "text",
+      "default": "roboto_n4",
+      "label": "Body font",
+      "description": "Body font"
+    }
+  }
+}

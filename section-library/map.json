@@ -1,0 +1,156 @@
+{
+  "id": "map",
+  "name": "CUSTOM Map",
+  "description": "Section: CUSTOM Map",
+  "tags": [
+    "map"
+  ],
+  "type": "custom",
+  "liquid_code": "{%- assign map_address = section.settings.map_address -%}\n<style>\n  .section-{{ section.id }}-padding {\n    max-width: var(--max-width);\n    margin: var(--mt, 0) auto var(--mb, 0);\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n    padding-left: var(--px, 1.5rem);\n    padding-right: var(--px, 1.5rem);\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-{{ section.id }}-padding {\n      padding-left: var(--px-desktop, 5rem);\n      padding-right: var(--px-desktop, 5rem);\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n  }\n</style>\n\n<div\n  style=\"background-color:{{ section.settings.background_color }};\"\n>\n  <div\n    class=\"section-{{ section.id }}-padding\"\n    style=\"\n      {%- if section.settings.full_width -%}\n        --max-width: 100%;\n      {%- else -%}\n        --max-width: {{ section.settings.section_width }}rem;\n      {%- endif -%}\n        --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n        --pt-desktop: {{ section.settings.padding_top }}px;\n        --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n        --pb-desktop: {{ section.settings.padding_bottom }}px;\n        --px: {{ section.settings.padding_x }}px;\n        --px-desktop: {{ section.settings.padding_x_desktop }}px;\n        --mt: {{ section.settings.margin_top }}px;\n        --mb: {{ section.settings.margin_bottom }}px;\n    \"\n  >\n    <style>\n      .map-container-{{ section.id }} {\n        position: relative;\n        width: 100%;\n        height: 650px;\n        overflow: hidden;\n      }\n      @media screen and (min-width: 750px) {\n        .map-container-{{ section.id }} {\n          height: 500px;\n        }\n      }\n    </style>\n    <div class=\"map-container-{{ section.id }}\">\n      {% comment %} BG: {% endcomment %}\n      <style>\n        .map-bg-{{ section.id }} {\n          width: 100%;\n          height: 100%;\n        }\n        .map-google-custom-shopify-svg-placeholder {\n          fill: rgb(153, 153, 153);\n          background-color: rgb(225, 225, 225);\n          display: block;\n          height: 100%;\n          max-height: 100%;\n          max-width: 100%;\n          width: 100%;\n          padding: 30px 0px;\n        }\n      </style>\n      <div class=\"map-bg-{{ section.id }}\">\n        {%- if section.settings.google_map_api_key != blank -%}\n          <style>\n            .map-{{ section.id }} {\n              height: 100%;\n            }\n          </style>\n          <div class=\"map-{{ section.id }}\">\n            <strong> Click SAVE to see the map </strong>\n          </div>\n          <!-- prettier-ignore -->\n          <script>(g=>{var h,a,k,p=\"The Google Maps JavaScript API\",c=\"google\",l=\"importLibrary\",q=\"__ib__\",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement(\"script\"));e.set(\"libraries\",[...r]+\"\");for(k in g)e.set(k.replace(/[A-Z]/g,t=>\"_\"+t[0].toLowerCase()),g[k]);e.set(\"callback\",c+\".maps.\"+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+\" could not load.\"));a.nonce=m.querySelector(\"script[nonce]\")?.nonce||\"\";m.head.append(a)}));d[l]?console.warn(p+\" only loads once. Ignoring:\",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})\n              ({key: \"{{ section.settings.google_map_api_key }}\", v: \"weekly\"});</script>\n          <script>\n            (() => {\n              let map;\n              let targetLocation;\n\n              function setMapCenter() {\n                if (map && targetLocation) {\n                  if (window.innerWidth < 750) {\n                    const lat = targetLocation.lat() + 0.005;\n                    const lng = targetLocation.lng();\n                    const newCenter = { lat, lng };\n                    map.setCenter(newCenter);\n                  } else {\n                    const lat = targetLocation.lat();\n                    const lng = targetLocation.lng() - 0.01;\n                    const newCenter = { lat, lng };\n                    map.setCenter(newCenter);\n                  }\n                }\n              }\n              window.addEventListener('resize', setMapCenter);\n\n              async function initMap() {\n                //@ts-ignore\n                const { Map } = await google.maps.importLibrary('maps');\n                const { PlacesService } = await google.maps.importLibrary('places');\n\n                const mapEl = document.querySelector('.map-{{ section.id }}');\n                map = new Map(mapEl, {\n                  center: { lat: -33.867, lng: 151.195 },\n                  zoom: 15,\n                });\n\n                const address = '{{ map_address }}';\n                const request = {\n                  query: address,\n                  fields: ['name', 'geometry'],\n                };\n\n                new PlacesService(map).findPlaceFromQuery(request, (results, status) => {\n                  if (status === google.maps.places.PlacesServiceStatus.OK && results) {\n                    new google.maps.Marker({\n                      map,\n                      position: results[0].geometry.location,\n                    });\n                    targetLocation = results[0].geometry.location;\n\n                    setMapCenter();\n                  }\n                });\n              }\n\n              initMap();\n\n              // shopify section load:\n              if (window.Shopify && window.Shopify.designMode) {\n                document.addEventListener('shopify:section:load', function () {\n                  // unload map first:\n                  map = null;\n                  document.querySelector('.map-{{ section.id }}').innerHTML = '';\n                  setTimeout(() => {\n                    initMap();\n                  }, 100);\n                });\n              }\n            })();\n          </script>\n        {%- elsif section.settings.image != blank -%}\n          <img\n            src=\"{{ section.settings.image | img_url: 'master' }}\"\n            srcset=\"\n              {{ section.settings.image | img_url: '400x' }} 400w,\n              {{ section.settings.image | img_url: '600x' }} 600w,\n              {{ section.settings.image | img_url: '800x' }} 800w,\n              {{ section.settings.image | img_url: '1200x' }} 1200w,\n              {{ section.settings.image | img_url: '1600x' }} 1600w,\n              {{ section.settings.image | img_url: 'master' }} 2000w\n            \"\n            style=\"width: 100%; height: 100%; object-fit: cover;\"\n            alt=\"{{ section.settings.image.alt }}\"\n            {%- if section.settings.lazy_loading -%}\n              loading=\"lazy\"\n            {%- endif -%}\n          >\n        {%- else -%}\n          {{ 'lifestyle-1' | placeholder_svg_tag: 'map-google-custom-shopify-svg-placeholder' }}\n        {%- endif -%}\n      </div>\n\n      <style>\n        .map-overlay-{{ section.id }} {\n          position: absolute;\n          top: 0;\n          left: 0;\n          padding: 30px;\n          margin: 30px;\n          background-color: white;\n          max-width: calc(100% - 60px);\n        }\n        @media screen and (min-width: 750px) {\n          .map-overlay-{{ section.id }} {\n            left: 30px;\n            margin-top: 0;\n            top: 50%;\n            transform: translateY(-50%);\n            width: 30%;\n          }\n        }\n        .text-spacing-{{ section.id }} {\n          margin-bottom: 15px;\n        }\n        .rte-setting-{{ section.id }} > p {\n          margin: 0 0 15px 0;\n        }\n        .rte-setting-{{ section.id }} > p:last-child {\n          margin-bottom: 0;\n        }\n        .btn-{{ section.id }} {\n          background: #111111;\n          color: white;\n          font-weight: 700;\n          letter-spacing: 0.3em;\n          font-size: 12px;\n          line-height: 1.42;\n          padding: 8px 14px;\n          min-width: 90px;\n          text-transform: uppercase;\n        }\n      </style>\n      <div\n        class=\"map-overlay-{{ section.id }}\"\n        style=\"\n          color: {{ section.settings.text_color }};\n          background: {{ section.settings.card_background_color }};\n        \"\n      >\n        <h3\n          class=\"text-spacing-{{ section.id }}\"\n          style=\"\n            margin-top: 0; color: {{ section.settings.text_color }};\n            font-size: {{ section.settings.heading_size }}px;\n          \"\n        >\n          {{ section.settings.heading }}\n        </h3>\n        <div\n          class=\"rte-setting-{{ section.id }} text-spacing-{{ section.id }}\"\n          style=\"font-size: {{ section.settings.address_size }}px;\"\n        >\n          {{ section.settings.address }}\n        </div>\n        {%- if section.settings.show_button -%}\n          <a\n            href=\"https://maps.google.com?daddr={{ section.settings.map_address }}\"\n            class=\"btn-{{ section.id }}\"\n            style=\"\n              color: {{ section.settings.btn_text_color }};\n              background: {{ section.settings.btn_background_color }};\n              font-size: {{ section.settings.button_size }}px;\n            \"\n            target=\"_blank\"\n            rel=\"noopener\"\n            aria-label=\"Our retail store\"\n            >{{ section.settings.button_text }}</a\n          >\n        {%- endif -%}\n      </div>\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Our retail store",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "address": {
+      "type": "textarea",
+      "default": "<p> Havnegade 12<br> Copenhagen, Denmark </p> <p>  Mon - Thur, 8:30am - 5:30pm <br>  Fri-Sat, 8:30am - 11:30pm<br> Sunday, 8:30am - 4:30pm  </p>",
+      "label": "Address and hours",
+      "description": "Address and hours"
+    },
+    "map_address": {
+      "type": "text",
+      "default": "Havnegade 12, Copenhagen, Denmark",
+      "label": "Map address",
+      "description": "Input correct format & Google maps will pin the exact location. (Link on image and map)"
+    },
+    "google_map_api_key": {
+      "type": "text",
+      "default": "",
+      "label": "Google Maps API key",
+      "description": "You'll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
+    },
+    "show_button": {
+      "type": "text",
+      "default": "true",
+      "label": "Show button",
+      "description": "Show button"
+    },
+    "button_text": {
+      "type": "text",
+      "default": "Get directions",
+      "label": "Button text",
+      "description": "Button text"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "lazy_loading": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy loading",
+      "description": "Lazy loading should be enabled when section images are below the fold."
+    },
+    "heading_size": {
+      "type": "text",
+      "default": "24",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "address_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Address",
+      "description": "Address"
+    },
+    "button_size": {
+      "type": "text",
+      "default": "12",
+      "label": "Button",
+      "description": "Button"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Text",
+      "description": "Text"
+    },
+    "card_background_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Card background",
+      "description": "Card background"
+    },
+    "btn_text_color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Button text",
+      "description": "Button text"
+    },
+    "btn_background_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Button background",
+      "description": "Button background"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_x": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding horizontal",
+      "description": "Padding horizontal"
+    },
+    "padding_x_desktop": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding horizontal desktop",
+      "description": "Padding horizontal desktop"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "true",
+      "label": "Section full width",
+      "description": "Section full width"
+    },
+    "section_width": {
+      "type": "text",
+      "default": "120",
+      "label": "Section width",
+      "description": "Section width"
+    }
+  }
+}

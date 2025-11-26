@@ -1,0 +1,162 @@
+{
+  "id": "custom-announcement-bar-slideshow",
+  "name": "CUSTOM Announcement bar",
+  "description": "Section: CUSTOM Announcement bar",
+  "tags": [
+    "announcement"
+  ],
+  "type": "custom",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign content_width = section.settings.content_width\n  assign full_width = section.settings.full_width \n\n  assign text_custom = section.settings.text_custom\n  assign text_font = section.settings.text_font\n  assign text_size = section.settings.text_size\n  assign text_size_mobile = section.settings.text_size_mobile\n  assign text_height = section.settings.text_height\n  assign text_color = section.settings.text_color\n  assign text_align = section.settings.text_align\n  assign text_align_mobile = section.settings.text_align_mobile\n\n  assign progress_color = section.settings.progress_color\n  assign progress_default_color = section.settings.progress_default_color\n  assign play_border_color = section.settings.play_border_color\n  assign play_icon_color = section.settings.play_icon_color\n-%}\n\n{%- style -%}  \n  {{ text_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    overflow: hidden;\n    position: relative;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n  \n  .announcement-inner-{{ section.id }} {\n    display: flex;\n    flex-wrap: nowrap;\n    align-items: center;\n    position: relative;\n    overflow: hidden;    \n    justify-content: space-between;    \n    margin: 0;\n  }\n\n  .announcement-text-{{ section.id }} {\n    text-align: {{ text_align_mobile }};\n    width: 75%;\n    margin: 0 auto;\n  }\n\n  .announcement-text-{{ section.id }} * {\n    margin: 0;  \n    font-size: {{ text_size_mobile }}px;\n    line-height: {{ text_height }}%;\n    color: {{ text_color }};\n    text-transform: unset;\n    word-break: break-word;\n  }\n\n  .announcement-thumbs-{{ section.id }} {\n    position: absolute;\n    right: 10px;\n    bottom: 50%;\n    transform: translateY(50%);\n    padding-top: {{ padding_top }}px;\n    padding-bottom: {{ padding_bottom }}px;\n    width: auto;\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 6px;\n    z-index: 2;\n    align-items: center;\n  }\n\n  .announcement-slider-wrapper-{{ section.id }} {\n    align-items: center !important;\n  }\n\n  .announcement-thumb-{{ section.id }} {\n    display: none;\n  }\n\n  #progress{{ section.id | replate: '-', '' }} {\n    width: 100%;\n    height: 1px;\n  }\n\n  #progress{{ section.id | replate: '-', '' }}[value] {\n    appearance: none;\n    border: none;\n    color: {{ progress_color }};\n  }\n\n  #progress{{ section.id | replate: '-', '' }}[value]::-webkit-progress-value {\n    background: {{ progress_color }};\n    transition: width 0.5s linear;\n  }\n  \n  #progress{{ section.id | replate: '-', '' }}[value]::-webkit-progress-bar {\n    background: {{ progress_default_color }};\n    transition: width 0.5s linear;\n  }\n  \n  #progress{{ section.id | replate: '-', '' }}[value]::-moz-progress-bar {\n    background: {{ progress_default_color }};\n  }\n\n  .announcement-button-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    background: transparent;\n    justify-content: center;\n    border: none;\n    padding: 5px;\n    cursor: pointer;\n    width: 18px;\n    height: 18px;\n  }\n\n  .announcement-button-{{ section.id }} {\n    border-radius: 100%;\n    border: 1px solid {{ play_border_color }};\n  }\n\n  .announcement-button-{{ section.id }} svg {\n    flex-shrink: 0;\n    width: 10px;\n    height: 10px;\n  }  \n\n  \n  .announcement-button-{{ section.id }} svg:nth-child(2) rect  {\n    stroke: {{ play_icon_color }};\n  }\n\n  .announcement-button-{{ section.id }} svg:nth-child(1) polygon {\n    stroke: {{ play_icon_color }};\n    fill: {{ play_icon_color }};\n  }\n\n  .announcement-button-{{ section.id }} svg:nth-child(1) {\n    display: none;\n  }\n\n  .announcement-button-{{ section.id }}.active svg:nth-child(1) {\n    display: block;\n  }\n  \n  .announcement-button-{{ section.id }}.active svg:nth-child(2) {\n    display: none;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .announcement-text-{{ section.id }} {\n      text-align: {{ text_align }};\n      width: 100%;\n    }\n\n    .announcement-text-{{ section.id }} * {\n      font-size: {{ text_size }}px;\n    }\n\n    .announcement-thumbs-{{ section.id }} {\n      grid-template-columns: repeat({{ section.blocks.size | plus: 1 }}, 1fr);\n      width: calc(150px - 20px);\n    } \n\n    .announcement-thumb-{{ section.id }} {\n      cursor: pointer;\n      display: flex;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if text_custom %}\n  <style>\n    .announcement-text-{{ section.id }} * {\n      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};\n      font-weight: {{ text_font.weight }};\n      font-style: {{ text_font.style }};\n    }\n  </style>\n{% endif %}\n\n<template id=\"announcement-template-{{ section.id }}\">\n  <div class=\"section-{{ section.id }} announcement-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n      <div class=\"section-{{ section.id }}-settings\">\n        <div class=\"announcement-inner-{{ section.id }}\">\n          <div class=\"announcement-slider-{{ section.id }} swiper\">\n            <div class=\"announcement-slider-wrapper-{{ section.id }} swiper-wrapper\">\n              {% for block in section.blocks %}\n                <div class=\"announcement-slide-{{ section.id }} swiper-slide\">\n                  {% if block.settings.text != blank %}\n                    <div class=\"announcement-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                  {% endif %}\n                </div>\n              {% endfor %}\n            </div>\n          </div>\n        </div>\n\n        <div class=\"announcement-thumbs-{{ section.id }}\">\n          {% for block in section.blocks %}\n            <div class=\"announcement-thumb-{{ section.id }}\">\n              <progress id=\"progress{{ section.id | replate: '-', '' }}\" max=\"100\" value=\"0\"></progress>\n            </div>\n          {% endfor %}             \n          <button class=\"announcement-button-{{ section.id }}\">\n              <svg class=\"t4s-carousel--autoplay-icon t4s-carousel--autoplay-icon--play\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"5 3 19 12 5 21 5 3\"></polygon></svg>\n              <svg class=\"t4s-carousel--autoplay-icon t4s-carousel--autoplay-icon--pause t4s-pa\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"4\" width=\"2\" height=\"16\"></rect><rect x=\"15\" y=\"4\" width=\"2\" height=\"16\"></rect></svg>\n          </button>\n        </div>  \n      </div>\n  </div>\n</template>\n\n<div id=\"announcement-local-target-{{ section.id }}\"></div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n\n<script>\n  function initAnnouncementBar4() {\n    let cssTarget = '{{ section.settings.insert_css_class_target }}';\n    let productForm = cssTarget\n      ? document.querySelector(cssTarget)\n      : document.querySelector('#announcement-local-target-{{ section.id }}');\n\n    if (!productForm) return;\n\n    const templateContent = document.querySelector(\n      '#announcement-template-{{ section.id }}'\n    ).content;\n\n    productForm.insertAdjacentElement(\n      'beforebegin',\n      templateContent.firstElementChild\n    );\n\n    const autoplayDelay = 3000;\n    const progressBars = document.querySelectorAll(\n      `.announcement-thumbs-{{ section.id }} progress`\n    );\n    const pauseButton = document.querySelector(\n      `.announcement-button-{{ section.id }}`\n    );\n\n    const slider = new Swiper(`.announcement-slider-{{ section.id }}`, {\n      speed: 300,\n      loop: true,\n      slidesPerView: 1,\n      autoplay: false,\n    });\n\n    let currentProgressIndex = 0;\n    let progressTimer = null;\n    let isPaused = false;\n\n    function startProgressBar(index) {\n      if (index >= progressBars.length) {\n        resetAllProgressBars();\n        currentProgressIndex = 0;\n        slider.slideToLoop(0);\n      }\n\n      const bar = progressBars[currentProgressIndex];\n      bar.value = 0;\n\n      let startTime = Date.now();\n\n      function updateProgress() {\n        if (isPaused) return;\n\n        const elapsed = Date.now() - startTime;\n        const progressValue = (elapsed / autoplayDelay) * 100;\n\n        if (progressValue <= 100) {\n          bar.value = progressValue;\n          progressTimer = requestAnimationFrame(updateProgress);\n        } else {\n          bar.value = 100;\n          currentProgressIndex++;\n          setTimeout(() => {\n            slider.slideNext();\n            startProgressBar(currentProgressIndex);\n          }, 400)\n       \n        }\n      }\n\n      progressTimer = requestAnimationFrame(updateProgress);\n    }\n\n    function resetAllProgressBars() {\n      progressBars.forEach((bar) => (bar.value = 0));\n      cancelAnimationFrame(progressTimer);\n    }\n\n    pauseButton.addEventListener('click', () => {\n      isPaused = !isPaused;\n      pauseButton.classList.toggle('active', isPaused);\n\n      if (isPaused) {\n        cancelAnimationFrame(progressTimer);\n      } else {\n        startProgressBar(currentProgressIndex);\n      }\n    });\n\n    startProgressBar(currentProgressIndex);\n  }\n\n\n  document.addEventListener('DOMContentLoaded', initAnnouncementBar4);\n\n</script>",
+  "variables": {
+    "insert_css_class_target": {
+      "type": "text",
+      "default": ".header, .pageheader",
+      "label": "Target CSS class",
+      "description": "If empty, the announcement bar will display normally. If you want to display the announcement bar in a specific place, you can add the CSS class of the target element here. Default is above header as announcement bar"
+    },
+    "text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "text_size": {
+      "type": "text",
+      "default": "13",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "text_align": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "text_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "progress_default_color": {
+      "type": "color",
+      "default": "#AFAFAF",
+      "label": "Progress bar",
+      "description": "Progress bar"
+    },
+    "progress_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Active progress bar",
+      "description": "Active progress bar"
+    },
+    "play_icon_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Play icon",
+      "description": "Play icon"
+    },
+    "play_border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Play border",
+      "description": "Play border"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "12",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    }
+  }
+}

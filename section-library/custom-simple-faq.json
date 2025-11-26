@@ -1,0 +1,61 @@
+{
+  "id": "custom-simple-faq",
+  "name": "Faq",
+  "description": "Section: Faq",
+  "tags": [
+    "simple",
+    "faq"
+  ],
+  "type": "faq",
+  "liquid_code": "<div class=\"rb-faq-shopify-section\">\r\n    <h1 style=\"text-align: center; padding: 20px 20px 0px 20px;\"> {{ section.settings.heading }} </h1>\r\n    <div class=\"rb-faq-container\">\r\n        {%for block in section.blocks %}\r\n        <div class=\"rb-faq-container-item\">\r\n            <input style=\"display:none!important;\" type=\"checkbox\" id=\"tab{{forloop.index}}\" class=\"tab-toggle\">\r\n            <label for=\"tab{{forloop.index}}\" class=\"rb-faq-question\">{{block.settings.question}}</label>\r\n            <div class=\"rb-faq-answer\">{{block.settings.answer}}</div>\r\n        </div>\r\n        {% endfor %}\r\n    </div>\r\n  </div>",
+  "variables": {
+    "heading": {
+      "type": "text",
+      "default": "Frequently Asked Questions",
+      "label": "Heading",
+      "description": "Heading"
+    },
+    "icon_color": {
+      "type": "color",
+      "default": "#fff",
+      "label": "Icon color",
+      "description": "Icon color"
+    },
+    "hover_color": {
+      "type": "color",
+      "default": "#EFEFEF",
+      "label": "Question hover color",
+      "description": "Question hover color"
+    },
+    "question_color": {
+      "type": "color",
+      "default": "#fff",
+      "label": "Question color",
+      "description": "Question color"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#D5CAA6",
+      "label": "Question Background color",
+      "description": "Question Background color"
+    },
+    "answer_color": {
+      "type": "color",
+      "default": "#000",
+      "label": "Answer color",
+      "description": "Answer color"
+    },
+    "answer_bg_color": {
+      "type": "color",
+      "default": "#fff",
+      "label": "Answer Background color",
+      "description": "Answer Background color"
+    },
+    "questions-font-size": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Questions font size",
+      "description": "Questions font size"
+    }
+  }
+}

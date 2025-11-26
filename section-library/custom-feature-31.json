@@ -1,0 +1,372 @@
+{
+  "id": "custom-feature-31",
+  "name": "CUSTOM Feature #31",
+  "description": "Section: CUSTOM Feature #31",
+  "tags": [
+    "feature"
+  ],
+  "type": "feature",
+  "liquid_code": "<link\n  rel=\"stylesheet\"\n  href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\"\n/>\n\n{%- liquid \n  assign padding_horizontal = section.settings.padding_horizontal\n  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile\n  assign padding_top = section.settings.padding_top\n  assign padding_bottom = section.settings.padding_bottom\n  assign border_color = section.settings.border_color\n  assign border_thickness = section.settings.border_thickness\n  assign margin_top = section.settings.margin_top\n  assign margin_bottom = section.settings.margin_bottom\n  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile\n  assign margin_horizontal = section.settings.margin_horizontal\n  assign background_color = section.settings.background_color\n  assign background_gradient = section.settings.background_gradient\n  assign full_width = section.settings.full_width\n  assign content_width = section.settings.content_width\n  assign section_radius = section.settings.section_radius\n\n  assign layout = section.settings.layout\n  assign layout_mobile = section.settings.layout_mobile\n  assign layout_gap = section.settings.layout_gap\n  assign layout_gap_mobile = section.settings.layout_gap_mobile\n  assign use_slider_on_mobile = section.settings.use_slider_on_mobile\n\n  assign content_align = section.settings.content_align\n  assign content_align_mobile = section.settings.content_align_mobile\n  assign content_vertical_align = section.settings.content_vertical_align\n\n  assign features_gap = section.settings.features_gap\n  assign features_gap_mobile = section.settings.features_gap_mobile\n\n  assign feature_align = section.settings.feature_align\n  assign feature_align_mobile = section.settings.feature_align_mobile\n\n  assign feature_horizontal_align = \"\"\n  if feature_align == \"center\"\n    assign feature_horizontal_align = \"center\"\n  elsif feature_align == \"right\"\n    assign feature_horizontal_align = \"end\"\n  else\n    assign feature_horizontal_align = \"start\"\n  endif\n\n  assign feature_horizontal_align_mobile = \"\"\n  if feature_align_mobile == \"center\"\n    assign feature_horizontal_align_mobile = \"center\"\n  elsif feature_align_mobile == \"right\"\n    assign feature_horizontal_align_mobile = \"end\"\n  else\n    assign feature_horizontal_align_mobile = \"start\"\n  endif\n\n  assign percent_size = section.settings.percent_size\n  assign percent_size_mobile = section.settings.percent_size_mobile\n  assign percent_color = section.settings.percent_color\n  assign percent_custom = section.settings.percent_custom\n  assign percent_font = section.settings.percent_font\n  assign percent_height = section.settings.percent_height\n\n  assign circle_progress = section.settings.circle_progress\n  assign circle_active_progress = section.settings.circle_active_progress\n  assign circle_size = section.settings.circle_size\n  assign circle_size_mobile = section.settings.circle_size_mobile\n\n  assign feature_text_custom = section.settings.feature_text_custom\n  assign feature_text_font = section.settings.feature_text_font\n  assign feature_text_size = section.settings.feature_text_size\n  assign feature_text_size_mobile = section.settings.feature_text_size_mobile\n  assign feature_text_height = section.settings.feature_text_height\n  assign feature_text_color = section.settings.feature_text_color\n  assign feature_text_mt = section.settings.feature_text_mt\n  assign feature_text_mt_mobile = section.settings.feature_text_mt_mobile\n\n  assign bottom_text = section.settings.bottom_text\n  assign bottom_text_custom = section.settings.bottom_text_custom\n  assign bottom_text_font = section.settings.bottom_text_font\n  assign bottom_text_size = section.settings.bottom_text_size\n  assign bottom_text_size_mobile = section.settings.bottom_text_size_mobile\n  assign bottom_text_height = section.settings.bottom_text_height\n  assign bottom_text_color = section.settings.bottom_text_color\n  assign bottom_text_mt = section.settings.bottom_text_mt\n  assign bottom_text_mt_mobile = section.settings.bottom_text_mt_mobile\n  assign bottom_text_align = section.settings.bottom_text_align\n  assign bottom_text_align_mobile = section.settings.bottom_text_align_mobile\n\n  assign dots_size = section.settings.dots_size\n  assign dots_show_mobile = section.settings.dots_show_mobile\n  assign dots_color = section.settings.dots_color\n  assign dots_mt = section.settings.dots_mt\n-%}\n\n{%- style -%}\n  {{ percent_font | font_face: font_display: 'swap' }}\n  {{ feature_text_font | font_face: font_display: 'swap' }}\n  {{ bottom_text_font | font_face: font_display: 'swap' }}\n\n  .section-{{ section.id }} {\n    border-top: solid {{ border_color }} {{ border_thickness }}px;\n    border-bottom: solid {{ border_color }} {{ border_thickness }}px;\n    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;\n    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;\n    margin-left: {{ margin_horizontal_mobile }}rem;\n    margin-right: {{ margin_horizontal_mobile }}rem;\n    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;\n    overflow: hidden;\n  }\n  \n  .section-{{ section.id }}-settings {\n    margin: 0 auto;\n    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;\n    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;\n    padding-left: {{ padding_horizontal_mobile }}rem;\n    padding-right: {{ padding_horizontal_mobile }}rem;\n  }\n\n  .feature-body-{{ section.id }} {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: {{ layout_gap_mobile }}px;\n  }\n\n  .feature-slider-wrapper-{{ section.id }} {\n    display: grid;\n  }\n\n  .feature-features-slider-{{ section.id }} {\n    display: none !important;\n    min-width: 0 !important;\n    width: 100% !important;\n  }\n\n  .feature-content-{{ section.id }} {\n    grid-area: content;\n    display: flex;\n    flex-direction: column;\n    position: relative;\n    justify-content: {{ content_vertical_align }};\n  }\n  \n  .feature-features-wrapper-{{ section.id }} {\n    grid-area: feature\n  }\n\n  .feature-features-grid-{{ section.id }} {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: {{ features_gap_mobile }}px;\n  }\n\n  .feature-progress-{{ section.id }} {\n    display: flex;\n    align-items: center;\n    justify-content: {{ feature_horizontal_align_mobile }};\n    gap: 8px;\n  }\n\n  .feature-circle-{{ section.id }} {\n    position: relative;\n    height: {{ circle_size_mobile }}px;\n  }\n\n  .feature-circle-container-{{ section.id }} {\n    max-height: fit-content;\n  }\n\n  .feature-circle-container-{{ section.id }} svg {\n    width: {{ circle_size_mobile }}px;\n    height: {{ circle_size_mobile }}px;\n  }\n\n  .feature-progress-text-{{ section.id }}{\n    margin: 0;\n    font-size: {{ percent_size_mobile }}px;\n    color: {{ percent_color }};\n    line-height: {{ percent_height }}%;   \n    display: block;\n    text-transform: unset;\n  }\n\n  .feature-item-text-{{ section.id }} {\n    margin-top: {{ feature_text_mt_mobile }}px;\n    text-align: {{ feature_align_mobile }};\n  }\n\n  .feature-item-text-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ feature_text_size_mobile }}px;\n    color: {{ feature_text_color }};\n    line-height: {{ feature_text_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n\n  .feature-bottom-text-{{ section.id }} {\n    margin-top: {{ bottom_text_mt_mobile }}px;\n    text-align: {{ bottom_text_align_mobile }};\n  }\n\n  .feature-bottom-text-{{ section.id }} * {\n    margin: 0;\n    font-size: {{ bottom_text_size_mobile }}px;\n    color: {{ bottom_text_color }};\n    line-height: {{ bottom_text_height }}%;\n    text-transform: unset;\n    text-decoration: none;\n  }\n\n  \n  .feature-pagination-{{ section.id }} {\n    position: static !important;\n    margin: 0px auto !important;\n    margin-top: {{ dots_mt }}px !important;\n    width: 100% !important;\n    max-width: fit-content;\n    justify-content: center;\n    align-items: center;\n  }\n\n  .feature-pagination-{{ section.id }} .swiper-pagination-bullet {\n    width: {{ dots_size }}px !important;\n    height: {{ dots_size }}px !important;\n    border: 0px !important;\n    background-color: {{ dots_color }} !important;\n    opacity: 0.4 !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  .feature-pagination-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active {\n    transform: scale(1.3) !important;\n    opacity: 1 !important;\n    transition: all 0.25s ease 0s;\n  }\n\n  @media(min-width: 1024px) {\n\n    .section-{{ section.id }} {\n      margin-top: {{ margin_top }}px;\n      margin-bottom: {{ margin_bottom }}px;\n      margin-left: {{ margin_horizontal }}rem;\n      margin-right: {{ margin_horizontal }}rem;\n      border-radius: {{ section_radius }}px;\n    }\n    \n    .section-{{ section.id }}-settings {\n      padding: 0 5rem;\n      padding-top: {{ padding_top }}px;\n      padding-bottom: {{ padding_bottom }}px;\n      padding-left: {{ padding_horizontal }}rem;\n      padding-right: {{ padding_horizontal }}rem;\n    }\n\n    .feature-body-{{ section.id }} {\n      grid-template-columns: 1fr 1fr;\n      gap: {{ layout_gap }}px;\n    }\n\n    .feature-features-grid-{{ section.id }} {\n      grid-template-columns: 1fr 1fr;\n      gap: {{ features_gap }}px;\n    }\n\n    .feature-progress-{{ section.id }} {\n      justify-content: {{ feature_horizontal_align }};\n    }\n\n    .feature-progress-text-{{ section.id }}{\n      font-size: {{ percent_size }}px;\n    }\n\n    .feature-circle-{{ section.id }} {\n      height: {{ circle_size }}px;\n    }\n\n    .feature-circle-container-{{ section.id }} svg {\n      width: {{ circle_size }}px;\n      height: {{ circle_size }}px;\n    }\n\n    .feature-item-text-{{ section.id }} {\n      text-align: {{ feature_align }}; \n      margin-top: {{ feature_text_mt }}px;\n    }\n\n    .feature-item-text-{{ section.id }} * {    \n      font-size: {{ feature_text_size }}px;\n    }\n\n    .feature-bottom-text-{{ section.id }} {\n      text-align: {{ bottom_text_align }}; \n      margin-top: {{ bottom_text_mt }}px;\n    }\n\n    .feature-bottom-text-{{ section.id }} * {    \n      font-size: {{ bottom_text_size }}px;\n    }\n  }\n  \n{%- endstyle -%}\n\n{% unless full_width %}\n  <style>\n    .section-{{ section.id }}-settings {\n      max-width: {{ content_width }}px;\n    }\n  </style>\n{% endunless %}\n\n{% if margin_horizontal_mobile > 0 %}\n  <style>\n    .section-{{ section.id }} {\n      border-left: solid {{ border_color }} {{ border_thickness }}px;\n      border-right: solid {{ border_color }} {{ border_thickness }}px;\n    }\n    \n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: 0px;\n        border-right: 0px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if margin_horizontal > 0 %}\n  <style>\n    @media(min-width: 1024px) {\n      .section-{{ section.id }} {\n        border-left: solid {{ border_color }} {{ border_thickness }}px;\n        border-right: solid {{ border_color }} {{ border_thickness }}px;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if percent_custom %}\n  <style>\n    .feature-progress-text-{{ section.id }} {\n      font-family: {{ percent_font.family }}, {{ percent_font.fallback_families }};\n      font-weight: {{ percent_font.weight }};\n      font-style: {{ percent_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if feature_text_custom %}\n  <style>\n    .feature-item-text-{{ section.id }} * {\n      font-family: {{ feature_text_font.family }}, {{ feature_text_font.fallback_families }};\n      font-weight: {{ feature_text_font.weight }};\n      font-style: {{ feature_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n\n{% if bottom_text_custom %}\n  <style>\n    .feature-bottom-text-{{ section.id }} * {\n      font-family: {{ bottom_text_font.family }}, {{ bottom_text_font.fallback_families }};\n      font-weight: {{ bottom_text_font.weight }};\n      font-style: {{ bottom_text_font.style }};\n    }\n  </style>\n{% endif %}\n\n{% if layout_mobile == 'content_feature'%}\n  <style>\n    .feature-body-{{ section.id }} {\n      grid-template-areas: \n        \"content\"\n        \"feature\";     \n    }\n  </style>\n{% elsif layout_mobile == 'feature_content' %}\n  <style>\n    .feature-body-{{ section.id }} {\n      grid-template-areas: \n        \"feature\"\n        \"content\";     \n    }\n  </style>\n{% endif %}\n\n{% if layout == 'content_feature'%}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-body-{{ section.id }} {\n        grid-template-areas: \"content feature\";    \n      }\n    }    \n  </style>\n{% elsif layout == 'feature_content' %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-body-{{ section.id }} {\n        grid-template-areas: \"feature content\";   \n      }\n    }   \n  </style>\n{% endif %}\n\n{% if feature_align_mobile == 'center' %}\n  <style>   \n    .feature-progress-{{ section.id }} {\n      flex-direction: row;\n    }     \n    .feature-progress-text-{{ section.id }} {\n      text-align: center;\n    }     \n  </style>  \n{% elsif feature_align_mobile == 'right' %}\n  <style>\n    .feature-progress-{{ section.id }} {\n      flex-direction: row;\n    }  \n    .feature-progress-text-{{ section.id }} {\n      text-align: end;\n    }\n  </style>\n{% else %}\n  <style>\n    .feature-progress-{{ section.id }} {\n      flex-direction: row;\n    }    \n    .feature-progress-text-{{ section.id }} {\n      text-align: center;\n    }\n  </style>\n{% endif %}\n\n{% if feature_align == 'center' %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-progress-{{ section.id }} {\n        flex-direction: row;\n      }\n      .feature-progress-text-{{ section.id }} {\n        text-align: center;\n      }\n    }\n  </style>  \n{% elsif feature_align == 'right' %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-progress-{{ section.id }} {\n        flex-direction: row;\n      }  \n      .feature-progress-text-{{ section.id }} {\n          text-align: end;\n      }\n  </style>\n{% else %}\n  <style>\n    @media(min-width: 1024px) {\n      .feature-progress-{{ section.id }} {\n        flex-direction: row;\n      }\n      .feature-progress-text-{{ section.id }} {\n        text-align: start;\n      }\n    }     \n  </style>\n{% endif %}\n\n{% if use_slider_on_mobile %}\n  <style>\n    .feature-features-grid-{{ section.id }} {\n      display: none;      \n    }\n\n    .feature-features-slider-{{ section.id }} {\n      display: block !important;\n    }\n\n    @media(min-width: 1024px) {\n      .feature-features-grid-{{ section.id }} {\n        display: grid;      \n      }\n\n      .feature-features-slider-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% if dots_show_mobile %}\n  <style>\n    .feature-pagination-{{ section.id }} {\n      display: flex !important;\n    }\n\n    @media(min-width: 1024px) {\n      .feature-pagination-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% else %}\n  <style>\n    .feature-pagination-{{ section.id }} {\n      display: none !important;\n    }\n\n    @media(min-width: 1024px) {\n      .feature-pagination-{{ section.id }} {\n        display: none !important;\n      }\n    }\n  </style>\n{% endif %}\n\n{% for block in section.blocks %}\n  {% case block.type %}\n    {% when 'heading' %}  \n      <style>\n        {{  block.settings.heading_font | font_face: font_display: 'swap' }}\n\n        .feature-heading-{{ block.id }} {\n          margin-top: {{ block.settings.heading_mt_mobile }}px;\n          text-align: {{ content_align_mobile }};\n        }\n      \n        .feature-heading-{{ block.id }} * {\n          margin: 0;\n          font-size: {{ block.settings.heading_size_mobile }}px;\n          color: {{ block.settings.heading_color }};\n          line-height: {{ block.settings.heading_height }}%;\n          text-transform: unset;\n          word-break: break-word;\n          font-weight: 700;\n        }\n\n        .feature-heading-{{ block.id }} * strong {\n          text-decoration: underline {{ block.settings.heading_border_color }};\n        }\n\n        @media(min-width: 1024px) {\n          \n          .feature-heading-{{ block.id }} {\n            margin-top: {{ block.settings.heading_mt }}px;\n            text-align: {{ content_align }};\n          }\n        \n          .feature-heading-{{ block.id }} * {\n            font-size: {{ block.settings.heading_size }}px;\n          }\n        }          \n      </style>\n        \n      {% if block.settings.heading_custom %}\n        <style>\n          .feature-heading-{{ block.id }} * {\n            font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};\n            font-weight: {{ block.settings.heading_font.weight }};\n            font-style: {{ block.settings.heading_font.style }};\n          }\n        </style>\n      {% endif %}\n\n    {% when 'text' %}   \n      <style>\n        {{  block.settings.text_font | font_face: font_display: 'swap' }}\n        \n        .feature-text-{{ block.id }} {\n          margin-top: {{ block.settings.text_mt_mobile }}px;\n          text-align: {{ content_align_mobile }};\n          position: relative;\n          z-index: 2;\n        }\n      \n        .feature-text-{{ block.id }} * {\n          margin: 0;\n          font-size: {{ block.settings.text_size_mobile }}px;\n          color: {{ block.settings.text_color }};\n          line-height: {{ block.settings.text_height }}%;\n          text-transform: unset;\n        }\n\n        @media(min-width: 1024px) {\n          \n          .feature-text-{{ block.id }} {\n            margin-top: {{ block.settings.text_mt }}px;\n            text-align: {{  content_align }};\n          }\n      \n          .feature-text-{{ block.id }} * {\n            font-size: {{ block.settings.text_size }}px;\n          }\n          \n        }\n      </style>\n\n      {% if block.settings.text_custom %}\n        <style>\n          .feature-text-{{ block.id }} * {\n            font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};\n            font-weight: {{ block.settings.text_font.weight }};\n            font-style: {{ block.settings.text_font.style }};\n          }\n        </style>          \n      {% endif %}  \n  {% endcase %}\n{% endfor %}\n\n<div class=\"section-{{ section.id }} feature-{{ section.id }}\" style=\"background-color:{{ background_color }}; background-image: {{ background_gradient }};\">\n    <div class=\"section-{{ section.id }}-settings\">\n      <div class=\"feature-body-{{ section.id }}\">\n        <div class=\"feature-content-{{ section.id }}\">\n          {% for block in section.blocks %}\n            {% case block.type %}\n              {% when 'heading'%}\n                {% if block.settings.heading != blank %}\n                  <div class=\"feature-heading-{{ block.id }}\">\n                    {{ block.settings.heading }}\n                  </div>\n                {% endif %}\n              {% when 'text' %}\n                {% if block.settings.text != blank %}\n                  <div class=\"feature-text-{{ block.id }}\">\n                    {{ block.settings.text }}\n                  </div>\n                {% endif %}  \n            {% endcase %}\n          {% endfor %}   \n        </div> \n        <div class=\"feature-features-wrapper-{{ section.id }}\">\n          <div class=\"feature-features-grid-{{ section.id }}\">\n            {% for block in section.blocks %}\n              {% unless block.type == 'heading' or block.type == 'text' %}\n                {% if block.type == 'feature' %}\n                  <div class=\"feature-item-{{ section.id }}\">\n                    <div class=\"feature-progress-{{ section.id }}\">\n                      {% if block.settings.percent > 0 %}\n                        <p class=\"feature-progress-text-{{ section.id }}\">0%</p>\n                        <div class=\"feature-circle-container-{{ section.id }}\">\n                          <div class=\"feature-circle-{{ section.id }}\" data-percent=\"{{ block.settings.percent }}\" data-progress=\"{{ circle_progress }}\" data-active-progress=\"{{ circle_active_progress }}\">\n                            <svg width=\"100\" height=\"100\" viewBox=\"0 0 36 36\" style=\"background-color: transparent;\">\n                              <path d=\"M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831\" fill=\"none\" stroke=\"{{ circle_progress }}\" stroke-width=\"3\" stroke-dasharray=\"100, 100\"></path>\n                            </svg>                    \n                          </div>\n                        </div>                     \n                      {% endif %}   \n                    </div>\n                    {% if block.settings.text %}\n                      <div class=\"feature-item-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                    {% endif %}\n                  </div>\n                {% endif %}           \n              {% endunless %}\n            {% endfor %}\n          </div>\n\n          <div class=\"feature-slider-wrapper-{{ section.id }}\">\n            <div class=\"feature-features-slider-{{ section.id }} swiper\">\n              <div class=\"swiper-wrapper\">\n                {% for block in section.blocks %}\n                  {% unless block.type == 'heading' or block.type == 'text' %}\n                    {% if block.type == 'feature' %}\n                      <div class=\"feature-item-{{ section.id }} swiper-slide\">\n                        <div class=\"feature-progress-{{ section.id }}\">\n                          {% if block.settings.percent > 0 %}\n                            <p class=\"feature-progress-text-{{ section.id }}\">0%</p>\n                            <div class=\"feature-circle-container-{{ section.id }}\">\n                              <div class=\"feature-circle-{{ section.id }}\" data-percent=\"{{ block.settings.percent }}\" data-progress=\"{{ circle_progress }}\" data-active-progress=\"{{ circle_active_progress }}\">\n                                <svg width=\"100\" height=\"100\" viewBox=\"0 0 36 36\" style=\"background-color: transparent;\">\n                                  <path d=\"M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831\" fill=\"none\" stroke=\"{{ circle_progress }}\" stroke-width=\"3\" stroke-dasharray=\"100, 100\"></path>\n                                </svg>                    \n                              </div>\n                            </div>                     \n                          {% endif %}   \n                        </div>\n                        {% if block.settings.text %}\n                          <div class=\"feature-item-text-{{ section.id }}\">{{ block.settings.text }}</div>\n                        {% endif %}\n                      </div>\n                    {% endif %}           \n                  {% endunless %}\n                {% endfor %}\n              </div>             \n            </div>\n            <div class=\"feature-pagination-{{ section.id }} swiper-pagination\"></div>\n          </div>\n          \n\n          {% if bottom_text != blank %}\n            <div class=\"feature-bottom-text-{{ section.id }}\">{{ bottom_text }}</div>\n          {% endif %}\n        </div>        \n      </div>\n      \n    </div>\n</div>\n\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n\n<script>\nfunction initFeature30() {\n  const slider = new Swiper(\".feature-features-slider-{{ section.id }}\", {\n    speed: 800,\n    spaceBetween: 20,   \n    pagination: {\n      el: '.feature-pagination-{{ section.id }}',\n      type: \"bullets\",\n      clickable: true\n    },\n    slidesPerView: 1\n  });\n\n  let circles = document.querySelectorAll(`.feature-circle-{{ section.id }}`);\n  let section = document.querySelector(`.feature-{{ section.id }}`);\n  let animated = false;\n\n  const observer = new IntersectionObserver((entries, observer) => {\n    if (animated) return;\n\n    let sectionInView = entries.some(entry => entry.isIntersecting);\n    \n    if (sectionInView) {\n      animated = true;\n      observer.unobserve(section); \n\n      circles.forEach(circle => {\n        const progressText = circle.closest('.feature-progress-{{ section.id }}')\n                                  .querySelector(`.feature-progress-text-{{ section.id }}`);\n        const progressColor = circle.getAttribute('data-progress');\n        const activeProgressColor = circle.getAttribute('data-active-progress');\n        const percent = parseFloat(circle.getAttribute('data-percent')) || 25;\n        const lineWidth = parseFloat(circle.getAttribute('data-line')) || 4;\n        const size = parseFloat(circle.getAttribute('data-size')) || 100;\n        const svgNamespace = \"http://www.w3.org/2000/svg\";\n\n        let existingSvg = circle.querySelector(\"svg\");\n        if (existingSvg) existingSvg.remove();\n\n        let svg = document.createElementNS(svgNamespace, \"svg\");\n        svg.setAttribute(\"width\", size);\n        svg.setAttribute(\"height\", size);\n        svg.setAttribute(\"viewBox\", \"0 0 36 36\");\n        svg.style.backgroundColor = \"transparent\";\n\n        let backgroundCircle = document.createElementNS(svgNamespace, \"path\");\n        backgroundCircle.setAttribute(\"d\", \"M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831\");\n        backgroundCircle.setAttribute(\"fill\", \"none\");\n        backgroundCircle.setAttribute(\"stroke\", progressColor);\n        backgroundCircle.setAttribute(\"stroke-width\", lineWidth);\n        backgroundCircle.setAttribute(\"stroke-dasharray\", \"100, 100\");\n\n        let activeCircle = document.createElementNS(svgNamespace, \"path\");\n        activeCircle.setAttribute(\"d\", \"M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831\");\n        activeCircle.setAttribute(\"fill\", \"none\");\n        activeCircle.setAttribute(\"stroke\", activeProgressColor);\n        activeCircle.setAttribute(\"stroke-width\", lineWidth);\n        activeCircle.setAttribute(\"stroke-dasharray\", \"0, 100\");\n        activeCircle.classList.add(\"active-circle\");\n\n        svg.appendChild(backgroundCircle);\n        svg.appendChild(activeCircle);\n        circle.appendChild(svg);\n\n        let currentPercent = 0;\n        function animateCircle() {\n          let dashArray = `${currentPercent}, 100`;\n          activeCircle.setAttribute(\"stroke-dasharray\", dashArray);\n          progressText.textContent = `${currentPercent}%`;\n\n          if (currentPercent < percent) {\n            currentPercent += 1;\n            requestAnimationFrame(animateCircle);\n          }\n        }\n        animateCircle();\n      });\n    }\n  }, { threshold: 0.5 });\n\n  observer.observe(section);\n\n}\n\ndocument.addEventListener('DOMContentLoaded', initFeature30);\n\nif (Shopify.designMode) {\n  document.addEventListener('shopify:section:unload', initFeature30);\n  document.addEventListener('shopify:section:load', initFeature30);\n}\n\n</script>",
+  "variables": {
+    "layout": {
+      "type": "text",
+      "default": "content_feature",
+      "label": "Layout",
+      "description": "Layout"
+    },
+    "layout_mobile": {
+      "type": "text",
+      "default": "content_feature",
+      "label": "Layout - mobile",
+      "description": "Layout - mobile"
+    },
+    "layout_gap": {
+      "type": "text",
+      "default": "48",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "layout_gap_mobile": {
+      "type": "text",
+      "default": "24",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "content_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "content_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "content_vertical_align": {
+      "type": "text",
+      "default": "start",
+      "label": "Vertical align - desktop",
+      "description": "Vertical align - desktop"
+    },
+    "features_gap": {
+      "type": "text",
+      "default": "48",
+      "label": "Gap",
+      "description": "Gap"
+    },
+    "features_gap_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Gap - mobile",
+      "description": "Gap - mobile"
+    },
+    "use_slider_on_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Use slider on mobile",
+      "description": "Use slider on mobile"
+    },
+    "feature_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "feature_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "circle_size": {
+      "type": "text",
+      "default": "50",
+      "label": "Size",
+      "description": "Size"
+    },
+    "circle_size_mobile": {
+      "type": "text",
+      "default": "40",
+      "label": "Size - mobile",
+      "description": "Size - mobile"
+    },
+    "percent_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "percent_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "percent_size": {
+      "type": "text",
+      "default": "72",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "percent_size_mobile": {
+      "type": "text",
+      "default": "48",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "percent_height": {
+      "type": "text",
+      "default": "130",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "feature_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "feature_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "feature_text_size": {
+      "type": "text",
+      "default": "18",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "feature_text_size_mobile": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "feature_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "feature_text_mt": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "feature_text_mt_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "bottom_text": {
+      "type": "textarea",
+      "default": "<p><em>Caption about the results and/or link for their proof.</em></p>",
+      "label": "Text",
+      "description": "Text"
+    },
+    "bottom_text_custom": {
+      "type": "text",
+      "default": "false",
+      "label": "Use custom font",
+      "description": "Use custom font"
+    },
+    "bottom_text_font": {
+      "type": "text",
+      "default": "josefin_sans_n4",
+      "label": "Font family",
+      "description": "Font family"
+    },
+    "bottom_text_size": {
+      "type": "text",
+      "default": "16",
+      "label": "Font size",
+      "description": "Font size"
+    },
+    "bottom_text_size_mobile": {
+      "type": "text",
+      "default": "12",
+      "label": "Font size - mobile",
+      "description": "Font size - mobile"
+    },
+    "bottom_text_height": {
+      "type": "text",
+      "default": "150",
+      "label": "Line height",
+      "description": "Line height"
+    },
+    "bottom_text_mt": {
+      "type": "text",
+      "default": "60",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "bottom_text_mt_mobile": {
+      "type": "text",
+      "default": "32",
+      "label": "Margin top - mobile",
+      "description": "Margin top - mobile"
+    },
+    "bottom_text_align": {
+      "type": "text",
+      "default": "",
+      "label": "Alignment",
+      "description": "Alignment"
+    },
+    "bottom_text_align_mobile": {
+      "type": "text",
+      "default": "center",
+      "label": "Alignment - mobile",
+      "description": "Alignment - mobile"
+    },
+    "dots_size": {
+      "type": "text",
+      "default": "6",
+      "label": "Size",
+      "description": "Size"
+    },
+    "dots_mt": {
+      "type": "text",
+      "default": "20",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "dots_show_mobile": {
+      "type": "text",
+      "default": "true",
+      "label": "Show on mobile",
+      "description": "Show on mobile"
+    },
+    "percent_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Percent",
+      "description": "Percent"
+    },
+    "circle_progress": {
+      "type": "color",
+      "default": "#F3F3F3",
+      "label": "Circle progress",
+      "description": "Circle progress"
+    },
+    "circle_active_progress": {
+      "type": "color",
+      "default": "#8eb3e7",
+      "label": "Circle progress active",
+      "description": "Circle progress active"
+    },
+    "feature_text_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Text",
+      "description": "Text"
+    },
+    "dots_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Dots",
+      "description": "Dots"
+    },
+    "bottom_text_color": {
+      "type": "color",
+      "default": "#999999",
+      "label": "Caption",
+      "description": "Caption"
+    },
+    "background_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Section background",
+      "description": "Section background"
+    },
+    "background_gradient": {
+      "type": "color",
+      "default": "",
+      "label": "Section background gradient",
+      "description": "Remove gradient to replace with solid colors"
+    },
+    "border_color": {
+      "type": "color",
+      "default": "#121212",
+      "label": "Border",
+      "description": "Border"
+    },
+    "margin_top": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin top",
+      "description": "Margin top"
+    },
+    "margin_bottom": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin bottom",
+      "description": "Margin bottom"
+    },
+    "margin_horizontal": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides",
+      "description": "Margin sides"
+    },
+    "margin_horizontal_mobile": {
+      "type": "text",
+      "default": "0",
+      "label": "Margin sides mobile",
+      "description": "Margin sides mobile"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    },
+    "padding_horizontal": {
+      "type": "text",
+      "default": "5",
+      "label": "Padding sides",
+      "description": "Padding sides"
+    },
+    "padding_horizontal_mobile": {
+      "type": "text",
+      "default": "1.5",
+      "label": "Padding sides mobile",
+      "description": "Padding sides mobile"
+    },
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Full width",
+      "description": "Full width"
+    },
+    "content_width": {
+      "type": "text",
+      "default": "1200",
+      "label": "Section content width",
+      "description": "Section content width"
+    },
+    "border_thickness": {
+      "type": "text",
+      "default": "0",
+      "label": "Border thickness",
+      "description": "Border thickness"
+    },
+    "section_radius": {
+      "type": "text",
+      "default": "0",
+      "label": "Section roundness",
+      "description": "Section roundness"
+    }
+  }
+}

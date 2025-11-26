@@ -1,0 +1,96 @@
+{
+  "id": "countdown-1",
+  "name": "Countdown timer 1",
+  "description": "Section: Countdown timer 1",
+  "tags": [
+    "countdown"
+  ],
+  "type": "custom",
+  "liquid_code": "<style>\n  .countdown-banner-{{ section.id }}-wrapper {\n    padding-top: var(--pt);\n    padding-bottom: var(--pb);\n  }\n  @media screen and (min-width: 750px) {\n    .countdown-banner-{{ section.id }}-wrapper {\n      padding-top: var(--pt-desktop);\n      padding-bottom: var(--pb-desktop);\n    }\n  }\n  .countdown-banner-{{ section.id }} {\n    position: relative;\n    height: var(--section-height-mobile);\n    overflow: hidden;\n  }\n  @media screen and (min-width: 750px) {\n    .countdown-banner-{{ section.id }} {\n      height: var(--section-height);\n    }\n  }\n  .countdown-banner-{{ section.id }} .countdown-banner-image {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    position: absolute;\n    top: 0;\n    left: 0;\n  }\n  .countdown-banner-{{ section.id }} .countdown-banner-image--desktop {\n    display: none;\n  }\n  @media screen and (min-width: 750px) {\n    .countdown-banner-{{ section.id }} .countdown-banner-image--desktop {\n      display: block;\n    }\n    .countdown-banner-{{ section.id }} .countdown-banner-image--mobile {\n      display: none;\n    }\n  }\n</style>\n<div\n  class=\"countdown-banner-{{ section.id }}-wrapper\"\n  style=\"\n    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;\n    --pt-desktop: {{ section.settings.padding_top }}px;\n    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;\n    --pb-desktop: {{ section.settings.padding_bottom }}px;\n    background-color:{{ section.settings.background-color }};\n  \"\n>\n  <div\n    class=\"\n      countdown-banner-{{ section.id }}\n      {% unless section.settings.full_width %} page-width {% endunless %}\n    \"\n    style=\"\n      --section-height: {{ section.settings.height }};\n      --section-height-mobile: {{ section.settings.height_mobile }};\n    \"\n  >\n    <div\n      style=\"\n        height: 100%; width: 100%; position: relative; overflow: hidden;\n        {% unless section.settings.full_width %} border-radius: {{ section.settings.border_radius }}px; {% endunless %}\n      \"\n    >\n      {% comment %} Image: {% endcomment %}\n      {% assign image = section.settings.image %}\n      {% if image == blank %}\n        {% comment %} {{ 'image' | placeholder_svg_tag: 'countdown-banner-image' }} {% endcomment %}\n        <div\n          class=\"countdown-banner-image\"\n          style=\"background-color: {{ section.settings.no_image_bg_color }}; display: block;\"\n        ></div>\n      {% else %}\n        <img\n          class=\"\n            countdown-banner-image\n            {% if section.settings.image_mobile != blank %}\n              countdown-banner-image--desktop\n            {% endif %}\n          \"\n          src=\"{{ image | img_url: '500x' }}\"\n          srcset=\"\n            {{ image | img_url: '500x' }} 500w,\n            {{ image | img_url: '800x' }} 800w,\n            {{ image | img_url: '1200x' }} 1200w,\n            {{ image | img_url: '1600x' }} 1600w,\n            {{ image | img_url: '2000x' }} 2000w,\n            {{ image | img_url: 'master' }} 2400w\n          \"\n          alt=\"{{ image.alt }}\"\n          {% if section.settings.lazy_load %}\n            loading=\"lazy\"\n          {% endif %}\n          {% if section.settings.blur %}\n            style=\"filter: blur(4px);\"\n          {% endif %}\n        >\n        {% if section.settings.image_mobile != blank %}\n          {% assign image = section.settings.image_mobile %}\n          <img\n            class=\"countdown-banner-image countdown-banner-image--mobile\"\n            src=\"{{ image | img_url: '500x' }}\"\n            srcset=\"\n              {{ image | img_url: '500x' }} 500w,\n              {{ image | img_url: '800x' }} 800w,\n              {{ image | img_url: '1200x' }} 1200w,\n              {{ image | img_url: '1600x' }} 1600w,\n              {{ image | img_url: '2000x' }} 2000w,\n              {{ image | img_url: 'master' }} 2400w\n            \"\n            alt=\"{{ image.alt }}\"\n            {% if section.settings.lazy_load %}\n              loading=\"lazy\"\n            {% endif %}\n            {% if section.settings.blur %}\n              style=\"filter: blur(4px);\"\n            {% endif %}\n          >\n        {% endif %}\n      {% endif %}\n\n      {% comment %} Content: {% endcomment %}\n      <style>\n        .countdown-banner-content-{{ section.id }} {\n          position: relative;\n          z-index: 1;\n          overflow: hidden;\n          width: 100%;\n          height: 100%;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center;\n          gap: 2rem;\n          text-align: center;\n          line-height: 1.1;\n        }\n      </style>\n      <div\n        class=\"countdown-banner-content-{{ section.id }}\"\n      >\n        {% comment %} Overlay: {% endcomment %}\n        <div\n          style=\"\n            opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};\n            background-color: {{ section.settings.overlay_color }};\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            z-index: -1;\n            display: block;\n          \"\n        ></div>\n        {% for block in section.blocks %}\n          {% case block.type %}\n            {% when 'text' %}\n              {% if block.settings.heading != blank %}\n                <style>\n                  .countdown-banner-heading-{{ section.id }}-{{ block.id }} {\n                  }\n                  .countdown-banner-heading-{{ section.id }}-{{ block.id }} p {\n                    margin:0 10px;\n                  }\n                </style>\n                <div\n                  class=\"countdown-banner-heading-{{ section.id }}-{{ block.id }}\"\n                  style=\"\n                    font-size: {{ block.settings.font_size }}px;\n                    color: {{ block.settings.color }};\n                  \"\n                >\n                  {{ block.settings.heading }}\n                </div>\n              {% endif %}\n              {% if block.settings.richtext != blank %}\n                <style>\n                  .countdown-banner-richtext-{{ section.id }}-{{ block.id }} {\n                  }\n                </style>\n                <div\n                  class=\"countdown-banner-richtext-{{ section.id }}-{{ block.id }}\"\n                  style=\"\n                    font-size: {{ block.settings.richtext_font_size }}px;\n                    color: {{ block.settings.richtext_color }};\n                    line-height:1.3;\n                    padding:0 15px;\n                  \"\n                >\n                  {{ block.settings.richtext }}\n                </div>\n              {% endif %}\n            {% when 'button' %}\n              <style>\n                .countdown-banner-button-{{ section.id }}-{{ block.id }} {\n                  padding: 9px 25px;\n                  text-decoration: none;\n                }\n                @media screen and (min-width: 750px) {\n                  .countdown-banner-button-{{ section.id }}-{{ block.id }} {\n                    padding: 11px 25px;\n                  }\n                }\n              </style>\n              <a\n                href=\"{{ block.settings.button_link }}\"\n                class=\"countdown-banner-button-{{ section.id }}-{{ block.id }}\"\n                style=\"\n                  color: {{ block.settings.color }};\n                  background-color: {{ block.settings.background_color }};\n                  border-radius: {{ block.settings.border_radius }}px;\n                  font-size: {{ block.settings.font_size }}px;\n                  border: {{block.settings.button_border_thickness}}px {{block.settings.button_border_color}} solid;\n                  margin: 5px 10px;\n                \"\n              >\n                {{ block.settings.button_text }}\n              </a>\n            {% when 'timer' %}\n              <style>\n                .countdown-timer-{{ section.id }}-{{ block.id }} {\n                  display: flex;\n                  justify-content: center;\n                  align-items: center;\n                  gap: 5px;\n                  margin: 5px 10px;\n                }\n                @media (min-width: 750px) {\n                  .countdown-timer-{{ section.id }}-{{ block.id }} {\n                     gap: 20px;\n                  }\n                }\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-block {\n                  position: relative;\n                  border-radius: 12px;\n                  /*padding: 20px;*/\n                  padding: 0 1rem;\n                }\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-block__num,\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-block__unit {\n                  display: block;\n                  text-align: center;\n                }\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-block__num {\n                  font-size: 25px;\n                  line-height: 1;\n                }\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-block__unit {\n                  text-transform: uppercase;\n                  margin-top: 6px;\n                  font-size: 10px;\n                }\n                @media (min-width: 750px) {\n                  .countdown-timer-{{ section.id }}-{{ block.id }} .time-block__unit {\n                    font-size: 12px;\n                  }\n                }\n                .countdown-timer-{{ section.id }}-{{ block.id }} .time-divier {\n                  position: relative;\n                  width: 1px;\n                  height: 40px;\n                  background-color: var(--color);\n                }\n              </style>\n\n              <div\n                class=\"countdown-timer-{{ section.id }}-{{ block.id }}\"\n                {{ block.shopify_attributes }}\n                style=\"\n                  color: {{ block.settings.color }};\n                  --color: {{ block.settings.color }};\n                \"\n              >\n                <div class=\"time-block\">\n                  <span class=\"time-block__num js-timer-days\">00</span>\n                  <span class=\"time-block__unit\">{{ block.settings.days_text }}</span>\n                </div>\n                {% comment %} <span class=\"time-colon\">:</span> {% endcomment %}\n                <span class=\"time-divier\"></span>\n                <div class=\"time-block\">\n                  <span class=\"time-block__num js-timer-hours\">00</span>\n                  <span class=\"time-block__unit\">{{ block.settings.hours_text }}</span>\n                </div>\n                {% comment %} <span class=\"time-colon\">:</span> {% endcomment %}\n                <span class=\"time-divier\"></span>\n                <div class=\"time-block\">\n                  <span class=\"time-block__num js-timer-minutes\">00</span>\n                  <span class=\"time-block__unit\">{{ block.settings.minutes_text }}</span>\n                </div>\n                {% comment %} <span class=\"time-colon\">:</span> {% endcomment %}\n                <span class=\"time-divier\"></span>\n                <div class=\"time-block\">\n                  <span class=\"time-block__num js-timer-seconds\">00</span>\n                  <span class=\"time-block__unit\">{{ block.settings.seconds_text }}</span>\n                </div>\n              </div>\n\n              <style>\n                .countdown-timer-completed-text-{{ section.id }}-{{ block.id }} {\n                  display: none;\n                }\n              </style>\n              <div\n                class=\"countdown-timer-completed-text-{{ section.id }}-{{ block.id }}\"\n              >\n                {{ block.settings.timer_completed_text }}\n              </div>\n\n              <script type=\"text/javascript\">\n                (function () {\n                  function startTimer() {\n                    const second = 1000,\n                      minute = second * 60,\n                      hour = minute * 60,\n                      day = hour * 24,\n                      wrapper = document.querySelector(\n                        '.countdown-timer-{{ section.id }}-{{ block.id }}'\n                      );\n                \n                    // Create UTC date string in a Safari-friendly format\n                    const dateString = `{{ block.settings.year }}/{{ block.settings.month }}/{{ block.settings.day }} {{ block.settings.hour }}:{{ block.settings.minute }}:00 UTC`;\n                    const countDown = Date.parse(dateString);\n                \n                    console.log('start timer, end date:', dateString);\n                \n                    const interval = setInterval(function () {\n                      let now = Date.now(); // Используем Date.now() вместо new Date().getTime()\n                      let distance = countDown - now;\n                \n                      // Handle case when distance is negative or invalid\n                      if (distance < 0 || isNaN(distance)) {\n                        wrapper.querySelector('.js-timer-days').innerText = '00';\n                        wrapper.querySelector('.js-timer-hours').innerText = '00';\n                        wrapper.querySelector('.js-timer-minutes').innerText = '00';\n                        wrapper.querySelector('.js-timer-seconds').innerText = '00';\n                        {% if block.settings.hide_timer_on_completed %}\n                          wrapper.style.display = 'none';\n                        {% endif %}\n                        document.querySelector(\n                          '.countdown-timer-completed-text-{{ section.id }}-{{ block.id }}'\n                        ).style.display = 'block';\n                \n                        clearInterval(interval);\n                        return;\n                      }\n                \n                      // Calculate time units\n                      const days = Math.floor(distance / day);\n                      const hours = Math.floor((distance % day) / hour);\n                      const minutes = Math.floor((distance % hour) / minute);\n                      const seconds = Math.floor((distance % minute) / second);\n                \n                      // Format numbers to always show two digits\n                      const formatNumber = (num) => (num < 10 ? '0' + num : num);\n                \n                      // Update DOM\n                      wrapper.querySelector('.js-timer-days').innerText = formatNumber(days);\n                      wrapper.querySelector('.js-timer-hours').innerText = formatNumber(hours);\n                      wrapper.querySelector('.js-timer-minutes').innerText = formatNumber(minutes);\n                      wrapper.querySelector('.js-timer-seconds').innerText = formatNumber(seconds);\n                \n                    }, second);\n                \n                    // Clean up interval on section unload\n                    document.addEventListener('shopify:section:unload', function (event) {\n                      if (event.detail.sectionId === '{{ section.id }}') clearInterval(interval);\n                    });\n                  }\n                \n                  // Start timer initially\n                  startTimer();\n                \n                  // Reinitialize timer when section is reloaded in theme editor\n                  if (window.Shopify && Shopify.designMode) {\n                    document.addEventListener('shopify:section:load', function (event) {\n                      if (event.detail.sectionId === '{{ section.id }}') {\n                        startTimer();\n                      }\n                    });\n                  }\n                })();\n              </script>\n            {% else %}\n\n          {% endcase %}\n        {% endfor %}\n      </div>\n    </div>\n  </div>\n</div>",
+  "variables": {
+    "full_width": {
+      "type": "text",
+      "default": "false",
+      "label": "Section full width",
+      "description": "Section full width"
+    },
+    "height": {
+      "type": "text",
+      "default": "600px",
+      "label": "Section height",
+      "description": "Section height"
+    },
+    "height_mobile": {
+      "type": "text",
+      "default": "500px",
+      "label": "Section height (Mobile)",
+      "description": "Section height (Mobile)"
+    },
+    "image": {
+      "type": "text",
+      "default": "",
+      "label": "Image",
+      "description": "Image"
+    },
+    "no_image_bg_color": {
+      "type": "color",
+      "default": "#FFFFFF",
+      "label": "Background color",
+      "description": "When no image"
+    },
+    "blur": {
+      "type": "text",
+      "default": "true",
+      "label": "Blur the image",
+      "description": "Blur the image"
+    },
+    "overlay_opacity": {
+      "type": "text",
+      "default": "30",
+      "label": "Overlay opacity",
+      "description": "Overlay opacity"
+    },
+    "overlay_color": {
+      "type": "color",
+      "default": "#000000",
+      "label": "Overlay color",
+      "description": "Overlay color"
+    },
+    "image_mobile": {
+      "type": "text",
+      "default": "",
+      "label": "Mobile Image (optional)",
+      "description": "Mobile Image (optional)"
+    },
+    "border_radius": {
+      "type": "text",
+      "default": "15",
+      "label": "Border radius",
+      "description": "Border radius"
+    },
+    "lazy_load": {
+      "type": "text",
+      "default": "true",
+      "label": "Lazy load image",
+      "description": "Lazy loading should be enabled if section appear below fold. It will improve page load speed."
+    },
+    "background-color": {
+      "type": "color",
+      "default": "#ffffff",
+      "label": "Section background color",
+      "description": "Section background color"
+    },
+    "padding_top": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding top",
+      "description": "Padding top"
+    },
+    "padding_bottom": {
+      "type": "text",
+      "default": "36",
+      "label": "Padding bottom",
+      "description": "Padding bottom"
+    }
+  }
+}

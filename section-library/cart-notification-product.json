@@ -1,0 +1,12 @@
+{
+  "id": "cart-notification-product",
+  "name": "Cart Notification Product",
+  "description": "Section: Cart Notification Product",
+  "tags": [
+    "cart",
+    "product"
+  ],
+  "type": "product",
+  "liquid_code": "{%- if cart != empty -%}\n  {%- for item in cart.items -%}\n    <div id=\"cart-notification-product-{{ item.key }}\" class=\"cart-item\">\n      {%- if item.image -%}\n        <div class=\"cart-notification-product__image global-media-settings\">\n          <img\n            src=\"{{ item.image | image_url: width: 140 }}\"\n            alt=\"{{ item.image.alt | escape }}\"\n            width=\"70\"\n            height=\"{{ 70 | divided_by: item.image.aspect_ratio | ceil }}\"\n            loading=\"lazy\"\n          >\n        </div>\n      {%- endif -%}\n      <div>\n        {%- if settings.show_vendor -%}\n          <p class=\"caption-with-letter-spacing light\">{{ item.product.vendor }}</p>\n        {%- endif -%}\n        <h3 class=\"cart-notification-product__name h4\">{{ item.product.title | escape }}</h3>\n        <dl>\n          {%- unless item.product.has_only_default_variant -%}\n            {%- for option in item.options_with_values -%}\n              <div class=\"product-option\">\n                <dt>{{ option.name }}:</dt>\n                <dd>{{ option.value }}</dd>\n              </div>\n            {%- endfor -%}\n          {%- endunless -%}\n          {%- for property in item.properties -%}\n            {%- assign property_first_char = property.first | slice: 0 -%}\n            {%- if property.last != blank and property_first_char != '_' -%}\n              <div class=\"product-option\">\n                <dt>{{ property.first }}:</dt>\n                <dd>\n                  {%- if property.last contains '/uploads/' -%}\n                    <a href=\"{{ property.last }}\" class=\"link\" target=\"_blank\">\n                      {{ property.last | split: '/' | last }}\n                    </a>\n                  {%- else -%}\n                    {{ property.last }}\n                  {%- endif -%}\n                </dd>\n              </div>\n            {%- endif -%}\n          {%- endfor -%}\n        </dl>\n        {%- if item.selling_plan_allocation != nil -%}\n          <p class=\"product-option\">{{ item.selling_plan_allocation.selling_plan.name }}</p>\n        {%- endif -%}\n      </div>\n    </div>\n  {%- endfor -%}\n{%- endif -%}",
+  "variables": {}
+}
