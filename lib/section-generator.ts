@@ -581,9 +581,54 @@ export function generateSectionFromReferences(
 }
 
 /**
+ * Check if a corresponding .liquid file exists and return its content
+ */
+function getLiquidFileContent(sectionId: string): string | null {
+  try {
+    // Try multiple possible paths where Liquid files might be located
+    const possiblePaths = [
+      // Absolute path (most reliable)
+      '/Users/kram/Downloads/Updated theme 11-26-25/sections',
+      // Relative paths from current working directory
+      path.join(process.cwd(), '..', '..', 'Downloads', 'Updated theme 11-26-25', 'sections'),
+      path.join(process.cwd(), 'sections'),
+      path.join(process.cwd(), '..', 'sections'),
+      // Environment variable or config-based path could be added here
+    ]
+    
+    for (const sectionsPath of possiblePaths) {
+      const liquidFilePath = path.join(sectionsPath, `${sectionId}.liquid`)
+      if (fs.existsSync(liquidFilePath)) {
+        // Read and return the complete Liquid file content (includes schema)
+        const content = fs.readFileSync(liquidFilePath, 'utf-8')
+        console.log(`Found Liquid file for ${sectionId} at: ${liquidFilePath}`)
+        return content
+      }
+    }
+    
+    return null
+  } catch (error) {
+    console.warn(`Error checking for Liquid file ${sectionId}.liquid:`, error)
+    return null
+  }
+}
+
+/**
  * Generate liquid code for a single template
  */
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string } {
+  // First, try to get the complete Liquid file if it exists
+  const liquidFileContent = getLiquidFileContent(template.id)
+  
+  if (liquidFileContent) {
+    // Return the complete Liquid file content directly (includes schema)
+    return {
+      liquidCode: liquidFileContent,
+      sectionId: template.id
+    }
+  }
+  
+  // Fall back to JSON-based generation if Liquid file doesn't exist
   // Generate liquid code with default values
   let liquidCode = template.liquid_code
   
