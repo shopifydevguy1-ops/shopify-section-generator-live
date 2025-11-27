@@ -581,34 +581,101 @@ export function generateSectionFromReferences(
 }
 
 /**
+ * Get the sections directory path from environment variable or use default
+ */
+function getSectionsDirectoryPath(): string {
+  // Check for environment variable first (for deployment flexibility)
+  if (process.env.SECTIONS_DIRECTORY_PATH) {
+    return process.env.SECTIONS_DIRECTORY_PATH
+  }
+  
+  // Default path where Liquid files are stored
+  return '/Users/kram/Downloads/Updated theme 11-26-25/sections'
+}
+
+/**
  * Check if a corresponding .liquid file exists and return its content
  */
 function getLiquidFileContent(sectionId: string): string | null {
   try {
+    // Get the primary sections directory path
+    const primaryPath = getSectionsDirectoryPath()
+    
     // Try multiple possible paths where Liquid files might be located
     const possiblePaths = [
-      // Absolute path (most reliable)
-      '/Users/kram/Downloads/Updated theme 11-26-25/sections',
-      // Relative paths from current working directory
+      // Primary path (from env var or default)
+      primaryPath,
+      // Alternative absolute paths (fallbacks)
+      path.join('/Users', 'kram', 'Downloads', 'Updated theme 11-26-25', 'sections'),
+      // Relative paths from current working directory (for different environments)
       path.join(process.cwd(), '..', '..', 'Downloads', 'Updated theme 11-26-25', 'sections'),
       path.join(process.cwd(), 'sections'),
       path.join(process.cwd(), '..', 'sections'),
-      // Environment variable or config-based path could be added here
     ]
     
-    for (const sectionsPath of possiblePaths) {
-      const liquidFilePath = path.join(sectionsPath, `${sectionId}.liquid`)
-      if (fs.existsSync(liquidFilePath)) {
-        // Read and return the complete Liquid file content (includes schema)
-        const content = fs.readFileSync(liquidFilePath, 'utf-8')
-        console.log(`Found Liquid file for ${sectionId} at: ${liquidFilePath}`)
-        return content
+    // Remove duplicates
+    const uniquePaths = Array.from(new Set(possiblePaths))
+    
+    console.log(`[getLiquidFileContent] Looking for ${sectionId}.liquid`)
+    console.log(`[getLiquidFileContent] Current working directory: ${process.cwd()}`)
+    console.log(`[getLiquidFileContent] Primary sections path: ${primaryPath}`)
+    
+    for (const sectionsPath of uniquePaths) {
+      try {
+        // Try exact match first
+        let liquidFilePath = path.join(sectionsPath, `${sectionId}.liquid`)
+        let normalizedPath = path.normalize(liquidFilePath)
+        
+        console.log(`[getLiquidFileContent] Checking: ${normalizedPath}`)
+        
+        if (fs.existsSync(normalizedPath)) {
+          // Read and return the complete Liquid file content (includes schema)
+          const content = fs.readFileSync(normalizedPath, 'utf-8')
+          
+          if (content && content.length > 0) {
+            console.log(`[getLiquidFileContent] ✓ Found Liquid file for ${sectionId} at: ${normalizedPath}`)
+            console.log(`[getLiquidFileContent] File size: ${content.length} characters`)
+            return content
+          } else {
+            console.warn(`[getLiquidFileContent] File found but is empty: ${normalizedPath}`)
+          }
+        } else {
+          // Try case-insensitive search if exact match fails
+          // This handles cases where section ID might have different casing
+          try {
+            const files = fs.readdirSync(sectionsPath)
+            const matchingFile = files.find(file => 
+              file.toLowerCase() === `${sectionId}.liquid`.toLowerCase()
+            )
+            
+            if (matchingFile) {
+              const caseInsensitivePath = path.join(sectionsPath, matchingFile)
+              const normalizedCasePath = path.normalize(caseInsensitivePath)
+              console.log(`[getLiquidFileContent] Found case-insensitive match: ${normalizedCasePath}`)
+              
+              const content = fs.readFileSync(normalizedCasePath, 'utf-8')
+              if (content && content.length > 0) {
+                console.log(`[getLiquidFileContent] ✓ Found Liquid file for ${sectionId} at: ${normalizedCasePath}`)
+                console.log(`[getLiquidFileContent] File size: ${content.length} characters`)
+                return content
+              }
+            }
+          } catch (dirError) {
+            // Directory might not exist or not be readable, continue to next path
+            console.warn(`[getLiquidFileContent] Cannot read directory ${sectionsPath}:`, dirError)
+          }
+        }
+      } catch (pathError) {
+        // Continue to next path if this one fails
+        console.warn(`[getLiquidFileContent] Error checking path ${sectionsPath}:`, pathError)
+        continue
       }
     }
     
+    console.warn(`[getLiquidFileContent] ✗ Liquid file not found for ${sectionId}.liquid after checking ${uniquePaths.length} paths`)
     return null
   } catch (error) {
-    console.warn(`Error checking for Liquid file ${sectionId}.liquid:`, error)
+    console.error(`[getLiquidFileContent] Error checking for Liquid file ${sectionId}.liquid:`, error)
     return null
   }
 }
@@ -618,14 +685,25 @@ function getLiquidFileContent(sectionId: string): string | null {
  */
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string } {
   // First, try to get the complete Liquid file if it exists
+  // This should be the primary source for sections that have corresponding .liquid files
   const liquidFileContent = getLiquidFileContent(template.id)
   
   if (liquidFileContent) {
-    // Return the complete Liquid file content directly (includes schema)
-    return {
-      liquidCode: liquidFileContent,
-      sectionId: template.id
+    // Validate that the content includes a schema (to ensure we got the complete file)
+    const hasSchema = liquidFileContent.includes('{% schema %}') || liquidFileContent.includes('{%schema%}')
+    
+    if (hasSchema) {
+      console.log(`[generateSectionCode] ✓ Using complete Liquid file for ${template.id} (includes schema)`)
+      // Return the complete Liquid file content directly (includes schema)
+      return {
+        liquidCode: liquidFileContent,
+        sectionId: template.id
+      }
+    } else {
+      console.warn(`[generateSectionCode] ⚠ Liquid file for ${template.id} found but doesn't contain schema, falling back to JSON generation`)
     }
+  } else {
+    console.log(`[generateSectionCode] No Liquid file found for ${template.id}, using JSON-based generation`)
   }
   
   // Fall back to JSON-based generation if Liquid file doesn't exist
