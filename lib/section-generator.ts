@@ -26,10 +26,144 @@ export interface SectionCustomization {
 }
 
 /**
- * Load all section templates from the section-library directory
- * This function should only be called server-side (in API routes)
+ * Load metadata from JSON files (for name, description, tags, preview_image)
+ */
+function loadJsonMetadata(): Map<string, Partial<SectionTemplate>> {
+  const metadataMap = new Map<string, Partial<SectionTemplate>>()
+  
+  try {
+    const sectionLibraryPath = path.join(process.cwd(), 'section-library')
+    
+    if (!fs.existsSync(sectionLibraryPath)) {
+      return metadataMap
+    }
+
+    const files = fs.readdirSync(sectionLibraryPath)
+    const jsonFiles = files.filter(file => file.endsWith('.json'))
+    
+    for (const file of jsonFiles) {
+      try {
+        const filePath = path.join(sectionLibraryPath, file)
+        const content = fs.readFileSync(filePath, 'utf-8')
+        const template = JSON.parse(content) as SectionTemplate
+        
+        if (template.id) {
+          // Store only metadata, not the liquid_code
+          metadataMap.set(template.id, {
+            name: template.name,
+            description: template.description,
+            tags: template.tags,
+            type: template.type,
+            variables: template.variables,
+            preview_image: template.preview_image
+          })
+        }
+      } catch (error) {
+        console.warn(`Error loading JSON metadata from ${file}:`, error)
+      }
+    }
+  } catch (error) {
+    console.warn('Error loading JSON metadata:', error)
+  }
+  
+  return metadataMap
+}
+
+/**
+ * Extract section name from liquid file schema
+ */
+function extractNameFromSchema(liquidContent: string): string {
+  try {
+    const schemaMatch = liquidContent.match(/{%\s*schema\s*%}([\s\S]*?){%\s*endschema\s*%}/)
+    if (schemaMatch) {
+      const schemaJson = JSON.parse(schemaMatch[1])
+      return schemaJson.name || ''
+    }
+  } catch (error) {
+    // Ignore parsing errors
+  }
+  return ''
+}
+
+/**
+ * Load all section templates from liquid files directory (primary source)
+ * Enriches with metadata from JSON files if available
  */
 export function loadSectionTemplates(): SectionTemplate[] {
+  try {
+    const sectionsPath = getSectionsDirectoryPath()
+    const jsonMetadata = loadJsonMetadata()
+    
+    if (!fs.existsSync(sectionsPath)) {
+      console.warn(`Sections directory not found at ${sectionsPath}. Falling back to JSON-only mode.`)
+      return loadTemplatesFromJsonOnly()
+    }
+
+    const files = fs.readdirSync(sectionsPath)
+    const liquidFiles = files.filter(file => file.endsWith('.liquid'))
+    
+    console.log(`Found ${liquidFiles.length} liquid files in ${sectionsPath}`)
+    
+    const templates: SectionTemplate[] = []
+    let loadedCount = 0
+    let errorCount = 0
+    
+    for (const file of liquidFiles) {
+      try {
+        // Extract section ID from filename (remove .liquid extension)
+        const sectionId = file.replace(/\.liquid$/, '')
+        const filePath = path.join(sectionsPath, file)
+        const liquidContent = fs.readFileSync(filePath, 'utf-8')
+        
+        if (!liquidContent || liquidContent.trim().length === 0) {
+          console.warn(`Skipping ${file}: file is empty`)
+          errorCount++
+          continue
+        }
+        
+        // Get metadata from JSON if available, otherwise extract from liquid file
+        const jsonMeta = jsonMetadata.get(sectionId)
+        const nameFromSchema = extractNameFromSchema(liquidContent)
+        
+        // Create template with liquid file as primary source
+        const template: SectionTemplate = {
+          id: sectionId,
+          name: jsonMeta?.name || nameFromSchema || sectionId,
+          description: jsonMeta?.description || `Section: ${sectionId}`,
+          tags: jsonMeta?.tags || [],
+          type: jsonMeta?.type || 'custom',
+          liquid_code: liquidContent, // Use complete liquid file content
+          variables: jsonMeta?.variables || {},
+          preview_image: jsonMeta?.preview_image
+        }
+        
+        templates.push(template)
+        loadedCount++
+      } catch (error) {
+        console.error(`Error loading liquid file ${file}:`, error)
+        errorCount++
+      }
+    }
+    
+    console.log(`Loaded ${loadedCount} templates from liquid files${errorCount > 0 ? `, ${errorCount} errors` : ''}`)
+    
+    // If no templates found, fall back to JSON-only mode
+    if (templates.length === 0) {
+      console.warn('No liquid files found, falling back to JSON-only mode')
+      return loadTemplatesFromJsonOnly()
+    }
+    
+    return templates
+  } catch (error) {
+    console.error('Error loading section templates from liquid files:', error)
+    return loadTemplatesFromJsonOnly()
+  }
+}
+
+/**
+ * Fallback: Load templates from JSON files only (legacy mode)
+ */
+function loadTemplatesFromJsonOnly(): SectionTemplate[] {
   try {
     const sectionLibraryPath = path.join(process.cwd(), 'section-library')
     
@@ -73,7 +207,7 @@ export function loadSectionTemplates(): SectionTemplate[] {
       }
     }
     
-    console.log(`Loaded ${loadedCount} templates successfully${errorCount > 0 ? `, ${errorCount} errors` : ''}`)
+    console.log(`Loaded ${loadedCount} templates from JSON${errorCount > 0 ? `, ${errorCount} errors` : ''}`)
     
     // If no templates found, return defaults
     if (templates.length === 0) {
@@ -83,7 +217,7 @@ export function loadSectionTemplates(): SectionTemplate[] {
     
     return templates
   } catch (error) {
-    console.error('Error loading section templates:', error)
+    console.error('Error loading section templates from JSON:', error)
     return getDefaultTemplates()
   }
 }
@@ -682,59 +816,83 @@ function getLiquidFileContent(sectionId: string): string | null {
 
 /**
  * Generate liquid code for a single template
+ * Since we now load liquid files directly, this function primarily returns the template's liquid_code
  */
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
-  // First, try to get the complete Liquid file if it exists
-  // This should be the primary source for sections that have corresponding .liquid files
-  const liquidFileContent = getLiquidFileContent(template.id)
-  
-  if (liquidFileContent) {
-    // Validate that the content includes a schema (to ensure we got the complete file)
-    const hasSchema = liquidFileContent.includes('{% schema %}') || liquidFileContent.includes('{%schema%}')
+  // If liquid_code is already the complete liquid file (from loadSectionTemplates), use it directly
+  if (template.liquid_code) {
+    // Check if it's a complete liquid file (contains schema) or just partial code
+    const hasSchema = template.liquid_code.includes('{% schema %}') || template.liquid_code.includes('{%schema%}')
     
     if (hasSchema) {
-      console.log(`[generateSectionCode] ✓ Using complete Liquid file for ${template.id} (includes schema)`)
-      // Return the complete Liquid file content directly (includes schema)
+      // This is a complete liquid file, return it as-is
+      console.log(`[generateSectionCode] ✓ Using complete Liquid file for ${template.id}`)
       return {
-        liquidCode: liquidFileContent,
+        liquidCode: template.liquid_code,
         sectionId: template.id,
         previewImage: template.preview_image
       }
     } else {
-      console.warn(`[generateSectionCode] ⚠ Liquid file for ${template.id} found but doesn't contain schema, falling back to JSON generation`)
+      // This is partial code from JSON, try to get the complete liquid file
+      const liquidFileContent = getLiquidFileContent(template.id)
+      
+      if (liquidFileContent) {
+        console.log(`[generateSectionCode] ✓ Found complete Liquid file for ${template.id}, using it instead of JSON code`)
+        return {
+          liquidCode: liquidFileContent,
+          sectionId: template.id,
+          previewImage: template.preview_image
+        }
+      }
+      
+      // Fall back to JSON-based generation with schema
+      console.log(`[generateSectionCode] Using JSON-based generation for ${template.id}`)
+      let liquidCode = template.liquid_code
+      
+      // Check if liquid_code uses {{variable}} placeholders or section.settings directly
+      const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
+      
+      if (usesPlaceholders) {
+        // Replace all variables with their default values
+        for (const [key, variable] of Object.entries(template.variables)) {
+          const placeholder = `{{${key}}}`
+          const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+          const defaultValue = variable.default !== undefined && variable.default !== null 
+            ? String(variable.default) 
+            : ""
+          liquidCode = liquidCode.replace(regex, defaultValue)
+        }
+      }
+      
+      // Generate schema tag
+      const schemaTag = generateSchemaTag(template)
+      
+      // Combine liquid code and schema
+      const fullCode = `${liquidCode}\n\n${schemaTag}`
+      
+      return {
+        liquidCode: fullCode,
+        sectionId: template.id,
+        previewImage: template.preview_image
+      }
     }
-  } else {
-    console.log(`[generateSectionCode] No Liquid file found for ${template.id}, using JSON-based generation`)
   }
   
-  // Fall back to JSON-based generation if Liquid file doesn't exist
-  // Generate liquid code with default values
-  let liquidCode = template.liquid_code
-  
-  // Check if liquid_code uses {{variable}} placeholders or section.settings directly
-  const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
-  
-  if (usesPlaceholders) {
-    // Replace all variables with their default values
-    for (const [key, variable] of Object.entries(template.variables)) {
-      const placeholder = `{{${key}}}`
-      const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
-      const defaultValue = variable.default !== undefined && variable.default !== null 
-        ? String(variable.default) 
-        : ""
-      liquidCode = liquidCode.replace(regex, defaultValue)
+  // Last resort: try to get liquid file directly
+  const liquidFileContent = getLiquidFileContent(template.id)
+  if (liquidFileContent) {
+    console.log(`[generateSectionCode] ✓ Found Liquid file for ${template.id} as fallback`)
+    return {
+      liquidCode: liquidFileContent,
+      sectionId: template.id,
+      previewImage: template.preview_image
     }
   }
-  // If liquid_code already uses section.settings, no replacement needed
   
-  // Generate schema tag
-  const schemaTag = generateSchemaTag(template)
-  
-  // Combine liquid code and schema
-  const fullCode = `${liquidCode}\n\n${schemaTag}`
-  
+  // If nothing works, return empty (shouldn't happen)
+  console.error(`[generateSectionCode] ✗ No liquid code available for ${template.id}`)
   return {
-    liquidCode: fullCode,
+    liquidCode: '',
     sectionId: template.id,
     previewImage: template.preview_image
   }
