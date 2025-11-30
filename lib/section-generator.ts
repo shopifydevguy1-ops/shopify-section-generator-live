@@ -700,15 +700,27 @@ export function generateSectionFromReferences(
   // Select up to maxResults templates (prioritize higher scores)
   const selectedTemplates = uniqueTemplates.slice(0, maxResults)
   
-  // Generate code for each selected template
-  const results = selectedTemplates.map(template => {
-    const codeResult = generateSectionCode(template)
-    return {
-      ...codeResult,
-      name: template.name,
-      description: template.description
+  // Generate code for each selected template, filtering out any that fail
+  const results: Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> = []
+  
+  for (const template of selectedTemplates) {
+    try {
+      const codeResult = generateSectionCode(template)
+      results.push({
+        ...codeResult,
+        name: template.name,
+        description: template.description
+      })
+    } catch (error) {
+      // Skip templates that don't have liquid files
+      console.warn(`[generateSectionFromReferences] Skipping ${template.id}: ${error instanceof Error ? error.message : 'No liquid file'}`)
+      continue
     }
-  })
+  }
+  
+  if (results.length === 0) {
+    throw new Error(`No valid sections found matching: "${input}". All matching sections are missing liquid files.`)
+  }
   
   return results
 }
@@ -819,7 +831,7 @@ function getLiquidFileContent(sectionId: string): string | null {
  */
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
   // Since we load liquid files directly in loadSectionTemplates, template.liquid_code should be the complete file
-  if (template.liquid_code) {
+  if (template.liquid_code && template.liquid_code.trim().length > 0) {
     const hasSchema = template.liquid_code.includes('{% schema %}') || template.liquid_code.includes('{%schema%}')
     
     if (hasSchema) {
@@ -830,6 +842,9 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
         sectionId: template.id,
         previewImage: template.preview_image
       }
+    } else {
+      // Liquid code exists but no schema - try to get from filesystem
+      console.warn(`[generateSectionCode] ⚠ Liquid code for ${template.id} exists but missing schema, trying filesystem`)
     }
   }
   
@@ -841,6 +856,27 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
       liquidCode: liquidFileContent,
       sectionId: template.id,
       previewImage: template.preview_image
+    }
+  }
+  
+  // Try alternative naming patterns (e.g., custom-testimonials-10 -> ss-testimonials-10)
+  const alternativeIds = [
+    template.id.replace(/^custom-/, 'ss-'),
+    template.id.replace(/^ss-/, 'custom-'),
+    template.id.replace(/^custom-/, ''),
+  ]
+  
+  for (const altId of alternativeIds) {
+    if (altId !== template.id) {
+      const altContent = getLiquidFileContent(altId)
+      if (altContent) {
+        console.log(`[generateSectionCode] ✓ Found Liquid file for ${template.id} using alternative ID: ${altId}`)
+        return {
+          liquidCode: altContent,
+          sectionId: template.id, // Keep original ID for consistency
+          previewImage: template.preview_image
+        }
+      }
     }
   }
   
