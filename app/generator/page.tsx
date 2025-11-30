@@ -86,7 +86,16 @@ export default function GeneratorPage() {
         throw new Error("No sections found. Please try again with a different query.")
       }
 
-      setGeneratedSections(data.sections)
+      // Verify sections have complete content
+      const verifiedSections = data.sections.map((section: any) => {
+        const hasSchema = section.liquidCode?.includes('{% schema %}') && section.liquidCode?.includes('{% endschema %}')
+        if (!hasSchema && section.liquidCode) {
+          console.warn(`[Generator] Section ${section.sectionId} missing schema in liquidCode (${section.liquidCode.length} chars)`)
+        }
+        return section
+      })
+
+      setGeneratedSections(verifiedSections)
       setSelectedSection(null) // Reset selection
       
       toast({
@@ -297,10 +306,22 @@ export default function GeneratorPage() {
                             </div>
                             <div className="flex-1 overflow-auto">
                               <Textarea
-                                value={selectedSection.liquidCode}
+                                value={selectedSection.liquidCode || ''}
                                 readOnly
                                 className="font-mono text-xs md:text-sm min-h-[300px] resize-none"
+                                style={{ 
+                                  whiteSpace: 'pre-wrap',
+                                  wordBreak: 'break-word'
+                                }}
                               />
+                              {selectedSection.liquidCode && (
+                                <div className="mt-2 text-xs text-muted-foreground">
+                                  Code length: {selectedSection.liquidCode.length} characters
+                                  {selectedSection.liquidCode.includes('{% schema %}') && selectedSection.liquidCode.includes('{% endschema %}') 
+                                    ? ' • Includes schema' 
+                                    : ' • ⚠️ Missing schema'}
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
