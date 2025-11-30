@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -218,10 +219,12 @@ export default function GeneratorPage() {
                       >
                         {section.previewImage ? (
                           <div className="relative aspect-video bg-muted/30">
-                            <img 
+                            <Image 
                               src={section.previewImage} 
                               alt={section.name}
-                              className="w-full h-full object-cover"
+                              fill
+                              className="object-cover"
+                              unoptimized
                             />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                           </div>
@@ -260,11 +263,15 @@ export default function GeneratorPage() {
                           {/* Left Side - Image */}
                           <div className="md:w-1/2 w-full bg-muted/30 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
                             {selectedSection.previewImage ? (
-                              <img 
-                                src={selectedSection.previewImage} 
-                                alt={selectedSection.name}
-                                className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
-                              />
+                              <div className="relative w-full h-full min-h-[300px]">
+                                <Image 
+                                  src={selectedSection.previewImage} 
+                                  alt={selectedSection.name}
+                                  fill
+                                  className="object-contain rounded-lg shadow-lg"
+                                  unoptimized
+                                />
+                              </div>
                             ) : (
                               <div className="flex items-center justify-center h-full text-muted-foreground">
                                 <div className="text-center">
@@ -306,7 +313,7 @@ export default function GeneratorPage() {
                   <div className="text-center">
                     <Code className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Generated sections will appear here</p>
-                    <p className="text-sm mt-2 opacity-75">Enter a description and click "Generate Section"</p>
+                    <p className="text-sm mt-2 opacity-75">Enter a description and click &quot;Generate Section&quot;</p>
                   </div>
                 </div>
               )}
