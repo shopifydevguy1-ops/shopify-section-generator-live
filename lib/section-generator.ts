@@ -121,6 +121,14 @@ export function loadSectionTemplates(): SectionTemplate[] {
           continue
         }
         
+        // Verify the file has schema (for debugging)
+        const hasSchema = liquidContent.includes('{% schema %}') && liquidContent.includes('{% endschema %}')
+        if (!hasSchema) {
+          console.warn(`[loadSectionTemplates] ⚠ ${file} loaded but missing schema tags`)
+        } else {
+          console.log(`[loadSectionTemplates] ✓ ${file} loaded with complete schema (${liquidContent.length} chars)`)
+        }
+        
         // Get metadata from JSON if available, otherwise extract from liquid file
         const jsonMeta = jsonMetadata.get(sectionId)
         const nameFromSchema = extractNameFromSchema(liquidContent)
@@ -878,11 +886,19 @@ function getLiquidFileContent(sectionId: string): string | null {
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
   // Since we load liquid files directly in loadSectionTemplates, template.liquid_code should be the complete file
   if (template.liquid_code && template.liquid_code.trim().length > 0) {
-    // If we have liquid_code, use it (even if it doesn't have a schema - some sections might not)
-    // This is the primary path for templates loaded from liquid files
-    console.log(`[generateSectionCode] ✓ Using Liquid file content for ${template.id}`)
+    // Verify the content includes schema
+    const hasSchema = template.liquid_code.includes('{% schema %}') && template.liquid_code.includes('{% endschema %}')
+    const contentLength = template.liquid_code.length
+    
+    if (hasSchema) {
+      console.log(`[generateSectionCode] ✓ Using complete Liquid file for ${template.id} (${contentLength} chars, includes schema)`)
+    } else {
+      console.warn(`[generateSectionCode] ⚠ Liquid file for ${template.id} (${contentLength} chars) but missing schema tags`)
+    }
+    
+    // Return the complete liquid code (includes schema if present)
     return {
-      liquidCode: template.liquid_code,
+      liquidCode: template.liquid_code, // Return complete file content
       sectionId: template.id,
       previewImage: template.preview_image
     }
