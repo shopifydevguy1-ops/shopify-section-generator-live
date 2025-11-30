@@ -64,9 +64,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // Generate sections from references (returns up to 5 sections for selection)
+    // Generate sections from references (returns up to 6 sections for selection)
     const excludedIds = excludedSectionIds && Array.isArray(excludedSectionIds) ? excludedSectionIds : []
-    const results = generateSectionFromReferences(sectionInput, excludedIds, 5)
+    const results = generateSectionFromReferences(sectionInput, excludedIds, 6)
 
     if (results.length === 0) {
       return NextResponse.json(

@@ -125,14 +125,18 @@ export function loadSectionTemplates(): SectionTemplate[] {
         const jsonMeta = jsonMetadata.get(sectionId)
         const nameFromSchema = extractNameFromSchema(liquidContent)
         
+        // Get name and clean it (remove CUSTOM prefix)
+        let sectionName = jsonMeta?.name || nameFromSchema || sectionId
+        sectionName = cleanSectionName(sectionName) // Remove CUSTOM prefix
+        
         // Create template with liquid file as primary source
         const template: SectionTemplate = {
           id: sectionId,
-          name: jsonMeta?.name || nameFromSchema || sectionId,
+          name: sectionName,
           description: jsonMeta?.description || `Section: ${sectionId}`,
           tags: jsonMeta?.tags || [],
           type: jsonMeta?.type || 'custom',
-          liquid_code: liquidContent, // Use complete liquid file content
+          liquid_code: liquidContent, // Use complete liquid file content (includes schema)
           variables: jsonMeta?.variables || {},
           preview_image: jsonMeta?.preview_image
         }
@@ -674,12 +678,12 @@ function mapVariableTypeToSchemaType(variableType: string): string {
 /**
  * Generate section code from text input with references
  * Supports both natural language and explicit section references
- * Returns up to 5 sections for user selection (only from liquid files)
+ * Returns up to 6 sections for user selection (only from liquid files)
  */
 export function generateSectionFromReferences(
   input: string, 
   excludedSectionIds: string[] = [],
-  maxResults: number = 5
+  maxResults: number = 6
 ): Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> {
   // First, try to parse as explicit references (IDs or names)
   const explicitReferences = parseSectionReferences(input)
@@ -723,9 +727,11 @@ export function generateSectionFromReferences(
     
     try {
       const codeResult = generateSectionCode(template)
+      // Clean the name to remove CUSTOM prefix
+      const cleanedName = cleanSectionName(template.name)
       results.push({
         ...codeResult,
-        name: template.name,
+        name: cleanedName,
         description: template.description
       })
     } catch (error) {
@@ -745,9 +751,10 @@ export function generateSectionFromReferences(
         }
         try {
           const codeResult = generateSectionCode(template)
+          const cleanedName = cleanSectionName(template.name)
           results.push({
             ...codeResult,
-            name: template.name,
+            name: cleanedName,
             description: template.description
           })
         } catch (error) {
