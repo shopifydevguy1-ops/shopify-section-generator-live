@@ -129,19 +129,41 @@ export function loadSectionTemplates(): SectionTemplate[] {
           console.log(`[loadSectionTemplates] ✓ ${file} loaded with complete schema (${liquidContent.length} chars)`)
         }
         
-        // Get metadata from JSON if available, otherwise extract from liquid file
-        const jsonMeta = jsonMetadata.get(sectionId)
+        // Try to find JSON metadata - check both exact match and alternative IDs
+        // (e.g., ss-testimonials-10 might have metadata as custom-testimonials-10)
+        let jsonMeta = jsonMetadata.get(sectionId)
+        if (!jsonMeta) {
+          // Try alternative ID patterns
+          const alternativeIds = [
+            sectionId.replace(/^ss-/, 'custom-'),
+            sectionId.replace(/^custom-/, 'ss-'),
+            sectionId.replace(/^ss-/, ''),
+            sectionId.replace(/^custom-/, ''),
+          ]
+          for (const altId of alternativeIds) {
+            if (altId !== sectionId && jsonMetadata.has(altId)) {
+              jsonMeta = jsonMetadata.get(altId)
+              console.log(`[loadSectionTemplates] Found JSON metadata for ${sectionId} using alternative ID: ${altId}`)
+              break
+            }
+          }
+        }
+        
         const nameFromSchema = extractNameFromSchema(liquidContent)
         
         // Get name and clean it (remove CUSTOM prefix)
         let sectionName = jsonMeta?.name || nameFromSchema || sectionId
         sectionName = cleanSectionName(sectionName) // Remove CUSTOM prefix
         
+        // Get description and clean it (remove CUSTOM prefix)
+        let sectionDescription = jsonMeta?.description || `Section: ${sectionId}`
+        sectionDescription = cleanSectionName(sectionDescription) // Remove CUSTOM prefix from description too
+        
         // Create template with liquid file as primary source
         const template: SectionTemplate = {
           id: sectionId,
           name: sectionName,
-          description: jsonMeta?.description || `Section: ${sectionId}`,
+          description: sectionDescription,
           tags: jsonMeta?.tags || [],
           type: jsonMeta?.type || 'custom',
           liquid_code: liquidContent, // Use complete liquid file content (includes schema)
