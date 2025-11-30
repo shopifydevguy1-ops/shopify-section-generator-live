@@ -757,12 +757,13 @@ export function generateSectionFromReferences(
     
     try {
       const codeResult = generateSectionCode(template)
-      // Clean the name to remove CUSTOM prefix
+      // Clean the name and description to remove CUSTOM prefix
       const cleanedName = cleanSectionName(template.name)
+      const cleanedDescription = cleanSectionName(template.description)
       results.push({
         ...codeResult,
         name: cleanedName,
-        description: template.description
+        description: cleanedDescription
       })
     } catch (error) {
       // Skip templates that don't have liquid files
