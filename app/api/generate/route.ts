@@ -74,6 +74,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       liquidCode: result.liquidCode,
       sectionId: result.sectionId,
+      previewImage: result.previewImage,
     })
   } catch (error: any) {
     console.error("Error generating section:", error)

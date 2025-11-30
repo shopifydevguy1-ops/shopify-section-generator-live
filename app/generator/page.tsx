@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
 import { Copy, Download, Loader2, FileText, Code } from "lucide-react"
 
@@ -19,10 +20,12 @@ export default function GeneratorPage() {
   
   const [sectionInput, setSectionInput] = useState<string>("")
   const [generatedCode, setGeneratedCode] = useState<string>("")
+  const [previewImage, setPreviewImage] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<string>("code")
   const [excludedSectionIds, setExcludedSectionIds] = useState<string[]>([])
   const [lastInput, setLastInput] = useState<string>("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     if (isLoaded && !user) {
@@ -73,6 +76,7 @@ export default function GeneratorPage() {
       }
 
       setGeneratedCode(data.liquidCode)
+      setPreviewImage(data.previewImage || "")
       
       // Track the generated section ID and input for next generation
       if (data.sectionId) {
@@ -192,108 +196,101 @@ export default function GeneratorPage() {
             </Card>
           </div>
 
-          {/* Generated Code Preview */}
+          {/* Generated Section Preview */}
           <Card>
             <CardHeader>
               <CardTitle>Generated Section</CardTitle>
-              <CardDescription>Your Shopify section liquid code with schema tags</CardDescription>
+              <CardDescription>Click on the preview image to view and copy the code</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {generatedCode ? (
                 <>
-                  <div className="flex gap-2">
-                    <Button onClick={copyToClipboard} variant="outline" size="sm">
-                      <Copy className="mr-2 h-4 w-4" />
-                      Copy Code
-                    </Button>
+                  <div className="flex gap-2 mb-4">
                     <Button onClick={downloadLiquid} variant="outline" size="sm">
                       <Download className="mr-2 h-4 w-4" />
                       Download .liquid
                     </Button>
                   </div>
                   
-                  <Tabs value={activeTab} onValueChange={setActiveTab}>
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="code">
-                        <Code className="mr-2 h-4 w-4" />
-                        Code
-                      </TabsTrigger>
-                      <TabsTrigger value="instructions">
-                        <FileText className="mr-2 h-4 w-4" />
-                        Instructions
-                      </TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="code" className="mt-4">
-                      <Textarea
-                        value={generatedCode}
-                        readOnly
-                        className="font-mono text-sm min-h-[400px]"
+                  {/* Preview Image - Clickable */}
+                  <div 
+                    className="relative cursor-pointer group rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    {previewImage ? (
+                      <img 
+                        src={previewImage} 
+                        alt="Section Preview" 
+                        className="w-full h-auto object-contain"
                       />
-                    </TabsContent>
-                    
-                    <TabsContent value="instructions" className="mt-4">
-                      <div className="space-y-4 text-sm">
-                        <div className="border rounded-lg p-4 bg-muted/50">
-                          <h3 className="font-semibold text-base mb-3">How to Add This Section to Shopify</h3>
-                          <ol className="space-y-3 list-decimal list-inside">
-                            <li className="space-y-1">
-                              <span className="font-medium">Download the section file</span>
-                              <p className="text-muted-foreground ml-6">Click the &quot;Download .liquid&quot; button above to save the file to your computer.</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Access your Shopify theme</span>
-                              <p className="text-muted-foreground ml-6">Go to your Shopify admin → Online Store → Themes → Actions → Edit code</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Navigate to the sections folder</span>
-                              <p className="text-muted-foreground ml-6">In the left sidebar, click on &quot;Sections&quot; folder</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Add a new section file</span>
-                              <p className="text-muted-foreground ml-6">Click &quot;Add a new section&quot; and give it a name (e.g., &quot;custom-hero.liquid&quot;)</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Paste your code</span>
-                              <p className="text-muted-foreground ml-6">Copy the entire code from the &quot;Code&quot; tab and paste it into the new section file. Click &quot;Save&quot;</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Add to your page</span>
-                              <p className="text-muted-foreground ml-6">Go to Online Store → Themes → Customize. Navigate to the page where you want to add the section, then click &quot;Add section&quot; and select your new section from the list.</p>
-                            </li>
-                            <li className="space-y-1">
-                              <span className="font-medium">Customize settings</span>
-                              <p className="text-muted-foreground ml-6">Click on the section in the theme editor to customize colors, text, images, and other settings defined in the schema.</p>
-                            </li>
-                          </ol>
-                        </div>
-                        
-                        <div className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/20">
-                          <h4 className="font-semibold mb-2 text-blue-900 dark:text-blue-100">💡 Pro Tips:</h4>
-                          <ul className="space-y-2 text-blue-800 dark:text-blue-200 text-xs ml-4 list-disc">
-                            <li>Make sure your theme supports Online Store 2.0 (sections everywhere)</li>
-                            <li>You can add this section to any page: home, product, collection, or custom pages</li>
-                            <li>Test the section on different screen sizes using the theme editor&apos;s responsive preview</li>
-                            <li>If you encounter errors, check the browser console and ensure all required settings are configured</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="border rounded-lg p-4 bg-amber-50 dark:bg-amber-950/20">
-                          <h4 className="font-semibold mb-2 text-amber-900 dark:text-amber-100">⚠️ Important Notes:</h4>
-                          <ul className="space-y-2 text-amber-800 dark:text-amber-200 text-xs ml-4 list-disc">
-                            <li>Always backup your theme before making changes</li>
-                            <li>Some sections may require specific theme features or CSS classes to work properly</li>
-                            <li>If the section doesn&apos;t appear, check that the file name ends with &quot;.liquid&quot;</li>
-                            <li>For best results, use a theme that&apos;s compatible with Shopify Online Store 2.0</li>
-                          </ul>
+                    ) : (
+                      <div className="flex items-center justify-center h-[400px] bg-muted/50 text-muted-foreground">
+                        <div className="text-center">
+                          <Code className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                          <p>Preview image not available</p>
+                          <p className="text-xs mt-1">Click to view code</p>
                         </div>
                       </div>
-                    </TabsContent>
-                  </Tabs>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 px-4 py-2 rounded-md border">
+                        <p className="text-sm font-medium">Click to view code</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Modal with Image and Code */}
+                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                    <DialogContent className="max-w-[95vw] max-h-[95vh] w-full p-0 gap-0 overflow-hidden">
+                      <DialogHeader className="px-6 pt-6 pb-4 border-b">
+                        <DialogTitle>Section Code</DialogTitle>
+                        <DialogDescription>
+                          Preview on the left, code on the right. Click copy to copy the code.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex flex-col md:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
+                        {/* Left Side - Image */}
+                        <div className="md:w-1/2 w-full bg-muted/30 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
+                          {previewImage ? (
+                            <img 
+                              src={previewImage} 
+                              alt="Section Preview" 
+                              className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                            />
+                          ) : (
+                            <div className="flex items-center justify-center h-full text-muted-foreground">
+                              <div className="text-center">
+                                <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                                <p className="text-sm">Preview image not available</p>
+                                <p className="text-xs mt-2 opacity-75">Add a preview_image field to your section JSON</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Right Side - Code */}
+                        <div className="md:w-1/2 w-full flex flex-col p-4 md:p-6 overflow-hidden">
+                          <div className="flex gap-2 mb-4">
+                            <Button onClick={copyToClipboard} variant="outline" size="sm" className="flex-1">
+                              <Copy className="mr-2 h-4 w-4" />
+                              Copy Code
+                            </Button>
+                          </div>
+                          <div className="flex-1 overflow-auto">
+                            <Textarea
+                              value={generatedCode}
+                              readOnly
+                              className="font-mono text-xs md:text-sm min-h-[300px] resize-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-[400px] text-muted-foreground">
-                  <p>Generated code will appear here</p>
+                  <p>Generated section preview will appear here</p>
                 </div>
               )}
             </CardContent>

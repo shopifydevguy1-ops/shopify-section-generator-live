@@ -533,7 +533,7 @@ function mapVariableTypeToSchemaType(variableType: string): string {
 export function generateSectionFromReferences(
   input: string, 
   excludedSectionIds: string[] = []
-): { liquidCode: string; sectionId: string } {
+): { liquidCode: string; sectionId: string; previewImage?: string } {
   // First, try to parse as explicit references (IDs or names)
   const explicitReferences = parseSectionReferences(input)
   const templates = loadSectionTemplates()
@@ -683,7 +683,7 @@ function getLiquidFileContent(sectionId: string): string | null {
 /**
  * Generate liquid code for a single template
  */
-function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string } {
+function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
   // First, try to get the complete Liquid file if it exists
   // This should be the primary source for sections that have corresponding .liquid files
   const liquidFileContent = getLiquidFileContent(template.id)
@@ -697,7 +697,8 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
       // Return the complete Liquid file content directly (includes schema)
       return {
         liquidCode: liquidFileContent,
-        sectionId: template.id
+        sectionId: template.id,
+        previewImage: template.preview_image
       }
     } else {
       console.warn(`[generateSectionCode] ⚠ Liquid file for ${template.id} found but doesn't contain schema, falling back to JSON generation`)
@@ -734,7 +735,8 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
   
   return {
     liquidCode: fullCode,
-    sectionId: template.id
+    sectionId: template.id,
+    previewImage: template.preview_image
   }
 }
 
