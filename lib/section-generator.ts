@@ -662,16 +662,16 @@ function mapVariableTypeToSchemaType(variableType: string): string {
 /**
  * Generate section code from text input with references
  * Supports both natural language and explicit section references
- * Returns only 1 section, excluding previously generated sections
+ * Returns up to 5 sections for user selection (only from liquid files)
  */
 export function generateSectionFromReferences(
   input: string, 
-  excludedSectionIds: string[] = []
-): { liquidCode: string; sectionId: string; previewImage?: string } {
+  excludedSectionIds: string[] = [],
+  maxResults: number = 5
+): Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> {
   // First, try to parse as explicit references (IDs or names)
   const explicitReferences = parseSectionReferences(input)
   const templates = loadSectionTemplates()
-  const notFound: string[] = []
   const foundTemplates: SectionTemplate[] = []
   
   // Try to find sections by explicit references first
@@ -679,14 +679,12 @@ export function generateSectionFromReferences(
     const template = findTemplateByIdOrName(ref)
     if (template) {
       foundTemplates.push(template)
-    } else {
-      notFound.push(ref)
     }
   }
   
   // If no explicit references found or input looks like natural language, use NLP
   if (foundTemplates.length === 0 || (explicitReferences.length === 1 && explicitReferences[0].split(/\s+/).length > 2)) {
-    const nlpResults = findSectionsByNaturalLanguage(input, 10) // Get more results to have options
+    const nlpResults = findSectionsByNaturalLanguage(input, 20) // Get more results to have options
     foundTemplates.push(...nlpResults)
   }
   
@@ -696,22 +694,23 @@ export function generateSectionFromReferences(
   ).filter(t => !excludedSectionIds.includes(t.id))
   
   if (uniqueTemplates.length === 0) {
-    // If all sections are excluded, reset and try again without exclusions
-    const allTemplates = Array.from(
-      new Map(foundTemplates.map(t => [t.id, t])).values()
-    )
-    if (allTemplates.length === 0) {
-      throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
-    }
-    // Use all templates if we've exhausted the excluded ones
-    const selectedTemplate = allTemplates[Math.floor(Math.random() * allTemplates.length)]
-    return generateSectionCode(selectedTemplate)
+    throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
   }
   
-  // Select one random template from the available ones
-  const selectedTemplate = uniqueTemplates[Math.floor(Math.random() * uniqueTemplates.length)]
+  // Select up to maxResults templates (prioritize higher scores)
+  const selectedTemplates = uniqueTemplates.slice(0, maxResults)
   
-  return generateSectionCode(selectedTemplate)
+  // Generate code for each selected template
+  const results = selectedTemplates.map(template => {
+    const codeResult = generateSectionCode(template)
+    return {
+      ...codeResult,
+      name: template.name,
+      description: template.description
+    }
+  })
+  
+  return results
 }
 
 /**
@@ -816,12 +815,11 @@ function getLiquidFileContent(sectionId: string): string | null {
 
 /**
  * Generate liquid code for a single template
- * Since we now load liquid files directly, this function primarily returns the template's liquid_code
+ * Only uses liquid files - no JSON generation fallback
  */
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
-  // If liquid_code is already the complete liquid file (from loadSectionTemplates), use it directly
+  // Since we load liquid files directly in loadSectionTemplates, template.liquid_code should be the complete file
   if (template.liquid_code) {
-    // Check if it's a complete liquid file (contains schema) or just partial code
     const hasSchema = template.liquid_code.includes('{% schema %}') || template.liquid_code.includes('{%schema%}')
     
     if (hasSchema) {
@@ -832,53 +830,10 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
         sectionId: template.id,
         previewImage: template.preview_image
       }
-    } else {
-      // This is partial code from JSON, try to get the complete liquid file
-      const liquidFileContent = getLiquidFileContent(template.id)
-      
-      if (liquidFileContent) {
-        console.log(`[generateSectionCode] ✓ Found complete Liquid file for ${template.id}, using it instead of JSON code`)
-        return {
-          liquidCode: liquidFileContent,
-          sectionId: template.id,
-          previewImage: template.preview_image
-        }
-      }
-      
-      // Fall back to JSON-based generation with schema
-      console.log(`[generateSectionCode] Using JSON-based generation for ${template.id}`)
-      let liquidCode = template.liquid_code
-      
-      // Check if liquid_code uses {{variable}} placeholders or section.settings directly
-      const usesPlaceholders = liquidCode.includes('{{') && !liquidCode.includes('section.settings')
-      
-      if (usesPlaceholders) {
-        // Replace all variables with their default values
-        for (const [key, variable] of Object.entries(template.variables)) {
-          const placeholder = `{{${key}}}`
-          const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
-          const defaultValue = variable.default !== undefined && variable.default !== null 
-            ? String(variable.default) 
-            : ""
-          liquidCode = liquidCode.replace(regex, defaultValue)
-        }
-      }
-      
-      // Generate schema tag
-      const schemaTag = generateSchemaTag(template)
-      
-      // Combine liquid code and schema
-      const fullCode = `${liquidCode}\n\n${schemaTag}`
-      
-      return {
-        liquidCode: fullCode,
-        sectionId: template.id,
-        previewImage: template.preview_image
-      }
     }
   }
   
-  // Last resort: try to get liquid file directly
+  // Fallback: try to get liquid file directly from filesystem
   const liquidFileContent = getLiquidFileContent(template.id)
   if (liquidFileContent) {
     console.log(`[generateSectionCode] ✓ Found Liquid file for ${template.id} as fallback`)
@@ -889,12 +844,7 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
     }
   }
   
-  // If nothing works, return empty (shouldn't happen)
-  console.error(`[generateSectionCode] ✗ No liquid code available for ${template.id}`)
-  return {
-    liquidCode: '',
-    sectionId: template.id,
-    previewImage: template.preview_image
-  }
+  // If no liquid file found, throw error (no JSON generation)
+  throw new Error(`No liquid file found for section: ${template.id}. Only liquid files from the sections directory are supported.`)
 }
 

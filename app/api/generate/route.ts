@@ -64,17 +64,22 @@ export async function POST(request: Request) {
       }
     }
 
-    // Generate section from references (only 1 section, excluding previous ones)
+    // Generate sections from references (returns up to 5 sections for selection)
     const excludedIds = excludedSectionIds && Array.isArray(excludedSectionIds) ? excludedSectionIds : []
-    const result = generateSectionFromReferences(sectionInput, excludedIds)
+    const results = generateSectionFromReferences(sectionInput, excludedIds, 5)
+
+    if (results.length === 0) {
+      return NextResponse.json(
+        { error: "No sections found matching your request. Try being more specific." },
+        { status: 404 }
+      )
+    }
 
     // Log usage (use "custom" as type since we're generating from references)
     await logUsage(user.id, "custom")
 
     return NextResponse.json({
-      liquidCode: result.liquidCode,
-      sectionId: result.sectionId,
-      previewImage: result.previewImage,
+      sections: results,
     })
   } catch (error: any) {
     console.error("Error generating section:", error)

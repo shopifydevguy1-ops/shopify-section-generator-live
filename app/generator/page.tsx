@@ -8,10 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
-import { Copy, Download, Loader2, FileText, Code } from "lucide-react"
+import { Copy, Download, Loader2, Code } from "lucide-react"
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
@@ -19,10 +18,21 @@ export default function GeneratorPage() {
   const { toast } = useToast()
   
   const [sectionInput, setSectionInput] = useState<string>("")
-  const [generatedCode, setGeneratedCode] = useState<string>("")
-  const [previewImage, setPreviewImage] = useState<string>("")
+  const [generatedSections, setGeneratedSections] = useState<Array<{
+    liquidCode: string
+    sectionId: string
+    previewImage?: string
+    name: string
+    description: string
+  }>>([])
+  const [selectedSection, setSelectedSection] = useState<{
+    liquidCode: string
+    sectionId: string
+    previewImage?: string
+    name: string
+    description: string
+  } | null>(null)
   const [loading, setLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState<string>("code")
   const [excludedSectionIds, setExcludedSectionIds] = useState<string[]>([])
   const [lastInput, setLastInput] = useState<string>("")
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -71,33 +81,16 @@ export default function GeneratorPage() {
         throw new Error(data.error || `Failed to generate section: ${response.status}`)
       }
 
-      if (!data.liquidCode) {
-        throw new Error("No code generated. Please try again.")
+      if (!data.sections || data.sections.length === 0) {
+        throw new Error("No sections found. Please try again with a different query.")
       }
 
-      setGeneratedCode(data.liquidCode)
-      setPreviewImage(data.previewImage || "")
-      
-      // Track the generated section ID and input for next generation
-      if (data.sectionId) {
-        if (currentInput === lastInput) {
-          // Add to excluded list if same input
-          setExcludedSectionIds(prev => {
-            if (!prev.includes(data.sectionId)) {
-              return [...prev, data.sectionId]
-            }
-            return prev
-          })
-        } else {
-          // Reset excluded list for new input
-          setExcludedSectionIds([data.sectionId])
-          setLastInput(currentInput)
-        }
-      }
+      setGeneratedSections(data.sections)
+      setSelectedSection(null) // Reset selection
       
       toast({
         title: "Success",
-        description: "Section generated successfully!",
+        description: `Found ${data.sections.length} section${data.sections.length > 1 ? 's' : ''}. Click on an image to view the code.`,
       })
     } catch (error: any) {
       console.error("Error generating section:", error)
@@ -112,7 +105,8 @@ export default function GeneratorPage() {
   }
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedCode)
+    if (!selectedSection) return
+    navigator.clipboard.writeText(selectedSection.liquidCode)
     toast({
       title: "Copied!",
       description: "Code copied to clipboard",
@@ -120,13 +114,13 @@ export default function GeneratorPage() {
   }
 
   const downloadLiquid = () => {
-    if (!generatedCode) return
+    if (!selectedSection) return
 
-    const blob = new Blob([generatedCode], { type: "text/plain" })
+    const blob = new Blob([selectedSection.liquidCode], { type: "text/plain" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `section-${Date.now()}.liquid`
+    a.download = `${selectedSection.sectionId}-${Date.now()}.liquid`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -136,6 +130,11 @@ export default function GeneratorPage() {
       title: "Downloaded!",
       description: "Section file downloaded successfully",
     })
+  }
+
+  const handleSectionSelect = (section: typeof selectedSection) => {
+    setSelectedSection(section)
+    setIsModalOpen(true)
   }
 
   if (!isLoaded) {
@@ -196,101 +195,119 @@ export default function GeneratorPage() {
             </Card>
           </div>
 
-          {/* Generated Section Preview */}
+          {/* Generated Sections Preview */}
           <Card>
             <CardHeader>
-              <CardTitle>Generated Section</CardTitle>
-              <CardDescription>Click on the preview image to view and copy the code</CardDescription>
+              <CardTitle>Generated Sections</CardTitle>
+              <CardDescription>
+                {generatedSections.length > 0 
+                  ? `Found ${generatedSections.length} section${generatedSections.length > 1 ? 's' : ''}. Click on an image to view and copy the code.`
+                  : "Generated sections will appear here"}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {generatedCode ? (
+              {generatedSections.length > 0 ? (
                 <>
-                  <div className="flex gap-2 mb-4">
-                    <Button onClick={downloadLiquid} variant="outline" size="sm">
-                      <Download className="mr-2 h-4 w-4" />
-                      Download .liquid
-                    </Button>
-                  </div>
-                  
-                  {/* Preview Image - Clickable */}
-                  <div 
-                    className="relative cursor-pointer group rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    {previewImage ? (
-                      <img 
-                        src={previewImage} 
-                        alt="Section Preview" 
-                        className="w-full h-auto object-contain"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-[400px] bg-muted/50 text-muted-foreground">
-                        <div className="text-center">
-                          <Code className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                          <p>Preview image not available</p>
-                          <p className="text-xs mt-1">Click to view code</p>
+                  {/* Grid of Section Previews */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {generatedSections.map((section, index) => (
+                      <div
+                        key={section.sectionId}
+                        className="relative cursor-pointer group rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-all hover:shadow-lg"
+                        onClick={() => handleSectionSelect(section)}
+                      >
+                        {section.previewImage ? (
+                          <div className="relative aspect-video bg-muted/30">
+                            <img 
+                              src={section.previewImage} 
+                              alt={section.name}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                          </div>
+                        ) : (
+                          <div className="aspect-video flex items-center justify-center bg-muted/50 text-muted-foreground">
+                            <div className="text-center p-4">
+                              <Code className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                              <p className="text-xs font-medium">{section.name}</p>
+                            </div>
+                          </div>
+                        )}
+                        <div className="p-3 bg-background border-t">
+                          <h3 className="font-semibold text-sm truncate">{section.name}</h3>
+                          <p className="text-xs text-muted-foreground truncate mt-1">{section.description}</p>
+                        </div>
+                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="bg-background/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium border">
+                            Click to view code
+                          </div>
                         </div>
                       </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 px-4 py-2 rounded-md border">
-                        <p className="text-sm font-medium">Click to view code</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
 
                   {/* Modal with Image and Code */}
-                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                    <DialogContent className="max-w-[95vw] max-h-[95vh] w-full p-0 gap-0 overflow-hidden">
-                      <DialogHeader className="px-6 pt-6 pb-4 border-b">
-                        <DialogTitle>Section Code</DialogTitle>
-                        <DialogDescription>
-                          Preview on the left, code on the right. Click copy to copy the code.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="flex flex-col md:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
-                        {/* Left Side - Image */}
-                        <div className="md:w-1/2 w-full bg-muted/30 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
-                          {previewImage ? (
-                            <img 
-                              src={previewImage} 
-                              alt="Section Preview" 
-                              className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
-                            />
-                          ) : (
-                            <div className="flex items-center justify-center h-full text-muted-foreground">
-                              <div className="text-center">
-                                <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                                <p className="text-sm">Preview image not available</p>
-                                <p className="text-xs mt-2 opacity-75">Add a preview_image field to your section JSON</p>
+                  {selectedSection && (
+                    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                      <DialogContent className="max-w-[95vw] max-h-[95vh] w-full p-0 gap-0 overflow-hidden">
+                        <DialogHeader className="px-6 pt-6 pb-4 border-b">
+                          <DialogTitle>{selectedSection.name}</DialogTitle>
+                          <DialogDescription>
+                            {selectedSection.description}
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex flex-col md:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
+                          {/* Left Side - Image */}
+                          <div className="md:w-1/2 w-full bg-muted/30 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
+                            {selectedSection.previewImage ? (
+                              <img 
+                                src={selectedSection.previewImage} 
+                                alt={selectedSection.name}
+                                className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                              />
+                            ) : (
+                              <div className="flex items-center justify-center h-full text-muted-foreground">
+                                <div className="text-center">
+                                  <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                                  <p className="text-sm">Preview image not available</p>
+                                  <p className="text-xs mt-2 opacity-75">Section: {selectedSection.sectionId}</p>
+                                </div>
                               </div>
+                            )}
+                          </div>
+                          
+                          {/* Right Side - Code */}
+                          <div className="md:w-1/2 w-full flex flex-col p-4 md:p-6 overflow-hidden">
+                            <div className="flex gap-2 mb-4">
+                              <Button onClick={copyToClipboard} variant="outline" size="sm" className="flex-1">
+                                <Copy className="mr-2 h-4 w-4" />
+                                Copy Code
+                              </Button>
+                              <Button onClick={downloadLiquid} variant="outline" size="sm">
+                                <Download className="mr-2 h-4 w-4" />
+                                Download
+                              </Button>
                             </div>
-                          )}
-                        </div>
-                        
-                        {/* Right Side - Code */}
-                        <div className="md:w-1/2 w-full flex flex-col p-4 md:p-6 overflow-hidden">
-                          <div className="flex gap-2 mb-4">
-                            <Button onClick={copyToClipboard} variant="outline" size="sm" className="flex-1">
-                              <Copy className="mr-2 h-4 w-4" />
-                              Copy Code
-                            </Button>
-                          </div>
-                          <div className="flex-1 overflow-auto">
-                            <Textarea
-                              value={generatedCode}
-                              readOnly
-                              className="font-mono text-xs md:text-sm min-h-[300px] resize-none"
-                            />
+                            <div className="flex-1 overflow-auto">
+                              <Textarea
+                                value={selectedSection.liquidCode}
+                                readOnly
+                                className="font-mono text-xs md:text-sm min-h-[300px] resize-none"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </>
               ) : (
                 <div className="flex items-center justify-center h-[400px] text-muted-foreground">
-                  <p>Generated section preview will appear here</p>
+                  <div className="text-center">
+                    <Code className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>Generated sections will appear here</p>
+                    <p className="text-sm mt-2 opacity-75">Enter a description and click "Generate Section"</p>
+                  </div>
                 </div>
               )}
             </CardContent>
