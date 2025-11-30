@@ -453,6 +453,17 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
   const scoredTemplates = templates.map(template => {
     let score = 0
     
+    // Check section ID match (filename) - this is very important for matching
+    const lowerId = template.id.toLowerCase()
+    if (lowerId.includes(lowerInput) || lowerInput.includes(lowerId)) {
+      score += 15 // High score for ID match
+    }
+    keywords.forEach(keyword => {
+      if (lowerId.includes(keyword)) {
+        score += 8 // High score for keyword in ID
+      }
+    })
+    
     // Check name match
     const cleanName = cleanSectionName(template.name).toLowerCase()
     if (cleanName.includes(lowerInput) || lowerInput.includes(cleanName)) {
@@ -499,7 +510,8 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
     
     // Common section type mappings
     const sectionTypeMappings: Record<string, string[]> = {
-      'hero': ['hero', 'banner', 'landing', 'header', 'intro'],
+      'hero': ['hero', 'landing', 'header', 'intro'],
+      'banner': ['banner', 'hero', 'landing', 'header', 'intro'],
       'product': ['product', 'shop', 'catalog', 'item', 'merchandise'],
       'collection': ['collection', 'category', 'group', 'set'],
       'testimonial': ['testimonial', 'review', 'feedback', 'rating', 'quote'],
@@ -697,13 +709,18 @@ export function generateSectionFromReferences(
     throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
   }
   
-  // Select up to maxResults templates (prioritize higher scores)
-  const selectedTemplates = uniqueTemplates.slice(0, maxResults)
+  // Select more templates initially to account for filtering
+  const initialSelection = uniqueTemplates.slice(0, maxResults * 2)
   
   // Generate code for each selected template, filtering out any that fail
   const results: Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> = []
   
-  for (const template of selectedTemplates) {
+  for (const template of initialSelection) {
+    // Stop if we have enough results
+    if (results.length >= maxResults) {
+      break
+    }
+    
     try {
       const codeResult = generateSectionCode(template)
       results.push({
@@ -719,7 +736,29 @@ export function generateSectionFromReferences(
   }
   
   if (results.length === 0) {
-    throw new Error(`No valid sections found matching: "${input}". All matching sections are missing liquid files.`)
+    // Try to get more results if we filtered everything out
+    if (uniqueTemplates.length > initialSelection.length) {
+      const additionalTemplates = uniqueTemplates.slice(initialSelection.length, initialSelection.length + maxResults * 2)
+      for (const template of additionalTemplates) {
+        if (results.length >= maxResults) {
+          break
+        }
+        try {
+          const codeResult = generateSectionCode(template)
+          results.push({
+            ...codeResult,
+            name: template.name,
+            description: template.description
+          })
+        } catch (error) {
+          continue
+        }
+      }
+    }
+    
+    if (results.length === 0) {
+      throw new Error(`No valid sections found matching: "${input}". All matching sections are missing liquid files. Try a different search term.`)
+    }
   }
   
   return results
@@ -832,19 +871,13 @@ function getLiquidFileContent(sectionId: string): string | null {
 function generateSectionCode(template: SectionTemplate): { liquidCode: string; sectionId: string; previewImage?: string } {
   // Since we load liquid files directly in loadSectionTemplates, template.liquid_code should be the complete file
   if (template.liquid_code && template.liquid_code.trim().length > 0) {
-    const hasSchema = template.liquid_code.includes('{% schema %}') || template.liquid_code.includes('{%schema%}')
-    
-    if (hasSchema) {
-      // This is a complete liquid file, return it as-is
-      console.log(`[generateSectionCode] ✓ Using complete Liquid file for ${template.id}`)
-      return {
-        liquidCode: template.liquid_code,
-        sectionId: template.id,
-        previewImage: template.preview_image
-      }
-    } else {
-      // Liquid code exists but no schema - try to get from filesystem
-      console.warn(`[generateSectionCode] ⚠ Liquid code for ${template.id} exists but missing schema, trying filesystem`)
+    // If we have liquid_code, use it (even if it doesn't have a schema - some sections might not)
+    // This is the primary path for templates loaded from liquid files
+    console.log(`[generateSectionCode] ✓ Using Liquid file content for ${template.id}`)
+    return {
+      liquidCode: template.liquid_code,
+      sectionId: template.id,
+      previewImage: template.preview_image
     }
   }
   
