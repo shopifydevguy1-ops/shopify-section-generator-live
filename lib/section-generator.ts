@@ -1,5 +1,5 @@
 // Section Generator Logic
-// Loads sections from JSON files in /section-library
+// Loads sections from liquid files in the sections directory
 // Schema generation ensures all variables are properly converted to Shopify schema settings
 
 import fs from 'fs'
@@ -158,8 +158,6 @@ export function loadSectionTemplates(): SectionTemplate[] {
         
         if (!hasSchema) {
           console.warn(`[loadSectionTemplates] ⚠ ${file} loaded but missing schema tags`)
-        } else {
-          console.log(`[loadSectionTemplates] ✓ ${file} loaded with complete schema (${liquidContent.length} chars)`)
         }
         
         // Extract metadata from schema
@@ -428,67 +426,117 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
   const templates = loadSectionTemplates()
   const lowerInput = input.toLowerCase().trim()
   
+  console.log(`[findSectionsByNaturalLanguage] Searching for: "${input}" (${templates.length} templates loaded)`)
+  
   // Extract keywords from input (remove common words)
-  const commonWords = ['i', 'need', 'a', 'an', 'the', 'want', 'looking', 'for', 'get', 'show', 'me']
+  const commonWords = ['i', 'need', 'a', 'an', 'the', 'want', 'looking', 'for', 'get', 'show', 'me', 'to', 'is', 'are', 'was', 'were']
   let keywords = lowerInput
     .split(/\s+/)
     .filter(word => word.length > 2 && !commonWords.includes(word))
     .map(word => word.replace(/[^\w]/g, ''))
     .filter(word => word.length > 0)
   
-  // If no keywords after filtering, use the whole input
+  // If no keywords after filtering, use the whole input cleaned
   if (keywords.length === 0) {
-    keywords = [lowerInput.replace(/[^\w]/g, '')]
+    const cleaned = lowerInput.replace(/[^\w]/g, '')
+    if (cleaned.length > 0) {
+      keywords = [cleaned]
+    } else {
+      keywords = [lowerInput]
+    }
+  }
+  
+  console.log(`[findSectionsByNaturalLanguage] Extracted keywords:`, keywords)
+  
+  // Common section type mappings with synonyms
+  const sectionTypeMappings: Record<string, string[]> = {
+    'hero': ['hero', 'landing', 'header', 'intro', 'banner'],
+    'banner': ['banner', 'hero', 'landing', 'header', 'intro'],
+    'product': ['product', 'products', 'shop', 'catalog', 'item', 'items', 'merchandise'],
+    'collection': ['collection', 'collections', 'category', 'categories', 'group', 'groups', 'set', 'sets'],
+    'testimonial': ['testimonial', 'testimonials', 'review', 'reviews', 'feedback', 'rating', 'ratings', 'quote', 'quotes', 'customer', 'customers'],
+    'faq': ['faq', 'faqs', 'question', 'questions', 'answer', 'answers', 'help', 'support'],
+    'form': ['form', 'forms', 'contact', 'submit', 'input', 'field', 'fields'],
+    'gallery': ['gallery', 'galleries', 'image', 'images', 'photo', 'photos', 'picture', 'pictures', 'media'],
+    'video': ['video', 'videos', 'youtube', 'vimeo', 'media'],
+    'slider': ['slider', 'sliders', 'carousel', 'carousels', 'slideshow', 'swiper'],
+    'countdown': ['countdown', 'timer', 'timers', 'clock', 'deadline'],
+    'trust': ['trust', 'badge', 'badges', 'security', 'guarantee', 'certificate'],
+    'social': ['social', 'share', 'facebook', 'twitter', 'instagram'],
+    'newsletter': ['newsletter', 'email', 'emails', 'subscribe', 'signup'],
+    'blog': ['blog', 'blogs', 'article', 'articles', 'post', 'posts', 'news'],
+    'footer': ['footer', 'footers', 'bottom', 'links'],
+    'header': ['header', 'headers', 'nav', 'navigation', 'menu', 'menus'],
   }
   
   // Score each template based on relevance
   const scoredTemplates = templates.map(template => {
     let score = 0
-    
-    // Check section ID match (filename) - HIGHEST PRIORITY
-    // Handle plurals: "testimonial" should match "testimonials"
     const lowerId = template.id.toLowerCase()
+    const lowerLiquidCode = template.liquid_code.toLowerCase()
+    
+    // 1. Check section ID match (filename) - HIGHEST PRIORITY
     keywords.forEach(keyword => {
-      // Exact match in ID
-      if (lowerId === keyword || lowerId.includes(keyword)) {
-        score += 20 // Very high score for ID match
+      // Direct match in ID
+      if (lowerId.includes(keyword)) {
+        score += 30 // Very high score for direct ID match
       }
-      // Handle plural/singular variations
+      
+      // Handle plural/singular variations more aggressively
       const singular = keyword.replace(/s$/, '')
       const plural = keyword + 's'
-      if (lowerId.includes(singular) || lowerId.includes(plural)) {
-        score += 15 // High score for plural/singular match
+      const plural2 = keyword.replace(/y$/, 'ies') // testimonial -> testimonials (but we handle this differently)
+      
+      if (lowerId.includes(singular) && singular.length > 3) {
+        score += 25 // High score for singular match
+      }
+      if (lowerId.includes(plural) && plural.length > 3) {
+        score += 25 // High score for plural match
+      }
+      
+      // Special handling for common patterns
+      if (keyword === 'testimonial' && lowerId.includes('testimonial')) {
+        score += 30 // Direct match for testimonial
       }
     })
     
-    // Check name match
-    const cleanName = cleanSectionName(template.name).toLowerCase()
-    if (cleanName.includes(lowerInput) || lowerInput.includes(cleanName)) {
-      score += 10
-    }
+    // 2. Check type match using inferred type
+    const templateType = template.type.toLowerCase()
+    Object.entries(sectionTypeMappings).forEach(([type, synonyms]) => {
+      if (templateType === type) {
+        // Check if any keyword matches synonyms
+        keywords.forEach(keyword => {
+          if (synonyms.some(syn => syn.includes(keyword) || keyword.includes(syn))) {
+            score += 20 // High score for type match
+          }
+        })
+        // Also check full input
+        synonyms.forEach(synonym => {
+          if (lowerInput.includes(synonym)) {
+            score += 15
+          }
+        })
+      }
+    })
     
-    // Check keyword matches in name
+    // 3. Check name match
+    const cleanName = cleanSectionName(template.name).toLowerCase()
     keywords.forEach(keyword => {
       if (cleanName.includes(keyword)) {
-        score += 5
+        score += 10
       }
     })
     
-    // Check liquid file content for keywords (search within the actual code)
-    const lowerLiquidCode = template.liquid_code.toLowerCase()
+    // 4. Check liquid file content for keywords
     keywords.forEach(keyword => {
-      // Search in liquid code (but not in schema JSON to avoid false positives)
+      // Search in liquid code (excluding schema to avoid false positives)
       const liquidWithoutSchema = lowerLiquidCode.replace(/{%\s*schema\s*%}[\s\S]*?{%\s*endschema\s*%}/gi, '')
       if (liquidWithoutSchema.includes(keyword)) {
-        score += 6 // Medium score for content match
-      }
-      // Also check schema for relevant terms
-      if (lowerLiquidCode.includes(keyword)) {
-        score += 4
+        score += 8 // Medium score for content match
       }
     })
     
-    // Check description match
+    // 5. Check description match
     const lowerDescription = template.description.toLowerCase()
     keywords.forEach(keyword => {
       if (lowerDescription.includes(keyword)) {
@@ -496,98 +544,64 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
       }
     })
     
-    // Check tag matches
-    template.tags.forEach(tag => {
-      const lowerTag = tag.toLowerCase()
-      if (lowerTag === lowerInput) {
-        score += 10
-      } else if (lowerTag.includes(lowerInput) || lowerInput.includes(lowerTag)) {
-        score += 7
-      }
-      keywords.forEach(keyword => {
-        if (lowerTag.includes(keyword) || keyword.includes(lowerTag)) {
-          score += 4
-        }
-      })
-    })
-    
-    // Check type match
-    if (template.type.toLowerCase().includes(lowerInput) || lowerInput.includes(template.type.toLowerCase())) {
-      score += 6
-    }
-    
-    // Common section type mappings
-    const sectionTypeMappings: Record<string, string[]> = {
-      'hero': ['hero', 'landing', 'header', 'intro'],
-      'banner': ['banner', 'hero', 'landing', 'header', 'intro'],
-      'product': ['product', 'shop', 'catalog', 'item', 'merchandise'],
-      'collection': ['collection', 'category', 'group', 'set'],
-      'testimonial': ['testimonial', 'testimonials', 'review', 'reviews', 'feedback', 'rating', 'ratings', 'quote', 'quotes'],
-      'faq': ['faq', 'question', 'answer', 'help', 'support'],
-      'form': ['form', 'contact', 'submit', 'input', 'field'],
-      'gallery': ['gallery', 'image', 'photo', 'picture', 'media'],
-      'video': ['video', 'youtube', 'vimeo', 'media'],
-      'slider': ['slider', 'carousel', 'slideshow', 'swiper'],
-      'countdown': ['countdown', 'timer', 'clock', 'deadline'],
-      'trust': ['trust', 'badge', 'security', 'guarantee', 'certificate'],
-      'social': ['social', 'share', 'facebook', 'twitter', 'instagram'],
-      'newsletter': ['newsletter', 'email', 'subscribe', 'signup'],
-      'blog': ['blog', 'article', 'post', 'news'],
-      'footer': ['footer', 'bottom', 'links'],
-      'header': ['header', 'nav', 'navigation', 'menu'],
-    }
-    
-    // Check type mappings - improved to work with inferred types
-    const templateType = template.type.toLowerCase()
-    Object.entries(sectionTypeMappings).forEach(([type, synonyms]) => {
-      if (templateType === type) {
-        synonyms.forEach(synonym => {
-          if (lowerInput.includes(synonym)) {
-            score += 12 // High score for type match
-          }
-        })
-        // Also check keywords
-        keywords.forEach(keyword => {
-          if (synonyms.some(syn => syn.includes(keyword) || keyword.includes(syn))) {
-            score += 10
-          }
-        })
-      }
-    })
-    
-    // Check for specific feature keywords
-    const featureKeywords: Record<string, string[]> = {
-      'animated': ['animated', 'animation', 'moving', 'dynamic'],
-      'interactive': ['interactive', 'click', 'hover', 'effect'],
-      'responsive': ['responsive', 'mobile', 'tablet', 'desktop'],
-      'customizable': ['custom', 'customizable', 'configurable', 'settings'],
-    }
-    
-    Object.entries(featureKeywords).forEach(([feature, keywords]) => {
-      keywords.forEach(keyword => {
-        if (lowerInput.includes(keyword)) {
-          if (template.tags.some(tag => tag.toLowerCase().includes(feature))) {
-            score += 3
-          }
-        }
-      })
-    })
-    
     return { template, score }
   })
   
   // Sort by score and return top results
-  const results = scoredTemplates
+  let results = scoredTemplates
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxResults)
     .map(item => item.template)
   
+  // If no results found, try a more lenient search (partial matches)
+  if (results.length === 0 && templates.length > 0) {
+    console.log(`[findSectionsByNaturalLanguage] No exact matches, trying lenient search...`)
+    
+    // Try matching any part of the keyword in the ID
+    const lenientResults = templates
+      .map(template => {
+        const lowerId = template.id.toLowerCase()
+        let score = 0
+        
+        keywords.forEach(keyword => {
+          // Very lenient: any substring match
+          if (lowerId.includes(keyword) || keyword.includes(lowerId.split('-')[0])) {
+            score += 5
+          }
+          // Check if keyword is in any part of the ID
+          const idParts = lowerId.split('-')
+          idParts.forEach(part => {
+            if (part.includes(keyword) || keyword.includes(part)) {
+              score += 3
+            }
+          })
+        })
+        
+        return { template, score }
+      })
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, maxResults)
+      .map(item => item.template)
+    
+    if (lenientResults.length > 0) {
+      console.log(`[findSectionsByNaturalLanguage] Lenient search found ${lenientResults.length} results`)
+      results = lenientResults
+    }
+  }
+  
   // Log for debugging
   if (results.length > 0) {
-    console.log(`[findSectionsByNaturalLanguage] Found ${results.length} sections for "${input}":`, results.map(r => r.id))
+    console.log(`[findSectionsByNaturalLanguage] ✓ Found ${results.length} sections for "${input}":`, results.map(r => `${r.id} (type: ${r.type})`))
   } else {
-    console.warn(`[findSectionsByNaturalLanguage] No sections found for "${input}". Total templates loaded: ${templates.length}`)
+    console.warn(`[findSectionsByNaturalLanguage] ✗ No sections found for "${input}"`)
+    console.warn(`[findSectionsByNaturalLanguage] Total templates: ${templates.length}, Keywords: ${keywords.join(', ')}`)
+    // Show sample IDs for debugging
+    if (templates.length > 0) {
+      const sampleIds = templates.slice(0, 10).map(t => t.id)
+      console.warn(`[findSectionsByNaturalLanguage] Sample template IDs:`, sampleIds)
+    }
   }
   
   return results
@@ -720,7 +734,9 @@ export function generateSectionFromReferences(
   
   // If no explicit references found or input looks like natural language, use NLP
   if (foundTemplates.length === 0 || (explicitReferences.length === 1 && explicitReferences[0].split(/\s+/).length > 2)) {
+    console.log(`[generateSectionFromReferences] Using NLP search for: "${input}"`)
     const nlpResults = findSectionsByNaturalLanguage(input, 20) // Get more results to have options
+    console.log(`[generateSectionFromReferences] NLP found ${nlpResults.length} results`)
     foundTemplates.push(...nlpResults)
   }
   
@@ -730,7 +746,10 @@ export function generateSectionFromReferences(
   ).filter(t => !excludedSectionIds.includes(t.id))
   
   if (uniqueTemplates.length === 0) {
-    throw new Error(`No sections found matching: "${input}". Try being more specific or use section IDs.`)
+    // Get all templates for better error message
+    const allTemplates = loadSectionTemplates()
+    const sampleIds = allTemplates.slice(0, 10).map(t => t.id).join(', ')
+    throw new Error(`No sections found matching: "${input}". Total sections available: ${allTemplates.length}. Sample IDs: ${sampleIds}`)
   }
   
   // Select more templates initially to account for filtering
