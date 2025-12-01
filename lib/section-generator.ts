@@ -78,6 +78,38 @@ function mapSchemaTypeToVariableType(schemaType: string): string {
 }
 
 /**
+ * Infer section type from section ID
+ * Examples: ss-testimonials-22 -> testimonial, custom-product-tabs -> product
+ */
+function inferSectionTypeFromId(sectionId: string): string {
+  const lowerId = sectionId.toLowerCase()
+  
+  // Remove common prefixes
+  const cleanId = lowerId.replace(/^(ss-|custom-)/, '')
+  
+  // Common type patterns
+  if (cleanId.includes('testimonial')) return 'testimonial'
+  if (cleanId.includes('product')) return 'product'
+  if (cleanId.includes('hero')) return 'hero'
+  if (cleanId.includes('banner')) return 'banner'
+  if (cleanId.includes('collection')) return 'collection'
+  if (cleanId.includes('faq')) return 'faq'
+  if (cleanId.includes('form')) return 'form'
+  if (cleanId.includes('gallery')) return 'gallery'
+  if (cleanId.includes('video')) return 'video'
+  if (cleanId.includes('slider') || cleanId.includes('carousel')) return 'slider'
+  if (cleanId.includes('countdown') || cleanId.includes('timer')) return 'countdown'
+  if (cleanId.includes('trust') || cleanId.includes('badge')) return 'trust'
+  if (cleanId.includes('social')) return 'social'
+  if (cleanId.includes('newsletter')) return 'newsletter'
+  if (cleanId.includes('blog')) return 'blog'
+  if (cleanId.includes('footer')) return 'footer'
+  if (cleanId.includes('header') || cleanId.includes('nav')) return 'header'
+  
+  return 'custom'
+}
+
+/**
  * Extract section name from liquid file schema
  */
 function extractNameFromSchema(liquidContent: string): string {
@@ -138,13 +170,16 @@ export function loadSectionTemplates(): SectionTemplate[] {
         // Extract variables from schema settings
         const variables = schema ? extractVariablesFromSchema(schema) : {}
         
+        // Infer section type from ID (e.g., ss-testimonials-22 -> testimonial)
+        const inferredType = inferSectionTypeFromId(sectionId)
+        
         // Create template with liquid file as primary source
         const template: SectionTemplate = {
           id: sectionId,
           name: sectionName,
           description: sectionDescription,
           tags: [], // Tags can be extracted from schema if needed in future
-          type: 'custom', // Type can be extracted from schema if needed in future
+          type: inferredType, // Infer type from section ID
           liquid_code: liquidContent, // Use complete liquid file content (includes schema)
           variables: variables,
           preview_image: undefined // Preview images not in liquid files
@@ -391,27 +426,38 @@ export function parseSectionReferences(input: string): string[] {
  */
 export function findSectionsByNaturalLanguage(input: string, maxResults: number = 10): SectionTemplate[] {
   const templates = loadSectionTemplates()
-  const lowerInput = input.toLowerCase()
+  const lowerInput = input.toLowerCase().trim()
   
-  // Extract keywords from input
-  const keywords = lowerInput
+  // Extract keywords from input (remove common words)
+  const commonWords = ['i', 'need', 'a', 'an', 'the', 'want', 'looking', 'for', 'get', 'show', 'me']
+  let keywords = lowerInput
     .split(/\s+/)
-    .filter(word => word.length > 2)
+    .filter(word => word.length > 2 && !commonWords.includes(word))
     .map(word => word.replace(/[^\w]/g, ''))
     .filter(word => word.length > 0)
+  
+  // If no keywords after filtering, use the whole input
+  if (keywords.length === 0) {
+    keywords = [lowerInput.replace(/[^\w]/g, '')]
+  }
   
   // Score each template based on relevance
   const scoredTemplates = templates.map(template => {
     let score = 0
     
-    // Check section ID match (filename) - this is very important for matching
+    // Check section ID match (filename) - HIGHEST PRIORITY
+    // Handle plurals: "testimonial" should match "testimonials"
     const lowerId = template.id.toLowerCase()
-    if (lowerId.includes(lowerInput) || lowerInput.includes(lowerId)) {
-      score += 15 // High score for ID match
-    }
     keywords.forEach(keyword => {
-      if (lowerId.includes(keyword)) {
-        score += 8 // High score for keyword in ID
+      // Exact match in ID
+      if (lowerId === keyword || lowerId.includes(keyword)) {
+        score += 20 // Very high score for ID match
+      }
+      // Handle plural/singular variations
+      const singular = keyword.replace(/s$/, '')
+      const plural = keyword + 's'
+      if (lowerId.includes(singular) || lowerId.includes(plural)) {
+        score += 15 // High score for plural/singular match
       }
     })
     
@@ -428,14 +474,25 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
       }
     })
     
+    // Check liquid file content for keywords (search within the actual code)
+    const lowerLiquidCode = template.liquid_code.toLowerCase()
+    keywords.forEach(keyword => {
+      // Search in liquid code (but not in schema JSON to avoid false positives)
+      const liquidWithoutSchema = lowerLiquidCode.replace(/{%\s*schema\s*%}[\s\S]*?{%\s*endschema\s*%}/gi, '')
+      if (liquidWithoutSchema.includes(keyword)) {
+        score += 6 // Medium score for content match
+      }
+      // Also check schema for relevant terms
+      if (lowerLiquidCode.includes(keyword)) {
+        score += 4
+      }
+    })
+    
     // Check description match
     const lowerDescription = template.description.toLowerCase()
-    if (lowerDescription.includes(lowerInput)) {
-      score += 8
-    }
     keywords.forEach(keyword => {
       if (lowerDescription.includes(keyword)) {
-        score += 3
+        score += 5
       }
     })
     
@@ -465,7 +522,7 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
       'banner': ['banner', 'hero', 'landing', 'header', 'intro'],
       'product': ['product', 'shop', 'catalog', 'item', 'merchandise'],
       'collection': ['collection', 'category', 'group', 'set'],
-      'testimonial': ['testimonial', 'review', 'feedback', 'rating', 'quote'],
+      'testimonial': ['testimonial', 'testimonials', 'review', 'reviews', 'feedback', 'rating', 'ratings', 'quote', 'quotes'],
       'faq': ['faq', 'question', 'answer', 'help', 'support'],
       'form': ['form', 'contact', 'submit', 'input', 'field'],
       'gallery': ['gallery', 'image', 'photo', 'picture', 'media'],
@@ -480,12 +537,19 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
       'header': ['header', 'nav', 'navigation', 'menu'],
     }
     
-    // Check type mappings
+    // Check type mappings - improved to work with inferred types
+    const templateType = template.type.toLowerCase()
     Object.entries(sectionTypeMappings).forEach(([type, synonyms]) => {
-      if (template.type.toLowerCase() === type) {
+      if (templateType === type) {
         synonyms.forEach(synonym => {
           if (lowerInput.includes(synonym)) {
-            score += 5
+            score += 12 // High score for type match
+          }
+        })
+        // Also check keywords
+        keywords.forEach(keyword => {
+          if (synonyms.some(syn => syn.includes(keyword) || keyword.includes(syn))) {
+            score += 10
           }
         })
       }
@@ -513,11 +577,20 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
   })
   
   // Sort by score and return top results
-  return scoredTemplates
+  const results = scoredTemplates
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxResults)
     .map(item => item.template)
+  
+  // Log for debugging
+  if (results.length > 0) {
+    console.log(`[findSectionsByNaturalLanguage] Found ${results.length} sections for "${input}":`, results.map(r => r.id))
+  } else {
+    console.warn(`[findSectionsByNaturalLanguage] No sections found for "${input}". Total templates loaded: ${templates.length}`)
+  }
+  
+  return results
 }
 
 /**
