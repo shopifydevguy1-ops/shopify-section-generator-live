@@ -527,15 +527,36 @@ export default function GeneratorPage() {
                       
                       {/* Right Side - Code */}
                       <div className="md:w-1/2 w-full flex flex-col p-4 md:p-6 overflow-hidden bg-background">
-                        <div className="flex gap-2 mb-4">
-                          <Button onClick={copyToClipboard} variant="default" size="sm" className="flex-1">
-                            <Copy className="mr-2 h-4 w-4" />
-                            Copy Code
-                          </Button>
-                          <Button onClick={downloadLiquid} variant="outline" size="sm">
-                            <Download className="mr-2 h-4 w-4" />
-                            Download
-                          </Button>
+                        <div className="flex flex-col gap-2 mb-4">
+                          <div className="flex gap-2">
+                            <Button 
+                              onClick={copyToClipboard} 
+                              variant="default" 
+                              size="sm" 
+                              className="flex-1"
+                              disabled={downloadStats && !downloadStats.allowed}
+                            >
+                              <Copy className="mr-2 h-4 w-4" />
+                              Copy Code
+                            </Button>
+                            <Button 
+                              onClick={downloadLiquid} 
+                              variant="outline" 
+                              size="sm"
+                              disabled={downloadStats && !downloadStats.allowed}
+                            >
+                              <Download className="mr-2 h-4 w-4" />
+                              Download
+                            </Button>
+                          </div>
+                          {downloadStats && downloadStats.limit !== Infinity && (
+                            <p className="text-xs text-muted-foreground text-center">
+                              {downloadStats.remaining > 0 
+                                ? `${downloadStats.remaining} download${downloadStats.remaining !== 1 ? 's' : ''} remaining (${downloadStats.count}/${downloadStats.limit} used)`
+                                : `Download limit reached (${downloadStats.count}/${downloadStats.limit}). Upgrade to Pro for unlimited downloads.`
+                              }
+                            </p>
+                          )}
                         </div>
                         <div className="flex-1 overflow-auto rounded-lg border bg-muted/30 p-4">
                           <Textarea
