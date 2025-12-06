@@ -133,6 +133,15 @@ let downloadLogs: DownloadLog[] = []
 let loginLogs: LoginLog[] = []
 
 // Support requests store
+export interface SupportReply {
+  id: string
+  support_request_id: string
+  message: string
+  from_admin: boolean
+  created_at: Date
+  admin_email?: string
+}
+
 export interface SupportRequest {
   id: string
   user_id: string
@@ -142,6 +151,7 @@ export interface SupportRequest {
   message: string
   created_at: Date
   status: 'open' | 'closed' | 'in_progress'
+  replies?: SupportReply[]
 }
 
 let supportRequests: SupportRequest[] = []
@@ -151,7 +161,36 @@ export function getAllSupportRequests(): SupportRequest[] {
 }
 
 export function addSupportRequest(request: SupportRequest): void {
-  supportRequests.push(request)
+  supportRequests.push({ ...request, replies: [] })
+}
+
+export function getSupportRequestById(requestId: string): SupportRequest | null {
+  return supportRequests.find(r => r.id === requestId) || null
+}
+
+export function getSupportRequestsByUserId(userId: string): SupportRequest[] {
+  return supportRequests.filter(r => r.user_id === userId)
+}
+
+export function addSupportReply(reply: SupportReply): void {
+  const request = supportRequests.find(r => r.id === reply.support_request_id)
+  if (request) {
+    if (!request.replies) {
+      request.replies = []
+    }
+    request.replies.push(reply)
+    // Update status if admin replied
+    if (reply.from_admin && request.status === 'open') {
+      request.status = 'in_progress'
+    }
+  }
+}
+
+export function updateSupportRequestStatus(requestId: string, status: 'open' | 'closed' | 'in_progress'): void {
+  const request = supportRequests.find(r => r.id === requestId)
+  if (request) {
+    request.status = status
+  }
 }
 
 export async function getUserById(userId: string): Promise<User | null> {

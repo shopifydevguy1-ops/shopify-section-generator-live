@@ -2,14 +2,14 @@ import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
-import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lucide-react"
+import { getUserByClerkId, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
 import { SyncUsersButton } from "@/components/admin/sync-users-button"
 import { SupportRequests } from "@/components/admin/support-requests"
 import { RecentUsersLive } from "@/components/admin/recent-users-live"
 import { RecentActivityLive } from "@/components/admin/recent-activity-live"
+import { StatsCardsLive } from "@/components/admin/stats-cards-live"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -82,8 +82,7 @@ export default async function AdminPage() {
     await createUser(user.id, user.emailAddresses[0]?.emailAddress || "", true)
   }
 
-  // Get admin stats
-  const stats = await getUserStats()
+  // Get data for legacy table (stats are now live via StatsCardsLive component)
   const allUsers = await getAllUsers()
   const allSubscriptions = await getAllSubscriptions()
   const allLogs = await getAllUsageLogs()
@@ -98,62 +97,8 @@ export default async function AdminPage() {
           <p className="text-muted-foreground">Manage users, subscriptions, and track usage</p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalUsers}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {stats.freeUsers} free, {stats.proUsers} pro
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Subscriptions</CardTitle>
-              <CreditCard className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.activeSubscriptions}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {stats.totalSubscriptions} total subscriptions
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Generations</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalGenerations}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {stats.generationsThisMonth} this month
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pro Users</CardTitle>
-              <UserCheck className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.proUsers}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {stats.totalUsers > 0 
-                  ? `${Math.round((stats.proUsers / stats.totalUsers) * 100)}% conversion`
-                  : '0% conversion'}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Stats Cards - Live Component */}
+        <StatsCardsLive />
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Recent Users - Live Component */}

@@ -8,6 +8,7 @@ import Link from "next/link"
 import { getUserByClerkId, getSubscriptionByUserId } from "@/lib/db"
 import { CreditCard, Settings, User } from "lucide-react"
 import { AccountProfileCard } from "@/components/account/account-profile-card"
+import { UserMessages } from "@/components/account/user-messages"
 
 export default async function AccountPage() {
   const { userId } = auth()
@@ -125,6 +126,11 @@ export default async function AccountPage() {
               </Link>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Support Messages */}
+        <div className="mt-6 max-w-4xl">
+          <UserMessages />
         </div>
       </main>
     </div>
