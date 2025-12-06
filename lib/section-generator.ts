@@ -1305,6 +1305,8 @@ async function generateWithTogether(apiKey: string, systemPrompt: string, userPr
  */
 async function generateWithHuggingFace(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
   const model = process.env.AI_MODEL || 'meta-llama/Meta-Llama-3-70B-Instruct'
+  
+  // Try router API endpoint first (new format)
   const url = `https://router.huggingface.co/hf-inference/models/${model}`
   
   const response = await fetchWithRetry(url, {
@@ -1325,11 +1327,19 @@ async function generateWithHuggingFace(apiKey: string, systemPrompt: string, use
 
   if (!response.ok) {
     const errorText = await response.text()
+    let errorMessage = `Hugging Face API error: ${response.status} - ${errorText}`
+    
     // 403 errors indicate permission issues - provide clearer message
     if (response.status === 403) {
-      throw new Error(`Hugging Face API permission error (403): The API key does not have sufficient permissions for Inference Providers. Please check your Hugging Face token permissions or use a different provider.`)
+      errorMessage = `Hugging Face API permission error (403): ${errorText}. Please verify your token has 'Inference API' permissions enabled in your Hugging Face account settings.`
     }
-    throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`)
+    
+    // If 404, the endpoint format might be wrong - try alternative format
+    if (response.status === 404) {
+      console.warn(`[Hugging Face] Router API returned 404, endpoint format may be incorrect`)
+    }
+    
+    throw new Error(errorMessage)
   }
 
   const data = await response.json()
