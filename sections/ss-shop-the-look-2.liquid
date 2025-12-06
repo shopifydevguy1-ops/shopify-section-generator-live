@@ -1,0 +1,1250 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+  assign heading_mb = section.settings.heading_mb
+  assign heading_mb_mobile = section.settings.heading_mb_mobile
+
+  assign body_vertical_padding = section.settings.body_vertical_padding
+  assign body_vertical_padding_mobile = section.settings.body_vertical_padding_mobile
+
+  assign image = section.settings.image
+  assign image_ratio = section.settings.image_ratio
+  assign image_ratio_mobile = section.settings.image_ratio_mobile
+  assign image_radius = section.settings.image_radius
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_border_color = section.settings.image_border_color
+  assign item_image_hover = section.settings.item_image_hover
+
+  assign content_horizontal_align = section.settings.content_horizontal_align
+
+  assign text_align = ""
+  if content_horizontal_align == "start"
+    assign text_align = "left"
+  elsif content_horizontal_align == "center"
+    assign text_align = "center"
+  else
+    assign text_align = "right"
+  endif
+
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_size = section.settings.title_size
+  assign title_height = section.settings.title_height
+  assign title_color = section.settings.title_color
+
+  assign price_custom = section.settings.price_custom
+  assign price_font = section.settings.price_font
+  assign price_size = section.settings.price_size
+  assign price_mt = section.settings.price_mt
+  assign price_height = section.settings.price_height
+  assign price_color = section.settings.price_color
+  assign price_original_color = section.settings.price_original_color
+
+  assign item_image_ratio = section.settings.item_image_ratio
+  assign item_image_ratio_mobile = section.settings.item_image_ratio_mobile
+  assign item_image_radius = section.settings.item_image_radius
+  assign item_image_border_thickness = section.settings.item_image_border_thickness
+  assign item_image_border_color = section.settings.item_image_border_color
+  
+-%}
+
+{%- style -%}
+
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  title_font | font_face: font_display: 'swap' }}
+  {{  price_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .shop-heading-{{ section.id }} {
+    text-align: {{ heading_align_mobile }};
+    margin-bottom: {{ heading_mb_mobile }}px;
+  }
+
+  .shop-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .shop-body-{{ section.id }} {
+    position: relative;
+    padding: {{ body_vertical_padding_mobile }}px 0px;
+  }
+
+  .shop-image-{{ section.id }} {
+    width: 100%;
+    max-width: 76%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: {{ image_radius }}px;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};
+    overflow: hidden;
+  }
+
+  .shop-image-{{ section.id }} img,
+  .shop-image-{{ section.id }} svg,
+  .shop-item-image-{{ section.id }} img,
+  .shop-item-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.25s ease 0s;
+  }
+
+  .shop-image-{{ section.id }} svg,
+  .shop-item-image-{{ section.id }} svg {
+    background-color: #AFAFAF;
+  }
+
+  .shop-item-{{ section.id }} {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.25s ease 0s;
+  }
+
+  .shop-item-desktop-{{ section.id }} {
+    display: none;
+  }
+
+  .shop-item-{{ section.id }}:first-child {
+    flex-direction: row-reverse;
+    top: 35%;
+    right: 0;
+    width: 94px;
+  }
+
+  .shop-item-{{ section.id }}:nth-child(2) {
+    left: 18px;
+    width: 90px;
+    bottom: 70px;
+  }
+
+  .shop-item-{{ section.id }}:nth-child(3) {
+    top: 30px;
+    left: 0;
+    width: 91px;
+  }
+
+  .shop-item-{{ section.id }}:nth-child(4) {
+    flex-direction: row-reverse;
+    top: 0px;
+    right: 35px;
+    width: 85px;
+  }
+
+  .shop-item-{{ section.id }}:nth-child(5) {
+    flex-direction: row-reverse;
+    bottom: 0;
+    right: 20px;
+    width: 85px;
+  }
+
+  .shop-item-image-{{ section.id }} {
+    flex: 1 0;
+    box-shadow: 0 0 5px 2px #89868629;
+    border-radius: {{ item_image_radius }}px;
+    border: {{ item_image_border_thickness }}px solid {{ item_image_border_color }};
+    overflow: hidden;
+    transition: all 0.25s ease 0s;
+  }
+
+  .shop-item-content-{{ section.id }} {
+    display: none;
+    flex: 1 0;
+    padding: 20px;
+    transition: all 0.25s ease 0s;
+  }
+
+  .shop-item-title-{{ section.id }} {
+    margin: 0;
+    width: 100%;
+    text-align: {{ text_align }};
+    font-size: {{ title_size }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    text-transform: unset;
+  }
+
+  .shop-item-price-{{ section.id }} {
+    margin-top: {{ price_mt }}px;
+    display: flex;
+    align-items: center;
+    justify-content: {{ content_horizontal_align }};
+    gap: 5px;
+  }
+
+  .shop-item-price-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ price_size }}px;
+    color: {{ price_color }};
+    line-height: {{ price_height }}%;
+    text-transform: unset;
+    font-style: normal;
+  }
+
+  .shop-item-compare-price-{{ section.id }} {
+    opacity: 0.8;
+    font-size: {{ price_size | times: 0.8 }}px;
+    color: {{ price_original_color }};
+    text-decoration: line-through !important;
+  }
+
+  @media(min-width: 768px) {
+    .shop-item-{{ section.id }}:first-child {
+      width: 160px;
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(2) {
+      width: 150px;
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(3) {
+       width: 140px
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(4) {
+      width: 123px;
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(5) {
+      width: 110px;
+    }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .shop-heading-{{ section.id }} {
+      text-align: {{ heading_align }};
+      margin-bottom: {{ heading_mb }}px;
+    }
+
+    .shop-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .shop-body-{{ section.id }} {
+      padding: {{ body_vertical_padding }}px 0px;
+    }
+
+    .shop-image-{{ section.id }} {
+      max-width: 40%;
+    }
+
+    .shop-item-desktop-{{ section.id }} {
+      display: flex;
+    }
+
+    .shop-item-content-{{ section.id }} {
+      display: block;
+    }
+
+    .shop-item-{{ section.id }}:first-child {
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0px;
+      width: 100%;
+      width: 410px;
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(2) {
+      bottom: 70px;
+      left: 0px;
+      width: 100%;
+      width: 400px;
+    }
+  
+    .shop-item-{{ section.id }}:nth-child(3) {
+      top: 60px;
+      left: 60px;
+      width: 327px;
+    }
+
+    .shop-item-{{ section.id }}:nth-child(4) {
+      top: 20px;
+      right: 105px;
+      width: 280px;
+    }
+
+    .shop-item-{{ section.id }}:nth-child(5) {
+      bottom: 0;
+      right: 70px;
+      width: 310px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+    .shop-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if title_custom %}
+  <style>
+    .shop-item-title-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if price_custom %}
+  <style>
+    .shop-item-price-{{ section.id }} * {
+      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};
+      font-weight: {{ price_font.weight }};
+      font-style: {{ price_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio_mobile == "portrait" %}
+  <style>
+    .shop-image-{{ section.id }} {
+       aspect-ratio: 9.6/12; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "landscape" %}
+  <style>
+    .shop-image-{{ section.id }}{
+     aspect-ratio: 12/10; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "square" %}
+  <style>
+    .shop-image-{{ section.id }} {
+     aspect-ratio: 12/12; 
+    }
+  </style>
+{% else %}
+  <style>
+    .shop-image-{{ section.id }} {
+     aspect-ratio: auto; 
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio == "portrait" %}
+  <style>
+    @media(min-width: 1024px) {
+     .shop-image-{{ section.id }} {
+       aspect-ratio: 9.6/12; 
+      } 
+    }
+  </style>
+{% elsif image_ratio == "landscape" %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-image-{{ section.id }}{
+       aspect-ratio: 12/10; 
+      }
+    }
+  </style>
+{% elsif image_ratio == "square" %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-image-{{ section.id }} {
+       aspect-ratio: 12/12; 
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-image-{{ section.id }} {
+       aspect-ratio: auto; 
+      }
+    }
+  </style>
+{% endif %}
+
+{% if item_image_ratio_mobile == "portrait" %}
+  <style>
+    .shop-item-image-{{ section.id }} {
+       aspect-ratio: 9.6/12; 
+    }
+  </style>
+{% elsif item_image_ratio_mobile == "landscape" %}
+  <style>
+    .shop-item-image-{{ section.id }}{
+     aspect-ratio: 12/10; 
+    }
+  </style>
+{% elsif item_image_ratio_mobile == "square" %}
+  <style>
+    .shop-item-image-{{ section.id }} {
+     aspect-ratio: 12/12; 
+    }
+  </style>
+{% else %}
+  <style>
+    .shop-item-image-{{ section.id }} {
+     aspect-ratio: auto; 
+    }
+  </style>
+{% endif %}
+
+{% if item_image_ratio == "portrait" %}
+  <style>
+    @media(min-width: 1024px) {
+     .shop-item-image-{{ section.id }} {
+       aspect-ratio: 9.6/12; 
+      } 
+    }
+  </style>
+{% elsif item_image_ratio == "landscape" %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-item-image-{{ section.id }} {
+       aspect-ratio: 12/10; 
+      }
+    }
+  </style>
+{% elsif item_image_ratio == "square" %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-item-image-{{ section.id }} {
+       aspect-ratio: 12/12; 
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .shop-item-image-{{ section.id }} {
+       aspect-ratio: auto; 
+      }
+    }
+  </style>
+{% endif %}
+
+{% if item_image_hover == "zoom" %}
+  <style>
+    .shop-item-{{ section.id }}:hover .shop-item-image-{{ section.id }} img,
+    .shop-item-{{ section.id }}:hover .shop-item-image-{{ section.id }} svg {
+      transform: scale(1.1);
+      transition: all 0.25s ease 0s;
+    }
+  </style>
+{% elsif item_image_hover == "scale" %}
+  <style>
+    .shop-item-{{ section.id }}:hover .shop-item-content-{{ section.id }},
+    .shop-item-{{ section.id }}:hover .shop-item-image-{{ section.id }} {
+      transform: scale(1.05);
+      transition: all 0.25s ease 0s;
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} shop-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      {% if heading != blank %}
+        <div class="shop-heading-{{ section.id }}">{{ heading }}</div>
+      {% endif %}
+
+      <div class="shop-body-{{ section.id }}">
+        {% for block in section.blocks %}
+          <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% elsif block.settings.product != blank %}a href="{{ block.settings.product.url }}"{% else %}div{% endif %} class="shop-item-{{ section.id }} shop-item-{{ block.id }} {% if block.settings.hide_mobile %}shop-item-desktop-{{ section.id }}{% endif %}">
+            {% if block.settings.product != blank or block.settings.title != blank %}
+              <div class="shop-item-content-{{ section.id }}">
+                <p class="shop-item-title-{{ section.id }}">
+                  {% if block.settings.title != blank %}
+                    {{ block.settings.title }}
+                  {% elsif block.settings.product != blank %}
+                    {{ block.settings.product.title }}
+                  {% endif %}
+                </p>
+
+                {% if block.settings.product != blank %}
+                  <div class="shop-item-price-{{ section.id }}">
+                    <p class="shop-item-regular-price-{{ section.id }}">{{ block.settings.product.price | money }}</p>
+                    {% if block.settings.product.compare_at_price != blank %}
+                      <strong>-</strong> <p class="shop-item-compare-price-{{ section.id }}">{{ block.settings.product.compare_at_price | money }}</p>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            <div class="shop-item-image-{{ section.id }}">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+              {% elsif block.settings.product.featured_image != blank %}
+                <img src="{{ block.settings.product.featured_image | image_url }}" alt="{{ block.settings.product.featured_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+          </{% if block.settings.url != blank or block.settings.product != blank %}a{% else %}div{% endif %}>
+        {% endfor %}
+              
+        <div class="shop-image-{{ section.id }}">
+          {% if image != blank %}
+            <img src="{{ image | image_url }}" alt="{{ image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Shop The Look #2",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading Settings"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>SHOP THE LOOK—</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size",
+        "default": 52
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size - Mobile",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 150
+      },
+      {
+        "type": "range",
+        "id": "heading_mb",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Margin Bottom",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "heading_mb_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Margin Bottom - Mobile",
+        "default": 16
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align",
+        "label": "Heading Text Align",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align_mobile",
+        "label": "Heading Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Body Settings"
+      },
+      {
+        "type": "range",
+        "id": "body_vertical_padding",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Body Vertical Padding",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "body_vertical_padding_mobile",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Body Vertical Padding - Mobile",
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+         "type": "range",
+         "id": "image_radius",
+         "min": 0,
+         "max": 300,
+         "step": 4,
+         "unit": "px",
+         "label": "Image Roundness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "image_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Image Border Thickness",
+         "default": 0
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_ratio_mobile",
+        "label": "Image Aspect Ratio - Mobile",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Item Content Settings"
+      },
+      {
+        "type": "select",
+        "id": "content_horizontal_align",
+        "label": "Content Horizontal Align",
+        "default": "start",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Item Title Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "title_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "title_font",
+        "label": "Item Title Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Item Title Size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "title_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Item Title Line Height",
+        "default": 130
+      },
+      {
+        "type": "header",
+        "content": "Item Price Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "price_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "price_font",
+        "label": "Item Price Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "price_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Item Price Size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "price_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Item Price Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "price_mt",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Item Price Margin Top",
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Item Image Settings"
+      },
+      {
+         "type": "range",
+         "id": "item_image_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Item Image Roundness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "item_image_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Item Image Border Thickness",
+         "default": 0
+      },
+      {
+        "type": "select",
+        "id": "item_image_ratio",
+        "label": "Item Image Aspect Ratio",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "item_image_ratio_mobile",
+        "label": "Item Image Aspect Ratio - Mobile",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "item_image_hover",
+        "label": "Item Image Hover Effect",
+        "default": "none",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "Zoom in on Image",
+            "value": "zoom"
+          },
+          {
+            "label": "Card Scale",
+            "value": "scale"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Item Colors"
+      },
+      {
+        "type": "color",
+        "label": "Item Title Color",
+        "id": "title_color",
+        "default": "#3C3C3C"
+      },
+      {
+        "type": "color",
+        "label": "Item Price Color",
+        "id": "price_color",
+        "default": "#3C3C3C"
+      },
+      {
+        "type": "color",
+        "label": "Item Price Original Color",
+        "id": "price_original_color",
+        "default": "#3C3C3C"
+      },
+      {
+        "type": "color",
+        "label": "Item Image Border Color",
+        "id": "item_image_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#3C3C3C"
+      },
+      {
+        "type": "color",
+        "label": "Image Border Color",
+        "id": "image_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section Roundness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Will Replace the Product Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "Will Replace the Product Title",
+            "default": "Product Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL",
+            "info": "Will Replace the Product URL"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_mobile",
+            "label": "Hide on Mobile"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Shop The Look #2",
+        "blocks": [
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

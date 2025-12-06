@@ -1,0 +1,481 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 5rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  .best-seller {
+    color: var(--text-color);
+  }
+  .best-seller div {
+    box-sizing: border-box;
+  }
+  .best-seller p {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.07;
+  }
+  .swiper-arrow-icon-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+  @media screen and (min-width: 750px) {
+    .swiper-arrow-icon-wrapper {
+      gap: 1.5rem;
+    }
+  }
+  .swiper-arrow-icon {
+    color: var(--text-color);
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    position: unset;
+    margin-top: unset;
+    margin-bottom: 43px;
+  }
+  .swiper-arrow-icon--left {
+    transform: rotate(180deg);
+  }
+  @media screen and (min-width: 750px) {
+    .swiper-arrow-icon {
+      width: 97px;
+      height: 97px;
+      margin-bottom: 60px;
+    }
+  }
+  .best-seller-title {
+    font-size: calc(var(--title-font-size) * 0.5);
+    font-weight: 800;
+    line-height: 107%;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  @media screen and (min-width: 750px) {
+    .best-seller-title {
+      font-size: calc(var(--title-font-size) * 0.75);
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .best-seller-title {
+      font-size: var(--title-font-size);
+      margin-bottom: 2rem;
+    }
+  }
+  .best-seller-card {
+    border: 1px solid var(--text-color);
+    border-radius: 29px;
+    background: var(--card-background-color, #fef9f3);
+    padding: 20px;
+    height: auto;
+  }
+  @media screen and (min-width: 750px) {
+    .best-seller-card {
+      padding: 23px 27px;
+    }
+  }
+  .best-seller-card__title {
+    font-weight: 800;
+    font-size: var(--product-card-title-font-size, 24px);
+    margin-bottom: 5px;
+  }
+  .best-seller-card__desc {
+    font-weight: 500;
+    font-size: var(--product-card-description-font-size, 20px);
+    margin-bottom: 13px;
+  }
+  .best-seller-card__link {
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    font-weight: 800;
+    background: var(--link-background-color, #fbf4fe);
+    border-radius: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  @media screen and (min-width: 750px) {
+    .best-seller-card__link {
+      height: 60px;
+    }
+  }
+  .best-seller-card__image {
+    width: 100%;
+    object-fit: contain;
+  }
+</style>
+
+<div
+  class="best-seller" id="best-seller"
+  style="
+    background-color:{{ section.settings.background-color }};
+    --title-font-size: {{ section.settings.title_font_size }}px;
+    --product-card-title-font-size: {{ section.settings.product_card_title_font_size }}px;
+    --product-card-description-font-size: {{ section.settings.product_card_description_font_size }}px;
+    --text-color:{{ section.settings.text-color }};
+    --card-background-color: {{ section.settings.card-background-color }};
+    --link-background-color: {{ section.settings.link-background-color }};
+    overflow:hidden;
+  "
+>
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="best-seller-title">{{ section.settings.title }}</div>
+
+    <div class="swiper swiper-{{ section.id }}" style="overflow:visible">
+      <div class="swiper-arrow-icon-wrapper">
+        <svg
+          class="swiper-button-prev swiper-arrow-icon swiper-arrow-icon--left"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 97 97"
+          fill="none"
+        >
+          <circle cx="48.6602" cy="48.75" r="47.5" fill="{{ section.settings.card-background-color }}" stroke="currentColor"/>
+          <path
+            d="M72.9825 49.8107C73.5683 49.2249 73.5683 48.2751 72.9825 47.6893L63.4366 38.1434C62.8508 37.5576 61.9011 37.5576 61.3153 38.1434C60.7295 38.7292 60.7295 39.6789 61.3153 40.2647L69.8006 48.75L61.3153 57.2353C60.7295 57.8211 60.7295 58.7708 61.3153 59.3566C61.9011 59.9424 62.8508 59.9424 63.4366 59.3566L72.9825 49.8107ZM29.9219 50.25H71.9219V47.25H29.9219V50.25Z"
+            fill="currentColor"
+          />
+        </svg>
+        <svg
+          class="swiper-button-next swiper-arrow-icon swiper-arrow-icon--right"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 97 97"
+          fill="none"
+        >
+          <circle cx="48.6602" cy="48.75" r="47.5" fill="{{ section.settings.card-background-color }}" stroke="currentColor"/>
+          <path
+            d="M72.9825 49.8107C73.5683 49.2249 73.5683 48.2751 72.9825 47.6893L63.4366 38.1434C62.8508 37.5576 61.9011 37.5576 61.3153 38.1434C60.7295 38.7292 60.7295 39.6789 61.3153 40.2647L69.8006 48.75L61.3153 57.2353C60.7295 57.8211 60.7295 58.7708 61.3153 59.3566C61.9011 59.9424 62.8508 59.9424 63.4366 59.3566L72.9825 49.8107ZM29.9219 50.25H71.9219V47.25H29.9219V50.25Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide best-seller-card">
+            {% assign image = block.settings.image %}
+            {% if image == blank %}
+              {% assign image = block.settings.product.featured_image %}
+            {% endif %}
+            {% if image != blank %}
+              <img
+                class="best-seller-card__image"
+                src="{{ image | img_url: '400x' }}"
+                srcset="
+                  {{ image | img_url: '400x' }} 400w,
+                  {{ image | img_url: '600x' }} 800w,
+                  {{ image | img_url: '800x' }} 1200w,
+                  {{ image | img_url: '1000x' }} 1600w,
+                  {{ image | img_url: 'master' }} 2000w
+                "
+                alt="{{ image.alt }}"
+              >
+            {% else %}
+              <div
+                class="best-seller-card__image"
+                style="
+                  aspect-ratio: 1/1;
+                  width: 100%;
+                  display: block;
+                "
+              ></div>
+            {% endif %}
+            <div class="best-seller-card__title">
+              {% if block.settings.title == blank %}
+                {{ product.title }}
+              {% else %}
+                {{ block.settings.title }}
+              {% endif %}
+            </div>
+            <div class="best-seller-card__desc">{{ block.settings.desc }}</div>
+            {% assign url = block.settings.url %}
+            {% if url == blank %}
+              {% assign url = block.settings.product.url %}
+            {% endif %}
+            <a class="best-seller-card__link" href="{{ url }}">
+              {{ block.settings.url_text }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // load the swiper css and js only once:
+  (function () {
+    const cssId = 'swiper-css';
+    let existingLink = document.getElementById(cssId);
+    if (!existingLink) {
+      let link = document.createElement('link');
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css';
+      link.rel = 'stylesheet';
+      link.id = cssId;
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(link);
+    }
+    const jsId = 'swiper-js';
+    let existingScript = document.getElementById(jsId);
+    if (!existingScript) {
+      let script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js';
+      script.id = jsId;
+      script.defer = true;
+      // fire a custom event when the script is loaded:
+      script.onload = function () {
+        let event = new Event('swiper:loaded');
+        document.dispatchEvent(event);
+      };
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(script);
+    }
+
+    function loadSwiper() {
+      try {
+        new Swiper('.swiper-{{ section.id }}', {
+          slidesPerView: 1.2,
+          spaceBetween: 22,
+          navigation: {
+            nextEl: '.swiper-arrow-icon--right',
+            prevEl: '.swiper-arrow-icon--left',
+          },
+          breakpoints: {
+            750: {
+              slidesPerView: 3.3,
+              spaceBetween: 32,
+            },
+            //1440: {
+            //  slidesPerView: 3.8,
+            //  spaceBetween: 32,
+            //},
+          },
+        });
+      } catch (e) {
+        console.log('Swiper not loaded');
+        console.log(e);
+      }
+    }
+    document.addEventListener('swiper:loaded', loadSwiper);
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', loadSwiper);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS - Best seller Slider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "BEST SELLER"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "label": "Text color",
+      "id": "text-color",
+      "default": "#432a54"
+    },
+    {
+      "type": "color",
+      "label": "Card background color",
+      "id": "card-background-color",
+      "default": "#fef9f3"
+    },
+    {
+      "type": "color",
+      "label": "Link background color",
+      "id": "link-background-color",
+      "default": "#fbf4fe"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Title font size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "product_card_title_font_size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card Title font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "product_card_description_font_size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Description font size",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 120
+    }
+  ],
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "If you don't select an image, the featured image of the product will be used."
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>BIG JUICE BUNDLE</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description",
+          "default": "<p>23 Drinks + Accessories</p>"
+        },
+        {
+          "type": "header",
+          "content": "Link"
+        },
+        {
+          "type": "text",
+          "id": "url_text",
+          "label": "Link text",
+          "default": "SEE DETAILS"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Link",
+          "info": "If you don't enter a link, the product page will be used."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - BonBon Product Slider",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

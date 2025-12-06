@@ -1,0 +1,812 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+
+  assign logo = section.settings.logo 
+  assign logo_size_mobile = section.settings.logo_size_mobile
+  assign logo_size = section.settings.logo_size
+  assign logo_url = section.settings.logo_url
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_mt = section.settings.heading_mt
+  assign heading_mt_mobile = section.settings.heading_mt_mobile
+
+  assign icons_mt = section.settings.icons_mt
+  assign icons_mt_mobile = section.settings.icons_mt_mobile
+  assign icons_gap_mobile = section.settings.icons_gap_mobile
+  assign icons_gap = section.settings.icons_gap
+  assign open_in_new_tab = section.settings.open_in_new_tab
+
+  assign icon_size_mobile = section.settings.icon_size_mobile
+  assign icon_size = section.settings.icon_size
+  assign icon_color = section.settings.icon_color
+  assign icon_hover_color = section.settings.icon_hover_color
+
+  assign content_horizontal_align_mobile = section.settings.content_horizontal_align_mobile
+  assign content_horizontal_align = section.settings.content_horizontal_align
+
+  assign text_align = ""
+  if content_horizontal_align == "start"
+    assign text_align = "left"
+  elsif content_horizontal_align == "center"
+    assign text_align = "center"
+  else
+    assign text_align = "right"
+  endif
+
+  assign text_align_mobile = ""
+  if content_horizontal_align_mobile == "start"
+    assign text_align_mobile = "left"
+  elsif content_horizontal_align_mobile == "center"
+    assign text_align_mobile = "center"
+  else
+    assign text_align_mobile = "right"
+  endif
+  
+-%}
+
+{%- style -%}
+
+  {{  heading_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .social-content-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: {{ content_horizontal_align_mobile }};
+  }
+
+  .social-logo-{{ section.id }} {
+    max-width: {{ logo_size_mobile }}px;
+  }
+
+  .social-logo-{{ section.id }} img,
+  .social-logo-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .social-logo-{{ section.id }} svg path {
+    fill: white;
+  }
+
+  .social-heading-{{ section.id }} {
+    width: 100%;
+    margin-top: {{ heading_mt_mobile }}px;
+    text-align: {{ text_align_mobile }};
+  }
+
+  .social-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .social-icons-{{ section.id }} {
+    width: 100%;
+    margin-top: {{ icons_mt_mobile }}px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: {{ icons_gap_mobile }}px;
+    justify-content: {{ content_horizontal_align_mobile }};
+  }
+
+  .social-icon-{{ section.id }} {
+    flex: 0 0 {{ icon_size_mobile }}px;
+    height: {{ icon_size_mobile }}px;
+    cursor: pointer;
+  }
+
+  .social-icon-{{ section.id }} img,
+  .social-icon-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .social-icon-{{ section.id }} svg path {
+    fill: {{ icon_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .social-icon-{{ section.id }}:hover svg path {
+    fill: {{ icon_hover_color }};
+    transition: all 0.25s ease 0s;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .social-content-{{ section.id }} {
+      align-items: {{ content_horizontal_align }};
+    }
+
+    .social-logo-{{ section.id }} {
+      max-width: {{ logo_size }}px;
+    }
+
+    .social-heading-{{ section.id }} {
+      margin-top: {{ heading_mt }}px;
+      text-align: {{ text_align }};
+    }
+
+    .social-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .social-icons-{{ section.id }} {
+      margin-top: {{ icons_mt }}px;
+      gap: {{ icons_gap }}px;
+      justify-content: {{ content_horizontal_align }};
+    }
+
+    .social-icon-{{ section.id }} {
+      flex: 0 0 {{ icon_size }}px;
+      height: {{ icon_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+    .social-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} social-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      <div class="social-content-{{ section.id }}">
+        <{% if logo_url != blank %}a href="{{ logo_url }}"{% else %}div{% endif %} class="social-logo-{{ section.id }}">
+          {% if logo != blank %}
+            <img src="{{ logo | image_url }}" alt="{{ logo.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+        </{% if logo_url != blank %}a{% else %}div{% endif %}>
+        {% if heading != blank %}
+          <div class="social-heading-{{ section.id }}">
+            {{ heading }}
+          </div>
+        {% endif %}
+  
+        <div class="social-icons-{{ section.id }}">
+          {% for block in section.blocks %}
+            <{% if block.settings.url != blank %}a href="{{ block.settings.url }}" {% if open_in_new_tab %}target="_blank"{% endif %}{% else %}div{% endif %} class="social-icon-{{ section.id }}">
+              {% if block.settings.icon != blank %}
+                <img src="{{ block.settings.icon | image_url }}" alt="{{ block.settings.icon.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+              {% else %}
+                {% case block.settings.icon_type %}
+                  {% when 'facebook' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="24" viewBox="0 0 13 24" fill="none"><path d="M12.085 13.5L12.7515 9.15656H8.58387V6.33797C8.58387 5.14969 9.16605 3.99141 11.0326 3.99141H12.9273V0.293438C12.9273 0.293438 11.2079 0 9.56402 0C6.13184 0 3.8884 2.08031 3.8884 5.84625V9.15656H0.0732422V13.5H3.8884V24H8.58387V13.5H12.085Z"></path></svg>
+                  {% when 'instagram' %}
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14.836 21.425c1.683-.08 3.173-.464 4.401-1.697 1.229-1.228 1.613-2.719 1.697-4.401.099-1.735.099-6.929 0-8.663-.08-1.683-.464-3.173-1.697-4.401C18.01 1.034 16.52.65 14.836.566c-1.734-.099-6.933-.099-8.667 0C4.49.646 3 1.03 1.767 2.258S.155 4.977.07 6.659c-.098 1.735-.098 6.933 0 8.668.08 1.682.464 3.173 1.697 4.401C3 20.956 4.486 21.341 6.17 21.425c1.734.098 6.933.098 8.667 0zm-4.331-1.819c-1.528 0-4.814.122-6.193-.422-.918-.365-1.626-1.073-1.996-1.996-.549-1.383-.422-4.665-.422-6.193 0-1.528-.122-4.814.422-6.192.365-.919 1.073-1.626 1.996-1.997 1.383-.548 4.665-.422 6.193-.422 1.528 0 4.814-.121 6.192.422.919.366 1.626 1.074 1.997 1.997.548 1.383.422 4.664.422 6.192 0 1.528.126 4.814-.422 6.193-.366.918-1.074 1.626-1.997 1.996-1.383.549-4.664.422-6.192.422zm5.606-12.96c.694 0 1.256-.558 1.256-1.257 0-.694-.562-1.256-1.256-1.256s-1.256.562-1.256 1.256.557 1.256 1.256 1.256zm-5.606 9.735c2.98 0 5.386-2.404 5.386-5.386 0-2.98-2.405-5.386-5.386-5.386-2.982 0-5.386 2.405-5.386 5.386 0 2.982 2.404 5.386 5.386 5.386zm0-1.884c-1.927 0-3.502-1.57-3.502-3.502 0-1.93 1.57-3.501 3.502-3.501 1.93 0 3.501 1.57 3.501 3.501 0 1.932-1.575 3.502-3.501 3.502z"></path></svg>
+                  {% when 'youtube' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="22" viewBox="0 0 33 22" fill="none"><path d="M31.4906 3.44226C31.1307 2.08731 30.0705 1.02019 28.7243 0.658052C26.2843 0 16.4999 0 16.4999 0C16.4999 0 6.71566 0 4.27555 0.658052C2.92937 1.02025 1.86913 2.08731 1.50928 3.44226C0.855469 5.89818 0.855469 11.0222 0.855469 11.0222C0.855469 11.0222 0.855469 16.1463 1.50928 18.6022C1.86913 19.9572 2.92937 20.9798 4.27555 21.3419C6.71566 22 16.4999 22 16.4999 22C16.4999 22 26.2842 22 28.7243 21.3419C30.0705 20.9798 31.1307 19.9572 31.4906 18.6022C32.1444 16.1463 32.1444 11.0222 32.1444 11.0222C32.1444 11.0222 32.1444 5.89818 31.4906 3.44226ZM13.2999 15.6745V6.36997L21.4777 11.0223L13.2999 15.6745Z"></path></svg>
+                  {% when 'tiktok' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none"><path d="M20.9968 9.84246C18.9332 9.8474 16.9201 9.20381 15.242 8.00262V16.3801C15.2414 17.9317 14.7672 19.4462 13.8827 20.721C12.9981 21.9958 11.7455 22.9701 10.2923 23.5138C8.83903 24.0575 7.25445 24.1445 5.75041 23.7633C4.24636 23.3821 2.89455 22.5508 1.87572 21.3805C0.856887 20.2103 0.219606 18.7569 0.0490885 17.2147C-0.121429 15.6725 0.182943 14.115 0.921507 12.7504C1.66007 11.3859 2.79762 10.2793 4.18205 9.57873C5.56649 8.87814 7.13181 8.61691 8.66872 8.82996V13.0436C7.96543 12.8223 7.21022 12.829 6.51094 13.0626C5.81166 13.2962 5.20407 13.7448 4.77494 14.3443C4.34582 14.9438 4.11709 15.6635 4.12143 16.4008C4.12578 17.138 4.36296 17.8551 4.79912 18.4495C5.23529 19.0439 5.84811 19.4853 6.5501 19.7106C7.25208 19.936 8.00731 19.9337 8.70795 19.7042C9.40859 19.4748 10.0188 19.0297 10.4514 18.4328C10.8841 17.8358 11.117 17.1174 11.117 16.3801V0.00292969H15.242C15.2391 0.351277 15.2683 0.699149 15.3292 1.04215C15.4725 1.80784 15.7706 2.53625 16.2051 3.18281C16.6396 3.82936 17.2014 4.38049 17.8562 4.80246C18.7878 5.41844 19.88 5.74676 20.9968 5.74652V9.84246Z"></path></svg>
+                  {% when 'twitter' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="20" viewBox="0 0 23 20" fill="none"><path d="M17.7014 0.25H21.0107L13.7826 8.50937L22.2857 19.75H15.6295L10.4123 12.9344L4.4498 19.75H1.13574L8.86543 10.9141L0.713867 0.25H7.53887L12.2498 6.47969L17.7014 0.25ZM16.5389 17.7719H18.3717L6.54043 2.125H4.57168L16.5389 17.7719Z"></path></svg>
+                  {% when 'pinterest' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="24" viewBox="0 0 19 24" fill="none"><path d="M10.0625 0.302246C5.25313 0.302246 0.5 3.5085 0.5 8.69756C0.5 11.9976 2.35625 13.8726 3.48125 13.8726C3.94531 13.8726 4.2125 12.5788 4.2125 12.2132C4.2125 11.7772 3.10156 10.8491 3.10156 9.03506C3.10156 5.26631 5.97031 2.59443 9.68281 2.59443C12.875 2.59443 15.2375 4.4085 15.2375 7.74131C15.2375 10.2304 14.2391 14.8991 11.0047 14.8991C9.8375 14.8991 8.83906 14.0554 8.83906 12.846C8.83906 11.0741 10.0766 9.3585 10.0766 7.53037C10.0766 4.42725 5.675 4.98975 5.675 8.73975C5.675 9.52725 5.77344 10.3991 6.125 11.1163C5.47813 13.9007 4.15625 18.0491 4.15625 20.9179C4.15625 21.8038 4.28281 22.6757 4.36719 23.5616C4.52656 23.7397 4.44688 23.721 4.69063 23.6319C7.05313 20.3976 6.96875 19.7647 8.0375 15.5319C8.61406 16.6288 10.1047 17.2194 11.2859 17.2194C16.2641 17.2194 18.5 12.3679 18.5 7.99443C18.5 3.33975 14.4781 0.302246 10.0625 0.302246Z"></path></svg>
+                {% endcase %}
+              {% endif %}
+            </{% if block.settings.url != blank %}a{% else %}div{% endif %}>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Social Icons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "select",
+        "id": "content_horizontal_align",
+        "label": "Content Horizontal Align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "content_horizontal_align_mobile",
+        "label": "Content Horizontal Align - Mobile",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Logo Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "url",
+        "id": "logo_url",
+        "label": "Logo URL"
+      },
+      {
+        "type": "range",
+        "id": "logo_size",
+        "min": 0,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Logo Size",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "logo_size_mobile",
+        "min": 0,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Logo Size - Mobile",
+        "default": 120
+      },
+      {
+        "type": "header",
+        "content": "Heading Settings"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>DESIGNED WITH ♡ IN DENMARK</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size - Mobile",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 150
+      },
+      {
+        "type": "range",
+        "id": "heading_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Margin Top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "heading_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Margin Top - Mobile",
+        "default": 36
+      },
+      {
+        "type": "header",
+        "content": "Icons Settings"
+      },
+      {
+        "type": "range",
+        "id": "icons_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Icons Margin Top",
+        "default": 56
+      },
+      {
+        "type": "range",
+        "id": "icons_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Icons Margin Top - Mobile",
+        "default": 56
+      },
+      {
+        "type": "range",
+        "id": "icons_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Icons Gap",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "icons_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Icons Gap - Mobile",
+        "default": 32
+      },
+      {
+        "type": "checkbox",
+        "id": "open_in_new_tab",
+        "label": "Open in new tab",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Icon Settings"
+      },
+      {
+        "type": "range",
+        "id": "icon_size",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Icon Size",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "icon_size_mobile",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Icon Size - Mobile",
+        "default": 24
+      },
+      {
+        "type": "header",
+        "content": "Icons Colors"
+      },
+      {
+        "type": "color",
+        "label": "Icon Color",
+        "id": "icon_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Icon Hover Color",
+        "id": "icon_hover_color",
+        "default": "#E5E5E5"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient",
+        "default": "linear-gradient(180deg,#333 0,#111)"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section Roundness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "icon",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "select",
+            "id": "icon_type",
+            "label": "Icon Type",
+            "default": "facebook",
+            "options": [
+              {
+                "label": "Facebook",
+                "value": "facebook"
+              },
+              {
+                "label": "Instagram",
+                "value": "instagram"
+              },
+              {
+                "label": "Youtube",
+                "value": "youtube"
+              },
+              {
+                "label": "Tik-tok",
+                "value": "tiktok"
+              },
+              {
+                "label": "Twitter",
+                "value": "twitter"
+              },
+              {
+                "label": "Pinterest",
+                "value": "pinterest"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Custom Icon"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Social Icons",
+        "blocks": [
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "instagram"
+            }
+          },
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "youtube"
+            }
+          },
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "tiktok"
+            }
+          },
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "facebook"
+            }
+          },
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "pinterest"
+            }
+          },
+          {
+            "type": "icon",
+            "settings": {
+              "icon_type": "twitter"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

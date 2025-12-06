@@ -1,0 +1,737 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign section_radius = section.settings.section_radius
+
+  assign body_gap_mobile = section.settings.body_gap_mobile
+  assign body_gap = section.settings.body_gap
+  assign body_direction = section.settings.body_direction
+  assign body_align = section.settings.body_align
+  assign body_align_mobile = section.settings.body_align_mobile
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_height = section.settings.text_height
+
+  assign autoplay_delay = section.settings.autoplay_delay
+-%}
+
+{%- style -%}
+
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  text_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .text-row-{{ section.id }} {
+    display: flex;
+    gap: {{ body_gap_mobile }}px;
+    align-items: {{ body_align_mobile }};
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .text-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .text-slider-{{ section.id }} {
+    overflow: visible !important;
+    margin: 0px !important;
+    flex-shrink: 0;
+  }
+
+  .text-text-{{ section.id }} {
+    margin: 0;
+    opacity: 0 !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+    transition: all 0.25s ease 0s;
+  }
+
+  .text-text-{{ section.id }}.swiper-slide-active {
+    opacity: 1 !important;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .text-row-{{ section.id }} {
+      gap: {{ body_gap }}px;
+      flex-direction: {{ body_direction }};
+    }
+
+    .text-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .text-text-{{ section.id }} {
+      font-size: {{ text_size }}px;
+    }
+    
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if body_align_mobile == "center" %}
+  <style>
+    .text-heading-{{ section.id }},
+    .text-slider-{{ section.id }}{
+      text-align: center;
+    }
+  </style>
+{% elsif body_align_mobile == "end" %}
+  <style>
+    .text-heading-{{ section.id }},
+    .text-slider-{{ section.id }}{
+      text-align: right;
+    }
+  </style>
+{% endif %}
+
+{% if body_direction == "row" %}
+  <style>
+    @media(min-width: 1024px) {
+      .text-heading-{{ section.id }} {
+        text-align: right;
+      }
+
+      .text-text-{{ section.id }} {
+        text-align: left;
+      }
+
+      .text-row-{{ section.id }} {
+        justify-content: {{ body_align }};
+        align-items: center;
+      }
+    }
+  </style>
+
+  {% if body_align == "center" %}
+    <style>
+      @media(min-width: 1024px) {
+        .text-heading-{{ section.id }},
+        .text-slider-{{ section.id }} {
+          min-width: 50%;
+        }
+      }
+    </style>
+  {% endif %}
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .text-row-{{ section.id }} {
+        justify-content: center;
+        align-items: {{ body_align }};
+      }
+    }
+  </style>
+
+  {% if body_align == "center" %}
+    <style>
+      @media(min-width: 1024px) {
+        
+        .text-text-{{ section.id }} {
+          text-align: center;
+        } 
+      }
+    </style>
+  {% elsif body_align == "end" %}
+    <style>
+      @media(min-width: 1024px) {
+         .text-text-{{ section.id }} {
+          text-align: right;
+        } 
+      }
+    </style>
+  {% else %}
+    <style>
+      @media(min-width: 1024px) {
+         .text-text-{{ section.id }} {
+          text-align: left;
+        } 
+      }
+    </style>
+  {% endif %}
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+      .text-heading-{{ section.id }} * {
+          font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+          font-weight: {{ heading_font.weight }};
+          font-style: {{ heading_font.style }};
+      }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+      .text-text-{{ section.id }} {
+          font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+          font-weight: {{ text_font.weight }};
+          font-style: {{ text_font.style }};
+      }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} text-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      <div class="text-row-{{ section.id }}">
+        {% if heading != blank %}
+            <div class="text-heading-{{ section.id }}">
+                {{ heading }}
+            </div>
+        {% endif %}
+        <div class="text-slider-{{ section.id }} swiper">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <p class="text-text-{{ section.id }} swiper-slide">
+                {{ block.settings.text }}
+              </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  function initRotatingText() {
+    const slider = new Swiper(".text-slider-{{ section.id }}", {
+      speed: 300,
+      loop: true,
+      autoHeight: true,
+      simulateTouch: false,
+      autoplay: {
+        delay: {{ autoplay_delay }}000,
+      },
+      slidesPerView: 1,
+      direction: 'vertical'
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initRotatingText);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initRotatingText);
+     document.addEventListener('shopify:section:load', initRotatingText);
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "SS - Rotating Text",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Body Settings"
+      },
+      {
+        "type": "select",
+        "id": "body_direction",
+        "label": "Body Direction",
+        "default": "row",
+        "options": [
+          {
+              "label": "Horizontal",
+              "value": "row"
+          },
+          {
+              "label": "Vertical",
+              "value": "column"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "body_align",
+        "label": "Body Align",
+        "default": "center",
+        "options": [
+          {
+              "label": "Left",
+              "value": "start"
+          },
+          {
+              "label": "Center",
+              "value": "center"
+          },
+          {
+              "label": "Right",
+              "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "body_align_mobile",
+        "label": "Body Align - Mobile",
+        "default": "center",
+        "options": [
+          {
+              "label": "Left",
+              "value": "start"
+          },
+          {
+              "label": "Center",
+              "value": "center"
+          },
+          {
+              "label": "Right",
+              "value": "end"
+          }
+        ]
+      },
+      {
+          "type": "range",
+          "id": "body_gap",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Body Gap",
+          "default": 16
+      },
+      {
+          "type": "range",
+          "id": "body_gap_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Body Gap - Mobile",
+          "default": 16
+      },
+      {
+        "type": "range",
+        "id": "autoplay_delay",
+        "min": 1,
+        "max": 10,
+        "step": 0.1,
+        "unit": "s",
+        "label": "Autoplay Delay",
+        "default": 3
+      },
+      {
+          "type": "header",
+          "content": "Heading Settings"
+      },
+      {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "<h2>Join membership, get:</h2>"
+      },
+      {
+          "type": "checkbox",
+          "id": "heading_custom",
+          "label": "Use Custom Font",
+          "default": false
+      },
+      {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Heading Font Family",
+          "default": "josefin_sans_n4"
+      },
+      {
+          "type": "range",
+          "id": "heading_size",
+          "min": 0,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "label": "Heading Size",
+          "default": 36
+      },
+      {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "min": 0,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "label": "Heading Size - Mobile",
+          "default": 22
+      },
+      {
+          "type": "range",
+          "id": "heading_height",
+          "min": 50,
+          "max": 200,
+          "step": 10,
+          "unit": "%",
+          "label": "Heading Line Height",
+          "default": 130
+      },
+      {
+          "type": "header",
+          "content": "Text Settings"
+      },
+      {
+          "type": "checkbox",
+          "id": "text_custom",
+          "label": "Use Custom Font",
+          "default": false
+      },
+      {
+          "type": "font_picker",
+          "id": "text_font",
+          "label": "Text Font Family",
+          "default": "josefin_sans_n4"
+      },
+      {
+          "type": "range",
+          "id": "text_size",
+          "min": 0,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "label": "Text Size",
+          "default": 36
+      },
+      {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 0,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "label": "Text Size - Mobile",
+          "default": 22
+      },
+      {
+          "type": "range",
+          "id": "text_height",
+          "min": 50,
+          "max": 200,
+          "step": 10,
+          "unit": "%",
+          "label": "Text Line Height",
+          "default": 130
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#45523e"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "default": "#9eb091"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FCFBF6"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section Roundness",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Rotating Text",
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "text": " seasonal gifts (4x a year)."
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "early access to new products."
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "priority concierge support."
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "free shipping."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

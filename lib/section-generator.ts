@@ -827,7 +827,13 @@ function getSectionsDirectoryPath(): string {
     return process.env.SECTIONS_DIRECTORY_PATH
   }
   
-  // Default path where Liquid files are stored
+  // Try local sections folder first
+  const localSectionsPath = path.join(process.cwd(), 'sections')
+  if (fs.existsSync(localSectionsPath)) {
+    return localSectionsPath
+  }
+  
+  // Fallback to default path
   return '/Users/kram/Downloads/Updated theme 11-26-25/sections'
 }
 
@@ -841,13 +847,14 @@ function getLiquidFileContent(sectionId: string): string | null {
     
     // Try multiple possible paths where Liquid files might be located
     const possiblePaths = [
+      // Local sections folder (highest priority)
+      path.join(process.cwd(), 'sections'),
       // Primary path (from env var or default)
       primaryPath,
       // Alternative absolute paths (fallbacks)
       path.join('/Users', 'kram', 'Downloads', 'Updated theme 11-26-25', 'sections'),
       // Relative paths from current working directory (for different environments)
       path.join(process.cwd(), '..', '..', 'Downloads', 'Updated theme 11-26-25', 'sections'),
-      path.join(process.cwd(), 'sections'),
       path.join(process.cwd(), '..', 'sections'),
     ]
     
@@ -982,6 +989,118 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
 }
 
 /**
+ * Load reference sections from the sections folder based on user input
+ */
+function loadReferenceSections(input: string, maxReferences: number = 3): string {
+  try {
+    const sectionsPath = getSectionsDirectoryPath()
+    
+    if (!fs.existsSync(sectionsPath)) {
+      console.warn(`[Reference Sections] Sections directory not found at ${sectionsPath}`)
+      return ''
+    }
+
+    const files = fs.readdirSync(sectionsPath)
+    const liquidFiles = files.filter(file => file.endsWith('.liquid'))
+    
+    if (liquidFiles.length === 0) {
+      return ''
+    }
+
+    // Extract keywords from input to find relevant sections
+    const lowerInput = input.toLowerCase()
+    const keywords = lowerInput
+      .split(/\s+/)
+      .filter(word => word.length > 2)
+      .slice(0, 5)
+
+    // Score and rank sections by relevance
+    const scoredFiles = liquidFiles.map(file => {
+      const lowerFile = file.toLowerCase()
+      let score = 0
+      
+      keywords.forEach(keyword => {
+        if (lowerFile.includes(keyword)) {
+          score += 10
+        }
+        // Check for partial matches
+        if (keyword.length > 3 && lowerFile.includes(keyword.substring(0, 3))) {
+          score += 5
+        }
+      })
+      
+      return { file, score }
+    })
+
+    // Sort by score and get top matches
+    const topFiles = scoredFiles
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, maxReferences)
+      .map(item => item.file)
+
+    // If no matches found, use random samples
+    if (topFiles.length === 0) {
+      topFiles.push(...liquidFiles.slice(0, maxReferences))
+    }
+
+    // Load and format reference sections
+    const references: string[] = []
+    for (const file of topFiles) {
+      try {
+        const filePath = path.join(sectionsPath, file)
+        const content = fs.readFileSync(filePath, 'utf-8')
+        
+        // Truncate very long sections (keep first 2000 chars)
+        const truncatedContent = content.length > 2000 
+          ? content.substring(0, 2000) + '\n... (truncated)'
+          : content
+        
+        references.push(`\n--- Reference Section: ${file} ---\n${truncatedContent}`)
+      } catch (error) {
+        console.warn(`[Reference Sections] Error loading ${file}:`, error)
+      }
+    }
+
+    if (references.length > 0) {
+      return `\n\nHere are some example sections from the existing library for reference:\n${references.join('\n\n')}`
+    }
+
+    return ''
+  } catch (error) {
+    console.error('[Reference Sections] Error loading reference sections:', error)
+    return ''
+  }
+}
+
+/**
+ * Retry fetch with exponential backoff for rate limiting
+ */
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<Response> {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const response = await fetch(url, options)
+    
+    // If 429 (Too Many Requests), retry with exponential backoff
+    if (response.status === 429 && attempt < maxRetries - 1) {
+      const delay = baseDelay * Math.pow(2, attempt)
+      console.log(`[AI Generator] Rate limited (429), retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`)
+      await new Promise(resolve => setTimeout(resolve, delay))
+      continue
+    }
+    
+    return response
+  }
+  
+  // Final attempt
+  return await fetch(url, options)
+}
+
+/**
  * Generate Shopify liquid section using Google Gemini AI
  */
 export async function generateSectionWithAI(
@@ -995,6 +1114,10 @@ export async function generateSectionWithAI(
   if (!apiKey) {
     throw new Error('AI API key not configured. Please set AI_API_KEY environment variable.')
   }
+
+  // Load reference sections from the sections folder
+  const referenceSections = loadReferenceSections(input, 3)
+  console.log(`[AI Generator] Loaded ${referenceSections ? 'reference sections' : 'no reference sections'} for context`)
 
   const systemPrompt = `You are an expert Shopify theme developer. Generate complete Shopify liquid section files based on user descriptions.
 
@@ -1011,6 +1134,7 @@ Requirements:
 5. Make sections customizable through schema settings
 6. Use semantic HTML and accessible markup
 7. Include inline styles or CSS classes for styling
+8. Follow the style and patterns from the reference sections provided${referenceSections ? ' (if any)' : ''}
 
 Generate ${maxResults} different variations of the requested section. Each variation should be unique but match the user's description. Return ONLY valid liquid code for each section, nothing else.`
 
@@ -1021,15 +1145,15 @@ Each section should be complete with:
 - Inline CSS or classes for styling
 - Complete {% schema %} block with settings
 - Responsive design
-- Modern, professional appearance
+- Modern, professional appearance${referenceSections ? '\n\nUse the reference sections below as style guides and examples of proper Shopify liquid section structure:' : ''}
 
-Return each section as a separate complete liquid file.`
+Return each section as a separate complete liquid file.${referenceSections}`
 
   try {
     console.log(`[AI Generator] Generating sections with Gemini for: "${input}"`)
     
-    // Use Gemini API directly
-    const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+    // Use Gemini API with retry logic for rate limiting
+    const response = await fetchWithRetry(`${apiUrl}?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1052,10 +1176,21 @@ Return each section as a separate complete liquid file.`
     if (!response.ok) {
       const errorText = await response.text()
       console.error('[AI Generator] API Error:', errorText)
+      
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please wait a moment and try again.')
+      }
+      
       throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
     }
 
     const data = await response.json()
+    
+    // Check for API errors in response
+    if (data.error) {
+      console.error('[AI Generator] API Error in response:', data.error)
+      throw new Error(data.error.message || 'API returned an error')
+    }
     
     // Extract text from Gemini response
     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text

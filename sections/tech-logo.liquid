@@ -1,0 +1,343 @@
+<style>
+  .section-{{ section.id }}-padding {
+    margin: 0 auto;
+    /*padding: 0 1.5rem;*/
+    padding-top: var(--pt);
+    padding-bottom: var(--pb);
+    background: {{section.settings.background-color}};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      /*padding: 0 5rem;*/
+      padding-top: var(--pt-desktop);
+      padding-bottom: var(--pb-desktop);
+    }
+  }
+</style>
+
+<style>
+  .scrolling-logo-cloud_{{ section.id }} {
+    {%- if section.settings.padding != blank -%}
+      /*padding-top: {{ section.settings.padding }}px;
+      padding-bottom: {{ section.settings.padding }}px;
+      padding: 0 40px;
+      max-width: 1500px;*/
+    {%- endif -%}
+  }
+  .slick-track {
+    display: flex!important;
+    align-items: center;
+  }
+  .scrolling-logo-cloud_{{ section.id }} .slick-slide {
+    text-align: center;
+    width: auto;
+    margin: 0 25px;
+  }
+  .scrolling-logo-cloud_placeholder {
+    width:100%;
+  }
+
+  .slide svg {
+    width: {{section.settings.icon-width}}px;
+    height:100%;
+  }
+  .slick-slide img {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 600px) {
+    .scrolling-logo-cloud_{{ section.id }} {
+      display:none;
+      padding: 0 10px;
+    }
+
+    .slide svg {
+      width: calc({{section.settings.icon-width}}px * 0.8);
+    }
+
+    .slide img {
+      width: calc({{section.settings.icon-width}}px * 0.8);
+    }
+  }
+
+  .scrolling-logo-cloud-title {
+    text-align:center;
+    padding: 0 15px;
+    font-size:{{section.settings.header-size}}px;
+    color: {{section.settings.header_color}};
+  }
+
+  .scrolling-logo-cloud_{{ section.id }} .slide {
+    max-width:{{section.settings.icon-width}}px;
+  }
+</style>
+
+{% capture loop %}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'slide' -%}
+        <div class="slide">
+          <a href="{{ block.settings.link }}">
+            {%- if block.settings.image != blank -%}
+              <img class="image-content__image lazyload"
+                                src="{{ block.settings.image | img_url: '300x300' }}"
+                                data-src="{{ img_url }}"
+                                data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                data-sizes="auto"
+                                alt="{{ block.settings.image.alt | escape }}">
+            {%- else -%}
+              {{ 'product-2' | placeholder_svg_tag: 'scrolling-logo-cloud_placeholder' }}
+            {%- endif -%}
+          </a>
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+{% endcapture %}
+
+<section
+  class="section-{{ section.id }}-padding"
+  data-section-id="{{ section.id }}"
+  style="
+    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    --pt-desktop: {{ section.settings.padding_top }}px;
+    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    --pb-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <h2
+    class="scrolling-logo-cloud-title"
+    id="scrolling-logo-cloud"
+    style="font-weight: 700;"
+  >
+    {{ section.settings['ss-title'] }}
+  </h2>
+  <div
+    class="scrolling-logo-cloud_{{ section.id }} slider"
+    style="{% if section.settings.shadow %} box-shadow: 4px 4px 20px rgba(191, 191, 191, 0.5);{% endif %}background: {{section.settings.slider-background-color}};
+    padding-top:{{ section.settings.logo_padding_top }}px;padding-bottom:{{ section.settings.logo_padding_bottom }}px;"
+  >
+    {{ loop }}
+    {{ loop }}
+    {{ loop }}
+  </div>
+</section>
+
+<script>
+  window.jQuery ||
+    document.write(
+      '<script src="https://code.jquery.com/jquery-3.4.1.min.js">\x3C/script>'
+    );
+</script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"
+  integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+>
+
+<script>
+  $(document).ready(function() {
+      $('.scrolling-logo-cloud_{{ section.id }}').slick({
+          {%- comment -%}
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          {%- endcomment -%}
+          slidesToShow: 1,
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 0,
+          speed: {{ section.settings.scrolling-velocity }},
+          arrows: false,
+          dots: false,
+          pauseOnHover: false,
+          cssEase: 'linear',
+          variableWidth: true,
+          {% comment %}
+          responsive: [{
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 4
+            }
+          }, {
+            breakpoint: 520,
+            settings: {
+              slidesToShow: 2
+            }
+          }]
+          {% endcomment %}
+      });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "SS - Scrolling Logo Cloud",
+  "settings": [
+    {
+      "type": "header",
+      "content": "ATT: Save to see live changes."
+    },
+    {
+      "id": "ss-title",
+      "type": "text",
+      "label": "Header text",
+      "default": "Trusted by"
+    },
+    {
+      "type": "range",
+      "id": "header-size",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Header font size",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "label": "Header color",
+      "id": "header_color",
+      "default": "#3B3A3A"
+    },
+    {
+      "type": "text",
+      "id": "icon-width",
+      "label": "Width of icons in pixel",
+      "default": "200"
+    },
+    {
+      "type": "text",
+      "id": "scrolling-velocity",
+      "label": "Scrolling velocity",
+      "info": "the lower the number, the faster the scrolling",
+      "default": "2000"
+    },
+    {
+      "type": "checkbox",
+      "id":"shadow",
+      "label": "Shadow",
+      "default": false,
+      "info": "Check this box to add shadow around the slider"
+    },
+    {
+        "type": "header",
+        "content": "Background colors"
+    },
+    {
+        "type": "color",
+        "label": "Section background color",
+        "id": "background-color",
+        "default": "#ffffff"
+    },
+    {
+        "type": "color",
+        "label": "Slider background color",
+        "id": "slider-background-color",
+        "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Logo cloud padding",
+      "info": "Useful for when logo cloud background color is different from section background color."
+    },
+    {
+      "type": "range",
+      "id": "logo_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Client logo",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Tip: Crop out all white space of images."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Client logo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - Scrolling Logo Cloud",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

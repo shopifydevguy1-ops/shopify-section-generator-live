@@ -1,0 +1,526 @@
+{%- if section.settings.override_font != blank -%}
+  {%- capture font_settings_list -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}~
+    {{ section.settings.body_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+    {{ section.settings.body_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+    {{ section.settings.body_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}~
+    {{ section.settings.heading_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+    {{ section.settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+    {{ section.settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+  {%- endcapture -%}
+  {%- assign font_array = font_settings_list | split: '~' -%}
+{% endif %}
+<style>
+  {%- if section.settings.override_font != blank -%}
+    {%- for font in font_array -%}
+      {%- unless font contains 'error' -%}
+        {{ font }}{%- endunless -%}
+    {%- endfor -%}
+    #sp-{{ section.id }}{
+      --heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --heading-font-weight: {{ section.settings.heading_font.weight }};
+      --heading-font-style: {{ section.settings.heading_font.style }};
+      --body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --body-font-weight: {{ section.settings.body_font.weight }};
+      --body-font-style: {{ section.settings.body_font.style }};
+    }
+  {% endif %}
+  #sp-{{ section.id }}{
+    --background: {{ section.settings.background_color }};
+    --heading-max-width: {{ section.settings.heading_max_width }}px;
+    --container-max-width: {{ section.settings.container_max_width }}px;
+    --heading-alignment: {{ section.settings.heading_alignment }};
+    --content-alignment: {{ section.settings.content_alignment }};
+
+    --content-background: {{ section.settings.content_background_color }};
+    --number_item: {{ section.settings.number_item }};
+    --mobile-top-padding: {{ section.settings.mobile_top_padding }}px;
+    --mobile-bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+    --desktop-top-padding: {{ section.settings.desktop_top_padding }}px;
+    --desktop-bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+    --heading-color: {{ section.settings.content_color }};
+    {% comment %}
+      setting font size{% endcomment %}
+    --heading-size: calc({{ section.settings.heading_size }} / 100);
+    --body-size: calc({{ section.settings.body_size }} / 100);
+    --space: calc({{ section.settings.space }} / 100);
+    {% comment %}
+      end setting font size{% endcomment %}
+    --content-border-radius: {{ section.settings.content_boder-radius }}px;
+    --rating-color: {{ section.settings.rating_color }};
+    {%- if section.settings.heading_alignment == "auto auto auto 0px" -%}
+      --heading-text-align: left;
+    {% elsif section.settings.heading_alignment == "auto" %}
+      --heading-text-align: center;
+    {% else %}
+      --heading-text-align: right;
+    {% endif %}
+    --sub-infor-align: auto auto auto 0;
+    --image-ratio: {{ section.settings.image_ratio }};
+    {% comment %}
+      --space-between-image: {{ section.settings.space_betwwen_image }}
+      px;
+    {% endcomment %}
+    --image-border-radius: {{ section.settings.image_border_radius }}px;
+  }
+</style>
+
+{% comment %} groupCells {% endcomment %}
+{% assign desktop_items = section.settings.number_item %}
+{% assign tablet_items = 2 %}
+{% if desktop_items == 1 %}
+  {% assign tablet_items = 1 %}
+{% endif %}
+
+{% if section.settings.slide_on_desktop == false %}
+  {% assign display_slide_item = false %}
+  {% assign display_grid_item = true %}
+{% else %}
+  {% assign display_slide_item = true %}
+  {% assign display_grid_item = false %}
+{% endif %}
+
+{% if section.settings.slide_on_mobile == false %}
+  {% assign display_slide_item_mobile = false %}
+  {% assign display_grid_item_mobile = true %}
+{% else %}
+  {% assign display_slide_item_mobile = true %}
+  {% assign display_grid_item_mobile = false %}
+{% endif %}
+
+{% comment %} Autoplay {% endcomment %}
+{% assign auto_play = false %}
+{% if section.settings.slider_auto_change != blank %}
+  {% assign auto_play = section.settings.slider_loop %}
+{% endif %}
+
+<div
+  id="sp-{{ section.id }}"
+  class="sp-{{ section.id }} sp-section sp-section-beauty-our-team sp-override-font-{{ section.settings.override_font }}"
+>
+  <div
+    {%- if section.settings.check_full_width == true -%}
+      class="sp-container sp-container-padding sp-container-fullwidth"
+    {% else %}
+      class="sp-container sp-container-padding sp-container-maxwidth"
+    {% endif %}
+  >
+    <div class="sp-heading-container">
+      <h2 class="sp-heading">
+        {{ section.settings.heading_content }}
+      </h2>
+    </div>
+    <div class="sp-sub-heading">{{ section.settings.sub_heading_content }}</div>
+
+    <div class="grid-container display-grid-item-{{ display_grid_item }} display-grid-item-mobile-{{ display_grid_item_mobile }}">
+      {% for block in section.blocks %}
+        {% if block.type == 'item' %}
+          <div class="grid-item" {{ block.shopify_attributes }}>
+              <div class="sp-image">
+                {% if block.settings.avatar %}
+                  <img src="{{ block.settings.avatar | image_url }}" alt="testimonial image">
+                {% else %}
+                  {% assign default_svg = 'image' | placeholder_svg_tag: 'sp-default-image' | escape  %}
+                  {% assign image_content = "data:image/svg+xml;utf8," | append: default_svg %}
+                  <img src="{{ image_content }}" class="sp-default-image"/>
+                {% endif %}
+              </div>
+              <div class="team-member">
+                <h5 class="team-member-name">{{ block.settings.member_name }}</h5>
+                <span class="team-member-role">{{ block.settings.member_role }}</span>
+              </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div
+      class="sp-carousel display-slide-item-{{ display_slide_item }} display-slide-item-mobile-{{ display_slide_item_mobile }}"
+      data-slider='{ "autoPlay": {{ auto_play }}, "cellAlign": "left", "contain": true, "prevNextButtons": false, "pageDots": true, "groupCells": {"desktop": {{ desktop_items }}, "tablet": {{ tablet_items }}, "mobile": 1} }'
+      data="sp-slider"
+    >
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'item' -%}
+          <div class="sp-item" {{ block.shopify_attributes }}>
+              <div class="sp-image">
+                {% if block.settings.avatar %}
+                  <img src="{{ block.settings.avatar | image_url }}" alt="testimonial image">
+                {% else %}
+                  {% assign default_svg = 'image' | placeholder_svg_tag: 'sp-default-image' | escape  %}
+                  {% assign image_content = "data:image/svg+xml;utf8," | append: default_svg %}
+                  <img src="{{ image_content }}" class="sp-default-image"/>
+                {% endif %}
+              </div>
+              <div class="team-member">
+                <h5 class="team-member-name">{{ block.settings.member_name }}</h5>
+                <span class="team-member-role">{{ block.settings.member_role }}</span>
+              </div>
+            {% comment %}
+              <div class="sp-item-container">
+              <div>
+              {%- if block.settings.avatar != blank -%}
+              <div class="avatar">{{ block.settings.avatar | image_url: width: 150 | image_tag }}</div>
+              {% else %}
+              <div class="avatar none"></div>
+              {% endif %}
+              </div>
+              <div>
+              {% if section.settings.show_rating != blank %}
+              <div class="sp-item-star">
+              {% assign number_star = block.settings.rating | times: 1 %}
+              {% for i in (1..number_star) %}
+              <span class="sp-icon-star"></span>
+              {% endfor %}
+              {% assign number_sub_star = 5 | minus: number_star %}
+              {% for i in (1..number_sub_star) %}
+              <div class="sp-sub-star-wrapper">
+              <span class="sp-icon-star sub-star"></span>
+              <span class="sp-icon-star sub-star"></span>
+              </div>
+              {% endfor %}
+              </div>
+              {% endif %}
+              {%- if block.settings.content != blank -%}
+              <p class="description" sp-key="blocks.item.content">{{ block.settings.content }}</p>
+              {% endif %}
+
+
+              <div class="sub-infor">
+              {%- if block.settings.customer_name != blank -%}
+              <span class="customer-name" >{{ block.settings.customer_name }}</span>
+              {% endif %}
+              {%- if block.settings.customer_info != blank -%}
+              <span class="customer-info" >&nbsp;-&nbsp;{{ block.settings.customer_info }}</span>
+              {% endif %}
+              </div>
+              </div>
+              </div>
+            {% endcomment %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" defer="defer"></script>
+
+{% schema %}
+{
+	"name": "🧩 Beauty Team",
+	"tag": "section",
+	"class": "beauty-our-team",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Heading"
+		},
+		{
+			"type": "text",
+			"id": "heading_content",
+			"label": "Heading",
+			"default": "Meet our team"
+		},
+		{
+			"type": "text",
+			"id": "sub_heading_content",
+			"label": "Description",
+			"default": "Introduce their employees to site visitors and showcase the highlights of their organization's personnel our team."
+		},
+		{
+			"type": "select",
+			"id": "heading_alignment",
+			"label": "Heading alignment",
+			"options": [
+				{
+					"value": "auto auto auto 0px",
+					"label": "Left"
+				},
+				{
+					"value": "auto",
+					"label": "Center"
+				},
+				{
+					"value": "auto 0px auto auto",
+					"label": "Right"
+				}
+			],
+			"default": "auto"
+		},
+		{
+			"type": "range",
+			"id": "heading_max_width",
+			"min": 400,
+			"max": 1200,
+			"step": 10,
+			"unit": "px",
+			"label": "Heading max width",
+			"default": 570
+		},
+		{
+			"type": "header",
+			"content": "Image"
+		},
+		{
+			"type": "range",
+			"id": "image_ratio",
+			"min": 0.3,
+			"max": 2,
+			"step": 0.1,
+			"unit": ":1",
+			"label": "Image ratio",
+			"default": 1.1
+		},
+		{
+			"type": "range",
+			"id": "image_border_radius",
+			"min": 0,
+			"max": 100,
+			"step": 1,
+			"unit": "px",
+			"label": "Border radius",
+			"default": 20
+		},
+		{
+			"type": "header",
+			"content": "Content"
+		},
+		{
+			"type": "select",
+			"id": "content_alignment",
+			"label": "Content alignment",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "range",
+			"id": "number_item",
+			"min": 1,
+			"max": 5,
+			"step": 1,
+			"label": "Members per row",
+			"default": 3
+		},
+		{
+			"type": "checkbox",
+			"id": "slide_on_desktop",
+			"label": "Slide on desktop",
+			"default": false
+		},
+		{
+			"type": "checkbox",
+			"id": "slide_on_mobile",
+			"label": "Slide on mobile",
+			"default": false
+		},
+		{
+			"type": "header",
+			"content": "Layout Settings"
+		},
+		{
+			"type": "checkbox",
+			"id": "check_full_width",
+			"label": "Full-width",
+			"default": false
+		},
+		{
+			"type": "range",
+			"id": "container_max_width",
+			"min": 900,
+			"max": 1800,
+			"step": 10,
+			"unit": "px",
+			"label": "Container max width",
+			"default": 1200,
+			"info": "This option is only applied when you uncheck \"Full-width\""
+		},
+		{
+			"type": "range",
+			"id": "space",
+			"min": 0,
+			"max": 250,
+			"unit": "%",
+			"step": 5,
+			"label": "Space between elements",
+			"default": 100
+		},
+		{
+			"type": "paragraph",
+			"content": "Desktop"
+		},
+		{
+			"type": "range",
+			"id": "desktop_top_padding",
+			"min": 0,
+			"max": 200,
+			"unit": "px",
+			"step": 5,
+			"label": "Top padding",
+			"default": 120
+		},
+		{
+			"type": "range",
+			"id": "desktop_bottom_padding",
+			"min": 0,
+			"max": 200,
+			"unit": "px",
+			"step": 5,
+			"label": "Bottom padding",
+			"default": 120
+		},
+		{
+			"type": "paragraph",
+			"content": "Mobile"
+		},
+		{
+			"type": "range",
+			"id": "mobile_top_padding",
+			"min": 0,
+			"max": 200,
+			"unit": "px",
+			"step": 5,
+			"label": "Top padding",
+			"default": 80
+		},
+		{
+			"type": "range",
+			"id": "mobile_bottom_padding",
+			"min": 0,
+			"max": 200,
+			"unit": "px",
+			"step": 5,
+			"label": "Bottom padding",
+			"default": 80
+		},
+		{
+			"type": "header",
+			"content": "Color Settings"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "content_color",
+			"label": "Content text",
+			"default": "#252422"
+		},
+		{
+			"type": "header",
+			"content": "Fonts Settings"
+		},
+		{
+			"type": "range",
+			"id": "heading_size",
+			"min": 50,
+			"max": 150,
+			"step": 1,
+			"label": "Heading size",
+			"default": 100,
+			"unit": "%"
+		},
+		{
+			"type": "range",
+			"id": "body_size",
+			"min": 50,
+			"max": 150,
+			"step": 1,
+			"label": "Body size",
+			"default": 100,
+			"unit": "%"
+		},
+		{
+			"type": "checkbox",
+			"id": "override_font",
+			"label": "Override fonts of the theme",
+			"default": false,
+			"info": "If you uncheck this option, the fonts of the section will work"
+		},
+		{
+			"type": "font_picker",
+			"id": "heading_font",
+			"label": "Heading font",
+			"default": "crimson_text_n6"
+		},
+		{
+			"type": "font_picker",
+			"id": "body_font",
+			"label": "Body font",
+			"default": "roboto_n4"
+		}
+	],
+	"blocks": [
+		{
+			"name": "Item",
+			"type": "item",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "avatar",
+					"label": "Avatar image"
+				},
+				{
+					"type": "text",
+					"id": "member_name",
+					"label": "Name",
+					"default": "Brianna Keenan"
+				},
+				{
+					"type": "text",
+					"id": "member_role",
+					"label": "Role",
+					"default": "Designer Manager"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "🧩 Beauty Team",
+			"blocks": [
+				{
+					"type": "item",
+					"settings": {
+						"member_name": "Brianna Keenan",
+						"member_role": "Designer Manager"
+					}
+				},
+				{
+					"type": "item",
+					"settings": {
+						"member_name": "Sara England",
+						"member_role": "Creative Manager"
+					}
+				},
+				{
+					"type": "item",
+					"settings": {
+						"member_name": "Oliver Green",
+						"member_role": "Marketting Manager"
+					}
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.sp-section-beauty-our-team{background:var(--background)}.sp-section-beauty-our-team *{line-height:120%}.sp-section-beauty-our-team .grid-container{width:100%;display:flex;flex-wrap:wrap;justify-content:var(--content-align);grid-gap:calc(32px*var(--space)) 30px}.sp-section-beauty-our-team .grid-item{text-align:var(--content-align);flex:0 0 calc(100%/var(--number_item) - 30px/var(--number_item)*(var(--number_item) - 1))}.sp-section.sp-section-beauty-our-team .sp-carousel{box-shadow:none !important;text-align:data("section.settings.content_alignment")}.sp-section-beauty-our-team .sp-item{width:calc(100%/var(--number_item) - (var(--number_item) - 1)/var(--number_item)*30px);margin-right:30px}.sp-section-beauty-our-team .sp-item-container{padding:48px 30px;background:var(--content-background);box-shadow:0px 5px 20px #e5e6f1;border-radius:var(--content-border-radius);display:flex}.sp-section-beauty-our-team .sp-image{width:100%;margin-bottom:calc(30px*var(--space))}.sp-section-beauty-our-team .sp-image img{border-radius:var(--image-border-radius);width:100%;aspect-ratio:1/var(--image-ratio);object-fit:cover}.sp-section-beauty-our-team .sp-container-maxwidth{max-width:var(--container-max-width)}.sp-section-beauty-our-team .sp-container-maxwidth{max-width:var(--container-max-width)}.sp-section-beauty-our-team .sp-container>*:last-child{margin-bottom:0 !important}.sp-section-beauty-our-team .sp-container-fullwidth{max-width:100%}.sp-section-beauty-our-team .sp-heading-container{margin-bottom:calc(16px*var(--space))}.sp-section-beauty-our-team .sp-heading{width:100%;min-width:120px;color:var(--heading-color);font-weight:600;max-width:var(--heading-max-width);text-align:center;text-transform:capitalize;line-height:calc(54px*var(--heading-size));margin:var(--heading-alignment);font-size:calc(48px*var(--heading-size));text-align:var(--heading-text-align);margin-bottom:calc(16px*var(--space))}.sp-section-beauty-our-team .sp-sub-heading{width:100%;opacity:.8;text-align:var(--heading-text-align);max-width:var(--heading-max-width);margin:var(--heading-alignment);min-width:120px;line-height:calc(28px*var(--heading-size));font-weight:400;font-size:calc(18px*var(--heading-size));color:var(--heading-color);margin-bottom:calc(64px*var(--space))}.sp-section-beauty-our-team .team-member{width:100%;text-align:var(--content-alignment)}.sp-section-beauty-our-team .team-member-name{width:100%;text-align:var(--content-alignment);font-weight:600;color:var(--heading-color);line-height:calc(32px*var(--heading-size));font-size:calc(24px*var(--heading-size));margin-bottom:calc(12px*var(--space))}.sp-section-beauty-our-team .team-member-role{width:100%;opacity:.8;color:var(--heading-color);font-weight:400;font-size:calc(16px*var(--body-size));text-align:var(--content-alignment);letter-spacing:.5px;line-height:calc(26px*var(--body-size))}.sp-section-beauty-our-team{padding-top:var(--desktop-top-padding);padding-bottom:var(--desktop-bottom-padding)}.sp-section-beauty-our-team .display-slide-item-false{display:none}.sp-section-beauty-our-team .display-grid-item-false{display:none}.sp-section-beauty-our-team .flickity-page-dots{position:relative;margin-top:calc(40px*var(--space) - 7.5px);bottom:0px}.sp-section-beauty-our-team .flickity-page-dots .dot{background:var(--heading-color)}@media screen and (max-width: 991px){.sp-section-beauty-our-team .sp-item{width:calc(50% - 15px)}.sp-section-beauty-our-team{padding-top:var(--desktop-top-padding);padding-bottom:var(--desktop-bottom-padding)}.sp-section-beauty-our-team .sp-item-container{display:block}}@media screen and (max-width: 767px){.sp-section-beauty-our-team .display-slide-item-false{display:block}.sp-section-beauty-our-team .grid-container{padding:0px}.sp-section-beauty-our-team .display-grid-item-false{display:flex}.sp-section-beauty-our-team .sp-item{width:100%}.sp-section-beauty-our-team .sp-item .customer-name{font-size:calc(16px*var(--body-size))}.sp-section-beauty-our-team .sp-item .customer-info{font-size:calc(15px*var(--body-size))}.sp-section-beauty-our-team .sp-item .description{font-size:calc(16px*var(--body-size))}.sp-section-beauty-our-team .sp-item-container{display:block}.sp-section-beauty-our-team .sp-item .avatar{margin-right:0}.sp-section-beauty-our-team .sp-item{padding:0px}.sp-section-beauty-our-team{padding-top:var(--mobile-top-padding);padding-bottom:var(--mobile-bottom-padding)}.sp-section-beauty-our-team .sp-item .avatar{margin-bottom:calc(25px*var(--space))}.sp-section-beauty-our-team .grid-item{text-align:var(--content-align);flex:0 0 100%;padding:0px}.sp-section-beauty-our-team .sp-image{width:100%;margin-bottom:calc(28px*var(--space))}.sp-section-beauty-our-team .sp-sub-heading{margin-bottom:calc(60px*var(--space))}.sp-section-beauty-our-team .display-slide-item-mobile-false{display:none}.sp-section-beauty-our-team .display-grid-item-mobile-false{display:none}.sp-section-beauty-our-team .sp-heading{line-height:calc(46px*var(--heading-size));font-size:calc(36px*var(--heading-size))}.sp-section-beauty-our-team .flickity-viewport{width:100%;aspect-ratio:1/var(--image-ratio)}.sp-section-beauty-our-team .flickity-page-dots{margin-top:calc(40px*var(--space) - 7.5px)}}
+{% endstyle %}

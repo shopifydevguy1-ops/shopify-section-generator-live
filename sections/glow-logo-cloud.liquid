@@ -1,0 +1,234 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  
+@font-face {
+    font-family: "Recoleta-Bold";
+    src: url({{ "Recoleta-Bold.woff" | asset_url }}) format("woff"), url({{ "Recoleta-Bold.woff2" | asset_url }}) format("woff2");
+}
+@font-face {
+    font-family: "Recoleta-SemiBold";
+    src: url({{ "Recoleta-SemiBold.woff" | asset_url }}) format("woff"), url({{ "Recoleta-SemiBold.woff2" | asset_url }}) format("woff2");
+}
+@font-face {
+    font-family: "Recoleta-Medium";
+    src: url({{ "Recoleta-Medium.woff" | asset_url }}) format("woff"), url({{ "Recoleta-Medium.woff2" | asset_url }}) format("woff2");
+}
+  
+.glow-logo-section {
+	padding:0 40px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+}
+ 
+.glow-logo-header {
+  	font-family: "Recoleta-SemiBold";
+    font-weight: 600;
+	text-align:center;
+    margin: 0 0 30px 0;
+}
+
+.glow-logo-cloud-section {
+    display: flex;
+    text-align: center;
+	justify-content: center;
+    align-items: center;
+}
+.glow-logo-img-div {
+  width:{{ section.settings.image_width }};
+  max-width:{{ section.settings.image_width }};
+  margin: 0 27.5px 35px;
+}
+  
+@media (max-width:767px){
+  .glow-logo-cloud-section {
+    flex-wrap:wrap;
+  }
+  .glow-logo-img-div {
+    max-width:33%;
+  }
+  .glow-logo-section {
+    padding: 20px;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+}
+
+</style>
+<div class="glow-logo-section" id="glow-logo-section">
+  <h2 class="glow-logo-header {% if section.settings.heading_size == 'medium' %}h1{% else %}h0{% endif %}"><span>{{ section.settings.custom_text_title_first }}</span>
+  	<span style="background: linear-gradient(96.1deg, {{ section.settings.color_1 }} 0%, {{ section.settings.color_2 }} 53.03%, {{ section.settings.color_3 }} 103.23%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;" class="glow-logo-header {% if section.settings.heading_size == 'medium' %}h1{% else %}h0{% endif %}"> {{ section.settings.custom_text_title_gradient }}</span>
+      <span class="glow-logo-header {% if section.settings.heading_size == 'medium' %}h1{% else %}h0{% endif %}">{{ section.settings.custom_text_title_second }}</span>
+  </h2>
+  <div class="glow-logo-cloud-section">
+    {% for block in section.blocks %}
+     <div class="glow-logo-img-div" style="{{ block.shopify_attributes }}">
+     {% if block.settings.image != blank %}
+			<img style="max-width:100%;" src="{{ block.settings.image| img_url: 'medium' }}" alt="">
+          {% else %}
+            {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Glow Logo Cloud",
+	"max_blocks":10,
+    "settings": [
+      {
+        "id": "custom_text_title_first",
+        "type": "text",
+        "label": "Header first part",
+        "default": "Logo"
+      },
+	  {
+        "id": "custom_text_title_gradient",
+        "type": "text",
+        "label": "Header gradient part",
+        "default": "cloud"
+      },
+	  {
+        "id": "custom_text_title_second",
+        "type": "text",
+        "label": "Header second part",
+        "default": "goes here"
+      },
+   	  {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "medium",
+          "label": "Medium"
+        },
+	  {
+		"type":"color",
+		"id":"color_1",
+		"label":"First Color",
+		"default":"#4222DE"
+	  },
+	  {
+		"type":"color",
+		"id":"color_2",
+		"label":"Second Color",
+		"default":"#659BFF"
+	  },
+	  {
+		"type":"color",
+		"id":"color_3",
+		"label":"Third Color",
+		"default":"#7FF6E8"
+	  },
+	  {
+		"type":"color",
+		"id":"color_4",
+		"label":"Standard Color",
+		"default":"#302E2E"
+	  },
+	  {
+		"type":"select",
+		"id":"image_width",
+		"label":"Image size",
+		"options":[
+			{
+				"label":"Extra small",
+				"value": "100px"
+			},
+			{
+				"label":"Small",
+				"value": "125px"
+			},
+			{
+				"label":"Medium",
+				"value": "150px"
+			},
+			{
+				"label":"Large",
+				"value": "175px"
+			},
+			{
+				"label":"Xtra large",
+				"value": "200px"
+			}
+		]
+	  },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+           "type": "range",
+           "id": "padding_bottom",
+           "min": 0,
+           "max": 100,
+           "step": 4,
+           "unit": "px",
+           "label": "Padding bottom",
+           "default": 16
+      }
+    ],
+	
+	"blocks": [
+     {
+       "name": "Image",
+       "type": "image",
+       "settings": [
+         {
+           "type": "image_picker",
+           "id": "image",
+           "label": "Image"
+         }
+       ]
+     }
+   ],
+   "presets": [
+      {
+        "name": "SS - Glow Logo Cloud",
+        "category": "Glow",
+      "blocks": [
+           {
+             "type": "image"
+           },
+		   {
+             "type": "image"
+           },
+		   {
+             "type": "image"
+           },
+		   {
+             "type": "image"
+           },
+		   {
+             "type": "image"
+           }
+		]
+	  }
+    ]
+ }
+{% endschema %}
+
+{% javascript %}
+{% endjavascript %}

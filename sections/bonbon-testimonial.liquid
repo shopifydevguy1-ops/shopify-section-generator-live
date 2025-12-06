@@ -1,0 +1,474 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 5rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+
+   .rating-item svg {
+    width:16px;
+    height:16px;
+    border:none;
+    margin-right:0px;
+    line-height: 1.6;
+    fill: var(--text-color);
+  }
+
+  .customers-reviews {
+    color: var(--text-color);
+    text-align: center;
+  }
+  .customers-reviews div {
+    box-sizing: border-box;
+  }
+  .customers-reviews p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  @media screen and (min-width: 750px) {
+    .customers-reviews .swiper-arrow-icon-wrapper {
+      display: none;
+    }
+  }
+  .swiper-arrow-icon-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+  @media screen and (min-width: 750px) {
+    .swiper-arrow-icon-wrapper {
+      gap: 1.5rem;
+    }
+  }
+  .swiper-arrow-icon {
+    color: var(--text-color);
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    position: unset;
+    margin-top: unset;
+    margin-bottom: 43px;
+  }
+  .swiper-arrow-icon--left {
+    transform: rotate(180deg);
+  }
+  @media screen and (min-width: 750px) {
+    .swiper-arrow-icon {
+      width: 97px;
+      height: 97px;
+      margin-bottom: 60px;
+    }
+  }
+  .customers-reviews-title {
+    font-size: calc(var(--title-font-size) * 0.5);
+    font-weight: 800;
+    line-height: 107%;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+    color: var(--title-color);
+  }
+  @media screen and (min-width: 750px) {
+    .customers-reviews-title {
+      font-size: calc(var(--title-font-size) * 0.75);
+      margin-bottom: 60px;
+      text-align: center;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .customers-reviews-title {
+      font-size: var(--title-font-size);
+    }
+  }
+  /* .ss-custom-card will be reused on other sections */
+  .ss-custom-card {
+    border: 1px solid var(--text-color);
+    border-radius: 29px;
+    background: var(--card-background-color, #fef9f3);
+    padding: 20px;
+    height: auto;
+    width: 100%;
+  }
+  @media screen and (min-width: 750px) {
+    .ss-custom-card {
+      padding: 23px 27px;
+    }
+  }
+  .ss-custom-card__title {
+    font-weight: 800;
+    font-size: var(--product-card-title-font-size, 24px);
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  .ss-custom-card__desc {
+    font-weight: 500;
+    font-size: var(--product-card-description-font-size, 20px);
+    margin-bottom: 13px;
+  }
+  .ss-custom-card__rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 13px;
+  }
+  .ss-custom-card__author {
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .ss-custom-card__link {
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    font-weight: 800;
+    background: var(--link-background-color, #fbf4fe);
+    border-radius: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    text-decoration: none;
+  }
+  @media screen and (min-width: 750px) {
+    .ss-custom-card__link {
+      height: 60px;
+    }
+  }
+  .ss-custom-card__image {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border: 1px solid var(--text-color);
+    border-radius: 26px;
+  }
+  .ss-custom-card__index {
+    border: 1px solid var(--text-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    background: var(--second-card-background-color, #f9f9f9);
+    font-weight: 500;
+    font-size: 28px;
+  }
+</style>
+
+<div
+  class="customers-reviews" id="customers-reviews"
+  style="
+    background-color:{{ section.settings.background-color }};
+    --title-font-size: {{ section.settings.title_font_size }}px;
+    --title-color: {{ section.settings.title_color }};
+    --product-card-title-font-size: {{ section.settings.product_card_title_font_size }}px;
+    --text-color:{{ section.settings.text-color }};
+    --card-background-color: {{ section.settings.card-background-color }};
+    overflow:hidden;
+  "
+>
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="customers-reviews-title">{{ section.settings.title }}</div>
+
+    <div class="swiper swiper-{{ section.id }}" style="overflow:visible;">
+      <div class="swiper-arrow-icon-wrapper">
+        <svg
+          class="swiper-button-prev swiper-arrow-icon swiper-arrow-icon--left"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 97 97"
+          fill="none"
+        >
+          <circle cx="48.6602" cy="48.75" r="47.5" fill="{{ section.settings.card-background-color }}" stroke="currentColor"/>
+          <path
+            d="M72.9825 49.8107C73.5683 49.2249 73.5683 48.2751 72.9825 47.6893L63.4366 38.1434C62.8508 37.5576 61.9011 37.5576 61.3153 38.1434C60.7295 38.7292 60.7295 39.6789 61.3153 40.2647L69.8006 48.75L61.3153 57.2353C60.7295 57.8211 60.7295 58.7708 61.3153 59.3566C61.9011 59.9424 62.8508 59.9424 63.4366 59.3566L72.9825 49.8107ZM29.9219 50.25H71.9219V47.25H29.9219V50.25Z"
+            fill="currentColor"
+          />
+        </svg>
+        <svg
+          class="swiper-button-next swiper-arrow-icon swiper-arrow-icon--right"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 97 97"
+          fill="none"
+        >
+          <circle cx="48.6602" cy="48.75" r="47.5" fill="{{ section.settings.card-background-color }}" stroke="currentColor"/>
+          <path
+            d="M72.9825 49.8107C73.5683 49.2249 73.5683 48.2751 72.9825 47.6893L63.4366 38.1434C62.8508 37.5576 61.9011 37.5576 61.3153 38.1434C60.7295 38.7292 60.7295 39.6789 61.3153 40.2647L69.8006 48.75L61.3153 57.2353C60.7295 57.8211 60.7295 58.7708 61.3153 59.3566C61.9011 59.9424 62.8508 59.9424 63.4366 59.3566L72.9825 49.8107ZM29.9219 50.25H71.9219V47.25H29.9219V50.25Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide ss-custom-card">
+            <div class="ss-custom-card__title">{{ block.settings.title }}</div>
+            {% assign rating = block.settings.rating %}
+            <div class="ss-custom-card__rating">
+              {% for i in (1..5) %}{% if i <= rating %}<div class="rating-item"><svg class="svg-inline--fa fa-star" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="{{ section.settings.stars-color }}" d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path></svg><!-- <i class="fas fa-star"></i> Font Awesome fontawesome.com --></div>{% endif %}{% endfor %}
+            </div>
+            <div class="ss-custom-card__desc">{{ block.settings.desc }}</div>
+            <div class="ss-custom-card__author">{{ block.settings.author }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // load the swiper css and js only once:
+  (function () {
+    const cssId = 'swiper-css';
+    let existingLink = document.getElementById(cssId);
+    if (!existingLink) {
+      let link = document.createElement('link');
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css';
+      link.rel = 'stylesheet';
+      link.id = cssId;
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(link);
+    }
+    // do the same with the swiperjs script
+    const jsId = 'swiper-js';
+    let existingScript = document.getElementById(jsId);
+    if (!existingScript) {
+      let script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js';
+      script.id = jsId;
+      script.defer = true;
+      // fire a custom event when the script is loaded:
+      script.onload = function () {
+        let event = new Event('swiper:loaded');
+        document.dispatchEvent(event);
+      };
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(script);
+    }
+
+    function loadSwiper() {
+      try {
+        new Swiper('.swiper-{{ section.id }}', {
+          slidesPerView: 1.2,
+          spaceBetween: 22,
+          navigation: {
+            nextEl: '.swiper-arrow-icon--right',
+            prevEl: '.swiper-arrow-icon--left',
+          },
+          breakpoints: {
+            750: {
+              slidesPerView: 3,
+              spaceBetween: 32,
+            },
+            //1440: {
+            //  slidesPerView: 3.8,
+            //  spaceBetween: 32,
+            //},
+          },
+        });
+      }
+      catch (e) {
+        console.log('Swiper not loaded');
+        console.log(e)
+      }
+    }
+    document.addEventListener('swiper:loaded', loadSwiper);
+    if(window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', loadSwiper);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS - Customer reviews",
+  "class": "section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "WHAT OUT CUSTOMERS THINK"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "label": "Title color",
+      "id": "title_color",
+      "default": "#432a54"
+    },
+    {
+      "type": "color",
+      "label": "Text color",
+      "id": "text-color",
+      "default": "#432a54"
+    },
+    {
+      "type": "color",
+      "label": "Card background color",
+      "id": "card-background-color",
+      "default": "#fef9f3"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Title font size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "product_card_title_font_size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card Title font size",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#F7EAF9"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 120
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>OUTSTANDING STUFF!</p>"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description",
+          "default": "<p>Totally wicked, can honestly recommend it to every viber out there. Better buy that stuff right now or regret it forever!</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "NIC R."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - BonBon Testimonials",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "<p>LOVING IT :)</p>",
+            "rating": 5,
+            "desc": "<p>Totally wicked, can honestly recommend it to every viber out there. Better buy that stuff right now or regret it forever!</p>",
+            "author": "SUSAN K."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "<p>ORDERED MORE!</p>",
+            "rating": 5,
+            "desc": "<p>Totally wicked, can honestly recommend it to every viber out there. Better buy that stuff right now or regret it forever!</p>",
+            "author": "LINUS Vbr."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

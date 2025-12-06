@@ -1,0 +1,1078 @@
+<style>
+  .desktop-only-{{ section.id }} {
+    display: none;
+  }
+  @media screen and (min-width: 750px) {
+    .mobile-only-{{ section.id }} {
+      display: none;
+    }
+    .desktop-only-{{ section.id }} {
+      display: block;
+    }
+  }
+  .placeholder-{{ section.id }} {
+    background: rgb(26 26 26 / .3);
+    fill: rgb(26 26 26 / .7);
+    color: rgb(26 26 26 / .7);
+    display: block;
+  }
+  .rounded-{{ section.id }} {
+    border-radius: 12px;
+  }
+  .relative-{{ section.id }} {
+    position: relative;
+  }
+  .sr-only-{{ section.id }} {
+    width: 1px;
+    height: 1px;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+  }
+</style>
+<style>
+  .section-{{ section.id }}-padding {
+    max-width: var(--max-width);
+    margin: var(--mt) auto var(--mb);
+    padding: 0 var(--px, 1.5rem);
+    padding-top: var(--pt);
+    padding-bottom: var(--pb);
+  }
+  .section-{{ section.id }} a {
+    text-decoration: none;
+  }
+  .section-{{ section.id }} * {
+    color: var(--color);
+    font-size: var(--mobile-font-size, calc(var(--font-size) * 0.85));
+    line-height: 1.2;
+    box-sizing: border-box;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 var(--px-desktop, 5rem);
+      padding-top: var(--pt-desktop);
+      padding-bottom: var(--pb-desktop);
+    }
+    .section-{{ section.id }} * {
+      font-size: var(--font-size);
+    }
+  }
+</style>
+<div
+  style="
+    background-color:{{ section.settings.background-color }};
+    background: {{ section.settings.background }};
+    --mobile-product-card-bg: {{ section.settings.product_card_bg_mobile }};
+    --product-card-bg: {{ section.settings.product_card_bg }};
+    --mobile-product-card-text-color: {{ section.settings.product_card_text_color_mobile }};
+    --product-card-text-color: {{ section.settings.product_card_text_color }};
+    --mobile-product-card-atc-bg: {{ section.settings.product_card_atc_bg_mobile }};
+    --product-card-atc-bg: {{ section.settings.product_card_atc_bg }};
+    --mobile-product-card-atc-text-color: {{ section.settings.product_card_atc_text_color_mobile }};
+    --product-card-atc-text-color: {{ section.settings.product_card_atc_text_color }};
+  "
+>
+  <div
+    class="section-{{ section.id }} section-{{ section.id }}-padding"
+    style="
+      --max-width: {{ section.settings.section-width }}rem;
+      --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      --pt-desktop: {{ section.settings.padding_top }}px;
+      --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      --pb-desktop: {{ section.settings.padding_bottom }}px;
+      --px: {{ section.settings.padding_x }}rem;
+      --px-desktop: {{ section.settings.padding_x_desktop }}rem;
+      --mt: {{ section.settings.margin_top }}px;
+      --mb: {{ section.settings.margin_bottom }}px;
+    "
+  >
+    <style>
+      .title-wrapper-{{ section.id }} {
+        margin-bottom: 32px;
+      }
+      @media screen and (min-width: 750px) {
+        .title-wrapper-{{ section.id }} {
+          margin-bottom: 48px;
+        }
+      }
+    </style>
+    {% if section.settings.title != blank
+      or section.settings.subtitle != blank
+    %}
+      <div class="title-wrapper-{{ section.id }}">
+        {% comment %} Title: {% endcomment %}
+        {% if section.settings.title != blank %}
+          <div
+            class="title-{{ section.id }}"
+            style="
+              font-weight: 700;
+              --font-size: {{ section.settings.title_font_size }}px;
+              color: {{ section.settings.title_color }};
+            "
+          >
+            {{ section.settings.title }}
+          </div>
+        {% endif %}
+
+        {% comment %} Subtitle: {% endcomment %}
+        {% if section.settings.subtitle != blank %}
+          {% if section.settings.title != blank %}
+            <style>
+              .subtitle-{{ section.id }} {
+                margin-top: 20px;
+              }
+              @media screen and (min-width: 750px) {
+                .subtitle-{{ section.id }} {
+                  margin-top: 24px;
+                }
+              }
+            </style>
+          {% endif %}
+          <div
+            class="subtitle-{{ section.id }}"
+            style="
+              --font-size: {{ section.settings.subtitle_font_size }}px;
+              color: {{ section.settings.subtitle_color }};
+            "
+          >
+            {{ section.settings.subtitle }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <style>
+      .grid-{{ section.id }} {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+      @media screen and (min-width: 750px) {
+        .grid-{{ section.id }} {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 0;
+        }
+      }
+    </style>
+    <div class="grid-{{ section.id }}">
+      <div>
+        <div
+          class="relative-{{ section.id }}"
+          style="
+            {% if section.settings.object_fit == 'cover' %}
+              height: 100%;
+            {% endif %}
+          "
+        >
+          {% if section.settings.image != blank %}
+            <img
+              class="rounded-{{ section.id }}"
+              style="
+                width: 100%;
+                object-fit: {{ section.settings.object_fit }};
+                {% if section.settings.object_fit == 'cover' %}
+                  height: 100%;
+                {% endif %}
+              "
+              src="{{ section.settings.image | img_url: 'master' }}"
+              alt="{{ section.settings.image.alt }}"
+            >
+          {% else %}
+            {% assign class_name = 'placeholder-'
+              | append: section.id
+              | append: ' rounded-'
+              | append: section.id
+            %}
+            {{ 'image' | placeholder_svg_tag: class_name }}
+          {% endif %}
+
+          <style>
+            .button-on-image-{{ section.id }} {
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              position: absolute;
+              transition: transform .2s ease-in-out;
+              transform-origin: center;
+              cursor: pointer;
+            }
+            .button-on-image-{{ section.id }}:hover,
+            .button-on-image--active-{{ section.id }} {
+              transform: scale(1.3);
+            }
+            .button-on-image-{{ section.id }}::after {
+              content: "";
+              top: calc(50% + (24px * -1));
+              left: calc(50% + (24px * -1));
+              width: 48px;
+              height: 48px;
+              --shop-the-look-dot-background: 255 255 255;
+              background: radial-gradient(50% 50% at 50% 50%,rgb(var(--shop-the-look-dot-background) / 0),rgb(var(--shop-the-look-dot-background) / .3));
+              border-radius: 50%;
+              animation: 2s ease-in-out infinite alternate ping-custom;
+              position: absolute;
+            }
+            @keyframes ping-custom {
+              from {
+                transform: scale(0.8);
+              }
+              to {
+                transform: scale(1);
+              }
+            }
+          </style>
+          {% for block in section.blocks %}
+            <div
+              class="
+                button-on-image-{{ section.id }}
+                {% if forloop.index == 1 %}
+                  button-on-image--active-{{ section.id }}
+                {% endif %}
+              "
+              style="
+                background: white;
+                top: calc({{ block.settings.vertical_position }}% + (10px / 2));
+                left: calc({{ block.settings.horizontal_position }}% + (10px / 2));
+              "
+            >
+              <span class="sr-only-{{ section.id }}"
+                >Go to item {{ forloop.index -}}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        {% comment %} Two Mobile Layouts: {% endcomment %}
+        <div class="mobile-only-{{ section.id }}">
+          <style>
+            .product-mobile-card-wrapper-{{ section.id }} {
+              border: 1px solid rgb(26 26 26 / .12);
+            }
+            .product-mobile-card-wrapper-not-stacked-{{ section.id }} {
+              display: flex;
+              gap: 16px;
+            }
+            .product-mobile-card-wrapper-not-stacked-{{ section.id }} .product-mobile-card-{{ section.id }} {
+              flex-grow: 1;
+              flex-shrink: 0;
+            }
+            .product-mobile-card-{{ section.id }} {
+              padding: 16px;
+              gap: 16px;
+              display: flex;
+              align-items: center;
+              background: var(--mobile-product-card-bg);
+              color: var(--mobile-product-card-text-color);
+            }
+            .product-mobile-card-atc-{{ section.id }} {
+              border-radius: 60px;
+              width: fit-content;
+              background: var(--mobile-product-card-atc-bg, #E5E5E5);
+              color: var(--mobile-product-card-atc-text-color);
+              padding: 8px 20px;
+              margin-top: 6px;
+            }
+          </style>
+
+          {% capture products %}
+            {% for block in section.blocks %}
+              {% assign product = block.settings.product %}
+              {% if product != blank %}
+                <a
+                  class="product-mobile-card-{{ section.id }}"
+                  href="{{ product.url }}"
+                >
+                  <img
+                    style="width: 64px; height: 64px; object-fit: contain;"
+                    src="{{ product.featured_image | img_url: '700x' }}"
+                    alt="{{ product.featured_image.alt }}"
+                  >
+                  <div>
+                    <div class="product-title-{{ section.id }}">
+                      {{ product.title }}
+                    </div>
+                    <div class="price-{{ section.id }}">
+                      {{ product.price | money }}
+                    </div>
+                    <div 
+                      class="product-mobile-card-atc-{{ section.id }}"
+                      style="--font-size: {{ section.settings.atc_font_size }}px"
+                    >
+                      More Details
+                    </div>
+                  </div>
+                </a>
+              {% else %}
+                <div
+                  class="product-mobile-card-{{ section.id }}"
+                >
+                  <div
+                    style="
+                      width: 64px;
+                      height: 64px;
+                      background: rgb(26 26 26 / .12);
+                    "
+                  >
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                  <div>
+                    <div class="product-title-{{ section.id }}">
+                      Product Title
+                    </div>
+                    <div class="price-{{ section.id }}">
+                      $45.00
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endcapture %}
+
+          {% if section.settings.stack_on_mobile %}
+            <div class="product-mobile-card-wrapper-{{ section.id }}">
+              {{ products }}
+            </div>
+          {% else %}
+            <style>
+              .scroll-area-bleed-{{ section.id }} {
+                scrollbar-width: none;
+                position: relative;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-padding-inline: 20px;
+                margin-inline-start: -20px;
+                /*margin-inline-end: -20px;*/
+                padding-inline-start: 20px;
+                /*padding-inline-end: 20px;*/
+                display: grid;
+              }
+              /* hide scroll bar: */
+              .scroll-area-bleed-{{ section.id }}::-webkit-scrollbar {
+                display: none;
+              }
+              .scroll-area-bleed-{{ section.id }} .product-mobile-card-{{ section.id }} {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                /*width: calc(100% - 40px - 20px);*/
+                width: 70vw;
+                flex-shrink: 0;
+                border-right: 1px solid rgb(26 26 26 / .12);
+                border-top: 1px solid rgb(26 26 26 / .12);
+                border-bottom: 1px solid rgb(26 26 26 / .12);
+              }
+            </style>
+            <div style="display: grid;">
+              <div
+                class="scroll-area-bleed-{{ section.id }}"
+              >
+                <div style="display: flex; border-left: 1px solid rgb(26 26 26 / .12);">
+                  {{ products }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        {% comment %} One Desktop Carousel: {% endcomment %}
+        <div class="desktop-only-{{ section.id }}" style="height: 100%;">
+          <div style="display: flex; justify-content: space-between; flex-direction: column; height: 100%; gap: 20px;">
+            <style>
+              .product-card-{{ section.id }} {
+                position: relative;
+                display: grid;
+                align-content: start;
+                border-radius: 6px;
+                overflow: hidden;
+                grid-template-columns: minmax(0,1fr);
+                width: 60%;
+                margin: 0 auto;
+                background: white;
+                opacity: 0;
+                transition: opacity .4s ease-in-out;
+                background: var(--product-card-bg);
+                color: var(--product-card-text-color);
+              }
+              .product-card-{{ section.id }}:not(:first-child) {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+              }
+              .product-card--active-{{ section.id }} {
+                z-index: 1;
+                opacity: 1;
+              }
+              .product-content-{{ section.id }} {
+                padding: 20px;
+              }
+              .product-title-{{ section.id }} {
+                font-weight: 700;
+                text-decoration: none;
+                margin-bottom: 6px;
+                display: block;
+                --font-size: 16px;
+              }
+              .price-{{ section.id }} {
+                --mobile-font-size: 12px;
+              }
+              .product-image-{{ section.id }} {
+                object-fit:cover;
+                width: 100%;
+                height: 100%;
+              }
+              .product-hover-image-{{ section.id }} {
+                transition: opacity .4s ease-in-out;
+                opacity: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                background: var(--product-card-bg, white);
+              }
+              .product-image-wrapper-{{ section.id }}:hover .product-hover-image-{{ section.id }} {
+                opacity: 1;
+              }
+              .more-detail-{{ section.id }} {
+                background: var(--product-card-atc-bg, black);
+                border-radius: 60px;
+                position: absolute;
+                right: 16px;
+                bottom: 16px;
+                color: var(--product-card-atc-text-color, white);
+                padding: 12px 24px;
+                font-weight: 700;
+                font-size: 14px;
+                opacity: 0;
+                transform: translateY(5px);
+                transition: all .2s ease-in-out;
+              }
+              .product-image-wrapper-{{ section.id }}:hover .more-detail-{{ section.id }} {
+                opacity: 1;
+                transform: translateY(0);
+              }
+              .more-detail-{{ section.id }}:hover {
+                background: rgba(0,0,0,.85);
+              }
+              .product-save-amount-tag-{{ section.id }} {
+                position: absolute;
+                top: 16px;
+                left: 16px;
+                background: rgb(248 58 58);
+                --color: white;
+                color: white;
+                padding: 4px 8px;
+                border-radius: 60px;
+                font-size: 12px;
+                font-weight: 700;
+                z-index: 5;
+                pointer-events: none;
+              }
+            </style>
+            <div class="relative-{{ section.id }}" style="height: 100%;">
+              {% for block in section.blocks %}
+                {% if block.settings.product != blank %}
+                  {% assign product = block.settings.product %}
+                  <div
+                    class="
+                      product-card-{{ section.id }}
+                      {% if forloop.first %} product-card--active-{{ section.id }} {% endif %}
+                    "
+                  >
+                    <a
+                      class="relative-{{ section.id }} product-image-wrapper-{{ section.id }}"
+                      href="{{ product.url }}"
+                    >
+                      <img
+                        class="product-image-{{ section.id }}"
+                        src="{{ product.images[0] | img_url: '1000x' }}"
+                        alt="{{ product.images[0].alt }}"
+                      >
+                      {% comment %} Hover image: {% endcomment %}
+                      {% if product.images[1] != blank %}
+                        <img
+                          class="product-image-{{ section.id }} product-hover-image-{{ section.id }}"
+                          src="{{ product.images[1] | img_url: '1000x' }}"
+                          alt="{{ product.images[1].alt }}"
+                          loading="lazy"
+                        >
+                      {% endif %}
+
+                      {% comment %} Save amount tag: {% endcomment %}
+                      {% if product.compare_at_price_max > product.price %}
+                        <div class="product-save-amount-tag-{{ section.id }}">
+                          Save
+                          {{
+                            product.compare_at_price_max
+                            | minus: product.price
+                            | money
+                          }}
+                        </div>
+                      {% endif %}
+
+                      {% comment %} More Details button: {% endcomment %}
+                      <div
+                        class="more-detail-{{ section.id }}"
+                        style="--font-size: {{ section.settings.atc_font_size }}px"
+                      >
+                        More Details
+                      </div>
+                    </a>
+                    <div class="product-content-{{ section.id }}">
+                      <a
+                        href="{{ product.url }}"
+                        class="product-title-{{ section.id }}"
+                      >
+                        {{ product.title }}
+                      </a>
+                      <div class="price-{{ section.id }}">
+                        <span
+                          style="
+                            {% if product.compare_at_price_max > product.price %}
+                              color: red;
+                            {% endif %}
+                          "
+                        >
+                          {{ product.price | money }}
+                        </span>
+
+                        {% if product.compare_at_price_max > product.price %}
+                          <span
+                            style="
+                              text-decoration: line-through;
+                              color: rgba(26, 26, 26, 0.7);
+                            "
+                          >
+                            {{ product.compare_at_price_max | money }}
+                          </span>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                  <div
+                    class="
+                      product-card-{{ section.id }}
+                      {% if forloop.first %} product-card--active-{{ section.id }} {% endif %}
+                    "
+                  >
+                    <div>
+                      {% assign class_name = 'placeholder-'
+                        | append: section.id
+                      %}
+                      {{ 'product-1' | placeholder_svg_tag: class_name }}
+                    </div>
+                    <div class="product-content-{{ section.id }}">
+                      <a href="" class="product-title-{{ section.id }}"
+                        >Product</a
+                      >
+                      <div class="price-{{ section.id }}">$45.00</div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <style>
+              .arrow-wrapper-{{ section.id }} {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+              }
+              .arrow-{{ section.id }} {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                place-items: center;
+                transition: opacity .15s ease-in;
+                display: grid;
+                box-shadow: 0 0 0 1px rgb(var(--text-color) / .12);
+                cursor: pointer;
+                overflow: hidden;
+              }
+              .animated-arrow-{{ section.id }} {
+                pointer-events: none;
+                place-items: center;
+                display: grid;
+              }
+              .animated-arrow-{{ section.id }}:before, .animated-arrow-{{ section.id }}:after {
+                content: "";
+                grid-area: 1 / -1;
+                transition: all .2s ease-in-out;
+                border-style: solid;
+                border-width: 0;
+                --transform-logical-flip: 1;
+              }
+              .animated-arrow-{{ section.id }}:before {
+                width: 6px;
+                width: 8px;
+                height: 6px;
+                height: 8px;
+                transform: rotate(calc(1 * 45deg));
+                border-color: currentColor;
+                border-block-start-width: 2px;
+                border-inline-end-width: 2px;
+                position: relative;
+
+                left: -1px;
+              }
+              .animated-arrow-{{ section.id }}:after {
+                width: 10px;
+                height: 2px;
+                transform-origin: center;
+                opacity: 0;
+                background: currentColor;
+                transform: scaleX(.5);
+              }
+              .arrow-{{ section.id }}:hover .animated-arrow-{{ section.id }}:before {
+                transform: translate(calc(var(--transform-logical-flip) * 2px)) rotate(calc(var(--transform-logical-flip) * 45deg))
+              }
+              .arrow-{{ section.id }}:hover .animated-arrow-{{ section.id }}:after {
+                opacity: 1;
+                transform: scaleX(1);
+              }
+            </style>
+            <div
+              class="arrow-wrapper-{{ section.id }}"
+              style="--text-color: 26 26 26; color: black;"
+            >
+              <div class="arrow-{{ section.id }}" data-prev>
+                {% if section.settings.arrow_left != blank %}
+                  <img
+                    style="width: 100%; height: 100%; object-fit: contain;"
+                    src="{{ section.settings.arrow_left | img_url: '100x' }}"
+                    alt="Previous"
+                  >
+                {% else %}
+                  <span class="sr-only-{{ section.id }}">Previous</span>
+                  <span
+                    class="animated-arrow-{{ section.id }}"
+                    style="transform: rotate(180deg);"
+                  ></span>
+                {% endif %}
+              </div>
+              <div class="arrow-{{ section.id }}" data-next>
+                {% if section.settings.arrow_right != blank %}
+                  <img
+                    style="width: 100%; height: 100%; object-fit: contain;"
+                    src="{{ section.settings.arrow_right | img_url: '100x' }}"
+                    alt="Next"
+                  >
+                {% else %}
+                  <span class="sr-only-{{ section.id }}">Next</span>
+                  <span
+                    class="animated-arrow-{{ section.id }}"
+                  ></span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          (function () {
+            function sliderInit() {
+              let activeSlideIndex = 0;
+
+              const productCards = document.querySelectorAll(
+                '.product-card-{{ section.id }}'
+              );
+              const imageButtons = document.querySelectorAll(
+                '.button-on-image-{{ section.id }}'
+              );
+              function switchProduct(index) {
+                // use .product-card--active-{{ section.id }} to toggle active class:
+                productCards.forEach((card, i) => {
+                  if (i === index) {
+                    card.classList.add('product-card--active-{{ section.id }}');
+                  } else {
+                    card.classList.remove(
+                      'product-card--active-{{ section.id }}'
+                    );
+                  }
+                });
+                // toggle button-on-image--active-{{ section.id }}
+                imageButtons.forEach((button, i) => {
+                  if (i === index) {
+                    button.classList.add(
+                      'button-on-image--active-{{ section.id }}'
+                    );
+                  } else {
+                    button.classList.remove(
+                      'button-on-image--active-{{ section.id }}'
+                    );
+                  }
+                });
+                activeSlideIndex = index;
+
+                // check if .scroll-area-bleed-{{ section.id }} exists, if so, scroll to the product card:
+                const scrollArea = document.querySelector(
+                  '.scroll-area-bleed-{{ section.id }}'
+                );
+                if (scrollArea) {
+                  // scroll to the product-mobile-card-{{ section.id }}:
+                  const productCards = document.querySelectorAll(
+                    '.product-mobile-card-{{ section.id }}'
+                  );
+                  // use the activeSlideIndex to find the product card to scroll to:
+                  const productCard = productCards[activeSlideIndex];
+                  scrollArea.scrollTo({
+                    left: productCard.offsetLeft,
+                    behavior: 'smooth',
+                  });
+                }
+              }
+              imageButtons.forEach((button, i) => {
+                button.addEventListener('click', () => {
+                  switchProduct(i);
+                });
+              });
+              // find .arrow-{{ section.id }} data-prev, data-next, on click:
+              const prevArrow = document.querySelector(
+                '.arrow-{{ section.id }}[data-prev]'
+              );
+              const nextArrow = document.querySelector(
+                '.arrow-{{ section.id }}[data-next]'
+              );
+              prevArrow.addEventListener('click', () => {
+                if (activeSlideIndex === 0) {
+                  switchProduct(productCards.length - 1);
+                } else {
+                  switchProduct(activeSlideIndex - 1);
+                }
+              });
+              nextArrow.addEventListener('click', () => {
+                if (activeSlideIndex === productCards.length - 1) {
+                  switchProduct(0);
+                } else {
+                  switchProduct(activeSlideIndex + 1);
+                }
+              });
+            }
+            sliderInit();
+            if (window.Shopify && Shopify.designMode) {
+              document.addEventListener('shopify:section:load', sliderInit);
+            }
+          })();
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS - Shop the look",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "stack_on_mobile",
+      "label": "Stack on mobile",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop the look"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "label": "Subtitle font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Arrows"
+    },
+    {
+      "type": "image_picker",
+      "id": "arrow_left",
+      "label": "Left arrow icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "arrow_right",
+      "label": "Right arrow icon"
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "color",
+      "id": "product_card_text_color_mobile",
+      "label": "Product card Text color (M)",
+      "info": "For Mobile"
+    },
+    {
+      "type": "color",
+      "id": "product_card_text_color",
+      "label": "Product card Text color",
+      "info": "For Desktop"
+    },
+    {
+      "type": "color",
+      "id": "product_card_bg_mobile",
+      "label": "Product card Background (M)",
+      "info": "For Mobile"
+    },
+    {
+      "type": "color",
+      "id": "product_card_bg",
+      "label": "Product card Background",
+      "info": "For Desktop"
+    },
+    {
+      "type": "header",
+      "content": "Product card 'More info' button"
+    },
+    {
+      "type": "color",
+      "id": "product_card_atc_bg",
+      "label": "Product card 'More info' BG",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "product_card_atc_bg_mobile",
+      "label": "Product card 'More info' BG (M)",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "product_card_atc_text_color",
+      "label": "Product card 'More info' text",
+      "default": "#FFF"
+    },
+    {
+      "type": "color",
+      "id": "product_card_atc_text_color_mobile",
+      "label": "Product card 'More info' text (M)",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "atc_font_size",
+      "label": "'More info' font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background gradient"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_x_desktop",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 52
+        },
+        {
+          "type": "range",
+          "id": "vertical_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 25
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - Shop the look",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {}
+        },
+        {
+          "type": "product",
+          "settings": {
+            "horizontal_position": 75,
+            "vertical_position": 53
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "horizontal_position": 33,
+            "vertical_position": 73
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

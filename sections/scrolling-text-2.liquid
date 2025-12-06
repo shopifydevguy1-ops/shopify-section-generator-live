@@ -1,0 +1,409 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    margin: 0 auto;
+    padding: 0;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    border-top: solid {{section.settings.border-color}} {{section.settings.border-thickness}}px;
+    border-bottom: solid {{section.settings.border-color}} {{section.settings.border-thickness}}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  
+  .track-horizontal-{{section.id}} {
+    /* will-change: transform;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0); */
+    animation: marquee-horizontal-{{section.settings.direction}} {{section.settings.scrolling_speed}}s linear infinite;
+  }
+  .compound-item-{{section.id}} h3 {
+    color: {{ section.settings.heading_color}};
+    font-size: {{ section.settings.heading_size }}px;
+    {% unless section.settings.heading_gradient == blank %}
+      background-image: {{section.settings.heading_gradient}};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    {% endunless %}
+  }
+  .compound-item-{{section.id}} p {
+    color: {{ section.settings.sub_heading_color}};
+    font-size: {{ section.settings.sub_heading_size }}px;
+    {% unless section.settings.subheading_gradient == blank %}
+      background-image: {{section.settings.subheading_gradient}};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    {% endunless %}
+  }
+
+    .compound-section {
+    overflow: hidden;
+  }
+  .compound-slider .swiper-wrapper{
+     -webkit-transition-timing-function:linear!important; 
+    -o-transition-timing-function:linear!important;
+    transition-timing-function:linear!important; 
+  }
+  .compound-item {
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    gap: 10px;
+  }
+  .compound-item.normal {
+    flex-direction: column;
+  }
+  .compound-item.reverse {
+    flex-direction: column-reverse;
+  }
+  .compound-item h3 {
+    margin: 0;
+    font-weight: bold;
+    line-height: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+  }
+  .compound-item p {
+    margin: 0;
+    font-weight: bold;
+    line-height: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+  }
+  
+  
+  .marquee-horizontal {
+      position: relative;
+      z-index: 200;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      height: 110px;
+      -webkit-box-pack: start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+  }
+  .track-horizontal {
+      position: absolute;
+      white-space: nowrap;
+      top: 0;
+      bottom: 0;
+      will-change: transform;
+  }
+  .track-horizontal {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+  }
+  .marquee-text {
+      margin-right: 8vw;
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      /* backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      -webkit-backface-visibility: hidden;
+      -webkit-transform-style: preserve-3d;
+      transform: translate3d(0, 0, 0); */
+  }
+  @media screen and (max-width: 767px) {
+    .marquee-text {
+      margin-right: 13vw;
+    } 
+  }
+  
+  @keyframes marquee-horizontal-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  @keyframes marquee-horizontal-right {
+    from { transform:translateX(-50%); }
+    to {transform:translateX(0%); }
+  }
+    
+  @media screen and (max-width: 481px) { 
+    .marquee-horizontal {
+      margin-top: 0px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .compound-item-{{section.id}} h3 {
+        font-size: {{ section.settings.heading_size | times: 0.85 | round: 0 }}px;
+    }
+    .compound-item-{{section.id}} p {
+        font-size: {{ section.settings.sub_heading_size | times: 0.85 | round: 0  }}px;
+    }
+    .marquee-horizontal {
+      height:90px;
+    }
+  }
+{%- endstyle -%}
+
+<div style="background-color:{{section.settings.background-color}};background-image: {{section.settings.background_gradient}};">
+  <div class="section-{{ section.id }}-padding compound-section">
+    <div class="marquee-horizontal marquee-{{ section.settings.direction }}">
+      <div class="track-horizontal track-horizontal-{{section.id}} outer_flex">
+        {% for block in section.blocks %}
+            <div class="marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}">
+                <h3>{{ block.settings.heading }}</h3>
+                <p>{{ block.settings.sub_heading }}</p>
+            </div>
+        {% endfor %}
+        {% for block in section.blocks %}
+            <div class="marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}">
+                <h3>{{ block.settings.heading }}</h3>
+                <p>{{ block.settings.sub_heading }}</p>
+            </div>
+        {% endfor %}
+        {% for block in section.blocks %}
+            <div class="marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}">
+                <h3>{{ block.settings.heading }}</h3>
+                <p>{{ block.settings.sub_heading }}</p>
+            </div>
+        {% endfor %}
+        {% for block in section.blocks %}
+            <div class="marquee-text compound-item compound-item-{{section.id}} {% if block.settings.heading_position == 'top' %} {{ 'normal' }} {% else %} {{ 'reverse' }} {% endif %}">
+                <h3>{{ block.settings.heading }}</h3>
+                <p>{{ block.settings.sub_heading }}</p>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+ {
+   "name": "SS - Scrolling text 2",
+   "tag": "section",
+   "settings": [
+      {
+            "type": "range",
+            "id": "heading_size",
+            "min": 12,
+            "max": 44,
+            "step": 2,
+            "unit": "px",
+            "label": "Heading size",
+            "default": 28
+      },
+      {
+            "type": "range",
+            "id": "sub_heading_size",
+            "min": 10,
+            "max": 36,
+            "step": 2,
+            "unit": "px",
+            "label": "Sub-Heading size",
+            "default": 18
+      },
+      {
+            "type": "range",
+            "id": "border-thickness",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "unit": "px",
+            "label": "Border thickness",
+            "default": 0
+      },
+      {
+            "type": "range",
+            "id": "scrolling_speed",
+            "min": 5,
+            "max": 100,
+            "step": 1,
+            "unit": "s",
+            "label": "Scrolling speed",
+            "default": 45
+      },
+      {
+        "type": "select",
+        "id": "direction",
+        "label": "Direction",
+        "default": "left",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Colors",
+        "info":"Gradient replaces solid colors when set."
+      },
+      {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#612323"
+      },
+      {
+        "type": "color_background",
+        "id": "heading_gradient",
+        "label": "Heading gradient"
+      },
+      {
+          "type": "color",
+          "id": "sub_heading_color",
+          "label": "Sub-Heading",
+          "default": "#a73814"
+      },
+      {
+        "type": "color_background",
+        "id": "subheading_gradient",
+        "label": "Sub-Heading gradient"
+      },
+      {
+    	  "type": "color",
+    	  "label": "Section background",
+    	  "id": "background-color",
+    	  "default": "#FFD1A7"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+    	  "type": "color",
+    	  "label": "Border",
+    	  "id": "border-color",
+    	  "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 4
+      },
+      {
+           "type": "range",
+           "id": "padding_bottom",
+           "min": 0,
+           "max": 100,
+           "step": 4,
+           "unit": "px",
+           "label": "Padding bottom",
+           "default": 4
+      }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Text",
+      "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Up"
+          },
+          {
+            "type": "text",
+            "id": "sub_heading",
+            "label": "Sub-Heading",
+            "default": "Down"
+          },
+          {
+            "type": "select",
+            "id": "heading_position",
+            "label": "Heading position",
+            "options":
+            [
+              {
+                "value": "top",
+                "label": "Top"
+              },
+              {
+                "value": "bottom",
+                "label": "Bottom"
+              }
+            ],
+            "default": "top"
+          }
+      ]
+    }
+  ],
+  "presets": [
+   {
+     "name": "SS - Scrolling text 2",
+      "blocks": [
+        {
+          "type": "block",
+           "settings": {
+             "heading_position":"top"
+           }
+        },
+        {
+          "type": "block",
+           "settings": {
+             "heading_position":"bottom"
+           }
+        },
+        {
+          "type": "block",
+           "settings": {
+             "heading_position":"top"
+           }
+        },
+        {
+          "type": "block",
+           "settings": {
+             "heading_position":"bottom"
+           }
+        },
+        {
+          "type": "block",
+           "settings": {
+             "heading_position":"top"
+           }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

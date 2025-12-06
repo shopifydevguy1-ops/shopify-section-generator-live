@@ -1,0 +1,2283 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign content_width = section.settings.content_width
+  assign full_width = section.settings.full_width
+
+  assign btn_position = section.settings.btn_position
+  assign btn_width = section.settings.btn_width
+  assign btn_bg_color = section.settings.btn_bg_color
+  assign btn_border_thickness = section.settings.btn_border_thickness
+  assign btn_border_color = section.settings.btn_border_color
+  assign btn_border_color_gradient = section.settings.btn_border_color_gradient
+  assign btn_image = section.settings.btn_image
+  assign btn_delay = section.settings.btn_delay
+
+  assign overlay_opacity = section.settings.overlay_opacity
+
+  assign modal_bg_color = section.settings.modal_bg_color
+  assign modal_width = section.settings.modal_width
+
+  assign slice_size_mobile = section.settings.slice_size_mobile
+  assign slice_size = section.settings.slice_size
+  assign slice_font = section.settings.slice_font
+  assign slice_custom = section.settings.slice_custom
+  assign slice_color = section.settings.slice_color
+
+  assign content_heading = section.settings.content_heading
+  assign content_heading_size = section.settings.content_heading_size
+  assign content_heading_size_mobile = section.settings.content_heading_size_mobile
+  assign content_heading_color = section.settings.content_heading_color
+  assign content_heading_custom = section.settings.content_heading_custom
+  assign content_heading_font = section.settings.content_heading_font
+  assign content_heading_height = section.settings.content_heading_height
+  assign content_heading_align = section.settings.content_heading_align
+  assign content_sub_heading_result = section.settings.content_sub_heading_result
+
+  assign content_sub_heading = section.settings.content_sub_heading
+  assign content_sub_heading_size = section.settings.content_sub_heading_size
+  assign content_sub_heading_size_mobile = section.settings.content_sub_heading_size_mobile
+  assign content_sub_heading_color = section.settings.content_sub_heading_color
+  assign content_sub_heading_custom = section.settings.content_sub_heading_custom
+  assign content_sub_heading_font = section.settings.content_sub_heading_font
+  assign content_sub_heading_height = section.settings.content_sub_heading_height
+  assign content_sub_heading_align = section.settings.content_sub_heading_align
+  assign content_sub_heading_mt = section.settings.content_sub_heading_mt
+
+  assign input_placeholder = section.settings.input_placeholder
+  assign input_placeholder_result = section.settings.input_placeholder_result
+  assign input_icon = section.settings.input_icon
+  assign input_size = section.settings.input_size
+  assign input_size_mobile = section.settings.input_size_mobile
+  assign input_color = section.settings.input_color
+  assign input_custom = section.settings.input_custom
+  assign input_font = section.settings.input_font
+  assign input_height = section.settings.input_height
+  assign input_mt = section.settings.input_mt
+  assign input_padding_vertical = section.settings.input_padding_vertical
+  assign input_padding_horizontal = section.settings.input_padding_horizontal
+  assign input_radius = section.settings.input_radius
+  assign input_border_thickness = section.settings.input_border_thickness
+  assign input_border_color = section.settings.input_border_color
+  assign input_placeholder_color = section.settings.input_placeholder_color
+  assign input_h = section.settings.input_h
+
+  assign submit = section.settings.submit
+  assign submit_result = section.settings.submit_result
+  assign submit_size = section.settings.submit_size
+  assign submit_size_mobile = section.settings.submit_size_mobile
+  assign submit_color = section.settings.submit_color
+  assign submit_hover_color = section.settings.submit_hover_color
+  assign submit_custom = section.settings.submit_custom
+  assign submit_font = section.settings.submit_font
+  assign submit_height = section.settings.submit_height
+  assign submit_mt = section.settings.submit_mt
+  assign submit_padding_vertical = section.settings.submit_padding_vertical
+  assign submit_padding_horizontal = section.settings.submit_padding_horizontal
+  assign submit_radius = section.settings.submit_radius
+  assign submit_border_thickness = section.settings.submit_border_thickness
+  assign submit_border_color = section.settings.submit_border_color
+  assign submit_border_hover_color = section.settings.submit_border_hover_color
+  assign submit_bg_color = section.settings.submit_bg_color
+  assign submit_bg_hover_color = section.settings.submit_bg_hover_color
+
+  assign content_text = section.settings.content_text
+  assign content_text_size = section.settings.content_text_size
+  assign content_text_size_mobile = section.settings.content_text_size_mobile
+  assign content_text_color = section.settings.content_text_color
+  assign content_text_custom = section.settings.content_text_custom
+  assign content_text_font = section.settings.content_text_font
+  assign content_text_height = section.settings.content_text_height
+  assign content_text_align = section.settings.content_text_align
+  assign content_text_mt = section.settings.content_text_mt
+
+  assign close = section.settings.close
+  assign close_size = section.settings.close_size
+  assign close_size_mobile = section.settings.close_size_mobile
+  assign close_color = section.settings.close_color
+  assign close_custom = section.settings.close_custom
+  assign close_font = section.settings.close_font
+  assign close_height = section.settings.close_height
+  assign close_align = section.settings.close_align
+  assign close_mt = section.settings.close_mt
+  
+-%}
+
+{%- style -%}
+
+  {{  slice_font | font_face: font_display: 'swap' }}
+  {{  content_heading_font | font_face: font_display: 'swap' }}
+  {{  content_sub_heading_font | font_face: font_display: 'swap' }}
+  {{  input_font | font_face: font_display: 'swap' }}
+  {{  submit_font | font_face: font_display: 'swap' }}
+  {{  content_text_font | font_face: font_display: 'swap' }}
+  {{  close_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .wheel-triger-{{ section.id }} {
+    position: fixed;
+    left: 0;
+    top: {{ btn_position }}vh;
+    z-index: 3;
+  }
+
+  .wheel-triger-btn-{{ section.id }} {
+    background-color: {{ btn_bg_color }};
+    box-shadow: 0 0 0 0 {{ btn_bg_color }};
+    display: inline-block !important;
+    position: relative;
+    --b: {{ section.settings.btn_border_thickness }}px;
+    margin: 10px;
+    width: {{ btn_width }}px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    animation: wlo-pulse-trigger 1.8s infinite;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+  }
+
+  @keyframes wlo-pulse-trigger {
+    0% {
+      transform: scale(0.95);
+    }
+    55% {
+        transform: scale(1);
+        box-shadow: 0 0 0 35px rgba(255,255,255,0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255,255,255,0);
+    }
+  }
+
+  .wheel-triger-btn-{{ section.id }}:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: {{ btn_border_color }};
+    background-image: {{ btn_border_color_gradient }};
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--b) - 1px), #fff calc(100% - var(--b)));
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--b) - 1px), #fff calc(100% - var(--b)));
+    border-radius: 50%;
+  }
+
+  .wheel-triger-btn-image-{{ section.id }} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wheel-triger-btn-image-{{ section.id }} img,
+  .wheel-triger-btn-image-{{ section.id }} svg {
+    display: block;
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+
+  .wheel-modal-{{ section.id }} {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    line-height: 1.0em;
+    text-align: left;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    user-select: none;
+    overscroll-behavior: none;
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  .wheel-modal-{{ section.id }}.active {
+    pointer-events: all;
+  }
+
+  .wheel-panel-{{ section.id }} {
+    z-index: 11;
+    height: 100vh;
+    width: 100%;
+    max-width: {{ modal_width }}px;
+    background-color: {{ modal_bg_color }};
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    overflow-y: auto;
+    left: -100%;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .wheel-modal-{{ section.id }}.active .wheel-panel-{{ section.id }} {
+    left: 0;
+    box-shadow: 4px 0 65px 0 #000000;
+    transition: 0.3s linear;
+  }
+
+  .wheel-modal-overlay-{{ section.id }} {
+    background-color: rgba(0,0,0,{{ overlay_opacity }});
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100% !important;
+    display: block !important;
+    z-index: 10;
+    opacity: 0;
+    transition: 0.7s ease 0.3s;
+  }
+
+  .wheel-modal-{{ section.id }}.active .wheel-modal-overlay-{{ section.id }} {
+    opacity: 1;
+    transition: 0.7s ease 0.3s;
+  }
+
+  .wheel-panel-wheel-{{ section.id }} {
+    transform: scale(0.5);
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+  }
+
+  .wheel-modal-{{ section.id }}.active .wheel-panel-wheel-{{ section.id }} {
+    margin-top: -20%;
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.9s;
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.9s;
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.9s;
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.9s;
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.9s;
+  }
+
+  .wheel-panel-wheel-{{ section.id }} .slice text {
+    font-size: {{ slice_size_mobile }}px;
+    fill: {{ slice_color }};
+    font-weight: 700;
+  }
+
+  .wheel-modal-{{ section.id }}.active .wlo-wheel {
+    transform: scale(1) !important;
+    opacity: 1;
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 0.3s;
+  }
+  
+  .wlo-holder div {
+    box-sizing: border-box;
+  }
+  
+  .wlo-animation-helper {
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-transform: translate3d(0, 0, 0);
+    -moz-backface-visibility: hidden;
+    -o-transform: translate3d(0, 0, 0);
+    -o-backface-visibility: hidden;
+    -ms-transform: translate3d(0, 0, 0);
+    -ms-backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: none;
+    -webkit-transform-style: flat;
+    -moz-transform-style: flat;
+    -o-transform-style: flat;
+    -ms-transform-style: flat;
+    will-change: transform, opacity;
+  }
+  
+  .wlo-wheel {
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    transform: scale(0.1) !important;
+    opacity: 0.7;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .wlo-holder svg, .wlo-holder svg * {
+    transition: none !important;
+  }
+  
+  .wlo-holder svg {
+    position: absolute !important;
+    fill: inherit !important;
+    stroke: inherit !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: unset !important;
+  }
+
+  #wlo-wheel-shadow {
+    transform: rotate(150deg);
+    right: -50px;
+    bottom: -30px;
+  }
+  
+  #wlo-rotor {
+    transform: rotate(50deg);
+    display: flex;
+  }
+  
+  .wlo-wheel-holder {
+    width: 556px;
+    height: 556px;
+  }
+  
+  .wlo-wheel-holder #wlo-pointer-holder {
+    width: 556px;
+    height: 556px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+  }
+  
+  .wlo-wheel-holder #wlo-pointer-holder #wlo-pointer {
+    transform-origin: 75% 47.5%;
+    right: -70px;
+    margin-top: 10px;
+  }
+
+  #chart svg {
+    position: relative !important;
+    margin-left: 20px;
+  }
+
+  .wheel-panel-content-{{ section.id }} {
+    margin-top: -20%;
+    width: 100%;
+    padding: 20px;
+    position: absolute;
+    transform: scale(0.5);
+    opacity: 0;
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    overflow-y: auto;
+  }
+
+  .wheel-modal-{{ section.id }}.active .wheel-panel-content-{{ section.id }} {
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 1.5s;
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 1.5s;
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 1.5s;
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 1.5s;
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03) 1.5s;
+    opacity: 1;
+    transform: scale(1);
+    position: static;
+  }
+
+  .wheel-modal-{{ section.id }}.active.submit .wheel-panel-content-{{ section.id }} {
+    transform: scale(0);
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    transition: 0s ease 0s;
+  }
+
+  .wheel-modal-{{ section.id }}.submit .wheel-panel-wheel-{{ section.id }} {
+    margin-left: 10% !important;
+    transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -webkit-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -moz-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -ms-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+    -o-transition: 0.7s cubic-bezier(0.79, -0.01, 0.04, 2.03);
+  }
+
+  .wheel-panel-content-heading-{{ section.id }} {
+    margin: 0;
+    font-size: {{ content_heading_size_mobile }}px;
+    color: {{ content_heading_color }};
+    line-height: {{ content_heading_height }}%;
+    text-align: {{ content_heading_align }};
+    text-transform: unset;
+    font-weight: 700;
+  }
+
+  .wheel-panel-content-subheading-{{ section.id }} {
+    margin: 0;
+    margin-top: {{ content_sub_heading_mt | times: 0.75 | round: 0 }}px;
+    font-size: {{ content_sub_heading_size_mobile }}px;
+    color: {{ content_sub_heading_color }};
+    line-height: {{ content_sub_heading_height }}%;
+    text-align: {{ content_sub_heading_align }};
+    text-transform: unset;
+    font-weight: 700;
+  }
+
+  .wheel-panel-content-wrapper-{{ section.id }} {
+    margin-top: {{ input_mt | times: 0.75 | round: 0 }}px;
+    padding-top: {{ input_padding_vertical | times: 0.75 | round: 0 }}px;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: {{ input_radius }}px;
+    height: {{ input_h }}px;
+    border: solid {{ input_border_thickness }}px {{ input_border_color }};
+    text-align: left;
+    transition: box-shadow 0.3s;
+    z-index: 3;
+    float: unset;
+    animation: wlo-pulse-input 1.8s infinite;
+  }
+
+  @keyframes wlo-pulse-input {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
+    }
+    55% {
+        box-shadow: 0 0 0 15px rgba(255,255,255,0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255,255,255,0);
+    }
+  }
+
+  .wheel-panel-content-input-{{ section.id }} {
+    box-shadow: none;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    padding: {{ input_padding_vertical | times: 0.75 | round: 0 }}px {{ input_padding_horizontal | times: 0.75 | round: 0 }}px;
+    transition: border-color 0.2s;
+    color: {{ input_color }};
+    line-height: {{ input_height }}%;
+    border-radius: {{ input_radius }}px;
+    font-size: {{ input_size_mobile }}px;
+    background-color: transparent !important;
+    margin: 0 !important;
+  }
+
+  .wheel-panel-content-input-{{ section.id }}:-webkit-autofill,
+  .wheel-panel-content-input-{{ section.id }}:-webkit-autofill:hover,
+  .wheel-panel-content-input-{{ section.id }}:-webkit-autofill:focus{
+    background-color: transparent !important;
+  }
+
+  .wheel-panel-content-label-{{ section.id }} {
+    position: absolute;
+    cursor: text;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: {{ input_size_mobile }}px;
+    text-transform: none;
+    display: block;
+    transition: 0.3s;
+    color: {{ input_placeholder_color }};
+    margin-left: {{ input_padding_horizontal | times: 0.75 | round: 0 }}px;
+    line-height: {{ input_height }}%;
+  }
+
+  .wheel-panel-content-input-{{ section.id }}:focus + .wheel-panel-content-label-{{ section.id }},
+  .wheel-panel-content-label-{{ section.id }}.active {
+    top: 5px;
+    transform: translateY(0);
+    font-size: 10px;
+  }
+
+  .wheel-panel-content-icon-{{ section.id }} {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    display: block;
+  }
+
+  .wheel-panel-content-icon-{{ section.id }} img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .wheel-panel-content-submit-{{ section.id }} {
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    margin-top: {{ submit_mt | times: 0.75 | round: 0 }}px;
+    font-size: {{ submit_size_mobile }}px;
+    line-height: {{ submit_height }}%;
+    color: {{ submit_color }};
+    border: {{ submit_border_thickness }}px solid {{ submit_border_color }};
+    background-color: {{ submit_bg_color }};
+    border-radius: {{ submit_radius }}px;
+    padding: {{ submit_padding_vertical | times: 0.75 | round: 0 }}px {{ submit_padding_horizontal | times: 0.75 | round: 0 }}px;
+    transition: all 0.25s ease 0s;
+  }
+
+  .wheel-panel-content-submit-{{ section.id }}:hover {
+    transition: all 0.25s ease 0s;
+    background-color: {{ submit_bg_hover_color }};
+    color: {{ submit_hover_color }};
+    border-color: {{ submit_border_hover_color }};
+  }
+
+  .wheel-panel-content-submit-{{ section.id }}.hide-submit {
+    display: none !important;
+  }
+
+  .wheel-panel-content-text-{{ section.id }} {
+    margin-top: {{ content_text_mt | times: 0.75 | round: 0 }}px;
+    text-align: {{ content_text_align }};
+  }
+
+  .wheel-panel-content-text-{{ section.id }} * {
+    margin: 0px;
+    font-size: {{ content_text_size_mobile }}px;
+    color: {{ content_text_color }};
+    line-height: {{ content_text_height }}%;
+    text-transform: unset;
+  }
+
+  .wheel-panel-content-close-{{ section.id }} {
+    margin-top: {{ close_mt | times: 0.75 | round: 0 }}px;
+    display: flex;
+    align-items: center;
+    justify-content: {{ close_align }};
+    gap: 5px;
+    font-size: {{ close_size_mobile }}px;
+    line-height: {{ close_height }}%;
+    color: {{ close_color }};
+    cursor: pointer;
+  }
+
+  .wheel-panel-content-close-{{ section.id }} svg {
+    height: 15px;
+    width: 15px;
+    position: static !important;
+  }
+
+  .wheel-panel-content-close-{{ section.id }} svg path {
+    fill: {{close_color }};
+  }
+
+  .wheel-panel-content-close-{{ section.id }}.hide-close {
+    display: none !important;
+  }
+
+  .wheel-panel-content-copy-{{ section.id }} {
+    display: none !important;
+    position: absolute;
+    height: {{ input_h | minus: 10 }}px;
+    width: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 6px;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding: 17px 12.9px 11px 19px;
+    color: #666;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .wheel-panel-content-copy-{{ section.id }}.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wheel-panel-content-copy-{{ section.id }}:hover {
+    box-shadow: 0 4px 1px 0 rgba(0,0,0,0.3), 0 5px 15px 0 rgba(0,0,0,0.2), 0 2px 0 0 #fff, inset 0 2px 0 0 rgba(255,255,255,0.2);
+  }
+
+  .wheel-panel-content-copy-{{ section.id }}.copy {
+    background-color: #5cac31;
+    color: #fff;
+  }
+
+  .wheel-panel-content-submit-close-{{ section.id }} {
+    display: none !important;
+  }
+
+  .wheel-panel-content-submit-close-{{ section.id }}.active {
+    display: flex !important;
+  }
+
+  @media(min-width: 768px) {
+    .wheel-panel-{{ section.id }} {
+      flex-direction: row;
+    }
+
+    .wheel-panel-wheel-{{ section.id }} {
+      transform: scale(1);
+    }
+
+    .wheel-modal-{{ section.id }}.active .wheel-panel-wheel-{{ section.id }} {
+      margin-top: 0;
+      margin-left: -35%;
+    }
+
+    .wheel-panel-content-{{ section.id }} {
+      padding: 80px;
+      padding-right: 20px;
+    }
+
+    .wheel-panel-content-{{ section.id }} {
+      margin-top: 0;
+    }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .wheel-panel-wheel-{{ section.id }} .slice text {
+      font-size: {{ slice_size }}px;
+    }
+
+    .wheel-panel-content-heading-{{ section.id }} {
+      font-size: {{ content_heading_size }}px;
+    }
+
+    .wheel-panel-content-subheading-{{ section.id }} {
+      margin-top: {{ content_sub_heading_mt }}px;
+      font-size: {{ content_sub_heading_size }}px;
+    }
+
+    .wheel-panel-content-wrapper-{{ section.id }} {
+      margin-top: {{ input_mt }}px;
+      padding-top: {{ input_padding_vertical }}px;
+    }
+
+    .wheel-panel-content-input-{{ section.id }} {
+      padding: {{ input_padding_vertical }}px {{ input_padding_horizontal }}px;
+      font-size: {{ input_size }}px;
+    }
+
+    .wheel-panel-content-label-{{ section.id }} {
+      font-size: {{ input_size }}px;
+      margin-left: {{ input_padding_horizontal }}px;
+    }
+
+    .wheel-panel-content-submit-{{ section.id }} {
+      margin-top: {{ submit_mt }}px;
+      font-size: {{ submit_size}}px;
+      padding: {{ submit_padding_vertical }}px {{ submit_padding_horizontal }}px;
+    }
+
+    .wheel-panel-content-text-{{ section.id }} {
+     margin-top: {{ content_text_mt }}px;
+    }
+
+    .wheel-panel-content-text-{{ section.id }} * {
+      font-size: {{ content_text_size }}px;
+    }
+
+    .wheel-panel-content-close-{{ section.id }} {
+      margin-top: {{ close_mt }}px;
+      font-size: {{ close_size }}px;
+    }
+    
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if slice_custom %}
+  <style>
+    .wheel-panel-wheel-{{ section.id }} .slice text {
+      font-family: {{ slice_font.family }}, {{ slice_font.fallback_families }};
+      font-weight: {{ slice_font.weight }};
+      font-style: {{ slice_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if content_heading_custom %}
+  <style>
+    .wheel-panel-content-heading-{{ section.id }} {
+      font-family: {{ content_heading_font.family }}, {{ content_heading_font.fallback_families }};
+      font-weight: {{ content_heading_font.weight }};
+      font-style: {{ content_heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if content_sub_heading_custom %}
+  <style>
+    .wheel-panel-content-subheading-{{ section.id }} {
+      font-family: {{ content_sub_heading_font.family }}, {{ content_sub_heading_font.fallback_families }};
+      font-weight: {{ content_sub_heading_font.weight }};
+      font-style: {{ content_sub_heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if input_custom %}
+  <style>
+    .wheel-panel-content-input-{{ section.id }},
+    .wheel-panel-content-label-{{ section.id }} {
+      font-family: {{ input_font.family }}, {{ input_font.fallback_families }};
+      font-weight: {{ input_font.weight }};
+      font-style: {{ input_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if submit_custom %}
+  <style>
+    .wheel-panel-content-submit-{{ section.id }} {
+      font-family: {{ submit_font.family }}, {{ submit_font.fallback_families }};
+      font-weight: {{ submit_font.weight }};
+      font-style: {{ submit_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if content_text_custom %}
+  <style>
+    .wheel-panel-content-text-{{ section.id }} * {
+      font-family: {{ content_text_font.family }}, {{ content_text_font.fallback_families }};
+      font-weight: {{ content_text_font.weight }};
+      font-style: {{ content_text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if close_custom %}
+  <style>
+    .wheel-panel-content-close-{{ section.id }} {
+      font-family: {{ close_font.family }}, {{ close_font.fallback_families }};
+      font-weight: {{ close_font.weight }};
+      font-style: {{ close_font.style }};
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} wheel-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings ">
+      <div class="wheel-triger-{{ section.id }}">
+        <div class="wheel-triger-btn-{{ section.id }}">
+          <div class="wheel-triger-btn-image-{{ section.id }}">
+            {% if btn_image != blank %}
+              <img src="{{ btn_image | image_url }}" alt="{{ btn_image.alt }}">
+            {% else %}
+              {{ 'product-6' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="wheel-modal-{{ section.id }}">
+        <div class="wheel-panel-{{ section.id }}">
+          <div class="wheel-panel-wheel-{{ section.id }} wlo-holder">
+            <div class="wlo-wheel-holder">
+              <div class="wlo-wheel wlo-animation-helper wlo-animate-in">
+              <svg id="wheel-drop-shadow" width="566px" height="574px" viewBox="0 0 566 574" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class=""><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.200000003"><g id="wheel-design-export-2" transform="translate(-253.000000, -267.000000)" fill="#000000"><ellipse id="wheel-drop-shadow" cx="535.874522" cy="553.898484" rx="282.750669" ry="286.520678"></ellipse></g></g></svg>
+              <!-- shadow -->
+              <svg id="wlo-wheel-shadow" viewBox="0.64 -30.07 553.804 445.312" width="553.804" height="445.312" xmlns="http://www.w3.org/2000/svg"><defs><filter id="zs8ma" width="575" height="487" x="-10" y="-41" filterUnits="userSpaceOnUse"><feOffset dy="20" in="SourceGraphic" result="FeOffset1052Out"></feOffset><!-- <feGaussianBlur in="FeOffset1052Out" result="FeGaussianBlur1053Out" stdDeviation="0 0" /> --></filter><mask id="zs8mb" width="2" height="2" x="-1" y="-1"><path fill="#fff" d="M0-31h555v447H0z"></path><path d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z"></path></mask></defs><g><g opacity=".5"><g filter="url(#zs8ma)"><path fill="none" d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z" mask="url(#zs8mb)"></path><path fill-opacity=".2" d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z"></path></g></g></g></svg>
+              <!-- slice labels -->
+              <div id="chart"></div>
+              <!-- shadow -->
+              <svg id="inner-shadow" width="534px" height="529px" viewBox="0 0 534 529" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient x1="50%" y1="100%" x2="50%" y2="3.061617e-15%" id="linearGradient-1"><stop stop-color="#000000" stop-opacity="0.5" offset="0%"></stop><stop stop-color="#000000" stop-opacity="0" offset="100%"></stop></linearGradient><ellipse id="path-2" cx="521.736989" cy="528.450924" rx="266.728131" ry="263.900624"></ellipse><filter x="-5.6%" y="-5.7%" width="111.2%" height="111.4%" filterUnits="objectBoundingBox" id="filter-3"><!-- <feGaussianBlur stdDeviation="25" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur> --><feOffset dx="0" dy="10" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset><feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite><feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix><!-- <feGaussianBlur stdDeviation="10" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur> --><!-- <feOffset dx="0" dy="10" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>                      <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"                         result="shadowInnerInner2"></feComposite>                      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix"                         in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix> --><!-- <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="shadowBlurInner3"></feGaussianBlur> --><!-- <feOffset dx="0" dy="10" in="shadowBlurInner3" result="shadowOffsetInner3"></feOffset>                      <feComposite in="shadowOffsetInner3" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"                         result="shadowInnerInner3"></feComposite>                      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix"                         in="shadowInnerInner3" result="shadowMatrixInner3"></feColorMatrix> --><feMerge><feMergeNode in="shadowMatrixInner1"></feMergeNode><!-- <feMergeNode in="shadowMatrixInner2"></feMergeNode> --><!-- <feMergeNode in="shadowMatrixInner3"></feMergeNode> --></feMerge></filter></defs><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="wheel-design-export-2" transform="translate(-255.000000, -264.000000)"><g id="inner-shadow"><use fill-opacity="0.25" fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use><use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use></g></g></g></svg> <svg style="display: none;" width="534px" height="529px" viewBox="0 0 534 529" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient x1="50%" y1="100%" x2="50%" y2="3.061617e-15%" id="linearGradient-1"><stop stop-color="#000000" stop-opacity="0.5" offset="0%"></stop><stop stop-color="#000000" stop-opacity="0" offset="100%"></stop></linearGradient><ellipse id="path-2" cx="521.736989" cy="528.450924" rx="266.728131" ry="263.900624"></ellipse><filter x="-5.6%" y="-5.7%" width="111.2%" height="111.4%" filterUnits="objectBoundingBox" id="filter-3"><!-- <feGaussianBlur stdDeviation="25" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur> --><feOffset dx="0" dy="10" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset><feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite><feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix><!-- <feGaussianBlur stdDeviation="10" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur> --><feOffset dx="0" dy="10" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset><feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite><feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix><!-- <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="shadowBlurInner3"></feGaussianBlur> --><feOffset dx="0" dy="10" in="shadowBlurInner3" result="shadowOffsetInner3"></feOffset><feComposite in="shadowOffsetInner3" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner3"></feComposite><feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix" in="shadowInnerInner3" result="shadowMatrixInner3"></feColorMatrix><feMerge><feMergeNode in="shadowMatrixInner1"></feMergeNode><feMergeNode in="shadowMatrixInner2"></feMergeNode><feMergeNode in="shadowMatrixInner3"></feMergeNode></feMerge></filter></defs><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="wheel-design-export-2" transform="translate(-255.000000, -264.000000)"><g id="inner-shadow"><use fill-opacity="0.25" fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use><use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use></g></svg>
+              <!-- circle -->
+              <svg width="114px" style="margin-left: 4px; margin-top: 4px;" height="117px" viewBox="0 0 114 117" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="3d-ring-+-sredinski-krog" transform="translate(-260.000000, -244.000000)"><g id="sredinski-krog" transform="translate(260.000000, 244.000000)"><circle id="Oval-3-Copy-4" fill="#000000" opacity="0.200000003" cx="61.3088738" cy="64.3088738" r="52.3088738"></circle><ellipse id="Oval-3-Copy" fill="#FFFFFF" cx="52.3088738" cy="50.808874" rx="52.3088738" ry="50.808874"></ellipse><circle id="Oval-3-Copy-2" fill="#D8D8D8" cx="52.3088738" cy="58.3088738" r="52.3088738"></circle><ellipse id="Oval-3-Copy-3" fill="#F2F2F2" cx="52.3088738" cy="54.808874" rx="52.3088738" ry="50.808874"></ellipse></g></g></g></svg>
+              <!-- shadow -->
+              <svg style="top: -10px;" viewBox="0.64 -30.07 553.804 445.312" width="553.804" height="445.312" xmlns="http://www.w3.org/2000/svg"><defs><filter id="zs8ma" width="575" height="487" x="-10" y="-41" filterUnits="userSpaceOnUse"><feOffset dy="20" in="SourceGraphic" result="FeOffset1052Out"></feOffset><!-- <feGaussianBlur in="FeOffset1052Out" result="FeGaussianBlur1053Out" stdDeviation="0 0" /> --></filter><mask id="zs8mb" width="2" height="2" x="-1" y="-1"><path fill="#fff" d="M0-31h555v447H0z"></path><path d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z"></path></mask></defs><g><g opacity=".5"><g filter="url(#zs8ma)"><path fill="none" d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z" mask="url(#zs8mb)"></path><path fill-opacity=".2" d="M.64 250.324C.64 95.467 124.613-30.07 277.542-30.07c152.929 0 276.902 125.537 276.902 280.394 0 61.641-19.643 118.636-52.936 164.918 26.735-42.024 42.246-92.058 42.246-145.76 0-148.87-119.207-269.555-266.257-269.555S11.241 120.611 11.241 269.483c0 53.244 15.248 102.883 41.565 144.685C19.98 368.08.64 311.489.64 250.324z"></path></g></g></g></svg>
+              <!-- 3d circle -->
+              <svg width="566px" height="578px" viewBox="0 0 566 578" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class=""><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="3d-ring-+-sredinski-krog" transform="translate(-29.000000, -25.000000)" fill-rule="nonzero"><g id="3d-ring" transform="translate(29.000000, 25.000000)"><path d="M282.75,577.5 C126.593,577.5 1.13686838e-13,450.909 1.13686838e-13,294.75 C1.13686838e-13,138.591 126.592,12 282.75,12 C438.91,12 565.501,138.591 565.501,294.75 C565.501,450.909 438.91,577.5 282.751,577.5 L282.75,577.5 Z M282.67,562.341 C430.501,562.341 550.341,442.501 550.341,294.671 C550.341,146.841 430.501,27 282.671,27 C134.841,27 15,146.84 15,294.67 C15,442.501 134.84,562.341 282.67,562.341 L282.67,562.341 Z" id="idh293amwb" fill="#D8D8D8"></path><path d="M282.75,565.5 C126.593,565.5 1.13686838e-13,438.909 1.13686838e-13,282.75 C1.13686838e-13,126.591 126.592,0 282.75,0 C438.91,0 565.501,126.591 565.501,282.75 C565.501,438.909 438.91,565.5 282.751,565.5 L282.75,565.5 Z M282.67,550.341 C430.501,550.341 550.341,430.501 550.341,282.671 C550.341,134.841 430.501,15 282.671,15 C134.841,15 15,134.84 15,282.67 C15,430.501 134.84,550.341 282.67,550.341 L282.67,550.341 Z" id="idh293amwb" fill="#FFFFFF"></path><path d="M282.75,569.5 C126.593,569.5 1.13686838e-13,442.909 1.13686838e-13,286.75 C1.13686838e-13,130.591 126.592,4 282.75,4 C438.91,4 565.501,130.591 565.501,286.75 C565.501,442.909 438.91,569.5 282.751,569.5 L282.75,569.5 Z M282.67,554.341 C430.501,554.341 550.341,434.501 550.341,286.671 C550.341,138.841 430.501,19 282.671,19 C134.841,19 15,138.84 15,286.67 C15,434.501 134.84,554.341 282.67,554.341 L282.67,554.341 Z" id="idh293amwb" fill="#F2F2F2"></path></g></g></g></svg>
+              <!-- pins -->
+              <svg id="pins" style="transform: rotate(50deg);" class="wlo-animation-helper" width="583px" height="582px" viewBox="0 0 583 582" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Wheel-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="3d-ring-+-sredinski-krog" transform="translate(-20.000000, -20.000000)"><g id="zatici" transform="translate(-86.736607, -86.236607)"><g id="nov-zatic" transform="translate(391.000000, 107.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-3" transform="translate(118.736607, 396.736607) rotate(-90.000000) translate(-118.736607, -396.736607) translate(110.736607, 385.236607)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="Group-4" transform="translate(398.000000, 397.500000) rotate(-330.000000) translate(-398.000000, -397.500000) translate(107.000000, 107.000000)"><g id="nov-zatic-copy" transform="translate(284.000000, 0.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-7" transform="translate(12.000000, 288.500000) rotate(-90.000000) translate(-12.000000, -288.500000) translate(4.000000, 277.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-6" transform="translate(570.000000, 288.500000) scale(-1, 1) rotate(-90.000000) translate(-570.000000, -288.500000) translate(562.000000, 277.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-5" transform="translate(292.000000, 569.500000) scale(-1, -1) translate(-292.000000, -569.500000) translate(284.000000, 558.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g></g><g id="Group-4-Copy" transform="translate(398.000000, 397.500000) rotate(-300.000000) translate(-398.000000, -397.500000) translate(107.000000, 107.000000)"><g id="nov-zatic-copy" transform="translate(284.000000, 0.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-7" transform="translate(12.000000, 288.500000) rotate(-90.000000) translate(-12.000000, -288.500000) translate(4.000000, 277.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-6" transform="translate(570.000000, 288.500000) scale(-1, 1) rotate(-90.000000) translate(-570.000000, -288.500000) translate(562.000000, 277.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-5" transform="translate(292.000000, 569.500000) scale(-1, -1) translate(-292.000000, -569.500000) translate(284.000000, 558.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g></g><g id="nov-zatic-copy-4" transform="translate(677.736607, 396.736607) scale(-1, 1) rotate(-90.000000) translate(-677.736607, -396.736607) translate(669.736607, 385.236607)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g><g id="nov-zatic-copy-2" transform="translate(399.000000, 676.500000) scale(1, -1) translate(-399.000000, -676.500000) translate(391.000000, 665.000000)"><path d="M8,1 C12.418278,1 16,4.47637724 16,8.76470588 L16,8.76470588 L16,15.2352941 C16,19.5236228 12.418278,23 8,23 C3.581722,23 0,19.5236228 0,15.2352941 L0,15.2352941 L0,8.76470588 L0.00380682464,8.52285536 C0.135457134,4.34643078 3.66508574,1 8,1 Z" id="Combined-Shape" fill="#000000" opacity="0.300000012"></path><ellipse id="Oval-Copy-13" fill="#FFFFFF" cx="8" cy="7.5" rx="8" ry="7.5"></ellipse><ellipse id="Oval-Copy-5" fill="#D8D8D8" cx="8" cy="10" rx="8" ry="7"></ellipse></g></g></g></g></svg>
+              <!-- pin -->
+              <div id="wlo-pointer-holder"><svg id="wlo-pointer" xmlns="http://www.w3.org/2000/svg" width="97" height="56" viewBox="0 0 97 56"><defs><linearGradient id="vxwea" x1="75.15" x2="70.61" y1="38.94" y2="13.18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#dcdcdc"></stop><stop offset="1" stop-color="#f2f2f2"></stop></linearGradient></defs><g><g><g opacity=".2" transform="rotate(93 48.305 30.065)"><path d="M50.82 76.62C63.599 50.84 72.806 14.953 72.806 5.479c0-12.978-10.97-23.499-24.503-23.499C34.77-18.02 23.8-7.5 23.8 5.479c0 9.474 9.207 45.36 21.984 71.14 1.015 2.049 4.021 2.049 5.037 0z"></path></g><g transform="rotate(93 48.305 24.065)"><path id="wlo-pointer-color" fill="#c32262" d="M50.82 70.62C63.599 44.84 72.806 8.953 72.806-.521c0-12.978-10.97-23.499-24.503-23.499C34.77-24.02 23.8-13.5 23.8-.521c0 9.474 9.207 45.36 21.984 71.14 1.015 2.049 4.021 2.049 5.037 0z" style="fill: rgb(255, 163, 191);"></path></g><g opacity=".5" transform="rotate(93 48.9 12.56)"><path fill="#fff" d="M60.34-35.44c-13.528 0-24.495 10.501-24.495 23.456 0 9.457 9.204 45.278 21.978 71.01.797 1.605 2.82 1.95 4.143 1.036a2.707 2.707 0 0 1-1.148-1.192C48.044 33.137 38.84-2.684 38.84-12.141c0-12.03 9.458-21.945 21.642-23.299h-.141z"></path></g><g transform="rotate(-59 72.88 26.06)"><path fill="url(#vxwea)" d="M75.15 13.18C68.036 11.928 61.254 16.677 60 23.789c-1.253 7.112 3.496 13.894 10.608 15.149 7.112 1.254 13.894-3.495 15.149-10.608 1.254-7.112-3.495-13.894-10.608-15.148z"></path></g></g></g></svg></div></div>    
+            </div>
+          </div>
+          <div class="wheel-panel-content-{{ section.id }}">
+            {% if content_heading != blank %}
+              <p class="wheel-panel-content-heading-{{ section.id }}">{{ content_heading }}</p>
+            {% endif %}
+            {% if content_sub_heading != blank %}
+              <p class="wheel-panel-content-subheading-{{ section.id }}">{{ content_sub_heading }}</p>
+            {% endif %}
+            <div class="wheel-panel-content-form-{{ section.id }}">
+              {% capture newsletterForm %}
+                {% form 'customer', class: 'wheel-panel-content-form' %}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <div class="wheel-panel-content-wrapper-{{ section.id }}">
+                    {% if input_icon != blank %}
+                      <div class="wheel-panel-content-icon-{{ section.id }}">
+                        <img src="{{ input_icon | image_url }}" alt="{{ input_icon.alt }}">
+                      </div>
+                    {% endif %}
+                    <input
+                      id="wheel-panel-content-form--{{ section.id }}"
+                      type="email"
+                      name="contact[email]"
+                      class="wheel-panel-content-input-{{ section.id }}"
+                      aria-required="true"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      autocomplete="email"
+                      {% if form.errors %}
+                        autofocus
+                        aria-invalid="true"
+                        aria-describedby="Newsletter-error--{{ section.id }}"
+                      {% elsif form.posted_successfully? %}
+                        aria-describedby="Newsletter-success--{{ section.id }}"
+                      {% endif %}
+                      required
+                    >
+                    <label class="wheel-panel-content-label-{{ section.id }}">{{ input_placeholder }}</label>
+                    <div class="wheel-panel-content-copy-{{ section.id }}">COPY</div>
+                  </div>
+                  <button type="submit" class="wheel-panel-content-submit-{{ section.id }}" name="commit" id="Submit" aria-label="Submit">{{ submit }}</button>
+                  <div class="wheel-panel-content-submit-{{ section.id }} wheel-panel-content-submit-close-{{ section.id }}" >{{ submit_result }}</div>
+                {% endform %}
+              {% endcapture %}
+              {{ newsletterForm }}
+            </div>
+            {% if content_text != blank %}
+              <div class="wheel-panel-content-text-{{ section.id }}">{{ content_text }}</div>
+            {% endif %}
+            <div class="wheel-panel-content-close-{{ section.id }}">
+              {{ close }}
+              <svg viewBox="0 0 329.26933 329" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px"><path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"></path></svg>
+            </div>
+          </div>
+        </div>
+        <div class="wheel-modal-overlay-{{ section.id }}"></div>
+      </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+            
+<script>
+
+  var padding = {
+    top:20, right:20, bottom:0, left:0
+  },
+  w = 556 - padding.left - padding.right,
+  h = 556 - padding.top - padding.bottom,
+  r = Math.min(w, h)/2,
+  roatation = 0,
+  oldrotation = 0,
+  picked = 100000,
+  oldpick = [],
+  color = d3.scale.category20();
+  
+  var data = [
+    {% for block in section.blocks %}
+      {% if forloop.last %}
+        {"label":"{{ block.settings.text }}",  "value":{% if block.settings.value != blank %}{{ block.settings.value }}{% else %}0{% endif %},  "number":"{% if block.settings.result != blank %}{{ block.settings.result }}{% else %}nothing{% endif %}", "color": "{{ block.settings.bg_color }}"}
+      {% else %}
+        {"label":"{{ block.settings.text }}",  "value":{% if block.settings.value != blank %}{{ block.settings.value }}{% else %}0{% endif %},  "number":"{% if block.settings.result != blank %}{{ block.settings.result }}{% else %}nothing{% endif %}", "color": "{{ block.settings.bg_color }}"},
+      {% endif %}
+    {% endfor %}
+  ];
+
+  var vis;
+
+  function initWheelMail() {
+
+    if(document.querySelector('.wheel-triger-btn-{{ section.id }}')) {
+      document.querySelector('.wheel-triger-btn-{{ section.id }}').addEventListener('click', () => {
+        setTimeout(function() {
+          document.querySelector('.wheel-modal-{{ section.id }}').classList.add('active');
+          document.querySelector('body').style.overflow = "hidden";
+          if(document.querySelector('#chart').innerHTML == "") {
+            createSvg();
+          }
+        }, {{ btn_delay | times: 1000 }})
+      })
+    }
+
+    if(document.querySelector('.wheel-panel-content-input-{{ section.id }}')){
+      document.querySelector('.wheel-panel-content-input-{{ section.id }}').addEventListener('input', () => {
+        if (document.querySelector('.wheel-panel-content-input-{{ section.id }}').value !== '') {
+          document.querySelector('.wheel-panel-content-label-{{ section.id }}').classList.add('active');
+        } else {
+          document.querySelector('.wheel-panel-content-label-{{ section.id }}').classList.remove('active');
+        }
+      });
+    }
+
+    if(document.querySelector('.wheel-panel-content-close-{{ section.id }}')) {
+      document.querySelector('.wheel-panel-content-close-{{ section.id }}').addEventListener('click', () => {
+        document.querySelector('.wheel-modal-{{ section.id }}').classList.remove('active');
+        document.querySelector('body').style.overflow = "";
+        document.querySelector('#chart').innerHTML = "";
+        let heading = document.querySelector('.wheel-panel-content-heading-{{ section.id }}');
+        let sub_heading = document.querySelector('.wheel-panel-content-subheading-{{ section.id }}');
+        let label = document.querySelector('.wheel-panel-content-label-{{ section.id }}');
+        let copy = document.querySelector('.wheel-panel-content-copy-{{ section.id }}');
+        let input = document.querySelector('.wheel-panel-content-input-{{ section.id }}');
+        let text = document.querySelector('.wheel-panel-content-text-{{ section.id }}');
+        let close = document.querySelector('.wheel-panel-content-close-{{ section.id }}');
+        let submit = document.querySelector('.wheel-panel-content-submit-{{ section.id }}');
+        let submit_close = document.querySelector('.wheel-panel-content-submit-close-{{ section.id }}');
+        let icon = document.querySelector('.wheel-panel-content-icon-{{ section.id }}');
+        
+        if(heading){
+          heading.innerText = "{{ content_heading }}";
+        }
+        if(sub_heading){
+          sub_heading.innerText = "{{ content_sub_heading }}";
+        }
+        if(label){
+          label.innerText = "{{ input_placeholder }}";
+          label.classList.remove('active');
+        }
+        if(copy){
+          copy.classList.remove('active');
+        }
+        if(input){
+          input.value = "";
+          input.style.pointerEvents = "all";
+        }
+        if(text){
+          text.style.display = "block";
+        }
+        if(close){
+          close.classList.remove('hide-close');
+        }
+        if(submit){
+          submit.classList.remove('hide-submit');
+        }
+        if(submit_close){
+          submit_close.classList.remove('active');
+        }
+        if(icon){
+          icon.style.display = "block";
+        }
+      })
+    }
+
+    if(document.querySelector('.wheel-modal-overlay-{{ section.id }}')) {
+      document.querySelector('.wheel-modal-overlay-{{ section.id }}').addEventListener('click', () => {
+        document.querySelector('.wheel-modal-{{ section.id }}').classList.remove('active');
+        document.querySelector('body').style.overflow = "";
+        document.querySelector('#chart').innerHTML = "";
+        let heading = document.querySelector('.wheel-panel-content-heading-{{ section.id }}');
+        let sub_heading = document.querySelector('.wheel-panel-content-subheading-{{ section.id }}');
+        let label = document.querySelector('.wheel-panel-content-label-{{ section.id }}');
+        let copy = document.querySelector('.wheel-panel-content-copy-{{ section.id }}');
+        let input = document.querySelector('.wheel-panel-content-input-{{ section.id }}');
+        let text = document.querySelector('.wheel-panel-content-text-{{ section.id }}');
+        let close = document.querySelector('.wheel-panel-content-close-{{ section.id }}');
+        let submit = document.querySelector('.wheel-panel-content-submit-{{ section.id }}');
+        let submit_close = document.querySelector('.wheel-panel-content-submit-close-{{ section.id }}');
+        let icon = document.querySelector('.wheel-panel-content-icon-{{ section.id }}');
+        if(heading){
+          heading.innerText = "{{ content_heading }}";
+        }
+        if(sub_heading){
+          sub_heading.innerText = "{{ content_sub_heading }}";
+        }
+        if(label){
+          label.innerText = "{{ input_placeholder }}";
+          label.classList.remove('active');
+        }
+        if(copy){
+          copy.classList.remove('active');
+        }
+        if(input){
+          input.value = "";
+          input.style.pointerEvents = "all";
+        }
+        if(text){
+          text.style.display = "block";
+        }
+        if(close){
+          close.classList.remove('hide-close');
+        }
+        if(submit){
+          submit.classList.remove('hide-submit');
+        }
+        if(submit_close){
+          submit_close.classList.remove('active');
+        }
+        if(icon){
+          icon.style.display = "block";
+        }
+      })
+    }
+    
+    if(document.querySelector('.wheel-panel-content-submit-close-{{ section.id }}')) {
+      document.querySelector('.wheel-panel-content-submit-close-{{ section.id }}').addEventListener('click', () => {
+        document.querySelector('.wheel-modal-{{ section.id }}').classList.remove('active');
+        document.querySelector('body').style.overflow = "";
+        document.querySelector('#chart').innerHTML = "";
+        let heading = document.querySelector('.wheel-panel-content-heading-{{ section.id }}');
+        let sub_heading = document.querySelector('.wheel-panel-content-subheading-{{ section.id }}');
+        let label = document.querySelector('.wheel-panel-content-label-{{ section.id }}');
+        let copy = document.querySelector('.wheel-panel-content-copy-{{ section.id }}');
+        let input = document.querySelector('.wheel-panel-content-input-{{ section.id }}');
+        let text = document.querySelector('.wheel-panel-content-text-{{ section.id }}');
+        let close = document.querySelector('.wheel-panel-content-close-{{ section.id }}');
+        let submit = document.querySelector('.wheel-panel-content-submit-{{ section.id }}');
+        let submit_close = document.querySelector('.wheel-panel-content-submit-close-{{ section.id }}');
+        let icon = document.querySelector('.wheel-panel-content-icon-{{ section.id }}');
+        if(heading){
+          heading.innerText = "{{ content_heading }}";
+        }
+        if(sub_heading){
+          sub_heading.innerText = "{{ content_sub_heading }}";
+        }
+        if(label){
+          label.innerText = "{{ input_placeholder }}";
+          label.classList.remove('active');
+        }
+        if(copy){
+          copy.classList.remove('active');
+        }
+        if(input){
+          input.value = "";
+          input.style.pointerEvents = "all";
+        }
+        if(text){
+          text.style.display = "block";
+        }
+        if(close){
+          close.classList.remove('hide-close');
+        }
+        if(submit){
+          submit.classList.remove('hide-submit');
+        }
+        if(submit_close){
+          submit_close.classList.remove('active');
+        }
+        if(icon){
+          icon.style.display = "block";
+        }
+      })
+    }
+
+    if(document.querySelector('.wheel-panel-content-copy-{{ section.id }}')) {
+      document.querySelector('.wheel-panel-content-copy-{{ section.id }}').addEventListener('click', () => {
+        var textToCopy = document.querySelector('.wheel-panel-content-input-{{ section.id }}').value;
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          document.querySelector('.wheel-panel-content-copy-{{ section.id }}').classList.add('copy');
+        });
+      })
+    }
+
+    initForm();
+    createSvg();
+
+  }
+
+  function createSvg() {
+
+     var svg = d3.select("#chart")
+        .append("svg")
+        .data([data])
+        .attr("width", w + padding.left + padding.right)
+        .attr("height", h + padding.top + padding.bottom)
+    ;
+    
+    var container = svg.append("g")
+        .attr("class", "chartholder")
+        .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")")
+    ;
+    
+    vis = container
+        .append("g")
+    ;
+    
+    var pie = d3.layout.pie().sort(null).value(function(d){return 1;});
+    
+    var arc = d3.svg.arc().outerRadius(r);
+    
+    var arcs = vis.selectAll("g.slice")
+        .data(pie)
+        .enter()
+        .append("g")
+        .attr("class", "slice")
+    ;
+    
+    arcs.append("path")
+        .attr("fill", function(d) { return d.data.color;})
+        .attr("d", function (d) { return arc(d); });
+    
+    arcs.append("text").attr("transform", function(d){
+            d.innerRadius = 0;
+            d.outerRadius = r;
+            d.angle = (d.startAngle + d.endAngle)/2;
+            return "rotate(" + (d.angle * 180 / Math.PI - 88) + ")translate(" + (d.outerRadius -25) +")";
+        })
+        .attr("text-anchor", "end")
+        .text( function(d, i) {
+            return data[i].label;
+        });
+    
+  }
+  
+
+  function spin(d){
+
+    var  ps       = 360/data.length,
+         pieslice = Math.round(1440/data.length),
+         rng      = Math.floor((Math.random() * 1440) + 360);
+
+    rotation = (Math.round(rng / ps) * ps);
+
+    picked = Math.round(data.length - (rotation % 360)/ps);
+    picked = picked >= data.length ? (picked % data.length) : picked;
+
+
+    if(oldpick.indexOf(picked) !== -1){
+        d3.select(this).call(spin);
+        return;
+    } else {
+        oldpick.push(picked);
+    }
+
+    rotation += 90 - Math.round(ps/2);
+
+    vis.transition()
+        .duration(3000)
+        .attrTween("transform", rotTween)
+        .each("end", function(){
+
+
+            d3.select(".wheel-panel-content-heading-{{ section.id }}")
+                .text(data[picked].number);
+            $('.wheel-panel-content-subheading-{{ section.id }}').text(`{{ content_sub_heading_result }}`);
+            $('.wheel-panel-content-label-{{ section.id }}').text(`{{ input_placeholder_result }}`);
+            $('.wheel-panel-content-label-{{ section.id }}').addClass('active');
+            $('.wheel-panel-content-copy-{{ section.id }}').addClass('active');
+            $('.wheel-panel-content-input-{{ section.id }}').val(data[picked].value);
+            $('.wheel-panel-content-input-{{ section.id }}').css("pointer-events", "none");
+            $('.wheel-panel-content-text-{{ section.id }}').css("display", "none");
+            $('.wheel-panel-content-close-{{ section.id }}').addClass('hide-close');
+            $('.wheel-panel-content-submit-{{ section.id }}').addClass('hide-submit');
+            $('.wheel-panel-content-submit-close-{{ section.id }}').addClass('active');
+            $('.wheel-panel-content-icon-{{ section.id }}').css("display", "none");
+          
+
+            oldrotation = rotation;
+
+        });
+    setTimeout(function() {
+      $('.wheel-modal-{{ section.id }}').removeClass('submit');
+    }, 3000)
+  }
+  
+  function rotTween(to) {
+    var i = d3.interpolate(oldrotation % 360, rotation);
+    return function(t) {
+      return "rotate(" + i(t) + ")";
+    };
+  }
+  
+  
+  function getRandomNumbers(){
+      var array = new Uint16Array(1000);
+      var scale = d3.scale.linear().range([360, 1440]).domain([0, 100000]);
+  
+      if(window.hasOwnProperty("crypto") && typeof window.crypto.getRandomValues === "function"){
+          window.crypto.getRandomValues(array);
+      } else {
+          for(var i=0; i < 1000; i++){
+              array[i] = Math.floor(Math.random() * 100000) + 1;
+          }
+      }
+  
+      return array;
+  }
+
+  function formToJSON(elements) {
+  	return [].reduce.call(elements, function (data, element) {
+  		data[element.name] = element.value;
+  		return data;
+  	}, {});
+  }
+  
+  function getUrlString(data) {
+  	var urlParameters = Object.entries(data).map(function (e) {
+  		return e.join('=');
+  	}).join('&');
+  
+  	return urlParameters;
+  }
+
+  function initForm(selector) {
+	selector = selector || '.wheel-panel-content-form';
+
+	document.querySelectorAll(selector).forEach(function(form) {
+		var action = form.getAttribute("action"),
+			inputs = form.querySelectorAll("[name]"),
+			btn = form.querySelector('[type="button"]');
+
+		// Submit data via Fetch
+		form.addEventListener('submit', function(e){
+			e.preventDefault();
+
+          //   $.ajax({
+          //     type: "POST",
+          //     url:  $(this).attr('action'),
+          //     cache: false,
+          //     data: $(this).serialize(),
+          //     success: function(data){
+          //         alert("Thank's For Submitting Your Email");
+          //     },
+          //     error: function (jqXHR, textStatus, errorThrown) {
+          //         console.log(jqXHR);
+          //         console.log(textStatus);
+          //         console.log(errorThrown);
+          //         alert("error");
+          //     }
+          // })
+
+   //          console.log(action);
+   //          alert('error');
+			// fetch(action, {
+			// 	method: 'POST',
+				
+			// 	body: getUrlString(formToJSON(inputs))
+			// }).then(function(response) {
+   //              document.querySelector('.wheel-modal-{{ section.id }}').classList.add('submit');
+   //              spin();
+			// 	console.log(response);
+			// 	console.log("Response Status: " + response.status);
+			// }).catch(function(error) {
+			// 	console.log(error);
+			// 	console.log("Response Status: " + response.status);
+			// });
+
+            fetch(action, {
+              method: 'POST',
+              body: getUrlString(formToJSON(inputs))
+            })
+            .then(response => {
+              console.log(response);
+              console.log(response.status);
+              if (response.status === 200) {
+                // Successful response
+                alert(response);
+              } else {
+                // Non-successful response
+                throw new Error('Form submission failed.');
+              }
+            })
+            .catch(error => {
+              // Handle errors here
+              console.error('Form submission error:', error);
+              alert(error);
+            })
+            .finally(() => {
+              // Reset the submitting status after form submission
+              alert('finally');
+            });
+		});
+	});
+  }
+  
+  document.addEventListener('DOMContentLoaded', initWheelMail);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initWheelMail);
+     document.addEventListener('shopify:section:load', initWheelMail);
+  }
+  
+</script>
+
+{% schema %}
+  {
+    "name": "SS - Wheel",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Button Triger Settings"
+      },
+      {
+        "type": "range",
+        "id": "btn_position",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "vh",
+        "label": "Button Vertical Position",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "btn_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Button Width",
+        "default": 90
+      },
+      {
+        "type": "range",
+        "id": "btn_border_thickness",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Button Border Thickness",
+        "default": 5
+      },
+      {
+        "type": "image_picker",
+        "id": "btn_image",
+        "label": "Button Image"
+      },
+      {
+        "type": "range",
+        "id": "btn_delay",
+        "min": 0,
+        "max": 5,
+        "step": 0.5,
+        "label": "Button Delay Before Open Modal",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Modal Settings"
+      },
+      {
+        "type": "range",
+        "id": "overlay_opacity",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.1,
+        "label": "Overlay Opacity",
+        "default": 0.6
+      },
+      {
+        "type": "range",
+        "id": "modal_width",
+        "min": 600,
+        "max": 1400,
+        "step": 10,
+        "unit": "px",
+        "label": "Modal Width",
+        "default": 790
+      },
+      {
+        "type": "header",
+        "content": "Slice Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "slice_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "slice_font",
+        "label": "Slice Text Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "slice_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Slice Text Size",
+        "default": 22
+      },
+      {
+        "type": "range",
+        "id": "slice_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Slice Text Size - Mobile",
+        "default": 22
+      },
+      {
+        "type": "header",
+        "content": "Content Heading"
+      },
+      {
+        "type": "text",
+        "id": "content_heading",
+        "label": "Content Heading",
+        "default": "This is how Wheelio looks like"
+      },
+      {
+        "type": "checkbox",
+        "id": "content_heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "content_heading_font",
+        "label": "Content Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "content_heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Heading Size",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "content_heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Heading Size - Mobile",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "content_heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Content Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "select",
+        "id": "content_heading_align",
+        "label": "Content Heading Align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Content Sub-Heading"
+      },
+      {
+        "type": "text",
+        "id": "content_sub_heading",
+        "label": "Content Sub-Heading",
+        "default": "You can change all texts and colors"
+      },
+      {
+        "type": "text",
+        "id": "content_sub_heading_result",
+        "label": "Content Sub-Heading Result",
+        "default": "Don't forget to use the discount code at checkout!"
+      },
+      {
+        "type": "checkbox",
+        "id": "content_sub_heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "content_sub_heading_font",
+        "label": "Content Sub-Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "content_sub_heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Sub-Heading Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "content_sub_heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Sub-Heading Size - Mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "content_sub_heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Content Sub-Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "select",
+        "id": "content_sub_heading_align",
+        "label": "Content Sub-Heading Align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "content_sub_heading_mt",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Content Sub-Heading Margin Top",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Input Settings"
+      },
+      {
+        "type": "text",
+        "id": "input_placeholder",
+        "label": "Input Label",
+        "default": "Email"
+      },
+      {
+        "type": "text",
+        "id": "input_placeholder_result",
+        "label": "Input Label Result",
+        "default": "Your discount code is:"
+      },
+      {
+        "type": "image_picker",
+        "id": "input_icon",
+        "label": "Input Icon"
+      },
+      {
+        "type": "checkbox",
+        "id": "input_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "input_font",
+        "label": "Input Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "input_size",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Input Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "input_size_mobile",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Input Size - Mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "input_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Input Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "input_h",
+        "min": 20,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Input Height",
+        "default": 56
+      },
+      {
+        "type": "range",
+        "id": "input_mt",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Input Margin Top",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "input_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Input Padding Vertical",
+        "default": 10
+      },
+      {
+         "type": "range",
+         "id": "input_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Input Padding Horizontal",
+         "default": 50
+      },
+      {
+         "type": "range",
+         "id": "input_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Input Border Radius",
+         "default": 6
+      },
+      {
+         "type": "range",
+         "id": "input_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Input Border Thickness",
+         "default": 1
+      },
+      {
+        "type": "header",
+        "content": "Button Submit Settings"
+      },
+      {
+        "type": "text",
+        "id": "submit",
+        "label": "Button Text",
+        "default": "Try your luck"
+      },
+            {
+        "type": "text",
+        "id": "submit_result",
+        "label": "Button Text Result",
+        "default": "Continue & use discount"
+      },
+      {
+        "type": "checkbox",
+        "id": "submit_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "submit_font",
+        "label": "Button Text Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "submit_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Text Size",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "submit_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Text Size - Mobile",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "submit_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Button Text Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "submit_mt",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Button Margin Top",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "submit_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Padding Vertical",
+        "default": 10
+      },
+      {
+         "type": "range",
+         "id": "submit_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Button Padding Horizontal",
+         "default": 20
+      },
+      {
+         "type": "range",
+         "id": "submit_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Button Border Radius",
+         "default": 28
+      },
+      {
+         "type": "range",
+         "id": "submit_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Button Border Thickness",
+         "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Content Text"
+      },
+      {
+        "type": "richtext",
+        "id": "content_text",
+        "label": "Content Text",
+        "default": "<p>* You can spin the wheel only once.</p><p>* If you win, you can claim your coupon for 10 mins only!</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "content_text_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "content_text_font",
+        "label": "Content Text Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "content_text_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Text Size",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "content_text_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Text Size - Mobile",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "content_text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Content Text Line Height",
+        "default": 130
+      },
+      {
+        "type": "select",
+        "id": "content_text_align",
+        "label": "Content Text Align",
+        "default": "left",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "content_text_mt",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Content Text Margin Top",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Close Settings"
+      },
+      {
+        "type": "text",
+        "id": "close",
+        "label": "Close",
+        "default": "No, I don't feel lucky "
+      },
+      {
+        "type": "checkbox",
+        "id": "close_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "close_font",
+        "label": "Close Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "close_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Close Size",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "close_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Close Size - Mobile",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "close_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Close Line Height",
+        "default": 130
+      },
+      {
+        "type": "select",
+        "id": "close_align",
+        "label": "Close Align",
+        "default": "end",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "close_mt",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Close Margin Top",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Button Background Color",
+        "id": "btn_bg_color",
+        "default": "#49A3AF"
+      },
+      {
+        "type": "color",
+        "label": "Button Border Color",
+        "id": "btn_border_color",
+        "default": "#49A3AF"
+      },
+      {
+        "type": "color_background",
+        "label": "Button Border Color Gradient",
+        "id": "btn_border_color_gradient",
+        "default": "linear-gradient(to bottom, #a01186, #e65b38 52%, #f2a956)"
+      },
+      {
+        "type": "color",
+        "label": "Button Background Color",
+        "id": "modal_bg_color",
+        "default": "#49A3AF"
+      },
+      {
+        "type": "color",
+        "label": "Slice Text Color",
+        "id": "slice_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Content Heading Color",
+        "id": "content_heading_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Content Sub-Heading Color",
+        "id": "content_sub_heading_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Input Color",
+        "id": "input_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Input Placeholder Color",
+        "id": "input_placeholder_color",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "label": "Input Border Color",
+        "id": "input_border_color",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "label": "Button Submit Color",
+        "id": "submit_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Button Submit Hover Color",
+        "id": "submit_hover_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Button Submit Background Color",
+        "id": "submit_bg_color",
+        "default": "#0C0C0C"
+      },
+      {
+        "type": "color",
+        "label": "Button Submit Background Hover Color",
+        "id": "submit_bg_hover_color",
+        "default": "#0C0C0C"
+      },
+            {
+        "type": "color",
+        "label": "Button Submit Border Color",
+        "id": "submit_border_color",
+        "default": "#0C0C0C"
+      },
+      {
+        "type": "color",
+        "label": "Button Submit Border Hover Color",
+        "id": "submit_border_hover_color",
+        "default": "#0C0C0C"
+      },
+      {
+        "type": "color",
+        "label": "Content Text Color",
+        "id": "content_text_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Close Color",
+        "id": "close_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slice",
+        "name": "Slice",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "value",
+            "label": "Value"
+          },
+          {
+            "type": "text",
+            "id": "result",
+            "label": "Result Text"
+          },
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Wheel"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,1165 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign section_radius = section.settings.section_radius
+
+  assign wave_type = section.settings.wave_type
+
+  assign animation_speed = section.settings.animation_speed
+  assign animation_speed_mobile = section.settings.animation_speed_mobile
+  assign reverse_direction = section.settings.reverse_direction
+  assign line_color = section.settings.line_color
+
+  assign body_padding_vertical = section.settings.body_padding_vertical
+  assign body_padding_vertical_mobile = section.settings.body_padding_vertical_mobile
+  assign body_align = section.settings.body_align
+  assign body_align_mobile = section.settings.body_align_mobile
+
+  assign body_horizontal_align = ""
+  if body_align == "center"
+    assign body_horizontal_align = "center"
+  elsif body_align == "right"
+    assign body_horizontal_align = "end"
+  else
+    assign body_horizontal_align = "start"
+  endif
+
+  assign body_horizontal_align_mobile = ""
+  if body_align_mobile == "center"
+    assign body_horizontal_align_mobile = "center"
+  elsif body_align_mobile == "right"
+    assign body_horizontal_align_mobile = "end"
+  else
+    assign body_horizontal_align_mobile = "start"
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+    overflow: hidden;
+  }
+
+  .text-block-animation-line-{{ section.id }}:first-child {
+    display: flex;
+    align-items: center;
+    width: 200vw;
+    position: relative; 
+    left: -100vw;
+    -webkit-animation: ticker_up{{ section.id | replace: '-', '' }} {{ animation_speed_mobile }}s infinite linear;
+    animation-duration: {{ animation_speed_mobile }}s;
+  }
+
+  .text-block-animation-line-{{ section.id }}:last-child {
+    display: flex;
+    align-items: center;
+    width: 200vw;
+    left: -100vw;
+    position: relative; 
+    -webkit-animation: ticker_down{{ section.id | replace: '-', '' }} {{ animation_speed_mobile }}s infinite linear;
+    animation-duration: {{ animation_speed_mobile }}s;
+  }
+  
+  .text-block-line-{{ section.id }} {
+    flex-shrink: 0;
+    height: 14px;
+    overflow: hidden;
+  }
+
+  .text-block-line-{{ section.id }}.text-block-line-two-{{ section.id }} {
+    width: 959px;
+  }
+
+  .text-block-line-{{ section.id }}.text-block-line-one-{{ section.id }} path,
+  .text-block-line-{{ section.id }}.text-block-line-two-{{ section.id }} path {    
+    stroke: {{ line_color }};
+  }
+
+  .text-block-line-{{ section.id }}.text-block-line-zig-zag-{{ section.id }} path {
+    fill: {{ line_color }};
+  }
+
+  .text-block-content-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ body_horizontal_align_mobile }};
+    padding: {{ body_padding_vertical_mobile }}px 0;
+  }
+
+  .text-block-button-wrapper-{{ section.id }} {
+    display: flex;
+    justify-content: {{ body_horizontal_align_mobile }};
+    width: 100%;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .text-block-animation-line-{{ section.id }}:first-child {
+    display: flex;
+    align-items: center;
+    width: 200vw;
+    position: relative; 
+    left: -100vw;
+    -webkit-animation: ticker_up{{ section.id | replace: '-', '' }} {{ animation_speed }}s infinite linear;
+    animation-duration: {{ animation_speed }}s;
+  }
+
+  .text-block-animation-line-{{ section.id }}:last-child {
+    display: flex;
+    align-items: center;
+    width: 200vw;
+    position: relative; 
+    left: -100vw;
+    -webkit-animation: ticker_down{{ section.id | replace: '-', '' }} {{ animation_speed }}s infinite linear;
+    animation-duration: {{ animation_speed }}s;
+  }
+
+    .text-block-content-{{ section.id }} {
+      justify-content: {{ body_horizontal_align }};
+      padding: {{ body_padding_vertical }}px 0;
+    }
+
+    .text-block-button-wrapper-{{ section.id }} {
+      justify-content: {{ body_horizontal_align }};
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if reverse_direction %}
+	<style>
+    @keyframes ticker_up{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+    }
+    @keyframes ticker_down{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+	</style>
+{% else %}
+	<style>
+    @keyframes ticker_up{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    @keyframes ticker_down{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+    }
+	</style>
+{% endif %}
+
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'subtext' %}
+      <style>
+        {{ block.settings.sub_text_font | font_face: font_display: 'swap' }}
+
+        .text-block-subtext-{{ block.id }} {
+          margin-top: {{ block.settings.sub_text_mt_mobile }}px;
+        }
+
+        .text-block-subtext-{{ block.id }} * {
+          margin: 0px;
+          text-align: {{ body_align_mobile }};
+          font-size: {{ block.settings.sub_text_size_mobile }}px;
+          line-height: {{ block.settings.sub_text_height }}%;
+          color: {{ block.settings.sub_text_color }};
+          text-transform: unset;
+          word-break: break-word;
+        }
+        @media (min-width: 1024px) {
+          .text-block-subtext-{{ block.id }} {
+            margin-top: {{ block.settings.sub_text_mt }}px;
+          }
+
+          .text-block-subtext-{{ block.id }} * {
+            text-align: {{ body_align }};
+            font-size: {{ block.settings.sub_text_size }}px;
+          }
+        }
+      </style>
+      {% if block.settings.sub_text_custom %}
+        <style>
+          .text-block-subtext-{{ block.id }} * {
+            font-family: {{ block.settings.sub_text_font.family }}, {{ block.settings.sub_text_font.fallback_families }};
+            font-weight: {{ block.settings.sub_text_font.weight }};
+            font-style: {{ block.settings.sub_text_font.style }};
+          }
+        </style>
+      {% endif %}
+
+    {% when 'text' %}
+      <style>        
+        {{ block.settings.text_font | font_face: font_display: 'swap' }}
+        
+        .text-block-text-{{ block.id }} {
+          margin-top: {{ block.settings.text_mt_mobile }}px;
+        }
+
+        .text-block-text-{{ block.id }} * {
+          margin: 0px;
+          text-align: {{ body_align_mobile }};
+          font-size: {{ block.settings.text_size_mobile }}px;
+          line-height: {{ block.settings.text_height }}%;
+          color: {{ block.settings.text_color }};
+          text-transform: unset;
+          word-break: break-word;
+          font-weight: 700;
+        }
+
+        @media (min-width: 1024px) {          
+          .text-block-text-{{ block.id }} {
+            margin-top: {{ block.settings.text_mt }}px;
+          }
+
+          .text-block-text-{{ block.id }} * {
+            text-align: {{ body_align }};
+            font-size: {{ block.settings.text_size }}px;
+          }
+        }
+      </style>
+      {% if block.settings.text_custom %}
+        <style>
+          .text-block-text-{{ block.id }} * {
+            font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+            font-weight: {{ block.settings.text_font.weight }};
+            font-style: {{ block.settings.text_font.style }};
+          }
+        </style>
+      {% endif %}
+
+    {% when 'button' %}
+      <style>
+        {{ block.settings.button_font | font_face: font_display: 'swap' }}
+        
+        .text-block-button-{{ block.id }} {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          max-width: fit-content;
+          gap: 10px;
+          width: 100%;
+          margin: 0;
+          margin-top: {{ block.settings.button_mt_mobile }}px;
+          font-size: {{ block.settings.button_size_mobile }}px;
+          color: {{ block.settings.button_color }};
+          line-height: {{ block.settings.button_height }}%;
+          text-align: center;
+          text-transform: unset;
+          text-decoration: none;
+          padding: {{ block.settings.button_padding_vertical_mobile }}px {{ block.settings.button_padding_horizontal_mobile }}px;
+          border-radius: {{ block.settings.button_radius }}px;
+          transition: all 0.25s ease 0s;
+          background-color: transparent;
+          border: 0px;
+          cursor: pointer;
+          font-weight: 700;
+        } 
+
+        .text-block-button-inner-{{ block.id }} {
+          margin: 0px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        }
+
+        .text-block-button-{{ block.id }}:hover {
+          color: {{ block.settings.button_hover_color }};
+          transition: all 0.25s ease 0s;
+        }
+
+        .text-block-button-{{ block.id }} svg {
+          width: 14px;
+          height: 14px;
+        }
+
+        .text-block-button-{{ block.id }} svg path {
+          fill: {{ block.settings.button_color }};
+          transition: all 0.25s ease 0s;
+        }
+
+        .text-block-button-{{ block.id }}:hover svg path {
+          fill: {{ block.settings.button_hover_color }};
+          transition: all 0.25s ease 0s;
+        }
+        @media (min-width: 1024px) {
+          .text-block-button-{{ block.id }} {
+            margin-top: {{ block.settings.button_mt }}px;
+            padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+            font-size: {{ block.settings.button_size }}px;
+          }
+        }
+      </style>
+      {% if block.settings.button_style == "non_outline" or block.settings.button_style == "non_outline_arrow" %}
+        <style>
+          .text-block-button-{{ block.id }} {
+            background-color: {{ block.settings.button_bg_color }};
+          }
+      
+          .text-block-button-{{ block.id }}:hover {
+            transition: all 0.25s ease 0s;
+            background-color: {{ block.settings.button_bg_hover_color }};
+          }
+
+          .text-block-button-{{ block.id }}:hover svg {
+            transition: all 0.25s ease 0s;
+          }
+        </style>
+      {% elsif block.settings.button_style == "outline" or block.settings.button_style == "outline_arrow" %}
+        <style>
+          .text-block-button-{{ block.id }} {
+            background-color: {{ block.settings.button_bg_color }};
+            border: {{ block.settings.button_border_thickness }}px solid {{ block.settings.button_border_color }};
+          }
+      
+          .text-block-button-{{ block.id }}:hover {
+            transition: all 0.25s ease 0s;
+            background-color: {{ block.settings.button_bg_hover_color }};
+            border: {{ block.settings.button_border_thickness }}px solid {{ block.settings.button_border_hover_color }};
+          }
+
+          .text-block-button-{{ block.id }}:hover svg {
+            transition: all 0.25s ease 0s;
+          }
+        </style>
+      {% elsif block.settings.button_style == "link" %}
+        <style>
+          .text-block-button-{{ block.id }} {
+            padding: 0px !important;
+          }
+        </style>
+      {% endif %}
+      
+      {% if block.settings.button_custom %}
+        <style>
+          .text-block-button-{{ block.id }} {
+            font-family: {{ block.settings.button_font.family }}, {{ block.settings.button_font.fallback_families }};
+            font-weight: {{ block.settings.button_font.weight }};
+            font-style: {{ block.settings.button_font.style }};
+          }
+        </style>
+      {% endif %}
+  {% endcase %}
+{% endfor %}
+
+
+<div class="section-{{ section.id }} text-block-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">    
+      <div class="text-block-body-{{ section.id }}">
+        <div class="text-block-animation-line-{{ section.id }}">
+          {% for item in (1..7) %}
+            {% if wave_type == 'zig_zag' %}
+              <svg class="text-block-line-{{ section.id }} text-block-line-zig-zag-{{ section.id }}" viewBox="0 0 1324 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M886 12.3121L875.943 0L865.887 12.3121L855.83 0L845.689 12.3121L835.632 0L825.576 12.3121L815.519 0L805.462 12.3121L795.405 0L785.349 12.3121L775.208 0L765.151 12.3121L755.095 0L745.038 12.3121L734.981 0L724.924 12.3121L714.868 0L704.811 12.3121L694.67 0L684.613 12.3121L674.557 0L664.5 12.3121L654.443 0L644.387 12.3121L634.33 0L624.189 12.3121L614.132 0L604.076 12.3121L594.019 0L583.962 12.3121L573.905 0L563.849 12.3121L553.708 0L543.651 12.3121L533.595 0L523.538 12.3121L513.481 0L503.424 12.3121L493.368 0L483.311 12.3121L473.17 0L463.114 12.3121L453.057 0L443 12.3121V14L453.057 1.68794L463.114 14L473.17 1.68794L483.311 14L493.368 1.68794L503.424 14L513.481 1.68794L523.538 14L533.595 1.68794L543.651 14L553.708 1.68794L563.849 14L573.905 1.68794L583.962 14L594.019 1.68794L604.076 14L614.132 1.68794L624.189 14L634.33 1.68794L644.387 14L654.443 1.68794L664.5 14L674.557 1.68794L684.613 14L694.67 1.68794L704.811 14L714.868 1.68794L724.924 14L734.981 1.68794L745.038 14L755.095 1.68794L765.151 14L775.208 1.68794L785.349 14L795.405 1.68794L805.462 14L815.519 1.68794L825.576 14L835.632 1.68794L845.689 14L855.83 1.68794L865.887 14L875.943 1.68794L886 14V12.3121Z" fill="#fac1ba"></path>
+                <path d="M443 12.3121L432.943 0L422.887 12.3121L412.83 0L402.689 12.3121L392.632 0L382.576 12.3121L372.519 0L362.462 12.3121L352.405 0L342.349 12.3121L332.208 0L322.151 12.3121L312.095 0L302.038 12.3121L291.981 0L281.924 12.3121L271.868 0L261.811 12.3121L251.67 0L241.614 12.3121L231.557 0L221.5 12.3121L211.443 0L201.386 12.3121L191.33 0L181.189 12.3121L171.132 0L161.076 12.3121L151.019 0L140.962 12.3121L130.905 0L120.849 12.3121L110.708 0L100.651 12.3121L90.5946 0L80.5378 12.3121L70.4811 0L60.4243 12.3121L50.3676 0L40.3108 12.3121L30.1703 0L20.1135 12.3121L10.0568 0L0 12.3121V14L10.0568 1.68794L20.1135 14L30.1703 1.68794L40.3108 14L50.3676 1.68794L60.4243 14L70.4811 1.68794L80.5378 14L90.5946 1.68794L100.651 14L110.708 1.68794L120.849 14L130.905 1.68794L140.962 14L151.019 1.68794L161.076 14L171.132 1.68794L181.189 14L191.33 1.68794L201.386 14L211.443 1.68794L221.5 14L231.557 1.68794L241.614 14L251.67 1.68794L261.811 14L271.868 1.68794L281.924 14L291.981 1.68794L302.038 14L312.095 1.68794L322.151 14L332.208 1.68794L342.349 14L352.405 1.68794L362.462 14L372.519 1.68794L382.576 14L392.632 1.68794L402.689 14L412.83 1.68794L422.887 14L432.943 1.68794L443 14V12.3121Z" fill="#fac1ba"></path>
+                <path d="M1324 12.3121L1314.06 0L1304.11 12.3121L1294.17 0L1284.14 12.3121L1274.2 0L1264.26 12.3121L1254.31 0L1244.37 12.3121L1234.43 0L1224.48 12.3121L1214.46 0L1204.52 12.3121L1194.57 0L1184.63 12.3121L1174.69 0L1164.74 12.3121L1154.8 0L1144.86 12.3121L1134.83 0L1124.89 12.3121L1114.94 0L1105 12.3121L1095.06 0L1085.11 12.3121L1075.17 0L1065.14 12.3121L1055.2 0L1045.26 12.3121L1035.31 0L1025.37 12.3121L1015.43 0L1005.48 12.3121L995.459 0L985.515 12.3121L975.572 0L965.629 12.3121L955.686 0L945.742 12.3121L935.799 0L925.856 12.3121L915.83 0L905.886 12.3121L895.943 0L886 12.3121V14L895.943 1.68794L905.886 14L915.83 1.68794L925.856 14L935.799 1.68794L945.742 14L955.686 1.68794L965.629 14L975.572 1.68794L985.515 14L995.459 1.68794L1005.48 14L1015.43 1.68794L1025.37 14L1035.31 1.68794L1045.26 14L1055.2 1.68794L1065.14 14L1075.17 1.68794L1085.11 14L1095.06 1.68794L1105 14L1114.94 1.68794L1124.89 14L1134.83 1.68794L1144.86 14L1154.8 1.68794L1164.74 14L1174.69 1.68794L1184.63 14L1194.57 1.68794L1204.52 14L1214.46 1.68794L1224.48 14L1234.43 1.68794L1244.37 14L1254.31 1.68794L1264.26 14L1274.2 1.68794L1284.14 14L1294.17 1.68794L1304.11 14L1314.06 1.68794L1324 14V12.3121Z" fill="#fac1ba"></path>
+              </svg>
+            {% elsif wave_type == 'wave_one' %}
+              <svg class="text-block-line-{{ section.id }} text-block-line-one-{{ section.id }}" viewBox="0 0 1233 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 1C6.85 1 6.85 7 13.7 7C20.55 7 20.55 1 27.4 1C34.25 1 34.25 7 41.1 7C47.95 7 47.95 1 54.8 1C61.65 1 61.65 7 68.5 7C75.35 7 75.35 1 82.2 1C89.05 1 89.05 7 95.9 7C102.75 7 102.75 1 109.6 1C116.45 1 116.45 7 123.3 7C130.15 7 130.15 1 137 1C143.85 1 143.85 7 150.7 7C157.55 7 157.55 1 164.4 1C171.25 1 171.25 7 178.1 7C184.95 7 184.95 1 191.8 1C198.65 1 198.65 7 205.5 7C212.35 7 212.35 1 219.2 1C226.05 1 226.05 7 232.9 7C239.75 7 239.75 1 246.6 1C253.45 1 253.45 7 260.3 7C267.15 7 267.15 1 274 1C280.85 1 280.85 7 287.7 7C294.55 7 294.55 1 301.4 1C308.25 1 308.25 7 315.1 7C321.95 7 321.95 1 328.8 1C335.65 1 335.65 7 342.5 7C349.35 7 349.35 1 356.2 1C363.05 1 363.05 7 369.9 7C376.75 7 376.75 1 383.6 1C390.45 1 390.45 7 397.3 7C404.15 7 404.15 1 411 1C417.85 1 417.85 7 424.7 7C431.55 7 431.55 1 438.4 1C445.25 1 445.25 7 452.1 7C458.95 7 458.95 1 465.8 1C472.65 1 472.65 7 479.49 7C486.33 7 486.34 1 493.18 1C500.02 1 500.03 7 506.87 7C513.71 7 513.72 1 520.57 1C527.42 1 527.42 7 534.27 7C541.12 7 541.12 1 547.97 1C554.82 1 554.82 7 561.66 7C568.5 7 568.51 1 575.36 1C582.21 1 582.21 7 589.06 7C595.91 7 595.91 1 602.76 1C609.61 1 609.61 7 616.46 7C623.31 7 623.31 1 630.16 1C637.01 1 637.01 7 643.86 7C650.71 7 650.71 1 657.56 1C664.41 1 664.41 7 671.26 7C678.11 7 678.11 1 684.96 1C691.81 1 691.81 7 698.66 7C705.51 7 705.51 1 712.36 1C719.21 1 719.21 7 726.06 7C732.91 7 732.91 1 739.76 1C746.61 1 746.61 7 753.46 7C760.31 7 760.31 1 767.16 1C774.01 1 774.01 7 780.86 7C787.71 7 787.71 1 794.56 1C801.41 1 801.41 7 808.26 7C815.11 7 815.11 1 821.96 1C828.81 1 828.81 7 835.66 7C842.51 7 842.51 1 849.36 1C856.21 1 856.21 7 863.06 7C869.91 7 869.91 1 876.76 1C883.61 1 883.61 7 890.46 7C897.31 7 897.31 1 904.16 1C911.01 1 911.01 7 917.86 7C924.71 7 924.71 1 931.56 1C938.41 1 938.41 7 945.26 7C952.11 7 952.11 1 958.96 1C965.81 1 965.81 7 972.66 7C979.51 7 979.51 1 986.36 1C993.21 1 993.21 7 1000.06 7C1006.91 7 1006.91 1 1013.76 1C1020.61 1 1020.61 7 1027.46 7C1034.31 7 1034.31 1 1041.16 1C1048.01 1 1048.01 7 1054.86 7C1061.71 7 1061.71 1 1068.56 1C1075.41 1 1075.41 7 1082.26 7C1089.11 7 1089.11 1 1095.96 1C1102.81 1 1102.81 7 1109.67 7C1116.53 7 1116.52 1 1123.37 1C1130.22 1 1130.22 7 1137.07 7C1143.92 7 1143.92 1 1150.77 1C1157.62 1 1157.62 7 1164.47 7C1171.32 7 1171.32 1 1178.17 1C1185.02 1 1185.02 7 1191.88 7C1198.74 7 1198.73 1 1205.58 1C1212.43 1 1212.44 7 1219.29 7C1226.14 7 1226.15 1 1233 1" stroke="black" stroke-miterlimit="10"/>
+              </svg>
+            {% elsif wave_type == 'wave_two' %}  
+              <svg class="text-block-line-{{ section.id }} text-block-line-two-{{ section.id }}" width="1233" viewBox="0 0 1233 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 1C8.11 1 8.11 17 16.22 17C24.33 17 24.33 1 32.44 1C40.55 1 40.55 17 48.66 17C56.77 17 56.77 1 64.88 1C72.99 1 72.99 17 81.1 17C89.21 17 89.22 1 97.33 1C105.44 1 105.44 17 113.55 17C121.66 17 121.66 1 129.77 1C137.88 1 137.88 17 145.99 17C154.1 17 154.1 1 162.22 1C170.34 1 170.33 17 178.44 17C186.55 17 186.55 1 194.66 1C202.77 1 202.77 17 210.88 17C218.99 17 218.99 1 227.11 1C235.23 1 235.22 17 243.33 17C251.44 17 251.44 1 259.55 1C267.66 1 267.66 17 275.77 17C283.88 17 283.88 1 291.99 1C300.1 1 300.1 17 308.21 17C316.32 17 316.33 1 324.44 1C332.55 1 332.55 17 340.66 17C348.77 17 348.77 1 356.89 1C365.01 1 365 17 373.11 17C381.22 17 381.22 1 389.33 1C397.44 1 397.44 17 405.55 17C413.66 17 413.67 1 421.78 1C429.89 1 429.89 17 438 17C446.11 17 446.11 1 454.22 1C462.33 1 462.33 17 470.44 17C478.55 17 478.56 1 486.67 1C494.78 1 494.78 17 502.89 17C511 17 511 1 519.11 1C527.22 1 527.22 17 535.33 17C543.44 17 543.44 1 551.55 1C559.66 1 559.66 17 567.77 17C575.88 17 575.88 1 583.99 1C592.1 1 592.1 17 600.21 17C608.32 17 608.32 1 616.43 1C624.54 1 624.54 17 632.65 17C640.76 17 640.76 1 648.87 1C656.98 1 656.98 17 665.09 17C673.2 17 673.2 1 681.31 1C689.42 1 689.42 17 697.53 17C705.64 17 705.64 1 713.75 1C721.86 1 721.86 17 729.97 17C738.08 17 738.08 1 746.19 1C754.3 1 754.3 17 762.42 17C770.54 17 770.53 1 778.64 1C786.75 1 786.75 17 794.87 17C802.99 17 802.98 1 811.09 1C819.2 1 819.2 17 827.31 17C835.42 17 835.42 1 843.53 1C851.64 1 851.64 17 859.75 17C867.86 17 867.86 1 875.97 1C884.08 1 884.08 17 892.2 17C900.32 17 900.31 1 908.43 1C916.55 1 916.54 17 924.65 17C932.76 17 932.76 1 940.87 1C948.98 1 948.98 17 957.1 17C965.22 17 965.21 1 973.33 1C981.45 1 981.44 17 989.56 17C997.68 17 997.67 1 1005.79 1C1013.91 1 1013.9 17 1022.02 17C1030.14 17 1030.13 1 1038.24 1C1046.35 1 1046.35 17 1054.46 17C1062.57 17 1062.57 1 1070.69 1C1078.81 1 1078.8 17 1086.92 17C1095.04 17 1095.03 1 1103.15 1C1111.27 1 1111.26 17 1119.38 17C1127.5 17 1127.49 1 1135.61 1C1143.73 1 1143.72 17 1151.84 17C1159.96 17 1159.95 1 1168.06 1C1176.17 1 1176.18 17 1184.29 17C1192.4 17 1192.41 1 1200.52 1C1208.63 1 1208.64 17 1216.75 17C1224.86 17 1224.87 1 1232.98 1" stroke="black" stroke-miterlimit="10"/>
+              </svg>
+            {% endif %}            
+          {% endfor %}         
+        </div>        
+        <div class="text-block-content-{{ section.id }}">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'subtext' %}
+                {% if block.settings.subtext %}
+                  <div class="text-block-subtext-{{ block.id }}">{{ block.settings.subtext }}</div>
+                {% endif %}  
+              {% when 'text' %}
+                {%  if block.settings.text != blank %} 
+                  <div class="text-block-text-{{ block.id }}">{{ block.settings.text }}</div>
+                {% endif %}                
+              {% when 'button' %}
+                {% if block.settings.button != blank %}
+                  <div class="text-block-button-wrapper-{{ section.id }}">
+                    <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="text-block-button-{{ block.id }}"> 
+                      <p class="text-block-button-inner-{{ block.id }}">
+                      {{ block.settings.button }}
+                      {% if block.settings.button_style == "non_outline_arrow" or block.settings.button_style == "outline_arrow" %}
+                          <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                            <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                          </svg>
+                        {% endif %}
+                      </p>
+                    </{% if block.settings.url != blank %}a{% else %}div{% endif %}>   
+                  </div>                  
+                {% endif %}
+            {% endcase %}
+          {% endfor %}          
+        </div>
+        <div class="text-block-animation-line-{{ section.id }}">
+          {% for item in (1..7) %}
+            {% if wave_type == 'zig_zag' %}
+              <svg class="text-block-line-{{ section.id }} text-block-line-zig-zag-{{ section.id }}" viewBox="0 0 1324 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M886 12.3121L875.943 0L865.887 12.3121L855.83 0L845.689 12.3121L835.632 0L825.576 12.3121L815.519 0L805.462 12.3121L795.405 0L785.349 12.3121L775.208 0L765.151 12.3121L755.095 0L745.038 12.3121L734.981 0L724.924 12.3121L714.868 0L704.811 12.3121L694.67 0L684.613 12.3121L674.557 0L664.5 12.3121L654.443 0L644.387 12.3121L634.33 0L624.189 12.3121L614.132 0L604.076 12.3121L594.019 0L583.962 12.3121L573.905 0L563.849 12.3121L553.708 0L543.651 12.3121L533.595 0L523.538 12.3121L513.481 0L503.424 12.3121L493.368 0L483.311 12.3121L473.17 0L463.114 12.3121L453.057 0L443 12.3121V14L453.057 1.68794L463.114 14L473.17 1.68794L483.311 14L493.368 1.68794L503.424 14L513.481 1.68794L523.538 14L533.595 1.68794L543.651 14L553.708 1.68794L563.849 14L573.905 1.68794L583.962 14L594.019 1.68794L604.076 14L614.132 1.68794L624.189 14L634.33 1.68794L644.387 14L654.443 1.68794L664.5 14L674.557 1.68794L684.613 14L694.67 1.68794L704.811 14L714.868 1.68794L724.924 14L734.981 1.68794L745.038 14L755.095 1.68794L765.151 14L775.208 1.68794L785.349 14L795.405 1.68794L805.462 14L815.519 1.68794L825.576 14L835.632 1.68794L845.689 14L855.83 1.68794L865.887 14L875.943 1.68794L886 14V12.3121Z" fill="#fac1ba"></path>
+                <path d="M443 12.3121L432.943 0L422.887 12.3121L412.83 0L402.689 12.3121L392.632 0L382.576 12.3121L372.519 0L362.462 12.3121L352.405 0L342.349 12.3121L332.208 0L322.151 12.3121L312.095 0L302.038 12.3121L291.981 0L281.924 12.3121L271.868 0L261.811 12.3121L251.67 0L241.614 12.3121L231.557 0L221.5 12.3121L211.443 0L201.386 12.3121L191.33 0L181.189 12.3121L171.132 0L161.076 12.3121L151.019 0L140.962 12.3121L130.905 0L120.849 12.3121L110.708 0L100.651 12.3121L90.5946 0L80.5378 12.3121L70.4811 0L60.4243 12.3121L50.3676 0L40.3108 12.3121L30.1703 0L20.1135 12.3121L10.0568 0L0 12.3121V14L10.0568 1.68794L20.1135 14L30.1703 1.68794L40.3108 14L50.3676 1.68794L60.4243 14L70.4811 1.68794L80.5378 14L90.5946 1.68794L100.651 14L110.708 1.68794L120.849 14L130.905 1.68794L140.962 14L151.019 1.68794L161.076 14L171.132 1.68794L181.189 14L191.33 1.68794L201.386 14L211.443 1.68794L221.5 14L231.557 1.68794L241.614 14L251.67 1.68794L261.811 14L271.868 1.68794L281.924 14L291.981 1.68794L302.038 14L312.095 1.68794L322.151 14L332.208 1.68794L342.349 14L352.405 1.68794L362.462 14L372.519 1.68794L382.576 14L392.632 1.68794L402.689 14L412.83 1.68794L422.887 14L432.943 1.68794L443 14V12.3121Z" fill="#fac1ba"></path>
+                <path d="M1324 12.3121L1314.06 0L1304.11 12.3121L1294.17 0L1284.14 12.3121L1274.2 0L1264.26 12.3121L1254.31 0L1244.37 12.3121L1234.43 0L1224.48 12.3121L1214.46 0L1204.52 12.3121L1194.57 0L1184.63 12.3121L1174.69 0L1164.74 12.3121L1154.8 0L1144.86 12.3121L1134.83 0L1124.89 12.3121L1114.94 0L1105 12.3121L1095.06 0L1085.11 12.3121L1075.17 0L1065.14 12.3121L1055.2 0L1045.26 12.3121L1035.31 0L1025.37 12.3121L1015.43 0L1005.48 12.3121L995.459 0L985.515 12.3121L975.572 0L965.629 12.3121L955.686 0L945.742 12.3121L935.799 0L925.856 12.3121L915.83 0L905.886 12.3121L895.943 0L886 12.3121V14L895.943 1.68794L905.886 14L915.83 1.68794L925.856 14L935.799 1.68794L945.742 14L955.686 1.68794L965.629 14L975.572 1.68794L985.515 14L995.459 1.68794L1005.48 14L1015.43 1.68794L1025.37 14L1035.31 1.68794L1045.26 14L1055.2 1.68794L1065.14 14L1075.17 1.68794L1085.11 14L1095.06 1.68794L1105 14L1114.94 1.68794L1124.89 14L1134.83 1.68794L1144.86 14L1154.8 1.68794L1164.74 14L1174.69 1.68794L1184.63 14L1194.57 1.68794L1204.52 14L1214.46 1.68794L1224.48 14L1234.43 1.68794L1244.37 14L1254.31 1.68794L1264.26 14L1274.2 1.68794L1284.14 14L1294.17 1.68794L1304.11 14L1314.06 1.68794L1324 14V12.3121Z" fill="#fac1ba"></path>
+              </svg>
+            {% elsif wave_type == 'wave_one' %}
+              <svg class="text-block-line-{{ section.id }} text-block-line-one-{{ section.id }}" viewBox="0 0 1233 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 1C6.85 1 6.85 7 13.7 7C20.55 7 20.55 1 27.4 1C34.25 1 34.25 7 41.1 7C47.95 7 47.95 1 54.8 1C61.65 1 61.65 7 68.5 7C75.35 7 75.35 1 82.2 1C89.05 1 89.05 7 95.9 7C102.75 7 102.75 1 109.6 1C116.45 1 116.45 7 123.3 7C130.15 7 130.15 1 137 1C143.85 1 143.85 7 150.7 7C157.55 7 157.55 1 164.4 1C171.25 1 171.25 7 178.1 7C184.95 7 184.95 1 191.8 1C198.65 1 198.65 7 205.5 7C212.35 7 212.35 1 219.2 1C226.05 1 226.05 7 232.9 7C239.75 7 239.75 1 246.6 1C253.45 1 253.45 7 260.3 7C267.15 7 267.15 1 274 1C280.85 1 280.85 7 287.7 7C294.55 7 294.55 1 301.4 1C308.25 1 308.25 7 315.1 7C321.95 7 321.95 1 328.8 1C335.65 1 335.65 7 342.5 7C349.35 7 349.35 1 356.2 1C363.05 1 363.05 7 369.9 7C376.75 7 376.75 1 383.6 1C390.45 1 390.45 7 397.3 7C404.15 7 404.15 1 411 1C417.85 1 417.85 7 424.7 7C431.55 7 431.55 1 438.4 1C445.25 1 445.25 7 452.1 7C458.95 7 458.95 1 465.8 1C472.65 1 472.65 7 479.49 7C486.33 7 486.34 1 493.18 1C500.02 1 500.03 7 506.87 7C513.71 7 513.72 1 520.57 1C527.42 1 527.42 7 534.27 7C541.12 7 541.12 1 547.97 1C554.82 1 554.82 7 561.66 7C568.5 7 568.51 1 575.36 1C582.21 1 582.21 7 589.06 7C595.91 7 595.91 1 602.76 1C609.61 1 609.61 7 616.46 7C623.31 7 623.31 1 630.16 1C637.01 1 637.01 7 643.86 7C650.71 7 650.71 1 657.56 1C664.41 1 664.41 7 671.26 7C678.11 7 678.11 1 684.96 1C691.81 1 691.81 7 698.66 7C705.51 7 705.51 1 712.36 1C719.21 1 719.21 7 726.06 7C732.91 7 732.91 1 739.76 1C746.61 1 746.61 7 753.46 7C760.31 7 760.31 1 767.16 1C774.01 1 774.01 7 780.86 7C787.71 7 787.71 1 794.56 1C801.41 1 801.41 7 808.26 7C815.11 7 815.11 1 821.96 1C828.81 1 828.81 7 835.66 7C842.51 7 842.51 1 849.36 1C856.21 1 856.21 7 863.06 7C869.91 7 869.91 1 876.76 1C883.61 1 883.61 7 890.46 7C897.31 7 897.31 1 904.16 1C911.01 1 911.01 7 917.86 7C924.71 7 924.71 1 931.56 1C938.41 1 938.41 7 945.26 7C952.11 7 952.11 1 958.96 1C965.81 1 965.81 7 972.66 7C979.51 7 979.51 1 986.36 1C993.21 1 993.21 7 1000.06 7C1006.91 7 1006.91 1 1013.76 1C1020.61 1 1020.61 7 1027.46 7C1034.31 7 1034.31 1 1041.16 1C1048.01 1 1048.01 7 1054.86 7C1061.71 7 1061.71 1 1068.56 1C1075.41 1 1075.41 7 1082.26 7C1089.11 7 1089.11 1 1095.96 1C1102.81 1 1102.81 7 1109.67 7C1116.53 7 1116.52 1 1123.37 1C1130.22 1 1130.22 7 1137.07 7C1143.92 7 1143.92 1 1150.77 1C1157.62 1 1157.62 7 1164.47 7C1171.32 7 1171.32 1 1178.17 1C1185.02 1 1185.02 7 1191.88 7C1198.74 7 1198.73 1 1205.58 1C1212.43 1 1212.44 7 1219.29 7C1226.14 7 1226.15 1 1233 1" stroke="black" stroke-miterlimit="10"/>
+              </svg>
+            {% elsif wave_type == 'wave_two' %}  
+              <svg class="text-block-line-{{ section.id }} text-block-line-two-{{ section.id }}" width="1233" viewBox="0 0 1233 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 1C8.11 1 8.11 17 16.22 17C24.33 17 24.33 1 32.44 1C40.55 1 40.55 17 48.66 17C56.77 17 56.77 1 64.88 1C72.99 1 72.99 17 81.1 17C89.21 17 89.22 1 97.33 1C105.44 1 105.44 17 113.55 17C121.66 17 121.66 1 129.77 1C137.88 1 137.88 17 145.99 17C154.1 17 154.1 1 162.22 1C170.34 1 170.33 17 178.44 17C186.55 17 186.55 1 194.66 1C202.77 1 202.77 17 210.88 17C218.99 17 218.99 1 227.11 1C235.23 1 235.22 17 243.33 17C251.44 17 251.44 1 259.55 1C267.66 1 267.66 17 275.77 17C283.88 17 283.88 1 291.99 1C300.1 1 300.1 17 308.21 17C316.32 17 316.33 1 324.44 1C332.55 1 332.55 17 340.66 17C348.77 17 348.77 1 356.89 1C365.01 1 365 17 373.11 17C381.22 17 381.22 1 389.33 1C397.44 1 397.44 17 405.55 17C413.66 17 413.67 1 421.78 1C429.89 1 429.89 17 438 17C446.11 17 446.11 1 454.22 1C462.33 1 462.33 17 470.44 17C478.55 17 478.56 1 486.67 1C494.78 1 494.78 17 502.89 17C511 17 511 1 519.11 1C527.22 1 527.22 17 535.33 17C543.44 17 543.44 1 551.55 1C559.66 1 559.66 17 567.77 17C575.88 17 575.88 1 583.99 1C592.1 1 592.1 17 600.21 17C608.32 17 608.32 1 616.43 1C624.54 1 624.54 17 632.65 17C640.76 17 640.76 1 648.87 1C656.98 1 656.98 17 665.09 17C673.2 17 673.2 1 681.31 1C689.42 1 689.42 17 697.53 17C705.64 17 705.64 1 713.75 1C721.86 1 721.86 17 729.97 17C738.08 17 738.08 1 746.19 1C754.3 1 754.3 17 762.42 17C770.54 17 770.53 1 778.64 1C786.75 1 786.75 17 794.87 17C802.99 17 802.98 1 811.09 1C819.2 1 819.2 17 827.31 17C835.42 17 835.42 1 843.53 1C851.64 1 851.64 17 859.75 17C867.86 17 867.86 1 875.97 1C884.08 1 884.08 17 892.2 17C900.32 17 900.31 1 908.43 1C916.55 1 916.54 17 924.65 17C932.76 17 932.76 1 940.87 1C948.98 1 948.98 17 957.1 17C965.22 17 965.21 1 973.33 1C981.45 1 981.44 17 989.56 17C997.68 17 997.67 1 1005.79 1C1013.91 1 1013.9 17 1022.02 17C1030.14 17 1030.13 1 1038.24 1C1046.35 1 1046.35 17 1054.46 17C1062.57 17 1062.57 1 1070.69 1C1078.81 1 1078.8 17 1086.92 17C1095.04 17 1095.03 1 1103.15 1C1111.27 1 1111.26 17 1119.38 17C1127.5 17 1127.49 1 1135.61 1C1143.73 1 1143.72 17 1151.84 17C1159.96 17 1159.95 1 1168.06 1C1176.17 1 1176.18 17 1184.29 17C1192.4 17 1192.41 1 1200.52 1C1208.63 1 1208.64 17 1216.75 17C1224.86 17 1224.87 1 1232.98 1" stroke="black" stroke-miterlimit="10"/>
+              </svg>
+            {% endif %}  
+          {% endfor %}         
+        </div> 
+      </div>
+    </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "SS - Text block #3",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Scrolling settings",
+        "info": "The theme editor may display incorrect scrolling speed; please verify on the live site."
+      },
+      {
+        "type": "select",
+        "id": "wave_type",
+        "label": "Type",
+        "default": "zig_zag",
+        "options": [
+          {
+            "label": "Zig zag",
+            "value": "zig_zag"
+          },
+          {
+            "label": "Wave one",
+            "value": "wave_one"
+          },
+          {
+            "label": "Wave two",
+            "value": "wave_two"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "animation_speed",
+        "min": 10,
+        "max": 150,
+        "step": 2,
+        "label": "Speed",
+        "info": "⚡ <----------------> 🐌",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "animation_speed_mobile",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "label": "Speed mobile",
+        "info": "⚡ <----------------> 🐌",
+        "default": 20
+      },
+      {
+        "type": "checkbox",
+        "id": "reverse_direction",
+        "label": "Reverse scrolling direction"
+      },
+      {
+        "type": "header",
+        "content": "Layout settings"
+      },
+      {
+        "type": "range",
+        "id": "body_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "body_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical - mobile",
+        "default": 24
+      }, 
+      {
+        "type": "text_alignment",
+        "id": "body_align",
+        "label": "Alignment",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "body_align_mobile",
+        "label": "Alignment - mobile",
+        "default": "center"
+      },         
+      {
+        "type": "header",
+        "content": "Section colors"
+      },
+      {
+        "type": "color",
+        "label": "Line color",
+        "id": "line_color",
+        "default": "#fac1ba"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },      
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 56
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 56
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 2
+      },
+      {
+        "type": "header",
+        "content": "Section settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Section content width",
+        "default": 900
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section roundness",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "subtext",
+        "limit": 1,
+        "name": "Subtext",
+        "settings": [ 
+          {
+            "type": "richtext",            
+            "id": "subtext",
+            "label": "Subtext",
+            "default": "<p>Add a paragraph or two that supplies information</p>"            
+          },          
+          {
+            "type": "checkbox",
+            "id": "sub_text_custom",
+            "label": "Use custom font",
+            "default": false
+          },
+          {
+            "type": "font_picker",
+            "id": "sub_text_font",
+            "label": "Font family",
+            "default": "josefin_sans_n4"
+          },
+          {
+            "type": "range",
+            "id": "sub_text_size",
+            "min": 0,
+            "max": 72,
+            "step": 2,
+            "unit": "px",
+            "label": "Font size",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "sub_text_size_mobile",
+            "min": 0,
+            "max": 72,
+            "step": 2,
+            "unit": "px",
+            "label": "Font size - mobile",
+            "default": 14
+          },
+          {
+            "type": "range",
+            "id": "sub_text_height",
+            "min": 50,
+            "max": 200,
+            "step": 10,
+            "unit": "%",
+            "label": "Line height",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "sub_text_mt",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "sub_text_mt_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top - mobile",
+            "default": 0
+          },
+          {
+            "type": "color",
+            "label": "Color",
+            "id": "sub_text_color",
+            "default": "#000000"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "limit": 1,
+        "name": "Text",
+        "settings": [ 
+          {
+            "type": "richtext",            
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Text Block #3</p>"            
+          },          
+          {
+            "type": "checkbox",
+            "id": "text_custom",
+            "label": "Use custom font",
+            "default": false
+          },
+          {
+            "type": "font_picker",
+            "id": "text_font",
+            "label": "Font family",
+            "default": "josefin_sans_n4"
+          },
+          {
+            "type": "range",
+            "id": "text_size",
+            "min": 0,
+            "max": 72,
+            "step": 2,
+            "unit": "px",
+            "label": "Font size",
+            "default": 32
+          },
+          {
+            "type": "range",
+            "id": "text_size_mobile",
+            "min": 0,
+            "max": 72,
+            "step": 2,
+            "unit": "px",
+            "label": "Font size - mobile",
+            "default": 24
+          },
+          {
+            "type": "range",
+            "id": "text_height",
+            "min": 50,
+            "max": 200,
+            "step": 10,
+            "unit": "%",
+            "label": "Line height",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "text_mt",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "text_mt_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top - mobile",
+            "default": 0
+          },
+          {
+            "type": "color",
+            "label": "Color",
+            "id": "text_color",
+            "default": "#000000"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "limit": 1,
+        "name": "Button",
+        "settings": [ 
+          {
+            "type": "text",
+            "id": "button",
+            "label": "Button label",
+            "default": "LEARN MORE"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL"
+          },
+          {
+            "type": "checkbox",
+            "id": "button_custom",
+            "label": "Use custom font",
+            "default": false
+          },
+          {
+            "type": "font_picker",
+            "id": "button_font",
+            "label": "Font family",
+            "default": "josefin_sans_n4"
+          },
+          {
+            "type": "range",
+            "id": "button_size",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 13
+          },
+          {
+            "type": "range",
+            "id": "button_size_mobile",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size - mobile",
+            "default": 13
+          },
+          {
+            "type": "range",
+            "id": "button_height",
+            "min": 50,
+            "max": 200,
+            "step": 10,
+            "unit": "%",
+            "label": "Line height",
+            "default": 100
+          },
+          {
+            "type": "range",
+            "id": "button_padding_horizontal",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding horizontal",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "button_padding_horizontal_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding horizontal - mobile",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "button_padding_vertical",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding vertical",
+            "default": 12
+          },
+          {
+            "type": "range",
+            "id": "button_padding_vertical_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding vertical - mobile",
+            "default": 12
+          },      
+          {
+            "type": "range",
+            "id": "button_radius",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Roundness",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "button_border_thickness",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "unit": "px",
+            "label": "Border thickness",
+            "default": 1
+          },
+          {
+            "type": "range",
+            "id": "button_mt",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "button_mt_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin top - mobile",
+            "default": 12
+          },
+          {
+            "type": "select",
+            "id": "button_style",
+            "label": "Button style",
+            "default": "outline",
+            "options": [
+              {
+                "label": "Link",
+                "value": "link"
+              },
+              {
+                "label": "Non-outline",
+                "value": "non_outline"
+              },
+              {
+                "label": "Non-outline & arrow",
+                "value": "non_outline_arrow"
+              },
+              {
+                "label": "Outline",
+                "value": "outline"
+              },
+              {
+                "label": "Outline & arrow",
+                "value": "outline_arrow"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Button colors"
+          },
+          {
+            "type": "color",
+            "label": "Text",
+            "id": "button_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Hover text",
+            "id": "button_hover_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Background",
+            "id": "button_bg_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Background hover",
+            "id": "button_bg_hover_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Button border",
+            "id": "button_border_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Border hover",
+            "id": "button_border_hover_color",
+            "default": "#000000"
+          },
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Text block #3",
+        "blocks": [
+          {
+            "type": "text"
+          },
+          {
+            "type": "subtext"
+          },
+          {
+            "type": "button"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

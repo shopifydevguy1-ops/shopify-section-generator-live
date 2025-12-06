@@ -1,0 +1,1085 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign banner_height = section.settings.banner_height
+  assign banner_fixed_height = section.settings.banner_fixed_height
+  assign banner_fixed_height_mobile = section.settings.banner_fixed_height_mobile
+  assign banner_padding_vertical = section.settings.banner_padding_vertical
+  assign banner_padding_vertical_mobile = section.settings.banner_padding_vertical_mobile
+  assign banner_padding_horizontal = section.settings.banner_padding_horizontal
+  assign banner_padding_horizontal_mobile = section.settings.banner_padding_horizontal_mobile
+  assign banner_radius = section.settings.banner_radius
+  assign banner_border_thickness = section.settings.banner_border_thickness
+  assign banner_overlay = section.settings.banner_overlay
+  assign banner_bg_color = section.settings.banner_bg_color
+  assign banner_border_color = section.settings.banner_border_color
+  
+  assign url = section.settings.url
+
+  assign bg_type = section.settings.bg_type
+  assign image = section.settings.image
+  assign video = section.settings.video
+  assign video_url = section.settings.video_url
+  
+  assign media_row = section.settings.media_row
+  assign media_width = section.settings.media_width
+  assign media_height = section.settings.media_height
+  assign media_mt = section.settings.media_mt
+
+  assign align_content_mobile = section.settings.align_content_mobile
+  assign align_content = section.settings.align_content
+
+  assign title = section.settings.title
+  assign title_color = section.settings.title_color
+  assign title_custom = section.settings.title_custom
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_font = section.settings.title_font
+  assign title_height = section.settings.title_height
+  assign title_mt = section.settings.title_mt
+
+  assign text = section.settings.text
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_height = section.settings.text_height
+
+  assign arrow_color = section.settings.arrow_color
+  assign arrow_size_mobile = section.settings.arrow_size_mobile
+  assign arrow_size = section.settings.arrow_size
+
+  assign action_size_mobile = section.settings.action_size_mobile
+  assign action_size = section.settings.action_size
+  assign action_bg_color = section.settings.action_bg_color
+  assign action_arrow_color = section.settings.action_arrow_color
+-%}
+
+{%- style -%}
+
+  {{  title_font | font_face: font_display: 'swap' }}
+  {{  text_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .video-banner-{{ section.id }} {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: {{ banner_padding_vertical_mobile }}px {{ banner_padding_horizontal_mobile }}px;
+    border-radius: {{ banner_radius }}px;
+    border: {{ banner_border_thickness }}px solid {{ banner_border_color }};
+    background-color: {{ banner_bg_color }};
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .video-banner-media-{{ section.id }} {
+    border-radius: {{ banner_radius }}px;
+  }
+
+  .video-banner-media-{{ section.id }}:after {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, {{ banner_overlay }});
+    border-radius: {{ banner_radius }}px;
+  }
+
+  .video-banner-media-{{ section.id }} img,
+  .video-banner-media-{{ section.id }} > svg,
+  .video-banner-media-{{ section.id }} iframe,
+  .video-banner-media-{{ section.id }} video {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    border: 0px;
+    border-radius: {{ banner_radius }}px;
+  }
+
+  .video-banner-media-{{ section.id }} > svg path {
+    fill: white;
+  }
+
+  .video-banner-content-{{ section.id }} {
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 20px;
+    transform: translateX(-{{ banner_padding_horizontal_mobile | plus: arrow_size_mobile }}px);
+    transition: all 0.35s ease 0s;
+    align-items: {{ align_content_mobile }};
+  }
+
+  .video-banner-{{ section.id }}:hover .video-banner-content-{{ section.id }} {
+    transform: translateX(0px);
+    transition: all 0.35s ease 0s;
+  }
+
+  .video-banner-content-{{ section.id }} svg {
+    flex: 0 0 {{ arrow_size_mobile }}px;
+    height: {{ arrow_size_mobile }}px;
+    transform: rotate(180deg);
+    opacity: 0;
+    transition: all 0.35s ease 0s;
+  }
+
+  .video-banner-{{ section.id }}:hover .video-banner-content-{{ section.id }} svg {
+    opacity: 1;
+    transition: all 0.35s ease 0s;
+  }
+
+  .video-banner-heading-{{ section.id }} {
+    margin: 0px;
+    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    font-size: {{ title_size_mobile }}px;
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .video-banner-subheading-{{ section.id }} {
+    margin: 0px;
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .video-banner-action-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    border-radius: 50%;
+    width: {{ action_size_mobile }}px;
+    height: {{ action_size_mobile }}px;
+    bottom: {{ banner_padding_vertical_mobile | plus: 15 }}px;
+    right: {{ banner_padding_horizontal_mobile | plus: 15 }}px;
+    background-color: {{ action_bg_color }};
+  }
+
+  .video-banner-action-{{ section.id }} svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .video-banner-action-{{ section.id }}.active .video-banner-pause-{{ section.id }},
+  .video-banner-action-{{ section.id }} .video-banner-play-{{ section.id }} {
+    display: none;
+  }
+
+  .video-banner-action-{{ section.id }}.active .video-banner-play-{{ section.id }} {
+    display: block;
+  }
+
+  .video-banner-action-{{ section.id }} svg path {
+    fill: {{ action_arrow_color }};
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .video-banner-{{ section.id }} {
+      flex-direction: row;
+      padding: {{ banner_padding_vertical }}px {{ banner_padding_horizontal }}px;
+    }
+
+    .video-banner-content-{{ section.id }} {
+      transform: translateX(-{{ banner_padding_horizontal | plus: arrow_size }}px);
+      align-items: {{ align_content }};
+    }
+
+    .video-banner-content-{{ section.id }} svg {
+      flex: 0 0 {{ arrow_size }}px;
+      height: {{ arrow_size }}px;
+      margin-bottom:10px;
+    }
+
+    .video-banner-heading-{{ section.id }} {
+      margin-top: {{ title_mt }}px;
+      font-size: {{ title_size }}px;
+    }
+
+    .video-banner-subheading-{{ section.id }} {
+      font-size: {{ text_size }}px;
+    }
+
+    .video-banner-action-{{ section.id }} {
+      bottom: {{ banner_padding_vertical | plus: 10 }}px;
+      right: {{ banner_padding_horizontal | plus: 10  }}px;
+      width: {{ action_size }}px;
+      height: {{ action_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if title_custom %}
+  <style>
+    .video-banner-heading-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+    .video-banner-subheading-{{ section.id }} {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if banner_height == "adapt_first" %}
+  <style>
+    .video-banner-{{ section.id }} {
+      height: 100vh;
+    }
+  </style>
+  
+{% else %}
+  <style>
+    .video-banner-{{ section.id }} {
+      height: {{ banner_fixed_height_mobile }}px;
+    }
+  
+    @media(min-width: 1024px) {
+      .video-banner-{{ section.id }} {
+        height: {{ banner_fixed_height }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if media_row == false or bg_type == "background"  %}
+  <style>
+    .video-banner-{{ section.id }} {
+      display: flex;
+      justify-content: end;
+      flex-direction: column;
+    }
+   .video-banner-{{ section.id }} .video-banner-media-{{ section.id }} {
+      position: absolute;
+      left: -0.5%;
+      right: 0;
+      top: -0.5%;
+      bottom: 0;
+      width: 101%;
+      height: 101%;
+    }
+    .video-banner-{{ section.id }} .video-banner-action-{{ section.id }} {
+      bottom: {{ banner_padding_vertical_mobile }}px;
+      right: {{ banner_padding_horizontal_mobile }} px;
+    }
+    @media(min-width: 1024px) {
+      .video-banner-{{ section.id }} .video-banner-action-{{ section.id }} {
+        bottom: {{ banner_padding_vertical | plus: 4 }}px;
+        right: {{ banner_padding_horizontal | plus: 10 }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if media_row and bg_type != "background" %}
+   <style>
+    .video-banner-media-{{ section.id }} {
+      height: 100%;
+      max-height: {{ media_height }}px;
+      margin-top: {{ media_mt }}px;
+    }
+    @media(min-width: 1024px) {
+      .video-banner-media-{{ section.id }} {
+        max-height: 100%;
+        margin-top: 0px;
+        flex: 1 0 {{ media_width}}%;
+      }
+      .video-banner-content-{{ section.id }} {
+        flex: 1 0 {{ 100 | minus: media_width}}%;
+      }
+    }
+   </style>
+{% endif %}
+
+<div class="section-{{ section.id }} video-banner-wrapper-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      
+      <{% if url != blank %}a href="{{ url }}"{% else %}div{% endif %} class="video-banner-{{ section.id }}">
+        <div class="video-banner-content-{{ section.id }}">
+          <svg width="48" height="48" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="{{ arrow_color }}" fill-rule="evenodd" clip-rule="evenodd" d="M4,12l8,8,1.41-1.41L7.83,13H20V11H7.83l5.59-5.59L12,4Z"></path></svg>
+          <div class="video-banner-text-{{ section.id }}">
+            {% if text != blank %}
+              <p class="video-banner-subheading-{{ section.id }}">{{ text }}</p>
+            {% endif %}
+            {% if title != blank %}
+              <p class="video-banner-heading-{{ section.id }}">{{ title }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="video-banner-media-{{ section.id }}">
+          {% if bg_type == "image" %}
+            {% if image != blank %}
+              <img src="{{ image | image_url }}" alt="{{ image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+            {% else %}
+              {{ 'image' | placeholder_svg_tag }}
+            {% endif %}
+          {% elsif bg_type == "video" %}
+            {% assign video_id =  video.id | default: video_url.id %}
+            {% assign loop = '&loop=1&playlist=' | append: video_id %} 
+            {%- if video == null and video_url != null -%}
+                
+                {%- if video_url.type == 'youtube' -%}
+                  <iframe
+                    data-src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=1&mute=1{{ loop }}"
+                    class="js-youtube lazy"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                    title="Fixed Video"
+                  ></iframe>
+                {%- else -%}
+                  <iframe
+                    data-src="https://player.vimeo.com/video/{{ video_id }}?enablejsapi=1&autoplay=1&mute=1{{ loop }}"
+                    class="js-vimeo lazy"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                    title="Fixed Video"
+                  ></iframe>
+                {% endif %}
+              
+              {% else %}
+                  
+                <video
+                    data-src="{{ video.sources[1].url }}"
+                    autoplay
+                    muted
+                    playsinline
+                    preload="none"
+                    loop
+                    class="lazy"
+                  ></video>
+              {% endif %}
+            {% endif %}
+            {% if bg_type == "video" %}
+              <div class="video-banner-action-{{ section.id }}">
+                <svg class="video-banner-pause-{{ section.id }}" width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><title>Pause</title><path d="M0 0H4V14H0V0Z" fill="currentColor"></path><path d="M8 0H12V14H8V0Z" fill="currentColor"></path></svg>
+                <svg class="video-banner-play-{{ section.id }}" width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><title>Play</title><path d="M12 7L0 14L6.1196e-07 0L12 7Z" fill="currentColor"></path></svg>
+              </div>
+            {% endif %}
+          </div>
+      </{% if url != blank %}a{% else %}div{% endif %}>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>   
+
+<script>
+  function initVideoBanner2() {
+    
+    var lazyLoadInstance = new LazyLoad();
+
+    window.addEventListener(
+      "LazyLoad::Initialized",
+      function (event) {
+        window.lazyLoadInstance = event.detail.instance;
+      },
+      false
+    );
+    
+    let items = document.querySelectorAll('.video-banner-{{ section.id }}');
+    items.forEach(el => {
+      let btn = el.querySelector('.video-banner-action-{{ section.id }}');
+      let video = el.querySelector('video');
+      let frame = el.querySelector('iframe');
+      if(btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          btn.classList.toggle('active');
+          if(btn.classList.contains('active')){
+            if(video) {
+              video.pause();
+            }
+            if(frame) {
+              frame.contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+            } 
+          } else {
+           if(video) {
+              video.play();
+            }
+            if(frame) {
+              frame.contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+            } 
+          }
+        })
+      }
+    })
+  }
+  
+  document.addEventListener('DOMContentLoaded', initVideoBanner2);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initVideoBanner2);
+     document.addEventListener('shopify:section:load', initVideoBanner2);
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "SS - Video Banner #2",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Video Banner Settings"
+      },
+      {
+        "type": "select",
+        "id": "banner_height",
+        "label": "Video Banner Height",
+        "default": "adapt_first",
+        "options": [
+          {
+            "label": "Adapt to first",
+            "value": "adapt_first"
+          },
+          {
+            "label": "Fixed Height",
+            "value": "fixed_height"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "banner_fixed_height",
+        "min": 200,
+        "max": 1000,
+        "step": 10,
+        "unit": "px",
+        "label": "Video Banner Fixed Height",
+        "default": 600
+      },
+      {
+        "type": "range",
+        "id": "banner_fixed_height_mobile",
+        "min": 100,
+        "max": 1000,
+        "step": 10,
+        "unit": "px",
+        "label": "Video Banner Fixed Height - Mobile",
+        "default": 500
+      },
+      {
+        "type": "range",
+        "id": "banner_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Padding Vertical",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "banner_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Padding Vertical - Mobile",
+        "default": 20
+      },
+      {
+         "type": "range",
+         "id": "banner_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Banner Padding Horizontal",
+         "default": 16
+      },
+      {
+         "type": "range",
+         "id": "banner_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Banner Padding Horizontal - Mobile",
+         "default": 16
+      },
+      {
+         "type": "range",
+         "id": "banner_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Banner Border Radius",
+         "default": 8
+      },
+      {
+         "type": "range",
+         "id": "banner_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Banner Border Thickness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "banner_overlay",
+         "min": 0,
+         "max": 1,
+         "step": 0.1,
+         "unit": "px",
+         "label": "Banner Overlay",
+         "default": 0.2
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "URL"
+      },
+      {
+        "type": "header",
+        "content": "Banner Background Settings"
+      },
+      {
+        "type": "select",
+        "id": "bg_type",
+        "label": "Background Type",
+        "default": "video",
+        "options": [
+          {
+            "label": "Image",
+            "value": "image"
+          },
+          {
+            "label": "Video",
+            "value": "video"
+          },
+          {
+            "label": "Background",
+            "value": "background"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "label": "Background Image",
+        "id": "image"
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Background Video from Shopify"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Background Video Embed from Url",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "info": "Shows when no Shopify-hosted video is selected."
+      },
+      {
+        "type": "checkbox",
+        "label": "Media in Row",
+        "id": "media_row",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Banner Media in Row Settings"
+      },
+      {
+         "type": "range",
+         "id": "media_width",
+         "min": 20,
+         "max": 80,
+         "step": 2,
+         "unit": "%",
+         "label": "Media Width - Desktop",
+         "default": 50
+      },
+      {
+         "type": "range",
+         "id": "media_height",
+         "min": 100,
+         "max": 400,
+         "step": 10,
+         "unit": "px",
+         "label": "Media Height - Mobile",
+         "default": 400
+      },
+      {
+        "type": "range",
+        "id": "media_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Media Margin Top - Mobile",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Banner Content Settings"
+      },
+      {
+        "type": "select",
+        "id": "align_content",
+        "label": "Vertical Align Content",
+        "default": "end",
+        "options": [
+          {
+            "label": "Top",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Bottom",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "align_content_mobile",
+        "label": "Vertical Align Content - Mobile",
+        "default": "end",
+        "options": [
+          {
+            "label": "Top",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Bottom",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Banner Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Banner Heading",
+        "default": "Video Banner"
+      },
+      {
+        "type": "checkbox",
+        "id": "title_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "title_font",
+        "label": "Banner Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Heading Size",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "title_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Heading Size - Mobile",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "title_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Banner Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "title_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Heading Margin Top",
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Banner Subheading"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Banner Subheading",
+        "default": "Place For Subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Banner Subheading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Subheading Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Subheading Size - Mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Banner Subheading Line Height",
+        "default": 130
+      },
+      {
+        "type": "header",
+        "content": "Banner Content Arrow Settings"
+      },
+      {
+        "type": "range",
+        "id": "arrow_size_mobile",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Arrow Size - Mobile",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "arrow_size",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Arrow Size",
+        "default": 48
+      },
+      {
+        "type": "header",
+        "content": "Banner Action Settings"
+      },
+      {
+        "type": "range",
+        "id": "action_size_mobile",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Action Size - Mobile",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "action_size",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Banner Action Size",
+        "default": 60
+      },
+      {
+        "type": "header",
+        "content": "Video Banner Colors"
+      },
+      {
+        "type": "color",
+        "label": "Banner Background Color",
+        "id": "banner_bg_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Banner Border Color",
+        "id": "banner_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Banner Heading Color",
+        "id": "title_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Banner Subheading Color",
+        "id": "text_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Banner Content Arrow Color",
+        "id": "arrow_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Banner Action Background Color",
+        "id": "action_bg_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Banner Action Arrow Color",
+        "id": "action_arrow_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 160
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Video Banner #2"
+      }
+    ]
+  }
+{% endschema %}

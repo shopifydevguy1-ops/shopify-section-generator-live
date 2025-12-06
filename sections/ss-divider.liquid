@@ -1,0 +1,495 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign margin_top = section.settings.margin_top
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+
+  assign fill = section.settings.fill
+
+  assign flip_vertically = section.settings.flip_vertically
+  assign flip_horizontally = section.settings.flip_horizontally
+
+  assign spacing = section.settings.spacing
+
+  assign shape_animate = section.settings.shape_animate
+  assign shape_animate_speed = section.settings.shape_animate_speed
+  assign shape_animate_speed_mobile = section.settings.shape_animate_speed_mobile
+  assign shape_direction = section.settings.shape_direction
+
+  assign animate_type = "marquee"
+    
+  if section.settings.shape == '2' or section.settings.shape == '5' or section.settings.shape == '6' or section.settings.shape == '7' or section.settings.shape == '10' or section.settings.shape == '12' or section.settings.shape == '13'
+    assign animate_type = "float"
+  endif
+  
+-%}
+
+{%- style -%}
+
+  .section-{{ section.id }} {
+    margin-top: {{ margin_top_mobile }}px;
+    margin-bottom: {{ margin_bottom_mobile }}px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .section-{{ section.id }}-settings {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .divider-shape-wrapper-{{ section.id }} {
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+  }
+
+  .divider-shape-{{ section.id }} {
+    height: 100%;
+    flex-shrink: 0;
+  }
+
+  .divider-shape-{{ section.id }} svg {
+    display: block;
+    width: 100.05%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media(min-width: 1024px) {
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% if flip_vertically %}
+  <style>
+    .divider-shape-{{ section.id }} {
+      margin-top: -1px;
+      transform: rotateX(180deg) {% if flip_horizontally %} rotateY(180deg) {% endif %};
+    }
+  </style>
+{% else %}
+  <style>
+    .divider-shape-{{ section.id }} {
+      margin-bottom: -1px;
+    }
+  </style>
+{% endif %}
+
+{% if flip_horizontally %}
+  <style>
+    .divider-shape-{{ section.id }} {
+      transform: rotateY(180deg) {% if flip_vertically %} rotateX(180deg) {% endif %};
+    }
+  </style>
+{% endif %}
+
+{% if shape_animate %}
+
+  <style>
+    .divider-shape-{{ section.id }} {
+      max-width: 100%;
+    }
+  </style>
+
+  {% if shape_direction %}
+    <style>
+      @keyframes shapeAnimation{{ section.id | replace: '-', '' }}{ 
+        from { transform: translateX(-100%) {% if flip_vertically %} rotateX(180deg) {% endif %} {% if flip_horizontally  %} rotateY(180deg) {% endif %}; }
+        to { transform: translateX(0%) {% if flip_vertically %} rotateX(180deg) {% endif %} {% if flip_horizontally  %} rotateY(180deg) {% endif %}; } 
+      }
+
+      @keyframes shapeAnimationFloat{{ section.id | replace: '-', '' }} {
+        0%, 100% {
+          translate: 0% 0%;
+        }
+        50% {
+          translate: 0% 15%;
+        }
+      }
+    </style>
+  {% else %}
+    <style>
+      @keyframes shapeAnimation{{ section.id | replace: '-', '' }} { 
+        from { transform: translateX(0) {% if flip_vertically %} rotateX(180deg) {% endif %} {% if flip_horizontally  %} rotateY(180deg) {% endif %}; }
+        to { transform: translateX(-100%) {% if flip_vertically %} rotateX(180deg) {% endif %} {% if flip_horizontally  %} rotateY(180deg) {% endif %}; } 
+      }
+
+      @keyframes shapeAnimationFloat{{ section.id | replace: '-', '' }} {
+        0%, 100% {
+          translate: 0% 0%;
+        }
+        50% {
+          translate: 0% -15%;
+        }
+      }
+    </style>
+  {% endif %}
+
+  {% if animate_type == "marquee" %}
+    <style>
+      .divider-shape-{{ section.id }} {
+        animation: shapeAnimation{{ section.id | replace: '-', '' }} {{ shape_animate_speed_mobile }}s linear infinite; 
+      }
+
+      @media(min-width: 1024px) {
+        .divider-shape-{{ section.id }} {
+          animation-duration: {{ shape_animate_speed }}s;
+        }
+      }
+    </style>
+  {% else %}
+    <style>
+      .divider-shape-{{ section.id }} {
+        animation: shapeAnimationFloat{{ section.id | replace: '-', '' }} {{ shape_animate_speed_mobile }}s linear infinite; 
+      }
+      
+      @media(min-width: 1024px) {
+        .divider-shape-{{ section.id }} {
+          animation-duration: {{ shape_animate_speed }}s;
+        }
+      }
+    </style>
+  {% endif %}
+
+{% endif %}
+{% if spacing == 'above' %}
+  <style>
+    #shopify-section-{{ section.id }} {
+        position: relative;
+    }
+    .section-{{ section.id }} {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+    }
+  </style>
+{% elsif spacing == 'below' %}
+  <style>
+    #shopify-section-{{ section.id }} {
+        position: relative;
+    }
+    .section-{{ section.id }} {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+    }
+  </style>
+{% else %}
+  <style>
+  .section-{{ section.id }} {
+    background-color:{{ background_color }};
+    background-image: {{ background_gradient }};
+  }
+  </style>
+{% endif %}
+
+{% if section.settings.shape == "1" %}
+  <style>
+    .divider-shape-{{ section.id }} svg {
+      min-height: 27px;
+    }
+  </style>
+{% endif %}
+
+
+{% capture svg %}
+  {% if section.settings.shape == '1' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="122.745" viewBox="0 0 1920 122.745">
+  <path id="wave-1" d="M1921.25,56.946S1721.2,1,1441.125,1,961.5,56.883,961.5,56.883l-.5.133S761.448,112.9,481.375,112.9,1.25,56.946,1.25,56.946v66.8h1920Z" transform="translate(-1.25 -1.001)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '2' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="159.169" viewBox="0 0 1920 159.169">
+  <path id="wave-2" d="M1922.5,1521.59c-120.03-65.591-260.412-93.288-396.359-78.2-133.13,14.773-260.916,69.172-394.854,70.7-152.286,1.736-296.117-64.693-445.208-95.769-231.052-48.16-479.37-8.125-683.579,110.209v29.03h1920Z" transform="translate(-2.503 -1398.388)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '3' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1926" height="102.489" viewBox="0 0 1926 102.489">
+  <path id="wave-3" d="M1617.436,84.249C1455.818,84.2,1455.771,0,1294.06,0h-.277C1132.3.1,1132.209,84.249,970.545,84.249,808.787,84.249,808.787,0,647.03,0S485.273,84.249,323.515,84.249,161.758,0,0,0V102.489H1926V.247c-147.059,4.977-152.038,83.954-308.564,84" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '4' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="41.359" viewBox="0 0 1920 41.359">
+  <path id="wave-4" d="M1921,1772c-36.927,0-36.927,30-73.854,30s-36.928-30-73.855-30-36.926,30-73.851,30-36.925-30-73.849-30-36.923,30-73.846,30-36.924-30-73.848-30-36.925,30-73.849,30-36.923-30-73.846-30-36.925,30-73.849,30-36.923-30-73.847-30-36.922,30-73.843,30-36.921-30-73.842-30-36.92,30-73.841,30-36.922-30-73.845-30-36.923,30-73.846,30-36.923-30-73.847-30-36.922,30-73.845,30-36.922-30-73.845-30-36.922,30-73.845,30-36.922-30-73.844-30-36.922,30-73.844,30-36.922-30-73.845-30-36.922,30-73.843,30-36.923-30-73.846-30-36.922,30-73.843,30S37.921,1772,1,1772v41.359H1921Z" transform="translate(-1 -1772)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '5' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1921.254" height="131.438" viewBox="0 0 1921.254 131.438">
+  <path id="wave-5" d="M1922.254,49.156c-58.3-44.32-137.511-46.732-210.673-43.459-231.928,10.377-460.372,58.977-691.343,82.452C948.7,95.419,872.934,99.562,808.421,67.8c-31.742-15.632-59.237-39.346-92.02-52.66C669.448-3.935,616.7.166,566.274,5.246A5712.748,5712.748,0,0,0,1,90.973v41.464H1922.254Z" transform="translate(-1 -0.999)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '6' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="117.412" viewBox="0 0 1920 117.412">
+  <path id="curve-1" d="M1,1518.2c228.357-55.242,573.624-90.443,960-90.443s731.643,35.2,960,90.443v26.969H1Z" transform="translate(-1 -1427.757)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '7' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920.085" height="162.685" viewBox="0 0 1920.085 162.685">
+  <path id="curve-2" d="M1919.841.009c-.5-1.037-574.043,134.923-960.387,134.923S228.338,55.419,0,.009V162.688H1919.841s.548-161.545,0-162.679" transform="translate(0 -0.003)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '8' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="68.401" viewBox="0 0 1920 68.401">
+  <path id="scallop-1" d="M1846.169,0c-31.889,0-59.625,19.9-73.83,49.213v.228l-.426-.225C1757.708,19.905,1729.974,0,1698.084,0s-59.627,19.9-73.83,49.213C1610.049,19.905,1582.314,0,1550.424,0s-59.625,19.9-73.829,49.213C1462.39,19.905,1434.655,0,1402.765,0s-59.625,19.9-73.829,49.213C1314.73,19.905,1287,0,1255.106,0s-59.625,19.9-73.83,49.213C1167.071,19.905,1139.335,0,1107.446,0s-59.624,19.9-73.829,49.213C1019.412,19.905,991.68,0,959.787,0s-59.625,19.9-73.83,49.213C871.752,19.9,844.017,0,812.128,0S752.5,19.9,738.3,49.213C724.093,19.9,696.357,0,664.467,0s-59.625,19.9-73.83,49.213C576.434,19.9,548.7,0,516.808,0s-59.626,19.9-73.83,49.213C428.773,19.9,401.039,0,369.149,0s-59.626,19.9-73.83,49.213C281.114,19.9,253.379,0,221.489,0s-59.625,19.9-73.83,49.213C133.455,19.9,105.72,0,73.83,0S14.2,19.905,0,49.216V68.4l1920,0V49.213C1905.795,19.9,1878.059,0,1846.169,0" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '9' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1922.692" height="112.216" viewBox="0 0 1922.692 112.216">
+  <path id="scallop-2" d="M1922.692,106.816a106.816,106.816,0,0,0-213.632,0,106.816,106.816,0,1,0-213.632,0,106.816,106.816,0,0,0-213.633,0,106.816,106.816,0,1,0-213.632,0,106.816,106.816,0,0,0-213.632,0,106.816,106.816,0,0,0-213.632,0,106.816,106.816,0,1,0-213.632,0,106.816,106.816,0,0,0-213.632,0A106.816,106.816,0,0,0,0,106.816v5.4H1922.692" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '10' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="95.588" viewBox="0 0 1920 95.588">
+  <path id="zigzag-1" d="M1921,73.115l-640-72-640,72L1,1.115V96.7H1921Z" transform="translate(-1 -1.115)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '11' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="40.835" viewBox="0 0 1920 40.835">
+  <path id="zigzag-2" d="M1871.99,28.7l-48-28.7-48,28.7-48-28.7-48,28.7L1631.973,0l-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-47.995,28.7L1055.976,0l-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7-48-28.7-48,28.7L95.992,0,48,28.7,0,0V40.833H1920V0Z" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '12' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="131.774" viewBox="0 0 1920 131.774">
+  <path id="diagonal-1" d="M1922.5,560.324,2.5,453.587V585.361h1920Z" transform="translate(-2.503 -453.587)" fill="{{ fill }}"/>
+  </svg>
+  {% elsif section.settings.shape == '13' %}
+  <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="173.691" viewBox="0 0 1920 173.691">
+  <path id="drips-1" d="M1921.5,680.859c-11.46-11.8-33.385-2.635-39.736,12.537s-2.208,32.46,1.9,48.388,7.989,33.348,1.209,48.333a36.826,36.826,0,0,1-68.78-4.448c-5.2-17.086,2.433-35.294,2.229-53.154s-17.111-38.563-32.8-30.034c-16.154,8.778-14.3,40.623-32.682,41.085-15.007.377-19.587-22.295-33.558-27.786-17.385-6.833-31.325,16.669-31.971,35.338s1.37,41.422-14.2,51.735c-16.4,10.858-39.178-2.961-47.735-20.668s-8.742-38.32-15.476-56.8-25.021-36.064-43.9-30.573c-29.273,8.513-27.942,60.279-57.79,66.484-14.241,2.96-28.026-7.094-36.962-18.571s-15.444-25.1-26.656-34.371-29.843-12.244-39.327-1.215c-9.716,11.3-10.08,34.929-24.924,33.618-9.266-.818-13.792-12.552-22.62-15.483-8.151-2.707-16.889,3.234-21.42,10.531s-6.39,15.951-10.474,23.508c-15.253,28.223-63.58,28.048-78.627-.285-6.346-11.95-6.934-26.014-10.444-39.081s-11.874-26.687-25.219-28.917c-18.852-3.15-33.127,18.589-33.588,37.7s7.116,37.793,6.174,56.882-16.594,40.265-35.154,35.7c-14.235-3.5-21.14-19.982-22-34.616s2.089-29.69-1.977-43.774-19.405-26.72-32.75-20.654c-21.127,9.6-13.2,51.606-36.089,55.437-12.607,2.109-22.588-11.291-25.081-23.828s-1.01-26.068-6.521-37.6c-10.575-22.127-47.879-23.137-59.636-1.614-6.8,12.451-5.076,27.655-2.753,41.652s4.976,28.83-.325,41.99-22.153,22.688-34.088,15.016c-10.428-6.7-11.116-21.255-14.751-33.109-2.426-7.9-8.981-15.263-17-17.544-5.673-1.613-8.078-.139-10.757-6.7-3.9-9.549-.42-21.265-.734-31.087-.1-3.08-.229-6.282-1.665-9.008-5.2-9.875-21.264-1.7-26.419,3.962-7.336,8.054-13.113,19.183-23.77,21.441-16.317,3.457-31.792-16.789-47.45-11.044-12.684,4.654-13.927,21.734-13.754,35.244s-3.835,30.967-17.257,32.514-25.3-1.8-31.655-13.736-7.067-25.926-9.1-39.293-6.15-27.541-16.9-35.745c-14.085-10.752-34.627-7.358-50.26.985s-28.778,20.9-44.71,28.658-37.018,9.545-49.823-2.7c-11.008-10.53-15.837-30.485-31.044-31.372-19.542-1.14-27.945,32.066-47.449,30.415-8.25-.7-14.494-7.911-17.976-15.422s-5.189-15.834-9.459-22.927a36.119,36.119,0,0,0-65.911,9.565c-5.78,22.307,10.3,45.546,6.061,68.2-3.171,16.958-18.85,30.735-36.074,31.7s-34.344-10.977-39.388-27.474c-3.233-10.572-1.836-21.915-.966-32.936s1.045-22.7-4.247-32.407-17.858-16.273-27.764-11.365c-14.272,7.071-16.322,32.706-32.25,32.661-14.851-.041-18.4-23.007-32.143-28.644-10.314-4.232-22.368,3.77-26.571,14.1s-2.709,21.981-1.058,33.007,3.338,22.61-.534,33.065c-6.987,18.867-33.655,26.927-49.923,15.088-12.145-8.839-16.74-24.784-18.195-39.735s-.62-30.353-5.318-44.621-17.086-27.581-32.1-27.065c-16.51.567-27.6,16.389-37.294,29.762S17.114,746.95,1.5,741.557V849.173h1920Z" transform="translate(-1.5 -675.482)" fill="{{ fill }}"/>
+  </svg>
+  {% endif %}
+{% endcapture %}
+
+<div class="section-{{ section.id }} divider-{{ section.id }}">
+    <div class="section-{{ section.id }}-settings">
+      {% if shape_animate and animate_type == "marquee" %}
+        <div class="divider-shape-wrapper-{{ section.id }}">
+          <div class="divider-shape-{{ section.id }}">
+            {{ svg }}
+          </div>
+          <div class="divider-shape-{{ section.id }}">
+            {{ svg }}
+          </div>
+          <div class="divider-shape-{{ section.id }}">
+            {{ svg }}
+          </div>
+        </div>
+      {% else %}
+        <div class="divider-shape-{{ section.id }}">
+          {{ svg }}
+        </div>
+      {% endif %}
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Divider",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Divider Shape Settings"
+      },
+      {
+        "type": "select",
+        "id": "shape",
+        "label": "Divider Shape",
+        "options": [
+          {
+            "value": "1",
+            "label": "Wave 1"
+          },
+          {
+            "value": "2",
+            "label": "Wave 2"
+          },
+          {
+            "value": "3",
+            "label": "Wave 3"
+          },
+          {
+            "value": "4",
+            "label": "Wave 4"
+          },
+          {
+            "value": "5",
+            "label": "Wave 5"
+          },
+          {
+            "value": "6",
+            "label": "Curve 1"
+          },
+          {
+            "value": "7",
+            "label": "Curve 2"
+          },
+          {
+            "value": "8",
+            "label": "Scallop 1"
+          },
+          {
+            "value": "9",
+            "label": "Scallop 2"
+          },
+          {
+            "value": "10",
+            "label": "Zig Zag 1"
+          },
+          {
+            "value": "11",
+            "label": "Zig Zag 2"
+          },
+          {
+            "value": "12",
+            "label": "Diagonal"
+          },
+          {
+            "value": "13",
+            "label": "Drips"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "checkbox",
+        "id": "flip_vertically",
+        "label": "Flip Shape Vertically"
+      },
+      {
+        "type": "checkbox",
+        "id": "flip_horizontally",
+        "label": "Flip Shape Horizontally"
+      },
+      {
+        "type": "radio",
+        "id": "spacing",
+        "label": "Position Adjustment",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "above",
+            "label": "Overlap above section"
+          },
+          {
+            "value": "below",
+            "label": "Overlap below section"
+          }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "Shape Animation Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "shape_animate",
+        "label": "Animate Shape"
+      },
+      {
+        "type": "range",
+        "id": "shape_animate_speed",
+        "min": 1,
+        "max": 40,
+        "step": 1,
+        "label": "Scrolling speed",
+        "info":"⚡ <--------> 🐌",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "shape_animate_speed_mobile",
+        "min": 1,
+        "max": 40,
+        "step": 1,
+        "label": "Scrolling speed - Mobile",
+        "info":"⚡ <--------> 🐌",
+        "default": 5
+      },
+      {
+        "type": "checkbox",
+        "id": "shape_direction",
+        "label": "Reverse the Animation Direction"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": -50,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_top_mobile",
+        "min": -50,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin top - Mobile",
+        "default": -1
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": -50,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom_mobile",
+        "min": -50,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin bottom - Mobile",
+        "default": -1
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Shape Color",
+        "id": "fill",
+        "default": "#FF9C88"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient",
+        "info": "Section background color applies only if Position Adjustment is None"
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Divider"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,1758 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign initial_position = section.settings.initial_position
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius 
+
+  assign layout = section.settings.layout
+  assign layout_mobile = section.settings.layout_mobile
+  assign layout_gap_mobile = section.settings.layout_gap_mobile
+  assign layout_gap = section.settings.layout_gap
+
+  assign before_image = section.settings.before_image
+  assign before_image_mobile = section.settings.before_image_mobile
+  assign after_image = section.settings.after_image
+  assign after_image_mobile = section.settings.after_image_mobile
+
+  assign image_ratio_mobile = section.settings.image_ratio_mobile
+  assign image_ratio = section.settings.image_ratio
+  assign image_border_color = section.settings.image_border_color
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_radius = section.settings.image_radius
+
+  assign btn_size_mobile = section.settings.btn_size_mobile
+  assign btn_size = section.settings.btn_size
+  assign btn_border_thickness = section.settings.btn_border_thickness
+  assign btn_border_color = section.settings.btn_border_color
+  assign btn_arrow_color = section.settings.btn_arrow_color
+  assign line_color = section.settings.line_color
+  assign btn_arrow_size_mobile = section.settings.btn_arrow_size_mobile
+  assign btn_arrow_size = section.settings.btn_arrow_size
+
+  assign image_text_before = section.settings.image_text_before
+  assign image_text_after = section.settings.image_text_after
+  assign image_text_custom = section.settings.image_text_custom
+  assign image_text_font = section.settings.image_text_font
+  assign image_text_size = section.settings.image_text_size
+  assign image_text_size_mobile = section.settings.image_text_size_mobile
+  assign image_text_height = section.settings.image_text_height
+  assign image_text_color = section.settings.image_text_color
+  
+  assign content_align = section.settings.content_align
+  assign content_align_mobile = section.settings.content_align_mobile
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+    
+  assign text = section.settings.text
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_height = section.settings.text_height
+  assign text_color = section.settings.text_color
+  assign text_mt = section.settings.text_mt
+  assign text_mt_mobile = section.settings.text_mt_mobile
+
+  assign features_gap = section.settings.features_gap
+  assign features_gap_mobile = section.settings.features_gap_mobile
+  assign features_mt = section.settings.features_mt
+  assign features_mt_mobile = section.settings.features_mt_mobile
+
+  assign progress_border_thickness = section.settings.progress_border_thickness
+  assign progress_border_color = section.settings.progress_border_color
+  assign progress_radius = section.settings.progress_radius
+  assign progress_bg_color = section.settings.progress_bg_color
+
+  assign percent_custom = section.settings.percent_custom
+  assign percent_font = section.settings.percent_font
+  assign percent_size = section.settings.percent_size
+  assign percent_size_mobile = section.settings.percent_size_mobile
+  assign percent_height = section.settings.percent_height
+  assign percent_color = section.settings.percent_color
+
+  assign progress_text_size = section.settings.progress_text_size
+  assign progress_text_size_mobile = section.settings.progress_text_size_mobile
+  assign progress_text_color = section.settings.progress_text_color
+  assign progress_text_custom = section.settings.progress_text_custom
+  assign progress_text_font = section.settings.progress_text_font
+  assign progress_text_height = section.settings.progress_text_height
+  assign progress_text_mt = section.settings.progress_text_mt
+  assign progress_text_mt_mobile = section.settings.progress_text_mt_mobile
+  assign progress_text_align = section.settings.progress_text_align
+  assign progress_text_align_mobile = section.settings.progress_text_align_mobile
+-%}
+
+{%- style -%}
+  {{ image_text_font | font_face: font_display: 'swap' }}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ text_font | font_face: font_display: 'swap' }}
+  {{ percent_font | font_face: font_display: 'swap' }}
+  {{ progress_text_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  } 
+
+  .before-after-body-{{ section.id }} {
+    display: grid; 
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: {{ layout_gap_mobile }}px;
+  }   
+  
+  .before-after-button-{{ section.id }} {
+    width: {{ btn_size_mobile }}px;
+    height: {{ btn_size_mobile }}px;
+    border-radius: 50%;
+    border: {{ btn_border_thickness }}px solid {{ btn_border_color }};
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    position: relative;
+  }
+
+  .before-after-button-{{ section.id }}::after {
+    content: '';
+    padding: 3px;
+    display: inline-block;
+    border: solid {{ btn_arrow_color }};
+    border-width: 0 2px 2px 0;
+    transform: rotate(-45deg) scale({{ btn_arrow_size_mobile }}%) translateY(-50%);
+  }
+
+  .before-after-button-{{ section.id }}::before {
+    content: '';
+    padding: 3px;
+    display: inline-block;
+    border: solid {{ btn_arrow_color }};
+    border-width: 0 2px 2px 0;
+    transform: rotate(135deg) scale({{ btn_arrow_size_mobile }}%) translateX(-50%);
+  }
+
+  .before-after-button-{{ section.id }}:before {
+    content: '';
+    height: calc(50% - {{ btn_size_mobile | times: 0.50 | round: 0 }}px);
+    top: 50%;
+    left: 15%;
+    width: 3px;
+    color: {{ line_color }};
+    z-index: -1;
+    position: absolute;
+  }
+  
+  .before-after-button-{{ section.id }}:after {
+    content: '';
+    height: calc(50% - {{ btn_size_mobile | times: 0.50 | round: 0 }}px);
+    top: 50%;
+    right: 15%;
+    width: 3px;
+    color: {{ line_color }};
+    z-index: -1;
+    position: absolute;
+  }
+
+  .before-after-image-relative-{{ section.id }} {
+    position: relative;
+    height: 100%;
+  }
+
+  .before-after-image-relative-{{ section.id }} img,
+  .before-after-image-relative-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .before-after-image-first-{{ section.id }} {
+    display: none;
+  }
+
+  .before-after-image-second-{{ section.id }} {
+    display: none;
+  }
+
+  .before-after-image-relative-{{ section.id }} svg {
+    background-color: #AFAFAF;
+  }
+
+  .before-after-image-inner-{{ section.id }} {    
+    position: relative;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};  
+    border-radius: {{ image_radius }}px;
+    filter: drop-shadow(var(--shadow));
+    user-select: none;
+    overflow: hidden;
+  }
+
+  .before-after-image-cursor-{{ section.id }} {
+    height: 100%;
+    width: max-content;
+    touch-action: none;
+    --transform-logical-flip: 1;
+    transform: translate(calc(var(--transform-logical-flip) * -50% + var(--clip-path-offset, 0px)),-50%);
+    cursor: grab;
+    will-change: transform;
+    place-items: center;
+    display: grid;
+    position: relative;
+    top: 50%;
+    left: var(--before-after-initial-drag-position, 0px);
+  }
+  
+  .before-after-image-cursor-{{ section.id }}:before {
+    content: '';
+    height: calc(50% - {{ btn_size_mobile | times: 0.5 | round: 0 }}px);
+    top: 0;
+    width: {{ btn_border_thickness }}px;
+    background: {{ line_color }};
+    z-index: -1;
+    position: absolute;
+  }
+  
+  .before-after-image-cursor-{{ section.id }}:after {
+    content: '';
+    height: calc(50% - {{ btn_size_mobile | times: 0.5 | round: 0 }}px);
+    bottom: 0;
+    width: {{ btn_border_thickness }}px;
+    background: {{ line_color }};
+    z-index: -1;
+    position: absolute;
+  }
+
+  .before-after-before-text-{{ section.id }},
+  .before-after-after-text-{{ section.id }} {
+    position: absolute;
+    bottom: 10px;
+    margin: 0;    
+    text-align: center;
+    text-transform: unset;
+    word-wrap: break-word;
+    font-size: {{ image_text_size_mobile }}px;
+    line-height: {{ image_text_height }}%;
+    color: {{ image_text_color }};  
+  }
+
+  .before-after-before-text-{{ section.id }} {
+    left: 10px;
+  }
+
+  .before-after-after-text-{{ section.id }} {
+    right: 10px;
+  }
+
+  .before-after-content-mobile-{{ section.id }} {
+    display: block;
+  }
+
+  .before-after-content-desktop-{{ section.id }} {
+    display: none;
+  }
+
+  .before-after-heading-{{ section.id }} {
+    text-align: {{ content_align_mobile }};
+  }
+
+  .before-after-heading-{{ section.id }} * {
+    margin: 0px;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+    word-wrap: break-word;
+    font-weight: 700;
+  }  
+
+  .before-after-text-{{ section.id }} {
+    text-align: {{ content_align_mobile }};
+    margin-top: {{ text_mt_mobile }}px;    
+  }
+
+  .before-after-text-{{ section.id }} * {
+    margin: 0;   
+    font-size: {{ text_size_mobile }}px;
+    line-height: {{ text_height }}%;
+    color: {{ text_color }};  
+    text-transform: unset;
+    word-wrap: break-word;
+  }
+
+  .before-after-features-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    margin-top: {{ features_mt_mobile }}px;
+    gap: {{ features_gap_mobile }}px;
+  }
+
+  .before-after-progress-{{ section.id }} {
+    position: relative;
+    border: {{ progress_border_thickness }}px solid {{ progress_border_color }};
+    border-radius: {{ progress_radius }}px;
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .before-after-percent-{{ section.id }} {
+    margin: 0;    
+    position: relative;
+    z-index: 2;
+    font-size: {{ percent_size_mobile }}px;
+    line-height: {{ percent_height }}%;
+    color: {{ percent_color }};      
+    text-transform: unset;
+    word-wrap: break-word;
+  }
+
+  .before-after-progress-bg-{{ section.id }} {
+    position: absolute;
+    z-index: 1;
+    display: block !important;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: {{ progress_bg_color }};
+    transition: all 1.5s ease 0s;
+  }
+
+  .before-after-progress-text-{{ section.id }} {
+    text-align: {{ progress_text_align_mobile }};
+    margin-top: {{ progress_text_mt_mobile }}px;    
+  }
+
+  .before-after-progress-text-{{ section.id }} * {
+    margin: 0;   
+    font-size: {{ progress_text_size_mobile }}px;
+    line-height: {{ progress_text_height }}%;
+    color: {{ progress_text_color }};  
+    text-transform: unset;
+    word-wrap: break-word;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .before-after-body-{{ section.id }} {
+      grid-template-columns: 0.5fr 1fr;
+      gap: {{ layout_gap }}px;
+    } 
+
+    .before-after-button-{{ section.id }} {
+      width: {{ btn_size }}px;
+      height: {{ btn_size }}px;
+    }
+
+    .before-after-image-first-{{ section.id }} {
+      display: block;
+    }
+    
+    .before-after-image-mobile-{{ section.id }} {
+      display: none;
+    }
+
+    .before-after-image-second-{{ section.id }} {
+      display: block;
+    }
+
+    .before-after-image-mobile-second-{{ section.id }} {
+      display: none;
+    }
+
+    .before-after-button-{{ section.id }}::after {
+      transform: rotate(-45deg) scale({{ btn_arrow_size }}%) translateY(-50%);
+      height: calc(50% - {{ btn_size | times: 0.50 | round: 0 }}px);
+    }
+
+    .before-after-button-{{ section.id }}::before {
+      transform: rotate(135deg) scale({{ btn_arrow_size }}%) translateX(-50%);
+      height: calc(50% - {{ btn_size | times: 0.50 | round: 0 }}px);
+    }
+
+    .before-after-image-cursor-{{ section.id }}:before {
+      height: calc(50% - {{ btn_size | times: 0.5 | round: 0 }}px);
+    }
+
+    .before-after-image-cursor-{{ section.id }}:after {
+      height: calc(50% - {{ btn_size | times: 0.5 | round: 0 }}px);
+    }
+
+    .before-after-before-text-{{ section.id }},
+    .before-after-after-text-{{ section.id }} {
+      font-size: {{ image_text_size }}px; 
+    }
+
+    .before-after-content-mobile-{{ section.id }} {
+      display: none;
+    }
+
+    .before-after-content-desktop-{{ section.id }} {
+      display: block;
+    }
+
+    .before-after-heading-{{ section.id }} {
+      text-align: {{ content_align }};
+    }
+
+    .before-after-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .before-after-text-{{ section.id }} {
+      text-align: {{ content_align }};
+      margin-top: {{ text_mt }}px;    
+    }
+
+    .before-after-text-{{ section.id }} * {
+      font-size: {{ text_size }}px; 
+    }   
+    
+    .before-after-features-{{ section.id }} {
+      margin-top: {{ features_mt }}px;
+      gap: {{ features_gap }}px;
+    }
+
+    .before-after-percent-{{ section.id }} {
+      font-size: {{ percent_size }}px; 
+    }
+
+    .before-after-progress-text-{{ section.id }} {
+      margin-top: {{ progress_text_mt }}px;
+      text-align: {{ progress_text_align }};      
+    }
+
+    .before-after-progress-text-{{ section.id }} * {
+      font-size: {{ progress_text_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if image_text_custom %}
+  <style>
+    .before-after-before-text-{{ section.id }},
+    .before-after-after-text-{{ section.id }} {
+      font-family: {{ image_text_font.family }}, {{ image_text_font.fallback_families }};
+      font-weight: {{ image_text_font.weight }};
+      font-style: {{ image_text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+    .before-after-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+    .before-after-text-{{ section.id }} * {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if percent_custom %}
+  <style>    
+    .before-after-percent-{{ section.id }}{
+      font-family: {{ percent_font.family }}, {{ percent_font.fallback_families }};
+      font-weight: {{ percent_font.weight }};
+      font-style: {{ percent_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if progress_text_custom %}
+  <style>    
+    .before-after-progress-text-{{ section.id }} * {
+      font-family: {{ progress_text_font.family }}, {{ progress_text_font.fallback_families }};
+      font-weight: {{ progress_text_font.weight }};
+      font-style: {{ progress_text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if layout_mobile == "images_text" %}
+  <style>    
+    .before-after-content-{{ section.id }} {
+      order: 2;
+    }
+    
+    .before-after-image-wrapper-{{ section.id }} {
+      order: 1;
+    }
+  </style>
+{% else %}
+  <style>
+    .before-after-content-{{ section.id }} {
+      order: 1;
+    }
+    
+    .before-after-image-wrapper-{{ section.id }} {
+      order: 2;
+    }
+  </style>
+{% endif %}
+
+{% if layout == "images_text" %}
+  <style>
+    @media(min-width: 1024px) {
+      .before-after-body-{{ section.id }} {
+        grid-template-columns: 1fr 0.5fr;
+      }
+
+      .before-after-content-{{ section.id }} {
+        order: 2;
+      }
+      
+      .before-after-image-wrapper-{{ section.id }} {
+        order: 1;
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .before-after-body-{{ section.id }} {
+        grid-template-columns: 0.5fr 1fr;
+      }
+
+      .before-after-content-{{ section.id }} {
+        order: 1;
+      }
+      
+      .before-after-image-wrapper-{{ section.id }} {
+        order: 2;
+      }
+    }
+  </style>
+{% endif %}
+
+
+{% if image_ratio_mobile == "portrait" %}
+  <style>
+    .before-after-image-relative-{{ section.id }} {
+     aspect-ratio: 9.6/14; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "landscape" %}
+  <style>
+    .before-after-image-relative-{{ section.id }}{
+     aspect-ratio: 12/9; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "square" %}
+  <style>
+    .before-after-image-relative-{{ section.id }} {
+     aspect-ratio: 12/12; 
+    }
+  </style>
+{% else%}
+  <style>
+   .before-after-image-relative-{{ section.id }} {
+     aspect-ratio: auto; 
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio == "portrait" %}
+  <style>
+    @media(min-width: 1024px) {
+     .before-after-image-relative-{{ section.id }} {
+       aspect-ratio: 9.6/14; 
+      } 
+    }
+  </style>
+{% elsif image_ratio == "landscape" %}
+  <style>
+    @media(min-width: 1024px) {
+      .before-after-image-relative-{{ section.id }} {
+       aspect-ratio: 12/9; 
+      }
+    }
+  </style>
+{% elsif image_ratio == "square" %}
+  <style>
+    @media(min-width: 1024px) {
+      .before-after-image-relative-{{ section.id }} {
+       aspect-ratio: 12/12; 
+      }
+    }
+  </style>
+{% else%}
+  <style>
+    @media(min-width: 1024px) {
+      .before-after-image-relative-{{ section.id }} {
+       aspect-ratio: auto; 
+      }
+    }
+  </style>
+{% endif %}
+
+{% capture content %}
+  {% if heading != blank %}
+    <div class="before-after-heading-{{ section.id }}">{{ heading }}</div>
+  {% endif %}
+  {% if text != blank %} 
+    <div class="before-after-text-{{ section.id }}">{{ text }}</div>
+  {% endif %}
+{% endcapture %}
+
+<div class="section-{{ section.id }} before-after-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">    
+      <div class="before-after-body-{{ section.id }}">
+        <div class="before-after-content-mobile-{{ section.id }}">
+          {{ content }}
+        </div>   
+        <div class="before-after-image-wrapper-{{ section.id }}">
+          <div class="before-after-image-inner-{{ section.id }}" style="--before-after-initial-drag-position: {{ initial_position }}%; --clip-path-offset: 0px;">
+            <div class="before-after-image-relative-{{ section.id }}" style=" position: relative;">
+              {% if before_image_mobile != blank %}
+                <img src="{{ before_image_mobile | image_url }}" alt="{{ before_image_mobile.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} before-after-image-mobile-{{ section.id }}">
+              {% endif %}
+              {% if before_image != blank %}
+                <img src="{{ before_image | image_url }}" alt="{{ before_image.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} {% if before_image_mobile != blank %}before-after-image-first-{{ section.id }}{% endif %}">
+              {% else %}
+                {{  'image' | placeholder_svg_tag }}
+              {% endif %}
+              {% if image_text_before != blank %}
+                <p class="before-after-before-text-{{ section.id }}">{{ image_text_before }}</p>
+              {% endif %}
+             
+            </div>
+            <div class="before-after-image-relative-{{ section.id }}" style="clip-path: inset(0 0 0 calc(var(--before-after-initial-drag-position, 50%) + var(--clip-path-offset, 0px))); position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+              {% if after_image_mobile != blank %}
+                <img src="{{ after_image_mobile | image_url }}" alt="{{ after_image_mobile.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} before-after-image-mobile-second-{{ section.id }}">
+              {% endif %}
+              {% if after_image != blank %}
+                <img src="{{ after_image | image_url }}" alt="{{ after_image.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} {% if after_image_mobile != blank %}before-after-image-second-{{ section.id }}{% endif %}">
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+              {% if image_text_after != blank %}
+                <p class="before-after-after-text-{{ section.id }}">{{ image_text_after }}</p>
+              {% endif %}           
+            </div>
+            {% comment %} Cursor: {% endcomment %}
+            <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+              <split-cursor class="before-after-image-cursor-{{ section.id }}">
+                <div class="before-after-button-{{ section.id }}"></div>
+              </split-cursor>
+            </div>         
+          </div>
+        </div>  
+        <div class="before-after-content-{{ section.id }}">
+          <div class="before-after-content-desktop-{{ section.id }}">
+            {{ content }}
+          </div>          
+          <div class="before-after-features-{{ section.id }}">
+            {% for block in section.blocks %}
+              <div class="before-after-feature-{{ section.id }}">
+                {% if block.settings.percent != 0 %}
+                  <div class="before-after-progress-{{ section.id }}">
+                    <p class="before-after-percent-{{ section.id }}">{{ block.settings.percent }} %</p>
+                    <div class="before-after-progress-bg-{{ section.id }}" data-percent="{{ block.settings.percent }}"></div>
+                  </div>
+                {% endif %}                
+                {% if block.settings.text != blank %}
+                  <div class="before-after-progress-text-{{ section.id }}">{{ block.settings.text }}</div>
+                {% endif %}              
+              </div>
+            {% endfor %}
+          </div>
+        </div>                 
+      </div>
+    </div>
+</div>
+
+<script>
+function initBeforeAfterImage7() {
+  const imageWrappers = document.querySelectorAll('.before-after-image-inner-{{ section.id }}');
+  const progressBars = document.querySelectorAll('.before-after-progress-bg-{{ section.id }}');
+  
+  const animatedElements = new Set();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!animatedElements.has(entry.target)) {
+        const percent = entry.target.getAttribute('data-percent');
+        
+        if (entry.isIntersecting) {
+          requestAnimationFrame(() => {
+            entry.target.style.width = percent + '%';
+          });
+          animatedElements.add(entry.target);
+          observer.unobserve(entry.target);
+        } else {
+          entry.target.style.width = '0.01%';
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  progressBars.forEach((bar) => {
+    bar.style.width = '0.01%';
+    
+    const rect = bar.getBoundingClientRect();
+    const isInViewport = (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+
+    if (isInViewport) {
+      const percent = bar.getAttribute('data-percent');
+      requestAnimationFrame(() => {
+        bar.style.width = percent + '%';
+      });
+      animatedElements.add(bar);
+    } else {
+      observer.observe(bar);
+    }
+  });
+
+  imageWrappers.forEach(imageWrapper => {
+    const cursor = imageWrapper.querySelector('.before-after-image-cursor-{{ section.id }}');
+
+    let xStart, xEnd, xDiff, originalOffset;
+    function dragStart(event) {
+      xStart = event.clientX;
+      originalOffset = imageWrapper.style
+        .getPropertyValue('--clip-path-offset')
+        .slice(0, -2);
+      document.addEventListener('pointermove', dragMove);
+      document.addEventListener('pointerup', dragEnd);
+    }
+
+    function dragMove(event) {
+      xEnd = event.clientX;
+      xDiff = xEnd - xStart;
+
+      let result = xDiff + parseInt(originalOffset);
+      let cursorOffsetPercent = parseFloat(getComputedStyle(imageWrapper).getPropertyValue('--before-after-initial-drag-position'));
+      let containerWidth = imageWrapper.offsetWidth;
+      let pixelsOffset = (cursorOffsetPercent / 100) * containerWidth;
+
+      const negativeMax = -1 * (pixelsOffset);
+      const positiveMax = imageWrapper.offsetWidth - pixelsOffset;
+      if (result < negativeMax) {
+        result = negativeMax;
+      } else if (result > positiveMax) {
+        result = positiveMax;
+      }
+      imageWrapper.style.setProperty(
+        '--clip-path-offset',
+        result + 'px'
+      );
+    }
+
+    function dragEnd(event) {
+      document.removeEventListener('pointermove', dragMove);
+      document.removeEventListener('pointerup', dragEnd);
+    }
+
+    cursor.addEventListener('pointerdown', dragStart);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initBeforeAfterImage7);
+
+if (Shopify.designMode) {
+  document.addEventListener('shopify:section:unload', initBeforeAfterImage7);
+  document.addEventListener('shopify:section:load', initBeforeAfterImage7);
+}
+</script>
+
+
+{% schema %}
+  {
+    "name": "SS - Before/after #7",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Save to display section correctly"
+      },
+      {
+        "type": "header",
+        "content": "Layout settings"
+      },
+      {
+        "type": "range",
+        "id": "layout_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "layout_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 24
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Image placement",
+        "default": "images_text",
+        "options": [
+          {
+            "label": "Align image left",
+            "value": "images_text"
+          },
+          {
+            "label": "Align image right",
+            "value": "text_images"
+          }
+        ]
+      }, 
+      {
+        "type": "select",
+        "id": "layout_mobile",
+        "label": "Image placement - mobile",
+        "default": "images_text",
+        "options": [
+          {
+            "label": "Image on top",
+            "value": "images_text"
+          },
+          {
+            "label": "Text on top",
+            "value": "text_images"
+          }
+        ]
+      },    
+      {
+        "type": "header",
+        "content": "Image settings"
+      },    
+      {
+        "type": "image_picker",
+        "id": "before_image",
+        "label": "Before image"
+      },
+      {
+        "type": "image_picker",
+        "id": "before_image_mobile",
+        "label": "Before image - mobile (optional)"
+      },
+      {
+        "type": "image_picker",
+        "id": "after_image",
+        "label": "After image"
+      },
+      {
+        "type": "image_picker",
+        "id": "after_image_mobile",
+        "label": "After image - mobile (optional)"
+      },   
+      {
+        "type": "range",
+        "id": "image_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "image_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Aspect ratio",
+        "default": "landscape",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_ratio_mobile",
+        "label": "Aspect ratio - mobile",
+        "default": "landscape",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      }, 
+      {
+        "type": "header",
+        "content": "Drag settings"
+      },
+      {
+        "type": "range",
+        "id": "initial_position",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Initial line position",
+        "info": "From left to right",
+        "default": 50
+      },
+      {
+         "type": "range",
+         "id": "btn_size",
+         "min": 40,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Size",
+         "default": 52
+      },
+      {
+         "type": "range",
+         "id": "btn_size_mobile",
+         "min": 40,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Size - mobile",
+         "default": 48
+      },
+      {
+         "type": "range",
+         "id": "btn_arrow_size",
+         "min": 100,
+         "max": 200,
+         "step": 5,
+         "unit": "%",
+         "label": "Arrow size",
+         "default": 110
+      },
+      {
+         "type": "range",
+         "id": "btn_arrow_size_mobile",
+         "min": 100,
+         "max": 200,
+         "step": 5,
+         "unit": "%",
+         "label": "Arrow size - mobile",
+         "default": 105
+      },
+      {
+         "type": "range",
+         "id": "btn_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Border thickness",
+         "default": 1
+      },
+      {
+        "type": "header",
+        "content": "Before/after text settings"
+      },     
+      {
+        "type": "text",
+        "id": "image_text_before",
+        "label": "Before text",
+        "default": "Before"
+      }, 
+      {
+        "type": "text",
+        "id": "image_text_after",
+        "label": "After text",
+        "default": "After"
+      },
+      {
+        "type": "checkbox",
+        "id": "image_text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "image_text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "image_text_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "image_text_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 12
+      },    
+      {
+        "type": "range",
+        "id": "image_text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 130
+      },   
+      {
+        "type": "header",
+        "content": "Content settings"
+      },  
+      {
+        "type": "text_alignment",
+        "id": "content_align",
+        "label": "Alignment"
+      },
+      {
+        "type": "text_alignment",
+        "id": "content_align_mobile",
+        "label": "Alignment - mobile"
+      },
+      {
+        "type": "header",
+        "content": "Heading settings"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>Before/after image #7</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Font size",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 130
+      },
+      {
+        "type": "header",
+        "content": "Text settings"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Showcase your product benefit by using before/after image comparison.</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 15
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 14
+      },    
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 150
+      },     
+      {
+        "type": "range",
+        "id": "text_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "text_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 10
+      },   
+      {
+        "type": "header",
+        "content": "Features settings"
+      },   
+      {
+        "type": "range",
+        "id": "features_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "features_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "features_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "features_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 0
+      }, 
+      {
+        "type": "header",
+        "content": "Progress settings"
+      },
+      {
+        "type": "range",
+        "id": "progress_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "progress_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Percent settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "percent_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "percent_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "percent_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 22
+      },
+      {
+        "type": "range",
+        "id": "percent_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 22
+      },    
+      {
+        "type": "range",
+        "id": "percent_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 100
+      }, 
+      {
+        "type": "header",
+        "content": "Progress text settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "progress_text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "progress_text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "progress_text_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "progress_text_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 15
+      },
+      {
+        "type": "range",
+        "id": "progress_text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 150
+      },
+      {
+        "type": "range",
+        "id": "progress_text_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "progress_text_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 10
+      },  
+      {
+        "type": "text_alignment",
+        "id": "progress_text_align",
+        "label": "Alignment"
+      },
+      {
+        "type": "text_alignment",
+        "id": "progress_text_align_mobile",
+        "label": "Alignment - mobile"
+      },
+      {
+        "type": "header",
+        "content": "Image colors"
+      }, 
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "image_text_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "image_border_color",
+        "label": "Border",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Vertical line + arrows",
+        "id": "line_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "btn_border_color",
+        "label": "Drag border",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Content colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading",
+        "id": "heading_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "text_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Progress colors"
+      },
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "progress_text_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Percent",
+        "id": "percent_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "progress_bg_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "progress_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section colors"
+      },      
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient",
+        "info": "Remove gradient to replace with solid colors"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Section content width",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section roundness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "feature",
+        "name": "Feature",
+        "settings": [     
+          {
+            "type": "range",
+            "id": "percent",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Percent",
+            "default": 90
+          },       
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>of participants noticed improvement</p>"
+          }       
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Before/after image #7",
+        "blocks": [
+          {
+            "type": "feature",
+            "settings": {
+              "percent": 100
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "percent": 83
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "percent": 75
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

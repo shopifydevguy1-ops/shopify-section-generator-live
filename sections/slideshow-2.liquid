@@ -1,0 +1,610 @@
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: var(--pt);
+    padding-bottom: var(--pb);
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: var(--pt-desktop);
+      padding-bottom: var(--pb-desktop);
+    }
+  }
+</style>
+{% assign content_font_family = section.settings.content_text_font %}
+<style>
+  {{ content_font_family | font_face }}
+</style>
+<style>
+  .swiper-{{ section.id }} {
+    --swiper-pagination-bullet-inactive-color: #D9D9D9;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-horizontal-gap: 0;
+    --swiper-pagination-bottom: 40px;
+    --swiper-pagination-bullet-width: 15px;
+    --swiper-pagination-bullet-height: 15px;
+    font-family: var(--font-family);
+    height: var(--mobile-height);
+  }
+  @media screen and (min-width: 750px) {
+    .swiper-{{ section.id }} {
+      height: var(--desktop-height);
+    }
+  }
+  @media screen and (max-width: 749.5px) {
+    .swiper-{{ section.id }} {
+      --swiper-pagination-bottom: 23px;
+    }
+  }
+  .swiper-{{ section.id }} .swiper-slide {
+    position: relative;
+    height: auto;
+  }
+  .swiper-{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  div.swiper-button-next-{{ section.id }},
+  div.swiper-button-prev-{{ section.id }} {
+    display: block;
+    bottom: 16px;
+    top: unset;
+    margin-top: unset;
+    width: 66px;
+    height: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--swiper-navigation-color);
+    border-radius: 50%;
+    --swiper-navigation-size: 22px;
+  }
+  div.swiper-button-next-{{ section.id }} {
+    right: 25px;
+    left: unset;
+  }
+  div.swiper-button-prev-{{ section.id }} {
+    right: 100px;
+    left: unset;
+  }
+  main div.swiper-pagination-{{ section.id }} {
+    width: fit-content !important;
+    border-radius: 16px;
+    left: unset;
+    transform: unset;
+    background: var(--swiper-pagination-bg-color);
+    padding: 11px 20px;
+    display: flex;
+    gap: 17px;
+  }
+  .swiper-pagination-{{ section.id }} span {
+    --swiper-pagination-bullet-inactive-color: transparent;
+    border: 1px solid var(--swiper-pagination-color);
+  }
+  .overlay-{{ section.id }} {
+    background-color: rgba(0, 0, 0, var(--overlay-opacity));
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block !important;
+  }
+  .text-content-{{ section.id }} {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-color);
+    text-align: center;
+    width: 87%;
+    line-height: 1.4;
+  }
+  .p-{{ section.id }} {
+     margin-bottom: 30px;
+     max-width: 570px;
+     margin-left: auto;
+     margin-right: auto;
+  }
+  @media screen and (min-width: 750px) {
+    .text-content-{{ section.id }} {
+      text-align: left;
+    }
+    .p-{{ section.id }} {
+      margin-left: unset;
+    }
+    main div.swiper-pagination-{{ section.id }} {
+      left: 50% !important;
+      transform: translateX(-50%);
+      gap: 25px;
+    }
+    div.swiper-button-next-{{ section.id }},
+    div.swiper-button-prev-{{ section.id }} {
+      bottom: 32px;
+    }
+  }
+  .banner-desktop-only {
+    display: none;
+  }
+  @media screen and (min-width: 750px) {
+
+    .swiper-{{ section.id }} {
+      --swiper-pagination-bullet-width: 20px;
+      --swiper-pagination-bullet-height: 20px;
+    }
+
+    .text-content-{{ section.id }} {
+      top: 50%;
+    }
+    
+    .banner-mobile-only {
+      display: none;
+    }
+    .banner-desktop-only {
+      display: block;
+    }
+  }
+  .button-wrapper-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    gap: 27px;
+  }
+  @media screen and (min-width: 750px) {
+    .button-wrapper-{{ section.id }} {
+        justify-content: flex-start;
+    }
+  }
+
+  .btn-{{ section.id }} {
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 30px;
+    max-width: 217px;
+    text-decoration: none;
+  }
+  .swiper-slide-image-{{ section.id }},
+  .swiper-slide-image-{{ section.id }} svg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
+{% assign height = section.settings.height %}
+{% assign mobile_height = section.settings.mobile_height %}
+<div
+  class="section-{{ section.id }}-padding"
+  style="
+    background-color:{{ section.settings.background-color }};
+    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    --pt-desktop: {{ section.settings.padding_top }}px;
+    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    --pb-desktop: {{ section.settings.padding_bottom }}px;
+    --swiper-pagination-color: {{ section.settings.pagination_color }};
+    --swiper-pagination-bg-color: transparent;
+    --swiper-navigation-color: {{ section.settings.navigation_color }};
+    --font-family: {{ content_font_family.family | escape }};
+    --swiper-pagination-bullet-size: 20px;
+  "
+>
+  <div
+    class="swiper swiper-{{ section.id }}"
+    style="
+      --overlay-opacity: {{ section.settings.overlay | divided_by: 100.0 }};
+      --text-color: {{ section.settings.text_color }};
+      --desktop-height: {{ height }}px;
+      --mobile-height: {{ mobile_height }}px;
+    "
+  >
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div
+          class="swiper-slide"
+          style=""
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image != blank %}
+            {% assign image = block.settings.image %}
+
+            <img
+              src="{{ image | img_url: '1200x' }}"
+              alt="{{ image.alt | escape }}"
+              srcset="
+                {{ image | img_url: '300x' }} 300w,
+                {{ image | img_url: '600x' }} 600w,
+                {{ image | img_url: '900x' }} 900w,
+                {{ image | img_url: '1200x' }} 1200w,
+                {{ image | img_url: '1500x' }} 1500w,
+                {{ image | img_url: '1800x' }} 1800w,
+                {{ image | img_url: '2100x' }} 2100w,
+                {{ image | img_url: 'master' }} 3000w
+              "
+              class="{% if block.settings.mobile_image != blank %} banner-desktop-only {% endif %} swiper-slide-image-{{ section.id }}"
+              {% if section.settings.lazy %}loading="lazy"{% endif %}
+            >
+            {% if block.settings.mobile_image != blank %}
+              {% assign image = block.settings.mobile_image %}
+              <img
+                src="{{ image | img_url: '1200x' }}"
+                alt="{{ image.alt | escape }}"
+                srcset="
+                  {{ image | img_url: '300x' }} 300w,
+                  {{ image | img_url: '600x' }} 600w,
+                  {{ image | img_url: '900x' }} 900w,
+                  {{ image | img_url: '1200x' }} 1200w,
+                  {{ image | img_url: '1500x' }} 1500w,
+                  {{ image | img_url: '1800x' }} 1800w,
+                  {{ image | img_url: '2100x' }} 2100w,
+                  {{ image | img_url: 'master' }} 3000w
+                "
+                class="banner-mobile-only swiper-slide-image-{{ section.id }}"
+                {% if section.settings.lazy %}loading="lazy"{% endif %}
+                {% if mobile_height %}
+                  style="height: {{ mobile_height }}px;"
+                {% endif %}
+              >
+            {% endif %}
+          {% else %}
+            {% comment %} Check https://www.shopify.com/partners/blog/placeholder-images {% endcomment %}
+            <div
+              class="banner-desktop-only swiper-slide-image-{{ section.id }}"
+              {% if height %}
+                style="height: {{ height }}px;"
+              {% endif %}
+            >
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            </div>
+            <div
+              class="banner-mobile-only swiper-slide-image-{{ section.id }}"
+            >
+              {{ 'collection-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+
+          <div
+            class="overlay-{{ section.id }}"
+            style="
+              {% if block.settings.overlay > 0 %}
+                --overlay-opacity: {{ block.settings.overlay | divided_by: 100.0 }};
+              {% endif %}
+            "
+          ></div>
+
+          <div class="text-content-{{ section.id }}">
+            {% if block.settings.title != blank %}
+              <div
+                style="
+                  color: {{ section.settings.title_color }};
+                  font-size: {{ section.settings.title_size }}px;
+                  margin-bottom: 16px;
+                  line-height:1.1;
+                "
+              >
+                {{ block.settings.title }}
+              </div>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p
+                class="p-{{ section.id }}"
+                style="
+                  color: {{ section.settings.text_color }};
+                  font-size: {{ section.settings.text_size }}px;
+                "
+              >
+                {{ block.settings.text }}
+              </p>
+            {% endif %}
+            <div class="button-wrapper-{{ section.id }}">
+              {% if block.settings.link_text != blank %}
+                <a
+                  href="{{ block.settings.link }}"
+                  class="btn-{{ section.id }}"
+                  style="
+                    color: {{ section.settings.button_text_color }};
+                    background-color: transparent;
+                    border: 1px solid {{ section.settings.button_color }};
+                    font-size: {{ section.settings.button_font_size }}px;
+                  "
+                >
+                  {{- block.settings.link_text -}}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
+    <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
+    <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
+  </div>
+</div>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"
+  defer
+></script>
+
+<script>
+  // load the swiper css and js only once:
+  (function () {
+    function loadSwiperOnBannerSlider2() {
+      if (typeof Swiper === 'undefined') {
+        setTimeout(loadSwiperOnBannerSlider2, 100);
+        return;
+      }
+      try {
+        new Swiper('.swiper-{{ section.id }}', {
+          slidesPerView: 1,
+          navigation: {
+            nextEl: '.swiper-button-next-{{ section.id }}',
+            prevEl: '.swiper-button-prev-{{ section.id }}',
+          },
+          pagination: {
+            el: '.swiper-pagination-{{ section.id }}',
+            clickable: true,
+          },
+          loop: true,
+          {% if section.settings.autoplay %}
+            autoplay: {
+              delay: {{ section.settings.autoplay_delay | times: 1000 }},
+            },
+          {% endif %}
+        });
+      } catch (e) {
+        console.log('Swiper not loaded');
+        console.log(e);
+      }
+    }
+    //document.addEventListener('swiper:loaded', loadSwiperOnBannerSlider2);
+    loadSwiperOnBannerSlider2();
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener(
+        'shopify:section:load',
+        loadSwiperOnBannerSlider2
+      );
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Banner slider 2",
+  "presets": [
+    {
+      "name": "Banner slider 2",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "default": 600,
+      "label": "Section height"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "default": 550,
+      "label": "Section height (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay",
+      "default": 50,
+      "info": "Will be applied to all slides"
+    },
+    {
+      "type": "font_picker",
+      "id": "content_text_font",
+      "label": "Font family",
+      "default": "open_sans_n4"
+    },
+    {
+      "type": "header",
+      "content": "Font sizes:"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Content",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Color:"
+    },
+    {
+      "type": "color",
+      "label": "Title Color",
+      "id": "title_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Content Text Color",
+      "id": "text_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button border color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination (dot) color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "navigation_color",
+      "label": "Navigation (arrow) color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images below fold for speed optimisation",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "range",
+          "id": "overlay",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Overlay",
+          "default": 0,
+          "info": "Will overwrite the global overlay setting for this slide"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "New collection out"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Introducing our enchanting new Collection, inspired by the season's rejuvenating spirit."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Shop Now"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1276 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+
+  assign slider_view_mobile = section.settings.slider_view_mobile
+  assign slider_view = section.settings.slider_view
+  assign slider_mt_mobile = section.settings.slider_mt_mobile
+  assign slider_mt = section.settings.slider_mt
+
+  assign card_padding_vertical = section.settings.card_padding_vertical
+  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile
+  assign card_padding_horizontal = section.settings.card_padding_horizontal
+  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile
+  assign card_radius = section.settings.card_radius
+  assign card_border_thickness = section.settings.card_border_thickness
+  assign card_border_color = section.settings.card_border_color
+  assign card_shadow = section.settings.card_shadow
+  assign card_hover = section.settings.card_hover
+  assign card_bg_color = section.settings.card_bg_color
+  assign card_height_mobile = section.settings.card_height_mobile
+  assign card_height = section.settings.card_height
+
+  assign front_image_radius = section.settings.front_image_radius
+
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_color = section.settings.title_color
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_height = section.settings.title_height
+  assign title_mt = section.settings.title_mt
+  assign title_align_mobile = section.settings.title_align_mobile
+  assign title_align = section.settings.title_align
+
+  assign navigation_mt_mobile = section.settings.navigation_mt_mobile
+  assign navigation_mt = section.settings.navigation_mt
+
+  assign star_color = section.settings.star_color
+  assign star_size = section.settings.star_size
+  assign star_size_mobile = section.settings.star_size_mobile
+
+  assign arrow_color = section.settings.arrow_color
+  assign arrow_size = section.settings.arrow_size
+  assign arrow_size_mobile = section.settings.arrow_size_mobile
+  
+-%}
+
+{%- style -%}
+
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  title_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+    position: relative;
+  }
+
+  .slider-heading-{{ section.id }} {
+    text-align: {{ heading_align_mobile }};
+  }
+
+  .slider-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .slider-body-{{ section.id }} {
+    margin-top: {{ slider_mt_mobile }}px;
+    height: {{ card_height_mobile | times: 2 }}px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slider-slider-{{ section.id }} {
+    padding: 40px 0px 75px;
+    position: absolute;
+    top: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350vw;
+    height: 350vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .slider-slide-{{ section.id }} {
+    width: 100%;
+    max-width: 170px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box !important;
+    perspective: 1300px;
+    overflow: visible !important;
+  }
+
+  .slider-inner-{{ section.id }} {
+    height: 100%;
+    position: relative;
+    transition: all 1s ease 0s;
+    min-height: {{ card_height_mobile | times: 0.8 | round: 0 }}px;
+    transform-style: preserve-3d;
+    border-radius: {{ card_radius }}px;
+  }
+
+  .slider-front-{{ section.id }} {
+    min-height: {{ card_height_mobile | times: 0.8 | round: 0 }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: {{ card_border_thickness }}px solid {{ card_border_color }};
+    border-radius: {{ card_radius }}px;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box !important;
+    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;
+    background-color: {{ card_bg_color }};
+    backface-visibility: hidden;
+  }
+
+  .slider-front-image-{{ section.id }} {
+    width: 100%;
+    border-radius: {{ front_image_radius }}px;
+    overflow: hidden;
+  }
+
+  .slider-back-{{ section.id }} {
+    border: {{ card_border_thickness }}px solid {{ card_border_color }};
+    border-radius: {{ card_radius }}px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: {{ card_bg_color }};
+    transform: rotateY(180deg);
+    z-index: 1;
+    backface-visibility: hidden;
+  }
+
+  .slider-front-image-{{ section.id }} img,
+  .slider-front-image-{{ section.id }} svg,
+  .slider-back-{{ section.id }} img,
+  .slider-back-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .slider-front-image-{{ section.id }} svg,
+  .slider-back-{{ section.id }} svg {
+    background-color: #AFAFAF;
+  }
+  
+  .slider-title-{{ section.id }} {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;
+    text-align: {{ title_align_mobile }};
+    font-size: {{ title_size_mobile }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    text-transform: unset;
+    font-weight: 700;
+  }
+
+  .slider-navigation-{{ section.id }} {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+    margin-top: {{ navigation_mt_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+  }
+
+  .slider-navigation-{{ section.id }} button {
+    box-shadow: none;
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .slider-star-{{ section.id }} {
+    flex: 0 0 {{ star_size_mobile }}px;
+    height: {{ star_size_mobile }}px;
+    transition: all 0.5s ease 0s;
+  }
+
+  .slider-star-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slider-star-{{ section.id }} svg path {
+    fill: {{ star_color }};
+  }
+
+  .slider-navigation-{{ section.id }} button {
+    flex: 0 0 {{ arrow_size_mobile }}px;
+  }
+
+  .slider-navigation-{{ section.id }} button svg,
+  .slider-navigation-{{ section.id }} button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .slider-navigation-{{ section.id }} button svg path {
+    fill: {{ arrow_color }};
+  }
+
+  @media(min-width: 420px) {
+    .slider-slider-{{ section.id }} {
+      width: 300vw;
+      height: 300vw;
+    }
+
+  }
+
+  @media(min-width: 500px) {
+    .slider-slider-{{ section.id }} {
+      width: 250vw;
+      height: 250vw;
+    }
+    
+    .slider-slide-{{ section.id }} {
+      max-width: 200px;
+    }
+
+    .slider-inner-{{ section.id }},
+    .slider-front-{{ section.id }} {
+      min-height: {{ card_height_mobile }}px;
+    }
+  }
+
+  @media(min-width: 650px) {
+    .slider-slider-{{ section.id }} {
+      width: 200vw;
+      height: 200vw;
+    }
+  }
+
+  @media(min-width: 850px) {
+    .slider-slider-{{ section.id }} {
+      width: 150vw;
+      height: 150vw;
+    }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .slider-heading-{{ section.id }} {
+      text-align: {{ heading_align }};
+    }
+
+    .slider-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .slider-body-{{ section.id }} {
+      height: {{ card_height | times: 1.5 }}px;
+      margin-top: {{ slider_mt }}px;
+    }
+
+    /* .slider-slider-{{ section.id }} {
+      width: {{ section.blocks.size | times: card_width | times: 0.075 }}vw;
+      height: {{ section.blocks.size | times: card_width | times: 0.075 }}vw;
+    } */
+
+    .slider-slide-{{ section.id }} {
+      max-width: 230px;
+    }
+    
+    .slider-inner-{{ section.id }},
+    .slider-front-{{ section.id }} {
+      min-height: {{ card_height | times: 0.55 }}px;
+    }
+
+    .slider-slide-{{ section.id }} {
+      max-width: 230px;
+    }
+
+    .slider-front-{{ section.id }} {
+      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;
+    }
+
+    .slider-title-{{ section.id }} {
+      margin-top: {{ title_mt }}px;
+      text-align: {{ title_align }};
+      font-size: {{ title_size }}px;
+    }
+
+    .slider-navigation-{{ section.id }} {
+      margin-top: {{ navigation_mt }}px;
+    }
+
+    .slider-navigation-{{ section.id }} button {
+      flex: 0 0 {{ arrow_size }}px;
+    }
+
+    .slider-star-{{ section.id }} {
+      flex: 0 0 {{ star_size }}px;
+      height: {{ star_size }}px;
+    }
+  }
+
+  @media(min-width: 1280px) {
+    .slider-inner-{{ section.id }},
+    .slider-front-{{ section.id }} {
+      min-height: {{ card_height | times: 0.8 }}px;
+    }
+
+    .slider-slide-{{ section.id }} {
+      max-width: 280px;
+    }
+  }
+
+  @media(min-width: 1400px) {
+    .slider-inner-{{ section.id }},
+    .slider-front-{{ section.id }} {
+      min-height: {{ card_height }}px;
+    }
+    
+    .slider-slide-{{ section.id }} {
+      max-width: 320px;
+    }
+  }
+
+  @media(min-width: 1640px) {
+    .slider-body-{{ section.id }} {
+      height: {{ card_height | times: 2 }}px;
+    }
+
+    .slider-slide-{{ section.id }} {
+      max-width: 370px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if heading_custom %}
+  <style>
+    .slider-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if title_custom %}
+  <style>
+    .slider-title-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if card_shadow %}
+  <style>
+    .slider-inner-{{ section.id }} {
+      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    }
+  </style>
+{% endif %}
+
+{% if card_hover %}
+  <style>
+    .slider-slide-{{ section.id }}:hover .slider-inner-{{ section.id }} {
+      transform: rotateY(180deg);
+    }
+  </style>
+{% endif %}
+
+{% for block in section.blocks %}
+  {% if block.settings.override %}
+    <style>
+      .slider-slide-{{ block.id }} .slider-front-{{ section.id }},
+      .slider-slide-{{ block.id }} .slider-back-{{ section.id }}{
+        border-color: {{ block.settings.slide_border_color }} !important;
+      }
+
+      .slider-slide-{{ block.id }} .slider-front-{{ section.id }} {
+        background-color: {{ block.settings.card_bg_color }} !important;
+      }
+
+      .slider-slide-{{ block.id }} .slider-title-{{ section.id }} {
+        color: {{ block.settings.title_color }} !important;
+      }
+    </style>
+  {% endif %}
+{% endfor %}
+
+<div class="section-{{ section.id }} slider-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      {% if heading != blank %}
+        <div class="slider-heading-{{ section.id }}">
+          {{ heading }}
+        </div>
+      {% endif %}
+      <div class="slider-body-{{ section.id }}">
+        <div class="slider-slider-{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="slider-slide-{{ section.id }} slider-slide-{{ block.id }}">
+              <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="slider-inner-{{ section.id }}">
+                <div class="slider-front-{{ section.id }}">
+                  <div class="slider-front-image-{{ section.id }}">
+                    {% if block.settings.front_image != blank %}
+                      <img src="{{ block.settings.front_image | image_url }}" alt="{{ block.settings.front_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </div>
+                  {% if block.settings.title != blank %}
+                    <p class="slider-title-{{ section.id }}">{{ block.settings.title }}</p>
+                  {% endif %}
+                </div>
+                {% if card_hover %}
+                  <div class="slider-back-{{ section.id }}">
+                    {% if block.settings.back_image != blank %}
+                      <img src="{{ block.settings.back_image | image_url }}" alt="{{ block.settings.back_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </{% if block.settings.url != blank %}a{% else %}div{% endif %}>
+            </div>
+          {% endfor %}
+          {% for block in section.blocks %}
+            <div class="slider-slide-{{ section.id }} slider-slide-{{ block.id }}">
+              <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="slider-inner-{{ section.id }}">
+                <div class="slider-front-{{ section.id }}">
+                  <div class="slider-front-image-{{ section.id }}">
+                    {% if block.settings.front_image != blank %}
+                      <img src="{{ block.settings.front_image | image_url }}" alt="{{ block.settings.front_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </div>
+                  {% if block.settings.title != blank %}
+                    <p class="slider-title-{{ section.id }}">{{ block.settings.title }}</p>
+                  {% endif %}
+                </div>
+                {% if card_hover %}
+                  <div class="slider-back-{{ section.id }}">
+                    {% if block.settings.back_image != blank %}
+                      <img src="{{ block.settings.back_image | image_url }}" alt="{{ block.settings.back_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </{% if block.settings.url != blank %}a{% else %}div{% endif %}>
+            </div>
+          {% endfor %}
+        </div>
+         <div class="slider-navigation-{{ section.id }}">
+            <button class="slider-btn-prev-{{ section.id }}">
+              {% if arrow_left != blank %}
+                <img src="{{ arrow_left | image_url }}" alt="{{ arrow_left.alt }}">
+              {% else %}
+                <svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.485 22.607L.94 13.06a1.5 1.5 0 010-2.122l9.546-9.546a1.5 1.5 0 112.122 2.122L4.12 12l8.486 8.485a1.5 1.5 0 11-2.122 2.122z" fill="#000"/></svg>
+              {% endif %}
+            </button>
+            <div class="slider-star-{{ section.id }}">
+              <svg width="56" height="54" viewBox="0 0 56 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0)">
+                <path d="M30.1157 44.2548L41.3207 52.8519C41.8544 53.2937 42.5181 53.5486 43.2103 53.5777C43.9025 53.6068 44.5853 53.4085 45.1542 53.0131C45.7231 52.6177 46.147 52.047 46.3611 51.388C46.5752 50.7291 46.5677 50.0182 46.3397 49.3639L41.9839 35.4653C41.7373 34.7567 41.7383 33.9856 41.9867 33.2777C42.235 32.5698 42.7161 31.9671 43.3512 31.5679L54.5152 23.9001C55.0966 23.5344 55.5436 22.9898 55.7891 22.3483C56.0346 21.7068 56.0652 21.003 55.8765 20.3426C55.6877 19.6821 55.2897 19.1008 54.7423 18.6859C54.1949 18.271 53.5277 18.045 52.8408 18.0418L38.5696 17.5669C37.858 17.5647 37.166 17.3339 36.5955 16.9086C36.025 16.4833 35.6062 15.886 35.4009 15.2047L31.041 2.25991C30.842 1.61054 30.4399 1.04216 29.8939 0.638348C29.3478 0.234534 28.6866 0.0166016 28.0074 0.0166016C27.3282 0.0166016 26.667 0.234534 26.1209 0.638348C25.5749 1.04216 25.1728 1.61054 24.9738 2.25991L20.6016 15.2047C20.3971 15.8857 19.9791 16.4829 19.4093 16.9082C18.8395 17.3335 18.1481 17.5644 17.437 17.5669L3.16172 18.0418C2.47486 18.045 1.8076 18.271 1.2602 18.6859C0.712799 19.1008 0.314819 19.6821 0.126062 20.3426C-0.0626955 21.003 -0.0320361 21.7068 0.213433 22.3483C0.458903 22.9898 0.905925 23.5344 1.48733 23.9001L12.6513 31.5679C13.2868 31.9666 13.768 32.5696 14.0157 33.2778C14.2634 33.986 14.263 34.7573 14.0146 35.4653L9.66278 49.3517C9.43485 50.0059 9.42734 50.7168 9.64141 51.3758C9.85549 52.0347 10.2794 52.6055 10.8483 53.0008C11.4173 53.3962 12.1 53.5945 12.7922 53.5654C13.4844 53.5363 14.1481 53.2814 14.6819 52.8396L25.8868 44.2425C26.4815 43.7502 27.2293 43.4809 28.0013 43.4809C28.7733 43.4809 29.5211 43.7502 30.1157 44.2425" fill="black"/>
+                </g>
+                <defs>
+                <clipPath id="clip0">
+                <rect width="56" height="53.5846" fill="white"/>
+                </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <button class="slider-btn-next-{{ section.id }}">
+              {% if arrow_right != blank %}
+                <img src="{{ arrow_right | image_url }}" alt="{{ arrow_right.alt }}">
+              {% else %}
+                <svg style="transform: rotate(-180deg); " width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.485 22.607L.94 13.06a1.5 1.5 0 010-2.122l9.546-9.546a1.5 1.5 0 112.122 2.122L4.12 12l8.486 8.485a1.5 1.5 0 11-2.122 2.122z" fill="#000"/></svg>
+              {% endif %}
+            </button>
+          </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>             
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script> 
+
+<script>
+    function initScrollingProducts() {
+
+      let totalRotation = 0;
+      let star = document.querySelector('.slider-star-{{ section.id }}');
+
+      console.clear();
+      gsap.registerPlugin(Draggable, Flip);
+      
+      let wheel = document.querySelector(".slider-slider-{{ section.id }}"),
+        images = gsap.utils.toArray(".slider-slide-{{ section.id }}"),
+        cards = gsap.utils.toArray(".slider-slide-{{ section.id }}"),
+        slice = 360 / images.length,
+        isRotating = false,
+        currentCard; // keep track of last clicked card so we can put it back
+      
+      
+      function setup() {
+        let radius = wheel.offsetWidth / 2,
+          center = radius,
+          DEG2RAD = Math.PI / 180;
+        gsap.set(images, {
+          x: i => center + radius * Math.sin(i * slice * DEG2RAD),
+          y: i => center - radius * Math.cos(i * slice * DEG2RAD),
+          rotation: i => i * slice,
+          xPercent: -50,
+          yPercent: -50
+        });
+      }
+      
+      setup();
+      
+      window.addEventListener("resize", setup);
+      const d = Draggable.create(wheel, {
+        allowContextMenu: true,
+        type: "rotation",
+        trigger: wheel,
+        inertia: true,
+        onDrag: () => {
+          isRotating = true;
+          const startX = d[0].startX;
+          const endX = d[0].endX;
+          if(endX > startX) {
+            totalRotation += 0.5;
+            star.style.transform = 'rotate(' + totalRotation + 'deg)';
+          } else {
+            totalRotation -= 0.5;
+            star.style.transform = 'rotate(' + totalRotation + 'deg)';
+          }
+        },
+        onThrowComplete: () => isRotating = false,
+        snap: {
+          rotation: gsap.utils.snap(360 / images.length)
+        }
+      });
+      
+      const rotationBtnComplete = () => {
+        d[0].update();
+        isRotating = false;
+      };
+      
+      const prevBtn = document.querySelector('.slider-btn-prev-{{ section.id }}');
+      prevBtn.addEventListener("click", () => {
+        gsap.to(wheel, {
+          duration: 0.25,
+          ease: "power1.inOut",
+          rotation: gsap.getProperty(wheel, "rotation") + slice,
+          onComplete: rotationBtnComplete,
+        });
+      });
+      
+      const nextBtn = document.querySelector('.slider-btn-next-{{ section.id }}');
+      nextBtn.addEventListener("click", () => {
+        gsap.to(wheel, {
+          duration: 0.25,
+          ease: "power1.inOut",
+          rotation: gsap.getProperty(wheel, "rotation") - slice,
+          onComplete: rotationBtnComplete,
+        });
+      });
+
+
+    document.querySelector('.slider-btn-prev-{{ section.id }}').addEventListener('click', () => {
+      
+      totalRotation += 15;
+      
+      star.style.transform = 'rotate(' + totalRotation + 'deg)';
+    });
+
+    document.querySelector('.slider-btn-next-{{ section.id }}').addEventListener('click', () => {
+      
+      totalRotation -= 15;
+      
+      star.style.transform = 'rotate(' + totalRotation + 'deg)';
+    });
+    
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollingProducts);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initScrollingProducts);
+     document.addEventListener('shopify:section:load', initScrollingProducts);
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Slider Experiment",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading Settings"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size",
+        "default": 38
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size - Mobile",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align",
+        "label": "Heading Text Align",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align_mobile",
+        "label": "Heading Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Slider Settings"
+      },
+      {
+        "type": "range",
+        "id": "slider_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "label": "Slider Margin Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "slider_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "label": "Slider Margin Top - Mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Slide Settings"
+      },
+      {
+        "type": "range",
+        "id": "card_height",
+        "min": 200,
+        "max": 800,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Height",
+        "default": 560
+      },
+      {
+        "type": "range",
+        "id": "card_height_mobile",
+        "min": 100,
+        "max": 800,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Height - Mobile",
+        "default": 560
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Slide Padding Vertical",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Slide Padding Vertical - Mobile",
+        "default": 12
+      },
+      {
+         "type": "range",
+         "id": "card_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Slide Padding Horizontal",
+         "default": 30
+      },
+      {
+         "type": "range",
+         "id": "card_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Slide Padding Horizontal - Mobile",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "card_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Slide Border Radius",
+         "default": 30
+      },
+      {
+         "type": "range",
+         "id": "card_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Slide Border Thickness",
+         "default": 5
+      },
+      {
+         "type": "checkbox",
+         "id": "card_shadow",
+         "label": "Slide Box Shadow"
+      },
+      {
+         "type": "checkbox",
+         "id": "card_hover",
+         "label": "Slide Hover Animation",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Slide Front Image Settings"
+      },
+      {
+         "type": "range",
+         "id": "front_image_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Slide Front Image Border Radius",
+         "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Card Title Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "title_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "title_font",
+        "label": "Card Title Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Title Size",
+        "default": 66
+      },
+      {
+        "type": "range",
+        "id": "title_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Title Size - Mobile",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "title_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Card Title Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "title_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Title Margin Top",
+        "default": 12
+      },
+      {
+        "type": "text_alignment",
+        "id": "title_align",
+        "label": "Card Title Align",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "title_align_mobile",
+        "label": "Card Title Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Navigation Settings"
+      },
+      {
+        "type": "range",
+        "id": "navigation_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "label": "Navigation Margin Top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "navigation_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "label": "Navigation Margin Top - Mobile",
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "Navigation Arrow Settings"
+      },
+      {
+        "type": "range",
+        "id": "arrow_size",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Arrow Size",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "arrow_size_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Arrow Size - Mobile",
+        "default": 28
+      },
+      {
+        "type": "header",
+        "content": "Navigation Star Settings"
+      },
+      {
+        "type": "range",
+        "id": "star_size",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Star Size",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "star_size_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Star Size - Mobile",
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "Slide Colors"
+      },
+      {
+        "type": "color",
+        "label": "Slide Background Color",
+        "id": "card_bg_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Slide Border Color",
+        "id": "slide_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Slide Title Color",
+        "id": "title_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Navigation Colors"
+      },
+      {
+        "type": "color",
+        "label": "Navigation Arrow Color",
+        "id": "arrow_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Navigation Star Color",
+        "id": "star_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Slide Content"
+          },
+          {
+            "type": "image_picker",
+            "id": "front_image",
+            "label": "Front Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "back_image",
+            "label": "Back Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Slide URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide Colors"
+          },
+          {
+            "type": "checkbox",
+            "id": "override",
+            "label": "Override Slide Colors"
+          },
+          {
+            "type": "color",
+            "label": "Slide Background Color",
+            "id": "card_bg_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Slide Border Color",
+            "id": "slide_border_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Slide Title Color",
+            "id": "title_color",
+            "default": "#000000"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slider Experiment",
+        "blocks": [
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

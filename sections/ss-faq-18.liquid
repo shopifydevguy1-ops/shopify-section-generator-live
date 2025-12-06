@@ -1,0 +1,1612 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign width = section.settings.width
+  assign content_width = section.settings.content_width
+  assign section_radius = section.settings.section_radius  
+  assign background_style = section.settings.background_style
+
+  assign cards_gap = section.settings.cards_gap
+  assign cards_gap_mobile = section.settings.cards_gap_mobile
+  assign cards_shadow = section.settings.cards_shadow
+  assign cards_shadow_color = section.settings.cards_shadow_color
+
+  assign card_radius = section.settings.card_radius
+  assign card_border_thickness = section.settings.card_border_thickness
+  assign card_border_color = section.settings.card_border_color
+
+  assign card_padding_horizontal = section.settings.card_padding_horizontal
+  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile
+  assign card_padding_vertical = section.settings.card_padding_vertical
+  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile 
+  assign card_bg_color = section.settings.card_bg_color
+  assign card_align = section.settings.card_align
+  assign card_align_mobile = section.settings.card_align_mobile
+
+  assign card_horizontal_align = ""
+  if card_align == "center"
+    assign card_horizontal_align = "center"
+  elsif card_align == "right"
+    assign card_horizontal_align = "end"
+  else
+    assign card_horizontal_align = "start"
+  endif
+
+  assign card_horizontal_align_mobile = ""
+  if card_align_mobile == "center"
+    assign card_horizontal_align_mobile = "center"
+  elsif card_align_mobile == "right"
+    assign card_horizontal_align_mobile = "end"
+  else
+    assign card_horizontal_align_mobile = "start"
+  endif
+
+  assign question_custom = section.settings.question_custom
+  assign question_font = section.settings.question_font
+  assign question_size = section.settings.question_size
+  assign question_size_mobile = section.settings.question_size_mobile
+  assign question_height = section.settings.question_height
+  assign question_color = section.settings.question_color
+  
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_height = section.settings.text_height
+  assign text_color = section.settings.text_color
+  assign text_mt = section.settings.text_mt
+  assign text_mt_mobile = section.settings.text_mt_mobile
+
+  assign buttons_gap = section.settings.buttons_gap
+  assign buttons_gap_mobile = section.settings.buttons_gap_mobile
+  assign buttons_mt = section.settings.buttons_mt
+  assign buttons_mt_mobile = section.settings.buttons_mt_mobile
+
+  assign button_custom = section.settings.button_custom
+  assign button_font = section.settings.button_font
+  assign button_size = section.settings.button_size
+  assign button_size_mobile = section.settings.button_size_mobile
+  assign button_height = section.settings.button_height
+  assign button_padding_vertical = section.settings.button_padding_vertical
+  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile
+  assign button_padding_horizontal = section.settings.button_padding_horizontal
+  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile
+  assign button_radius = section.settings.button_radius
+  assign button_border_thickness = section.settings.button_border_thickness
+  
+  assign first_button_color = section.settings.first_button_color
+  assign first_button_hover_color = section.settings.first_button_hover_color
+  assign first_button_border_color = section.settings.first_button_border_color
+  assign first_button_border_hover_color = section.settings.first_button_border_hover_color
+  assign first_button_bg_color = section.settings.first_button_bg_color
+  assign first_button_bg_hover_color = section.settings.first_button_bg_hover_color
+  assign first_button_style = section.settings.first_button_style
+
+  assign second_button_color = section.settings.second_button_color
+  assign second_button_hover_color = section.settings.second_button_hover_color
+  assign second_button_border_color = section.settings.second_button_border_color
+  assign second_button_border_hover_color = section.settings.second_button_border_hover_color
+  assign second_button_bg_color = section.settings.second_button_bg_color
+  assign second_button_bg_hover_color = section.settings.second_button_bg_hover_color
+  assign second_button_style = section.settings.second_button_style
+
+  
+  assign column_first_count = 0
+  assign column_second_count = 0
+  assign column_third_count = 0
+
+  for block in section.blocks
+    if block.settings.column == "1"
+      assign column_first_count = column_first_count | plus: 1
+    elsif block.settings.column == "2"
+      assign column_second_count = column_second_count | plus: 1  
+    elsif block.settings.column == "3"
+      assign column_third_count = column_third_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  {{  question_font | font_face: font_display: 'swap' }}
+  {{  text_font | font_face: font_display: 'swap' }}
+  {{  button_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .faq-cards-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ cards_gap_mobile }}px;
+    position: relative;
+  }
+
+  .faq-column-{{ section.id }} {
+    display: flex;
+    gap: {{ cards_gap_mobile }}px;
+    flex-direction: column;
+  }
+
+  .faq-card-{{ section.id }} {
+    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;
+    border: {{ card_border_thickness }}px solid {{ card_border_color }};
+    border-radius: {{ card_radius }}px;
+    background-color: {{ card_bg_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .faq-question-{{ section.id }} {
+    margin: 0;    
+    text-align: {{ card_align_mobile }};
+    text-transform: unset;
+    word-wrap: break-word;
+    font-size: {{ question_size_mobile }}px;
+    font-weight: 700;
+    line-height: {{ question_height }}%;
+    color: {{ question_color }};
+  }
+
+  .faq-text-{{ section.id }} {
+    margin-top: {{ text_mt_mobile }}px;
+    text-align: {{ card_align_mobile }};
+  }
+
+  .faq-text-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+    text-decoration: none;
+  }
+
+  
+  .faq-buttons-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: {{ card_horizontal_align_mobile }};
+    gap: {{ buttons_gap_mobile }}px;
+    margin-top: {{ buttons_mt_mobile }}px;
+  }
+
+  .faq-first-button-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: fit-content;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    font-size: {{ button_size_mobile }}px;
+    color: {{ first_button_color }};
+    line-height: {{ button_height }}%;
+    text-align: center;
+    text-transform: unset;
+    text-decoration: none;
+    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;
+    border-radius: {{ button_radius }}px;
+    transition: all 0.25s ease 0s;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    font-weight: 700;
+    min-width: max-content;
+  }
+
+  .faq-first-button-inner-{{ section.id }} {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .faq-first-button-{{ section.id }}:hover {
+    color: {{ first_button_hover_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .faq-first-button-{{ section.id }} svg {
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+  }
+
+  .faq-first-button-{{ section.id }} svg path {
+    fill: {{ first_button_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .faq-first-button-{{ section.id }}:hover svg path {
+    fill: {{ first_button_hover_color }};
+    transition: all 0.25s ease 0s;
+  }  
+
+  .faq-second-button-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: fit-content;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    font-size: {{ button_size_mobile }}px;
+    color: {{ second_button_color }};
+    line-height: {{ button_height }}%;
+    text-align: center;
+    text-transform: unset;
+    text-decoration: none;
+    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;
+    border-radius: {{ button_radius }}px;
+    transition: all 0.25s ease 0s;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    font-weight: 700;
+    min-width: max-content;
+  }
+
+  .faq-second-button-inner-{{ section.id }} {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .faq-second-button-{{ section.id }}:hover {
+    color: {{ second_button_hover_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .faq-second-button-{{ section.id }} svg {
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+  }
+
+  .faq-second-button-{{ section.id }} svg path {
+    fill: {{ second_button_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .faq-second-button-{{ section.id }}:hover svg path {
+    fill: {{ second_button_hover_color }};
+    transition: all 0.25s ease 0s;
+  } 
+
+  
+  .faq-text-{{ section.id }} a {
+    text-decoration: underline;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .faq-cards-{{ section.id }} {
+      flex-direction: row;
+      gap: {{ cards_gap }}px;
+    }
+
+    .faq-column-{{ section.id }} {     
+      gap: {{ cards_gap }}px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .faq-card-{{ section.id }} {
+      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;
+    }
+
+    .faq-question-{{ section.id }} { 
+      text-align: {{ card_align }};
+      font-size: {{ question_size }}px;
+    }
+
+    .faq-text-{{ section.id }} {
+      margin-top: {{ text_mt }}px;
+      text-align: {{ card_align }};
+    }
+
+    .faq-text-{{ section.id }} * {
+      font-size: {{ text_size }}px;
+    }
+    
+    .faq-buttons-{{ section.id }} {
+      justify-content: {{ card_horizontal_align }};
+      gap: {{ buttons_gap }}px;
+      margin-top: {{ buttons_mt }}px;
+    }
+
+    .faq-first-button-{{ section.id }} {
+      font-size: {{ button_size }}px;
+      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;
+    }    
+
+    .faq-second-button-{{ section.id }} {
+      font-size: {{ button_size }}px;
+      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;
+    }  
+  }
+  
+{%- endstyle -%}
+
+{% if width == 'custom' %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% elsif width == 'page' %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: var(--page-width);
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if question_custom %}
+  <style>
+    .faq-question-{{ section.id }} {
+      font-family: {{ question_font.family }}, {{ question_font.fallback_families }};
+      font-weight: {{ question_font.weight }};
+      font-style: {{ question_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if button_custom %}
+  <style>
+    .faq-first-button-{{ section.id }} {
+      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};
+      font-weight: {{ button_font.weight }};
+      font-style: {{ button_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if button_custom %}
+  <style>
+    .faq-second-button-{{ section.id }} {
+      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};
+      font-weight: {{ button_font.weight }};
+      font-style: {{ button_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+    .faq-text-{{ section.id }} * {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+
+{% if cards_shadow %}
+  <style>
+    .faq-card-{{ section.id }} {
+      box-shadow: 2px 2px 12px {{ cards_shadow_color }}0d;
+    }
+
+    .faq-media-{{ section.id }} {
+      box-shadow: 2px 2px 12px {{ cards_shadow_color }}0d;
+    }
+      
+    .faq-media-card-{{ section.id }} {
+      box-shadow: 2px 2px 12px {{ cards_shadow_color }}0d;
+    }
+
+    @media(min-width: 1024px) {
+      .faq-card-{{ section.id }}:hover {
+        z-index: 1;
+        box-shadow: 3px 3px 16px {{ cards_shadow_color }}40;
+        transition: all 0.25s ease 0s;
+      }  
+
+      .faq-media-{{ section.id }}:hover {
+        z-index: 1;
+        box-shadow: 3px 3px 16px {{ cards_shadow_color }}40;
+        transition: all 0.25s ease 0s;
+      }
+
+      .faq-media-card-{{ section.id }}:hover {
+        z-index: 1;
+        transition: all 0.25s ease 0s;
+        box-shadow: 3px 3px 16px {{ cards_shadow_color }}40;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if first_button_style == "non_outline" or first_button_style == "non_outline_arrow" %}
+  <style>
+    .faq-first-button-{{ section.id }} {
+      background-color: {{ first_button_bg_color }};
+    }
+
+    .faq-first-button-{{ section.id }}:hover {
+      background-color: {{ first_button_bg_hover_color }};
+    }
+  </style>
+{% elsif first_button_style == "outline" or first_button_style == "outline_arrow" %}
+  <style>
+    .faq-first-button-{{ section.id }} {
+      background-color: {{ first_button_bg_color }};
+      border: {{ button_border_thickness }}px solid {{ first_button_border_color }};
+    }
+
+    .faq-first-button-{{ section.id }}:hover {
+      background-color: {{ first_button_bg_hover_color }};
+      border: {{ button_border_thickness }}px solid {{ first_button_border_hover_color }};
+    }
+  </style>
+{% elsif first_button_style == "link" %}
+  <style>
+    .faq-first-button-{{ section.id }} {
+      padding: 0px !important;
+    }
+  </style>
+{% endif %}
+
+{% if second_button_style == "non_outline" or second_button_style == "non_outline_arrow" %}
+  <style>
+    .faq-second-button-{{ section.id }} {
+      background-color: {{ second_button_bg_color }};
+    }
+
+    .faq-second-button-{{ section.id }}:hover {
+      background-color: {{ second_button_bg_hover_color }};
+    }
+  </style>
+{% elsif second_button_style == "outline" or second_button_style == "outline_arrow" %}
+  <style>
+    .faq-second-button-{{ section.id }} {
+      background-color: {{ second_button_bg_color }};
+      border: {{ button_border_thickness }}px solid {{ second_button_border_color }};
+    }
+
+    .faq-second-button-{{ section.id }}:hover {
+      background-color: {{ second_button_bg_hover_color }};
+      border: {{ button_border_thickness }}px solid {{ second_button_border_hover_color }};
+    }
+  </style>
+{% elsif second_button_style == "link" %}
+  <style>
+    .faq-second-button-{{ section.id }} {
+      padding: 0px !important;
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} faq-{{ section.id }}" {% if background_style == 'solid' %}style="background-color:{{ background_color }};"{% else %} style="background-image: {{ background_gradient }};"{% endif %}>
+    <div class="section-{{ section.id }}-settings">         
+      <div class="faq-cards-{{ section.id }}">
+        {% if column_first_count > 0 %}
+          <div class="faq-column-{{ section.id }}">
+            {% for block in section.blocks %}              
+              {% if block.settings.column == '1' %}
+                <div class="faq-card-{{ section.id }}">
+                  {% if block.settings.use_second_border %}<div class="faq-card-{{ section.id }}">{% endif %}
+                  {% if block.settings.question != blank %}
+                    <p class="faq-question-{{ section.id }}">{{ block.settings.question }}</p>
+                  {% endif %}
+                  {% if block.settings.text %}
+                    <div class="faq-text-{{ section.id }}">{{ block.settings.text }}</div>
+                  {% endif %}
+                  <div class="faq-buttons-{{ section.id }}">
+                    {% if block.settings.first_button != blank %}
+                      <{% if block.settings.first_url != blank %}a href="{{ block.settings.first_url }}"{% else %}div{% endif %} class="faq-first-button-{{ section.id }}">
+                        <p class="faq-first-button-inner-{{ section.id }}">
+                        {{ block.settings.first_button }}
+                        {% if first_button_style == "non_outline_arrow" or first_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.first_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                    {% if block.settings.second_button != blank %}
+                      <{% if block.settings.second_url != blank %}a href="{{ block.settings.second_url }}"{% else %}div{% endif %} class="faq-second-button-{{ section.id }}">
+                        <p class="faq-second-button-inner-{{ section.id }}">
+                        {{ block.settings.second_button }}
+                        {% if second_button_style == "non_outline_arrow" or second_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.second_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                  </div>
+                  {% if block.settings.use_second_border %}</div>{% endif %}
+                </div>
+              {% endif %}                           
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if column_second_count > 0 %}
+          <div class="faq-column-{{ section.id }}">
+            {% for block in section.blocks %}              
+              {% if block.settings.column == '2' %}
+                <div class="faq-card-{{ section.id }}">
+                  {% if block.settings.use_second_border %}<div class="faq-card-{{ section.id }}">{% endif %}
+                  {% if block.settings.question != blank %}
+                    <p class="faq-question-{{ section.id }}">{{ block.settings.question }}</p>
+                  {% endif %}
+                  {% if block.settings.text %}
+                    <div class="faq-text-{{ section.id }}">{{ block.settings.text }}</div>
+                  {% endif %}
+                  <div class="faq-buttons-{{ section.id }}">
+                    {% if block.settings.first_button != blank %}
+                      <{% if block.settings.first_url != blank %}a href="{{ block.settings.first_url }}"{% else %}div{% endif %} class="faq-first-button-{{ section.id }}">
+                        <p class="faq-first-button-inner-{{ section.id }}">
+                        {{ block.settings.first_button }}
+                        {% if first_button_style == "non_outline_arrow" or first_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.first_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                    {% if block.settings.second_button != blank %}
+                      <{% if block.settings.second_url != blank %}a href="{{ block.settings.second_url }}"{% else %}div{% endif %} class="faq-second-button-{{ section.id }}">
+                        <p class="faq-second-button-inner-{{ section.id }}">
+                        {{ block.settings.second_button }}
+                        {% if second_button_style == "non_outline_arrow" or second_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.second_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                  </div>
+                  {% if block.settings.use_second_border %}</div>{% endif %}
+                </div>
+              {% endif %}                           
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if column_third_count > 0 %}
+          <div class="faq-column-{{ section.id }}">
+            {% for block in section.blocks %}              
+              {% if block.settings.column == '3' %}
+                <div class="faq-card-{{ section.id }}">
+                  {% if block.settings.use_second_border %}<div class="faq-card-{{ section.id }}">{% endif %}
+                  {% if block.settings.question != blank %}
+                    <p class="faq-question-{{ section.id }}">{{ block.settings.question }}</p>
+                  {% endif %}
+                  {% if block.settings.text %}
+                    <div class="faq-text-{{ section.id }}">{{ block.settings.text }}</div>
+                  {% endif %}
+                  <div class="faq-buttons-{{ section.id }}">
+                    {% if block.settings.first_button != blank %}
+                      <{% if block.settings.first_url != blank %}a href="{{ block.settings.first_url }}"{% else %}div{% endif %} class="faq-first-button-{{ section.id }}">
+                        <p class="faq-first-button-inner-{{ section.id }}">
+                        {{ block.settings.first_button }}
+                        {% if first_button_style == "non_outline_arrow" or first_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.first_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                    {% if block.settings.second_button != blank %}
+                      <{% if block.settings.second_url != blank %}a href="{{ block.settings.second_url }}"{% else %}div{% endif %} class="faq-second-button-{{ section.id }}">
+                        <p class="faq-second-button-inner-{{ section.id }}">
+                        {{ block.settings.second_button }}
+                        {% if second_button_style == "non_outline_arrow" or second_button_style == "outline_arrow" %}
+                            <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                              <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                            </svg>
+                          {% endif %}
+                        </p>
+                      </{% if block.settings.second_url != blank %}a{% else %}div{% endif %}>
+                    {% endif %}
+                  </div>
+                  {% if block.settings.use_second_border %}</div>{% endif %}
+                </div>
+              {% endif %}                           
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>      
+    </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "SS - FAQ #18",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "⚠️ Save to display section correctly"
+      },    
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "cards_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "cards_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 16
+      }, 
+      {
+        "type": "header",
+        "content": "Card"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_advanced",
+        "label": "Advanced settings",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "card_padding_horizontal",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal",
+        "default": 16,
+        "visible_if": "{{ section.settings.card_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "card_padding_horizontal_mobile",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal - mobile",
+        "default": 16,
+        "visible_if": "{{ section.settings.card_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical",
+        "default": 16,
+        "visible_if": "{{ section.settings.card_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical_mobile",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical - mobile",
+        "default": 16,
+        "visible_if": "{{ section.settings.card_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "card_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 8
+      },   
+      {
+        "type": "range",
+        "id": "card_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "cards_shadow",
+        "label": "Use shadow",
+        "default": true
+      },
+      {
+        "type": "text_alignment",
+        "id": "card_align",
+        "label": "Alignment"
+      },
+      {
+        "type": "text_alignment",
+        "id": "card_align_mobile",
+        "label": "Alignment - mobile"
+      },     
+      {
+        "type": "header",
+        "content": "Question"
+      },
+      {
+        "type": "checkbox",
+        "id": "question_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "question_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4",
+        "visible_if": "{{ section.settings.question_custom }}"
+      },
+      {
+        "type": "range",
+        "id": "question_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "question_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 18
+      },
+      {
+        "type": "checkbox",
+        "id": "question_advanced",
+        "label": "Advanced settings"
+      },
+      {
+        "type": "range",
+        "id": "question_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 150,
+        "visible_if": "{{ section.settings.question_advanced }}"
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4",
+        "visible_if": "{{ section.settings.text_custom }}"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 14
+      },
+      {
+        "type": "checkbox",
+        "id": "text_advanced",
+        "label": "Advanced settings"
+      },
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 150,
+        "visible_if": "{{ section.settings.text_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "text_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 16,
+        "visible_if": "{{ section.settings.text_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "text_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 12,
+        "visible_if": "{{ section.settings.text_advanced }}"
+      },    
+        {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "checkbox",
+        "id": "button_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "button_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4",
+        "visible_if": "{{ section.settings.button_custom }}"
+      },
+      {
+        "type": "range",
+        "id": "button_size",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "button_size_mobile",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 14
+      },
+      {
+        "type": "checkbox",
+        "id": "button_advanced",
+        "label": "Advanced settings",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "button_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 100,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical",
+        "default": 16,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical - mobile",
+        "default": 16,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "button_padding_horizontal",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal",
+        "default": 20,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "button_padding_horizontal_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal - mobile",
+        "default": 16,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "button_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "button_border_thickness",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "buttons_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 10,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "buttons_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 10,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "buttons_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 24,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "range",
+        "id": "buttons_mt_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 20,
+        "visible_if": "{{ section.settings.button_advanced }}"
+      },
+      {
+        "type": "header",
+        "content": "First button"
+      },
+      {
+        "type": "select",
+        "id": "first_button_style",
+        "label": "Button style",
+        "default": "outline",
+        "options": [
+          {
+            "label": "Link",
+            "value": "link"
+          },
+          {
+            "label": "Non-outline",
+            "value": "non_outline"
+          },
+          {
+            "label": "Non-outline & arrow",
+            "value": "non_outline_arrow"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          },
+          {
+            "label": "Outline & arrow",
+            "value": "outline_arrow"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Second button"
+      },
+      {
+        "type": "select",
+        "id": "second_button_style",
+        "label": "Button style",
+        "default": "outline",
+        "options": [
+          {
+            "label": "Link",
+            "value": "link"
+          },
+          {
+            "label": "Non-outline",
+            "value": "non_outline"
+          },
+          {
+            "label": "Non-outline & arrow",
+            "value": "non_outline_arrow"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          },
+          {
+            "label": "Outline & arrow",
+            "value": "outline_arrow"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Card colors"
+      },      
+      {
+        "type": "color",
+        "label": "Question",
+        "id": "question_color",
+        "default": "#121212"
+      },    
+      {
+        "type": "color",
+        "label": "Answer",
+        "id": "text_color",
+        "default": "#121212"
+      },     
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "card_bg_color",
+        "default": "#FFFFFF"
+      },  
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "card_border_color",
+        "default": "#F0F0F0"
+      },   
+      {
+        "type": "color",
+        "label": "Shadow",
+        "id": "cards_shadow_color",
+        "default": "#D2D2D2"
+      },   
+      {
+        "type": "header",
+        "content": "First button colors"
+      },
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "first_button_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Text hover",
+        "id": "first_button_hover_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "first_button_bg_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Background hover",
+        "id": "first_button_bg_hover_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "first_button_border_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Border hover",
+        "id": "first_button_border_hover_color",
+        "default": "#121212"
+      },
+      {
+        "type": "header",
+        "content": "Second button colors"
+      },
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "second_button_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Text hover",
+        "id": "second_button_hover_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "second_button_bg_color"
+      },
+      {
+        "type": "color",
+        "label": "Background hover",
+        "id": "second_button_bg_hover_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "second_button_border_color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "label": "Border hover",
+        "id": "second_button_border_hover_color",
+        "default": "#121212"
+      }, 
+      {
+        "type": "header",
+        "content": "Section colors"
+      },
+      {
+        "type": "select",
+        "id": "background_style",
+        "label": "Background style",
+        "default": "solid",
+        "options": [
+          {
+            "label": "Solid",
+            "value": "solid"
+          },
+          {
+            "label": "Gradient",
+            "value": "gradient"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "background_color",
+        "default": "#FFFFFF",
+        "visible_if": "{{ section.settings.background_style == 'solid' }}"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Gradient",
+        "default": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "visible_if": "{{ section.settings.background_style == 'gradient' }}"
+      },  
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#121212"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Sides - mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Sides - mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "default": "page",
+        "options": [
+          {
+            "label": "Page",
+            "value": "page"
+          },
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Content width",
+        "default": 1200,
+        "visible_if": "{{ section.settings.width == 'custom' }}"
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "Question",
+        "settings": [     
+          {
+            "type": "select",
+            "id": "column",
+            "label": "Column",
+            "default": "1",
+            "options": [
+              {
+                "label": "1",
+                "value": "1"
+              },
+              {
+                "label": "2",
+                "value": "2"
+              },
+              {
+                "label": "3",
+                "value": "3"
+              }
+            ]
+          },        
+          {
+            "type": "text",
+            "id": "question", 
+            "label": "Question",
+            "default": "Question"
+          }, 
+          {
+            "type": "richtext",
+            "id": "text", 
+            "label": "Answer",
+            "default": "<p>Answer</p>"
+          },
+          {
+            "type": "text",
+            "id": "first_button",
+            "label": "First button",
+            "info": "Leave the label blank to hide the button."
+          },
+          {
+            "type": "url",
+            "id": "first_url",
+            "label": "First button link"
+          },
+          {
+            "type": "text",
+            "id": "second_button",
+            "label": "Second button",
+            "info": "Leave the label blank to hide the button."
+          },
+          {
+            "type": "url",
+            "id": "second_url",
+            "label": "Second button link"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_second_border",
+            "label": "Use second border"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - FAQ #18",
+        "blocks": [
+          {
+            "type": "card",
+            "settings": {
+              "column": "1",
+              "question": "How can I use my discount code?",
+              "text": "<p>During checkout, look for the designated discount code field. Simply enter your code and click 'apply' or a similar button.</p>"
+            }
+          },       
+          {
+            "type": "card",
+            "settings": {
+              "column": "2",
+              "question": "What is the shipping policy?",
+              "text": "<p>Once your order is placed, you will receive a confirmation email letting you know that our fulfillment team has received your order. Rates and delivery times will vary depending on your selection and location.</p>"
+            }
+          },       
+          {
+            "type": "card",
+            "settings": {
+              "column": "3",
+              "question": "I placed an order where is it?",
+              "text": "<p>All items are dispatched from our warehouse within 48 hours of placing your order, during business hours. If you place an order on a Friday afternoon or over the weekend, it will be sent out on the next business day.</p>"
+            }
+          },   
+          {
+            "type": "card",
+            "settings": {
+              "column": "1",
+              "question": "How long do I have to return my order?",
+              "text": "<p>For US orders you have 30 days to return your order.</p>"
+            }
+          },      
+          {
+            "type": "card",
+            "settings": {
+              "column": "2"
+            }
+          },             
+          {
+            "type": "card",
+            "settings": {
+              "column": "3",
+              "first_button": "Our blog",
+              "second_button": "Contact us",
+              "use_second_border": true
+            }
+          }                 
+        ]
+      }
+    ]
+  }
+{% endschema %}

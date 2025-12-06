@@ -1,0 +1,1341 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+  assign heading_padding_vertical = section.settings.heading_padding_vertical
+  assign heading_padding_vertical_mobile = section.settings.heading_padding_vertical_mobile
+  assign heading_bg_color = section.settings.heading_bg_color
+
+  assign layout_gap_mobile = section.settings.layout_gap_mobile
+  assign layout_gap = section.settings.layout_gap
+  assign layout_border_color = section.settings.layout_border_color
+  assign layout_border = section.settings.layout_border
+
+  assign image_border_color = section.settings.image_border_color
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_radius = section.settings.image_radius
+  assign image_ratio = section.settings.image_ratio
+  assign image_ratio_mobile = section.settings.image_ratio_mobile
+
+  assign number_size = section.settings.number_size
+  assign number_size_mobile = section.settings.number_size_mobile
+  assign number_color = section.settings.number_color
+  assign number_custom = section.settings.number_custom
+  assign number_font = section.settings.number_font
+  assign number_height = section.settings.number_height
+  assign number_align = section.settings.number_align
+  assign number_align_mobile = section.settings.number_align_mobile
+
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_color = section.settings.title_color
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_height = section.settings.title_height
+  assign title_align_mobile = section.settings.title_align_mobile
+  assign title_align = section.settings.title_align
+  assign title_mt = section.settings.title_mt
+
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_height = section.settings.text_height
+  assign text_align_mobile = section.settings.text_align_mobile
+  assign text_align = section.settings.text_align
+  assign text_mt = section.settings.text_mt
+  assign text_mt_mobile = section.settings.text_mt_mobile
+
+  assign stars_mt = section.settings.stars_mt
+  assign stars_icon = section.settings.stars_icon
+  assign stars_size = section.settings.stars_size
+  assign stars_color = section.settings.stars_color
+  assign stars_align_mobile = section.settings.stars_align_mobile
+  assign stars_align = section.settings.stars_align
+  
+-%}
+
+{%- style -%}
+
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  number_font | font_face: font_display: 'swap' }}
+  {{  title_font | font_face: font_display: 'swap' }}
+  {{  text_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .steps-heading-{{ section.id }} {
+    background-color: {{ heading_bg_color }};
+    text-align: {{ heading_align_mobile }};
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+    padding-top: {{ heading_padding_vertical_mobile }}px;
+    padding-bottom: {{ heading_padding_vertical_mobile }}px;
+  }
+
+  .steps-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .steps-step-{{ section.id }}:not(:first-child) {
+    border-top: {{ layout_border }}px solid {{ layout_border_color }};
+  }
+  
+
+  .steps-inner-{{ section.id }} {
+    display: flex;
+    align-items: stretch;
+    gap: {{ layout_gap_mobile }}px;
+    border-bottom: {{ layout_border }}px solid {{ layout_border_color }};
+  }
+
+  .steps-left-{{ section.id }},
+  .steps-right-{{ section.id }} {
+    flex: 1 0;
+  }
+
+  .steps-right-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .steps-desktop-{{ section.id }} {
+    display: none;
+  }
+
+  .steps-mobile-{{ section.id }} {
+    padding-bottom: {{ layout_gap_mobile | times: 0.75 | round: 0 }}px;
+  }
+
+  .steps-image-{{ section.id }} {
+    width: 100%;
+    border-radius: {{ image_radius }}px;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  .steps-image-{{ section.id }} img,
+  .steps-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .steps-image-{{ section.id }} svg {
+    background-color: #AEAEAE;
+  }
+
+  .steps-number-{{ section.id }} {
+    margin: 0;
+    display: block;
+    width: 100%;
+    text-align: {{ number_align_mobile }};
+    font-size: {{ number_size_mobile }}px;
+    color: {{ number_color }};
+    line-height: {{ number_height }}%;
+    text-transform: unset;
+    font-style: italic;
+  }
+
+  .steps-title-{{ section.id }} {
+    display: block;
+    width: 100%;
+    text-align: {{ title_align_mobile }};
+    margin: 0;
+    margin-top: {{ title_mt | times: 0.75 | round: 0 }}px;
+    font-size: {{ title_size_mobile }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    text-transform: unset;
+  }
+
+  .steps-text-{{ section.id }} {
+    text-align: {{ text_align_mobile }};
+    margin-top: {{ text_mt_mobile }}px;
+  }
+
+  .steps-text-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+  }
+
+  .steps-stars-{{ section.id }} {
+    margin-top: {{ stars_mt | times: 0.75 | round: 0 }}px;
+    display: flex;
+    align-items: center;
+    justify-content: {{ stars_align_mobile }};
+    gap: 1px;
+  }
+
+  .steps-stars-{{ section.id }} svg,
+  .steps-stars-{{ section.id }} img {
+    display: block;
+    width: {{ stars_size }}px;
+    height: {{ stars_size }}px;
+    object-fit: cover;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .steps-heading-{{ section.id }} {
+      text-align: {{ heading_align }};
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+      padding-top: {{ heading_padding_vertical }}px;
+      padding-bottom: {{ heading_padding_vertical }}px;
+    }
+
+    .steps-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .steps-inner-{{ section.id }} {
+      gap: {{ layout_gap }}px;
+      border: 0px;
+    }
+    .steps-desktop-{{ section.id }} {
+      display: block;
+    }
+
+    .steps-mobile-{{ section.id }} {
+      display: none;
+    }
+
+    .steps-number-{{ section.id }} {
+      text-align: {{ number_align }};
+      font-size: {{ number_size }}px;
+    }
+
+    .steps-title-{{ section.id }} {
+      text-align: {{ title_align }};
+      margin-top: {{ title_mt }}px;
+      font-size: {{ title_size }}px;
+    }
+
+    .steps-text-{{ section.id }} {
+      text-align: {{ text_align }};
+      margin-top: {{ text_mt }}px;
+    }
+  
+    .steps-text-{{ section.id }} * {
+      font-size: {{ text_size }}px;
+    }
+
+    .steps-stars-{{ section.id }} {
+      margin-top: {{ stars_mt }}px;
+      justify-content: {{ stars_align }};
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if heading_custom %}
+  <style>
+    .steps-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if number_custom %}
+  <style>
+    .steps-number-{{ section.id }} {
+      font-family: {{ number_font.family }}, {{ number_font.fallback_families }};
+      font-weight: {{ number_font.weight }};
+      font-style: {{ number_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if title_custom %}
+  <style>
+    .steps-title-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+    .steps-text-{{ section.id }} * {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio_mobile == "portrait" %}
+  <style>
+    .steps-image-{{ section.id }} {
+     aspect-ratio: 9.6/11; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "landscape" %}
+  <style>
+    .steps-image-{{ section.id }}{
+     aspect-ratio: 12/9; 
+    }
+  </style>
+{% elsif image_ratio_mobile == "square" %}
+  <style>
+    .steps-image-{{ section.id }} {
+     aspect-ratio: 12/12; 
+    }
+  </style>
+{% else%}
+  <style>
+    .steps-image-{{ section.id }} {
+     aspect-ratio: auto; 
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio == "portrait" %}
+  <style>
+    @media(min-width: 1024px) {
+     .steps-image-{{ section.id }} {
+       aspect-ratio: 9.6/11; 
+      } 
+    }
+  </style>
+{% elsif image_ratio == "landscape" %}
+  <style>
+    @media(min-width: 1024px) {
+      .steps-image-{{ section.id }}{
+       aspect-ratio: 12/9; 
+      }
+    }
+  </style>
+{% elsif image_ratio == "square" %}
+  <style>
+    @media(min-width: 1024px) {
+      .steps-image-{{ section.id }} {
+       aspect-ratio: 12/12; 
+      }
+    }
+  </style>
+{% else%}
+  <style>
+    @media(min-width: 1024px) {
+      .steps-image-{{ section.id }} {
+       aspect-ratio: auto; 
+      }
+    }
+  </style>
+{% endif %}
+
+{% for block in section.blocks %}
+  {% if block.settings.reverse %}
+    <style>
+      .steps-inner-{{ block.id }} {
+        flex-direction: row-reverse;
+      }
+    </style>
+  {% endif %}
+{% endfor %}
+
+<div class="section-{{ section.id }} steps-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    {% if heading != blank %}
+      <div class="steps-heading-{{ section.id }}">
+        {{ heading }}
+      </div>
+    {% endif %}
+    <div class="section-{{ section.id }}-settings">
+      {% for block in section.blocks %}
+        <div class="steps-step-{{ section.id }}">
+          <div class="steps-inner-{{ section.id }} steps-inner-{{ block.id }}">
+            <div class="steps-left-{{ section.id }}">
+              <div class="steps-image-{{ section.id }}">
+               {% if block.settings.image != blank %}
+                 <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+               {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+               {% endif %}
+             </div>
+            </div>
+            <div class="steps-right-{{ section.id }}">
+              <p class="steps-number-{{ section.id }}">{{ forloop.index }}.</p>
+              {% if block.settings.heading != blank %}
+                <h3 class="steps-title-{{ section.id }}">{{ block.settings.heading }}</h3>
+              {% endif %}
+              <div class="steps-desktop-{{ section.id }}">
+                {% if block.settings.text != blank %}
+                  <div class="steps-text-{{ section.id }}">
+                    {{ block.settings.text }}
+                  </div>
+                {% endif %}
+    
+                {% if block.settings.stars_count != 0 %}
+                  <div class="steps-stars-{{ section.id }}">
+                    {% if stars_icon != blank %}
+                      {% for item in (1..block.settings.stars_count) %}
+                        <img src="{{ stars_icon | image_url }}" alt="{{ stars_icon.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                      {% endfor %}
+                    {% else %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                        {% if block.settings.stars_count > 0 and block.settings.stars_count < 1  %}
+                          <defs>
+                            <linearGradient id="grad{{ section.id }}1">
+                              <stop offset="0%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="white" />
+                              <stop offset="100%" stop-color="white" />
+                            </linearGradient>
+                          </defs>
+                        {% endif %}
+                        <path {% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}url(#grad{{ section.id }}1){% elsif block.settings.stars_count > 0.5 %}{{ stars_color }}{% endif %}"></path>
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                        {% if block.settings.stars_count > 1 and block.settings.stars_count < 2  %}
+                          <defs>
+                            <linearGradient id="grad{{ section.id }}2">
+                              <stop offset="0%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="white" />
+                              <stop offset="100%" stop-color="white" />
+                            </linearGradient>
+                          </defs>
+                        {% endif %}
+                        <path {% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}url(#grad{{ section.id }}2){% elsif block.settings.stars_count > 1.5 %}{{ stars_color }}{% endif %}"></path>
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                        {% if block.settings.stars_count > 2 and block.settings.stars_count < 3  %}
+                          <defs>
+                            <linearGradient id="grad{{ section.id }}3">
+                              <stop offset="0%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="white" />
+                              <stop offset="100%" stop-color="white" />
+                            </linearGradient>
+                          </defs>
+                        {% endif %}
+                        <path {% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}url(#grad{{ section.id }}3){% elsif block.settings.stars_count > 2.5 %}{{ stars_color }}{% endif %}"></path>
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                        {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}
+                          <defs>
+                            <linearGradient id="grad{{ section.id }}4">
+                              <stop offset="0%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="white" />
+                              <stop offset="100%" stop-color="white" />
+                            </linearGradient>
+                          </defs>
+                        {% endif %}
+                        <path {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}url(#grad{{ section.id }}4){% elsif block.settings.stars_count > 3.5 %}{{ stars_color }}{% endif %}"></path>
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                        {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}
+                          <defs>
+                            <linearGradient id="grad{{ section.id }}5">
+                              <stop offset="0%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="{{ stars_color }}" />
+                              <stop offset="50%" stop-color="white" />
+                              <stop offset="100%" stop-color="white" />
+                            </linearGradient>
+                          </defs>
+                        {% endif %}
+                        <path {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}url(#grad{{ section.id }}5){% elsif block.settings.stars_count > 4.5 %}{{ stars_color }}{% endif %}"></path>
+                      </svg>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="steps-mobile-{{ section.id }}">
+          {% if block.settings.text != blank %}
+            <div class="steps-text-{{ section.id }}">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.stars_count != 0 %}
+            <div class="steps-stars-{{ section.id }}">
+              {% if stars_icon != blank %}
+                {% for item in (1..block.settings.stars_count) %}
+                  <img src="{{ stars_icon | image_url }}" alt="{{ stars_icon.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                {% endfor %}
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                  {% if block.settings.stars_count > 0 and block.settings.stars_count < 1  %}
+                    <defs>
+                      <linearGradient id="grad{{ section.id }}1">
+                        <stop offset="0%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="white" />
+                        <stop offset="100%" stop-color="white" />
+                      </linearGradient>
+                    </defs>
+                  {% endif %}
+                  <path {% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 0 and block.settings.stars_count < 1 %}url(#grad{{ section.id }}1){% elsif block.settings.stars_count > 0.5 %}{{ stars_color }}{% endif %}"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                  {% if block.settings.stars_count > 1 and block.settings.stars_count < 2  %}
+                    <defs>
+                      <linearGradient id="grad{{ section.id }}2">
+                        <stop offset="0%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="white" />
+                        <stop offset="100%" stop-color="white" />
+                      </linearGradient>
+                    </defs>
+                  {% endif %}
+                  <path {% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 1 and block.settings.stars_count < 2 %}url(#grad{{ section.id }}2){% elsif block.settings.stars_count > 1.5 %}{{ stars_color }}{% endif %}"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                  {% if block.settings.stars_count > 2 and block.settings.stars_count < 3  %}
+                    <defs>
+                      <linearGradient id="grad{{ section.id }}3">
+                        <stop offset="0%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="white" />
+                        <stop offset="100%" stop-color="white" />
+                      </linearGradient>
+                    </defs>
+                  {% endif %}
+                  <path {% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 2 and block.settings.stars_count < 3 %}url(#grad{{ section.id }}3){% elsif block.settings.stars_count > 2.5 %}{{ stars_color }}{% endif %}"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                  {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}
+                    <defs>
+                      <linearGradient id="grad{{ section.id }}4">
+                        <stop offset="0%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="white" />
+                        <stop offset="100%" stop-color="white" />
+                      </linearGradient>
+                    </defs>
+                  {% endif %}
+                  <path {% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 3 and block.settings.stars_count < 4  %}url(#grad{{ section.id }}4){% elsif block.settings.stars_count > 3.5 %}{{ stars_color }}{% endif %}"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                  {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}
+                    <defs>
+                      <linearGradient id="grad{{ section.id }}5">
+                        <stop offset="0%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="{{ stars_color }}" />
+                        <stop offset="50%" stop-color="white" />
+                        <stop offset="100%" stop-color="white" />
+                      </linearGradient>
+                    </defs>
+                  {% endif %}
+                  <path {% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}stroke="{{ stars_color }}"{% endif %} d="M10 0L12.9389 5.95492L19.5106 6.90983L14.7553 11.5451L15.8779 18.0902L10 15L4.12215 18.0902L5.24472 11.5451L0.489435 6.90983L7.06107 5.95492L10 0Z" fill="{% if block.settings.stars_count > 4 and block.settings.stars_count < 5  %}url(#grad{{ section.id }}5){% elsif block.settings.stars_count > 4.5 %}{{ stars_color }}{% endif %}"></path>
+                </svg>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Steps #2",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading Settings"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<h2>5 REASONS TO LOVE THE DAWN DRESS</h2>"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size - Mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align",
+        "label": "Heading Text Align",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "heading_align_mobile",
+        "label": "Heading Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "range",
+        "id": "heading_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Padding Vertical",
+        "default": 60
+      },
+      {
+         "type": "range",
+         "id": "heading_padding_vertical_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Heading Padding Vertical - Mobile",
+         "default": 36
+      },
+      {
+        "type": "header",
+        "content": "Layout Settings"
+      },
+      {
+         "type": "range",
+         "id": "layout_gap",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Layout Gap",
+         "default": 80
+      },
+      {
+         "type": "range",
+         "id": "layout_gap_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Layout Gap - Mobile",
+         "default": 40
+      },
+      {
+         "type": "range",
+         "id": "layout_border",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Border Thickness Between Steps - Mobile",
+         "default": 1
+      },
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_ratio_mobile",
+        "label": "Image Aspect Ratio - Mobile",
+        "default": "portrait",
+        "options": [
+          {
+            "label": "Portrait",
+            "value": "portrait"
+          },
+          {
+            "label": "Square",
+            "value": "square"
+          },
+          {
+            "label": "Landscape",
+            "value": "landscape"
+          },
+          {
+            "label": "Original",
+            "value": "original"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "image_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Image Border Radius",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "image_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Image Border Thickness",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Step Number Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "number_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "number_font",
+        "label": "Step Number Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "number_size",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Number Size",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "number_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Number Size - Mobile",
+        "default": 52
+      },
+      {
+        "type": "range",
+        "id": "number_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Step Number Line Height",
+        "default": 130
+      },
+      {
+        "type": "text_alignment",
+        "id": "number_align",
+        "label": "Step Number Text Align"
+      },
+      {
+        "type": "text_alignment",
+        "id": "number_align_mobile",
+        "label": "Step Number Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Step Title Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "title_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "title_font",
+        "label": "Title Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Title Size",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "title_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Title Size - Mobile",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "title_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Title Line Height",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "title_mt",
+        "min": 0,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Title Margin Top",
+        "default": 8
+      },
+      {
+        "type": "text_alignment",
+        "id": "title_align",
+        "label": "Title Text Align"
+      },
+      {
+        "type": "text_alignment",
+        "id": "title_align_mobile",
+        "label": "Title Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Step Text Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Step Text Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Text Size",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Text Size - Mobile",
+        "default": 18
+      },
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Step Text Line Height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "text_mt",
+        "min": 0,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Text Margin Top",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "text_mt_mobile",
+        "min": 0,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Step Text Margin Top - Mobile",
+        "default": 22
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_align",
+        "label": "Title Text Align"
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_align_mobile",
+        "label": "Title Text Align - Mobile",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Stars Settings"
+      },
+      {
+        "type": "image_picker",
+        "label": "Stars Icon",
+        "id": "stars_icon",
+        "info": "Replaces the default stars icon"
+      },
+      {
+        "type": "range",
+        "id": "stars_size",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "label": "Stars Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "stars_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Stars Margin Top",
+        "default": 12
+      },
+      {
+        "type": "select",
+        "id": "stars_align",
+        "label": "Stars Align",
+        "default": "start",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "stars_align_mobile",
+        "label": "Stars Align - Mobile",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Step Colors"
+      },
+      {
+        "type": "color",
+        "label": "Image Border Color",
+        "id": "image_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Number Color",
+        "id": "number_color",
+        "default": "#853423"
+      },
+      {
+        "type": "color",
+        "label": "Title Color",
+        "id": "title_color",
+        "default": "#853423"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "default": "#5c4841"
+      },
+      {
+        "type": "color",
+        "label": "Stars Color",
+        "id": "stars_color",
+        "default": "#5c4841"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#5c4841"
+      },
+      {
+        "type": "color",
+        "label": "Heading Background Color",
+        "id": "heading_bg_color",
+        "default": "#EDE2DF"
+      },
+      {
+        "type": "color",
+        "label": "Border Color Between Steps",
+        "id": "layout_border_color",
+        "default": "#E2DEDD"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 110
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "step",
+        "name": "Step",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Text</p>"
+          },
+          {
+            "type": "range",
+            "id": "stars_count",
+            "min": 0,
+            "max": 5,
+            "step": 0.5,
+            "label": "Stars Count",
+            "default": 5
+          },
+          {
+            "type": "checkbox",
+            "id": "reverse",
+            "label": "Block Reverse"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Steps #2",
+        "blocks": [
+          {
+            "type": "step",
+            "settings": {
+              "heading": "Effortlessly Chic",
+              "text": "<p>“It’s a great “throw on and go” dress that can be accessorized for all sorts of occasions.” <em>- Lauren</em></p>"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "heading": "Versatile",
+              "text": "<p>“It has quickly become my go-to dress for everything from a walk in the city to an evening out to a Saturday errand day.” <em>- Ellen</em></p>",
+              "reverse": true
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "heading": "Timeless",
+              "text": "<p>“How many Dawn dresses are too many? Asking for a friend. As always, the best dress, so happy with my purchase.” <em>- Alice</em></p>"
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "heading": "A Great Fit For Every Body",
+              "text": "<p>“Reviews said to size up for bigger chests and I’m glad I did because a M would have been too snug up top. The bottom is nice and roomy plus it adjusts so well - I wear it all the time and love it!” <em>- Danielle</em></p>",
+              "reverse": true
+            }
+          },
+          {
+            "type": "step",
+            "settings": {
+              "heading": "These Dresses Heal The Earth.",
+              "text": "<p>“As a person trying to rid myself of my fast fashion habit, I’m happy to add quality pieces from Christy Dawn to my wardrobe.” <em>- Courtney</em></p>"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

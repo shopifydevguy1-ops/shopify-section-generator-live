@@ -1,0 +1,447 @@
+<style>
+  .section-{{ section.id }}-padding {
+    max-width: var(--max-width);
+    margin:  var(--mt) auto var(--mb) auto;
+    padding: 0 1.5rem;
+    padding-top: var(--pt);
+    padding-bottom: var(--pb);
+  }
+
+  .image-wrapper {
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap:wrap;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 5rem;
+      padding-top: var(--pt-desktop);
+      padding-bottom: var(--pb-desktop);
+    }
+    .image-wrapper {
+      {% if section.settings.image_only %}
+          justify-content: center;
+          gap:20px;
+      {% else %}
+         justify-content: space-evenly;
+      {% endif %}
+    }
+  }
+</style>
+
+<div
+  style="
+    background-color:{{ section.settings.background-color }};
+    --max-width: {{ section.settings.section-width }}rem;
+    --mt: {{ section.settings.margin_top }}px;
+    --mb: {{ section.settings.margin_bottom }}px;
+    --pt: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    --pt-desktop: {{ section.settings.padding_top }}px;
+    --pb: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    --pb-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div
+    class="section-{{ section.id }}-padding"
+    data-autoplay-interval="{{ section.settings.autoplay_interval }}000"
+  >
+    <style></style>
+    {% if section.settings.title != blank %}
+      <div
+        style="
+          color: {{ section.settings.title_color }};
+          font-size: {{ section.settings.title_size }}px;
+          margin-bottom: {{ section.settings.title_margin_bottom }}px;
+          text-align: {{ section.settings.title_align }};
+        "
+      >
+        {{ section.settings.title }}
+      </div>
+    {% endif %}
+    <style>
+      .logos-grid-{{ section.id }} {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+      }
+      @media (min-width: 750px) {
+        .logos-grid-{{ section.id }} {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .logos-grid--image-only-{{ section.id }} {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <div
+      class="
+        logos-grid-{{ section.id }}
+        {% if section.settings.image_only %}
+        logos-grid--image-only-{{ section.id }}
+        {% endif %}
+      "
+    >
+      <style>
+        .logos-grid--image-only-{{ section.id }} .content-wrapper-{{ section.id }} {
+          display: none;
+        }
+      </style>
+      <div
+        class="content-wrapper-{{ section.id }}"
+        style="color: {{ section.settings.text_color }};"
+      >
+        <style>
+          .content-{{ section.id }} {
+            text-align: center;
+          }
+          @media (min-width: 750px) {
+            .content-{{ section.id }} {
+              text-align: left;
+            }
+          }
+        </style>
+        {% for block in section.blocks %}
+          <div
+            class="content-{{ section.id }}"
+            data-index="{{ forloop.index0 }}"
+            style="
+              font-size: {{ section.settings.font_size }}px;
+              {% if forloop.first == false %}
+                display: none;
+              {% endif %}
+            "
+          >
+            {{ block.settings.content | richtext }}
+          </div>
+        {% endfor %}
+      </div>
+      <style>
+        .clickable-image-{{ section.id }} {
+          cursor: pointer;
+          max-width: var(--max-width, 10rem);
+          margin: 1.6rem;
+          opacity: .5;
+          color: white;
+          transition: opacity .3s ease-in-out;
+        }
+        .clickable-image-{{ section.id }}--active,
+        .logos-grid--image-only-{{ section.id }} .clickable-image-{{ section.id }} {
+          opacity: 1;
+        }
+        .clickable-image-{{ section.id }} svg {
+          width: 100%;
+        }
+      </style>
+      <div
+        class="image-wrapper"
+        style=""
+      >
+        {% for block in section.blocks %}
+          {% if block.settings.image != blank %}
+            <img
+              class="clickable-image-{{ section.id }} clickable-image-{{ section.id }}--active"
+              style="--max-width: {{ section.settings.image_max_width }}px"
+              data-index="{{ forloop.index0 }}"
+              src="{{ block.settings.image | img_url: 'master' }}"
+              alt="{{ block.settings.image.alt }}"
+            >
+          {% else %}
+            <div
+              class="clickable-image-{{ section.id }} clickable-image-{{ section.id }}--active"
+              style="--max-width: {{ section.settings.image_max_width }}px"
+              data-index="{{ forloop.index0 }}"
+            >
+              {{ 'product-1' | placeholder_svg_tag: '' }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function sectionSetup() {
+      let section = document.querySelector('.section-{{ section.id }}-padding');
+      let images = section.querySelectorAll(
+        '.clickable-image-{{ section.id }}'
+      );
+      let content = section.querySelectorAll('.content-{{ section.id }}');
+      let index = 0;
+
+      let autoplayInterval;
+      let autoplayIntervalTime = parseInt(section.dataset.autoplayInterval);
+
+      images.forEach(function (image) {
+        image.addEventListener('click', function () {
+          index = this.dataset.index;
+          updateSlide();
+          if (autoplayInterval) clearInterval(autoplayInterval);
+        });
+      });
+
+      function updateSlide() {
+        images.forEach(function (image) {
+          image.classList.remove('clickable-image-{{ section.id }}--active');
+        });
+        content.forEach(function (content) {
+          content.style.display = 'none';
+        });
+        images[index].classList.add('clickable-image-{{ section.id }}--active');
+        content[index].style.display = 'block';
+      }
+
+      updateSlide(); // init
+      if (autoplayIntervalTime && autoplayIntervalTime > 0)
+        autoplayInterval = setInterval(function () {
+          index++;
+          if (index >= images.length) index = 0;
+
+          updateSlide();
+        }, autoplayIntervalTime);
+    }
+
+    sectionSetup();
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.detail.sectionId !== '{{ section.id }}') return;
+        sectionSetup();
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SS - Logo cloud",
+  "presets": [
+    {
+      "name": "SS - Logo cloud",
+      "blocks": [
+        {
+          "type": "logo",
+          "settings": {
+            "content": "<p>\"Analog keep your focus where it should be.\"</p>"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "content": "<p>\"Gets things done without getting in your way.\"</p>"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "content": "<p>\"We don’t need fancy apps or gimmicky journals.\"</p>"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "content": "<p>\"Analog is simple, unique, and effective.\"</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Optional Title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title font size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Title margin bottom",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "Title align",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Logo settings:"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_only",
+      "label": "Remove quotes and center images",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "label": "Autoplay interval (ms)",
+      "unit":"s",
+      "default": 5
+    },
+    {
+          "type": "range",
+          "id": "image_max_width",
+          "min": 10,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Image width",
+          "default": 90
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Text font size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#212121"
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#F3FAF5"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "logo",
+      "limit": 16,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

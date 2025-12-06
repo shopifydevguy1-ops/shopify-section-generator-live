@@ -1,0 +1,873 @@
+<header class="header">
+    <div class="container">
+      <div class="cover">
+        <div class="cover__image image">
+          <div class="image__cover">
+                {%- if section.settings.section_image -%}
+                    {{ section.settings.section_image | image_url: width: section.settings.section_image.width | image_tag: class: "image__nft", alt: section.settings.heading }}
+                {%- else -%}
+                    {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+          </div>
+        </div>
+        <div class="cover__content nft">
+          <h1 class="nft__title">{{section.settings.heading}}</h1>
+          <div class="nft__author-wrapper">
+            <div class="nft__author-logo-wrapper">
+                {%- if section.settings.author_logo -%}
+                    {{ section.settings.author_logo | image_url: width: section.settings.author_logo.width | image_tag: class: "nft__author-logo", alt: section.settings.heading }}
+                {%- else -%}
+                    {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+            </div>
+            <div class="nft__author-nickname">{{section.settings.author_nickname}}</div>
+          </div>
+          <div class="nft__price-wrapper">
+            <div class="current-price">
+              <div class="current-price__title">Current Price</div>
+              <div class="current-price__eth">
+                {{section.settings.price__eth}}
+                <span>{{section.settings.price__eth_units}}</span>
+              </div>
+              <div class="current-price__usd">{{section.settings.price_usd}}</div>
+            </div>
+            <div class="collection-info">
+              <div class="collection-info__title">Collection Info</div>
+              <div class="collection-info__wrapper-quantity-marketcap">
+                <div class="collection-info__quantity-wrapper">
+                  <div class="collection-info__quantity-all">{{section.settings.collection_quantity_all}}</div>
+                  <div class="collection-info__quantity-name">{{section.settings.collection_quantity_name}}</div>
+                </div>
+                <div class="collection-info__marketcap-wrapper">
+                  <div class="collection-info__marketcap-all">{{section.settings.collection_marketcap_all}}</div>
+                  <div class="collection-info__marketcap-name">{{section.settings.collection_marketcap_name}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="collection-info__button-wrapper">
+            <div class="button-wrapper">
+              <a href="{{section.settings.buynow_url}}" class="button button__buy-now">{{section.settings.buynow_text}}</a>
+            </div>
+            <div class="button-wrapper">
+              <a href="{{section.settings.seeall_url}}" class="button button__see-all">{{section.settings.seeall_text}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {% schema %}
+  {
+    "name": "NFT Hero 👾",
+    "tag": "header",
+    "class": "header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "section_image",
+        "label": "Logo Image"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default": "Bored champ collection"
+      },
+      {
+          "type": "header",
+          "content": "Author settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "author_logo",
+        "label": "Author Logo Image"
+      },
+      {
+        "type": "text",
+        "id": "author_nickname",
+        "label": "Author nickname",
+        "default": "@tommychief"
+      },
+      {
+        "type": "url",
+        "id": "author_url",
+        "label": "Author url"
+      },
+      {
+          "type": "header",
+          "content": "Product settings"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Product Collection"
+      },
+      {
+        "type": "text",
+        "id": "collection_quantity_all",
+        "label": "Collection Quantity All",
+        "default": "800"
+      },
+      {
+        "type": "text",
+        "id": "collection_quantity_name",
+        "label": "Collection Quantity Name",
+        "default": "NFTs"
+      },
+      {
+        "type": "text",
+        "id": "collection_marketcap_all",
+        "label": "Collection Marketplace All",
+        "default": "1.4M"
+      },
+      {
+        "type": "text",
+        "id": "collection_marketcap_name",
+        "label": "Collection Marketplace Name",
+        "default": "marketcap"
+      },
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Landing Product"
+      },
+      {
+        "type": "text",
+        "id": "price__eth",
+        "label": "Current Price",
+        "default": "5.00"
+      },
+      {
+        "type": "text",
+        "id": "price__eth_units",
+        "label": "Current Price Units",
+        "default": "ETH"
+      },
+      {
+        "type": "text",
+        "id": "price_usd",
+        "label": "Current Price USD",
+        "default": "$25.220"
+      },
+      {
+          "type": "header",
+          "content": "Button BUY NOW settings"
+      },
+      {
+        "type": "text",
+        "id": "buynow_text",
+        "label": "Button Text",
+        "default": "Buy now"
+      },
+      {
+        "type": "url",
+        "id": "buynow_url",
+        "label": "Button BUYNOW URL",
+        "default": "/"
+      },
+      {
+          "type": "header",
+          "content": "Button SEE ALL settings"
+      },
+      {
+        "type": "text",
+        "id": "seeall_text",
+        "label": "Button Text",
+        "default": "See all"
+      },
+      {
+        "type": "url",
+        "id": "seeall_url",
+        "label": "Button SEE ALL URL",
+        "default": "/"
+      },
+      {
+          "type": "header",
+          "content": "Body Color/Gradient settings"
+      },
+      {
+          "type": "color",
+          "id": "body_gradient_color_1",
+          "label": "Gradient color 1",
+          "default": "#621f64"
+      },
+      {
+          "type": "color",
+          "id": "body_gradient_color_2",
+          "label": "Gradient color 2",
+          "default": "#1a0421"
+      },
+      {
+          "type": "header",
+          "content": "Button Color/Gradient settings"
+      },
+      {
+          "type": "color",
+          "id": "button_gradient_color_1",
+          "label": "Gradient color 1",
+          "default": "#ea3bca"
+      },
+      {
+          "type": "color",
+          "id": "button_gradient_color_2",
+          "label": "Gradient color 2",
+          "default": "#a931ee"
+      },
+      {
+          "type": "color",
+          "id": "button_gradient_color_3",
+          "label": "Gradient color 3",
+          "default": "#7f5aec"
+      },
+      {
+          "type": "color",
+          "id": "button_gradient_color_4",
+          "label": "Gradient color 4",
+          "default": "#82a3f7"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_othore_font",
+        "default": false,
+        "label": "Use selected fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "default": "assistant_n4",
+        "label": "t:settings_schema.typography.settings.type_header_font.label",
+        "info": "t:settings_schema.typography.settings.type_header_font.info"
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - NFT Hero"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+    @font-face {
+    font-family: 'Cubest';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local('Cubest-Light'), url({{'Cubest-Light.woff2' | asset_url }}) format('woff2'),
+      url({{'Cubest-Light.woff' | asset_url }}) format('woff');
+  }
+
+  @font-face {
+    font-family: 'Cubest';
+    font-style: medium;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Cubest-Medium'), url({{'Cubest-Medium.woff2' | asset_url }}) format('woff2'),
+      url({{'Cubest-Medium.woff' | asset_url }}) format('woff');
+  }
+
+  @font-face {
+    font-family: 'Cubest';
+    font-style: bold;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Cubest-Bold'), url({{'Cubest-Bold.woff2' | asset_url }}) format('woff2'),
+      url({{'Cubest-Bold.woff' | asset_url }}) format('woff');
+  }
+
+  .image__cover::before {
+    content: '';
+    background-image: url({{'intersect.png' | asset_url }});
+    background-size: contain;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+  {%- if section.settings.use_othore_font -%}
+    {{ section.settings.type_header_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  body {
+    {%- if section.settings.use_othore_font -%}
+      font-family: {{section.settings.type_header_font.family}};
+      font-weight: {{section.settings.type_header_font.weight}};
+    {%-else-%}
+      font-family: 'Cubest', 'Arial', sans-serif;
+      font-weight: 300;
+    {%- endif -%}
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 12px;
+    background: linear-gradient(180.89deg, {{section.settings.body_gradient_color_1}} -3.07%, {{section.settings.body_gradient_color_2}} 103.61%);
+  }
+  .button {
+    {%- if section.settings.use_othore_font -%}
+      font-family: {section.settings.type_header_font.family};
+    {%-else-%}
+      font-family: 'Cubest', 'Arial', sans-serif;
+    {%- endif -%}
+  }
+  .button__buy-now,
+  .button__buy-now::after,
+  .button__buy-mint::before,
+  .button__buy-mint,
+  .button__chat {
+      background: radial-gradient(
+      101.37% 1444.99% at 9.75% 0%,
+      {{section.settings.button_gradient_color_1}} 0%,
+      {{section.settings.button_gradient_color_2}} 40.63%,
+      {{section.settings.button_gradient_color_3}} 73.96%,
+      {{section.settings.button_gradient_color_4}} 100%
+    );
+    }
+    .link__author-nft::before,
+    .button__see-all::before {
+        background: radial-gradient(
+        101.37% 1444.99% at 9.75% 0%,
+        {{section.settings.button_gradient_color_1}} 0%,
+        {{section.settings.button_gradient_color_2}} 40.63%,
+        {{section.settings.button_gradient_color_3}} 73.96%,
+        {{section.settings.button_gradient_color_4}} 100%
+      )
+      border-box;
+    }
+</style>
+
+{% stylesheet %}
+
+  * {
+    box-sizing: border-box;
+  }
+  h1,
+  h2 {
+    text-transform: uppercase;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 32px;
+    line-height: 44px;
+    margin-bottom: 18px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .link__author-nft {
+    color: #e73bcd;
+    position: relative;
+    padding: 5px 6px;
+  }
+
+  .link__author-nft::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    border: 1px solid transparent; /*Обводка нужной толщины, но прозрачная*/
+    -webkit-mask: /*4*/ linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; /*5'*/
+    mask-composite: exclude; /*5*/
+  }
+
+  .button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    width: 183px;
+    height: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .button__card-see-all-wrapper {
+    width: 100%;
+    margin-top: 41px;
+  }
+
+  .button__card-see-all {
+    margin: 0 auto;
+  }
+
+  .button__buy-now {
+    box-shadow: 0px 0px 20px rgba(216, 88, 164, 0.4);
+    margin-right: 44px;
+    position: relative;
+  }
+
+  .button__buy-now::after {
+    content: '';
+    filter: blur(20px);
+    border-radius: 9px;
+    position: absolute;
+    width: 183px;
+    height: 62px;
+    z-index: -1;
+  }
+
+  .button__buy-mint {
+    box-shadow: 0px 0px 20px rgba(216, 88, 164, 0.4);
+    position: relative;
+  }
+
+  .button__buy-mint::before {
+    content: '';
+    filter: blur(20px);
+    border-radius: 9px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .button__chat {
+    box-shadow: 0px 0px 20px rgba(216, 88, 164, 0.4);
+  }
+
+  .button__see-all {
+    position: relative;
+  }
+
+  .button__see-all::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 9px;
+    border: 2px solid transparent; /*Обводка нужной толщины, но прозрачная*/
+    -webkit-mask: /*4*/ linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; /*5'*/
+    mask-composite: exclude; /*5*/
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    margin-bottom: 92px;
+  }
+
+  .container {
+    max-width: 1160px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ------------------------- */
+
+  .main {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main::before {
+    content: '';
+    position: absolute;
+    width: 502.01px;
+    height: 502.01px;
+    border: 1px dashed #5d4bcc;
+    border-radius: 50%;
+    left: -9%;
+    top: 6%;
+  }
+
+  .main::after {
+    content: '';
+    position: absolute;
+    width: 724.82px;
+    height: 724.82px;
+    left: -15%;
+    top: 3%;
+    border-radius: 50%;
+    border: 1px dashed #5d4bcc;
+    z-index: -1;
+  }
+
+.cover {
+    display: flex;
+    margin-top: 100px;
+    align-items: center;
+    column-gap: 82px;
+  }
+  /* HEADER COVER LEFT BLOCK */
+  .cover__image {
+    position: relative;
+  }
+
+  .cover__image::before {
+    content: '';
+    position: absolute;
+    width: 656.32px;
+    height: 661.73px;
+    border: 1px dashed #5d4bcc;
+    border-radius: 50%;
+    left: -66px;
+    top: 13px;
+  }
+
+  .cover__image::after {
+    content: '';
+    position: absolute;
+    width: 656.32px;
+    height: 661.73px;
+    border: 1px dashed #5d4bcc;
+    border-radius: 50%;
+    top: -20px;
+    left: -15px;
+    z-index: -1;
+  }
+
+  .image__cover {
+    width: 540px;
+    height: 598px;
+    background: linear-gradient(
+      101.85deg,
+      #ea3bd8 -8.76%,
+      #a931ee 33.33%,
+      #7f5aec 69.48%,
+      #82a3f7 97.03%
+    );
+    border-top-left-radius: 352px;
+    border-top-right-radius: 352px;
+    border-bottom-left-radius: 42px;
+    border-bottom-right-radius: 42px;
+    position: relative;
+  }
+
+  .image__cover::after {
+    content: '';
+    width: 404px;
+    height: 460px;
+    background: rgba(163, 191, 247, 0.89);
+    filter: blur(181px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    border-bottom-left-radius: 42px;
+    border-bottom-right-radius: 42px;
+  }
+
+  .image__nft {
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    object-fit: contain;
+    width: 346px;
+    height: 100%;
+    right: 20px;
+    transform: translateX(-20px);
+  }
+  /* HEADER COVER RIGHT BLOCK */
+  .cover__content {
+    margin-top: 40px;
+  }
+  .nft__title {
+    font-size: 40px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-text-stroke-width: 1.6px;
+    -webkit-text-stroke-color: #000000;
+    margin-bottom: 40px;
+    line-height: 76px;
+    position: relative;
+  }
+  .nft__title::after {
+    content: '';
+    width: 234px;
+    height: 234px;
+    background: linear-gradient(180deg, #6657cc 0%, #c1eeeb 100%);
+    filter: blur(151px);
+    position: absolute;
+    left: 50%;
+    top: -45px;
+    z-index: -1;
+  }
+  .nft__author-logo-wrapper {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+  .nft__author-nickname {
+    margin-left: 10px;
+  }
+  .nft__author-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+  .collection-info__wrapper-quantity-marketcap {
+    display: flex;
+  }
+  .nft__price-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin-left: 10px;
+    justify-content: space-between;
+    margin-bottom: 67px;
+  }
+  .nft__price-wrapper::after {
+    content: '';
+    height: 90%;
+    width: 2px;
+    position: absolute;
+    left: 46%;
+    transform: translateX(-46%);
+    background: linear-gradient(
+      to bottom,
+      rgba(234, 59, 202, 1) 0%,
+      rgba(169, 49, 238, 1) 40%,
+      rgba(126, 90, 236, 1) 73%,
+      rgba(130, 163, 247, 1) 100%
+    );
+  }
+  .current-price__title {
+    margin-bottom: 16px;
+  }
+  .current-price__eth {
+    font-size: 20px;
+    line-height: 41px;
+    margin-bottom: 14px;
+  }
+  .collection-info__quantity-all,
+  .collection-info__marketcap-all {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .collection-info__quantity-wrapper {
+    margin-right: 30px;
+  }
+  .collection-info__title {
+    margin-bottom: 19px;
+  }
+  .collection-info__button-wrapper {
+    display: flex;
+  }
+  .collection-info__button-wrapper {
+    margin-left: 10px;
+  }
+  @media (max-width: 1620px) {
+    .container {
+      max-width: 1080px;
+    }
+  }
+@media (max-width: 1279px) {
+    h2 {
+        font-size: 20px;
+        line-height: 27px;
+      }
+      .container {
+        max-width: 860px;
+      }
+      .header {
+        padding: 0 80px 0 82px;
+        margin-bottom: 69px;
+      }
+      .nft__title {
+        line-height: 41px;
+      }
+      .cover__image::before {
+        width: 384px;
+        height: 387px;
+        left: -37px;
+        top: 2px;
+      }
+      .cover__image::after {
+        width: 384px;
+        height: 387px;
+        top: -7px;
+        left: -15px;
+      }
+
+  }
+  @media (max-width: 1279px) {
+
+    .nft__title::after {
+      left: 34%;
+      top: -91px;
+    }
+    .image__nft {
+      width: 100%;
+      height: 100%;
+      right: -20px;
+      transform: translateX(2px);
+    }
+    .cover__content {
+      margin-top: 0;
+    }
+    .cover {
+      margin-top: 102px;
+    }
+    .nft__title {
+      font-size: 30px;
+    }
+    .image__cover {
+      width: 348px;
+      height: 384px;
+    }
+    .image__cover::after {
+      width: 218px;
+      height: 241px;
+    }
+    .image__cover::before {
+      width: 348px;
+      height: 384px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+  }
+
+@media (max-width: 1023px) {
+    /* HEADER */
+    .container {
+        max-width: 414px;
+      } 
+    .header {
+      padding: 0 10px;
+      margin: 0 auto;
+      max-width: 414px;
+    }
+  
+    .button__buy-now::after {
+      width: 100%;
+    }
+  
+    .cover__image::before {
+      width: 334px;
+      height: 337px;
+      left: -37px;
+      top: 2px;
+    }
+  
+    .cover__image::after {
+      width: 334px;
+      height: 337px;
+      top: -7px;
+      left: -15px;
+    }
+  
+    .cover {
+      flex-direction: column;
+      margin-top: 43px;
+    }
+  
+    .cover__image {
+      margin-bottom: 28px;
+    }
+  
+    .nft__title {
+      font-size: 30px;
+      line-height: 41px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  
+    .nft__author-wrapper {
+      justify-content: center;
+      margin-bottom: 43px;
+    }
+  
+    .nft__price-wrapper {
+      margin-left: 0;
+    }
+  
+    .image__cover {
+      width: 303px;
+      height: 335px;
+    }
+  
+    .image__cover::after {
+      width: 190px;
+      height: 210px;
+    }
+  
+    .image__cover::before {
+      width: 303px;
+      height: 335px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  
+    .current-price__title,
+    .collection-info__title,
+    .current-price__usd,
+    .collection-info__quantity-name,
+    .collection-info__marketcap-name {
+      font-size: 10px;
+    }
+  
+    .nft__price-wrapper {
+      margin-bottom: 54px;
+    }
+  
+    .current-price__eth,
+    .collection-info__quantity-all,
+    .collection-info__marketcap-all {
+      font-size: 16px;
+    }
+  
+    .collection-info__button-wrapper {
+      margin-left: 0;
+      flex-direction: column;
+    }
+  
+    .current-price__eth {
+      margin-bottom: 0;
+    }
+  
+    .collection-info__quantity-all,
+    .collection-info__marketcap-all {
+      margin-bottom: 30px;
+    }
+  
+    .collection-info__button-wrapper .button-wrapper:first-child {
+      margin-bottom: 15px;
+    }
+  
+    .nft__price-wrapper::after {
+      height: 100%;
+      left: 45%;
+      width: 1px;
+    }
+  
+    .button-wrapper,
+    .button-wrapper .button {
+      width: 100%;
+    }
+  
+}
+
+  {% endstylesheet %}

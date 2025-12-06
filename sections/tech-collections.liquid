@@ -1,0 +1,498 @@
+<style>
+  .font-size-scale-075-on-mobile,
+  .font-size-scale-075-on-mobile p {
+    font-size: calc(var(--font-size) * 0.75);
+    color: var(--font-color);
+  }
+  @media screen and (min-width: 750px) {
+    .font-size-scale-075-on-mobile,
+    .font-size-scale-075-on-mobile p {
+      font-size: var(--font-size);
+    }
+  }
+  .tech-collections-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 24px 0px;
+    text-align: center;
+  }
+  .tech-collections-grid-item {
+    all: unset;
+    aspect-ratio: 1.26 / 1;
+    background: var(--card-bg, #ffffff);
+    {% if section.settings.shadow %} box-shadow: 4px 4px 20px rgba(191, 191, 191, 0.5); {% endif %}
+    border-radius: {{section.settings.card_radius}}px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .tech-collections-grid-item:hover {
+    transform: scale(1.07);
+    transition: 0.3s;
+  }
+  .tech-collections-grid-item__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 0;
+    font-size: var(--font-size, 14px);
+    color: var(--font-color, #000000);
+    overflow: hidden;
+  }
+  @media screen and (min-width: 750px) {
+    .tech-collections-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 30px;
+      /*padding: 76px 0;*/
+    }
+    .tech-collections-grid-item {
+      aspect-ratio: 1.4 / 1;
+    }
+  }
+  .tech-collections-grid-item__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+</style>
+
+{% capture content %}
+{% if section.settings.title != blank %}
+  {% if section.settings.title_link != blank %}
+    <a
+      href="{{ section.settings.title_link }}"
+      class="font-size-scale-075-on-mobile"
+      style="
+        color: {{ section.settings.title_color }};
+        --font-size: {{ section.settings.title_font_size }}px;
+        font-weight: 700;
+        text-decoration: none;
+        margin-bottom: 12px;
+        text-align: {{ section.settings.title_alignment }};
+        width: 100%;
+        display: block;
+      "
+    >
+      {{ section.settings.title }}
+    </a>
+  {% else %}
+    <div
+      class="font-size-scale-075-on-mobile"
+      style="
+        color: {{ section.settings.title_color }};
+        --font-size: {{ section.settings.title_font_size }}px;
+        font-weight: 700;
+        text-decoration: none;
+        margin-bottom: 12px;
+        text-align: {{ section.settings.title_alignment }};
+        width: 100%;
+        display: block;
+      "
+    >
+      {{ section.settings.title }}
+    </div>
+  {% endif %}
+{% endif %}
+<div
+  class="tech-collections-grid"
+  id="tech-collections"
+  style="
+    --font-color: {{ section.settings.font_color }};
+    --font-size: {{ section.settings.font_size }}px;
+    --card-bg: {{ section.settings.card_bg }};
+  "
+>
+  {% for block in section.blocks %}
+    <a class="tech-collections-grid-item" href="{{ block.settings.url }}"
+    style="
+      border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    "
+    >
+      {% if block.settings.image != blank %}
+        <img
+          class="tech-collections-grid-item__image"
+          style="
+            width: {{ block.settings.image_size }}%;
+            object-fit: {{ block.settings.image_fit }};
+            transform: translateX({{ block.settings.image_position_x }}%) translateY({{ block.settings.image_position_y }}%);
+            padding-top: {{ block.settings.image_padding_top }}px;
+            padding-bottom: {{ block.settings.image_padding_bottom }}px;
+          "
+          src="{{ block.settings.image | img_url: '480x' }}"
+          alt="{{ block.settings.title }}"
+        >
+      {% endif %}
+      <div class="tech-collections-grid-item__title">
+        {{ block.settings.title }}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="6"
+          height="10"
+          viewBox="0 0 6 10"
+          fill="none"
+          style="display: block; margin-left: 10px; width: {{ section.settings.icon_size }}px; height: auto;"
+        >
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M0.545306 0.777972C0.498751 0.82441 0.461814 0.879577 0.436612 0.940311C0.41141 1.00105 0.398438 1.06616 0.398438 1.13191C0.398438 1.19767 0.41141 1.26278 0.436612 1.32351C0.461814 1.38425 0.498751 1.43941 0.545306 1.48585L4.19169 5.13123L0.545306 8.77662C0.451436 8.87049 0.3987 8.9978 0.3987 9.13056C0.3987 9.26331 0.451436 9.39063 0.545306 9.4845C0.639177 9.57837 0.766493 9.6311 0.899246 9.6311C1.032 9.6311 1.15932 9.57837 1.25319 9.4845L5.25251 5.48517C5.29906 5.43874 5.336 5.38357 5.3612 5.32284C5.3864 5.2621 5.39938 5.19699 5.39938 5.13123C5.39938 5.06548 5.3864 5.00037 5.3612 4.93963C5.336 4.8789 5.29906 4.82373 5.25251 4.77729L1.25319 0.777972C1.20675 0.731417 1.15158 0.69448 1.09085 0.669278C1.03011 0.644076 0.965003 0.631103 0.899246 0.631103C0.83349 0.631103 0.76838 0.644076 0.707645 0.669278C0.64691 0.69448 0.591744 0.731417 0.545306 0.777972Z" fill="#121212" fill-opacity="0.75"/>
+        </svg>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% endcapture %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 5rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div style="background-color:{{section.settings.background-color}};">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div>{{ content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tech Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#363636"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "url",
+      "id": "title_link",
+      "label": "Title Link"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Arrow icon Size",
+      "min": 6,
+      "max": 60,
+      "step": 1,
+      "default": 6,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card Border Width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 9,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id":"shadow",
+      "label": "Shadow",
+      "default": true,
+      "info": "Check this box to add shadow around the cards"
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_fit",
+          "label": "Image fit",
+          "default": "cover",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Image position"
+        },
+        {
+          "type": "range",
+          "id": "image_position_x",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Image position X",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "image_position_y",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Image position Y",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Image size"
+        },
+        {
+          "type": "range",
+          "id": "image_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Image size",
+          "default": 100
+        },
+        {
+          "type": "header",
+          "content": "Image padding"
+        },
+        {
+          "type": "range",
+          "id": "image_padding_top",
+          "min": 0,
+          "max": 100,
+          "step": 4,
+          "unit": "px",
+          "label": "Image padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "image_padding_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 4,
+          "unit": "px",
+          "label": "Image padding bottom",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tech Collections",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Phones"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Laptops"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Tablets"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Watches"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Gaming"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Drones"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "Devices"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "title": "More"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

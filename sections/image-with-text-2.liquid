@@ -1,0 +1,536 @@
+{%- assign text_aligment = section.settings.text_aligment -%}
+
+
+{%- style -%}
+
+  {{ section.settings.section_font_h2 | font_face }}
+  {{ section.settings.section_font_p | font_face }}
+  {{ section.settings.section_font_btn | font_face }}
+  
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .section-{{ section.id }}-padding .brick__block__text__inner .text__standard > h2 {
+    margin:0;
+    font-size: {{ section.settings.section_title_size }}px !important;
+    font-family: {{ section.settings.section_font_h2.family }} !important;
+    text-transform: uppercase;
+    color: {{ section.settings.section_color_h2 }};
+  }
+  .section-{{ section.id }}-padding .brick__block__text__inner .text__standard .standard__rte > p {
+    font-size: {{ section.settings.section_text_size }}px !important;
+    font-family: {{ section.settings.section_font_p.family }} !important;
+    color: {{ section.settings.section_color_p }};
+  }
+  .section-{{ section.id }}-padding .brick__block__text__inner .text__standard > a {
+    font-size: {{ section.settings.section_btn_size }}px !important;
+    font-family: {{ section.settings.section_font_btn.family }} !important;
+  }
+  .text-block .btn:hover,
+  .btn:focus,
+  .btn:active {
+    outline: none;
+    box-shadow: none !important;
+  }
+  .text-block .btn {
+    border: 0.8px solid #000;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+  }
+
+  /* ================ Brick layout ================ */
+  .brick__section {
+    display: flex;
+    align-items: stretch;
+    --menu-height: 0;
+  }
+  .brick_section-{{ section.id }}{
+    {%- if text_aligment == "right" -%}
+      flex-direction: row-reverse;
+    {%- endif -%}
+  }
+  @media only screen and (max-width: 767px) {
+    .brick__section {
+      flex-direction: column;
+      height: auto;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .brick__section--reverse {
+      flex-direction: column-reverse;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .brick--2 .brick__block {
+      width: 50%;
+    }
+  }
+  .brick__block {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .brick__block__text {
+    height: 100%;
+    display: flex;
+    padding: var(--outer);
+    align-items: center;
+  }
+  .brick__block__text.top {
+    align-items: flex-start;
+  }
+  .brick__block__text.bottom {
+    align-items: flex-end;
+  }
+  .brick__block__text__inner {
+    width: 100%;
+  }
+  .brick--1 .brick__block__text__inner .standard__rte {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1180px;
+  }
+  .brick__block__meta span {
+    padding: 0 10px;
+  }
+  .brick__block__author img {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  @media only screen and (min-width: 768px) {
+    .brick__block .video-background,
+    .brick__block .image__hero__frame,
+    .brick__block__video,
+    .brick__block__image {
+      height: 100%;
+    }
+  }
+  .brick__section.image-height .brick__block {
+    height: auto;
+  }
+  .brick__section .hero__content {
+    padding: 0;
+  }
+  .brick__block__image,
+  .brick__block__video,
+  .brick__block__text {
+    color: var(--text);
+  }
+  .brick__block__product__inner {
+    width: 100%;
+  }
+  .brick__block__product__inner .standard__kicker {
+    margin: 0 auto;
+    max-width: 350px;
+    width: 100%;
+  }
+  .brick__product {
+    display: block;
+    max-width: 350px;
+    margin: var(--outer) auto 0;
+  }
+  .brick__product .product-grid-item .product__grid__info {
+    padding-bottom: 0;
+  }
+  .brick__collection {
+    max-width: 500px;
+    padding: 0 75px 50px;
+    margin: 0 auto;
+  }
+  @media only screen and (max-width: 479px) {
+    .brick__collection {
+      padding: 0;
+    }
+    .brick__collection .flickity-button.flickity-prev-next-button {
+      display: none;
+    }
+  }
+  .brick__collection .brick__product {
+    width: 100%;
+  }
+  @media only screen and (max-width: 479px) {
+    .brick__collection .brick__product {
+      width: 80%;
+    }
+  }
+  .brick__collection .brick__product .product-grid-item {
+    width: 100%;
+  }
+  .brick__collection .flickity-badge-dots .flickity-page-dots:before {
+    opacity: 0;
+  }
+  .brick__collection .flickity-page-dots {
+    bottom: 10px;
+  }
+  .brick__collection:not(.flickity-enabled) .brick__product:not(:first-child) {
+    display: none;
+  }
+  .text-center .brick__collection .flickity-page-dots {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .img-with-text {
+    position: relative;
+    padding: 40px 0 80px;
+  }
+  @media(max-width: 988.98px) {
+    .img-with-text {
+      padding: 20px 0 40px;
+      margin-top: 60px !important;
+    }
+    .img-with-text:last-child {
+      margin-bottom: 0;
+    }
+  }
+    .section-{{ section.id }}-padding .img-with-text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 52%;
+    height: 100%;
+    background: {{ section.settings.background-color }};
+    z-index: 1;
+  }
+  @media(max-width: 988.98px) {
+     .section-{{ section.id }}-padding .img-with-text::after {
+      width: 100%;
+      top: 30%;
+      height: 70%;
+    }
+  }
+  .img-with-text .text-block {
+    width: 47%;
+  }
+  @media(max-width: 988.98px) {
+    .img-with-text .text-block {
+      width: 100%;
+      margin-top: 40px;
+    }
+  }
+  .img-with-text .text-block .brick__block__text {
+    padding: 0 5vw 0 0;
+    position: relative;
+    z-index: 2;
+  }
+  @media(max-width: 767.98px) {
+    .img-with-text .text-block .brick__block__text {
+      padding: 0;
+      min-height: unset !important;
+    }
+  }
+  .img-with-text .text-block .standard__rte {
+    line-height: 1.8;
+    margin-top: 25px;
+  }
+  .img-with-text .text-block .standard__rte p {
+    margin: 0 0 35px;
+  }
+  @media(max-width: 988.98px) {
+    .img-with-text .text-block .standard__rte p {
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+  }
+  .img-with-text .text-block .standard__rte p:last-child {
+    margin: 0;
+  }
+  .img-with-text .text-block .standard__rte p strong {
+    color: var(--COLOR-SECONDARY);
+  }
+  .img-with-text .text-block .btn {
+    margin-top: 30px;
+    padding: 20px 50px;
+  }
+   @media(max-width: 770px) {
+      .img-with-text .text-block .btn {
+        width: 100%;
+        text-align: center;
+      }
+   }
+  .img-with-text .img-block {
+    width: 53%;
+    position: relative;
+    z-index: 2;
+  }
+  @media(max-width: 988.98px) {
+    .img-with-text .img-block {
+      width: 100%;
+    }
+  }
+  .img-with-text.inverted::after {
+    left: unset;
+    right: 0;
+  }
+  .img-with-text.inverted .brick__block__text {
+    padding: 0 0 0 5vw;
+  }
+  @media(max-width: 767.98px) {
+    .img-with-text.inverted .brick__block__text {
+      padding: 0;
+    }
+  }
+  .img-with-text.sticked {
+    margin-bottom: 0;
+  }
+  @media(max-width: 988.98px) {
+    .img-with-text.sticked {
+      margin-top: 20px !important;
+    }
+  }
+  @media(min-width: 989px) {
+    .img-with-text.sticked .brick__section {
+      position: relative;
+    }
+    .img-with-text.sticked::after {
+      display: none;
+    }
+    .img-with-text.sticked .brick__block.text-block {
+      width: 53%;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .img-with-text.sticked .brick__block.text-block .brick__block__text {
+      padding: 90px 75px;
+      background-color: #F3ECE9;
+      height: auto;
+    }
+  }
+{%- endstyle -%}
+
+{%- if text_aligment == "right" -%}
+  {%- assign inverted = "inverted" -%}
+{%- endif -%}
+<div class="section-{{ section.id }}-padding">
+  
+  <div class="img-with-text {{ inverted }} section-{{ section.id }}-padding">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'block' -%}
+  
+        <div class="page-width brick__section brick--2 wrapper brick__section--reverse brick_section-{{ section.id }} image-height">
+          <div class="brick__block text-block">
+            <div class="brick__block__text">
+              <div class="brick__block__text__inner">
+                <div class="text__standard text-left">
+                  <h2 class="h2 standard__heading">
+                    {{ block.settings.title }}
+                  </h2>
+                  <div class="standard__rte">
+                    {{ block.settings.text }}
+                  </div>
+                    {%- if block.settings.button_text != blank -%}
+                      <a
+                        href="{{ block.settings.button_url }}"
+                        class="btn btn--secondary"
+                        style="display: inline-block;">
+                        {{ block.settings.button_text }}
+                      </a>
+                     {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="brick__block img-block">
+            <div class="brick__block__image">
+              <div class="image-overlay" style="--bg:#000000; opacity:0.0;"></div>
+              <div class="image__hero__frame fade-in-child image-height">
+                <div class="image__hero__pane">
+                  <div class="image__hero__scale">
+                    <div>
+                      {%- assign image = block.settings.image -%}
+                      <img
+                        src="{{ image | img_url: '480x480' }}"
+                        srcset="{{ image | img_url: '320x320' }} 320w, {{ image | img_url: '480x480' }} 480w, {{ image | img_url: '960x960' }} 960w, {{ image | img_url: '1440x1440' }} 1440w"
+                        class="lazyautosizes lazyloaded"
+                        style="width:100%;" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Image/Text overlap",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Background color 🎨"
+      },
+      {
+        "type": "color",
+        "label": "Section background color",
+        "id": "background-color",
+        "default": "#f3ece9"
+      },
+      {
+        "type": "header",
+        "content": "Section padding ↕️"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 36
+      }, {
+        "type": "header",
+        "content": "Text position"
+      }, {
+        "type": "radio",
+        "id": "text_aligment",
+        "label": "Text position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      }, {
+        "type": "header",
+        "content": "Headings and Fonts"
+      }, {
+        "type": "header",
+        "content": "Title"
+      },{
+        "type": "range",
+        "id": "section_title_size",
+        "label": "Title size",
+        "default": 23,
+        "min": 18,
+        "max": 50,
+        "step": 1,
+        "unit": "px"
+      }, {
+        "type": "range",
+        "id": "section_text_size",
+        "label": "Text size",
+        "default": 14,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      }, {
+        "type": "color",
+        "id": "section_color_h2",
+        "label": "Title color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      }, {
+        "type": "color",
+        "id": "section_color_p",
+        "label": "Text color",
+        "default": "#000000"
+      },{
+        "type": "header",
+        "content": "Button"
+      }, {
+        "type": "range",
+        "id": "section_btn_size",
+        "label": "Button text size",
+        "default": 14,
+        "min": 8,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Image/Text overlap",
+        "blocks": [
+          {
+            "type": "block"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 1,
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Block",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default":"Hand of craftsman"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default":"<p>At the heart of the object, there is the breath andt he hand of the craftsman. The one who blows the glass and leaves in each piece a complement of soul, the one who delicately pours the wax layer by layer. At the heart of the object there are also the materials, which allow our collections to express all their nobility.</p>"
+          }, {
+            "type": "text",
+            "id": "button_text",
+            "label": "Text of button",
+            "default": "Shop now"
+          }, {
+            "type": "page",
+            "id": "button_url",
+            "label": "Link of button"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

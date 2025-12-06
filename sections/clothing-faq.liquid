@@ -1,0 +1,304 @@
+{% capture section_content %}
+<style>
+  .cs-faq-item {
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    padding: 16px 10px;
+    margin-bottom: 20px;
+  }
+  .cs-faq-item:last-child {
+    margin-bottom: 0;
+  }
+  .cs-faq-item.cs-faq-item-active,
+  .cs-faq-item:hover {
+    border: 1px solid var(--active-border-color);
+  }
+  .cs-faq-title {
+    font-size: calc(var(--title-size) * 0.75);
+    color: var(--title-color);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  @media screen and (min-width: 750px) {
+    .cs-faq-title {
+      font-size: var(--title-size);
+      margin-bottom: 30px;
+    }
+  }
+  .cs-faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: calc(var(--question-size) * 0.75);
+    color: var(--question-color);
+    padding: 0 5px;
+  }
+  @media screen and (min-width: 750px) {
+    .cs-faq-question {
+      font-size: var(--question-size);
+      padding: 5px 15px;
+    }
+  }
+  .cs-faq-answer {
+    display: none;
+    color: var(--answer-color);
+    font-size: calc(var(--answer-size) * 0.75);
+    padding: 5px 5px;
+  }
+  @media screen and (min-width: 750px) {
+    .cs-faq-answer {
+      font-size: var(--answer-size);
+      padding: 0 15px;
+    }
+  }
+  .cs-faq-item-active .cs-faq-answer {
+    display: block;
+  }
+</style>
+
+<div
+  class="cs-faq cs-faq-{{ section.id }}" id="threads-faq"
+  style="
+    --border-color: {{ section.settings.border_color }};
+    --active-border-color: {{ section.settings.active_border_color }};
+    --title-size: {{ section.settings.font_size }}px;
+    --title-color: {{ section.settings.font_color }};
+
+    --question-size: {{ section.settings.question_font_size }}px;
+    --question-color: {{ section.settings.question_font_color }};
+
+    --answer-size: {{ section.settings.answer_font_size }}px;
+    --answer-color: {{ section.settings.answer_font_color }};
+  "
+>
+  <div class="cs-faq-title">
+    {{ section.settings.title }}
+  </div>
+  {% for block in section.blocks %}
+    <div class="cs-faq-item">
+      <div class="cs-faq-question">
+        {{ block.settings.question }}
+        <span>+</span>
+      </div>
+      <div class="cs-faq-answer">{{ block.settings.answer }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  (function () {
+    var faq = document.querySelector('.cs-faq-{{ section.id }}');
+    var items = faq.querySelectorAll('.cs-faq-item');
+    var answers = faq.querySelectorAll('.cs-faq-answer');
+
+    items.forEach(function (item) {
+      item.addEventListener('click', function () {
+        const question = item.querySelector('.cs-faq-question');
+        const answer = item.querySelector('.cs-faq-answer');
+
+        item.classList.toggle('cs-faq-item-active');
+        if (item.classList.contains('cs-faq-item-active')) {
+          question.querySelector('span').innerHTML = '-';
+        } else {
+          question.querySelector('span').innerHTML = '+';
+        }
+      });
+    });
+  })();
+</script>
+{% endcapture %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 5rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div style="background-color:{{section.settings.background-color}};">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div>{{ section_content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS - Threads FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FAQs"
+    },
+    {
+      "type": "header",
+      "content": "Colors:"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "active_border_color",
+      "label": "Active border color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "question_font_color",
+      "label": "Question color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "answer_font_color",
+      "label": "Answer color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Fonts size:"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Title font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "question_font_size",
+      "label": "Question font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size",
+      "label": "Answer font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is the question?"
+        },
+        {
+          "type": "text",
+          "id": "answer",
+          "label": "Answer",
+          "default": "This is the answer."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - Threads FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {}
+        },
+        {
+          "type": "question",
+          "settings": {}
+        },
+        {
+          "type": "question",
+          "settings": {}
+        },
+        {
+          "type": "question",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

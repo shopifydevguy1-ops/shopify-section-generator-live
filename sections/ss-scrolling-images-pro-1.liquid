@@ -1,0 +1,872 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2025 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign width = section.settings.width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+  assign background_style = section.settings.background_style
+
+  assign scrolling_velocity = section.settings.scrolling_velocity
+  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile
+  assign scrolling_gap = section.settings.scrolling_gap
+  assign scrolling_gap_mobile = section.settings.scrolling_gap_mobile
+  assign pause_hover = section.settings.pause_hover
+  assign scrolling_direction = section.settings.scrolling_direction
+  assign number_of_columns = section.settings.number_of_columns
+
+  assign image_height = section.settings.image_height
+  assign image_height_mobile = section.settings.image_height_mobile
+
+  assign image_radius = section.settings.image_radius
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_border_color = section.settings.image_border_color
+  
+  assign card_blocks = section.blocks | where: 'type', 'card'
+
+  assign block_size = card_blocks | size
+  assign block_size_divided = block_size | divided_by: 2
+  assign block_size_divided_3 = block_size | divided_by: 3
+
+  assign loading_attribute = 'eager'
+  if lazy
+    assign loading_attribute = 'lazy'
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+        overflow: hidden;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .scrolling-wrapper-{{ section.id }} {
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    {% if scrolling_direction == 'vertical' %}
+      flex-direction: column;
+      top: -200vh;
+      flex: 1 1 0;
+    {% else %}
+      left: -100vh;
+    {% endif %}
+    scrollbar-width: none;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;    
+    background-attachment: scroll !important;
+  }
+
+  .scrolling-body-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    {% if scrolling_direction == 'vertical' %}
+      max-height: 600px;
+      overflow: hidden;
+      flex-direction: row;
+      justify-content: center;
+    {% endif %}
+    gap: {{ scrolling_gap_mobile }}px;
+  }
+
+  .scrolling-list-{{ section.id }} {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    white-space: nowrap;
+    {% if scrolling_direction == 'vertical' %}
+      flex-direction: column;    
+    {% else %}
+      height: 100%;  
+    {% endif %}
+    background-attachment: scroll !important;
+    -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+    animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+    flex-shrink: 0;
+  }
+
+  .scrolling-list-offset-{{ section.id }} {
+    -webkit-animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear !important;
+    animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear !important;
+  }
+
+  .scrolling-card-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    {% if scrolling_direction == 'vertical' %}
+      width: 100%;
+      margin-bottom: {{ scrolling_gap_mobile }}px;
+    {% else %}
+      height: {{ image_height_mobile }}px;
+      margin-right: {{ scrolling_gap_mobile }}px;
+    {% endif %}
+    border-radius: {{ image_radius }}px;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background-attachment: scroll !important;
+    flex-shrink: 0;
+  }
+
+  .scrolling-card-{{ section.id }} img,
+  .scrolling-card-{{ section.id }} svg {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+  }
+
+  .scrolling-card-{{ section.id }} svg {
+    background-color: #AFAFAF;
+  }
+
+  @keyframes ticker{{ section.id | replace: '-', '' }} {
+    0% {
+      {% if scrolling_direction == 'vertical' %}
+        transform: translateY(-50%);
+      {% else %}
+        transform: translateX(-50%);
+      {% endif %}        
+    }
+    100% {
+      {% if scrolling_direction == 'vertical' %}
+        transform: translateY(0%);
+      {% else %}
+        transform: translateX(0%);
+      {% endif %}     
+    }
+  }
+
+    @keyframes tickerDown{{ section.id | replace: '-', '' }} {
+    0% {
+      {% if scrolling_direction == 'vertical' %}
+        transform: translateY(0%);
+      {% else %}
+        transform: translateX(0%);
+      {% endif %}        
+    }
+    100% {
+      {% if scrolling_direction == 'vertical' %}
+        transform: translateY(-50%);
+      {% else %}
+        transform: translateX(-50%);
+      {% endif %}     
+    }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+    }
+
+    .scrolling-body-{{ section.id }} {
+      gap: {{ scrolling_gap }}px;
+    }
+
+    .scrolling-list-{{ section.id }} {
+      -webkit-animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+      animation: ticker{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+    }
+
+    .scrolling-list-offset-{{ section.id }} {
+      -webkit-animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear !important;
+      animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear !important;
+    }
+
+    .scrolling-card-{{ section.id }} {  
+      {% if scrolling_direction == 'vertical' %}
+        width: 100%;
+        margin-bottom: {{ scrolling_gap }}px;
+      {% else %}
+        height: {{ image_height }}px;
+        margin-right: {{ scrolling_gap }}px;
+      {% endif %}
+    }
+  }
+  
+{%- endstyle -%}
+
+{% if width == 'custom' %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% elsif width == 'page' %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: clamp(100px, var(--page-content-width, var(--page-width)), 100%);
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if pause_hover %}
+	<style>
+    .scrolling-wrapper-{{ section.id }}:hover .scrolling-list-{{ section.id }} {
+      animation-play-state: paused
+    }
+	</style>
+{% endif %}
+
+{% for block in section.blocks %}
+  <style>
+    .scrolling-card-{{ block.id }} {      
+      {% if scrolling_direction == 'vertical' %}
+        height: {{ block.settings.image_width_mobile }}px;
+      {% else %}
+        width: {{ block.settings.image_width_mobile }}px;
+      {% endif %}
+    }
+
+    @media(min-width: 1024px) {
+      .scrolling-card-{{ block.id }} {
+        {% if scrolling_direction == 'vertical' %}
+          height: {{ block.settings.image_width }}px;
+        {% else %}
+          width: {{ block.settings.image_width }}px;
+        {% endif %}       
+      }
+    }
+  </style>
+{% endfor %}
+
+{% capture list %}
+  <div class="scrolling-list-{{ section.id }}">
+    {% for block in section.blocks %}
+      <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>            
+    {% endfor %}   
+  </div>
+{% endcapture %}
+
+{% capture list_limit %} 
+  <div class="scrolling-list-{{ section.id }}">
+    {% for item in (1..5) %}
+      {% for block in card_blocks limit: block_size_divided %}       
+         <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>    
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture list_offset %} 
+  <div class="scrolling-list-{{ section.id }} scrolling-list-offset-{{ section.id }}">
+    {% for item in (1..5) %}
+      {% for block in card_blocks offset: block_size_divided %}      
+         <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>   
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture list_first_third %} 
+  <div class="scrolling-list-{{ section.id }}">
+    {% for item in (1..5) %}
+      {% for block in card_blocks limit: block_size_divided_3 %}       
+         <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 3 }}px, (min-width: 750px) calc((100vw - 130px) / 3), calc((100vw - 50px) / 3){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>    
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture list_second_third %} 
+  <div class="scrolling-list-{{ section.id }}">
+    {% for item in (1..5) %}
+      {% for block in card_blocks limit: block_size_divided_3 offset: block_size_divided_3 %}       
+         <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 3 }}px, (min-width: 750px) calc((100vw - 130px) / 3), calc((100vw - 50px) / 3){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>    
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% assign offset_third = block_size_divided_3 | times: 2 %}
+{% capture list_third_third %} 
+  <div class="scrolling-list-{{ section.id }}">
+    {% for item in (1..5) %}
+      {% for block in card_blocks offset: offset_third %}       
+         <div class="scrolling-card-{{ section.id }} scrolling-card-{{ block.id }}">               
+        {% if block.settings.image != blank %}
+          {%- capture sizes -%}(min-width: {{ content_width }}px) {{ content_width | minus: 100 | divided_by: 3 }}px, (min-width: 750px) calc((100vw - 130px) / 3), calc((100vw - 50px) / 3){%- endcapture -%}
+          {{ block.settings.image | image_url: width: 1500 | image_tag:
+            loading: loading_attribute,
+            width: block.settings.image.width,
+            height: block.settings.image.height,
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: block.settings.image.alt
+          }}                    
+        {% else %}  
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}      
+      </div>    
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+<div class="section-{{ section.id }} scrolling-{{ section.id }}" {% if background_style == 'solid' %}style="background-color:{{ background_color }};"{% else %} style="background-image: {{ background_gradient }};"{% endif %}>
+    <div class="section-{{ section.id }}-settings">
+      <div class="scrolling-body-{{ section.id }}"> 
+        <div class="scrolling-wrapper-{{ section.id }}">
+            {% if number_of_columns == 1 %}
+              {{ list }}
+              {{ list }}
+            {% else %}
+              {% if number_of_columns == 3 %}
+                {{ list_first_third }}
+                {{ list_first_third }}
+              {% else %}
+                {{ list_limit }}
+                {{ list_limit }}
+              {% endif %}
+            {% endif %}       
+          </div>
+        {% if number_of_columns != 1 %}
+          <div class="scrolling-wrapper-{{ section.id }}">
+            {% if number_of_columns == 3 %}
+              {{ list_second_third }}
+              {{ list_second_third }}
+            {% else %}
+              {{ list_offset }}
+              {{ list_offset }}
+            {% endif %}
+          </div>
+          {% if number_of_columns == 3 %}
+            <div class="scrolling-wrapper-{{ section.id }}">
+              {{ list_third_third }}
+              {{ list_third_third }}
+            </div>
+          {% endif %}
+        {% endif %} 
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SS - Scrolling images pro",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Scrolling",
+        "info": "The theme editor may display incorrect scrolling speed; please verify on the live site."
+      },
+      {
+        "type": "range",
+        "id": "scrolling_velocity",
+        "min": 10,
+        "max": 150,
+        "step": 2,
+        "label": "Speed",
+        "info": "🐇 ———●——— 🐢",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "scrolling_velocity_mobile",
+        "min": 10,
+        "max": 150,
+        "step": 2,
+        "label": "Speed - mobile",
+        "info": "🐇 ———●——— 🐢",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "scrolling_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "scrolling_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 16
+      },
+      {
+        "type": "select",
+        "id": "scrolling_direction",
+        "label": "Scrolling direction",
+        "default": "horizontal",
+        "options": [
+          {
+            "label": "Horizontal",
+            "value": "horizontal"
+          },
+          {
+            "label": "Vertical",
+            "value": "vertical"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "number_of_columns",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "label": "Number of columns",
+        "default": 2
+      },
+      {
+        "type": "checkbox",
+        "id": "pause_hover",
+        "label": "Pause on hover",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Image"
+      },    
+      {
+        "type": "range",
+        "id": "image_height",
+        "min": 50,
+        "max": 500,
+        "step": 10,
+        "unit": "px",
+        "label": "Height",
+        "default": 220,
+        "visible_if": "{{ section.settings.scrolling_direction != 'vertical' }}"
+      },
+      {
+        "type": "range",
+        "id": "image_height_mobile",
+        "min": 50,
+        "max": 500,
+        "step": 10,
+        "unit": "px",
+        "label": "Height - mobile",
+        "default": 220,
+        "visible_if": "{{ section.settings.scrolling_direction != 'vertical' }}"
+      },
+      {
+        "type": "range",
+        "id": "image_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "image_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },     
+      {
+        "type": "header",
+        "content": "Image colors"
+      },     
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "image_border_color",
+        "default": "#121212"
+      },     
+      {
+        "type": "header",
+        "content": "Section colors"
+      },
+      {
+        "type": "select",
+        "id": "background_style",
+        "label": "Background style",
+        "default": "solid",
+        "options": [
+          {
+            "label": "Solid",
+            "value": "solid"
+          },
+          {
+            "label": "Gradient",
+            "value": "gradient"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Background",
+        "id": "background_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#121212"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Sides - mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Bottom",
+         "default": 36
+      },
+      {
+        "type": "header",
+        "content": "Section"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "default": "page",
+        "options": [
+          {
+            "label": "Page",
+            "value": "page"
+          },
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Content width",
+        "default": 1200,
+        "visible_if": "{{ section.settings.width == 'custom' }}"
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "range",
+            "id": "image_width",
+            "min": 50,
+            "max": 500,
+            "step": 10,
+            "unit": "px",
+            "label": "Extent",
+            "default": 220
+          },
+          {
+            "type": "range",
+            "id": "image_width_mobile",
+            "min": 50,
+            "max": 500,
+            "step": 10,
+            "unit": "px",
+            "label": "Extent - mobile",
+            "default": 220
+          },
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Scrolling images pro 💎",
+        "blocks": [
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 290,
+              "image_width_mobile": 290
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 440,
+              "image_width_mobile": 440
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 290,
+              "image_width_mobile": 290
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 440,
+              "image_width_mobile": 440
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 290,
+              "image_width_mobile": 290
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "image_width": 440,
+              "image_width_mobile": 440
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,257 @@
+{% capture section_content %}
+<style>
+  .cs-grid-image-section {
+    display: grid;
+    grid-auto-rows: 1fr;
+  }
+  .cs-grid-image-section.cs-grid-image-section--more-than-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media screen and (min-width: 750px) {
+    .cs-grid-image-section {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cs-grid-image-section.cs-grid-image-section--more-than-2 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .cs-grid-image-link {
+    position: relative;
+  }
+  .cs-grid-image-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cs-grid-image-link__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .cs-grid-image-link__text {
+    position: absolute;
+    left: 4%;
+    top: 1%;
+    color: var(--font-color);
+    font-size: calc(var(--font-size) * 0.75);
+  }
+  @media screen and (min-width: 750px) {
+    .cs-grid-image-link__text {
+      font-size: var(--font-size);
+    }
+  }
+</style>
+
+<div
+  class="
+    cs-grid-image-section
+    {% if section.blocks.size > 2 %} cs-grid-image-section--more-than-2 {% endif %}
+  "
+  style="
+    --font-size: {{ section.settings.font_size }}px;
+    --font-color: {{ section.settings.font_color }};
+  "
+>
+  {% for block in section.blocks %}
+    <a
+      href="{{ block.settings.url }}"
+      class="cs-grid-image-link"
+    >
+      {% assign image = block.settings.image %}
+      <img
+        src="{{ image | img_url: '500x' }}"
+        srcset="
+          {{ image | img_url: '300x' }} 500w,
+          {{ image | img_url: '500x' }} 800w,
+          {{ image | img_url: '800x' }} 1200w,
+          {{ image | img_url: '1000x' }} 1600w,
+          {{ image | img_url: 'master' }} 2400w
+        "
+        alt="{{ image.alt }}"
+      >
+      <div
+        class="cs-grid-image-link__overlay"
+        style="background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity }}); display: block;"
+      ></div>
+      <div
+        class="cs-grid-image-link__text"
+      >
+        {{ block.settings.text }}
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% endcapture %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 {{ section.settings.padding_vertical | times: 0.25 | round: 0}}rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 {{ section.settings.padding_vertical }}rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div style="background-color:{{section.settings.background-color}};" id="image-grid">
+  <div class="section-{{ section.id }}-padding">
+    <div>{{ section_content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS - Threads Image Grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Background color"
+    },
+    {
+      "type": "color",
+      "label": "Section background color",
+      "id": "background-color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding vertical",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "section-width",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section width",
+      "default": 200
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "link",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "SS - Threads Image Grid",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "text": "Hoodies"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "text": "Pants"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "text": "Tops"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "text": "Shorts"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

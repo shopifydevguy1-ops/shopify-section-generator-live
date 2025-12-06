@@ -1,0 +1,394 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign width_content = section.settings.width_content
+  assign full_width = section.settings.full_width
+
+  assign content_type = section.settings.content_type
+
+  assign text = section.settings.text
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_height = section.settings.text_height
+
+  assign image = section.settings.image
+  assign image_height = section.settings.image_height
+  assign image_height_mobile = section.settings.image_height_mobile
+
+-%}
+
+{%- style -%}
+
+  {{  text_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .top-banner-{{ section.id }} {
+    transition: height 0.3s;
+  }
+
+  .top-banner-text-{{ section.id }} {
+    margin: 0;
+    text-align: center;
+    font-size: {{ text_size_mobile }}vw;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+    font-weight: 700;
+  }
+
+  .top-banner-image-{{ section.id }} {
+    width: 100%;
+    height: {{ image_height_mobile }}px;
+  }
+
+  .top-banner-image-{{ section.id }} img,
+  .top-banner-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .top-banner-image-{{ section.id }} svg {
+    background-color: #FAFAFA;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+    }
+
+    .top-banner-text-{{ section.id }} {
+      font-size: {{ text_size }}vw;
+    }
+
+    .top-banner-image-{{ section.id }} {
+      height: {{ image_height }}px;
+    }
+
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ width_content }}%;
+    }
+  </style>
+{% endunless %}
+
+{% if text_custom %}
+  <style>
+    .top-banner-text-{{ section.id }} {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+<template id="top-banner-template-{{ section.id }}">
+  <div class="section-{{ section.id }} top-banner-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+      <div class="section-{{ section.id }}-settings">
+        {% if content_type == "text" %}
+        {% if text != blank %}
+            <p class="top-banner-text-{{ section.id }}">{{ text }}</p>
+          {% endif %}
+        {% else %}
+          <div class="top-banner-image-{{ section.id }}">
+          {% if image != blank %}
+            <img src="{{ image | image_url }}" alt="{{ image.alt }}">
+          {% else %}
+            {{ 'lifestyle-2' | placeholder_svg_tag }}
+          {% endif %}
+          </div>
+        {% endif %}
+      </div>
+  </div>
+</template>
+
+<div id="top-banner-local-target-{{ section.id }}"></div>
+
+<script>
+  function initTopBannerText() {
+    let cssTarget = '{{ section.settings.insert_css_class_target }}';
+    let productForm = cssTarget
+      ? document.querySelector(cssTarget)
+      : document.querySelector('#top-banner-local-target-{{ section.id }}');
+
+    if (!productForm) return;
+
+    const templateContent = document.querySelector(
+      '#top-banner-template-{{ section.id }}'
+    ).content;
+
+    productForm.insertAdjacentElement(
+      'beforebegin',
+      templateContent.firstElementChild
+    );
+
+    setTimeout(() => {
+      let height = document.querySelector('.top-banner-{{ section.id }}').offsetHeight;
+      window.addEventListener('scroll', () => {
+        if ((document.body.scrollTop < 20 && document.documentElement.scrollTop < 20) || window.scrollY < 20) {
+          document.querySelector('.top-banner-{{ section.id }}').style.height = height + "px";
+        } else {
+          document.querySelector('.top-banner-{{ section.id }}').style.height = '0';
+        }
+      });
+    }, 400);
+  }
+
+  document.addEventListener('DOMContentLoaded', initTopBannerText);
+  
+</script>
+
+{% schema %}
+  {
+    "name": "SS - Top banner text",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Att: To apply your new settings, click 'Save' and reload the page."
+      },
+      {
+        "type": "text",
+        "id": "insert_css_class_target",
+        "label": "Target CSS class",
+        "default": ".header, .pageheader",
+        "placeholder": ".header, .pageheader",
+        "info": "If empty, the announcement bar will display normally. If you want to display the announcement bar in a specific place, you can add the CSS class of the target element here. Default is above header as announcement bar."
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type": "select",
+        "id": "content_type",
+        "label": "Type",
+        "default": "text",
+        "options": [
+          {
+            "label": "Text",
+            "value": "text"
+          },
+          {
+            "label": "Image",
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Text settings"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "TOP BANNER TEXT"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 15,
+        "step": 1,
+        "unit": "vw",
+        "label": "Font size",
+        "default": 11
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 1,
+        "unit": "vw",
+        "label": "Font size - mobile",
+        "default": 11
+      },
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Image settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Section colors"
+      },
+      {
+        "type": "color",
+        "label": "Text color",
+        "id": "text_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 12
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 12
+      },
+      {
+        "type": "header",
+        "content": "Section settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "width_content",
+        "min": 10,
+        "max": 100,
+        "step": 2,
+        "unit": "%",
+        "label": "Section content width",
+        "default": 70
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Top banner text"
+      }
+    ]
+  }
+{% endschema %}

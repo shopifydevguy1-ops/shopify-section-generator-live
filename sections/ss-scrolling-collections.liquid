@@ -1,0 +1,1224 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+
+  assign collections = section.settings.collections
+  assign collections_size = 0
+
+  if collections
+    for collection in collections
+      assign collections_size = collections_size | plus: 1
+    endfor  
+  endif
+
+  assign collection_half_size = collections_size | divided_by: 2
+
+  assign loop_count = 0
+
+  if collections != blank
+    if collections_size >= 2
+      assign loop_count = 6
+    else 
+      assign loop_count = 3
+    endif
+  else 
+    if section.blocks.size >= 2
+      assign loop_count = 6
+    else 
+      assign loop_count = 3
+    endif
+  endif
+
+    
+
+  assign heading = section.settings.heading
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_height = section.settings.heading_height
+  assign heading_color = section.settings.heading_color
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+
+  assign block_size = section.blocks.size | divided_by: 2
+
+  assign scrolling_velocity = section.settings.scrolling_velocity
+  assign scrolling_velocity_mobile = section.settings.scrolling_velocity_mobile
+  assign reverse_direction = section.settings.reverse_direction
+  assign pause_hover = section.settings.pause_hover
+
+  assign cards_mt = section.settings.cards_mt
+  assign cards_mt_mobile = section.settings.cards_mt_mobile
+  assign cards_gap = section.settings.cards_gap
+  assign cards_gap_mobile = section.settings.cards_gap_mobile
+
+  assign card_radius = section.settings.card_radius
+  assign card_border_thickness = section.settings.card_border_thickness
+  assign card_border_color = section.settings.card_border_color
+  assign card_width = section.settings.card_width
+  assign card_width_mobile = section.settings.card_width_mobile
+  assign card_blur = section.settings.card_blur
+  assign card_ratio = section.settings.card_ratio
+  assign card_ratio_mobile = section.settings.card_ratio_mobile
+  assign card_overlay_color = section.settings.card_overlay_color
+  assign card_overlay = section.settings.card_overlay
+
+  assign logo_width = section.settings.logo_width
+  assign logo_width_mobile = section.settings.logo_width_mobile
+
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_height = section.settings.text_height
+  assign text_color = section.settings.text_color
+-%}
+
+{%- style -%}  
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  text_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+    overflow: hidden;
+  }
+
+  .scrolling-collections-heading-{{ section.id }} {
+    width: 100%;
+    text-align: {{ heading_align_mobile }};
+  }
+
+  .scrolling-collections-heading-{{ section.id }} * {
+    margin: 0;
+    font-weight: 700;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+    text-decoration: none;
+  }  
+
+  .scrolling-collections-body-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    margin-top: {{ cards_mt_mobile }}px;
+    gap: {{ cards_gap_mobile }}px;
+  }
+
+  .scrolling-collections-wrap-{{ section.id }} {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    background-attachment: scroll !important;
+    transform-origin: center;
+    width: 200vw;
+    position: relative;
+    z-index: 0;
+    left: -100vw;
+  }
+
+  .scrolling-collections-list-{{ section.id }} {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    background-attachment: scroll !important;
+    flex-shrink: 0;
+  }
+
+  .scrolling-collections-card-{{ section.id }} {
+    display: block;
+    background-attachment: scroll !important;
+    position: relative;
+    flex-shrink: 0;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: {{ cards_gap_mobile }}px;
+    width: {{ card_width_mobile }}px;
+    height: 100%;
+    border: {{ card_border_thickness }}px solid {{ card_border_color }};
+    border-radius: {{ card_radius }}px;
+    transition: transform 0.25s ease 0s;
+    text-decoration: none;
+    overflow: hidden;
+    filter: none;
+  }
+
+  .scrolling-collections-card-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: {{ card_overlay_color | hex_to_rgba: card_overlay }};
+  }
+
+  .scrolling-collections-card-{{ section.id }} img,
+  .scrolling-collections-card-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+  }
+
+  .scrolling-collections-card-{{ section.id }} svg {
+    background-color: #AFAFAF
+  }
+
+  .scrolling-collections-logo-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: {{ logo_width_mobile }}%;
+  }
+
+  .scrolling-collections-logo-{{ section.id }} img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scrolling-collections-text-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    margin: 0;
+    text-align: center;
+    word-break: break-word;
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;
+    text-transform: unset;
+  }
+      
+      /* Mobile animations */
+  .scrolling-collections-wrap-{{ section.id }}:first-child .scrolling-collections-list-{{ section.id }} {   
+    -webkit-animation: tickerUp{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+    animation: tickerUp{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+  }
+  
+  .scrolling-collections-wrap-{{ section.id }}:last-child .scrolling-collections-list-{{ section.id }} {   
+    -webkit-animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+    animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity_mobile }}s infinite linear;
+  }
+
+	@media(min-width: 1024px) {
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+    }
+
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .scrolling-collections-heading-{{ section.id }} {
+      text-align: {{ heading_align }};
+    }
+  
+    .scrolling-collections-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .scrolling-collections-list-{{ section.id }} {
+      animation-duration: {{ scrolling_velocity }}s;
+    }
+
+    .scrolling-collections-card-{{ section.id }} {
+      margin-right: {{ cards_gap }}px;
+      width: {{ card_width }}px;
+    }
+
+    .scrolling-collections-body-{{ section.id }} {
+      margin-top: {{ cards_mt }}px;
+      gap: {{ cards_gap }}px;
+    }
+
+    .scrolling-collections-wrap-{{ section.id }}:first-child .scrolling-collections-list-{{ section.id }} {   
+      -webkit-animation: tickerUp{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+      animation: tickerUp{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+    }
+  
+    .scrolling-collections-wrap-{{ section.id }}:last-child .scrolling-collections-list-{{ section.id }} {   
+      -webkit-animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+      animation: tickerDown{{ section.id | replace: '-', '' }} {{ scrolling_velocity }}s infinite linear;
+    }
+
+   .scrolling-collections-logo-{{ section.id }} {
+      max-width: {{ logo_width}}%;
+    }
+
+    .scrolling-collections-text-{{ section.id }} {
+      font-size: {{ text_size }}px;
+    }
+  }
+
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+    .scrolling-collections-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+
+{% if text_custom %}
+  <style>
+    .scrolling-collections-text-{{ section.id }} {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}    
+
+{% if reverse_direction %}
+	<style>
+    @keyframes tickerUp{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    @keyframes tickerDown{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+	</style>
+{% else %}
+	<style>
+    @keyframes tickerUp{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes tickerDown{{ section.id | replace: '-', '' }} {
+      0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+    }
+	</style>
+{% endif %}
+
+{% if pause_hover %}
+	<style>
+    .scrolling-collections-body-{{ section.id }}:hover .scrolling-collections-wrap-{{ section.id }} .scrolling-collections-list-{{ section.id }} {
+      animation-play-state: paused
+    }
+	</style>
+{% endif %}
+
+{% if card_ratio_mobile == "portrait" %}
+	<style>
+    .scrolling-collections-card-{{ section.id }} {
+      aspect-ratio: 9.6/13;
+    }
+	</style>
+{% elsif card_ratio_mobile == "landscape" %}
+	<style>
+    .scrolling-collections-card-{{ section.id }} {
+      aspect-ratio: 12/6;
+    }
+	</style>
+{% elsif card_ratio_mobile == "square" %}
+	<style>
+    .scrolling-collections-card-{{ section.id }} {
+      aspect-ratio: 12/12;
+    }
+	</style>
+{% else %}
+	<style>
+    .scrolling-collections-card-{{ section.id }} {
+      aspect-ratio: auto;
+    }
+	</style>
+{% endif %}
+
+{% if card_ratio == "portrait" %}
+	<style>
+    @media (min-width: 1024px) {
+        .scrolling-collections-card-{{ section.id }} {
+          aspect-ratio: 9.6/11;
+        }
+    }
+	</style>
+{% elsif card_ratio == "landscape" %}
+	<style>
+    @media (min-width: 1024px) {
+        .scrolling-collections-card-{{ section.id }} {
+          aspect-ratio: 12/6;
+        }
+    }
+	</style>
+{% elsif card_ratio == "square" %}
+	<style>
+    @media (min-width: 1024px) {
+        .scrolling-collections-card-{{ section.id }} {
+          aspect-ratio: 12/12;
+        }
+    }
+	</style>
+{% else %}
+	<style>
+    @media (min-width: 1024px) {
+        .scrolling-collections-card-{{ section.id }} {
+          aspect-ratio: auto;
+        }
+    }
+	</style>
+{% endif %}
+
+{% capture limit_collections %}
+  {% for item in (1..loop_count) %}
+    {% if collections != blank %}
+      {% for collection in collections limit: collection_half_size %}
+        <a href="{{ collection.url }}" class="scrolling-collections-card-{{ section.id }}">
+          {% if collection.featured_image != blank %}
+            <img src="{{ collection.featured_image | image_url }}" alt="{{ collection.featured_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+          <p class="scrolling-collections-text-{{ section.id }}">{{ collection.title }}</p>
+        </a>
+      {% endfor %}
+    {% else %}  
+      {% for block in section.blocks limit: block_size %}
+        <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="scrolling-collections-card-{{ section.id }}">          
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+          {% if block.settings.logo != blank %}
+            <div class="scrolling-collections-logo-{{ section.id }}">
+              <img src="{{ block.settings.logo | image_url }}" alt="{{ block.settings.logo.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+            </div>
+          {% elsif block.settings.text != blank %}
+            <p class="scrolling-collections-text-{{ section.id }}">{{ block.settings.text }}</p>
+          {% endif %}
+        </{% if block.settings.url != blank %}a{% else %}div{% endif %}> 
+      {% endfor %}
+    {% endif %}  
+  {% endfor %}
+{% endcapture %}
+
+{% capture offset_collections %}
+  {% for item in (1..loop_count) %}
+    {% if collections != blank %}
+      {% for collection in collections offset: collection_half_size %}
+        <a href="{{ collection.url }}" class="scrolling-collections-card-{{ section.id }}">
+          {% if collection.featured_image != blank %}
+            <img src="{{ collection.featured_image | image_url }}" alt="{{ collection.featured_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+          <p class="scrolling-collections-text-{{ section.id }}">{{ collection.title }}</p>
+        </a>
+      {% endfor %}
+    {% else %}  
+      {% for block in section.blocks offset: block_size %}
+        <{% if block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="scrolling-collections-card-{{ section.id }}">          
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}                  
+          {% if block.settings.logo != blank %}
+            <div class="scrolling-collections-logo-{{ section.id }}">
+              <img src="{{ block.settings.logo | image_url }}" alt="{{ block.settings.logo.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+            </div>
+          {% elsif block.settings.text != blank %}
+            <p class="scrolling-collections-text-{{ section.id }}">{{ block.settings.text }}</p>
+          {% endif %}
+        </{% if block.settings.url != blank %}a{% else %}div{% endif %}> 
+      {% endfor %}
+    {% endif %}  
+  {% endfor %}
+{% endcapture %}
+
+<div class="section-{{ section.id }} scrolling-collections-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+	<div class="section-{{ section.id }}-settings">
+    {% if heading != blank %}
+      <div class="scrolling-collections-heading-{{ section.id }}"> {{ heading }}</div> 
+    {% endif %}  
+    <div class="scrolling-collections-body-{{ section.id }}">      
+      <div class="scrolling-collections-wrap-{{ section.id }}">
+        {% for item in (1..2) %}
+          <div class="scrolling-collections-list-{{ section.id }}">         
+            {{ limit_collections }}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="scrolling-collections-wrap-{{ section.id }}">
+        {% for item in (1..2) %}
+          <div class="scrolling-collections-list-{{ section.id }}">         
+            {{ offset_collections }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>	  
+	</div>
+</div>
+
+<script>
+  function initScrollingProducts() {
+    const bodyElement = document.querySelector('.scrolling-collections-body-{{ section.id }}');
+    const cardElements = document.querySelectorAll('.scrolling-collections-card-{{ section.id }}');
+    const blurEnabled = {{ section.settings.card_blur_enabled | json }};
+
+    const applyBlur = () => {
+      if (!blurEnabled) return;
+      
+      cardElements.forEach(card => {
+        let image = card.querySelector('img');
+        let svg = card.querySelector('svg');
+        if(image) {
+          image.style.filter = 'blur({{ card_blur }}px)';
+        } else if(svg) {
+          svg.style.filter = 'blur({{ card_blur }}px)';
+        }
+      });
+    };
+
+    const removeBlur = () => {
+      if (!blurEnabled) return;
+      
+      cardElements.forEach(card => {
+        let image = card.querySelector('img');
+        let svg = card.querySelector('svg');
+        if(image) {
+          image.style.filter = 'none';
+        } else if(svg) {
+          svg.style.filter = 'none';
+        }
+      });
+    };
+
+    if (blurEnabled) {
+      bodyElement.addEventListener('mouseenter', applyBlur);
+      bodyElement.addEventListener('mouseleave', removeBlur);
+
+      cardElements.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          let image = card.querySelector('img');
+          let svg = card.querySelector('svg');
+          if(image) {
+            image.style.filter = 'none';
+          } else if(svg) {
+            svg.style.filter = 'none';
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          if (bodyElement.matches(':hover')) {
+            applyBlur(); 
+          }
+        });
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollingProducts);
+
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:unload', initScrollingProducts);
+    document.addEventListener('shopify:section:load', initScrollingProducts);
+  }
+</script>
+
+
+{% schema %}
+{
+  "name": "SS-Scrolling collections",
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections"
+    },
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>Scrolling collections</h2>"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align_mobile",
+      "label": "Alignment - mobile",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Scrolling settings"
+    },
+    {
+      "type": "range",
+      "id": "scrolling_velocity",
+      "min": 10,
+      "max": 150,
+      "step": 2,
+      "label": "Speed",
+      "info": "⚡ <----------------> 🐌",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "scrolling_velocity_mobile",
+      "min": 10,
+      "max": 150,
+      "step": 2,
+      "label": "Speed mobile",
+      "info": "⚡ <----------------> 🐌",
+      "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_direction",
+      "label": "Reverse scrolling direction"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Cards settings"
+    },
+    {
+      "type": "range",
+      "id": "cards_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "cards_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "cards_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "cards_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 32
+    }, 
+    {
+      "type": "header",
+      "content": "Card settings"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 100,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Width",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },  
+    {
+      "type": "range",
+      "id": "card_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },  
+    {
+      "type": "select",
+      "id": "card_ratio",
+      "label": "Aspect ratio",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_ratio_mobile",
+      "label": "Aspect ratio - mobile",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Overlay",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_blur",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Blur",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "card_blur_enabled",
+      "label": "Enable blur effect on hover",
+      "default": true,
+       "info": "Save settings to view blur updates",
+    },
+    {
+      "type": "header",
+      "content": "Logo settings"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Width",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Width - mobile",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Text font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },  
+    {
+      "type": "header",
+      "content": "Card colors"
+    },  
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "text_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "card_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Overlay",
+      "id": "card_overlay_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Margin sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Margin sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 800,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Section content width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section roundness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "Leave blank to show text"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS - Scrolling collections",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

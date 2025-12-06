@@ -1,0 +1,1872 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+
+  assign collection = section.settings.collection
+  assign collection_show = section.settings.collection_show
+  assign collection_gap = section.settings.collection_gap
+  assign collection_gap_mobile = section.settings.collection_gap_mobile
+  assign collection_mt = section.settings.collection_mt
+  assign collection_row_mobile = section.settings.collection_row_mobile
+  assign products = section.settings.products
+
+  assign card_padding_vertical = section.settings.card_padding_vertical
+  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile
+  assign card_padding_horizontal = section.settings.card_padding_horizontal
+  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile
+  assign card_radius = section.settings.card_radius
+  assign card_border_thickness = section.settings.card_border_thickness
+  assign card_border_color = section.settings.card_border_color
+  assign card_bg_color = section.settings.card_bg_color
+  assign card_shadow = section.settings.card_shadow
+  assign card_shadow_color = section.settings.card_shadow_color
+  assign card_overlay = section.settings.card_overlay
+  assign card_overlay_color = section.settings.card_overlay_color
+
+  assign row_height = section.settings.row_height
+  assign row_height_mobile = section.settings.row_height_mobile
+
+  assign content_padding_vertical = section.settings.content_padding_vertical
+  assign content_padding_vertical_mobile = section.settings.content_padding_vertical_mobile
+  assign content_padding_horizontal = section.settings.content_padding_horizontal
+  assign content_padding_horizontal_mobile = section.settings.content_padding_horizontal_mobile
+  assign content_radius = section.settings.content_radius
+  assign content_border_thickness = section.settings.content_border_thickness
+  assign content_border_color = section.settings.content_border_color
+  assign content_bg_color = section.settings.content_bg_color
+  assign content_bg_opacity = section.settings.content_bg_opacity
+  assign content_position_mobile = section.settings.content_position_mobile
+  assign content_position = section.settings.content_position
+
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_color = section.settings.title_color
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_height = section.settings.title_height
+
+  assign price_size = section.settings.price_size
+  assign price_size_mobile = section.settings.price_size_mobile
+  assign price_color = section.settings.price_color
+  assign price_custom = section.settings.price_custom
+  assign price_font = section.settings.price_font
+  assign price_height = section.settings.price_height
+
+  assign hover_image = section.settings.hover_image
+
+  assign button = section.settings.button
+  assign button_size = section.settings.button_size
+  assign button_size_mobile = section.settings.button_size_mobile
+  assign button_color = section.settings.button_color
+  assign button_hover_color = section.settings.button_hover_color
+  assign button_custom = section.settings.button_custom
+  assign button_font = section.settings.button_font
+  assign button_height = section.settings.button_height
+  assign button_mt = section.settings.button_mt
+  assign button_padding_vertical = section.settings.button_padding_vertical
+  assign button_padding_horizontal = section.settings.button_padding_horizontal
+  assign button_radius = section.settings.button_radius
+  assign button_border_thickness = section.settings.button_border_thickness
+  assign button_border_color = section.settings.button_border_color
+  assign button_border_hover_color = section.settings.button_border_hover_color
+  assign button_bg_color = section.settings.button_bg_color
+  assign button_bg_hover_color = section.settings.button_bg_hover_color
+  assign button_row = section.settings.button_row
+  assign button_align = section.settings.button_align
+  assign button_align_mobile = section.settings.button_align_mobile
+  assign button_row_mobile = section.settings.button_row_mobile
+  
+-%}
+
+{%- style -%}
+
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ title_font | font_face: font_display: 'swap' }}
+  {{ price_font | font_face: font_display: 'swap' }}
+  {{ button_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .collection-heading-{{ section.id }} {
+    text-align: {{ heading_align_mobile }};
+  }
+
+  .collection-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .collection-button-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: fit-content;
+    margin: 0;
+    font-size: {{ button_size_mobile }}px;
+    color: {{ button_color }};
+    line-height: {{ button_height }}%;
+    text-align: center;
+    text-transform: unset;
+    text-decoration: none;
+    padding: {{ button_padding_vertical | times: 0.75 | round: 0 }}px {{ button_padding_horizontal | times: 0.75 | round: 0 }}px;
+    border-radius: {{ button_radius }}px;
+    border: {{ button_border_thickness }}px solid {{ button_border_color }};
+    background-color: {{ button_bg_color }};
+    transition: all 0.25s ease 0s;
+    position: relative;
+    font-weight: 700;
+    z-index: 2;
+  }
+
+  .collection-button-{{ section.id }}:hover {
+    color: {{ button_hover_color }};
+    border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};
+    background-color: {{ button_bg_hover_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .collection-grid-{{ section.id }} {
+    margin-top: {{ collection_mt | times: 0.75 | round: 0 }}px;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-auto-rows: 1fr 0.5fr;
+    gap: {{ collection_gap_mobile }}px;
+    grid: auto-flow dense {{ row_height_mobile }}px / repeat({{ collection_row_mobile }},minmax(0,1fr));
+  }
+
+  .collection-item-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ content_position_mobile }};
+    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;
+    border-radius: {{ card_radius }}px;
+    border: {{ card_border_thickness }}px solid {{ card_border_color }};
+    background-color: {{ card_bg_color }};
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .collection-item-{{ section.id }}.portrait:nth-child(1),
+  .collection-item-{{ section.id }}.portrait:nth-child(4) {
+    grid-column-end: span 1;
+    grid-row-end: span 1;
+  }
+
+  .collection-item-{{ section.id }}.landscape {
+    grid-row-end: span 1;
+  }
+
+  .collection-item-{{ section.id }}.hero {
+    grid-column-end: span 1;
+    grid-row-end: span 1;
+  }
+
+  .collection-image-{{ section.id }} {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+  }
+
+  .collection-image-{{ section.id }} img,
+  .collection-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-image-{{ section.id }}:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: {{ card_overlay_color | hex_to_rgba: card_overlay }};
+  }
+
+  .collection-content-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    padding: {{ content_padding_vertical_mobile }}px {{ content_padding_horizontal_mobile }}px;
+    border-radius: {{ content_radius }}px;
+    border-top-right-radius: {{ section.settings.content_radius_top }}px;
+    border-top-left-radius: {{ section.settings.content_radius_top }}px;
+    border: {{ content_border_thickness }}px solid {{ content_border_color }};
+    background-color: {{ content_bg_color | hex_to_rgba: content_bg_opacity }};
+  }
+
+  .collection-title-{{ section.id }} {
+    margin: 0px;
+    font-size: {{ title_size_mobile }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    text-transform: unset;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .collection-price-{{ section.id }} {
+    margin: 0px;
+    font-size: {{ price_size_mobile }}px;
+    color: {{ price_color }};
+    line-height: {{ price_height }}%;
+    text-transform: unset;
+    text-decoration: none;
+  }
+
+   @media(min-width: 768px) {
+
+     .collection-grid-{{ section.id }} {
+      grid-template-columns: repeat(3,1fr);
+      grid-auto-rows: 1fr 0.5fr; 
+      --calculated-row-height: max(150px, min(100vw / 5, {{ row_height }}px));
+      grid: auto-flow dense var(--calculated-row-height) / repeat(4,minmax(0,1fr));
+     }
+
+     .collection-item-{{ section.id }}.portrait {
+        grid-column-end: unset;
+        grid-row-end: span 2;
+     }
+
+     .collection-item-{{ section.id }}.portrait:nth-child(1),
+     .collection-item-{{ section.id }}.portrait:nth-child(4) {
+      grid-column-end: unset;
+      grid-row-end: span 2;
+     }
+
+     .collection-item-{{ section.id }}.hero {
+      grid-column-end: span 2;
+      grid-row-end: span 2;
+     }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .collection-{{ section.id }} .collection-heading-{{ section.id }} {
+      text-align: left;
+    }
+
+    .collection-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .collection-{{ section.id }} .collection-button-{{ section.id }} {
+      margin-left: auto;
+      margin-right: 0px;
+      margin-top: 0px;
+      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;
+      font-size: {{ button_size }}px;
+    }
+
+    .collection-grid-{{ section.id }} {
+      grid-template-columns: repeat(4,1fr);
+      gap: {{ collection_gap }}px;
+    }
+
+    .collection-item-{{ section.id }} {
+      justify-content: {{ content_position }};
+      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;
+    }
+
+    .collection-item-{{ section.id }}.portrait:nth-child(1) {
+      grid-row: 1/span 2;
+    }
+
+    .collection-item-{{ section.id }}.landscape:nth-child(5) {
+      grid-row: 3/span 1;
+    }
+
+    .collection-item-{{ section.id }}.hero:nth-child(1) {
+      grid-row: 1/span 2;
+    }
+
+    .collection-content-{{ section.id }} {
+      padding: {{ content_padding_vertical }}px {{ content_padding_horizontal }}px;
+    }
+
+    .collection-title-{{ section.id }} {
+      font-size: {{ title_size }}px;
+    }
+
+    .collection-price-{{ section.id }} {
+      font-size: {{ price_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if heading_custom %}
+  <style>
+    .collection-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if title_custom %}
+  <style>
+    .collection-title-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if price_custom %}
+  <style>
+    .collection-price-{{ section.id }} {
+      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};
+      font-weight: {{ price_font.weight }};
+      font-style: {{ price_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if button_custom %}
+  <style>
+    .collection-button-{{ section.id }} {
+      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};
+      font-weight: {{ button_font.weight }};
+      font-style: {{ button_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if card_shadow %}
+  <style>
+    .collection-item-{{ section.id }} {
+      box-shadow: {{ card_shadow_color | hex_to_rgba: 0.15 }} 0px 2px 8px;
+    }
+  </style>
+{% endif %}
+
+{% if hover_image %}
+  <style>
+    .collection-second-image-{{ section.id }} {
+      opacity: 0;
+      transition: all 0.25s ease 0s;
+    }
+  
+    .collection-item-{{ section.id }}:hover .collection-second-image-{{ section.id }} {
+      z-index: 2;
+      opacity: 1;
+      transition: all 0.25s ease 0s;
+    }
+
+    .collection-item-{{ section.id }}:hover .collection-first-image-{{ section.id }} {
+      opacity: 0;
+    }
+  </style>
+{% endif %}
+
+{% if button_row_mobile %}
+  <style>
+    .collection-top-{{ section.id }} {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    @media(min-width: 1024px) {
+      .collection-top-{{ section.id }} {
+        display: block;
+      }
+    }
+  </style>
+{% endif %}
+
+{% unless button_row_mobile %}
+
+  <style>
+    .collection-button-{{ section.id }} {
+      margin-top: {{ button_mt | times: 0.75 | round: 0 }}px;
+    }
+  </style>
+  
+  {% if button_align_mobile == "center" %}
+    <style>
+     .collection-button-{{ section.id }} {
+        margin-left: auto;
+        margin-right: auto;
+      } 
+    </style>
+  {% elsif button_align_mobile == "right" %}
+    <style>
+     .collection-button-{{ section.id }} {
+        margin-left: auto;
+      } 
+    </style>
+  {% endif %}
+  
+{% endunless %}
+
+{% if button_row %}
+  <style>
+    @media(min-width: 1024px) {
+      .collection-top-{{ section.id }} {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-direction: row;
+      }
+
+      .collection-button-{{ section.id }} {
+        margin-top: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% unless button_row %}
+  <style>
+    
+    @media(min-width: 1024px) {
+      .collection-heading-{{ section.id }} {
+        text-align: {{ heading_align }} !important;
+      }
+
+      .collection-button-{{ section.id }} {
+        margin-top: {{ button_mt }}px !important;
+      }
+    }
+  </style>
+  
+  {% if button_align == "center" %}
+    <style>
+      @media(min-width: 1024px) {
+       .collection-button-{{ section.id }} {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        } 
+      }
+    </style>
+  {% elsif button_align == "right" %}
+    <style>
+      @media(min-width: 1024px) {
+       .collection-button-{{ section.id }} {
+          margin-left: auto !important;
+          margin-right: 0px !important;
+        } 
+      }
+    </style>
+  {% else %}
+    <style>
+      @media(min-width: 1024px) {
+       .collection-button-{{ section.id }} {
+          margin-left: 0px !important;
+          margin-right: 0px !important;
+        } 
+      }
+    </style>
+  {% endif %}
+  
+{% endunless %}
+
+<div class="section-{{ section.id }} collection-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+
+      <div class="collection-top-{{ section.id }}">
+        {% if heading != blank %}
+          <div class="collection-heading-{{ section.id }}">{{ heading }}</div>
+        {% endif %}
+      
+        {% if button != blank %}
+          <a href="{{ collection.url }}" class="collection-button-{{ section.id }}">{{ button }}</a>
+        {% endif %}
+      </div>
+
+      {% if collection != blank %}
+        <div class="collection-grid-{{ section.id }}">
+          {% if collection_show == "all" %}
+
+            {% assign count = 0 %}
+
+            {% for product in collections[collection].products %}
+            
+              {% if forloop.index < 8 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.first or forloop.index == 4 %}portrait{% elsif forloop.index == 2 or forloop.index == 3 or forloop.index == 5 or forloop.index == 7 %}landscape{% elsif forloop.index == 6 %}hero{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+  
+              {% elsif forloop.index < 15 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 8 %}hero{% elsif forloop.index == 9 or forloop.index == 13 or forloop.index == 12 or forloop.index == 14 %}landscape{% elsif forloop.index == 10 or forloop.index == 11 %}portrait{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+              {% elsif forloop.index < 22 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 15 or forloop.index == 18 %}portrait{% elsif forloop.index == 16 or forloop.index == 17 or forloop.index == 20 or forloop.index == 21 %}landscape{% elsif forloop.index == 19 %}hero{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+  
+              {% elsif forloop.index < 29 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 22 %}hero{% elsif forloop.index == 23 or forloop.index == 27 or forloop.index == 26 or forloop.index == 28 %}landscape{% elsif forloop.index == 24 or forloop.index == 25 %}portrait{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+
+              {% else %}
+                {% assign index = forloop.index | modulo: 2 %}
+                {% assign reverseArray = "true, false" | split: ", " %}
+                {% if count < 2 %}
+                  {% assign count = count | plus: 1 %}
+                {% else %}
+                  {% assign reverseArray = reverseArray | reverse %}
+                  {% assign count = 1 %}
+                {% endif %}
+
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if index == 0 %}{% if reverseArray[0] == "true" %}landscape{% else %}hero{% endif %}{% else %}{% if reverseArray[0] == "true"  %}hero{% else %}portrait{% endif %}{% endif %} {{ reverseArray[0] }}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+              {% endif %}
+              
+            {% endfor %}
+          
+          {% else %}
+            {% for product in collections[collection].products limit: collection_show %}
+            
+              {% if forloop.index < 8 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.first or forloop.index == 4 %}portrait{% elsif forloop.index == 2 or forloop.index == 3 or forloop.index == 5 or forloop.index == 7 %}landscape{% elsif forloop.index == 6 %}hero{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+  
+              {% elsif forloop.index < 15 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 8 %}hero{% elsif forloop.index == 9 or forloop.index == 13 or forloop.index == 12 or forloop.index == 14 %}landscape{% elsif forloop.index == 10 or forloop.index == 11 %}portrait{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+              {% elsif forloop.index < 22 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 15 or forloop.index == 18 %}portrait{% elsif forloop.index == 16 or forloop.index == 17 or forloop.index == 20 or forloop.index == 21 %}landscape{% elsif forloop.index == 19 %}hero{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+  
+              {% elsif forloop.index < 29 %}
+                <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 22 %}hero{% elsif forloop.index == 23 or forloop.index == 27 or forloop.index == 26 or forloop.index == 28 %}landscape{% elsif forloop.index == 24 or forloop.index == 25 %}portrait{% endif %}">
+  
+                  {% if product.featured_image != blank %}
+                    <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                      <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                    </div>
+                  {% endif %}
+  
+                  {% if product.images.size > 1 and hover_image %}
+                    {% for img in product.images %}
+                      {% if forloop.index == 2 %}
+                        <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                          <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+  
+                  <div class="collection-content-{{ section.id }}">
+                    <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                    <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                  </div>
+                  
+                </a>
+              {% endif %}
+              
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% elsif products != blank %}
+        
+        <div class="collection-grid-{{ section.id }}">
+
+          {% for product in products %}
+              
+            {% if forloop.index < 8 %}
+              <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.first or forloop.index == 4 %}portrait{% elsif forloop.index == 2 or forloop.index == 3 or forloop.index == 5 or forloop.index == 7 %}landscape{% elsif forloop.index == 6 %}hero{% endif %}">
+  
+                {% if product.featured_image != blank %}
+                  <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                    <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                  </div>
+                {% endif %}
+  
+                {% if product.images.size > 1 and hover_image %}
+                  {% for img in product.images %}
+                    {% if forloop.index == 2 %}
+                      <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                        <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+  
+                <div class="collection-content-{{ section.id }}">
+                  <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                  <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                </div>
+                
+              </a>
+  
+            {% elsif forloop.index < 15 %}
+              <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 8 %}hero{% elsif forloop.index == 9 or forloop.index == 13 or forloop.index == 12 or forloop.index == 14 %}landscape{% elsif forloop.index == 10 or forloop.index == 11 %}portrait{% endif %}">
+  
+                {% if product.featured_image != blank %}
+                  <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                    <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                  </div>
+                {% endif %}
+  
+                {% if product.images.size > 1 and hover_image %}
+                  {% for img in product.images %}
+                    {% if forloop.index == 2 %}
+                      <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                        <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+  
+                <div class="collection-content-{{ section.id }}">
+                  <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                  <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                </div>
+                
+              </a>
+            {% elsif forloop.index < 22 %}
+              <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 15 or forloop.index == 18 %}portrait{% elsif forloop.index == 16 or forloop.index == 17 or forloop.index == 19 or forloop.index == 21 %}landscape{% elsif forloop.index == 20 %}hero{% endif %}">
+  
+                {% if product.featured_image != blank %}
+                  <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                    <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                  </div>
+                {% endif %}
+  
+                {% if product.images.size > 1 and hover_image %}
+                  {% for img in product.images %}
+                    {% if forloop.index == 2 %}
+                      <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                        <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+  
+                <div class="collection-content-{{ section.id }}">
+                  <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                  <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                </div>
+                
+              </a>
+  
+            {% elsif forloop.index < 29 %}
+              <a href="{{ product.url }}" class="collection-item-{{ section.id }} {% if forloop.index == 22 %}hero{% elsif forloop.index == 23 or forloop.index == 27 or forloop.index == 26 or forloop.index == 28 %}landscape{% elsif forloop.index == 24 or forloop.index == 25 %}portrait{% endif %}">
+  
+                {% if product.featured_image != blank %}
+                  <div class="collection-image-{{ section.id }} {% if product.images.size > 1 and hover_image %}collection-first-image-{{ section.id }}{% endif %}">
+                    <img src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                  </div>
+                {% endif %}
+  
+                {% if product.images.size > 1 and hover_image %}
+                  {% for img in product.images %}
+                    {% if forloop.index == 2 %}
+                      <div class="collection-image-{{ section.id }} collection-second-image-{{ section.id }}">
+                        <img src="{{ img | image_url }}" alt="{{ img.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+  
+                <div class="collection-content-{{ section.id }}">
+                  <p class="collection-title-{{ section.id }}">{{ product.title }}</p>
+                  <p class="collection-price-{{ section.id }}">{{ product.price | money }}</p>
+                </div>
+                
+              </a>
+            {% endif %}
+            
+          {% endfor %}
+
+        </div>
+      
+      {% else %}
+        <div class="collection-grid-{{ section.id }}">
+        {% for item in (1..7) %}
+            
+            {% if forloop.index < 8 %}
+              <a href="#" class="collection-item-{{ section.id }} {% if forloop.first or forloop.index == 4 %}portrait{% elsif forloop.index == 2 or forloop.index == 3 or forloop.index == 5 or forloop.index == 7 %}landscape{% else %}hero{% endif %}">
+                
+                <div class="collection-content-{{ section.id }}">
+                  <p class="collection-title-{{ section.id }}">Product Title #{{ forloop.index }}</p>
+                  <p class="collection-price-{{ section.id }}">$98.00</p>
+                </div>
+                
+              </a>
+            {% endif %}
+            
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Featured Collection #3",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Collection Settings"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "product_list",
+        "id": "products",
+        "label": "Products",
+        "info": "If no collection chosen above"
+      },
+      {
+        "type": "select",
+        "id": "collection_show",
+        "label": "Collection Products",
+        "default": "14",
+        "options": [
+          {
+            "label": "7",
+            "value": "7"
+          },
+          {
+            "label": "14",
+            "value": "14"
+          },
+          {
+            "label": "21",
+            "value": "21"
+          },
+          {
+            "label": "28",
+            "value": "28"
+          },
+          {
+            "label": "All",
+            "value": "all"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "collection_row_mobile",
+        "label": "Products per Row - Mobile",
+        "default": "1",
+        "options": [
+          {
+            "label": "1",
+            "value": "1"
+          },
+          {
+            "label": "2",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "collection_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Collection Gap",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "collection_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Collection Gap - Mobile",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "collection_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Collection Margin top",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<h2>All products</h2>"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size",
+        "default": 34
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size - Mobile",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 130
+      },
+      {
+        "type": "select",
+        "id": "heading_align",
+        "label": "Heading Text Align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "heading_align_mobile",
+        "label": "Heading Text Align - Mobile",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Button"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button Text",
+        "default": "Show More"
+      },
+      {
+        "type": "checkbox",
+        "id": "button_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "button_font",
+        "label": "Button Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "button_size",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Button Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_size_mobile",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Button Size - Mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Button Line Height",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "button_mt",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Margin Top",
+        "info": "If uncheked 'Button in Row'",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Padding Vertical",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Padding Vertical - Mobile",
+        "default": 16
+      },
+      {
+         "type": "range",
+         "id": "button_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Button Padding Horizontal",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "button_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Button Padding Horizontal - Mobile",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "button_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Button Border Radius",
+         "default": 8
+      },
+      {
+         "type": "range",
+         "id": "button_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Button Border Thickness",
+         "default": 1
+      },
+      {
+        "type": "select",
+        "id": "button_align",
+        "label": "Button Align",
+        "info": "If uncheked 'Button in Row'",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "button_align_mobile",
+        "label": "Button Align - Mobile",
+        "default": "center",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "button_row",
+        "label": "Button in Row",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "button_row_mobile",
+        "label": "Button in Row - Mobile",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Row Max-Height",
+        "info": "Define the height of a single row, from which the grid is dinamically created."
+      },
+      {
+        "type": "range",
+        "id": "row_height",
+        "min": 150,
+        "max": 400,
+        "step": 10,
+        "unit": "px",
+        "label": "Desktop Row Max-Height",
+        "default": 300
+      },
+      {
+        "type": "range",
+        "id": "row_height_mobile",
+        "min": 120,
+        "max": 500,
+        "step": 10,
+        "unit": "px",
+        "label": "Mobile Row Height",
+        "default": 200
+      },
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Padding Vertical",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Padding Vertical - Mobile",
+        "default": 0
+      },
+      {
+         "type": "range",
+         "id": "card_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Card Padding Horizontal",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "card_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Card Padding Horizontal - Mobile",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "card_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Card Border Radius",
+         "default": 10
+      },
+      {
+         "type": "range",
+         "id": "card_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Card Border Thickness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "card_overlay",
+         "min": 0,
+         "max": 1,
+         "step": 0.1,
+         "label": "Card Overlay",
+         "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "card_shadow",
+        "label": "Use Card Shadow",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "hover_image",
+        "label": "Second Image in Hover",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content Position",
+        "default": "end",
+        "options": [
+          {
+            "label": "Top",
+            "value": "start"
+          },
+          {
+            "label": "Bottom",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "content_position_mobile",
+        "label": "Content Position - Mobile",
+        "default": "end",
+        "options": [
+          {
+            "label": "Top",
+            "value": "start"
+          },
+          {
+            "label": "Bottom",
+            "value": "end"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "content_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Padding Vertical",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "content_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Content Padding Vertical - Mobile",
+        "default": 10
+      },
+      {
+         "type": "range",
+         "id": "content_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Content Padding Horizontal",
+         "default": 14
+      },
+      {
+         "type": "range",
+         "id": "content_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Content Padding Horizontal - Mobile",
+         "default": 14
+      },
+      {
+         "type": "range",
+         "id": "content_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Content Border Radius",
+         "default": 10
+      },
+      {
+         "type": "range",
+         "id": "content_radius_top",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Content Border Radius Top",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "content_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Content Border Thickness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "content_bg_opacity",
+         "min": 0,
+         "max": 1,
+         "step": 0.1,
+         "label": "Content Background Opacity",
+         "default": 0.8
+      },
+      {
+        "type": "header",
+        "content": "Card Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "title_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "title_font",
+        "label": "Card Heading Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Heading Size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "title_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Heading Size - Mobile",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "title_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Card Heading Line Height",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Card Price"
+      },
+      {
+        "type": "checkbox",
+        "id": "price_custom",
+        "label": "Use Custom Font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "price_font",
+        "label": "Card Price Font Family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "price_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Price Size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "price_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Price Size - Mobile",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "price_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Card Price Line Height",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Button Colors"
+      },
+      {
+        "type": "color",
+        "label": "Button Color",
+        "id": "button_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Button Hover Color",
+        "id": "button_hover_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Button Background Color",
+        "id": "button_bg_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Button Background Hover Color",
+        "id": "button_bg_hover_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Button Border Color",
+        "id": "button_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Button Border Hover Color",
+        "id": "button_border_hover_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Card Colors"
+      },
+      {
+        "type": "color",
+        "label": "Card Background Color",
+        "id": "card_bg_color",
+        "default": "#DDDDDD"
+      },
+      {
+        "type": "color",
+        "label": "Card Border Color",
+        "id": "card_border_color",
+        "default": "#bcbcbc"
+      },
+      {
+        "type": "color",
+        "label": "Card Shadow Color",
+        "id": "card_shadow_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Card Overlay Color",
+        "id": "card_overlay_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Card Content Colors"
+      },
+      {
+        "type": "color",
+        "label": "Content Background Color",
+        "id": "content_bg_color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "label": "Content Border Color",
+        "id": "content_border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Card Heading Color",
+        "id": "title_color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "label": "Card Price Color",
+        "id": "price_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section Colors"
+      },
+      {
+        "type": "color",
+        "label": "Heading Color",
+        "id": "heading_color",
+        "default": "#171717"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#FCFCFC"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 0,
+        "max": 400,
+        "step": 5,
+        "unit": "rem",
+        "label": "Section content width",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Featured Collection #3"
+      }
+    ]
+  }
+{% endschema %}

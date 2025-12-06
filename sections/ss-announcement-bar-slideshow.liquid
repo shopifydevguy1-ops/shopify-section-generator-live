@@ -1,0 +1,626 @@
+{% comment %}
+---------------------------------------------------------
+Copyright © 2023 Section Store. All rights reserved.
+Unauthorized copying, modification, distribution, or use
+of this code or any portion of it, is strictly prohibited.
+Violators will be prosecuted to the fullest extent of the law.
+For inquiries or permissions, contact daniel@section.store
+---------------------------------------------------------
+{% endcomment %}
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign content_width = section.settings.content_width
+  assign full_width = section.settings.full_width 
+
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_height = section.settings.text_height
+  assign text_color = section.settings.text_color
+  assign text_align = section.settings.text_align
+  assign text_align_mobile = section.settings.text_align_mobile
+
+  assign progress_color = section.settings.progress_color
+  assign progress_default_color = section.settings.progress_default_color
+  assign play_border_color = section.settings.play_border_color
+  assign play_icon_color = section.settings.play_icon_color
+-%}
+
+{%- style -%}  
+  {{ text_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+  
+  .announcement-inner-{{ section.id }} {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: relative;
+    overflow: hidden;    
+    justify-content: space-between;    
+    margin: 0;
+  }
+
+  .announcement-text-{{ section.id }} {
+    text-align: {{ text_align_mobile }};
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .announcement-text-{{ section.id }} * {
+    margin: 0;  
+    font-size: {{ text_size_mobile }}px;
+    line-height: {{ text_height }}%;
+    color: {{ text_color }};
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .announcement-thumbs-{{ section.id }} {
+    position: absolute;
+    right: 10px;
+    bottom: 50%;
+    transform: translateY(50%);
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    z-index: 2;
+    align-items: center;
+  }
+
+  .announcement-slider-wrapper-{{ section.id }} {
+    align-items: center !important;
+  }
+
+  .announcement-thumb-{{ section.id }} {
+    display: none;
+  }
+
+  #progress{{ section.id | replate: '-', '' }} {
+    width: 100%;
+    height: 1px;
+  }
+
+  #progress{{ section.id | replate: '-', '' }}[value] {
+    appearance: none;
+    border: none;
+    color: {{ progress_color }};
+  }
+
+  #progress{{ section.id | replate: '-', '' }}[value]::-webkit-progress-value {
+    background: {{ progress_color }};
+    transition: width 0.5s linear;
+  }
+  
+  #progress{{ section.id | replate: '-', '' }}[value]::-webkit-progress-bar {
+    background: {{ progress_default_color }};
+    transition: width 0.5s linear;
+  }
+  
+  #progress{{ section.id | replate: '-', '' }}[value]::-moz-progress-bar {
+    background: {{ progress_default_color }};
+  }
+
+  .announcement-button-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    justify-content: center;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
+
+  .announcement-button-{{ section.id }} {
+    border-radius: 100%;
+    border: 1px solid {{ play_border_color }};
+  }
+
+  .announcement-button-{{ section.id }} svg {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+  }  
+
+  
+  .announcement-button-{{ section.id }} svg:nth-child(2) rect  {
+    stroke: {{ play_icon_color }};
+  }
+
+  .announcement-button-{{ section.id }} svg:nth-child(1) polygon {
+    stroke: {{ play_icon_color }};
+    fill: {{ play_icon_color }};
+  }
+
+  .announcement-button-{{ section.id }} svg:nth-child(1) {
+    display: none;
+  }
+
+  .announcement-button-{{ section.id }}.active svg:nth-child(1) {
+    display: block;
+  }
+  
+  .announcement-button-{{ section.id }}.active svg:nth-child(2) {
+    display: none;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .announcement-text-{{ section.id }} {
+      text-align: {{ text_align }};
+      width: 100%;
+    }
+
+    .announcement-text-{{ section.id }} * {
+      font-size: {{ text_size }}px;
+    }
+
+    .announcement-thumbs-{{ section.id }} {
+      grid-template-columns: repeat({{ section.blocks.size | plus: 1 }}, 1fr);
+      width: calc(150px - 20px);
+    } 
+
+    .announcement-thumb-{{ section.id }} {
+      cursor: pointer;
+      display: flex;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% endunless %}
+
+{% if text_custom %}
+  <style>
+    .announcement-text-{{ section.id }} * {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+<template id="announcement-template-{{ section.id }}">
+  <div class="section-{{ section.id }} announcement-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+      <div class="section-{{ section.id }}-settings">
+        <div class="announcement-inner-{{ section.id }}">
+          <div class="announcement-slider-{{ section.id }} swiper">
+            <div class="announcement-slider-wrapper-{{ section.id }} swiper-wrapper">
+              {% for block in section.blocks %}
+                <div class="announcement-slide-{{ section.id }} swiper-slide">
+                  {% if block.settings.text != blank %}
+                    <div class="announcement-text-{{ section.id }}">{{ block.settings.text }}</div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="announcement-thumbs-{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="announcement-thumb-{{ section.id }}">
+              <progress id="progress{{ section.id | replate: '-', '' }}" max="100" value="0"></progress>
+            </div>
+          {% endfor %}             
+          <button class="announcement-button-{{ section.id }}">
+              <svg class="t4s-carousel--autoplay-icon t4s-carousel--autoplay-icon--play" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <svg class="t4s-carousel--autoplay-icon t4s-carousel--autoplay-icon--pause t4s-pa" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="2" height="16"></rect><rect x="15" y="4" width="2" height="16"></rect></svg>
+          </button>
+        </div>  
+      </div>
+  </div>
+</template>
+
+<div id="announcement-local-target-{{ section.id }}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  function initAnnouncementBar4() {
+    let cssTarget = '{{ section.settings.insert_css_class_target }}';
+    let productForm = cssTarget
+      ? document.querySelector(cssTarget)
+      : document.querySelector('#announcement-local-target-{{ section.id }}');
+
+    if (!productForm) return;
+
+    const templateContent = document.querySelector(
+      '#announcement-template-{{ section.id }}'
+    ).content;
+
+    productForm.insertAdjacentElement(
+      'beforebegin',
+      templateContent.firstElementChild
+    );
+
+    const autoplayDelay = 3000;
+    const progressBars = document.querySelectorAll(
+      `.announcement-thumbs-{{ section.id }} progress`
+    );
+    const pauseButton = document.querySelector(
+      `.announcement-button-{{ section.id }}`
+    );
+
+    const slider = new Swiper(`.announcement-slider-{{ section.id }}`, {
+      speed: 300,
+      loop: true,
+      slidesPerView: 1,
+      autoplay: false,
+    });
+
+    let currentProgressIndex = 0;
+    let progressTimer = null;
+    let isPaused = false;
+
+    function startProgressBar(index) {
+      if (index >= progressBars.length) {
+        resetAllProgressBars();
+        currentProgressIndex = 0;
+        slider.slideToLoop(0);
+      }
+
+      const bar = progressBars[currentProgressIndex];
+      bar.value = 0;
+
+      let startTime = Date.now();
+
+      function updateProgress() {
+        if (isPaused) return;
+
+        const elapsed = Date.now() - startTime;
+        const progressValue = (elapsed / autoplayDelay) * 100;
+
+        if (progressValue <= 100) {
+          bar.value = progressValue;
+          progressTimer = requestAnimationFrame(updateProgress);
+        } else {
+          bar.value = 100;
+          currentProgressIndex++;
+          setTimeout(() => {
+            slider.slideNext();
+            startProgressBar(currentProgressIndex);
+          }, 400)
+       
+        }
+      }
+
+      progressTimer = requestAnimationFrame(updateProgress);
+    }
+
+    function resetAllProgressBars() {
+      progressBars.forEach((bar) => (bar.value = 0));
+      cancelAnimationFrame(progressTimer);
+    }
+
+    pauseButton.addEventListener('click', () => {
+      isPaused = !isPaused;
+      pauseButton.classList.toggle('active', isPaused);
+
+      if (isPaused) {
+        cancelAnimationFrame(progressTimer);
+      } else {
+        startProgressBar(currentProgressIndex);
+      }
+    });
+
+    startProgressBar(currentProgressIndex);
+  }
+
+
+  document.addEventListener('DOMContentLoaded', initAnnouncementBar4);
+
+</script>
+
+{% schema %}
+  {
+    "name": "SS - Announcement bar",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "⚠️ Save settings to display this section and see updates."
+      },
+      {
+        "type": "text",
+        "id": "insert_css_class_target",
+        "label": "Target CSS class",
+        "default": ".header, .pageheader",
+        "placeholder": ".header, .pageheader",
+        "info": "If empty, the announcement bar will display normally. If you want to display the announcement bar in a specific place, you can add the CSS class of the target element here. Default is above header as announcement bar"
+      },      
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "text_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "text_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 150
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_align",
+        "label": "Alignment",
+        "default": "center"
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_align_mobile",
+        "label": "Alignment - mobile",
+        "default": "center"
+      },  
+      {
+        "type": "header",
+        "content": "Section colors"
+      },   
+      {
+        "type": "color",
+        "label": "Text",
+        "id": "text_color",
+        "default": "#121212"
+      },  
+      {
+        "type": "color",
+        "label": "Progress bar",
+        "id": "progress_default_color",
+        "default": "#AFAFAF"
+      },        
+      {
+        "type": "color",
+        "label": "Active progress bar",
+        "id": "progress_color",
+        "default": "#121212"
+      },  
+      {
+        "type": "color",
+        "label": "Play icon",
+        "id": "play_icon_color",
+        "default": "#121212"
+      },   
+      {
+        "type": "color",
+        "label": "Play border",
+        "id": "play_border_color",
+        "default": "#121212"
+      },    
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#F3F3F3"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient",
+        "info": "Remove gradient to replace with solid colors"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#121212"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 12
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 12
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Section content width",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Announcement",
+        "settings": [             
+          {
+            "type": "richtext",
+            "label": "Text",
+            "id": "text",
+            "default": "<p>Welcome to our store</p>"            
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Announcement bar (slideshow)",
+        "blocks": [
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

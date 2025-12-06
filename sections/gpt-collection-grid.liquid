@@ -1,0 +1,65 @@
+<!-- sections/collection-grid.liquid -->
+<style>
+    .collection-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .grid-item {
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        text-align: center;
+    }
+    .grid-item img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<section class="collection-grid">
+    {% for block in section.blocks %}
+    <div class="grid-item">
+        <a href="{{ block.settings.link }}">
+            <img src="{{ block.settings.image | img_url: '300x' }}" alt="{{ block.settings.alt_text }}">
+            <p>{{ block.settings.label }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</section>
+
+{% schema %}
+{
+    "name": "GPT Collection Grid",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "item",
+            "name": "GPT Grid Item",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "alt_text",
+                    "label": "Image Alt Text",
+                    "default": "Image description"
+                },
+                {
+                    "type": "text",
+                    "id": "label",
+                    "label": "Label",
+                    "default": "Label Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                }
+            ],
+            "limit": 6
+        }
+    ]
+}
+{% endschema %}

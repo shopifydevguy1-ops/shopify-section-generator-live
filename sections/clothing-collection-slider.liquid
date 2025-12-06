@@ -1,0 +1,539 @@
+{% capture section_content %}
+  <style>
+    .cs-collection * {
+      box-sizing: border-box;
+    }
+    .cs-collection-title {
+      font-size: calc(var(--section-title-font-size) * 0.75);
+      color: var(--section-title-color);
+      text-decoration: none;
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-title {
+        font-size: var(--section-title-font-size);
+      }
+    }
+    .cs-collection-product-title {
+      font-size: calc(var(--product-title-font-size) * 0.75);
+      color: var(--product-title-color);
+      text-decoration: none;
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-product-title {
+        font-size: var(--product-title-font-size);
+      }
+    }
+    .cs-collection-product-tag {
+      font-size: calc(var(--product-tag-font-size) * 0.75);
+      color: var(--product-tag-color);
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-product-tag {
+        font-size: var(--product-tag-font-size);
+      }
+    }
+    .cs-collection-product-price {
+      font-size: calc(var(--product-price-font-size) * 0.75);
+      color: var(--product-price-color);
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-product-price {
+        font-size: var(--product-price-font-size);
+      }
+      .cs-collection .swiper {
+        overflow:hidden!important;
+      }
+    }
+
+    .cs-collection-title-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 15px;
+    }
+    .cs-collection .swiper {
+      overflow:inherit;
+      padding: 0 1px;
+    }
+    .cs-collection .swiper-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .cs-collection .swiper-button-prev,
+    .cs-collection .swiper-button-next {
+      position: unset;
+      height: auto;
+      margin-top: unset;
+    }
+    .cs-collection .swiper-button-prev:after,
+    .cs-collection .swiper-button-next:after {
+      content: '';
+    }
+
+    .cs-collection-product-image {
+      width: 100%;
+      height: var(--product-image-height);
+      object-fit: cover;
+    }
+    .cs-collection .swiper-slide {
+      border: 1px solid #e5e5e5;
+      border-left: none;
+      height: auto;
+      box-sizing: border-box;
+    }
+    .cs-collection .swiper-slide:first-child {
+      border-left: 1px solid #e5e5e5;
+    }
+    .cs-collection-product-info {
+      padding: 12px 17px;
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-product-info {
+        padding: 22px 20px;
+      }
+    }
+    .cs-collection-product-tag {
+      position: absolute;
+        top: 2%;
+        left: 7%;
+    }
+    @media screen and (min-width: 750px) {
+      .cs-collection-product-tag {
+        top: 2%;
+        left: 7%;
+      }
+    }
+  </style>
+
+  <div id="threads-slider" class="cs-collection cs-collection-{{ section.id }}" style="
+          --section-title-font-size: {{ section.settings.title_font_size }}px;
+          --product-title-font-size: {{ section.settings.product_title_font_size }}px;
+          --product-tag-font-size: {{ section.settings.product_tag_font_size }}px;
+          --product-price-font-size: {{ section.settings.product_price_font_size }}px;
+      
+          --section-title-color: {{ section.settings.title_color }};
+          --product-title-color: {{ section.settings.product_title_color }};
+          --product-tag-color: {{ section.settings.product_tag_color }};
+          --product-price-color: {{ section.settings.product_price_color }};
+      
+          --product-image-height: {{ section.settings.product_image_height }}px;
+        ">
+    <div class="cs-collection-title-wrapper">
+      {% if section.settings.title_link != blank %}
+        <a href="{{ section.settings.title_link }}" class="cs-collection-title">
+          {{ section.settings.title }}
+        </a>
+      {% else %}
+        <div class="cs-collection-title">{{ section.settings.title }}</div>
+      {% endif %}
+
+      <div class="swiper-buttons">
+        <div class="swiper-button-prev" style="width: {{ section.settings.icon_size }}px">
+          {% if section.settings.icon_left != blank %}
+            <img
+              src="{{ section.settings.icon_left | img_url: 'master' }}"
+              alt="{{ section.settings.icon_left.alt }}"
+              style="width: {{ section.settings.icon_size }}px">
+          {% else %}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.54424 15.3509C8.62184 15.2734 8.68342 15.1815 8.72543 15.0802C8.76744 14.979 8.78906 14.8705 8.78906 14.7609C8.78906 14.6512 8.76744 14.5427 8.72543 14.4415C8.68342 14.3402 8.62184 14.2483 8.54424 14.1709L2.46591 8.09419L8.54424 2.01753C8.70072 1.86105 8.78863 1.64882 8.78863 1.42753C8.78863 1.20623 8.70072 0.994003 8.54424 0.837526C8.38776 0.681048 8.17553 0.59314 7.95424 0.59314C7.73295 0.59314 7.52072 0.681048 7.36424 0.837526L0.697574 7.50419C0.619968 7.5816 0.558397 7.67356 0.516386 7.7748C0.474375 7.87605 0.452751 7.98458 0.452751 8.09419C0.452751 8.2038 0.474375 8.31234 0.516386 8.41358C0.558397 8.51482 0.619968 8.60678 0.697574 8.68419L7.36424 15.3509C7.44165 15.4285 7.53361 15.49 7.63485 15.532C7.73609 15.5741 7.84463 15.5957 7.95424 15.5957C8.06385 15.5957 8.17239 15.5741 8.27363 15.532C8.37487 15.49 8.46683 15.4285 8.54424 15.3509Z"
+                fill="#121212"
+                fill-opacity="0.75" />
+            </svg>
+          {% endif %}
+        </div>
+        <div class="swiper-button-next" style="width: {{ section.settings.icon_size }}px">
+          {% if section.settings.icon_right != blank %}
+            <img
+              src="{{ section.settings.icon_right | img_url: 'master' }}"
+              alt="{{ section.settings.icon_right.alt }}"
+              style="width: {{ section.settings.icon_size }}px">
+          {% else %}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none"
+              style="transform: rotate(180deg);">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.54424 15.3509C8.62184 15.2734 8.68342 15.1815 8.72543 15.0802C8.76744 14.979 8.78906 14.8705 8.78906 14.7609C8.78906 14.6512 8.76744 14.5427 8.72543 14.4415C8.68342 14.3402 8.62184 14.2483 8.54424 14.1709L2.46591 8.09419L8.54424 2.01753C8.70072 1.86105 8.78863 1.64882 8.78863 1.42753C8.78863 1.20623 8.70072 0.994003 8.54424 0.837526C8.38776 0.681048 8.17553 0.59314 7.95424 0.59314C7.73295 0.59314 7.52072 0.681048 7.36424 0.837526L0.697574 7.50419C0.619968 7.5816 0.558397 7.67356 0.516386 7.7748C0.474375 7.87605 0.452751 7.98458 0.452751 8.09419C0.452751 8.2038 0.474375 8.31234 0.516386 8.41358C0.558397 8.51482 0.619968 8.60678 0.697574 8.68419L7.36424 15.3509C7.44165 15.4285 7.53361 15.49 7.63485 15.532C7.73609 15.5741 7.84463 15.5957 7.95424 15.5957C8.06385 15.5957 8.17239 15.5741 8.27363 15.532C8.37487 15.49 8.46683 15.4285 8.54424 15.3509Z"
+                fill="#121212"
+                fill-opacity="0.75" />
+            </svg>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper swiper-{{ section.id }}">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% assign product = block.settings.product %}
+          <div class="swiper-slide">
+            <a href="{{ product.url }}" class="cs-collection-product-title"> 
+            {% assign image = product.featured_image %}
+            {% if block.settings.image != blank %}
+              {% assign image = block.settings.image %}
+            {% endif %}
+            <img
+              class="cs-collection-product-image"
+              src="{{ image | img_url: '500x' }}"
+              srcset="
+                              {{ image | img_url: '300x' }} 500w,
+                              {{ image | img_url: '500x' }} 800w,
+                              {{ image | img_url: '800x' }} 1200w,
+                              {{ image | img_url: '1000x' }} 1600w,
+                              {{ image | img_url: 'master' }} 2400w
+                            "
+              alt="{{ image.alt }}">
+            <div class="cs-collection-product-tag">{{ block.settings.tag }}</div>
+            <div class="cs-collection-product-info">
+              {% comment %} overwrite title if possible: {% endcomment %}
+              {% if block.settings.title != blank %}
+                {% assign product_title = block.settings.title %}
+              {% else %}
+                {% assign product_title = product.title %}
+              {% endif %}
+              <div class="cs-collection-product-title">
+                {{- product_title -}}
+              </div>
+              <div class="cs-collection-product-price">{{ product.price | money }}</div>
+            </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endcapture %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    max-width: {{ section.settings.section-width}}rem;
+    margin: 0 auto;
+    padding: 0 {{ section.settings.mb_padding_vertical }}rem;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding: 0 {{ section.settings.padding_vertical }}rem;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div style="background-color:{{section.settings.background-color}};">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div>{{ section_content }}</div>
+  </div>
+</div>
+
+
+<script>
+  // load the swiper css and js only once:
+  (function () {
+    const cssId = 'swiper-css';
+    let existingLink = document.getElementById(cssId);
+    if (!existingLink) {
+      let link = document.createElement('link');
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css';
+      link.rel = 'stylesheet';
+      link.id = cssId;
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(link);
+    }
+    const jsId = 'swiper-js';
+    let existingScript = document.getElementById(jsId);
+    if (!existingScript) {
+      let script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js';
+      script.id = jsId;
+      script.defer = true;
+      // fire a custom event when the script is loaded:
+      script.onload = function () {
+        let event = new Event('swiper:loaded');
+        document.dispatchEvent(event);
+      };
+      let head = document.getElementsByTagName('head')[0];
+      head.appendChild(script);
+    }
+
+    function loadSwiper() {
+      try {
+        new Swiper('.swiper-{{ section.id }}', {
+          slidesPerView: {{ section.settings.slides_view }},
+          spaceBetween: 0,
+          navigation: {
+            nextEl: '.cs-collection-{{ section.id }} .swiper-button-next',
+            prevEl: '.cs-collection-{{ section.id }} .swiper-button-prev',
+          },
+          breakpoints: {
+            750: {
+              slidesPerView: {{ section.settings.slides_view_desktop }},
+            },
+          },
+        });
+      } catch (e) {
+        console.log('Swiper not loaded');
+        console.log(e);
+      }
+    }
+    document.addEventListener('swiper:loaded', loadSwiper);
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', loadSwiper);
+    }
+  })();
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "SS - Threads Slider",
+    "tag": "section",
+    "settings": [
+      {
+          "type": "header",
+          "content": "ATT: Save to see live slider changes"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Bestseller Collection"
+      },
+      {
+        "type": "url",
+        "id": "title_link",
+        "label": "Title Link"
+      },
+      {
+        "type": "range",
+        "id": "slides_view",
+        "label": "Products per view mobile",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "slides_view_desktop",
+        "label": "Products per view desktop",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_left",
+        "label": "Icon Left"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_right",
+        "label": "Icon Right"
+      }, 
+      {
+        "type": "range",
+        "id": "icon_size",
+        "label": "Icon Size",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 20
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default": "#000000"
+      }, {
+        "type": "range",
+        "id": "product_image_height",
+        "label": "Product Image Height",
+        "min": 100,
+        "max": 1000,
+        "step": 20,
+        "default": 300
+      }, {
+        "type": "color",
+        "id": "product_title_color",
+        "label": "Product Title Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "product_tag_color",
+        "label": "Product Tag Color",
+        "default": "#ED893E"
+      }, {
+        "type": "color",
+        "id": "product_price_color",
+        "label": "Product Price Color",
+        "default": "#8F8F8F"
+      }, {
+        "type": "header",
+        "content": "Font size:"
+      }, {
+        "type": "range",
+        "id": "title_font_size",
+        "label": "Title Font Size",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 21
+      }, {
+        "type": "range",
+        "id": "product_title_font_size",
+        "label": "Product Title Font Size",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "product_tag_font_size",
+        "label": "Product Tag Font Size",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 14
+      }, {
+        "type": "range",
+        "id": "product_price_font_size",
+        "label": "Product Price Font Size",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "default": 16
+      }, {
+        "type": "header",
+        "content": "Background color"
+      }, {
+        "type": "color",
+        "label": "Section background color",
+        "id": "background-color",
+        "default": "#ffffff"
+      }, {
+        "type": "header",
+        "content": "Section padding"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 36
+      }, 
+      {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "rem",
+      "label": "Desktop padding vertical",
+      "default": 5
+      },
+      {
+      "type": "range",
+      "id": "mb_padding_vertical",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Mobile padding vertical",
+      "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section width"
+      }, {
+        "type": "range",
+        "id": "section-width",
+        "min": 80,
+        "max": 200,
+        "step": 5,
+        "unit": "rem",
+        "label": "Section width",
+        "default": 120
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }, {
+            "type": "text",
+            "id": "tag",
+            "label": "Product Tag",
+            "default": "most liked"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Product Title"
+          }, {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SS - Threads Product Slider",
+        "blocks": [
+          {
+            "type": "product"
+          },
+          {
+            "type": "product"
+          },
+          {
+            "type": "product"
+          },
+          {
+            "type": "product"
+          }, 
+          {
+            "type": "product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
