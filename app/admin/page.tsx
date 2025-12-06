@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions } from "@/lib/db"
+import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
 import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
@@ -86,6 +86,7 @@ export default async function AdminPage() {
   const stats = await getUserStats()
   const allUsers = await getAllUsers()
   const allSubscriptions = await getAllSubscriptions()
+  const allLogs = await getAllUsageLogs()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
