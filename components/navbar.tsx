@@ -1,13 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { useUser, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs"
+import { useUser, SignInButton, UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun, Shield } from "lucide-react"
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 export function Navbar() {
-  const { isSignedIn, user } = useUser()
+  const { isSignedIn } = useUser()
+  const pathname = usePathname()
   const [darkMode, setDarkMode] = useState(true) // Default to dark mode
   const [isAdmin, setIsAdmin] = useState(false)
 
@@ -60,20 +62,24 @@ export function Navbar() {
     }
   }
 
+  const isActive = (path: string) => {
+    return pathname === path || pathname?.startsWith(path + "/")
+  }
+
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Shopify Section Generator
             </span>
           </Link>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-1 md:space-x-2 lg:space-x-4">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-md hover:bg-accent"
+              className="p-2 rounded-md hover:bg-accent transition-colors"
               aria-label="Toggle dark mode"
             >
               {darkMode ? (
@@ -86,19 +92,41 @@ export function Navbar() {
             {isSignedIn ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost">Dashboard</Button>
+                  <Button 
+                    variant={isActive("/dashboard") ? "default" : "ghost"}
+                    className={`${isActive("/dashboard") ? "bg-primary" : ""} hidden sm:inline-flex`}
+                    size="sm"
+                  >
+                    Dashboard
+                  </Button>
                 </Link>
                 <Link href="/generator">
-                  <Button variant="ghost">Generator</Button>
+                  <Button 
+                    variant={isActive("/generator") ? "default" : "ghost"}
+                    className={`${isActive("/generator") ? "bg-primary" : ""} hidden sm:inline-flex`}
+                    size="sm"
+                  >
+                    Generator
+                  </Button>
                 </Link>
                 <Link href="/account">
-                  <Button variant="ghost">Account</Button>
+                  <Button 
+                    variant={isActive("/account") ? "default" : "ghost"}
+                    className={`${isActive("/account") ? "bg-primary" : ""} hidden md:inline-flex`}
+                    size="sm"
+                  >
+                    Account
+                  </Button>
                 </Link>
                 {isAdmin && (
-                  <Link href="/admin/">
-                    <Button variant="ghost" size="sm">
-                      <Shield className="h-4 w-4 mr-2" />
-                      Admin
+                  <Link href="/admin">
+                    <Button 
+                      variant={isActive("/admin") ? "default" : "ghost"}
+                      size="sm"
+                      className={`${isActive("/admin") ? "bg-primary" : ""} hidden lg:inline-flex`}
+                    >
+                      <Shield className="h-4 w-4 mr-1 md:mr-2" />
+                      <span className="hidden md:inline">Admin</span>
                     </Button>
                   </Link>
                 )}
@@ -107,10 +135,16 @@ export function Navbar() {
             ) : (
               <>
                 <Link href="/pricing">
-                  <Button variant="ghost">Pricing</Button>
+                  <Button 
+                    variant={isActive("/pricing") ? "default" : "ghost"}
+                    className={`${isActive("/pricing") ? "bg-primary" : ""} hidden sm:inline-flex`}
+                    size="sm"
+                  >
+                    Pricing
+                  </Button>
                 </Link>
                 <SignInButton mode="modal">
-                  <Button>Sign In</Button>
+                  <Button size="sm">Sign In</Button>
                 </SignInButton>
               </>
             )}
