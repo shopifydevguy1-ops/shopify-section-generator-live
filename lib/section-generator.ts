@@ -84,8 +84,8 @@ function mapSchemaTypeToVariableType(schemaType: string): string {
 function inferSectionTypeFromId(sectionId: string): string {
   const lowerId = sectionId.toLowerCase()
   
-  // Remove common prefixes
-  const cleanId = lowerId.replace(/^(ss-|custom-)/, '')
+  // Remove common prefixes (SS-, SG-, custom-)
+  const cleanId = lowerId.replace(/^(ss-|sg-|custom-)/, '')
   
   // Common type patterns
   if (cleanId.includes('testimonial')) return 'testimonial'
@@ -168,7 +168,7 @@ export function loadSectionTemplates(): SectionTemplate[] {
         // Extract variables from schema settings
         const variables = schema ? extractVariablesFromSchema(schema) : {}
         
-        // Infer section type from ID (e.g., ss-testimonials-22 -> testimonial)
+        // Infer section type from ID (e.g., sg-testimonials-22 -> testimonial, ss-testimonials-22 -> testimonial)
         const inferredType = inferSectionTypeFromId(sectionId)
         
         // Create template with liquid file as primary source
@@ -400,13 +400,15 @@ export function getAvailableTypes(): string[] {
 }
 
 /**
- * Clean section name by removing "CUSTOM" and "SS-" prefixes
+ * Clean section name by removing "CUSTOM", "SS-", and "SG-" prefixes
  */
 export function cleanSectionName(name: string): string {
   return name
     .replace(/^CUSTOM\s+/i, '')
     .replace(/^SS-\s*/i, '')
+    .replace(/^SG-\s*/i, '')
     .replace(/^SS\s+/i, '')
+    .replace(/^SG\s+/i, '')
     .trim()
 }
 

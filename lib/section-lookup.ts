@@ -56,11 +56,13 @@ function extractMetadataFromComments(content: string): {
 
 /**
  * Infer section name from filename
- * Example: hero-banner.liquid -> Hero Banner
+ * Example: sg-hero-banner.liquid -> Hero Banner (removes SG- prefix)
  */
 function inferNameFromFilename(filename: string): string {
   // Remove extension
-  const nameWithoutExt = filename.replace(/\.(liquid|html)$/i, '')
+  let nameWithoutExt = filename.replace(/\.(liquid|html)$/i, '')
+  // Remove SG- prefix if present
+  nameWithoutExt = nameWithoutExt.replace(/^sg-/i, '')
   // Split by dashes/underscores and capitalize
   return nameWithoutExt
     .split(/[-_]/)
@@ -75,6 +77,7 @@ function inferNameFromFilename(filename: string): string {
  */
 function getPreviewImagePath(sectionsPath: string, filename: string): string | undefined {
   const imageDir = path.join(sectionsPath, 'images')
+  // Keep the same filename (including SG- prefix) for image
   const imageName = filename.replace(/\.(liquid|html)$/i, '.png')
   const imagePath = path.join(imageDir, imageName)
 
