@@ -1121,7 +1121,9 @@ function getLLMProvider(): LLMProvider {
  * Get API key: https://console.groq.com/
  */
 async function generateWithGroq(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
-  const model = process.env.AI_MODEL || 'llama-3.1-70b-versatile'
+  // Updated to currently supported Groq models
+  // Available models: llama-3.1-70b-instruct, llama-3.1-8b-instant, mixtral-8x7b-32768, gemma-7b-it
+  const model = process.env.AI_MODEL || 'llama-3.1-70b-instruct'
   const url = 'https://api.groq.com/openai/v1/chat/completions'
   
   const response = await fetchWithRetry(url, {
