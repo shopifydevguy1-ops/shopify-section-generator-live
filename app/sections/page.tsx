@@ -52,7 +52,17 @@ export default function SectionsPage() {
       const response = await fetch("/api/sections/list")
       
       if (!response.ok) {
-        throw new Error("Failed to load sections")
+        const errorData = await response.json().catch(() => ({}))
+        if (response.status === 403 && errorData.requiresExpert) {
+          toast({
+            title: "Expert Plan Required",
+            description: errorData.error || "Full section library access requires Expert plan. Upgrade to browse and download unlimited sections.",
+            variant: "destructive",
+          })
+          router.push("/pricing")
+          return
+        }
+        throw new Error(errorData.error || "Failed to load sections")
       }
 
       const data = await response.json()

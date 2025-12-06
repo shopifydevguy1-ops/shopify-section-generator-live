@@ -5,7 +5,7 @@ import { convertUSDToPHPCents } from "@/lib/currency"
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const { userId } = auth()
     
@@ -19,24 +19,38 @@ export async function GET() {
     const paymongo = getPayMongoClient()
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
 
-    // Pro plan: $20 USD per month
-    const usdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "20")
+    // Get plan from query parameter (defaults to 'pro' for backward compatibility)
+    const { searchParams } = new URL(request.url)
+    const planParam = searchParams.get('plan') || 'pro'
+    const plan = planParam === 'expert' ? 'expert' : 'pro'
+
+    // Get pricing based on plan
+    let usdAmount: number
+    let planName: string
+    
+    if (plan === 'expert') {
+      usdAmount = parseFloat(process.env.EXPERT_PLAN_USD_AMOUNT || "125")
+      planName = "Expert"
+    } else {
+      usdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "20")
+      planName = "Pro"
+    }
     
     // Convert USD to PHP cents automatically based on current exchange rate
     const amount = await convertUSDToPHPCents(usdAmount)
     
-    console.log(`[Checkout] Converting $${usdAmount} USD to ${amount} PHP cents (₱${(amount / 100).toFixed(2)})`)
+    console.log(`[Checkout] Converting $${usdAmount} USD to ${amount} PHP cents (₱${(amount / 100).toFixed(2)}) for ${planName} plan`)
 
     // Create PayMongo checkout session
     const session = await paymongo.createCheckoutSession({
       amount: amount,
       currency: "PHP",
-      description: `Pro Plan - Monthly Subscription ($${usdAmount} USD)`,
+      description: `${planName} Plan - Monthly Subscription ($${usdAmount} USD)`,
       successUrl: `${appUrl}/account?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${appUrl}/pricing`,
       metadata: {
         clerk_user_id: userId,
-        plan: "pro",
+        plan: plan,
         billing_period: "monthly",
         usd_amount: usdAmount.toString(),
       },

@@ -32,11 +32,11 @@ export default async function DashboardPage() {
     redirect("/dashboard")
   }
 
-  // Ensure admin users have pro plan
-  if (dbUser.is_admin && dbUser.plan !== "pro") {
+  // Ensure admin users have expert plan
+  if (dbUser.is_admin && dbUser.plan !== "expert") {
     const { updateUserPlan } = await import("@/lib/db")
-    await updateUserPlan(dbUser.id, "pro")
-    dbUser.plan = "pro"
+    await updateUserPlan(dbUser.id, "expert")
+    dbUser.plan = "expert"
   }
 
   const subscription = await getSubscriptionByUserId(dbUser.id)
@@ -44,9 +44,19 @@ export default async function DashboardPage() {
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
   const usageCount = await getUserUsageCount(dbUser.id, currentMonth, currentYear)
-  // Admins and pro users have unlimited
-  const maxUsage = (dbUser.plan === "pro" || dbUser.is_admin) ? Infinity : 5
-  const remaining = (dbUser.plan === "pro" || dbUser.is_admin) ? "Unlimited" : Math.max(0, maxUsage - usageCount)
+  // Determine limits based on plan
+  let maxUsage: number | string
+  let remaining: number | string
+  if (dbUser.plan === "expert" || dbUser.is_admin) {
+    maxUsage = "Unlimited"
+    remaining = "Unlimited"
+  } else if (dbUser.plan === "pro") {
+    maxUsage = 50
+    remaining = Math.max(0, maxUsage - usageCount)
+  } else {
+    maxUsage = 5
+    remaining = Math.max(0, maxUsage - usageCount)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] relative">
@@ -68,12 +78,32 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold capitalize">{dbUser.plan}</div>
-              <Badge variant={dbUser.plan === "pro" ? "default" : "secondary"} className="mt-2">
-                {dbUser.plan === "pro" ? "Pro Member" : "Free Plan"}
-              </Badge>
-              {dbUser.plan === "free" && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                <Badge 
+                  variant={
+                    dbUser.plan === "expert" ? "default" : 
+                    dbUser.plan === "pro" ? "default" : 
+                    "secondary"
+                  }
+                >
+                  {dbUser.plan === "expert" ? "Expert Member" : 
+                   dbUser.plan === "pro" ? "Pro Member" : 
+                   "Free Plan"}
+                </Badge>
+                {dbUser.is_admin && (
+                  <Badge variant="default" className="bg-purple-600 hover:bg-purple-700">
+                    Admin
+                  </Badge>
+                )}
+              </div>
+              {dbUser.plan === "free" && !dbUser.is_admin && (
                 <Link href="/pricing" className="block mt-4">
                   <Button size="sm" className="w-full">Upgrade to Pro</Button>
+                </Link>
+              )}
+              {dbUser.plan === "pro" && !dbUser.is_admin && (
+                <Link href="/pricing" className="block mt-4">
+                  <Button size="sm" className="w-full">Upgrade to Expert</Button>
                 </Link>
               )}
             </CardContent>
@@ -87,8 +117,10 @@ export default async function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">{usageCount}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {dbUser.plan === "pro" 
+                {dbUser.plan === "expert" || dbUser.is_admin
                   ? "Unlimited generations" 
+                  : dbUser.plan === "pro"
+                  ? `${remaining} remaining out of ${maxUsage}`
                   : `${remaining} remaining out of ${maxUsage}`}
               </p>
             </CardContent>
@@ -124,15 +156,36 @@ export default async function DashboardPage() {
                   Generate New Section
                 </Button>
               </Link>
+              {(dbUser.plan === "expert" || dbUser.is_admin) && (
+                <Link href="/sections">
+                  <Button className="w-full" variant="outline">
+                    Browse Section Library
+                  </Button>
+                </Link>
+              )}
               <Link href="/account">
                 <Button className="w-full" variant="outline">
                   Manage Account
                 </Button>
               </Link>
-              {dbUser.plan === "free" && (
+              {dbUser.is_admin && (
+                <Link href="/admin">
+                  <Button className="w-full" variant="default">
+                    Admin Dashboard
+                  </Button>
+                </Link>
+              )}
+              {dbUser.plan === "free" && !dbUser.is_admin && (
                 <Link href="/pricing">
                   <Button className="w-full">
                     Upgrade to Pro
+                  </Button>
+                </Link>
+              )}
+              {dbUser.plan === "pro" && !dbUser.is_admin && (
+                <Link href="/pricing">
+                  <Button className="w-full">
+                    Upgrade to Expert
                   </Button>
                 </Link>
               )}
@@ -145,10 +198,13 @@ export default async function DashboardPage() {
               <CardDescription>Your generation quota for this month</CardDescription>
             </CardHeader>
             <CardContent>
-              {dbUser.plan === "pro" ? (
+              {dbUser.plan === "expert" || dbUser.is_admin ? (
                 <div className="text-center py-8">
                   <p className="text-2xl font-bold text-primary">Unlimited</p>
                   <p className="text-muted-foreground mt-2">You have unlimited generations</p>
+                  <Link href="/sections" className="block mt-4">
+                    <Button size="sm" variant="outline">Browse Section Library</Button>
+                  </Link>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -165,7 +221,9 @@ export default async function DashboardPage() {
                   {usageCount >= maxUsage && (
                     <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
                       <p className="text-sm text-destructive font-semibold">
-                        You&apos;ve reached your monthly limit. Upgrade to Pro for unlimited generations.
+                        {dbUser.plan === "free" 
+                          ? "You've reached your monthly limit. Upgrade to Pro for 50 sections per month, or Expert for unlimited."
+                          : "You've reached your monthly limit. Upgrade to Expert for unlimited access and full library access."}
                       </p>
                       <Link href="/pricing" className="block mt-2">
                         <Button size="sm">Upgrade Now</Button>

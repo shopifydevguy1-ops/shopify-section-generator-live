@@ -101,9 +101,9 @@ export async function POST() {
         updated++
       }
       
-      // Ensure admins have pro plan
-      if (shouldBeAdmin && dbUser.plan !== 'pro') {
-        await updateUserPlan(dbUser.id, 'pro')
+      // Ensure admins have expert plan
+      if (shouldBeAdmin && dbUser.plan !== 'expert') {
+        await updateUserPlan(dbUser.id, 'expert')
         updated++
       }
       

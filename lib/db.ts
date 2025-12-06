@@ -6,7 +6,7 @@ export interface User {
   id: string
   clerk_id: string
   email: string
-  plan: 'free' | 'pro'
+  plan: 'free' | 'pro' | 'expert'
   is_admin: boolean
   created_at: Date
   updated_at: Date
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   clerk_id VARCHAR(255) UNIQUE NOT NULL,
   email VARCHAR(255) NOT NULL,
-  plan VARCHAR(20) DEFAULT 'free' CHECK (plan IN ('free', 'pro')),
+  plan VARCHAR(20) DEFAULT 'free' CHECK (plan IN ('free', 'pro', 'expert')),
   is_admin BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
@@ -205,15 +205,15 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
       // Check if user should be admin based on current ADMIN_EMAILS
       const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
       if (adminEmails.includes(user.email.toLowerCase()) && !user.is_admin) {
-        // Update user to admin and pro plan if email is in admin list
+        // Update user to admin and expert plan if email is in admin list
         user.is_admin = true
-        user.plan = 'pro' // Admins get pro plan automatically
+        user.plan = 'expert' // Admins get expert plan automatically
         user.updated_at = new Date()
         users.set(user.id, user)
       }
-      // If user is admin but not on pro plan, upgrade them
-      if (user.is_admin && user.plan !== 'pro') {
-        user.plan = 'pro'
+      // If user is admin but not on expert plan, upgrade them
+      if (user.is_admin && user.plan !== 'expert') {
+        user.plan = 'expert'
         user.updated_at = new Date()
         users.set(user.id, user)
       }
@@ -230,12 +230,12 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     ? isAdmin 
     : adminEmails.includes(email.toLowerCase())
   
-  // Admins automatically get pro plan with unlimited generations
+      // Admins automatically get expert plan with unlimited generations
   const user: User = {
     id: crypto.randomUUID(),
     clerk_id: clerkId,
     email,
-    plan: shouldBeAdmin ? 'pro' : 'free',
+    plan: shouldBeAdmin ? 'expert' : 'free',
     is_admin: shouldBeAdmin,
     created_at: new Date(),
     updated_at: new Date(),
@@ -298,6 +298,7 @@ export async function getUserStats(): Promise<{
     totalUsers: allUsers.length,
     freeUsers: allUsers.filter(u => u.plan === 'free').length,
     proUsers: allUsers.filter(u => u.plan === 'pro').length,
+    expertUsers: allUsers.filter(u => u.plan === 'expert').length,
     totalSubscriptions: allSubscriptions.length,
     activeSubscriptions: allSubscriptions.filter(s => s.status === 'active').length,
     totalGenerations: allLogs.length,
@@ -376,7 +377,7 @@ export async function getSubscriptionByUserId(userId: string): Promise<Subscript
   return null
 }
 
-export async function updateUserPlan(userId: string, plan: 'free' | 'pro'): Promise<void> {
+export async function updateUserPlan(userId: string, plan: 'free' | 'pro' | 'expert'): Promise<void> {
   const user = users.get(userId) || Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.plan = plan
@@ -400,10 +401,10 @@ export async function updateUserAdminStatus(userId: string, isAdmin: boolean): P
   const user = users.get(userId) || Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.is_admin = isAdmin
-    // Admins automatically get pro plan
+    // Admins automatically get expert plan
     // Note: We don't change plan when removing admin status - let the plan update handle that
     if (isAdmin) {
-      user.plan = 'pro'
+      user.plan = 'expert'
     }
     user.updated_at = new Date()
     users.set(user.id, user)
@@ -477,10 +478,30 @@ export async function getUserActivityStats(userId: string): Promise<{
   }
 }
 
-export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
-  // Pro users and admins have unlimited downloads
-  if (plan === 'pro' || isAdmin) {
+export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | 'expert', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
+  // Expert users and admins have unlimited downloads
+  if (plan === 'expert' || isAdmin) {
     return { allowed: true, count: 0, limit: Infinity }
+  }
+  
+  // Pro users have a limit of 50 per month
+  if (plan === 'pro') {
+    const now = new Date()
+    const currentMonth = now.getMonth() + 1
+    const currentYear = now.getFullYear()
+    const userCount = await getUserUsageCount(userId, currentMonth, currentYear, ipAddress)
+    const limit = 50
+    
+    if (userCount >= limit) {
+      return { 
+        allowed: false, 
+        count: userCount, 
+        limit, 
+        reason: "You have reached your monthly limit of 50 sections. Upgrade to Expert for unlimited access." 
+      }
+    }
+    
+    return { allowed: true, count: userCount, limit }
   }
   
   // Free users have a limit of 5 total actions (generations + downloads + copies)
@@ -507,7 +528,7 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', is
       allowed: false, 
       count, 
       limit, 
-      reason: "You have reached the limit from this IP address. Please upgrade to Pro for unlimited access." 
+      reason: "You have reached the limit from this IP address. Please upgrade to Pro for more access." 
     }
   }
   

@@ -54,9 +54,9 @@ export async function PATCH(
     const { plan, is_admin } = body
 
     // Validate plan if provided
-    if (plan && plan !== 'free' && plan !== 'pro') {
+    if (plan && plan !== 'free' && plan !== 'pro' && plan !== 'expert') {
       return NextResponse.json(
-        { error: "Invalid plan. Must be 'free' or 'pro'" },
+        { error: "Invalid plan. Must be 'free', 'pro', or 'expert'" },
         { status: 400 }
       )
     }
@@ -89,7 +89,7 @@ export async function PATCH(
     // If trying to set plan to free but user is/will be admin, prevent it
     if (plan === 'free' && finalIsAdmin) {
       return NextResponse.json(
-        { error: "Admin users must have Pro plan. Please uncheck 'Admin Access' first, then change plan to free." },
+        { error: "Admin users must have Expert plan. Please uncheck 'Admin Access' first, then change plan to free." },
         { status: 400 }
       )
     }
@@ -108,7 +108,7 @@ export async function PATCH(
       // Get updated user to check current admin status
       const updatedUser = await getUserById(userId)
       
-      // If user is admin, they must stay on pro plan
+      // If user is admin, they must stay on expert plan
       if (updatedUser?.is_admin && plan === 'free') {
         return NextResponse.json(
           { error: "Cannot set free plan for admin users. Please remove admin status first." },

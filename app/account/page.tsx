@@ -61,11 +61,29 @@ export default async function AccountPage() {
             <CardContent className="space-y-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Current Plan</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <Badge variant={dbUser.plan === "pro" ? "default" : "secondary"}>
-                    {dbUser.plan === "pro" ? "Pro" : "Free"}
+                <div className="flex items-center gap-2 mt-1 flex-wrap">
+                  <Badge 
+                    variant={
+                      dbUser.plan === "expert" ? "default" : 
+                      dbUser.plan === "pro" ? "default" : 
+                      "secondary"
+                    }
+                  >
+                    {dbUser.plan === "expert" ? "Expert" : 
+                     dbUser.plan === "pro" ? "Pro" : 
+                     "Free"}
                   </Badge>
+                  {dbUser.is_admin && (
+                    <Badge variant="default" className="bg-purple-600 hover:bg-purple-700">
+                      Admin
+                    </Badge>
+                  )}
                 </div>
+                {dbUser.is_admin && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    As an admin, you have unlimited access to all features including the full section library.
+                  </p>
+                )}
               </div>
 
               {subscription && (
@@ -90,6 +108,10 @@ export default async function AccountPage() {
               {dbUser.plan === "free" ? (
                 <Link href="/pricing">
                   <Button className="w-full">Upgrade to Pro</Button>
+                </Link>
+              ) : dbUser.plan === "pro" ? (
+                <Link href="/pricing">
+                  <Button className="w-full">Upgrade to Expert</Button>
                 </Link>
               ) : subscription?.status === "active" ? (
                 <form action="/api/cancel-subscription" method="POST">
@@ -124,6 +146,20 @@ export default async function AccountPage() {
                   Section Generator
                 </Button>
               </Link>
+              {(dbUser.plan === "expert" || dbUser.is_admin) && (
+                <Link href="/sections">
+                  <Button variant="outline" className="w-full">
+                    Browse Section Library
+                  </Button>
+                </Link>
+              )}
+              {dbUser.is_admin && (
+                <Link href="/admin">
+                  <Button variant="default" className="w-full">
+                    Admin Dashboard
+                  </Button>
+                </Link>
+              )}
             </CardContent>
           </Card>
         </div>

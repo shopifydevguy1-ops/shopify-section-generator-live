@@ -18,7 +18,7 @@ interface EditUserDialogProps {
 
 export function EditUserDialog({ user, open, onOpenChange, onUserUpdated }: EditUserDialogProps) {
   const { toast } = useToast()
-  const [plan, setPlan] = useState<'free' | 'pro'>(user?.plan || 'free')
+  const [plan, setPlan] = useState<'free' | 'pro' | 'expert'>(user?.plan || 'free')
   const [isAdmin, setIsAdmin] = useState(user?.is_admin || false)
   const [loading, setLoading] = useState(false)
 
@@ -92,17 +92,18 @@ export function EditUserDialog({ user, open, onOpenChange, onUserUpdated }: Edit
 
           <div className="space-y-2">
             <Label htmlFor="plan">Plan</Label>
-            <Select value={plan} onValueChange={(value) => setPlan(value as 'free' | 'pro')}>
+            <Select value={plan} onValueChange={(value) => setPlan(value as 'free' | 'pro' | 'expert')}>
               <SelectTrigger id="plan">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="free">Free</SelectItem>
                 <SelectItem value="pro">Pro</SelectItem>
+                <SelectItem value="expert">Expert</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
-              Free plan: 5 generations/month. Pro plan: Unlimited generations.
+              Free: 5/month. Pro: 50/month. Expert: Unlimited + full library access.
             </p>
           </div>
 
@@ -120,7 +121,7 @@ export function EditUserDialog({ user, open, onOpenChange, onUserUpdated }: Edit
               </Label>
             </div>
             <p className="text-xs text-muted-foreground">
-              Admins automatically get Pro plan and can access the admin dashboard.
+              Admins automatically get Expert plan and can access the admin dashboard.
             </p>
           </div>
 

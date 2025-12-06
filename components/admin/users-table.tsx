@@ -37,8 +37,10 @@ export function UsersTable() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [resettingUserId, setResettingUserId] = useState<string | null>(null)
 
-  const fetchUsers = async () => {
-    setLoading(true)
+  const fetchUsers = async (showLoading = false) => {
+    if (showLoading) {
+      setLoading(true)
+    }
     try {
       const response = await fetch("/api/admin/clerk-users")
       const data = await response.json()
@@ -47,22 +49,34 @@ export function UsersTable() {
         throw new Error(data.error || "Failed to fetch users")
       }
 
-      setUsers(data.users || [])
+      // Only update users if we got valid data (preserves activity stats during refresh)
+      if (data.users && Array.isArray(data.users)) {
+        setUsers(data.users)
+      }
     } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to load users",
-        variant: "destructive",
-      })
+      // Only show error toast on initial load, not on silent refreshes
+      if (showLoading) {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to load users",
+          variant: "destructive",
+        })
+      } else {
+        // Silently log error for background refreshes
+        console.error("Background refresh failed:", error)
+      }
     } finally {
-      setLoading(false)
+      if (showLoading) {
+        setLoading(false)
+      }
     }
   }
 
   useEffect(() => {
-    fetchUsers()
-    // Auto-refresh every 10 seconds
-    const interval = setInterval(fetchUsers, 10000)
+    // Initial load with loading state
+    fetchUsers(true)
+    // Auto-refresh every 30 seconds without showing loading state (preserves activity data)
+    const interval = setInterval(() => fetchUsers(false), 30000)
     return () => clearInterval(interval)
   }, [])
 
@@ -129,9 +143,9 @@ export function UsersTable() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>All Users from Clerk</CardTitle>
-              <CardDescription>Complete list of all registered users from Clerk</CardDescription>
+              <CardDescription>Complete list of all registered users with activity stats (auto-refreshes every 30s)</CardDescription>
             </div>
-            <Button onClick={fetchUsers} variant="outline" size="sm">
+            <Button onClick={() => fetchUsers(false)} variant="outline" size="sm">
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
@@ -168,7 +182,13 @@ export function UsersTable() {
                           : "-"}
                       </td>
                       <td className="p-2">
-                        <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
+                        <Badge 
+                          variant={
+                            user.plan === "expert" ? "default" : 
+                            user.plan === "pro" ? "default" : 
+                            "secondary"
+                          }
+                        >
                           {user.plan}
                         </Badge>
                       </td>

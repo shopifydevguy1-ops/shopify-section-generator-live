@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       user = await createUser(userId, email)
     }
 
-    // Check usage limits for free plan (admins have unlimited)
+    // Check usage limits based on plan
     if (user.plan === "free" && !user.is_admin) {
       const now = new Date()
       const currentMonth = now.getMonth() + 1
@@ -56,13 +56,29 @@ export async function POST(request: Request) {
       if (usageCount >= 5) {
         return NextResponse.json(
           { 
-            error: "You've reached your monthly limit of 5 generations. Please upgrade to Pro for unlimited generations.",
+            error: "You've reached your monthly limit of 5 generations. Please upgrade to Pro for 50 generations per month.",
+            limitReached: true
+          },
+          { status: 403 }
+        )
+      }
+    } else if (user.plan === "pro" && !user.is_admin) {
+      const now = new Date()
+      const currentMonth = now.getMonth() + 1
+      const currentYear = now.getFullYear()
+      const usageCount = await getUserUsageCount(user.id, currentMonth, currentYear)
+      
+      if (usageCount >= 50) {
+        return NextResponse.json(
+          { 
+            error: "You've reached your monthly limit of 50 sections. Upgrade to Expert for unlimited access and full library access.",
             limitReached: true
           },
           { status: 403 }
         )
       }
     }
+    // Expert plan and admins have unlimited - no check needed
 
     // Search sections from /sections folder (NO AI generation)
     console.log(`[API] Searching sections from /sections folder for input: "${sectionInput}"`)

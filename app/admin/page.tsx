@@ -58,23 +58,23 @@ export default async function AdminPage() {
     redirect("/dashboard")
   }
   
-  // If user should be admin but isn't marked in DB, update it
-  if ((hasAdminRole || emailIsAdmin) && dbUser && !dbUser.is_admin) {
-    const { updateUserAdminStatus } = await import("@/lib/db")
-    await updateUserAdminStatus(dbUser.id, true)
-    // Refresh user data to get updated plan
-    const updatedUser = await getUserByClerkId(user.id)
-    if (updatedUser) {
-      updatedUser.is_admin = true
-      updatedUser.plan = 'pro'
+    // If user should be admin but isn't marked in DB, update it
+    if ((hasAdminRole || emailIsAdmin) && dbUser && !dbUser.is_admin) {
+      const { updateUserAdminStatus } = await import("@/lib/db")
+      await updateUserAdminStatus(dbUser.id, true)
+      // Refresh user data to get updated plan
+      const updatedUser = await getUserByClerkId(user.id)
+      if (updatedUser) {
+        updatedUser.is_admin = true
+        updatedUser.plan = 'expert'
+      }
     }
-  }
   
-  // If user is admin but not on pro plan, upgrade them
-  if (isAdmin && dbUser && dbUser.plan !== 'pro') {
-    const { updateUserPlan } = await import("@/lib/db")
-    await updateUserPlan(dbUser.id, 'pro')
-  }
+    // If user is admin but not on expert plan, upgrade them
+    if (isAdmin && dbUser && dbUser.plan !== 'expert') {
+      const { updateUserPlan } = await import("@/lib/db")
+      await updateUserPlan(dbUser.id, 'expert')
+    }
   
   // Ensure dbUser exists for stats
   if (!dbUser) {
@@ -100,24 +100,24 @@ export default async function AdminPage() {
         {/* Stats Cards - Live Component */}
         <StatsCardsLive />
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        {/* All Users Table from Clerk - Moved to top */}
+        <div className="mt-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold">All Users from Clerk</h2>
+              <p className="text-sm text-muted-foreground">Complete list with activity stats (generations, copies, downloads)</p>
+            </div>
+            <SyncUsersButton />
+          </div>
+          <UsersTable />
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6 mt-6">
           {/* Recent Users - Live Component */}
           <RecentUsersLive />
 
           {/* Recent Activity - Live Component */}
           <RecentActivityLive />
-        </div>
-
-        {/* All Users Table from Clerk */}
-        <div className="mt-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-semibold">User Management</h2>
-              <p className="text-sm text-muted-foreground">Sync Clerk users with database</p>
-            </div>
-            <SyncUsersButton />
-          </div>
-          <UsersTable />
         </div>
 
         {/* Database Users Table (Legacy) */}
@@ -148,7 +148,13 @@ export default async function AdminPage() {
                         <tr key={user.id} className="border-b">
                           <td className="p-2">{user.email}</td>
                           <td className="p-2">
-                            <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
+                            <Badge 
+                              variant={
+                                user.plan === "expert" ? "default" : 
+                                user.plan === "pro" ? "default" : 
+                                "secondary"
+                              }
+                            >
                               {user.plan}
                             </Badge>
                           </td>

@@ -86,7 +86,13 @@ export function RecentUsersLive() {
                     )}
                   </div>
                 </div>
-                <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
+                <Badge 
+                  variant={
+                    user.plan === "expert" ? "default" : 
+                    user.plan === "pro" ? "default" : 
+                    "secondary"
+                  }
+                >
                   {user.plan}
                 </Badge>
               </div>
