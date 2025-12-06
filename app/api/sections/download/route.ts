@@ -46,11 +46,12 @@ export async function POST(request: Request) {
     )
 
     if (!allowed) {
+      const limitValue = limit === Infinity ? 5 : limit // Should never be Infinity here, but just in case
       return NextResponse.json(
         { 
-          error: `You have reached your download/copy limit of ${limit} sections. Upgrade to Pro for unlimited downloads.`,
+          error: `You have reached your download/copy limit of ${limitValue} sections. Upgrade to Pro for unlimited downloads.`,
           count,
-          limit,
+          limit: limit === Infinity ? null : limit,
           reached: true
         },
         { status: 403 }
@@ -63,9 +64,9 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: action === 'copy' ? "Code copied successfully" : "Download logged successfully",
-      remaining: limit === Infinity ? Infinity : limit - count - 1,
+      remaining: limit === Infinity ? null : limit - count - 1,
       count: count + 1,
-      limit
+      limit: limit === Infinity ? null : limit
     })
   } catch (error: any) {
     console.error("Error processing download/copy:", error)
@@ -111,8 +112,8 @@ export async function GET() {
 
     return NextResponse.json({
       count,
-      limit,
-      remaining: limit === Infinity ? Infinity : Math.max(0, limit - count),
+      limit: limit === Infinity ? null : limit,
+      remaining: limit === Infinity ? null : Math.max(0, limit - count),
       allowed,
       plan: dbUser.plan,
       isAdmin: dbUser.is_admin

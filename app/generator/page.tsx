@@ -62,7 +62,12 @@ export default function GeneratorPage() {
       const response = await fetch("/api/sections/download")
       if (response.ok) {
         const data = await response.json()
-        setDownloadStats(data)
+        setDownloadStats({
+          count: data.count,
+          limit: data.limit === null ? Infinity : data.limit,
+          remaining: data.remaining === null ? Infinity : data.remaining,
+          allowed: data.allowed
+        })
       }
     } catch (error) {
       console.error("Error fetching download stats:", error)
@@ -174,15 +179,15 @@ export default function GeneratorPage() {
       if (data.remaining !== undefined) {
         setDownloadStats({
           count: data.count,
-          limit: data.limit,
-          remaining: data.remaining,
-          allowed: data.remaining > 0 || data.remaining === Infinity
+          limit: data.limit === null ? Infinity : data.limit,
+          remaining: data.remaining === null ? Infinity : data.remaining,
+          allowed: data.remaining === null || data.remaining > 0
         })
       }
 
       toast({
         title: "Copied!",
-        description: data.remaining === Infinity 
+        description: data.remaining === null 
           ? "Code copied to clipboard" 
           : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
       })
@@ -239,15 +244,15 @@ export default function GeneratorPage() {
       if (data.remaining !== undefined) {
         setDownloadStats({
           count: data.count,
-          limit: data.limit,
-          remaining: data.remaining,
-          allowed: data.remaining > 0 || data.remaining === Infinity
+          limit: data.limit === null ? Infinity : data.limit,
+          remaining: data.remaining === null ? Infinity : data.remaining,
+          allowed: data.remaining === null || data.remaining > 0
         })
       }
       
       toast({
         title: "Downloaded!",
-        description: data.remaining === Infinity 
+        description: data.remaining === null 
           ? "Section file downloaded successfully" 
           : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
       })
