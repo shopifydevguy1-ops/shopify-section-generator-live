@@ -20,8 +20,8 @@ export async function GET(
     }
 
     // Await params in Next.js 15
-    const { path } = await params
-    const imagePath = path.join('/')
+    const { path: pathArray } = await params
+    const imagePath = pathArray.join('/')
     
     // Get sections directory path
     const sectionsPath = process.env.SECTIONS_DIRECTORY_PATH || path.join(process.cwd(), 'sections')
