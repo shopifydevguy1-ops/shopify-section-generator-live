@@ -99,6 +99,8 @@ export async function POST(request: Request) {
     }
 
     // Log usage (use "custom" as type for section lookups)
+    // Important: Use database user.id, not Clerk userId
+    console.log(`[API Generate] Logging usage for user.id: ${user.id}, clerk_id: ${userId}`)
     await logUsage(user.id, "custom")
 
     return NextResponse.json({
