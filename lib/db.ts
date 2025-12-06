@@ -260,6 +260,10 @@ export async function getAllLoginLogs(): Promise<LoginLog[]> {
   return loginLogs
 }
 
+export async function getAllDownloadLogs(): Promise<DownloadLog[]> {
+  return downloadLogs
+}
+
 export async function logLogin(userId: string, clerkId: string, email: string, ipAddress?: string): Promise<void> {
   const log: LoginLog = {
     id: crypto.randomUUID(),

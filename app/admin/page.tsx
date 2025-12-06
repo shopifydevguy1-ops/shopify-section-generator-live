@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserByClerkId, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
+import { getUserByClerkId, getAllUsers, getAllSubscriptions, getAllUsageLogs, getAllDownloadLogs, getUserActivityStats } from "@/lib/db"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
 import { SyncUsersButton } from "@/components/admin/sync-users-button"
@@ -86,6 +86,15 @@ export default async function AdminPage() {
   const allUsers = await getAllUsers()
   const allSubscriptions = await getAllSubscriptions()
   const allLogs = await getAllUsageLogs()
+  const allDownloadLogs = await getAllDownloadLogs()
+  
+  // Get activity stats for all users
+  const usersWithStats = await Promise.all(
+    allUsers.map(async (user) => {
+      const activityStats = await getUserActivityStats(user.id)
+      return { user, activityStats }
+    })
+  )
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -112,14 +121,6 @@ export default async function AdminPage() {
           <UsersTable />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-6">
-          {/* Recent Users - Live Component */}
-          <RecentUsersLive />
-
-          {/* Recent Activity - Live Component */}
-          <RecentActivityLive />
-        </div>
-
         {/* Database Users Table (Legacy) */}
         {allUsers.length > 0 && (
           <Card className="mt-6">
@@ -136,14 +137,14 @@ export default async function AdminPage() {
                       <th className="text-left p-2">Plan</th>
                       <th className="text-left p-2">Subscription Status</th>
                       <th className="text-left p-2">Joined</th>
-                      <th className="text-left p-2">Total Generations</th>
+                      <th className="text-left p-2">Generations</th>
+                      <th className="text-left p-2">Copies</th>
+                      <th className="text-left p-2">Downloads</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {allUsers.map((user) => {
+                    {usersWithStats.map(({ user, activityStats }) => {
                       const subscription = allSubscriptions.find(s => s.user_id === user.id)
-                      // Filter logs by user's database ID (not clerk_id)
-                      const userLogs = allLogs.filter(log => log.user_id === user.id)
                       return (
                         <tr key={user.id} className="border-b">
                           <td className="p-2">{user.email}</td>
@@ -177,7 +178,13 @@ export default async function AdminPage() {
                             {new Date(user.created_at).toLocaleDateString()}
                           </td>
                           <td className="p-2">
-                            <span className="font-medium">{userLogs.length}</span>
+                            <span className="font-medium">{activityStats.generations}</span>
+                          </td>
+                          <td className="p-2">
+                            <span className="font-medium">{activityStats.copies}</span>
+                          </td>
+                          <td className="p-2">
+                            <span className="font-medium">{activityStats.downloads}</span>
                           </td>
                         </tr>
                       )
