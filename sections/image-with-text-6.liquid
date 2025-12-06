@@ -1,13 +1,3 @@
-{% comment %}
----------------------------------------------------------
-Copyright © 2023 Section Store. All rights reserved.
-Unauthorized copying, modification, distribution, or use
-of this code or any portion of it, is strictly prohibited.
-Violators will be prosecuted to the fullest extent of the law.
-For inquiries or permissions, contact daniel@section.store
----------------------------------------------------------
-{% endcomment %}
-
 {%- liquid 
   assign padding_horizontal = section.settings.padding_horizontal
   assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
@@ -673,1228 +663,1228 @@ For inquiries or permissions, contact daniel@section.store
 </div>
 
 {% schema %}
-  {
-    "name": "SS - Image With Text #6",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Layout Settings"
-      },
-      {
-        "type": "range",
-        "id": "layout_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Layout Gap",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "layout_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Layout Gap - Mobile",
-        "default": 20
-      },
-      {
-        "type": "header",
-        "content": "Content Settings"
-      },
-      {
-        "type": "range",
-        "id": "content_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Content Padding Vertical",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "content_padding_vertical_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Content Padding Vertical - Mobile",
-        "default": 28
-      },
-      {
-         "type": "range",
-         "id": "content_padding_horizontal",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Content Padding Horizontal",
-         "default": 16
-      },
-      {
-         "type": "range",
-         "id": "content_padding_horizontal_mobile",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Content Padding Horizontal - Mobile",
-         "default": 16
-      },
-      {
-         "type": "range",
-         "id": "content_radius",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Content Border Radius",
-         "default": 0
-      },
-      {
-         "type": "range",
-         "id": "content_border_thickness",
-         "min": 0,
-         "max": 10,
-         "step": 1,
-         "unit": "px",
-         "label": "Content Border Thickness",
-         "default": 0
-      },
-      {
-         "type": "range",
-         "id": "content_position_sticky",
-         "min": 0,
-         "max": 300,
-         "step": 5,
-         "unit": "px",
-         "label": "Content Position Sticky - Desktop",
-         "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Content Elements Settings"
-      },
-      {
-        "type": "range",
-        "id": "content_item_width",
-        "min": 200,
-        "max": 700,
-        "step": 10,
-        "unit": "px",
-        "label": "Content Elements Width",
-        "default": 570
-      },
-      {
-        "type": "range",
-        "id": "content_item_width_mobile",
-        "min": 40,
-        "max": 100,
-        "step": 2,
-        "unit": "%",
-        "label": "Content Elements Width - Mobile",
-        "default": 100
-      },
-      {
-        "type": "select",
-        "id": "content_vertical_position",
-        "label": "Content Elements Vertical Position - Desktop",
-        "default": "center",
-        "options": [
-          {
-            "label": "Top",
-            "value": "start"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Bottom",
-            "value": "end"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "content_horizontal_position",
-        "label": "Content Elements Horizontal Position - Desktop",
-        "default": "center",
-        "options": [
-          {
-            "label": "Left",
-            "value": "start"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "end"
-          }
-        ]
-      },
-      {
-        "type": "header",
-        "content": "Heading"
-      },
-      {
-        "type": "richtext",
-        "id": "heading",
-        "label": "Heading",
-        "default": "<h2>'Thick as a towel. Soft to touch. Perfect for your bed and couch.'</h2>"
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Heading Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Heading Size",
-        "default": 64
-      },
-      {
-        "type": "range",
-        "id": "heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Heading Size - Mobile",
-        "default": 32
-      },
-      {
-        "type": "range",
-        "id": "heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Heading Line Height",
-        "default": 130
-      },
-      {
-        "type": "select",
-        "id": "heading_align",
-        "label": "Heading Text Align",
-        "default": "left",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "heading_align_mobile",
-        "label": "Heading Text Align - Mobile",
-        "default": "left",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "header",
-        "content": "Content Items Settings"
-      },
-      {
-        "type": "range",
-        "id": "items_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Items Margin Top - Desktop",
-        "default": 60
-      },
-      {
-        "type": "range",
-        "id": "items_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Items Margin Top - Mobile",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "item_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Spacing Between Items - Desktop",
-        "default": 60
-      },
-      {
-        "type": "range",
-        "id": "item_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Spacing Between Items - Mobile",
-        "default": 24
-      },
-      {
-        "type": "header",
-        "content": "Item Icon Settings"
-      },
-      {
-        "type": "range",
-        "id": "item_icon_width",
-        "min": 30,
-        "max": 120,
-        "step": 5,
-        "unit": "px",
-        "label": "Item Icon Width",
-        "default": 50
-      },
-      {
-        "type": "range",
-        "id": "item_icon_width_mobile",
-        "min": 30,
-        "max": 120,
-        "step": 5,
-        "unit": "px",
-        "label": "Item Icon Width - Mobile",
-        "default": 40
-      },
-      {
-        "type": "checkbox",
-        "id": "hide_icon",
-        "label": "Hide Icon"
-      },
-      {
-        "type": "header",
-        "content": "Item Heading Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "item_heading_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "item_heading_font",
-        "label": "Item Heading Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "item_heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Heading Size",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "item_heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Heading Size - Mobile",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "item_heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Item Heading Line Height",
-        "default": 130
-      },
-      {
-        "type": "header",
-        "content": "Item Text Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "item_text_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "item_text_font",
-        "label": "Item Text Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "item_text_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Text Size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "item_text_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Text Size - Mobile",
-        "default": 14
-      },
-      {
-        "type": "range",
-        "id": "item_text_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Item Text Line Height",
-        "default": 150
-      },
-      {
-        "type": "header",
-        "content": "Media Container Settings"
-      },
-      {
-        "type": "range",
-        "id": "media_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Container Padding Vertical",
-        "default": 60
-      },
-      {
-        "type": "range",
-        "id": "media_padding_vertical_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Container Padding Vertical - Mobile",
-        "default": 0
-      },
-      {
-         "type": "range",
-         "id": "media_padding_horizontal",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Media Container Padding Horizontal",
-         "default": 10
-      },
-      {
-         "type": "range",
-         "id": "media_padding_horizontal_mobile",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Media Container Padding Horizontal - Mobile",
-         "default": 10
-      },
-      {
-        "type": "header",
-        "content": "Media Item Settings"
-      },
-      {
-        "type": "range",
-        "id": "media_item_width",
-        "min": 200,
-        "max": 700,
-        "step": 10,
-        "unit": "px",
-        "label": "Media Item Width",
-        "default": 540
-      },
-      {
-        "type": "range",
-        "id": "media_item_width_mobile",
-        "min": 40,
-        "max": 100,
-        "step": 2,
-        "unit": "%",
-        "label": "Media Item Width - Mobile",
-        "default": 100
-      },
-      {
-        "type": "select",
-        "id": "media_item_align",
-        "label": "Media Item Align",
-        "default": "center",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "media_item_align_mobile",
-        "label": "Media Item Align - Mobile",
-        "default": "center",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "range",
-        "id": "media_item_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Margin Top - Desktop",
-        "default": 60
-      },
-      {
-        "type": "range",
-        "id": "media_item_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Margin Top - Mobile",
-        "default": 22
-      },
-      {
-        "type": "header",
-        "content": "Media Image Settings"
-      },
-      {
-         "type": "range",
-         "id": "media_image_radius",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Media Border Radius",
-         "default": 0
-      },
-      {
-         "type": "range",
-         "id": "media_image_border_thickness",
-         "min": 0,
-         "max": 10,
-         "step": 1,
-         "unit": "px",
-         "label": "Media Border Thickness",
-         "default": 0
-      },
-      {
-        "type": "select",
-        "id": "media_image_ratio",
-        "label": "Media Aspect Ratio",
-        "default": "landscape",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "media_image_ratio_mobile",
-        "label": "Media Aspect Ratio - Mobile",
-        "default": "landscape",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      },
-      {
-        "type": "header",
-        "content": "Media Item Heading Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "media_heading_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "media_heading_font",
-        "label": "Media Item Heading Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "media_heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Heading Size",
-        "default": 32
-      },
-      {
-        "type": "range",
-        "id": "media_heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Heading Size - Mobile",
-        "default": 32
-      },
-      {
-        "type": "range",
-        "id": "media_heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Media Item Heading Line Height",
-        "default": 130
-      },
-      {
-        "type": "range",
-        "id": "media_heading_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Heading Margin Top - Desktop",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "media_heading_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Heading Margin Top - Mobile",
-        "default": 16
-      },
-      {
-        "type": "header",
-        "content": "Media Item Text Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "media_text_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "media_text_font",
-        "label": "Item Text Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "media_text_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Text Size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "media_text_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Item Text Size - Mobile",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "media_text_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Item Text Line Height",
-        "default": 130
-      },
-      {
-        "type": "range",
-        "id": "media_text_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Text Margin Top - Desktop",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "media_text_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Media Item Text Margin Top - Mobile",
-        "default": 10
-      },
-      {
-        "type": "header",
-        "content": "Content Colors"
-      },
-      {
-        "type": "color",
-        "label": "Content Background Color",
-        "id": "content_bg",
-        "default": "#827E6D"
-      },
-      {
-        "type": "color",
-        "label": "Content Border Color",
-        "id": "content_border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Content Heading Color",
-        "id": "heading_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "header",
-        "content": "Content Items Colors"
-      },
-      {
-        "type": "color",
-        "label": "Item Icon Color",
-        "id": "item_icon_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Item Heading Color",
-        "id": "item_heading_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Item Text Color",
-        "id": "item_text_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "header",
-        "content": "Media Colors"
-      },
-      {
-        "type": "color",
-        "label": "Media Border Color",
-        "id": "media_border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Media Item Heading Color",
-        "id": "media_heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Media Item Text Color",
-        "id": "media_text_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section Colors"
-      },
-      {
-        "type": "color",
-        "label": "Section background",
-        "id": "background_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color_background",
-        "id": "background_gradient",
-        "label": "Section background gradient"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section margin (outside)"
-      },
-      {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin bottom",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section padding (inside)"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Padding top",
-        "default": 36
-      },
-      {
-         "type": "range",
-         "id": "padding_bottom",
-         "min": 0,
-         "max": 100,
-         "step": 4,
-         "unit": "px",
-         "label": "Padding bottom",
-         "default": 36
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Padding sides",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Padding sides mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "full_width",
-        "label": "Full Width",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "content_width",
-        "min": 0,
-        "max": 400,
-        "step": 10,
-        "unit": "rem",
-        "label": "Section content width",
-        "default": 120
-      },
-      {
-        "type": "range",
-        "id": "border_thickness",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy",
-        "label": "Lazy load",
-        "info": "Lazy load images for speed optimisation",
-        "default": true
-      }
-    ],
-    "blocks": [
-      {
-        "type": "item",
-        "name": "Item",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image Icon"
-          },
-          {
-            "type": "select",
-            "id": "icon",
-            "label": "Icon",
-            "options": [
-              {
-                "value": "atc",
-                "label": "Add to cart",
-                "group": "Shop"
-              },
-              {
-                "value": "gift",
-                "label": "Gift",
-                "group": "Shop"
-              },
-              {
-                "value": "heart",
-                "label": "Heart",
-                "group": "Shop"
-              },
-              {
-                "value": "bi-ecology",
-                "label": "Ecology",
-                "group": "Shop"
-              },
-              {
-                "value": "plant",
-                "label": "Plant",
-                "group": "Shop"
-              },
-              {
-                "value": "shop",
-                "label": "Shop",
-                "group": "Shop"
-              },
-              {
-                "value": "pin",
-                "label": "Geo pin",
-                "group": "Shop"
-              },
-              {
-                "value": "megaphone",
-                "label": "Megaphone",
-                "group": "Communication"
-              },
-              {
-                "value": "chat",
-                "label": "Chat",
-                "group": "Communication"
-              },
-              {
-                "value": "chat-dots",
-                "label": "Chat w. dots",
-                "group": "Communication"
-              },
-              {
-                "value": "people",
-                "label": "Real people support",
-                "group": "Communication"
-              },
-              {
-                "value": "email",
-                "label": "Email",
-                "group": "Communication"
-              },
-              {
-                "value": "globe",
-                "label": "Globe",
-                "group": "Communication"
-              },
-              {
-                "value": "newsletter",
-                "label": "Newsletter",
-                "group": "Communication"
-              },
-              {
-                "value": "love",
-                "label": "Love",
-                "group": "Communication"
-              },
-              {
-                "value": "phone",
-                "label": "Phone",
-                "group": "Communication"
-              },
-              {
-                "value": "share",
-                "label": "Share",
-                "group": "Communication"
-              },
-              {
-                "value": "box",
-                "label": "Box",
-                "group": "Delivery"
-              },
-              {
-                "value": "worldwide",
-                "label": "Worldwide",
-                "group": "Delivery"
-              },
-              {
-                "value": "truck",
-                "label": "Truck",
-                "group": "Delivery"
-              },
-              {
-                "value": "airplane",
-                "label": "Airplane",
-                "group": "Delivery"
-              },
-              {
-                "value": "return_arrow",
-                "label": "Return purchase",
-                "group": "Delivery"
-              },
-              {
-                "value": "time",
-                "label": "Time",
-                "group": "Delivery"
-              },
-              {
-                "value": "payment",
-                "label": "Secure payment",
-                "group": "Security"
-              },
-              {
-                "value": "mobile",
-                "label": "Lock",
-                "group": "Security"
-              },
-              {
-                "value": "shield",
-                "label": "Shield",
-                "group": "Security"
-              },
-              {
-                "value": "guarantee",
-                "label": "Guarantee",
-                "group": "Badges"
-              },
-              {
-                "value": "action",
-                "label": "Action",
-                "group": "Badges"
-              },
-              {
-                "value": "holds",
-                "label": "Holds",
-                "group": "Image & Text"
-              },
-              {
-                "value": "blocking",
-                "label": "Blocking",
-                "group": "Image & Text"
-              },
-              {
-                "value": "lifetime",
-                "label": "Lifetime",
-                "group": "Image & Text"
-              },
-              {
-                "value": "design",
-                "label": "Design",
-                "group": "Image & Text"
-              }
-            ],
-            "default": "guarantee"
-          },
-          {
-            "type": "text",
-            "id": "heading",
-            "label": "Heading",
-            "default": "Item Heading"
-          },
-          {
-            "type": "text",
-            "id": "text",
-            "label": "Text",
-            "default": "Item Text"
-          }
-        ]
-      },
-      {
-        "type": "media",
-        "name": "Media",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image"
-          },
-          {
-            "type": "text",
-            "id": "heading",
-            "label": "Heading",
-            "default": "Media Heading"
-          },
-          {
-            "type": "text",
-            "id": "text",
-            "label": "Text",
-            "default": "Media Text"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SS - Image With Text #6",
-        "blocks": [
-          {
-            "type": "item",
-            "settings": {
-              "icon": "holds",
-              "heading": "Holds 1-12 Cards:",
-              "text": "Dual-track design remains as slim as possible"
+{
+  "name": "SG-Image With Text #6",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "layout_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Layout Gap",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "layout_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Layout Gap - Mobile",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Padding Vertical",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "content_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Padding Vertical - Mobile",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "content_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Padding Horizontal",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Padding Horizontal - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Border Radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_position_sticky",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "label": "Content Position Sticky - Desktop",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Content Elements Settings"
+    },
+    {
+      "type": "range",
+      "id": "content_item_width",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "label": "Content Elements Width",
+      "default": 570
+    },
+    {
+      "type": "range",
+      "id": "content_item_width_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Content Elements Width - Mobile",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "content_vertical_position",
+      "label": "Content Elements Vertical Position - Desktop",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal_position",
+      "label": "Content Elements Horizontal Position - Desktop",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>'Thick as a towel. Soft to touch. Perfect for your bed and couch.'</h2>"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size - Mobile",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading Text Align",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading Text Align - Mobile",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content Items Settings"
+    },
+    {
+      "type": "range",
+      "id": "items_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Items Margin Top - Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "items_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Items Margin Top - Mobile",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "item_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing Between Items - Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "item_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing Between Items - Mobile",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Item Icon Settings"
+    },
+    {
+      "type": "range",
+      "id": "item_icon_width",
+      "min": 30,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Item Icon Width",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "item_icon_width_mobile",
+      "min": 30,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Item Icon Width - Mobile",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_icon",
+      "label": "Hide Icon"
+    },
+    {
+      "type": "header",
+      "content": "Item Heading Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "item_heading_font",
+      "label": "Item Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "item_heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Heading Size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "item_heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Heading Size - Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "item_heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Item Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Item Text Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_text_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "item_text_font",
+      "label": "Item Text Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "item_text_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Text Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_text_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Text Size - Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "item_text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Item Text Line Height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Media Container Settings"
+    },
+    {
+      "type": "range",
+      "id": "media_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Container Padding Vertical",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "media_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Container Padding Vertical - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "media_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Container Padding Horizontal",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "media_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Container Padding Horizontal - Mobile",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Media Item Settings"
+    },
+    {
+      "type": "range",
+      "id": "media_item_width",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "label": "Media Item Width",
+      "default": 540
+    },
+    {
+      "type": "range",
+      "id": "media_item_width_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Media Item Width - Mobile",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "media_item_align",
+      "label": "Media Item Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_item_align_mobile",
+      "label": "Media Item Align - Mobile",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "media_item_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Margin Top - Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "media_item_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Margin Top - Mobile",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Media Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "media_image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Border Radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "media_image_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Media Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "media_image_ratio",
+      "label": "Media Aspect Ratio",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_image_ratio_mobile",
+      "label": "Media Aspect Ratio - Mobile",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Media Item Heading Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "media_heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "media_heading_font",
+      "label": "Media Item Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "media_heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Heading Size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "media_heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Heading Size - Mobile",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "media_heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Media Item Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "media_heading_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Heading Margin Top - Desktop",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "media_heading_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Heading Margin Top - Mobile",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Media Item Text Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "media_text_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "media_text_font",
+      "label": "Item Text Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "media_text_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Text Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "media_text_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Text Size - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "media_text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Item Text Line Height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "media_text_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Text Margin Top - Desktop",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "media_text_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Media Item Text Margin Top - Mobile",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Content Colors"
+    },
+    {
+      "type": "color",
+      "label": "Content Background Color",
+      "id": "content_bg",
+      "default": "#827E6D"
+    },
+    {
+      "type": "color",
+      "label": "Content Border Color",
+      "id": "content_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Content Heading Color",
+      "id": "heading_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Content Items Colors"
+    },
+    {
+      "type": "color",
+      "label": "Item Icon Color",
+      "id": "item_icon_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Item Heading Color",
+      "id": "item_heading_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Item Text Color",
+      "id": "item_text_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Media Colors"
+    },
+    {
+      "type": "color",
+      "label": "Media Border Color",
+      "id": "media_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Media Item Heading Color",
+      "id": "media_heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Media Item Text Color",
+      "id": "media_text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image Icon"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "atc",
+              "label": "Add to cart",
+              "group": "Shop"
+            },
+            {
+              "value": "gift",
+              "label": "Gift",
+              "group": "Shop"
+            },
+            {
+              "value": "heart",
+              "label": "Heart",
+              "group": "Shop"
+            },
+            {
+              "value": "bi-ecology",
+              "label": "Ecology",
+              "group": "Shop"
+            },
+            {
+              "value": "plant",
+              "label": "Plant",
+              "group": "Shop"
+            },
+            {
+              "value": "shop",
+              "label": "Shop",
+              "group": "Shop"
+            },
+            {
+              "value": "pin",
+              "label": "Geo pin",
+              "group": "Shop"
+            },
+            {
+              "value": "megaphone",
+              "label": "Megaphone",
+              "group": "Communication"
+            },
+            {
+              "value": "chat",
+              "label": "Chat",
+              "group": "Communication"
+            },
+            {
+              "value": "chat-dots",
+              "label": "Chat w. dots",
+              "group": "Communication"
+            },
+            {
+              "value": "people",
+              "label": "Real people support",
+              "group": "Communication"
+            },
+            {
+              "value": "email",
+              "label": "Email",
+              "group": "Communication"
+            },
+            {
+              "value": "globe",
+              "label": "Globe",
+              "group": "Communication"
+            },
+            {
+              "value": "newsletter",
+              "label": "Newsletter",
+              "group": "Communication"
+            },
+            {
+              "value": "love",
+              "label": "Love",
+              "group": "Communication"
+            },
+            {
+              "value": "phone",
+              "label": "Phone",
+              "group": "Communication"
+            },
+            {
+              "value": "share",
+              "label": "Share",
+              "group": "Communication"
+            },
+            {
+              "value": "box",
+              "label": "Box",
+              "group": "Delivery"
+            },
+            {
+              "value": "worldwide",
+              "label": "Worldwide",
+              "group": "Delivery"
+            },
+            {
+              "value": "truck",
+              "label": "Truck",
+              "group": "Delivery"
+            },
+            {
+              "value": "airplane",
+              "label": "Airplane",
+              "group": "Delivery"
+            },
+            {
+              "value": "return_arrow",
+              "label": "Return purchase",
+              "group": "Delivery"
+            },
+            {
+              "value": "time",
+              "label": "Time",
+              "group": "Delivery"
+            },
+            {
+              "value": "payment",
+              "label": "Secure payment",
+              "group": "Security"
+            },
+            {
+              "value": "mobile",
+              "label": "Lock",
+              "group": "Security"
+            },
+            {
+              "value": "shield",
+              "label": "Shield",
+              "group": "Security"
+            },
+            {
+              "value": "guarantee",
+              "label": "Guarantee",
+              "group": "Badges"
+            },
+            {
+              "value": "action",
+              "label": "Action",
+              "group": "Badges"
+            },
+            {
+              "value": "holds",
+              "label": "Holds",
+              "group": "Image & Text"
+            },
+            {
+              "value": "blocking",
+              "label": "Blocking",
+              "group": "Image & Text"
+            },
+            {
+              "value": "lifetime",
+              "label": "Lifetime",
+              "group": "Image & Text"
+            },
+            {
+              "value": "design",
+              "label": "Design",
+              "group": "Image & Text"
             }
-          },
-          {
-            "type": "item",
-            "settings": {
-              "icon": "blocking",
-              "heading": "RFID-BLOCKING:",
-              "text": "Protects you from scanners and credit card thieves"
-            }
-          },
-          {
-            "type": "item",
-            "settings": {
-              "icon": "lifetime",
-              "heading": "Lifetime Durability:",
-              "text": "Aerospace-grade materials come with a Lifetime Warranty"
-            }
-          },
-          {
-            "type": "item",
-            "settings": {
-              "icon": "design",
-              "heading": "MODULAR DESIGN:",
-              "text": "Built to last piece-by-piece for any future changes"
-            }
-          },
-          {
-            "type": "media",
-            "settings": {
-              "heading": "Carry everything you need, as slim as possible",
-              "text": "Our dual-track design expands to hold 1-12 cards while remaining as slim as possible. It’s simple, secure, and designed for everyday."
-            }
-          },
-          {
-            "type": "media",
-            "settings": {
-              "heading": "Premium Materials, designed to perform day-in and day-out for life.",
-              "text": "Using aerospace-grade materials allow us to guarantee each wallet for life, and be the last wallet you’ll ever need."
-            }
-          },
-          {
-            "type": "media",
-            "settings": {
-              "heading": "Peace of mind of better performance (and even better protection).",
-              "text": "Never lose your wallet again with popular and secure AirTag attachments from Clicks. Use the FindMy network for peace of mind wherever you may go."
-            }
+          ],
+          "default": "guarantee"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Item Heading"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Item Text"
+        }
+      ]
+    },
+    {
+      "type": "media",
+      "name": "Media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Media Heading"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Media Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Image With Text #6",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "holds",
+            "heading": "Holds 1-12 Cards:",
+            "text": "Dual-track design remains as slim as possible"
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "blocking",
+            "heading": "RFID-BLOCKING:",
+            "text": "Protects you from scanners and credit card thieves"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "lifetime",
+            "heading": "Lifetime Durability:",
+            "text": "Aerospace-grade materials come with a Lifetime Warranty"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "design",
+            "heading": "MODULAR DESIGN:",
+            "text": "Built to last piece-by-piece for any future changes"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+            "heading": "Carry everything you need, as slim as possible",
+            "text": "Our dual-track design expands to hold 1-12 cards while remaining as slim as possible. It’s simple, secure, and designed for everyday."
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+            "heading": "Premium Materials, designed to perform day-in and day-out for life.",
+            "text": "Using aerospace-grade materials allow us to guarantee each wallet for life, and be the last wallet you’ll ever need."
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+            "heading": "Peace of mind of better performance (and even better protection).",
+            "text": "Never lose your wallet again with popular and secure AirTag attachments from Clicks. Use the FindMy network for peace of mind wherever you may go."
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

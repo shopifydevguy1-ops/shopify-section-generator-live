@@ -73,11 +73,19 @@ function updateSectionName(content) {
     
     // Update name field: Replace SS- with SG-, or add SG- if not present
     if (schemaJson.name) {
-      // Remove any existing SS- or SS prefix
+      // Remove any existing SS- or SS prefix (with or without space)
+      // Handle patterns like: "SS - Name", "SS- Name", "SS Name", "SG-- Name"
       let cleanName = schemaJson.name
-        .replace(/^SS-\s*/i, '')
-        .replace(/^SS\s+/i, '')
+        .replace(/^SS\s*-\s*/i, '')  // "SS - " or "SS- "
+        .replace(/^SS\s+/i, '')      // "SS "
+        .replace(/^SS-/i, '')        // "SS-"
         .trim()
+      
+      // Fix any existing SG-- (double dash) issues first
+      cleanName = cleanName.replace(/^SG--\s*/, '')
+      
+      // Remove leading dash if present
+      cleanName = cleanName.replace(/^-\s*/, '')
       
       // Add SG- prefix if not already present
       if (!cleanName.startsWith('SG-') && !cleanName.startsWith('SG ')) {
@@ -92,9 +100,16 @@ function updateSectionName(content) {
       schemaJson.presets = schemaJson.presets.map(preset => {
         if (preset.name) {
           let cleanPresetName = preset.name
-            .replace(/^SS-\s*/i, '')
-            .replace(/^SS\s+/i, '')
+            .replace(/^SS\s*-\s*/i, '')  // "SS - " or "SS- "
+            .replace(/^SS\s+/i, '')      // "SS "
+            .replace(/^SS-/i, '')        // "SS-"
             .trim()
+          
+          // Fix any existing SG-- (double dash) issues first
+          cleanPresetName = cleanPresetName.replace(/^SG--\s*/, '')
+          
+          // Remove leading dash if present
+          cleanPresetName = cleanPresetName.replace(/^-\s*/, '')
           
           if (!cleanPresetName.startsWith('SG-') && !cleanPresetName.startsWith('SG ')) {
             preset.name = `SG-${cleanPresetName}`
@@ -112,7 +127,17 @@ function updateSectionName(content) {
     // Fallback: simple string replacement if JSON parsing fails
     let updated = content.replace(/"name"\s*:\s*"([^"]*)"/g, (match, name) => {
       if (!name.startsWith('SG-') && !name.startsWith('SG ')) {
-        let cleanName = name.replace(/^SS-\s*/i, '').replace(/^SS\s+/i, '').trim()
+        let cleanName = name
+          .replace(/^SS\s*-\s*/i, '')  // "SS - " or "SS- "
+          .replace(/^SS\s+/i, '')      // "SS "
+          .replace(/^SS-/i, '')        // "SS-"
+          .trim()
+        
+        // Fix any existing SG-- (double dash) issues first
+        cleanName = cleanName.replace(/^SG--\s*/, '')
+        
+        // Remove leading dash if present
+        cleanName = cleanName.replace(/^-\s*/, '')
         return `"name": "SG-${cleanName}"`
       }
       return match

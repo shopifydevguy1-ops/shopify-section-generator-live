@@ -1,0 +1,126 @@
+<style>
+
+  .sg-atc-button-style {
+    font-size: {{section.settings.sg-font_size}}px;
+    color: rgba(255,255,255,0.9);
+    border-radius: {{section.settings.sg-border_radius}}px;
+    background: linear-gradient(-45deg, {{ section.settings.first_color }}, {{ section.settings.second_color }}, {{ section.settings.third_color }}, {{ section.settings.fourth_color }});
+    background-size: 600%;
+    animation: anime 8s linear infinite;
+  }
+  .sg-atc-button-style::after {
+    --border-opacity: none;
+  }
+
+   .sg-atc-button-style:hover {
+     border: 1px solid black;
+   }
+ @keyframes anime {
+   0% {
+     background-position: 0% 50%;
+   }
+   50% {
+     background-position: 100% 50%;
+   }
+   100%{
+      background-position: 0% 50%;
+   }
+  }
+  
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const productForm = document.querySelector('{% if section.settings.custom_class_selector != blank %}{{ section.settings.custom_class_selector }}{% else %}.product-form__submit, .add-to-cart, .product-form__cart-submit, .button--addToCart, .product-buy-buttons--cta, .product__submit__add{% endif %}')
+
+        if (!productForm) {
+            return
+        }
+      
+      productForm.classList.add("sg-atc-button-style");
+    });
+</script>
+
+
+{% schema %}
+{
+  "name": "SG-ATC Button #2",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Att: Save settings to view updates"
+    },
+    {
+      "type": "text",
+      "id": "custom_class_selector",
+      "label": "Custom class selector"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "label": "Button first color",
+      "id": "first_color",
+      "default": "#FFA63D"
+    },
+    {
+      "type": "color",
+      "label": "Button second color",
+      "id": "second_color",
+      "default": "#FF3D77"
+    },
+    {
+      "type": "color",
+      "label": "Button third color",
+      "id": "third_color",
+      "default": "#338AFF"
+    },
+    {
+      "type": "color",
+      "label": "Button fourth",
+      "id": "fourth_color",
+      "default": "#3CF0C5"
+    },
+    {
+      "type": "header",
+      "content": "Font size"
+    },
+    {
+      "type": "range",
+      "id": "sg-font_size",
+      "label": "Font size",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Button roundness"
+    },
+    {
+      "type": "range",
+      "id": "sg-border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-ATC Button #2"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,446 @@
+<div class="container">
+    <h2 class="roadmap__title">{{section.settings.heading}}</h2>
+    <div class="level__list-wrapper">
+        {%- for block in section.blocks -%}
+        {%- unless forloop.last -%}
+          <style>.level__item-wrapper.level{{forloop.index}}::after {height: {{block.settings.line_height}};}</style>
+        {%- endunless -%}
+            <div class="level__item-wrapper level{{forloop.index}}">
+                <div class="level {% if block.settings.reverse %}level-reverse{% endif %}">
+                <div class="level__content-wrapper">
+                    <div class="level__number">{{block.settings.level}}</div>
+                    <div class="level__title">{{block.settings.level_heading}}</div>
+                    <div class="level__description">{{block.settings.level_description}}</div>
+                </div>
+                <div class="level__image level__image{{forloop.index}}">
+                  {%- if block.settings.level_image -%}
+                  <style>.level__image{{forloop.index}} img {max-height: {{block.settings.level_image_height}}; width: auto;}</style>
+                    {{ block.settings.level_image | image_url: width: block.settings.level_image.width | image_tag: loading: 'lazy', alt: block.settings.level_headingblock.settings.product_title }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+                </div>
+            </div>
+        {%- endfor -%}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "SG-Roadmap",
+  "tag": "section",
+  "class": "roadmap",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Roadmap"
+    },
+    {
+      "type": "header",
+      "content": "Button Color/Gradient settings"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_color_1",
+      "label": "Gradient color 1",
+      "default": "#ea3bd8",
+      "info": "Body color settings: background: "
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_color_2",
+      "label": "Gradient color 2",
+      "default": "#a931ee",
+      "info": "Body color settings: background: "
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_color_3",
+      "label": "Gradient color 3",
+      "default": "#7f5aec",
+      "info": "Body color settings: background: "
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_color_4",
+      "label": "Gradient color 4",
+      "default": "#82a3f7",
+      "info": "Body color settings: background: "
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "NFT Roadmap 👾",
+      "settings": [
+        {
+          "type": "text",
+          "id": "level",
+          "label": "Level",
+          "default": "level 1"
+        },
+        {
+          "type": "text",
+          "id": "level_heading",
+          "label": "Level Heading",
+          "default": "level 1"
+        },
+        {
+          "type": "richtext",
+          "id": "level_description",
+          "label": "Level Description",
+          "default": "<p>Some rich text here</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "level_image",
+          "label": "Level Image"
+        },
+        {
+          "type": "text",
+          "id": "level_image_height",
+          "label": "Image Max Height",
+          "default": "350px"
+        },
+        {
+          "type": "text",
+          "id": "line_height",
+          "label": "Right Line Height",
+          "default": "150%"
+        },
+        {
+          "type": "checkbox",
+          "id": "reverse",
+          "default": false,
+          "label": "Image Aligment reverse"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-NFT Roadmap",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+
+   .level__item-wrapper::after {
+    background: linear-gradient(
+    to right,
+    {{section.settings.button_gradient_color_1}} 0%,
+    {{section.settings.button_gradient_color_2}} 38%,
+    {{section.settings.button_gradient_color_3}} 67%,
+    {{section.settings.button_gradient_color_4}} 100%
+  );
+  }
+  .level::after {
+    background: radial-gradient(
+      101.37% 1444.99% at 9.75% 0%,
+      {{section.settings.button_gradient_color_1}} 0%,
+      {{section.settings.button_gradient_color_2}} 40.63%,
+      {{section.settings.button_gradient_color_3}} 73.96%,
+      {{section.settings.button_gradient_color_4}} 100%
+    )
+    border-box;
+  }
+  .level__number::before {
+    background: radial-gradient(
+      101.37% 1444.99% at 9.75% 0%,
+      {{section.settings.button_gradient_color_1}} 0%,
+      {{section.settings.button_gradient_color_2}} 40.63%,
+      {{section.settings.button_gradient_color_3}} 73.96%,
+      {{section.settings.button_gradient_color_4}} 100%
+    );
+  }
+  .level__number,
+  .level__item-wrapper::before {
+    background: linear-gradient(
+      95.94deg,
+      {{section.settings.button_gradient_color_1}} -3.84%,
+      {{section.settings.button_gradient_color_2}} 41.78%,
+      {{section.settings.button_gradient_color_3}} 79.2%,
+      {{section.settings.button_gradient_color_4}} 108.44%
+    );
+  }
+</style>
+{% stylesheet %}
+
+.roadmap {
+  position: relative;
+  overflow: hidden;
+  padding: 0 114px 231px 74px;
+}
+
+.roadmap::after {
+  content: '';
+  background-image: url('../assets/bgroadmap.png');
+  background-repeat: no-repeat;
+  width: 1153px;
+  height: 1212px;
+  background-size: contain;
+  position: absolute;
+  top: 6%;
+  right: -13%;
+  z-index: -1;
+}
+
+.roadmap__title {
+  margin-bottom: 55px;
+}
+
+.level__content-wrapper {
+  width: 70%;
+  position: relative;
+}
+
+.level__item-wrapper {
+  padding-left: 113px;
+  margin-bottom: 119px;
+  position: relative;
+}
+
+.level__item-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.level {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  backdrop-filter: blur(40px);
+  border-radius: 18px;
+  padding: 31px 30px 38px 34px;
+  position: relative;
+}
+
+.level__number {
+  text-transform: uppercase;
+  border-radius: 8px;
+  width: 102px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 999;
+}
+
+.level__number::before {
+  content: '';
+  width: 96.93px;
+  height: 31.86px;
+  filter: blur(20px);
+  border-radius: 9px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+}
+
+.level__title {
+  font-size: 20px;
+  line-height: 27px;
+  line-height: 27px;
+  margin-bottom: 10px;
+}
+
+.level__description {
+  line-height: 24px;
+}
+
+.level:last-child {
+  margin-bottom: 0;
+}
+
+.level.level-reverse .level__content-wrapper {
+  margin-left: auto;
+}
+
+.level__image {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.level.level-reverse .level__image {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.level::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 18px;
+  border: 2px solid transparent;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.level__item-wrapper::before {
+  content: url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12.6528' cy='13.2236' r='12.5' fill='white'/%3E%3C/svg%3E");
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+  padding-top: 2px;
+}
+
+.level__item-wrapper::after {
+  content: '';
+  width: 3px;
+  position: absolute;
+  left: 25px;
+  top: 50%;
+}
+
+  @media (max-width: 1279px) {
+    .roadmap {
+        position: relative;
+        overflow: hidden;
+        padding: 0 90px 100px 93px;
+      }
+      .roadmap::after {
+        background-image: url('../assets/roadmap-tablet.png');
+        width: 787px;
+        height: 1711px;
+        top: 6%;
+        right: -13%;
+      }
+      .level__item-wrapper::before {
+        display: none;
+      }
+      .level__item-wrapper::after {
+        display: none;
+      }
+      .level__item-wrapper {
+        padding-left: 0;
+      }
+      .level__item-wrapper {
+        margin-bottom: 167px;
+      }
+      .level__item-wrapper:last-child {
+        margin-bottom: 0;
+      }
+      .level__image1 {
+        width: 199px;
+        height: 354px;
+      }
+      .level.level-reverse .level__image2 {
+        width: 187px;
+        height: 333px;
+      }
+      .level__image3 {
+        width: 304px;
+        height: 304px;
+      }
+      .level.level-reverse .level__image4 {
+        width: 301px;
+        height: 301px;
+        left: -11%;
+      }
+      .level {
+        padding: 50px 30px 50px 42px;
+      }
+      .level__number {
+        margin-bottom: 28px;
+        padding-top: 5px;
+      }
+      .level__number {
+        width: 107px;
+        height: 32px;
+      }
+      .level__title {
+        margin-bottom: 33px;
+      }
+    }
+    @media (max-width: 1023px) {
+            /* ROADMAP */
+    .roadmap {
+        padding: 0 31px 159px 36px;
+      }
+      .roadmap::after {
+        display: none;
+      }
+      .level {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: inherit;
+        padding: 20px 27px 20px 27px;
+      }
+      .level__content-wrapper {
+        width: 100%;
+      }
+      .level__number {
+        align-items: center;
+      }
+      .level__number {
+        margin: 0 auto 12px auto;
+      }
+      .level__title {
+        font-size: 12px;
+        margin-bottom: 30px;
+      }
+      .level__description {
+        font-size: 10px;
+      }
+      .level__image {
+        position: inherit;
+        transform: translateY(25%);
+        height: fit-content;
+        margin-top: -80px;
+      }
+      .level.level-reverse .level__image {
+        position: inherit;
+        transform: translateY(25%);
+        height: fit-content;
+        margin-top: -80px;
+      }
+      .level__title {
+        text-align: center;
+      }
+      .level__item-wrapper {
+        margin-bottom: 55px;
+      }
+    }
+{% endstylesheet %}

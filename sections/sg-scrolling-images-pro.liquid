@@ -1,0 +1,870 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+
+  assign items_gap = section.settings.items_gap
+  assign items_gap_mobile = section.settings.items_gap_mobile
+  assign items_second_line = section.settings.items_second_line
+  assign items_mt = section.settings.items_mt
+
+  assign image_height = section.settings.image_height
+  assign image_height_mobile = section.settings.image_height_mobile
+  assign image_radius = section.settings.image_radius
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_border_color = section.settings.image_border_color
+  assign image_ratio = section.settings.image_ratio
+
+  assign animate_direction = section.settings.animate_direction
+  assign animate_speed = section.settings.animate_speed
+
+  assign line_width = section.settings.line_width
+  assign line_bg_color = section.settings.line_bg_color
+  assign line_border_color = section.settings.line_border_color
+  assign line_radius = section.settings.line_radius
+  assign line_border_thickness = section.settings.line_border_thickness
+  assign line_shadow = section.settings.line_shadow
+  assign line_shadow_color = section.settings.line_shadow_color
+-%}
+
+{%- style -%}
+  {{  heading_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .scrolling-images-heading-{{ section.id }} {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-align: {{ heading_align }};
+    text-transform: unset;
+  }
+
+  .scrolling-images-wrap-{{ section.id }} {
+    margin-top: {{ items_mt | times: 0.75 | round: 0 }}px;
+    height: {{ image_height_mobile | times: 2 }}px;
+  }
+
+  .scrolling-images-items-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    padding-top: {{ items_gap_mobile | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ items_gap_mobile | times: 0.5 | round: 0 }}px;
+    max-width: 2200px;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .scrolling-images-item-{{ section.id }} {
+    overflow: hidden;
+    grid-column: span 1/span 1;
+    position: relative;
+  }
+
+  .scrolling-images-line-{{ section.id }} {
+    display: block !important;
+    width: {{ line_width }}px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    background-color: {{ line_bg_color }};
+    border: {{ line_border_thickness }}px solid {{ line_border_color | hex_to_rgba: 0.2 }};
+    border-radius: {{ line_radius }}px;
+    transition: opacity 0.2s ease 0s;
+  }
+
+  .scrolling-images-cards-{{ section.id }} {
+    --bottom-offset: -220px;
+    width: 100%;
+    display: flex;
+    gap: {{ items_gap_mobile }}px;
+    flex-wrap: nowrap;
+    animation: animationScrollingCards {{ animate_speed }}s linear infinite;
+    position: absolute;
+    left: 0vw;
+    top: 0;
+    height: 50%;
+    will-change: transform;
+  }
+
+  .scrolling-images-cards-{{ section.id }}:last-child {
+    top: unset;
+    bottom: 0;
+    margin-left: var(--bottom-offset);
+  }
+
+  .scrolling-images-cards-{{ section.id }}.scrolling-images-cards-second-{{ section.id }} {
+    margin-left: calc(max(-50vw,-1100px));
+  }
+
+  .scrolling-images-cards-{{ section.id }}.scrolling-images-cards-second-{{ section.id }}:last-child {
+    margin-left: calc(max(-50vw,-1100px) + var(--bottom-offset));
+  }
+
+  .scrolling-images-card-{{ section.id }} {
+    display: block;
+    /* flex: 1;
+    flex-grow: 1; */
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    height: 100%;
+    position: relative;
+    transition: all 0.25s ease 0s;
+    will-change: transform;
+  }
+
+  .scrolling-images-card-{{ section.id }}:hover {
+    transition: all 0.25s ease 0s;
+    transform: scale(1.018);
+  }
+
+  .scrolling-images-card-{{ section.id }} img,
+  .scrolling-images-card-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: {{ image_radius }}px;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};
+  }
+
+  .scrolling-images-card-{{ section.id }} svg {
+    background-color: #DDDDDD;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .scrolling-images-heading-{{ section.id }} {
+      font-size: {{ heading_size }}px;
+    }
+    
+    .scrolling-images-items-{{ section.id }} {
+      padding-top: {{ items_gap | times: 0.5 | round: 0 }}px;
+      padding-bottom: {{ items_gap | times: 0.5 | round: 0 }}px;
+    }
+
+    .scrolling-images-wrap-{{ section.id }} {
+      margin-top: {{ items_mt }}px;
+      height: {{ image_height }}px;
+    }
+
+    .scrolling-images-cards-{{ section.id }} {
+      height: 100%;
+      gap: {{ items_gap }}px;
+    }
+
+    .scrolling-images-cards-{{ section.id }}:last-child {
+      display: none;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if heading_custom %}
+  <style>
+    .scrolling-images-heading-{{ section.id }} {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% unless items_second_line %}
+  <style>
+    .scrolling-images-cards-{{ section.id }}:last-child {
+      display: none;
+    }
+  
+    .scrolling-images-wrap-{{ section.id }} {
+      height: {{ image_height_mobile }}px;
+    }
+    
+    .scrolling-images-cards-{{ section.id }} {
+      height: 100%;
+    }
+    
+    @media(min-width: 1024px) {
+      .scrolling-images-wrap-{{ section.id }} {
+        height: {{ image_height }}px;
+      }
+    }
+  </style>
+{% endunless %}
+
+{% if image_ratio == "portrait" %}
+  <style>
+    .scrolling-images-card-{{ section.id }} {
+     aspect-ratio: 9.6/12; 
+    }
+    
+    .scrolling-images-cards-{{ section.id }} {
+      min-width: calc(({{ image_height_mobile }}px * 0.8 * {{ section.blocks.size | times: 2 }}) + ({{ items_gap_mobile }}px * {{ section.blocks.size | times: 0.5 }}));
+    }
+    @media(min-width: 1024px) {
+      .scrolling-images-cards-{{ section.id }} {
+        min-width: calc(({{ image_height }}px * 0.8 * {{ section.blocks.size | times: 2 }}) + ({{ items_gap}}px * {{ section.blocks.size | times: 0.5 }}));
+      }
+    }
+  </style>
+{% elsif image_ratio == "landscape" %}
+  <style>
+    .scrolling-images-card-{{ section.id }} {
+     aspect-ratio: 12/8; 
+    }
+    .scrolling-images-cards-{{ section.id }} {
+      min-width: calc(({{ image_height_mobile }}px * 1.5 * {{ section.blocks.size | times: 2 }}) - {{ items_gap_mobile | times: section.blocks.size }}px);
+    }
+    @media(min-width: 1024px) {
+      .scrolling-images-cards-{{ section.id }} {
+        min-width: calc(({{ image_height }}px * 1.5 * {{ section.blocks.size | times: 2 }}) - {{ items_gap | times: section.blocks.size }}px);
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    .scrolling-images-card-{{ section.id }} {
+     aspect-ratio: 12/12; 
+    }
+    .scrolling-images-cards-{{ section.id }} {
+      min-width: calc(({{ image_height_mobile }}px * {{ section.blocks.size | times: 2 }}) );
+    }
+    @media(min-width: 1024px) {
+      .scrolling-images-cards-{{ section.id }} {
+        min-width: calc(({{ image_height }}px * {{ section.blocks.size | times: 2 }}));
+      }
+    }
+  </style>
+{% endif %}
+
+{% if animate_direction == "left" %}
+  <style>
+    @keyframes animationScrollingCards {
+      0% {
+          transform: translateZ(0);
+      }
+      
+      100% {
+          transform: translate3d(-50%,0,0);
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @keyframes animationScrollingCards {
+      0% {
+          transform: translate3d(-50%,0,0);
+      }
+      
+      100% {
+          transform: translateZ(0);
+      }
+    }
+  </style>
+{% endif %}
+
+{% if line_shadow %}
+  <style>
+    .scrolling-images-line-{{ section.id }} {
+      box-shadow: 0 2px 12px 4px {{ line_shadow_color | hex_to_rgba: 0.24 }};
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} scrolling-images-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings ">
+      {% if heading != blank %}
+        <h2 class="scrolling-images-heading-{{ section.id }}">{{ heading }}</h2>
+      {% endif %}
+      <div class="scrolling-images-wrap-{{ section.id }}">
+        <div class="scrolling-images-items-{{ section.id }}">
+          <div class="scrolling-images-item-{{ section.id }}">
+            <div class="scrolling-images-cards-{{ section.id }}">
+              {% for item in (1..2) %}
+                {% for block in section.blocks %}
+                  <{% if block.settings.image_url != blank %}a href="{{ block.settings.image_url }}"{% else %}div{% endif %} class="scrolling-images-card-{{ section.id }}">
+                    {% if block.settings.left_image != blank %}
+                      <img src="{{ block.settings.left_image | image_url }}" alt="{{ block.settings.left_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </{% if block.settings.image_url != blank %}a{% else %}div{% endif %}>
+                {% endfor %}
+              {% endfor %}
+            </div>
+            <div class="scrolling-images-cards-{{ section.id }}">
+              {% for item in (1..3) %}
+                {% for block in section.blocks %}
+                  <{% if block.settings.image_url != blank %}a href="{{ block.settings.image_url }}"{% else %}div{% endif %} class="scrolling-images-card-{{ section.id }}">
+                    {% if block.settings.left_image != blank %}
+                      <img src="{{ block.settings.left_image | image_url }}" alt="{{ block.settings.left_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </{% if block.settings.image_url != blank %}a{% else %}div{% endif %}>
+                {% endfor %}
+              {%  endfor %}
+            </div>
+          </div>
+          <div class="scrolling-images-line-{{ section.id }}"></div>
+          <div class="scrolling-images-item-{{ section.id }}">
+            <div class="scrolling-images-cards-{{ section.id }} scrolling-images-cards-second-{{ section.id }}">
+              {% for item in (1..2) %}
+                {% for block in section.blocks %}
+                  <{% if block.settings.image_url != blank %}a href="{{ block.settings.image_url }}"{% else %}div{% endif %} class="scrolling-images-card-{{ section.id }}">
+                    {% if block.settings.right_image != blank %}
+                      <img src="{{ block.settings.right_image | image_url }}" alt="{{ block.settings.right_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </{% if block.settings.image_url != blank %}a{% else %}div{% endif %}>
+                {% endfor %}
+              {% endfor %}
+            </div>
+            <div class="scrolling-images-cards-{{ section.id }} scrolling-images-cards-second-{{ section.id }}">
+              {% for item in (1..3) %}
+                {% for block in section.blocks %}
+                  <{% if block.settings.image_url != blank %}a href="{{ block.settings.image_url }}"{% else %}div{% endif %} class="scrolling-images-card-{{ section.id }}">
+                    {% if block.settings.right_image != blank %}
+                      <img src="{{ block.settings.right_image | image_url }}" alt="{{ block.settings.right_image.alt }}" {% if lazy %}loading="lazy"{% endif %}>
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                  </{% if block.settings.image_url != blank %}a{% else %}div{% endif %}>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+                  
+{% schema %}
+{
+  "name": "SG-Scrolling Before/Aft",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size - Mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading Text Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Items Settings"
+    },
+    {
+      "type": "range",
+      "id": "items_gap",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Items Gap",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "items_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Items Gap - Mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "items_mt",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Items Margin top",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "items_second_line",
+      "label": "Use Second Line on Mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Line Settings"
+    },
+    {
+      "type": "range",
+      "id": "line_width",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Line Width",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "line_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Line Radius",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "line_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Line Border Thickness",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "line_shadow",
+      "label": "Line Shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 100,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Height",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "min": 50,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Height - Mobile",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Image Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Aspect Ratio",
+      "default": "portrait",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Animate Settings"
+    },
+    {
+      "type": "range",
+      "id": "animate_speed",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "Animate Speed",
+      "info": "⚡ <----------------> 🐌",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "animate_direction",
+      "label": "Animate Direction",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading Color",
+      "id": "heading_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Image Border Color",
+      "id": "image_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Line Background Color",
+      "id": "line_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Line Border Color",
+      "id": "line_border_color",
+      "default": "#FF7700"
+    },
+    {
+      "type": "color",
+      "label": "Line Shadow Color",
+      "id": "line_shadow_color",
+      "default": "#FF7700"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "left_image",
+          "label": " Left Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "right_image",
+          "label": "Right Image"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Scrolling Before/After",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

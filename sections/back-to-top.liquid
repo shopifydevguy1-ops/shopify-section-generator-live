@@ -1,5 +1,5 @@
 <style>
-  .ss-back-to-top-arrow-{{ section.id }} {
+  .sg-back-to-top-arrow-{{ section.id }} {
     position: fixed;
     bottom: var(--y-dst-to-edge);
     background-color: var(--bg-color, #fff);
@@ -11,11 +11,11 @@
     display: none;
     opacity: 0;
   }
-  .ss-back-to-top-arrow-{{ section.id }}:hover {
+  .sg-back-to-top-arrow-{{ section.id }}:hover {
     scale: 1.1;
   }
   @media screen and (max-width: 749.9px) {
-    .ss-back-to-top-arrow-{{ section.id }}-hide-on-mobile {
+    .sg-back-to-top-arrow-{{ section.id }}-hide-on-mobile {
       display: none;
     }
   }
@@ -23,12 +23,12 @@
 
 <button
   class="
-    ss-back-to-top-arrow-{{ section.id }}
+    sg-back-to-top-arrow-{{ section.id }}
     {% if section.settings.hide_on_mobile %}
-      ss-back-to-top-arrow-{{ section.id }}-hide-on-mobile
+      sg-back-to-top-arrow-{{ section.id }}-hide-on-mobile
     {% endif %}
   "
-  id="ss-back-to-top-arrow-{{ section.id }}"
+  id="sg-back-to-top-arrow-{{ section.id }}"
   style="
     --x-dst-to-edge: {{ section.settings.horizontal_dst_to_edge }}px;
     {% if section.settings.pos == 'left' %}
@@ -71,7 +71,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var backToTopArrow = document.getElementById(
-      'ss-back-to-top-arrow-{{ section.id }}'
+      'sg-back-to-top-arrow-{{ section.id }}'
     );
     backToTopArrow.addEventListener('click', function () {
       window.scrollTo({
@@ -104,7 +104,7 @@
 
 {% schema %}
 {
-  "name": "SS - Back to top arrow",
+  "name": "SG-Back to top arrow",
   "settings": [
     {
       "type": "checkbox",
@@ -147,7 +147,7 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background color",
-      "default":"#F4F2F2"
+      "default": "#F4F2F2"
     },
     {
       "type": "color",
@@ -204,7 +204,7 @@
   ],
   "presets": [
     {
-      "name": "SS - Back to top arrow"
+      "name": "SG-Back to top arrow"
     }
   ]
 }

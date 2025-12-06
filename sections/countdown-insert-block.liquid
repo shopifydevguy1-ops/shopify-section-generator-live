@@ -206,7 +206,7 @@
                       "
                       data-date-string="{{ block.settings.year }}-{{ block.settings.month }}-{{ block.settings.day }}T{{ block.settings.hour }}:{{ block.settings.minute }}:00Z"
                       data-hour-left="{{ block.settings.x_hours_left }}"
-                      data-ss-countdown-timer-wrapper
+                      data-sg-countdown-timer-wrapper
                     >
                       <div class="time-block">
                         <span class="time-block__num js-timer-days">00</span>
@@ -324,15 +324,15 @@
   let clearSSCountdownTimer = null;
 
   function setCountdownToLocalStorage(date) {
-    localStorage.setItem('ss-countdown-timer-hour-left', date);
+    localStorage.setItem('sg-countdown-timer-hour-left', date);
   }
 
   function getCountdownToLocalStorage() {
-    return localStorage.getItem('ss-countdown-timer-hour-left');
+    return localStorage.getItem('sg-countdown-timer-hour-left');
   }
 
   function clearCountdownToLocalStorage() {
-    localStorage.removeItem('ss-countdown-timer-hour-left');
+    localStorage.removeItem('sg-countdown-timer-hour-left');
   }
 
   function startTimer() {
@@ -340,7 +340,7 @@
       minute = second * 60,
       hour = minute * 60,
       day = hour * 24,
-      wrapper = document.querySelector('.countdown-timer-{{ section.id }} [data-ss-countdown-timer-wrapper]');
+      wrapper = document.querySelector('.countdown-timer-{{ section.id }} [data-sg-countdown-timer-wrapper]');
     
     if (!wrapper) return;
 
@@ -432,7 +432,7 @@
 
   function init() {
     const selectorEl = document.querySelector('{% if section.settings.countdown_position == "below_title" or section.settings.countdown_position == "above_title" %}.product__title{% elsif section.settings.countdown_position == "below_description" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');
-    const targetEl = document.querySelector('#ss-countdown-insert-block');
+    const targetEl = document.querySelector('#sg-countdown-insert-block');
     const target = targetEl ? targetEl : selectorEl;
     
     if (target) {
@@ -471,11 +471,11 @@
 
 {% schema %}
 {
-  "name": "SS - Product Countdown",
+  "name": "SG-Product Countdown",
   "presets": [
     {
       "category": "Custom",
-      "name": "SS - Product Countdown Timer",
+      "name": "SG-Product Countdown Timer",
       "blocks": [
         {
           "type": "text"
@@ -494,7 +494,7 @@
     {
       "type": "header",
       "content": "To change position",
-      "info": "To change placement - Copy this code: <div id='ss-countdown-insert-block'></div> - Click 'Add block' > Custom Liquid > Paste. Watch quick tutorial (copy link)"
+      "info": "To change placement - Copy this code: <div id='sg-countdown-insert-block'></div> - Click 'Add block' > Custom Liquid > Paste. Watch quick tutorial (copy link)"
     },
     {
       "type": "select",
@@ -986,30 +986,102 @@
           "label": "Hour",
           "default": "00",
           "options": [
-            { "value": "00", "label": "12 AM" },
-            { "value": "01", "label": "01 AM" },
-            { "value": "02", "label": "02 AM" },
-            { "value": "03", "label": "03 AM" },
-            { "value": "04", "label": "04 AM" },
-            { "value": "05", "label": "05 AM" },
-            { "value": "06", "label": "06 AM" },
-            { "value": "07", "label": "07 AM" },
-            { "value": "08", "label": "08 AM" },
-            { "value": "09", "label": "09 AM" },
-            { "value": "10", "label": "10 AM" },
-            { "value": "11", "label": "11 AM" },
-            { "value": "12", "label": "12 PM" },
-            { "value": "13", "label": "01 PM" },
-            { "value": "14", "label": "02 PM" },
-            { "value": "15", "label": "03 PM" },
-            { "value": "16", "label": "04 PM" },
-            { "value": "17", "label": "05 PM" },
-            { "value": "18", "label": "06 PM" },
-            { "value": "19", "label": "07 PM" },
-            { "value": "20", "label": "08 PM" },
-            { "value": "21", "label": "09 PM" },
-            { "value": "22", "label": "10 PM" },
-            { "value": "23", "label": "11 PM" }
+            {
+              "value": "00",
+              "label": "12 AM"
+            },
+            {
+              "value": "01",
+              "label": "01 AM"
+            },
+            {
+              "value": "02",
+              "label": "02 AM"
+            },
+            {
+              "value": "03",
+              "label": "03 AM"
+            },
+            {
+              "value": "04",
+              "label": "04 AM"
+            },
+            {
+              "value": "05",
+              "label": "05 AM"
+            },
+            {
+              "value": "06",
+              "label": "06 AM"
+            },
+            {
+              "value": "07",
+              "label": "07 AM"
+            },
+            {
+              "value": "08",
+              "label": "08 AM"
+            },
+            {
+              "value": "09",
+              "label": "09 AM"
+            },
+            {
+              "value": "10",
+              "label": "10 AM"
+            },
+            {
+              "value": "11",
+              "label": "11 AM"
+            },
+            {
+              "value": "12",
+              "label": "12 PM"
+            },
+            {
+              "value": "13",
+              "label": "01 PM"
+            },
+            {
+              "value": "14",
+              "label": "02 PM"
+            },
+            {
+              "value": "15",
+              "label": "03 PM"
+            },
+            {
+              "value": "16",
+              "label": "04 PM"
+            },
+            {
+              "value": "17",
+              "label": "05 PM"
+            },
+            {
+              "value": "18",
+              "label": "06 PM"
+            },
+            {
+              "value": "19",
+              "label": "07 PM"
+            },
+            {
+              "value": "20",
+              "label": "08 PM"
+            },
+            {
+              "value": "21",
+              "label": "09 PM"
+            },
+            {
+              "value": "22",
+              "label": "10 PM"
+            },
+            {
+              "value": "23",
+              "label": "11 PM"
+            }
           ]
         },
         {

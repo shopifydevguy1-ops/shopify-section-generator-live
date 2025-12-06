@@ -1,13 +1,3 @@
-{% comment %}
----------------------------------------------------------
-Copyright © 2023 Section Store. All rights reserved.
-Unauthorized copying, modification, distribution, or use
-of this code or any portion of it, is strictly prohibited.
-Violators will be prosecuted to the fullest extent of the law.
-For inquiries or permissions, contact daniel@section.store
----------------------------------------------------------
-{% endcomment %}
-
 {%- liquid 
   assign padding_horizontal = section.settings.padding_horizontal
   assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
@@ -678,599 +668,599 @@ For inquiries or permissions, contact daniel@section.store
 </script>
 
 {% schema %}
-  {
-    "name": "Slider Experiment",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Heading Settings"
-      },
-      {
-        "type": "richtext",
-        "id": "heading",
-        "label": "Heading"
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Heading Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Heading Size",
-        "default": 38
-      },
-      {
-        "type": "range",
-        "id": "heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Heading Size - Mobile",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Heading Line Height",
-        "default": 130
-      },
-      {
-        "type": "text_alignment",
-        "id": "heading_align",
-        "label": "Heading Text Align",
-        "default": "center"
-      },
-      {
-        "type": "text_alignment",
-        "id": "heading_align_mobile",
-        "label": "Heading Text Align - Mobile",
-        "default": "center"
-      },
-      {
-        "type": "header",
-        "content": "Slider Settings"
-      },
-      {
-        "type": "range",
-        "id": "slider_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "label": "Slider Margin Top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "slider_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "label": "Slider Margin Top - Mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Slide Settings"
-      },
-      {
-        "type": "range",
-        "id": "card_height",
-        "min": 200,
-        "max": 800,
-        "step": 10,
-        "unit": "px",
-        "label": "Slide Height",
-        "default": 560
-      },
-      {
-        "type": "range",
-        "id": "card_height_mobile",
-        "min": 100,
-        "max": 800,
-        "step": 10,
-        "unit": "px",
-        "label": "Slide Height - Mobile",
-        "default": 560
-      },
-      {
-        "type": "range",
-        "id": "card_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Slide Padding Vertical",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "card_padding_vertical_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Slide Padding Vertical - Mobile",
-        "default": 12
-      },
-      {
-         "type": "range",
-         "id": "card_padding_horizontal",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Slide Padding Horizontal",
-         "default": 30
-      },
-      {
-         "type": "range",
-         "id": "card_padding_horizontal_mobile",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Slide Padding Horizontal - Mobile",
-         "default": 24
-      },
-      {
-         "type": "range",
-         "id": "card_radius",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Slide Border Radius",
-         "default": 30
-      },
-      {
-         "type": "range",
-         "id": "card_border_thickness",
-         "min": 0,
-         "max": 10,
-         "step": 1,
-         "unit": "px",
-         "label": "Slide Border Thickness",
-         "default": 5
-      },
-      {
-         "type": "checkbox",
-         "id": "card_shadow",
-         "label": "Slide Box Shadow"
-      },
-      {
-         "type": "checkbox",
-         "id": "card_hover",
-         "label": "Slide Hover Animation",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Slide Front Image Settings"
-      },
-      {
-         "type": "range",
-         "id": "front_image_radius",
-         "min": 0,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Slide Front Image Border Radius",
-         "default": 30
-      },
-      {
-        "type": "header",
-        "content": "Card Title Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "title_custom",
-        "label": "Use Custom Font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "title_font",
-        "label": "Card Title Font Family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "title_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Card Title Size",
-        "default": 66
-      },
-      {
-        "type": "range",
-        "id": "title_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Card Title Size - Mobile",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "title_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Card Title Line Height",
-        "default": 130
-      },
-      {
-        "type": "range",
-        "id": "title_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Card Title Margin Top",
-        "default": 12
-      },
-      {
-        "type": "text_alignment",
-        "id": "title_align",
-        "label": "Card Title Align",
-        "default": "center"
-      },
-      {
-        "type": "text_alignment",
-        "id": "title_align_mobile",
-        "label": "Card Title Align - Mobile",
-        "default": "center"
-      },
-      {
-        "type": "header",
-        "content": "Navigation Settings"
-      },
-      {
-        "type": "range",
-        "id": "navigation_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "label": "Navigation Margin Top",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "navigation_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "label": "Navigation Margin Top - Mobile",
-        "default": 40
-      },
-      {
-        "type": "header",
-        "content": "Navigation Arrow Settings"
-      },
-      {
-        "type": "range",
-        "id": "arrow_size",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Arrow Size",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "arrow_size_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Arrow Size - Mobile",
-        "default": 28
-      },
-      {
-        "type": "header",
-        "content": "Navigation Star Settings"
-      },
-      {
-        "type": "range",
-        "id": "star_size",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Star Size",
-        "default": 50
-      },
-      {
-        "type": "range",
-        "id": "star_size_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Star Size - Mobile",
-        "default": 50
-      },
-      {
-        "type": "header",
-        "content": "Slide Colors"
-      },
-      {
-        "type": "color",
-        "label": "Slide Background Color",
-        "id": "card_bg_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Slide Border Color",
-        "id": "slide_border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Slide Title Color",
-        "id": "title_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Navigation Colors"
-      },
-      {
-        "type": "color",
-        "label": "Navigation Arrow Color",
-        "id": "arrow_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Navigation Star Color",
-        "id": "star_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section Colors"
-      },
-      {
-        "type": "color",
-        "label": "Heading Color",
-        "id": "heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Section background",
-        "id": "background_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color_background",
-        "id": "background_gradient",
-        "label": "Section background gradient"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section margin (outside)"
-      },
-      {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin bottom",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section padding (inside)"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Padding top",
-        "default": 36
-      },
-      {
-         "type": "range",
-         "id": "padding_bottom",
-         "min": 0,
-         "max": 100,
-         "step": 4,
-         "unit": "px",
-         "label": "Padding bottom",
-         "default": 36
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Padding sides",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Padding sides mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "full_width",
-        "label": "Full Width",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "content_width",
-        "min": 0,
-        "max": 400,
-        "step": 10,
-        "unit": "rem",
-        "label": "Section content width",
-        "default": 120
-      },
-      {
-        "type": "range",
-        "id": "border_thickness",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy",
-        "label": "Lazy load",
-        "info": "Lazy load images for speed optimisation",
-        "default": true
-      }
-    ],
-    "blocks": [
-      {
-        "type": "slide",
-        "name": "Slide",
-        "settings": [
-          {
-            "type": "header",
-            "content": "Slide Content"
-          },
-          {
-            "type": "image_picker",
-            "id": "front_image",
-            "label": "Front Image"
-          },
-          {
-            "type": "image_picker",
-            "id": "back_image",
-            "label": "Back Image"
-          },
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title",
-            "default": "Title"
-          },
-          {
-            "type": "url",
-            "id": "url",
-            "label": "Slide URL"
-          },
-          {
-            "type": "header",
-            "content": "Slide Colors"
-          },
-          {
-            "type": "checkbox",
-            "id": "override",
-            "label": "Override Slide Colors"
-          },
-          {
-            "type": "color",
-            "label": "Slide Background Color",
-            "id": "card_bg_color",
-            "default": "#FFFFFF"
-          },
-          {
-            "type": "color",
-            "label": "Slide Border Color",
-            "id": "slide_border_color",
-            "default": "#000000"
-          },
-          {
-            "type": "color",
-            "label": "Slide Title Color",
-            "id": "title_color",
-            "default": "#000000"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Slider Experiment",
-        "blocks": [
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          },
-          {
-            "type": "slide"
-          }
-        ]
-      }
-    ]
-  }
+{
+  "name": "SG-Slider Experiment",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size - Mobile",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align",
+      "label": "Heading Text Align",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align_mobile",
+      "label": "Heading Text Align - Mobile",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slider_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "label": "Slider Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "slider_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "label": "Slider Margin Top - Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Slide Settings"
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 200,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Slide Height",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Slide Height - Mobile",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Padding Vertical",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Padding Vertical - Mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Padding Horizontal",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Padding Horizontal - Mobile",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Border Radius",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Slide Border Thickness",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Slide Box Shadow"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_hover",
+      "label": "Slide Hover Animation",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slide Front Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "front_image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Slide Front Image Border Radius",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Card Title Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Card Title Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Title Size",
+      "default": 66
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Title Size - Mobile",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Card Title Line Height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "title_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Title Margin Top",
+      "default": 12
+    },
+    {
+      "type": "text_alignment",
+      "id": "title_align",
+      "label": "Card Title Align",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "title_align_mobile",
+      "label": "Card Title Align - Mobile",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Settings"
+    },
+    {
+      "type": "range",
+      "id": "navigation_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "label": "Navigation Margin Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "navigation_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "label": "Navigation Margin Top - Mobile",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Navigation Arrow Settings"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Arrow Size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "arrow_size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Arrow Size - Mobile",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Navigation Star Settings"
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Star Size",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Star Size - Mobile",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Slide Colors"
+    },
+    {
+      "type": "color",
+      "label": "Slide Background Color",
+      "id": "card_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Slide Border Color",
+      "id": "slide_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Slide Title Color",
+      "id": "title_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Colors"
+    },
+    {
+      "type": "color",
+      "label": "Navigation Arrow Color",
+      "id": "arrow_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Navigation Star Color",
+      "id": "star_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading Color",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slide Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "front_image",
+          "label": "Front Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "back_image",
+          "label": "Back Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Slide URL"
+        },
+        {
+          "type": "header",
+          "content": "Slide Colors"
+        },
+        {
+          "type": "checkbox",
+          "id": "override",
+          "label": "Override Slide Colors"
+        },
+        {
+          "type": "color",
+          "label": "Slide Background Color",
+          "id": "card_bg_color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "label": "Slide Border Color",
+          "id": "slide_border_color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "label": "Slide Title Color",
+          "id": "title_color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Slider Experiment",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

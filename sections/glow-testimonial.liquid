@@ -1,13 +1,3 @@
-{% comment %}
----------------------------------------------------------
-Copyright © 2023 Section Store. All rights reserved.
-Unauthorized copying, modification, distribution, or use
-of this code or any portion of it, is strictly prohibited.
-Violators will be prosecuted to the fullest extent of the law.
-For inquiries or permissions, contact daniel@section.store
----------------------------------------------------------
-{% endcomment %}
-
 {%- liquid 
   assign padding_horizontal = section.settings.padding_horizontal
   assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
@@ -545,660 +535,660 @@ For inquiries or permissions, contact daniel@section.store
 
 
 {% schema %}
-  {
-    "name": "SS - Glow testimonial",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Heading settings"
-      },
-      {
-        "type": "richtext",
-        "id": "heading",
-        "label": "Text",
-        "default": "<h2>Our customers <strong>love</strong> the product</h2>",
-        "info": "Use bold text to apply gradient"
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "heading_size",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 36
-      },
-      {
-        "type": "range",
-        "id": "heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 130
-      },
-      {
-        "type": "text_alignment",
-        "id": "heading_align",
-        "label": "Alignment",
-        "default": "center"
-      },
-      {
-        "type": "text_alignment",
-        "id": "heading_align_mobile",
-        "label": "Alignment - mobile",
-        "default": "center"
-      },
-      {
-        "type": "header",
-        "content": "Scrolling settings",
-        "info": "Add even number of testimonials to syncronise scrolling speed."
-      },
-      {
-        "type": "range",
-        "id": "animation_speed",
-        "min": 10,
-        "max": 150,
-        "step": 2,
-        "label": "Speed",
-        "info": "⚡ <----------------> 🐌",
-        "default": 48
-      },
-      {
-        "type": "range",
-        "id": "animation_speed_mobile",
-        "min": 10,
-        "max": 150,
-        "step": 2,
-        "label": "Speed mobile",
-        "info": "⚡ <----------------> 🐌",
-        "default": 40
-      },
-      {
-        "type": "checkbox",
-        "id": "reverse_direction",
-        "label": "Reverse scrolling direction"
-      },
-      {
-        "type": "header",
-        "content": "Testimonials settings"
-      }, 
-      {
-        "type": "range",
-        "id": "items_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap",
-        "default": 32
-      },
-      {
-        "type": "range",
-        "id": "items_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap - mobile",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "items_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 48
-      },
-      {
-        "type": "range",
-        "id": "items_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top - mobile",
-        "default": 36
-      },  
-      {
-        "type": "header",
-        "content": "Testimonial settings"
-      }, 
-      {
-        "type": "range",
-        "id": "item_width",
-        "min": 100,
-        "max": 400,
-        "step": 4,
-        "unit": "px",
-        "label": "Width",
-        "default": 320
-      },
-      {
-        "type": "range",
-        "id": "item_width_mobile",
-        "min": 100,
-        "max": 400,
-        "step": 4,
-        "unit": "px",
-        "label": "Width - mobile",
-        "default": 300
-      },
-      {
-        "type": "range",
-        "id": "item_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "item_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap - mobile",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "item_padding_horizontal",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding horizontal",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "item_padding_horizontal_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding horizontal - mobile",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "item_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "item_padding_vertical_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical - mobile",
-        "default": 12
-      },  
-      {
-        "type": "range",
-        "id": "item_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 100
-      },
-      {
-        "type": "range",
-        "id": "item_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "item_use_shadow",
-        "label": "Use shadow",
-        "default": true
-      },      
-      {
-        "type": "header",
-        "content": "Image settings"
-      },  
-      {
-        "type": "range",
-        "id": "image_width",
-        "min": 30,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Width",
-        "default": 52
-      },
-      {
-        "type": "range",
-        "id": "image_width_mobile",
-        "min": 30,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Width - mobile",
-        "default": 52
-      },  
-      {
-        "type": "range",
-        "id": "image_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 100
-      },
-      {
-        "type": "header",
-        "content": "Number settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "number_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "number_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "number_size",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "number_size_mobile",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "number_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "header",
-        "content": "Text settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "text_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "text_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "text_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "text_size_mobile",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "text_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 150
-      },
-      {
-        "type": "header",
-        "content": "Testimonial colors"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "text_color",
-        "default": "#000000"
-      }, 
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "item_bg_color",
-        "default": "#FFFFFF"
-      }, 
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "item_border_color",
-        "default": "#000000"
-      }, 
-      {
-        "type": "color",
-        "label": "Shadow",
-        "id": "item_shadow_color",
-        "default": "#B8B1DC"
-      }, 
-      {
-        "type": "header",
-        "content": "Number colors"
-      },
-      {
-        "type": "color",
-        "label": "Number",
-        "id": "number_color",
-        "default": "#FFFFFF"
-      }, 
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "number_bg_color",
-        "default": "#000000"
-      }, 
-      {
-        "type": "color_background",
-        "label": "Background gradient",
-        "id": "number_bg_gradient",
-        "default": "linear-gradient(46deg, rgba(52, 133, 236, 1) 13%, rgba(170, 248, 219, 1) 86%)",
-        "info": "Remove gradient to replace with solid colors"
-      }, 
-      {
-        "type": "header",
-        "content": "Section colors"
-      },
-      {
-        "type": "color",
-        "label": "Heading",
-        "id": "heading_color",
-        "default": "#000000"
-      }, 
-      {
-        "type": "color_background",
-        "label": "Heading gradient",
-        "id": "heading_gradient_color",
-        "default": "linear-gradient(46deg, rgba(52, 133, 236, 1) 13%, rgba(170, 248, 219, 1) 86%)"
-      }, 
-      {
-        "type": "color",
-        "label": "Section background",
-        "id": "background_color",
-        "default": "#FFFFFF"
-      },      
-      {
-        "type": "color_background",
-        "id": "background_gradient",
-        "label": "Section background gradient",
-        "info": "Remove gradient to replace with solid colors"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section margin (outside)"
-      },
-      {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin bottom",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Margin sides",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Margin sides mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section padding (inside)"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Padding top",
-        "default": 36
-      },
-      {
-         "type": "range",
-         "id": "padding_bottom",
-         "min": 0,
-         "max": 100,
-         "step": 4,
-         "unit": "px",
-         "label": "Padding bottom",
-         "default": 36
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Padding sides",
-        "default": 5
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Padding sides mobile",
-        "default": 1.5
-      },
-      {
-        "type": "header",
-        "content": "Section settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "full_width",
-        "label": "Full width",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "content_width",
-        "min": 800,
-        "max": 2000,
-        "step": 100,
-        "unit": "px",
-        "label": "Section content width",
-        "default": 1200
-      },
-      {
-        "type": "range",
-        "id": "border_thickness",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "section_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Section roundness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy",
-        "label": "Lazy load",
-        "info": "Lazy load images for speed optimisation",
-        "default": true
-      }
-    ],
-    "blocks": [
-      {
-        "type": "item",
-        "name": "Testimonial",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image"
-          },
-          {
-            "type": "text",
-            "id": "text",
-            "label": "Text",
-            "default": "Add awesome customer testimonial right here"
-          },
-          {
-            "type": "number",
-            "id": "rating_number",
-            "label": "Rating",
-            "default": 5
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SS - Glow testimonial",
-        "blocks": [
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          },
-          {
-            "type": "item"
-          }
-        ]
-      }
-    ]
-  }
+{
+  "name": "SG-Glow testimonial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Text",
+      "default": "<h2>Our customers <strong>love</strong> the product</h2>",
+      "info": "Use bold text to apply gradient"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_align_mobile",
+      "label": "Alignment - mobile",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Scrolling settings",
+      "info": "Add even number of testimonials to syncronise scrolling speed."
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 10,
+      "max": 150,
+      "step": 2,
+      "label": "Speed",
+      "info": "⚡ <----------------> 🐌",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "animation_speed_mobile",
+      "min": 10,
+      "max": 150,
+      "step": 2,
+      "label": "Speed mobile",
+      "info": "⚡ <----------------> 🐌",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_direction",
+      "label": "Reverse scrolling direction"
+    },
+    {
+      "type": "header",
+      "content": "Testimonials settings"
+    },
+    {
+      "type": "range",
+      "id": "items_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "items_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "items_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "items_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Testimonial settings"
+    },
+    {
+      "type": "range",
+      "id": "item_width",
+      "min": 100,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "label": "Width",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "item_width_mobile",
+      "min": 100,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "item_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "item_use_shadow",
+      "label": "Use shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Width",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Number settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "number_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "number_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "number_size_mobile",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "number_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Testimonial colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "item_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "item_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Shadow",
+      "id": "item_shadow_color",
+      "default": "#B8B1DC"
+    },
+    {
+      "type": "header",
+      "content": "Number colors"
+    },
+    {
+      "type": "color",
+      "label": "Number",
+      "id": "number_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "number_bg_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color_background",
+      "label": "Background gradient",
+      "id": "number_bg_gradient",
+      "default": "linear-gradient(46deg, rgba(52, 133, 236, 1) 13%, rgba(170, 248, 219, 1) 86%)",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color_background",
+      "label": "Heading gradient",
+      "id": "heading_gradient_color",
+      "default": "linear-gradient(46deg, rgba(52, 133, 236, 1) 13%, rgba(170, 248, 219, 1) 86%)"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Margin sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Margin sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 800,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Section content width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section roundness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Add awesome customer testimonial right here"
+        },
+        {
+          "type": "number",
+          "id": "rating_number",
+          "label": "Rating",
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Glow testimonial",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

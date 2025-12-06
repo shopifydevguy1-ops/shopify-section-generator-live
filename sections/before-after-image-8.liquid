@@ -1,13 +1,3 @@
-{% comment %}
----------------------------------------------------------
-Copyright © 2023 Section Store. All rights reserved.
-Unauthorized copying, modification, distribution, or use
-of this code or any portion of it, is strictly prohibited.
-Violators will be prosecuted to the fullest extent of the law.
-For inquiries or permissions, contact daniel@section.store
----------------------------------------------------------
-{% endcomment %}
-
 {%- liquid 
   assign padding_horizontal = section.settings.padding_horizontal
   assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
@@ -222,7 +212,7 @@ For inquiries or permissions, contact daniel@section.store
     word-wrap: break-word;
   } 
 
-  .before-after-progress-bar-{{ section.id }} {
+  .before-after-progresg-bar-{{ section.id }} {
     display: block !important;
     position: relative;
     z-index: 1;
@@ -234,7 +224,7 @@ For inquiries or permissions, contact daniel@section.store
     overflow: hidden;
   }
 
-  .before-after-progress-bar-{{ section.id }}:after {
+  .before-after-progresg-bar-{{ section.id }}:after {
     content: '';
     position: absolute;
     top: 0;
@@ -518,7 +508,7 @@ For inquiries or permissions, contact daniel@section.store
       font-size: {{ feature_text_size }}px;
     }
 
-    .before-after-progress-bar-{{ section.id }} {
+    .before-after-progresg-bar-{{ section.id }} {
       margin-top: {{ progress_mt }}px;
     }
     
@@ -804,7 +794,7 @@ For inquiries or permissions, contact daniel@section.store
                       <div class="before-after-feature-text-{{ section.id }}">{{ block.settings.text }}</div>
                     {% endif %}   
                   </div>                 
-                  <div class="before-after-progress-bar-{{ section.id }}" data-percent="{{ block.settings.percent }}"></div>                              
+                  <div class="before-after-progresg-bar-{{ section.id }}" data-percent="{{ block.settings.percent }}"></div>                              
                 </div>
               {% endif %}             
             {% endif %}
@@ -877,7 +867,7 @@ For inquiries or permissions, contact daniel@section.store
 function animatePercentages(feature) {
   const sectionId = feature.getAttribute('data-section-id');
   const percentElement = feature.querySelector(`.before-after-percent-${sectionId}`);
-  const progressBar = feature.querySelector(`.before-after-progress-bar-${sectionId}`);
+  const progressBar = feature.querySelector(`.before-after-progresg-bar-${sectionId}`);
   
   if (!percentElement || !progressBar) return;
   
@@ -1020,1049 +1010,1049 @@ if (Shopify.designMode) {
 }
 </script>
 {% schema %}
-  {
-    "name": "SS - Before/after #8",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Content settings"
-      },
-      {
-        "type": "text_alignment",
-        "id": "content_align",
-        "label": "Alignment",
-        "default": "center"
-      },
-      {
-        "type": "text_alignment",
-        "id": "content_align_mobile",
-        "label": "Alignment - mobile",
-        "default": "center"
-      },
-      {
-        "type": "header",
-        "content": "Heading settings"
-      },
-      {
-        "type": "richtext",
-        "id": "heading",
-        "label": "Heading",
-        "default": "<h2>Before/after image #8</h2>"
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "heading_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 130
-      },
-      {
-        "type": "header",
-        "content": "Text settings"
-      },
-      {
-        "type": "richtext",
-        "id": "text",
-        "label": "Text",
-        "default": "<p>Showcase your product benefit by using before/after image comparison.</p>"
-      },
-      {
-        "type": "checkbox",
-        "id": "text_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "text_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "text_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "text_size_mobile",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 14
-      },
-      {
-        "type": "range",
-        "id": "text_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 150
-      },
-      {
-        "type": "range",
-        "id": "text_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 24
-      },
-      {
-        "type": "range",
-        "id": "text_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top - mobile",
-        "default": 16
-      },   
-      {
-        "type": "header",
-        "content": "Layout settings"
-      },
-      {
-        "type": "range",
-        "id": "body_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 50
-      },
-      {
-        "type": "range",
-        "id": "body_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top - mobile",
-        "default": 30
-      }, 
-      {
-        "type": "range",
-        "id": "body_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap",
-        "default": 50
-      },
-      {
-        "type": "range",
-        "id": "body_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap - mobile",
-        "default": 30
-      }, 
-      {
-        "type": "header",
-        "content": "Features settings"
-      },      
-      {
-        "type": "range",
-        "id": "features_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap",
-        "default": 36
-      },
-      {
-        "type": "range",
-        "id": "features_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap - mobile",
-        "default": 20
-      },
-      {
-        "type": "header",
-        "content": "Feature settings"
-      },
-      {
-        "type": "text_alignment",
-        "id": "feature_align",
-        "label": "Alignment"
-      },
-      {
-        "type": "text_alignment",
-        "id": "feature_align_mobile",
-        "label": "Alignment - mobile"
-      },      
-      {
-        "type": "header",
-        "content": "Percent settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "percent_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "percent_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "percent_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 60
-      },
-      {
-        "type": "range",
-        "id": "percent_size_mobile",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 36
-      },
-      {
-        "type": "range",
-        "id": "percent_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 130
-      },
-      {
-        "type": "header",
-        "content": "Feature text settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "feature_text_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "feature_text_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "feature_text_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "feature_text_size_mobile",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 14
-      },
-      {
-        "type": "range",
-        "id": "feature_text_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 150
-      },
-      {
-        "type": "range",
-        "id": "feature_text_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 16
-      },     
-      {
-        "type": "header",
-        "content": "Progress settings"
-      },
-      {
-        "type": "range",
-        "id": "progress_mt",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "progress_mt_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top - mobile",
-        "default": 16
-      },     
-      {
-        "type": "header",
-        "content": "Image settings"
-      },      
-      {
-        "type": "range",
-        "id": "image_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "image_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "select",
-        "id": "image_ratio",
-        "label": "Aspect ratio",
-        "default": "landscape",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "image_ratio_mobile",
-        "label": "Aspect ratio - mobile",
-        "default": "landscape",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      }, 
-      {
-        "type": "header",
-        "content": "Drag settings"
-      },
-      {
-         "type": "range",
-         "id": "btn_size",
-         "min": 50,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Size",
-         "default": 56
-      },
-      {
-         "type": "range",
-         "id": "btn_size_mobile",
-         "min": 50,
-         "max": 100,
-         "step": 2,
-         "unit": "px",
-         "label": "Size - mobile",
-         "default": 52
-      },
-      {
-         "type": "range",
-         "id": "btn_arrow_size",
-         "min": 100,
-         "max": 200,
-         "step": 5,
-         "unit": "%",
-         "label": "Arrow size",
-         "default": 115
-      },
-      {
-         "type": "range",
-         "id": "btn_arrow_size_mobile",
-         "min": 100,
-         "max": 200,
-         "step": 5,
-         "unit": "%",
-         "label": "Arrow size - mobile",
-         "default": 110
-      },
-      {
-         "type": "range",
-         "id": "btn_border_thickness",
-         "min": 0,
-         "max": 10,
-         "step": 1,
-         "unit": "px",
-         "label": "Border thickness",
-         "default": 2
-      }, 
-      {
-        "type": "header",
-        "content": "Badge settings"
-      },
-      {
-        "type": "range",
-        "id": "badge_padding_horizontal",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding horizontal",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "badge_padding_horizontal_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding horizontal - mobile",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "badge_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "badge_padding_vertical_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical - mobile",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "badge_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "badge_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "badge_font",
-        "label": "Font family",
-        "default": "josefin_sans_n4"
-      },
-      {
-        "type": "range",
-        "id": "badge_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 14
-      },
-      {
-        "type": "range",
-        "id": "badge_size_mobile",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size - mobile",
-        "default": 14
-      },    
-      {
-        "type": "range",
-        "id": "badge_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 130
-      }, 
-      {
-        "type": "header",
-        "content": "Toggle images settings"
-      }, 
-      {
-        "type": "range",
-        "id": "toggle_images_view",
-        "min": 1,
-        "max": 3,
-        "step": 1,
-        "label": "Images per row",
-        "default": 2
-      },      
-      {
-        "type": "range",
-        "id": "toggle_images_view_mobile",
-        "min": 2,
-        "max": 6,
-        "step": 1,
-        "label": "Images per row - mobile",
-        "default": 6
-      }, 
-      {
-        "type": "range",
-        "id": "toggle_images_gap",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "toggle_images_gap_mobile",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap - mobile",
-        "default": 4
-      },
-      {
-        "type": "header",
-        "content": "Toggle image settings"
-      }, 
-      {
-        "type": "range",
-        "id": "toggle_image_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "toggle_image_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      }, 
-      {
-        "type": "select",
-        "id": "toggle_image_ratio",
-        "label": "Aspect ratio",
-        "default": "square",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "toggle_image_ratio_mobile",
-        "label": "Aspect ratio - mobile",
-        "default": "square",
-        "options": [
-          {
-            "label": "Portrait",
-            "value": "portrait"
-          },
-          {
-            "label": "Square",
-            "value": "square"
-          },
-          {
-            "label": "Landscape",
-            "value": "landscape"
-          },
-          {
-            "label": "Original",
-            "value": "original"
-          }
-        ]
-      }, 
-      {
-        "type": "header",
-        "content": "Content colors"
-      },
-      {
-        "type": "color",
-        "label": "Heading",
-        "id": "heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "text_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Feature colors"
-      },
-      {
-        "type": "color",
-        "id": "percent_color",
-        "label": "Percent",
-        "default": "#000000"
-      },  
-      {
-        "type": "color",
-        "id": "feature_text_color",
-        "label": "Text",
-        "default": "#000000"
-      },   
-      {
-        "type": "color",
-        "id": "progress_color",
-        "label": "Progress",
-        "default": "#E3E3E3"
-      }, 
-      {
-        "type": "color",
-        "id": "progress_active_color",
-        "label": "Progress active",
-        "default": "#000000"
-      }, 
-      {
-        "type": "header",
-        "content": "Image colors"
-      },
-      {
-        "type": "color",
-        "id": "image_border_color",
-        "label": "Border",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Vertical line",
-        "id": "line_color",
-        "default": "#FFFFFF"
-      }, 
-      {
-        "type": "color",
-        "id": "btn_border_color",
-        "label": "Drag border",
-        "default": "#FFFFFF"
-      },    
-      {
-        "type": "header",
-        "content": "Badge colors"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "badge_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "badge_bg_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Toggle image colors"
-      },    
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "toggle_image_border_color",
-        "default": "#000000"
-      },  
-      {
-        "type": "color",
-        "label": "Overlay",
-        "id": "toggle_image_overlay_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section colors"
-      },     
-      {
-        "type": "color",
-        "label": "Section background",
-        "id": "background_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color_background",
-        "id": "background_gradient",
-        "label": "Section background gradient",
-        "info": "Remove gradient to replace with solid colors"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section margin (outside)"
-      },
-      {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin bottom",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Margin sides",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Margin sides mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section padding (inside)"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Padding top",
-        "default": 36
-      },
-      {
-         "type": "range",
-         "id": "padding_bottom",
-         "min": 0,
-         "max": 100,
-         "step": 4,
-         "unit": "px",
-         "label": "Padding bottom",
-         "default": 36
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Padding sides",
-        "default": 5
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Padding sides mobile",
-        "default": 1.5
-      },
-      {
-        "type": "header",
-        "content": "Section settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "full_width",
-        "label": "Full width",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "content_width",
-        "min": 800,
-        "max": 2000,
-        "step": 100,
-        "unit": "px",
-        "label": "Section content width",
-        "default": 1200
-      },
-      {
-        "type": "range",
-        "id": "border_thickness",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "section_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Section roundness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy",
-        "label": "Lazy load",
-        "info": "Lazy load images for speed optimisation",
-        "default": true
-      }
-    ],
-    "blocks": [
-      {
-        "type": "image",
-        "name": "Image",
-        "settings": [          
-          {
-            "type": "image_picker",
-            "id": "toggle_image",
-            "label": "Toggle image"
-          },
-          {
-            "type": "image_picker",
-            "id": "before_image",
-            "label": "Before image"
-          },
-          {
-            "type": "image_picker",
-            "id": "before_image_mobile",
-            "label": "Before image - mobile (optional)"
-          },
-          {
-            "type": "text",
-            "id": "badge_before",
-            "label": "Badge before text",
-            "default": "Before"
-          }, 
-          {
-            "type": "image_picker",
-            "id": "after_image",
-            "label": "After image"
-          },
-          {
-            "type": "image_picker",
-            "id": "after_image_mobile",
-            "label": "After image - mobile (optional)"
-          },         
-          {
-            "type": "text",
-            "id": "badge_after",
-            "label": "Badge after text",
-            "default": "After"
-          }          
-        ]
-      },
-      {
-        "type": "feature",
-        "name": "Feature",
-        "settings": [     
-          {
-            "type": "range",
-            "id": "percent",
-            "min": 0,
-            "max": 100,
-            "step": 1,
-            "unit": "%",
-            "label": "Percent",
-            "default": 90
-          },       
-          {
-            "type": "richtext",
-            "id": "text",
-            "label": "Text",
-            "default": "<p>of participants noticed improvement</p>"
-          }       
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SS - Before/after image #8",
-        "blocks": [
-          {
-            "type": "image"
-          },
-          {
-            "type": "image"
-          },
-          {
-            "type": "image"
-          },
-          {
-            "type": "image"
-          },
-          {
-            "type": "image"
-          },
-          {
-            "type": "image"
-          },
-          {
-            "type": "feature"
-          },
-          {
-            "type": "feature"
-          },
-          {
-            "type": "feature"
-          }
-        ]
-      }
-    ]
-  }
+{
+  "name": "SG-Before/after #8",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_align",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_align_mobile",
+      "label": "Alignment - mobile",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>Before/after image #8</h2>"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Showcase your product benefit by using before/after image comparison.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "text_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "text_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Layout settings"
+    },
+    {
+      "type": "range",
+      "id": "body_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "body_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "body_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "body_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Features settings"
+    },
+    {
+      "type": "range",
+      "id": "features_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "features_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Feature settings"
+    },
+    {
+      "type": "text_alignment",
+      "id": "feature_align",
+      "label": "Alignment"
+    },
+    {
+      "type": "text_alignment",
+      "id": "feature_align_mobile",
+      "label": "Alignment - mobile"
+    },
+    {
+      "type": "header",
+      "content": "Percent settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "percent_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "percent_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "percent_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "percent_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "percent_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Feature text settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "feature_text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "feature_text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "feature_text_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Progress settings"
+    },
+    {
+      "type": "range",
+      "id": "progress_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "progress_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Aspect ratio",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "Aspect ratio - mobile",
+      "default": "landscape",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Drag settings"
+    },
+    {
+      "type": "range",
+      "id": "btn_size",
+      "min": 50,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "btn_size_mobile",
+      "min": 50,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size - mobile",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "btn_arrow_size",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "label": "Arrow size",
+      "default": 115
+    },
+    {
+      "type": "range",
+      "id": "btn_arrow_size_mobile",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "label": "Arrow size - mobile",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "btn_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Badge settings"
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "badge_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "badge_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "badge_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Toggle images settings"
+    },
+    {
+      "type": "range",
+      "id": "toggle_images_view",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Images per row",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "toggle_images_view_mobile",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row - mobile",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "toggle_images_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "toggle_images_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Toggle image settings"
+    },
+    {
+      "type": "range",
+      "id": "toggle_image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "toggle_image_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "toggle_image_ratio",
+      "label": "Aspect ratio",
+      "default": "square",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "toggle_image_ratio_mobile",
+      "label": "Aspect ratio - mobile",
+      "default": "square",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Feature colors"
+    },
+    {
+      "type": "color",
+      "id": "percent_color",
+      "label": "Percent",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "feature_text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "progress_color",
+      "label": "Progress",
+      "default": "#E3E3E3"
+    },
+    {
+      "type": "color",
+      "id": "progress_active_color",
+      "label": "Progress active",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Image colors"
+    },
+    {
+      "type": "color",
+      "id": "image_border_color",
+      "label": "Border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Vertical line",
+      "id": "line_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Drag border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Badge colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "badge_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "badge_bg_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Toggle image colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "toggle_image_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Overlay",
+      "id": "toggle_image_overlay_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Margin sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Margin sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 800,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Section content width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section roundness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "toggle_image",
+          "label": "Toggle image"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image_mobile",
+          "label": "Before image - mobile (optional)"
+        },
+        {
+          "type": "text",
+          "id": "badge_before",
+          "label": "Badge before text",
+          "default": "Before"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image_mobile",
+          "label": "After image - mobile (optional)"
+        },
+        {
+          "type": "text",
+          "id": "badge_after",
+          "label": "Badge after text",
+          "default": "After"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "range",
+          "id": "percent",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Percent",
+          "default": 90
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>of participants noticed improvement</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Before/after image #8",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

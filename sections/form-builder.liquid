@@ -16,13 +16,13 @@
     }
   }
 
-  .ss-form-field:focus {
+  .sg-form-field:focus {
     outline: none;
     box-shadow: none;
     /* Add any other properties you want to override */
   }
 
-  .ss-form-field {
+  .sg-form-field {
     border: 1px solid {{section.settings.field_border_color}};
     outline: none;
     color: {{section.settings.field_color}};
@@ -38,7 +38,7 @@
   } 
 
   @media screen and (min-width: 750px) {
-    .ss-form-field {
+    .sg-form-field {
       padding:15px;
     }
   }
@@ -51,28 +51,28 @@
     margin-bottom:10px;
   }
 
-  .ss-form-field::placeholder { /* Most modern browsers support this */
+  .sg-form-field::placeholder { /* Most modern browsers support this */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{section.settings.field_color}}; /* Change to desired color */
     opacity: 1; /* Firefox requires this to not be 0 */
   }
   
-  .ss-form-field::-ms-input-placeholder { /* Internet Explorer 10-11 */
+  .sg-form-field::-ms-input-placeholder { /* Internet Explorer 10-11 */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{section.settings.field_color}};
   }
   
-  .ss-form-field::-ms-input-placeholder { /* Microsoft Edge */
+  .sg-form-field::-ms-input-placeholder { /* Microsoft Edge */
     font-size: {{section.settings.font_size_placeholder}}px;
     color: {{section.settings.field_color}};
   }
 
-  .ss-submit-button:hover {
+  .sg-submit-button:hover {
      color: {{ section.settings.button_color_hover }};
      background: {{ section.settings.button_background_color_hover }};
   }
   
-  .ss-submit-button {
+  .sg-submit-button {
 
     height: {{ section.settings.button_height }}px;
     {% if section.settings.button_full_width %}
@@ -96,7 +96,7 @@
     
   }
 
-  .ss-text-area {
+  .sg-text-area {
     height: 150px;
   }
 
@@ -147,7 +147,7 @@
                   {{ block.settings.title }}{% if block.settings.required and block.settings.title != blank %}*{% endif %}
                   </label>
                 {% endif %}
-                <input class="ss-form-field" type="text" id="ContactFormName" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" autocapitalize="words" value=""
+                <input class="sg-form-field" type="text" id="ContactFormName" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" autocapitalize="words" value=""
                 {% if block.settings.required %}required{% endif %}>
               
                            
@@ -158,7 +158,7 @@
                   {{block.settings.title}}{% if block.settings.required %}*{% endif %}
                   </label>
                 {% endif %}
-                <input class="ss-form-field" type="email" id="ContactFormEmail" name="contact[email]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" autocorrect="off" autocapitalize="off" value=""
+                <input class="sg-form-field" type="email" id="ContactFormEmail" name="contact[email]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" autocorrect="off" autocapitalize="off" value=""
                 {% if block.settings.required %}required{% endif %}>
                            
               
@@ -169,7 +169,7 @@
                   {{block.settings.title}}{% if block.settings.required %}*{% endif %}
                   </label>
                 {% endif %}
-                <input class="ss-form-field" type="tel" id="ContactFormPhone" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" pattern="[0-9\-]*" value=""
+                <input class="sg-form-field" type="tel" id="ContactFormPhone" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}" pattern="[0-9\-]*" value=""
                 {% if block.settings.required %}required{% endif %}>
               
               
@@ -185,7 +185,7 @@
                   {{block.settings.title}}{% if block.settings.required %}*{% endif %}
                 </label>
               {% endif %}
-              <textarea class="ss-form-field ss-text-area" rows="10" id="ContactFormMessage" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}"
+              <textarea class="sg-form-field sg-text-area" rows="10" id="ContactFormMessage" name="contact[{{block.settings.title}}]" placeholder="{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}"
               {% if block.settings.required %}required{% endif %}></textarea>
             </div>
             
@@ -200,7 +200,7 @@
                   {{block.settings.title}}{% if block.settings.required %}*{% endif %}
                 </label>
                 {% endif %}
-                <select class="ss-form-field" {% if block.settings.required %}required{% endif %} id="ContactFormSelect" name="contact[{{block.settings.title}}]">
+                <select class="sg-form-field" {% if block.settings.required %}required{% endif %} id="ContactFormSelect" name="contact[{{block.settings.title}}]">
                 
                 {% if block.settings.placeholder %}
                   <option value = "" disabled selected>{% if block.settings.placeholder != blank %}{{block.settings.placeholder}}{% if block.settings.required %}*{% endif %}{% endif %}</option>
@@ -232,7 +232,7 @@
           {% endfor %}      
 
           <div style="display:flex;width:100%;{% if section.settings.text_align == "center" %}justify-content:center;{% endif %}">
-          <input type="submit" class="ss-submit-button" 
+          <input type="submit" class="sg-submit-button" 
                  value="{% if section.settings.submit_btn_label != blank%}{{ section.settings.submit_btn_label }}{% else %}Send{% endif %}">
           </div>
         </div>
@@ -243,27 +243,27 @@
 
 {% schema %}
 {
-  "name": "SS - Contact Form",
+  "name": "SG-Contact Form",
   "settings": [
-     {
+    {
       "type": "header",
       "content": "Form labels"
-    },    
-	{
-	  "type": "text",
-	  "id": "title",
-	  "label": "Page title"
-	},
-	{
-	  "type": "richtext",
-	  "id": "text",
-	  "label": "Sub-text"
-	},
+    },
     {
-	  "type": "richtext",
-	  "id": "form_success",
-	  "label": "Form success message"
-	},
+      "type": "text",
+      "id": "title",
+      "label": "Page title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Sub-text"
+    },
+    {
+      "type": "richtext",
+      "id": "form_success",
+      "label": "Form success message"
+    },
     {
       "type": "header",
       "content": "Other"
@@ -283,8 +283,14 @@
       "id": "text_align",
       "label": "Page title, sub-text & button alignment",
       "options": [
-        {"value": "left", "label": "Left"},
-        {"value": "center", "label": "Center"}
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
       ],
       "default": "left"
     },
@@ -293,99 +299,99 @@
       "content": "Button colors"
     },
     {
-          "type": "color",
-          "label": "Button text color",
-          "id": "button_color",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "color",
-          "label": "Button background color",
-          "id": "button_background_color",
-          "default": "#000000"
-        },
-        {
-          "type": "color",
-          "label": "Button text color hover",
-          "id": "button_color_hover",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "color",
-          "label": "Button background color hover",
-          "id": "button_background_color_hover",
-          "default": "#000000"
-        },
-        {
-          "type": "color",
-          "label": "Button text border color",
-          "id": "button_border_color",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "header",
-          "content": "Button settings"
-        },
-        {
-    	  "type": "text",
-    	  "id": "submit_btn_label",
-    	  "label": "Submit button label"
-    	},
-        {
-          "type": "range",
-          "id": "button_height",
-          "min": 20,
-          "max": 200,
-          "step": 2,
-          "unit": "px",
-          "label": "Button height",
-          "default": 44
-        },
-        {
-          "type": "range",
-          "id": "button_width",
-          "min": 100,
-          "max": 500,
-          "step": 10,
-          "unit": "px",
-          "label": "Button width",
-          "default": 200
-        },
-        {
-          "type": "checkbox",
-          "id": "button_full_width",
-          "label": "Make button full width",
-          "default": false
-        },
-        {
-          "type": "range",
-          "id": "button_font_size",
-          "min": 10,
-          "max": 30,
-          "step": 1,
-          "unit": "px",
-          "label": "Button font size",
-          "default": 16
-        },
-        {
-          "type": "range",
-          "id": "button_border_radius",
-          "min": 0,
-          "max": 100,
-          "step": 2,
-          "unit": "px",
-          "label": "Button radius",
-          "default": 2
-        },
-        {
-          "type": "range",
-          "id": "button_border_thickness",
-          "min": 0,
-          "max": 5,
-          "step": 1,
-          "unit": "px",
-          "label": "Button border thickness",
-          "default": 0
+      "type": "color",
+      "label": "Button text color",
+      "id": "button_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Button background color",
+      "id": "button_background_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Button text color hover",
+      "id": "button_color_hover",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Button background color hover",
+      "id": "button_background_color_hover",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Button text border color",
+      "id": "button_border_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Button settings"
+    },
+    {
+      "type": "text",
+      "id": "submit_btn_label",
+      "label": "Submit button label"
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "min": 20,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Button height",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Button width",
+      "default": 200
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width",
+      "label": "Make button full width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Button font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Button radius",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "button_border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Button border thickness",
+      "default": 0
     },
     {
       "type": "header",
@@ -494,168 +500,195 @@
       "default": 75
     }
   ],
- 	"blocks": [
-	  {
-		"name": "Text Field (Oneline)",
-		"type": "text",
-		"settings": [
-		  {
-			"type": "checkbox",
-			"id": "required",
-			"label": "Required",
-			"default": false
-		  },
-          {
-			"type": "checkbox",
-			"id": "use_label",
-			"label": "Use Label",
-			"default": false
-		  },
-		  {
-		    "type": "text",
-			"id": "title",
-			"label": "Field title",
-            "info": "This field is required!"
-		  },
-		  {
-		    "type": "text",
-			"id": "placeholder",
-			"label": "Placeholder text",
-			"info": "Please leave empty if you don't want any text."
-		  },
-		  {
-			"type": "select",
-			"id": "type",
-			"options": [
-				{"value": "text", "label": "Standard Text"},
-				{"value": "email", "label": "Email Address"},
-                {"value": "tel", "label": "Telephone Number"}
-			],
-			"label": "Text Field Data"
-		  },
-          {
-            "type": "select",
-            "id": "width",
-            "label": "Width",
-            "default": "full",
-            "options": [
-              { "value": "half", "label": "Half Width" },
-              { "value": "full", "label": "Full Width" }
-            ]
-          }
-		]
-	  },
-	  {
-		"name": "Text Field (Multiline)",
-		"type": "textarea",
-		"settings": [
-		  {
-			"type": "checkbox",
-			"id": "required",
-			"label": "Required",
-			"default": false
-		  },
-          {
-			"type": "checkbox",
-			"id": "use_label",
-			"label": "Use Label",
-			"default": false
-		  },
-		  {
-		    "type": "text",
-			"id": "title",
-			"label": "Field title",
-            "info": "This field is required!"
-		  },
-		  {
-		    "type": "text",
-			"id": "placeholder",
-			"label": "Placeholder text",
-			"info": "Please leave empty if you don't want any text."
-		  },
-          {
-            "type": "select",
-            "id": "width",
-            "label": "Width",
-            "default": "full",
-            "options": [
-              { "value": "half", "label": "Half Width" },
-              { "value": "full", "label": "Full Width" }
-            ]
-          }
-		]
-	  },
-	  {
-		"name": "Dropdown Box",
-		"type": "dropdown",
-		"settings": [
-		  {
-			"type": "checkbox",
-			"id": "required",
-			"label": "Required",
-			"default": false
-		  },
-          {
-			"type": "checkbox",
-			"id": "use_label",
-			"label": "Use Label",
-			"default": false
-		  },
-		  {
-		    "type": "text",
-			"id": "title",
-			"label": "Dropdown title",
-            "info": "This field is required!"
-		  },
-		  {
-		    "type": "text",
-			"id": "placeholder",
-			"label": "Placeholder option"
-		  },
-		  {
-			"type": "textarea",
-			"id": "dropdown_options",
-			"label": "Dropdown Box Options",
-			"info": "Please separate options with a comma."
-		  },
-          {
-            "type": "select",
-            "id": "width",
-            "label": "Width",
-            "default": "full",
-            "options": [
-              { "value": "half", "label": "Half Width" },
-              { "value": "full", "label": "Full Width" }
-            ]
-          }
-		]
-	},
-	{
-		"name": "Custom Message",
-		"type": "message",
-		"settings": [
-		  {
-		    "type": "richtext",
-			"id": "message",
-			"label": "Message"
-		  },
-		  {
-			"type": "range",
-            "id": "font_size",
-            "min": 10,
-            "max": 20,
-            "step": 1,
-            "unit": "px",
-            "label": "Font size",
-            "default": 15
-		  }
-		]
-	}
+  "blocks": [
+    {
+      "name": "Text Field (Oneline)",
+      "type": "text",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "use_label",
+          "label": "Use Label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Field title",
+          "info": "This field is required!"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder text",
+          "info": "Please leave empty if you don't want any text."
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "options": [
+            {
+              "value": "text",
+              "label": "Standard Text"
+            },
+            {
+              "value": "email",
+              "label": "Email Address"
+            },
+            {
+              "value": "tel",
+              "label": "Telephone Number"
+            }
+          ],
+          "label": "Text Field Data"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "full",
+          "options": [
+            {
+              "value": "half",
+              "label": "Half Width"
+            },
+            {
+              "value": "full",
+              "label": "Full Width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Text Field (Multiline)",
+      "type": "textarea",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "use_label",
+          "label": "Use Label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Field title",
+          "info": "This field is required!"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder text",
+          "info": "Please leave empty if you don't want any text."
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "full",
+          "options": [
+            {
+              "value": "half",
+              "label": "Half Width"
+            },
+            {
+              "value": "full",
+              "label": "Full Width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dropdown Box",
+      "type": "dropdown",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "use_label",
+          "label": "Use Label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Dropdown title",
+          "info": "This field is required!"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder option"
+        },
+        {
+          "type": "textarea",
+          "id": "dropdown_options",
+          "label": "Dropdown Box Options",
+          "info": "Please separate options with a comma."
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "full",
+          "options": [
+            {
+              "value": "half",
+              "label": "Half Width"
+            },
+            {
+              "value": "full",
+              "label": "Full Width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Custom Message",
+      "type": "message",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "message",
+          "label": "Message"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 15
+        }
+      ]
+    }
   ],
   "presets": [
-     {
-       "name": "SS - Contact Form"
-     }
+    {
+      "name": "SG-Contact Form"
+    }
   ]
 }
 {% endschema %}

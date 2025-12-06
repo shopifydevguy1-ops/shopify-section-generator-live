@@ -1,0 +1,1231 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+
+  assign heading = section.settings.heading
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_color = section.settings.heading_color
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_align = section.settings.heading_align
+  assign heading_align_mobile = section.settings.heading_align_mobile
+  assign heading_curve = section.settings.heading_curve
+  assign heading_curve_radius = section.settings.heading_curve_radius
+
+  assign items_row_mobile = section.settings.items_row_mobile
+  assign items_row = section.settings.items_row
+  assign items_gap_mobile = section.settings.items_gap_mobile
+  assign items_gap = section.settings.items_gap
+  assign items_mt = section.settings.items_mt
+
+  assign image_width_mobile = section.settings.image_width_mobile
+  assign image_width = section.settings.image_width
+  assign image_align_mobile = section.settings.image_align_mobile
+  assign image_align = section.settings.image_align
+  assign image_shape = section.settings.image_shape
+  assign image_radius = section.settings.image_radius
+  assign hide_image = section.settings.hide_image
+
+  assign name_size = section.settings.name_size
+  assign name_size_mobile = section.settings.name_size_mobile
+  assign name_color = section.settings.name_color
+  assign name_custom = section.settings.name_custom
+  assign name_font = section.settings.name_font
+  assign name_height = section.settings.name_height
+  assign name_align = section.settings.name_align
+  assign name_align_mobile = section.settings.name_align_mobile
+  assign name_mt = section.settings.name_mt
+
+  assign job_size = section.settings.job_size
+  assign job_size_mobile = section.settings.job_size_mobile
+  assign job_color = section.settings.job_color
+  assign job_custom = section.settings.job_custom
+  assign job_font = section.settings.job_font
+  assign job_height = section.settings.job_height
+  assign job_align = section.settings.job_align
+  assign job_align_mobile = section.settings.job_align_mobile
+  assign job_mt = section.settings.job_mt
+
+  assign description_size = section.settings.description_size
+  assign description_size_mobile = section.settings.description_size_mobile
+  assign description_color = section.settings.description_color
+  assign description_custom = section.settings.description_custom
+  assign description_font = section.settings.description_font
+  assign description_height = section.settings.description_height
+  assign description_align = section.settings.description_align
+  assign description_align_mobile = section.settings.description_align_mobile
+  assign description_mt = section.settings.description_mt
+  
+-%}
+
+{%- style -%}
+
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ name_font | font_face: font_display: 'swap' }}
+  {{ job_font | font_face: font_display: 'swap' }}
+  {{ description_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .about-heading-{{ section.id }} {
+    text-align: {{ heading_align_mobile }};
+  }
+
+  .about-heading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+  }
+
+  .about-items-{{ section.id }} {
+    margin-top: {{ items_mt | times: 0.75 | round: 0 }}px;
+    display: grid;
+    grid-template-columns: repeat({{ items_row_mobile }}, 1fr);
+    gap: {{ items_gap_mobile }}px;
+  }
+
+  .about-image-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    max-width: {{ image_width_mobile }}%;
+    overflow: hidden;
+  }
+
+  .about-image-{{ section.id }} img,
+  .about-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-image-{{ section.id }} svg {
+    background-color: #DDDDDD;
+  }
+
+  .about-name-{{ section.id }} {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-top: {{ name_mt | times: 0.75 | round: 0 }}px;
+    text-align: {{ name_align_mobile }};
+    font-size: {{ name_size_mobile }}px;
+    color: {{ name_color }};
+    line-height: {{ name_height }}%;
+    text-transform: unset;
+    font-weight: 700;
+  }
+
+  .about-job-{{ section.id }} {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-top: {{ job_mt | times: 0.75 | round: 0 }}px;
+    text-align: {{ job_align_mobile }};
+    font-size: {{ job_size_mobile }}px;
+    color: {{ job_color }};
+    line-height: {{ job_height }}%;
+    text-transform: unset;
+  }
+
+  .about-description-{{ section.id }} {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-top: {{ description_mt | times: 0.75 | round: 0 }}px;
+    text-align: {{ description_align_mobile }};
+    font-size: {{ description_size_mobile }}px;
+    color: {{ description_color }};
+    line-height: {{ description_height }}%;
+    text-transform: unset;
+    font-weight: 700;
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .about-heading-{{ section.id }} {
+      text-align: {{ heading_align }};
+    }
+
+    .about-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px;
+    }
+
+    .about-items-{{ section.id }} {
+      margin-top: {{ items_mt }}px;
+      grid-template-columns: repeat({{ items_row }}, 1fr);
+      gap: {{ items_gap }}px;
+    }
+
+    .about-image-{{ section.id }} {
+      max-width: {{ image_width }}%;
+    }
+
+    .about-name-{{ section.id }} {
+      margin-top: {{ name_mt }}px;
+      text-align: {{ name_align }};
+      font-size: {{ name_size }}px;
+    }
+
+    .about-job-{{ section.id }} {
+      margin-top: {{ job_mt }}px;
+      text-align: {{ job_align }};
+      font-size: {{ job_size }}px;
+    }
+
+    .about-description-{{ section.id }} {
+      margin-top: {{ description_mt }}px;
+      text-align: {{ description_align }};
+      font-size: {{ description_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if heading_custom %}
+  <style>
+    .about-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if name_custom %}
+  <style>
+    .about-name-{{ section.id }} {
+      font-family: {{ name_font.family }}, {{ name_font.fallback_families }};
+      font-weight: {{ name_font.weight }};
+      font-style: {{ name_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if job_custom %}
+  <style>
+    .about-job-{{ section.id }} {
+      font-family: {{ job_font.family }}, {{ job_font.fallback_families }};
+      font-weight: {{ job_font.weight }};
+      font-style: {{ job_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if description_custom %}
+  <style>
+    .about-description-{{ section.id }} {
+      font-family: {{ description_font.family }}, {{ description_font.fallback_families }};
+      font-weight: {{ description_font.weight }};
+      font-style: {{ description_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if image_align_mobile == "center" %}
+  <style>
+   .about-image-{{ section.id }} {
+      margin-left: auto;
+      margin-right: auto;
+    } 
+  </style>
+{% elsif image_align_mobile == "right" %}
+  <style>
+   .about-image-{{ section.id }} {
+      margin-left: auto;
+    } 
+  </style>
+{% endif %}
+
+{% if image_align == "center" %}
+  <style>
+    @media(min-width: 1024px) {
+     .about-image-{{ section.id }} {
+        margin-left: auto !important;
+        margin-right: auto !important;
+      } 
+    }
+  </style>
+{% elsif image_align == "right" %}
+  <style>
+    @media(min-width: 1024px) {
+     .about-image-{{ section.id }} {
+        margin-left: auto !important;
+        margin-right: 0px !important;
+      } 
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+     .about-image-{{ section.id }} {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+      } 
+    }
+  </style>
+{% endif %}
+
+{% if image_shape == "portrait" %}
+  <style>
+    .about-image-{{ section.id }} {
+      aspect-ratio: 9.6/13;
+      border-radius: {{ image_radius }}px;
+    }
+  </style>
+{% elsif image_shape == "square" %}
+  <style>
+    .about-image-{{ section.id }} {
+      aspect-ratio: 12/12;
+      border-radius: {{ image_radius }}px;
+    }
+  </style>
+{% elsif image_shape == "landscape" %}
+  <style>
+    .about-image-{{ section.id }} {
+      aspect-ratio: 12/7;
+      border-radius: {{ image_radius }}px;
+    }
+  </style>
+{% elsif image_shape == "oval" %}
+  <style>
+    .about-image-{{ section.id }} {
+      aspect-ratio: 9.6/13;
+      border-radius: 50%/35%;
+    }
+  </style>
+{% elsif image_shape == "round" %}
+  <style>
+    .about-image-{{ section.id }} {
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+    }
+  </style>
+{% elsif image_shape == "short_triagle" %}
+  <style>
+    .about-image-{{ section.id }} {
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      aspect-ratio: 1/1;
+    }
+  </style>
+{% elsif image_shape == "high_triagle" %}
+  <style>
+    .about-image-{{ section.id }} {
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      aspect-ratio: 9.6/13;
+    }
+  </style>
+{% elsif image_shape == "short_diamond" %}
+  <style>
+    .about-image-{{ section.id }} {
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      aspect-ratio: 1/1; 
+    }
+  </style>
+{% elsif image_shape == "high_diamond" %}
+  <style>
+    .about-image-{{ section.id }} {
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      aspect-ratio: 9.6/13; 
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} about-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+
+      {% if heading != blank %}
+        <div class="about-heading-{{ section.id }}">
+          <h2 id="about-heading-curve-{{ section.id }}">{{ heading }}</h2>
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="about-items-{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="about-item-{{ section.id }}">
+              
+              {% unless hide_image %}
+                <div class="about-image-{{ section.id }}">
+                  {% if block.settings.image != blank %}
+                    <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" {% if lazy %}lazy="loading"{% endif %}>
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag }}
+                  {% endif %}
+                </div>
+              {% endunless %}
+            
+              {% if block.settings.name %}
+                <p class="about-name-{{ section.id }}">{{ block.settings.name }}</p>
+              {% endif %}
+
+              {% if block.settings.job %}
+                <p class="about-job-{{ section.id }}">{{ block.settings.job }}</p>
+              {% endif %}
+
+              {% if block.settings.description %}
+                <p class="about-description-{{ section.id }}">{{ block.settings.description }}</p>
+              {% endif %}
+              
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+    </div>
+</div>
+
+{% if heading_curve %}
+<script src="https://cdn.jsdelivr.net/gh/peterhry/CircleType@2.3.1/dist/circletype.min.js"></script>
+
+<script>
+  function initAboutUs() {
+    new CircleType(document.getElementById('about-heading-curve-{{ section.id }}')).radius({{ heading_curve_radius }});
+  }
+
+  document.addEventListener('DOMContentLoaded', initAboutUs);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initAboutUs);
+     document.addEventListener('shopify:section:load', initAboutUs);
+  }
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "SG-About Us",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "HEALTH LEADERS LOVE US"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size - Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Heading Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading Text Align",
+      "default": "center",
+      "info": "If unchecked 'Heading Curve'",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading Text Align - Mobile",
+      "info": "If unchecked 'Heading Curve'",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_curve",
+      "label": "Heading Curve",
+      "info": "Please save to see",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "heading_curve_radius",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "label": "Heading Curve Radius",
+      "default": 800
+    },
+    {
+      "type": "header",
+      "content": "Items Settings"
+    },
+    {
+      "type": "range",
+      "id": "items_row",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Items per Row",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "items_row_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Items per Row - Mobile",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "items_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Items Gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "items_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Items Gap - Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "items_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Items Margin Top",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Image Width",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Image Width - Mobile",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "label": "Image Shape",
+      "default": "oval",
+      "options": [
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Oval",
+          "value": "oval"
+        },
+        {
+          "label": "Round",
+          "value": "round"
+        },
+        {
+          "label": "Short Triagle",
+          "value": "short_triagle"
+        },
+        {
+          "label": "High Triagle",
+          "value": "high_triagle"
+        },
+        {
+          "label": "Short Diamond",
+          "value": "short_diamond"
+        },
+        {
+          "label": "High Diamond",
+          "value": "high_diamond"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_align",
+      "label": "Image Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_align_mobile",
+      "label": "Image Align - Mobile",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Border Radius",
+      "info": "If the Image is in the Shape of a Portrait, Square or Landscape",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image",
+      "label": "Hide Image"
+    },
+    {
+      "type": "header",
+      "content": "Name Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "name_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "name_font",
+      "label": "Name Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Name Size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "name_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Name Size - Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "name_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Name Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "name_align",
+      "label": "Name Text Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "name_align_mobile",
+      "label": "Name Text Align - Mobile",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "name_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Name Margin Top",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Job Title Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "job_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "job_font",
+      "label": "Job Title Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "job_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Job Title Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "job_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Job Title Size - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "job_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Job Title Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "job_align",
+      "label": "Job Title Text Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "job_align_mobile",
+      "label": "Job Title Text Align - Mobile",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "job_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Job Title Margin Top",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Description Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "description_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "description_font",
+      "label": "Description Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Description Size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Description Size - Mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "description_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Description Line Height",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "description_align",
+      "label": "Description Text Align",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "description_align_mobile",
+      "label": "Description Text Align - Mobile",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "description_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Description Margin Top",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading Color",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Name Color",
+      "id": "name_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Job Title Color",
+      "id": "job_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Description Color",
+      "id": "description_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Mark Johnson"
+        },
+        {
+          "type": "text",
+          "id": "job",
+          "label": "Job Title",
+          "default": "Former lead food writer at the New York Times, author of 30 books"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "'Been working with the brand for 8+ years - on a mission.'"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-About Us",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item",
+          "settings": {
+            "name": "Mia Ronson",
+            "job": "Holistic Nutritionist MS, CNS",
+            "description": "'Delicious, convenient, and full of protein.'"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "name": "Dr. Will Blue",
+            "job": "Leading Functional Medicine Expert",
+            "description": "'A true revolution to plant-based protein!'"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

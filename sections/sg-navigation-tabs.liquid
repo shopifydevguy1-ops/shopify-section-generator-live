@@ -1,0 +1,782 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+>
+
+{%- liquid
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign section_radius = section.settings.section_radius
+
+  assign tabs_align_mobile = section.settings.tabs_align_mobile
+  assign tabs_align = section.settings.tabs_align
+  assign tabs_gap_mobile = section.settings.tabs_gap_mobile
+  assign tabs_gap = section.settings.tabs_gap
+  assign tabs_titles = section.settings.tabs_titles
+
+  assign use_sticky = section.settings.use_sticky
+  assign vertical_offset = section.settings.vertical_offset
+
+  assign use_highlite = section.settings.use_highlite
+
+  assign item_size = section.settings.item_size
+  assign item_size_mobile = section.settings.item_size_mobile
+  assign item_color = section.settings.item_color
+  assign item_hover_color = section.settings.item_hover_color
+  assign item_active_color = section.settings.item_active_color
+  assign item_custom = section.settings.item_custom
+  assign item_font = section.settings.item_font
+  assign item_height = section.settings.item_height
+  assign item_padding_vertical = section.settings.item_padding_vertical
+  assign item_padding_vertical_mobile = section.settings.item_padding_vertical_mobile
+  assign item_padding_horizontal = section.settings.item_padding_horizontal
+  assign item_padding_horizontal_mobile = section.settings.item_padding_horizontal_mobile
+  assign item_radius = section.settings.item_radius
+  assign item_border_thickness = section.settings.item_border_thickness
+  assign item_border_color = section.settings.item_border_color
+  assign item_border_hover_color = section.settings.item_border_hover_color
+  assign item_border_active_color = section.settings.item_border_active_color
+  assign item_bg_color = section.settings.item_bg_color
+  assign item_bg_hover_color = section.settings.item_bg_hover_color
+  assign item_bg_active_color = section.settings.item_bg_active_color
+  assign item_border_bottom = section.settings.item_border_bottom
+-%}
+
+{%- style -%}
+  {{  item_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .navigation-tabs-body-{{ section.id }} {
+    display: flex;
+    align-items: stretch;
+    gap: {{ tabs_gap_mobile }}px;
+    overflow-x: auto;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+    margin-left: -{{ padding_horizontal_mobile }}rem;
+    margin-right: -{{ padding_horizontal_mobile }}rem;
+  }
+
+  .navigation-tabs-body-{{ section.id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navigation-tabs-item-{{ section.id }} {
+    margin-top: 0px;
+    width: 100%;
+    max-width: fit-content;
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ item_size_mobile }}px;
+    font-weight: 700;
+    color: {{ item_color }};
+    line-height: {{ item_height }}%;
+    text-align: center;
+    text-transform: unset;
+    text-decoration: none;
+    padding: {{ item_padding_vertical_mobile }}px {{ item_padding_horizontal_mobile }}px;
+    border-radius: {{ item_radius }}px;
+    border: 0px;
+    border: {{ item_border_thickness }}px solid {{ item_border_color }};
+    background-color: transparent;
+    background-color: {{ item_bg_color }};
+    transition: all 0.25s ease 0s;
+    box-shadow: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .navigation-tabs-item-{{ section.id }}:hover {
+    color: {{ item_hover_color }};
+    border-color: {{ item_border_hover_color }};
+    background-color: {{ item_bg_hover_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  .navigation-tabs-item-{{ section.id }}.active {
+    color: {{ item_active_color }};
+    border-color: {{ item_border_active_color }};
+    background-color: {{ item_bg_active_color }};
+    transition: all 0.25s ease 0s;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .navigation-tabs-body-{{ section.id }} {
+      gap: {{ tabs_gap }}px;
+      flex-wrap: wrap;
+      overflow-x: hidden;
+      padding-left: 0rem;
+      padding-right: 0rem;
+      margin-left: 0rem;
+      margin-right: 0rem;
+    }
+
+    .navigation-tabs-item-{{ section.id }} {
+      padding: {{ item_padding_vertical }}px {{ item_padding_horizontal }}px;
+      font-size: {{ item_size }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if item_custom %}
+  <style>
+    .navigation-tabs-item-{{ section.id }} {
+      font-family: {{ item_font.family }}, {{ item_font.fallback_families }};
+      font-weight: {{ item_font.weight }};
+      font-style: {{ item_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if tabs_align_mobile == 'center' %}
+  <style>
+    .navigation-tabs-body-{{ section.id }} {
+      justify-content: center;
+    }
+  </style>
+{% elsif tabs_align_mobile == 'right' %}
+  <style>
+    .navigation-tabs-body-{{ section.id }} {
+      justify-content: end;
+    }
+  </style>
+{% endif %}
+
+{% if tabs_align == 'center' %}
+  <style>
+    @media(min-width: 1024px) {
+      .navigation-tabs-body-{{ section.id }} {
+        justify-content: center;
+      }
+    }
+  </style>
+{% elsif tabs_align == 'right' %}
+  <style>
+    @media(min-width: 1024px) {
+      .navigation-tabs-body-{{ section.id }} {
+        justify-content: end;
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .navigation-tabs-body-{{ section.id }} {
+        justify-content: start;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if item_border_bottom %}
+  <style>
+    .navigation-tabs-item-{{ section.id }} {
+      border: 0px;
+      border-bottom: {{ item_border_thickness }}px solid {{ item_border_color }};
+    }
+  </style>
+{% endif %}
+
+<div
+  class="section-{{ section.id }} {% if use_sticky %}navigation-tabs-sticky-{{ section.id }}{% endif %} navigation-tabs-{{ section.id }}"
+  style="background-color:{{ background_color }}; background-image: {{ background_gradient }};"
+>
+  <div class="section-{{ section.id }}-settings">
+    <div class="navigation-tabs-body-{{ section.id }}"></div>
+  </div>
+</div>
+
+<script>
+  function isSafari() {  
+    const userAgent = navigator.userAgent;  
+    return /^((?!chrome|android).)*safari/i.test(userAgent);  
+  } 
+  
+  function initNavigationTabs() {
+    let sections = document.querySelectorAll('.shopify-section');  
+    let body = document.querySelector('.navigation-tabs-body-{{ section.id }}');
+    let titles = "{{ tabs_titles }}";
+    let titlesArray = titles.split(",");
+    let belowThisSection = false;
+    let count = 0;
+    if (sections) {  
+      sections.forEach((el, i) => {
+        let itemId = el.id;
+        if (![...el.children].some(child => child.tagName === 'TEMPLATE')) {  
+          
+if(itemId != "shopify-section-header" && !itemId.includes("footer") && itemId != "shopify-section-announcement-bar") {
+  if(belowThisSection) {
+    let anchorText = titlesArray[count] || "Title";
+    let anchor = `<a href="#${itemId}" class="navigation-tabs-item-{{ section.id }}">${anchorText}</a>`;
+    body.insertAdjacentHTML('beforeend', anchor);   
+    count++;
+  }
+  if(itemId == "shopify-section-{{ section.id }}") {
+    belowThisSection = true;
+  }
+}
+
+          
+        } 
+        
+      });  
+    }
+
+    setTimeout(() => {
+      let items = document.querySelectorAll('.navigation-tabs-item-{{ section.id }}');
+      
+      if (items) {  
+        items.forEach(el => {
+          
+          el.addEventListener('click', (event) => {  
+              event.preventDefault();  
+              const targetId = el.getAttribute('href');  
+              if (targetId) {  
+                  const targetElement = document.querySelector(targetId);  
+                  if (targetElement) {  
+                      const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                      const offsetPosition = elementPosition - 100;
+                      
+                      window.scrollTo({  
+                          top: offsetPosition,  
+                          behavior: 'smooth'
+                      });  
+                  }  
+              }  
+          });
+        });
+
+        {% if use_highlite %}
+          window.addEventListener('scroll', () => {  
+            let foundActive = false;  
+        
+            items.forEach(el => {  
+                const targetId = el.getAttribute('href');  
+                if (targetId) {  
+                    const targetElement = document.querySelector(targetId);  
+                    if (targetElement) {  
+                        const rect = targetElement.getBoundingClientRect();  
+                        const windowHeight = window.innerHeight;  
+        
+                        const visibleHeight = Math.max(0, Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0));  
+         
+                        if (visibleHeight >= (rect.height / 2)) {  
+                            if (!foundActive) {  
+                                el.classList.add('active');  
+                                foundActive = true;
+                                const offsetLeft = el.offsetLeft;
+                                if (!isSafari()) {
+                                  body.scrollTo({  
+                                    left: offsetLeft,  
+                                    behavior: 'smooth'
+                                  });
+                                }
+                            }  
+                        } else {  
+                            el.classList.remove('active');  
+                        }  
+                    }  
+                }  
+            });  
+        }); 
+      {% endif %}
+      }
+
+      {% if use_sticky %}
+        if(sections) {
+          sections.forEach(section => {
+            if(section.id.includes('{{ section.id }}')) {
+              section.style.position = 'sticky';
+              section.style.top = '{{ vertical_offset }}px';
+              section.style.backgroundColor = '{{ background_color }}';
+              section.style.backgroundImage = '{{ background_gradient }}';
+              section.style.zIndex = '3';
+            }
+          })
+        }
+      {% endif %}
+    }, 400);   
+  }
+
+  document.addEventListener('DOMContentLoaded', initNavigationTabs);
+</script>
+
+{% schema %}
+{
+  "name": "SG-Navigation tabs",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "⚠️ Save settings to view updates"
+    },
+    {
+      "type": "header",
+      "content": "Navigation tabs settings"
+    },
+    {
+      "type": "text",
+      "id": "tabs_titles",
+      "label": "Tabs titles",
+      "default": "Title,Title,Title",
+      "info": "Replace the titles of your sections, separated by commas. For example: 'Similar Products,Specifications,Product Benefits,Frequently Bought Together'. Save to view changes. Att: Only sections available on the page will be included."
+    },
+    {
+      "type": "range",
+      "id": "tabs_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "tabs_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 4
+    },
+    {
+      "type": "text_alignment",
+      "id": "tabs_align",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "text_alignment",
+      "id": "tabs_align_mobile",
+      "label": "Alignmnet - mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_sticky",
+      "label": "Sticky on top",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_highlite",
+      "label": "Use highlite when scroll",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "vertical_offset",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical offset",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Link settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "item_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "item_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "item_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "item_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "item_border_bottom",
+      "label": "Use border only at bottom",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Link colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "item_color",
+      "default": "#0A1E32"
+    },
+    {
+      "type": "color",
+      "label": "Text hover",
+      "id": "item_hover_color",
+      "default": "#0A1E32"
+    },
+    {
+      "type": "color",
+      "label": "Text active",
+      "id": "item_active_color",
+      "default": "#0A1E32"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "item_bg_color"
+    },
+    {
+      "type": "color",
+      "label": "Background hover",
+      "id": "item_bg_hover_color"
+    },
+    {
+      "type": "color",
+      "label": "Background active",
+      "id": "item_bg_active_color"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "item_border_color"
+    },
+    {
+      "type": "color",
+      "label": "Border hover",
+      "id": "item_border_hover_color",
+      "default": "#0A1E32"
+    },
+    {
+      "type": "color",
+      "label": "Border active",
+      "id": "item_border_active_color",
+      "default": "#0A1E32"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Margin sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Margin sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section roundness",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Navigation tabs"
+    }
+  ]
+}
+{% endschema %}

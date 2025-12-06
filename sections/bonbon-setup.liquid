@@ -81,8 +81,8 @@
       margin-bottom: 2.5rem;
     }
   }
-  /* .ss-custom-card will be reused on other sections */
-  .ss-custom-card {
+  /* .sg-custom-card will be reused on other sections */
+  .sg-custom-card {
     border: 1px solid var(--text-color);
     border-radius: 29px;
     background: var(--card-background-color, #fef9f3);
@@ -91,22 +91,22 @@
     width: 100%;
   }
   @media screen and (min-width: 750px) {
-    .ss-custom-card {
+    .sg-custom-card {
       padding: 23px 27px;
     }
   }
-  .ss-custom-card__title {
+  .sg-custom-card__title {
     font-weight: 800;
     font-size: var(--product-card-title-font-size, 24px);
     margin-bottom: 5px;
     text-align: center;
   }
-  .ss-custom-card__desc {
+  .sg-custom-card__desc {
     font-weight: 500;
     font-size: var(--product-card-description-font-size, 20px);
     margin-bottom: 13px;
   }
-  .ss-custom-card__link {
+  .sg-custom-card__link {
     border: 1px solid var(--text-color);
     color: var(--text-color);
     font-weight: 800;
@@ -120,18 +120,18 @@
     text-decoration: none;
   }
   @media screen and (min-width: 750px) {
-    .ss-custom-card__link {
+    .sg-custom-card__link {
       height: 60px;
     }
   }
-  .ss-custom-card__image {
+  .sg-custom-card__image {
     width: 100%;
     object-fit: cover;
     aspect-ratio: 1/1;
     border: 1px solid var(--text-color);
     border-radius: 26px;
   }
-  .ss-custom-card__index {
+  .sg-custom-card__index {
     border: 1px solid var(--text-color);
     border-radius: 50%;
     width: 60px;
@@ -146,7 +146,7 @@
   }
 </style>
 <style>
-  .ss-custom-cta {
+  .sg-custom-cta {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -210,11 +210,11 @@
       </div>
       <div class="swiper-wrapper">
         {% for block in section.blocks %}
-          <div class="swiper-slide ss-custom-card">
+          <div class="swiper-slide sg-custom-card">
             {% assign image = block.settings.image %}
             {% if image != blank %}
               <img
-                class="ss-custom-card__image"
+                class="sg-custom-card__image"
                 src="{{ image | img_url: '400x' }}"
                 srcset="
                   {{ image | img_url: '400x' }} 400w,
@@ -237,15 +237,15 @@
                 "
               ></div>
             {% endif %}
-            <div class="ss-custom-card__index">{{ forloop.index }}</div>
-            <div class="ss-custom-card__title">{{ block.settings.title }}</div>
+            <div class="sg-custom-card__index">{{ forloop.index }}</div>
+            <div class="sg-custom-card__title">{{ block.settings.title }}</div>
           </div>
         {% endfor %}
       </div>
     </div>
 
     {% if section.settings.url_text != blank %}
-      <a class="ss-custom-cta" href="{{ section.settings.url }}">
+      <a class="sg-custom-cta" href="{{ section.settings.url }}">
         {{ section.settings.url_text }}
       </a>
     {% endif %}
@@ -315,7 +315,7 @@
 
 {% schema %}
 {
-  "name": "SS - Easy Setup Slider",
+  "name": "SG-Easy Setup Slider",
   "tag": "section",
   "settings": [
     {
@@ -466,7 +466,7 @@
   ],
   "presets": [
     {
-      "name": "SS - BonBon Steps",
+      "name": "SG-BonBon Steps",
       "blocks": [
         {
           "type": "card"

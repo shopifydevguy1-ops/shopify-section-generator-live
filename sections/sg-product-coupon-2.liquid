@@ -1,0 +1,1453 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign lazy = section.settings.lazy
+
+  assign coupon_position = section.settings.coupon_position
+
+  assign body_padding_horizontal = section.settings.body_padding_horizontal
+  assign body_padding_horizontal_mobile = section.settings.body_padding_horizontal_mobile
+  assign body_padding_vertical = section.settings.body_padding_vertical
+  assign body_padding_vertical_mobile = section.settings.body_padding_vertical_mobile
+  assign body_border_radius = section.settings.body_border_radius
+  assign body_border_thickness = section.settings.body_border_thickness
+  assign body_border_style = section.settings.body_border_style
+  assign body_border_color = section.settings.body_border_color
+  assign body_bg_color = section.settings.body_bg_color
+
+  assign custom_coupon_icon = section.settings.custom_coupon_icon
+  assign coupon_width = section.settings.coupon_width
+  assign coupon_width_mobile = section.settings.coupon_width_mobile
+  assign coupon_color = section.settings.coupon_color
+  assign hide_coupon = section.settings.hide_coupon
+
+  assign content_align = section.settings.content_align
+  assign content_align_mobile = section.settings.content_align_mobile
+
+  assign content_horizontal_align = ""
+  if content_align == "center"
+    assign content_horizontal_align = "center"
+  elsif content_align == "right"
+    assign content_horizontal_align = "end"
+  else
+    assign content_horizontal_align = "start"
+  endif
+
+  assign content_horizontal_align_mobile = ""
+  if content_align_mobile == "center"
+    assign content_horizontal_align_mobile = "center"
+  elsif content_align_mobile == "right"
+    assign content_horizontal_align_mobile = "end"
+  else
+    assign content_horizontal_align_mobile = "start"
+  endif
+
+  assign heading = section.settings.heading
+  assign heading_padding_horizontal = section.settings.heading_padding_horizontal
+  assign heading_padding_horizontal_mobile = section.settings.heading_padding_horizontal_mobile
+  assign heading_padding_vertical = section.settings.heading_padding_vertical
+  assign heading_padding_vertical_mobile = section.settings.heading_padding_vertical_mobile
+  assign heading_border_thickness = section.settings.heading_border_thickness
+  assign heading_border_color = section.settings.heading_border_color
+  assign heading_radius = section.settings.heading_radius
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_height = section.settings.heading_height
+  assign heading_color = section.settings.heading_color
+  assign heading_bg_color = section.settings.heading_bg_color
+
+  assign text = section.settings.text
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_height = section.settings.text_height
+  assign text_color = section.settings.text_color
+  assign text_mt = section.settings.text_mt
+  assign text_mt_mobile = section.settings.text_mt_mobile
+
+  assign discount_mt = section.settings.discount_mt
+  assign discount_mt_mobile = section.settings.discount_mt_mobile
+
+  assign discount_text = section.settings.discount_text
+  assign discount_text_custom = section.settings.discount_text_custom
+  assign discount_text_font = section.settings.discount_text_font
+  assign discount_text_size = section.settings.discount_text_size
+  assign discount_text_size_mobile = section.settings.discount_text_size_mobile
+  assign discount_text_height = section.settings.discount_text_height
+  assign discount_text_color = section.settings.discount_text_color
+
+  assign discount_code = section.settings.discount_code
+  assign discount_code_custom = section.settings.discount_code_custom
+  assign discount_code_font = section.settings.discount_code_font
+  assign discount_code_size = section.settings.discount_code_size
+  assign discount_code_size_mobile = section.settings.discount_code_size_mobile
+  assign discount_code_height = section.settings.discount_code_height
+  assign discount_code_color = section.settings.discount_code_color
+
+  assign copy_icon_width = section.settings.copy_icon_width
+  assign copy_icon_width_mobile = section.settings.copy_icon_width_mobile
+  assign copy_icon_color = section.settings.copy_icon_color
+  assign hide_copy_icon = section.settings.hide_copy_icon
+
+  assign message = section.settings.message
+  assign message_padding_horizontal = section.settings.message_padding_horizontal
+  assign message_padding_horizontal_mobile = section.settings.message_padding_horizontal_mobile
+  assign message_padding_vertical = section.settings.message_padding_vertical
+  assign message_padding_vertical_mobile = section.settings.message_padding_vertical_mobile
+  assign message_border_thickness = section.settings.message_border_thickness
+  assign message_border_color = section.settings.message_border_color
+  assign message_radius = section.settings.message_radius
+  assign message_custom = section.settings.message_custom
+  assign message_font = section.settings.message_font
+  assign message_size = section.settings.message_size
+  assign message_size_mobile = section.settings.message_size_mobile
+  assign message_height = section.settings.message_height
+  assign message_color = section.settings.message_color
+  assign message_bg_color = section.settings.message_bg_color
+  
+-%}
+
+{%- style -%}
+
+
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ text_font | font_face: font_display: 'swap' }}
+  {{ discount_text_font | font_face: font_display: 'swap' }}
+  {{ discount_code_font | font_face: font_display: 'swap' }}
+  {{ message_font | font_face: font_display: 'swap' }}
+
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px !important;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px !important;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .coupon-body-{{ section.id }} {
+    display: flex;    
+    align-items: center;
+    gap: 15px;
+    padding: {{ body_padding_vertical_mobile }}px {{ body_padding_horizontal_mobile }}px;
+    background-color: {{ body_bg_color }};
+    border: {{ body_border_thickness }}px {{  body_border_style }} {{ body_border_color }};
+    border-radius: {{ body_border_radius }}px;
+  }
+
+  .coupon-icon-{{ section.id }} {
+    flex-shrink: 0;
+    width: {{ coupon_width_mobile }}px;
+  }
+
+  .coupon-icon-{{ section.id }} img,
+  .coupon-icon-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .coupon-icon-{{ section.id }} svg path {
+    fill: {{ coupon_color }};
+  }
+
+  .coupon-content-{{ section.id }} {
+    flex: 1 1 auto;
+  }
+
+  .coupon-heading-{{ section.id }} {
+    max-width: fit-content;
+    background-color: {{ heading_bg_color }};
+    padding: {{ heading_padding_vertical_mobile }}px {{ heading_padding_horizontal_mobile }}px;
+    border: {{ heading_border_thickness }}px solid {{ heading_border_color }};
+    border-radius: {{ heading_radius }}px;
+    text-align: {{ content_align_mobile }};
+  }
+
+  .coupon-heading-{{ section.id }} * {
+    margin: 0;    
+    font-size: {{ heading_size_mobile }}px;
+    color: {{ heading_color }};
+    line-height: {{ heading_height }}%;   
+    text-transform: unset;
+    text-decoration: none;
+    word-break: break-word;
+    font-weight: 700;
+  }
+
+  .coupon-text-{{ section.id }} {
+    text-align: {{ content_align_mobile }};
+    margin-top: {{ text_mt_mobile }}px;
+  }
+
+  .coupon-text-{{ section.id }} * {
+    margin: 0;    
+    font-size: {{ text_size_mobile }}px;
+    color: {{ text_color }};
+    line-height: {{ text_height }}%;   
+    text-transform: unset;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .coupon-discount-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: {{ content_horizontal_align_mobile }};
+    margin-top: {{ discount_mt_mobile }}px;
+    position: relative;
+  }
+
+  .coupon-discount-text-{{ section.id }} {
+    margin: 0;    
+    font-size: {{ discount_text_size_mobile }}px;
+    color: {{ discount_text_color }};
+    line-height: {{ discount_text_height }}%;
+    text-transform: unset;
+    text-decoration: none;
+    word-break: break_word;
+  }
+
+  .coupon-discount-code-{{ section.id }} {
+    margin: 0;    
+    font-size: {{ discount_code_size_mobile }}px;
+    color: {{ discount_code_color }};
+    line-height: {{ discount_code_height }}%;
+    text-transform: unset;
+    text-decoration: none;
+    word-break: break-word;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .coupon-discount-copy-icon-{{ section.id }} {
+    cursor: pointer;
+    width: {{ copy_icon_width_mobile }}px;
+  }
+
+  .coupon-discount-copy-icon-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .coupon-discount-copy-icon-{{ section.id }} svg path {
+    fill: {{ copy_icon_color }};
+  }
+
+  .coupon-message-{{ section.id }} {
+    display: none;
+    max-width: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 2;
+    max-width: fit-content;
+    background-color: {{ message_bg_color }};
+    padding: {{ message_padding_vertical_mobile }}px {{ message_padding_horizontal_mobile }}px;
+    border: {{ message_border_thickness }}px solid {{ message_border_color }};
+    border-radius: {{ message_radius }}px;
+    text-align: cener;
+  }
+
+  .coupon-message-{{ section.id }} * {
+    margin: 0;    
+    font-size: {{ message_size_mobile }}px;
+    color: {{ message_color }};
+    line-height: {{ message_height }}%;   
+    text-transform: unset;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .coupon-message-{{ section.id }}.active {
+    display: block;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px !important;
+      margin-bottom: {{ margin_bottom }}px !important;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .coupon-body-{{ section.id }} {
+      display: flex;
+      padding: {{ body_padding_vertical }}px {{ body_padding_horizontal }}px;
+    }
+
+    .coupon-icon-{{ section.id }} {
+      width: {{ coupon_width }}px;
+    }
+
+    .coupon-heading-{{ section.id }} {
+      padding: {{ heading_padding_vertical }}px {{ heading_padding_horizontal }}px;
+      text-align: {{ content_align }};
+    }
+
+    .coupon-heading-{{ section.id }} * {    
+      font-size: {{ heading_size }}px;
+    }
+
+    .coupon-text-{{ section.id }} {
+      text-align: {{ content_align }};
+      margin-top: {{ text_mt }}px;
+    }
+
+    .coupon-text-{{ section.id }} * {
+      font-size: {{ text_size }}px;
+    }
+
+    .coupon-discount-{{ section.id }} {
+      justify-content: {{ content_horizontal_align }};
+      margin-top: {{ discount_mt }}px;
+    }
+
+    .coupon-discount-text-{{ section.id }} {    
+      font-size: {{ discount_text_size }}px;
+    }
+
+    .coupon-discount-code-{{ section.id }} {
+      font-size: {{ discount_code_size }}px;
+    }
+
+    .coupon-discount-copy-icon-{{ section.id }} {
+      width: {{ copy_icon_width }}px;
+    }
+
+    .coupon-message-{{ section.id }} {
+      padding: {{ message_padding_vertical }}px {{ message_padding_horizontal }}px;
+      text-align: {{ content_align }};
+    }
+
+    .coupon-message-{{ section.id }} * {    
+      font-size: {{ message_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% if heading_custom %}
+  <style>
+    .coupon-heading-{{ section.id }} * {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if text_custom %}
+  <style>
+    .coupon-text-{{ section.id }} * {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if discount_text_custom %}
+  <style>
+    .coupon-discount-text-{{ section.id }} {
+      font-family: {{ discount_text_font.family }}, {{ discount_text_font.fallback_families }};
+      font-weight: {{ discount_text_font.weight }};
+      font-style: {{ discount_text_font.style }};
+    }
+  </style>
+
+
+<style>
+  .coupon-heading-{{ section.id }} {
+    background: {% if heading_bg_color contains 'linear-gradient' %} {{ heading_bg_color }} {% else %} {{ heading_bg_color }} {% endif %};
+  }
+</style>
+{% endif %}
+
+{% if discount_code_custom %}
+  <style>
+    .coupon-discount-code-{{ section.id }} {
+      font-family: {{ discount_code_font.family }}, {{ discount_code_font.fallback_families }};
+      font-weight: {{ discount_code_font.weight }};
+      font-style: {{ discount_code_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if message_custom %}
+  <style>
+    .coupon-message-{{ section.id }} * {
+      font-family: {{ message_font.family }}, {{ message_font.fallback_families }};
+      font-weight: {{ message_font.weight }};
+      font-style: {{ message_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if content_align_mobile == 'center' %}
+  <style>
+    .coupon-heading-{{ section.id }} {
+      margin: 0 auto;
+    }
+  </style>
+{% elsif content_align_mobile == 'right' %}
+  <style>
+    .coupon-heading-{{ section.id }} {
+      margin-left: auto;
+    }
+  </style> 
+{% endif %}
+
+{% if content_align == 'left' %}
+  <style>
+    @media(min-width: 1024px) {
+      .coupon-heading-{{ section.id }} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }   
+  </style>
+{% elsif content_align == 'center' %}
+  <style>
+    @media(min-width: 1024px) {
+      .coupon-heading-{{ section.id }} {
+        margin: 0 auto;
+      }
+    }   
+  </style>
+{% elsif content_align == 'right' %}
+  <style>
+    @media(min-width: 1024px) {
+      .coupon-heading-{{ section.id }} {
+        margin-left: auto;
+      }
+    }  
+  </style> 
+{% endif %}
+
+{% if hide_coupon %}
+  <style>
+    .coupon-icon-{{ section.id }} {
+      display: none;
+    }
+  </style>
+{% endif %}
+
+{% if hide_copy_icon %}
+  <style>
+    .coupon-discount-copy-icon-{{ section.id }} {
+      display: none;
+    }
+  </style>
+{% endif %}
+
+<script>
+  (function () {
+    function moreLoadProductForm() {
+      var productForm = document.querySelector('#sg-product-coupon-2');
+      if (!productForm){
+        var productForm = document.querySelector('{% if coupon_position == "below_title" or coupon_position == "above_title" %}.product__title{% elsif coupon_position == "below_description" or coupon_position == "above_description" %}.product__description{% elsif coupon_position == "below_price" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');
+        if (!productForm) return;
+        }
+        const templateContent = document.querySelector(
+          '#sg-product-coupon-{{ section.id }}'
+        ).content;
+
+        productForm.insertAdjacentElement(
+          '{% if coupon_position == "below_buy" or coupon_position == "below_title" or coupon_position == "below_description" or coupon_position == "below_price" %}afterend{% else %}beforebegin{% endif %}',
+          templateContent.firstElementChild
+        );     
+    }
+    window.addEventListener('DOMContentLoaded', moreLoadProductForm);
+  })();
+</script>
+
+<template id="sg-product-coupon-{{ section.id }}">
+  <div class="section-{{ section.id }} coupon-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      <div class="coupon-body-{{ section.id }}">
+        <div class="coupon-icon-{{ section.id }}">
+          {% if custom_coupon_icon != blank %}
+            <img src="{{ custom_coupon_icon | image_url }}" alt="{{ custom_coupon_icon.alt }}" {% if lazy %}loading="lazy"{% endif %}>    
+          {% else %}  
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
+              <g><g><path fill="#000000" d="M192.9,49c-11.4-9.8-28.5-7.8-37.8,3.6c-9.3,11.4-7.8,28.5,3.6,38.3c11.4,9.8,28.5,7.8,38.3-3.6C206.4,75.4,204.8,58.3,192.9,49z M186.2,78.5c-4.7,5.7-13.5,6.7-19.2,1.6c-5.7-4.7-6.7-13.5-1.6-19.2c4.7-5.7,13.5-6.7,19.2-1.6C190.3,64,190.8,72.8,186.2,78.5z"/><path fill="#000000" d="M245.7,83.2L245.7,83.2l-14-67.9l0,0c-1-5.7-5.7-10.4-11.4-10.9c-0.5,0-0.5,0-1,0h-0.5h-68.9l0,0c-4.1,0-7.8,1.6-10.4,4.7L13.1,160.4l0,0c-4.7,5.7-4.1,14.5,1.6,19.2l83.4,68.9l0,0c5.7,4.7,14.5,4.1,19.2-1.6l0,0L243.6,95.1C246.2,91.5,246.2,87.3,245.7,83.2z M229.7,89.4l-118.6,143l0,0c-2.6,3.1-6.7,3.1-9.3,1l0,0l-72.5-60.1c-3.1-2.6-3.1-6.7-1-9.3l0,0L146.8,21.5c2.1-2.6,5.7-4.1,8.8-3.6h57l0,0c0.5,0,0.5,0,1,0c2.6,0.5,4.7,2.6,5.7,5.2l0,0l12.4,57.5l0,0C232.3,83.7,231.7,86.8,229.7,89.4z"/></g></g>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="coupon-content-{{ section.id }}">
+          {% if heading != blank %}
+            <div class="coupon-heading-{{ section.id }}">{{ heading }}</div>
+          {% endif %}      
+          {% if text != blank %}
+            <div class="coupon-text-{{ section.id }}">{{ text }}</div>
+          {% endif %}
+          {% if discount_code != blank %}
+            <div class="coupon-discount-{{ section.id }}">
+              <p class="coupon-discount-text-{{ section.id }}">
+                {{ discount_text }}
+                <span class="coupon-discount-code-{{ section.id }}">{{ discount_code }}</span>
+              </p>   
+              <div class="coupon-discount-copy-icon-{{ section.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                  <path d="M 4 4 L 4 5 L 4 23 L 4 24 L 5 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 5 L 20 4 L 19 4 L 5 4 L 4 4 z M 12 8 L 12 9 L 12 27 L 12 28 L 13 28 L 27 28 L 28 28 L 28 27 L 28 9 L 28 8 L 27 8 L 13 8 L 12 8 z M 14 10 L 26 10 L 26 26 L 14 26 L 14 10 z"/>
+                </svg>
+              </div> 
+
+              {% if message != blank %}
+                <div class="coupon-message-{{ section.id }}">
+                  {{ message }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}         
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  function initProductCoupon2() {
+  setTimeout(() => {
+    const discountCodes = document.querySelectorAll(".coupon-discount-code-{{ section.id }}");
+    const copyIcons = document.querySelectorAll(".coupon-discount-copy-icon-{{ section.id }}");
+    const message = document.querySelector(".coupon-message-{{ section.id }}");
+
+    function copyToClipboard(text) {
+      // Create temporary textarea
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+
+      // Select and copy text
+      tempInput.select();
+      document.execCommand("copy");
+
+      // Remove temporary element
+      document.body.removeChild(tempInput);
+
+      // Show message
+      message.classList.add('active');
+
+      // Hide message after delay
+      setTimeout(() => {
+        message.classList.remove('active');
+      }, 1000);
+    }
+
+    // Add click handler for discount codes
+    discountCodes.forEach(codeElement => {
+      codeElement.addEventListener("click", () => {
+        copyToClipboard(codeElement.innerText);
+      });
+    });
+
+    // Add click handler for copy icons
+    copyIcons.forEach((copyIcon, index) => {
+      copyIcon.addEventListener("click", () => {
+        // Find the corresponding discount code element
+        const codeElement = discountCodes[index];
+        if (codeElement) {
+          copyToClipboard(codeElement.innerText);
+        }
+      });
+    });
+  }, 400);
+}
+
+// Initialize on document load
+document.addEventListener('DOMContentLoaded', initProductCoupon2);
+
+// Handle Shopify theme editor events
+if (Shopify.designMode) {
+  document.addEventListener('shopify:section:unload', initProductCoupon2);
+  document.addEventListener('shopify:section:load', initProductCoupon2);
+}
+</script>
+
+
+
+{% schema %}
+{
+  "name": "SG-Product coupon #2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "⚠️ Save settings to view updates",
+      "info": "Learn how to add snippet sections with [this tutorial](https://section-store.helpscoutdocs.com/article/10-adding-product-page-snippets)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn how to include dynamic content per product with [this tutorial](https://section-store.helpscoutdocs.com/article/17-dynamic-content-settings-per-product)"
+    },
+    {
+      "type": "header",
+      "content": "Custom placement",
+      "info": "Copy this code: <div id='sg-product-coupon-2'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
+    },
+    {
+      "type": "select",
+      "id": "coupon_position",
+      "label": "Position",
+      "default": "below_title",
+      "options": [
+        {
+          "label": "Above buy buttons",
+          "value": "above_buy"
+        },
+        {
+          "label": "Below buy buttons",
+          "value": "below_buy"
+        },
+        {
+          "label": "Above product title",
+          "value": "above_title"
+        },
+        {
+          "label": "Below product title",
+          "value": "below_title"
+        },
+        {
+          "label": "Above product description",
+          "value": "above_description"
+        },
+        {
+          "label": "Below product description",
+          "value": "below_description"
+        },
+        {
+          "label": "Below price",
+          "value": "below_price"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout settings"
+    },
+    {
+      "type": "range",
+      "id": "body_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "body_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "body_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "body_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "body_border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "body_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "body_border_style",
+      "label": "Border style",
+      "default": "dashed",
+      "options": [
+        {
+          "label": "Solid",
+          "value": "solid"
+        },
+        {
+          "label": "Dotted",
+          "value": "dotted"
+        },
+        {
+          "label": "Dashed",
+          "value": "dashed"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Coupon settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_coupon_icon",
+      "label": "Custom icon"
+    },
+    {
+      "type": "range",
+      "id": "coupon_width",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Width",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "coupon_width_mobile",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 22
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_coupon",
+      "label": "Hide icon"
+    },
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_align",
+      "label": "Alignment"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_align_mobile",
+      "label": "Alignment - mobile"
+    },
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "heading_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Product coupon #2</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Describe a new promotion</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "text_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "text_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Discount settings"
+    },
+    {
+      "type": "range",
+      "id": "discount_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "discount_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Discount text settings"
+    },
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Text",
+      "default": "Use code:"
+    },
+    {
+      "type": "checkbox",
+      "id": "discount_text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "discount_text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "discount_text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Discount code settings"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Code",
+      "default": "XDATVD"
+    },
+    {
+      "type": "checkbox",
+      "id": "discount_code_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "discount_code_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "discount_code_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_code_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_code_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Copy icon settings"
+    },
+    {
+      "type": "range",
+      "id": "copy_icon_width",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Width",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "copy_icon_width_mobile",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_copy_icon",
+      "label": "Hide icon"
+    },
+    {
+      "type": "header",
+      "content": "Copy message settings"
+    },
+    {
+      "type": "richtext",
+      "id": "message",
+      "label": "Text",
+      "default": "<p>Great, you copied the discount code!</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "message_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "message_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "message_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "message_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "message_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "message_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "message_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "message_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "message_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "message_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "message_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Coupon colors"
+    },
+    {
+      "type": "color",
+      "label": "Coupon icon",
+      "id": "coupon_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "body_bg_color",
+      "default": "#f2f2f2"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "body_border_color",
+      "default": "#C6C6C6"
+    },
+    {
+      "type": "header",
+      "content": "Heading colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "heading_bg_color",
+      "default": "#F7DE6A"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "heading_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Content colors"
+    },
+    {
+      "type": "color",
+      "label": "Primary text",
+      "id": "text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Secondary text",
+      "id": "discount_text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Discount code",
+      "id": "discount_code_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Copy icon",
+      "id": "copy_icon_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Copy message colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "message_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "message_bg_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "message_border_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": -20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": -20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Product coupon #2"
+    }
+  ]
+}
+{% endschema %}

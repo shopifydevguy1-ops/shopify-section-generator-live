@@ -1,0 +1,1447 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+
+  assign cards_gap = section.settings.cards_gap
+  assign cards_gap_mobile = section.settings.cards_gap_mobile
+
+  assign card_padding_horizontal = section.settings.card_padding_horizontal
+  assign card_padding_horizontal_mobile = section.settings.card_padding_horizontal_mobile
+  assign card_padding_vertical = section.settings.card_padding_vertical
+  assign card_padding_vertical_mobile = section.settings.card_padding_vertical_mobile
+  assign card_height = section.settings.card_height
+  assign card_height_mobile = section.settings.card_height_mobile
+  assign card_radius = section.settings.card_radius
+  assign card_border_thickness = section.settings.card_border_thickness
+  assign card_align = section.settings.card_align
+  assign card_align_mobile = section.settings.card_align_mobile
+  assign use_box_shadow = section.settings.use_box_shadow
+
+  assign card_horizontal_align = ""
+  if card_align == "center"
+    assign card_horizontal_align = "center"
+  elsif card_align == "right"
+    assign card_horizontal_align = "end"
+  else
+    assign card_horizontal_align = "start"
+  endif
+
+  assign card_horizontal_align_mobile = ""
+  if card_align_mobile == "center"
+    assign card_horizontal_align_mobile = "center"
+  elsif card_align_mobile == "right"
+    assign card_horizontal_align_mobile = "end"
+  else
+    assign card_horizontal_align_mobile = "start"
+  endif
+
+  for block in section.blocks
+    if block.type == 'card'
+      assign card_count = card_count | plus: 1 
+    endif
+  endfor
+
+  assign sub_heading_size = section.settings.sub_heading_size
+  assign sub_heading_size_mobile = section.settings.sub_heading_size_mobile
+  assign sub_heading_custom = section.settings.sub_heading_custom
+  assign sub_heading_font = section.settings.sub_heading_font
+  assign sub_heading_height = section.settings.sub_heading_height
+
+  assign heading_size = section.settings.heading_size
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign heading_custom = section.settings.heading_custom
+  assign heading_font = section.settings.heading_font
+  assign heading_height = section.settings.heading_height
+  assign heading_mt = section.settings.heading_mt
+  assign heading_mt_mobile = section.settings.heading_mt_mobile
+
+  assign button_size = section.settings.button_size
+  assign button_size_mobile = section.settings.button_size_mobile
+  assign button_custom = section.settings.button_custom
+  assign button_font = section.settings.button_font
+  assign button_height = section.settings.button_height
+  assign button_padding_vertical = section.settings.button_padding_vertical
+  assign button_padding_vertical_mobile = section.settings.button_padding_vertical_mobile
+  assign button_padding_horizontal = section.settings.button_padding_horizontal
+  assign button_padding_horizontal_mobile = section.settings.button_padding_horizontal_mobile
+  assign button_radius = section.settings.button_radius
+  assign button_border_thickness = section.settings.button_border_thickness
+  assign button_style = section.settings.button_style
+  assign button_mt = section.settings.button_mt
+  assign button_mt_mobile = section.settings.button_mt_mobile
+  
+  assign icon_size = section.settings.icon_size
+  assign icon_size_mobile = section.settings.icon_size_mobile
+-%}
+
+{%- style -%}
+  {{  sub_heading_font | font_face: font_display: 'swap' }}
+  {{  heading_font | font_face: font_display: 'swap' }}
+  {{  button_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .bento-body-{{ section.id }} {
+    display: grid;
+    gap: {{ cards_gap_mobile }}px;
+  }
+
+  .bento-cards-column-{{ section.id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ cards_gap_mobile }}px;
+  }
+
+  .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }} {
+    width: 100%;
+  }
+
+  .bento-card-{{ section.id }} {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: {{ card_horizontal_align_mobile }};
+    padding: {{ card_padding_vertical_mobile }}px {{ card_padding_horizontal_mobile }}px;
+    border-radius: {{ card_radius }}px;
+    min-height: {{ card_height_mobile }}px;
+    overflow: hidden;
+    text-decoration: none;    
+    {% if use_box_shadow %}
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      transition: all 0.25s ease 0s;
+  {% endif %}
+  }
+
+  .bento-card-image-{{ section.id }} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;    
+  }
+
+  .bento-card-image-{{ section.id }} img,
+  .bento-card-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bento-card-subheading-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    text-align: {{ card_align_mobile }};
+  }
+  
+  .bento-card-subheading-{{ section.id }} * {
+    margin: 0;
+    font-size: {{ sub_heading_size_mobile }}px; 
+    line-height: {{ sub_heading_height }}%;
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .bento-card-heading-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    text-align: {{ card_align_mobile }};
+    margin-top: {{ heading_mt_mobile }}px;
+  }
+
+  .bento-card-heading-{{ section.id }} * {
+    margin: 0;    
+    font-size: {{ heading_size_mobile }}px; 
+    line-height: {{ heading_height }}%;
+    text-transform: unset;
+    word-break: break-word;
+  }
+
+  .bento-card-button-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: fit-content;
+    position: relative;
+    z-index: 2;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    margin-top: {{ button_mt_mobile }}px;
+    font-size: {{ button_size_mobile }}px;
+    line-height: {{ button_height }}%;
+    text-align: center;
+    text-transform: unset;
+    text-decoration: none;
+    padding: {{ button_padding_vertical_mobile }}px {{ button_padding_horizontal_mobile }}px;
+    border-radius: {{ button_radius }}px;
+    transition: all 0.25s ease 0s;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .bento-card-button-inner-{{ section.id }} {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .bento-card-button-{{ section.id }} svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .bento-card-top-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .bento-icon-{{ section.id }} {
+    position: relative;
+    z-index: 1;
+    width: {{ icon_size_mobile }}px;
+    height: {{ icon_size_mobile }}px;
+  }
+
+  .bento-icon-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .bento-body-{{ section.id }} {
+      gap: {{ cards_gap }}px;
+    }
+
+    .bento-cards-column-{{ section.id }} {
+      gap: {{ cards_gap }}px;
+    }
+
+    .bento-card-{{ section.id }} {
+      align-items: {{ card_horizontal_align }};
+      padding: {{ card_padding_vertical }}px {{ card_padding_horizontal }}px;
+      min-height: {{ card_height }}px;
+    }
+
+    .bento-card-subheading-{{ section.id }} {
+      text-align: {{ card_align }};
+    }
+
+    .bento-card-subheading-{{ section.id }} * {
+      font-size: {{ sub_heading_size }}px; 
+    }
+
+    .bento-card-heading-{{ section.id }} {
+      text-align: {{ card_align }};
+      margin-top: {{ heading_mt }}px;
+    }
+
+    .bento-card-heading-{{ section.id }} * {
+      font-size: {{ heading_size }}px; 
+    }
+    
+    .bento-card-button-{{ section.id }} {
+      margin-top: {{ button_mt }}px;
+      padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;
+      font-size: {{ button_size }}px;
+    }
+
+    .bento-icon-{{ section.id }} {
+      width: {{ icon_size }}px;
+      height: {{ icon_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}px;
+    }
+  </style>
+{% endunless %}
+
+{% if use_box_shadow %}
+  <style>
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  </style>
+{% endif %}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+    
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if sub_heading_custom %}
+  <style>
+    .bento-card-subheading-{{ section.id }} {
+      font-family: {{ sub_heading_font.family }}, {{ sub_heading_font.fallback_families }};
+      font-weight: {{ sub_heading_font.weight }};
+      font-style: {{ sub_heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if heading_custom %}
+  <style>
+    .bento-card-heading-{{ section.id }} {
+      font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      font-weight: {{ heading_font.weight }};
+      font-style: {{ heading_font.style }};
+    }
+  </style>
+{% endif %}
+
+
+{% if button_custom %}
+  <style>
+    .bento-card-button-{{ section.id }} {
+      font-family: {{ button_font.family }}, {{ button_font.fallback_families }};
+      font-weight: {{ button_font.weight }};
+      font-style: {{ button_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if card_count == 5 %} 
+  <style>
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(4) {
+      width: 100%;
+    }
+
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(2),
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(3) {
+      width: calc(50% - ({{ cards_gap_mobile }}px / 2)) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(2),
+      .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(3) {
+        width: calc(50% - ({{ cards_gap }}px / 2)) !important;
+      }
+
+      .bento-body-{{ section.id }} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+{% endif %}  
+
+{% if card_count == 4 %} 
+  <style>
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(2),
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(3) {
+      width: calc(50% - ({{ cards_gap_mobile }}px / 2)) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(2),
+      .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }}:nth-child(3) {
+        width: calc(50% - ({{ cards_gap }}px / 2)) !important;
+      }
+
+      .bento-body-{{ section.id }} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+{% endif %}  
+
+{% if card_count == 3 %} 
+  <style>
+    .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }} {
+      width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .bento-body-{{ section.id }} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bento-cards-column-{{ section.id }} .bento-card-{{ section.id }} {
+        width: 100%;
+      }
+    }
+  </style>
+{% endif %}  
+
+{% if card_count == 2 %} 
+  <style>
+    .bento-body-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1024px) {
+      .bento-body-{{ section.id }} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+{% endif %} 
+
+{% if card_count == 1 %} 
+  <style>
+    .faq-body-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1024px) {
+      .faq-body-{{ section.id }} {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+{% endif %} 
+
+{% for block in section.blocks %}
+  <style>
+    .bento-card-{{ block.id }} {
+      transition: all 0.25s ease 0s;
+      background-color: {{ block.settings.card_bg_color }};
+      border: {{ card_border_thickness }}px solid {{ block.settings.card_border_color }};
+    }
+
+    .bento-card-subheading-{{ block.id }} * {
+      transition: all 0.25s ease 0s;
+      color: {{ block.settings.sub_heading_color }};
+    }
+
+    .bento-card-heading-{{ block.id }} * {
+      transition: all 0.25s ease 0s;
+      color: {{ block.settings.heading_color }};
+    }   
+
+    .bento-card-button-{{ block.id }} {
+      color: {{ block.settings.button_color }};
+    }
+
+    .bento-card-button-{{ block.id }}:hover {
+      color: {{ block.settings.button_hover_color }};
+      transition: all 0.25s ease 0s;
+    }
+
+    .bento-card-button-{{ block.id }} svg path {
+      fill: {{ block.settings.button_color }};
+      transition: all 0.25s ease 0s;
+    }
+
+    .bento-card-button-{{ block.id }}:hover svg path {
+      fill: {{ block.settings.button_hover_color }};
+      transition: all 0.25s ease 0s;
+    }
+
+    .bento-icon-{{ block.id }} svg path {
+      transition: all 0.25s ease 0s;
+      fill: {{ block.settings.icon_color }};
+    }
+  </style>
+  {% if button_style == "non_outline" or button_style == "non_outline_arrow" %}
+    <style>
+      .bento-card-button-{{ block.id }} {
+        background-color: {{ block.settings.button_bg_color }};
+      }
+
+      .bento-card-button-{{ block.id }}:hover {
+        background-color: {{ block.settings.button_bg_hover_color }};
+      }
+    </style>
+  {% elsif button_style == "outline" or button_style == "outline_arrow" %}
+    <style>
+      .bento-card-button-{{ block.id }} {
+        background-color: {{ block.settings.button_bg_color }};
+        border: {{ button_border_thickness }}px solid {{ block.settings.button_border_color }};
+      }
+
+      .bento-card-button-{{ block.id }}:hover {
+        background-color: {{ block.settings.button_bg_hover_color }};
+        border: {{ button_border_thickness }}px solid {{ block.settings.button_border_hover_color }};
+      }
+    </style>
+  {% elsif button_style == "link" %}
+    <style>
+      .bento-card-button-{{ block.id }} {
+        padding: 0px !important;
+      }
+    </style>
+  {% endif %}
+  {% if block.settings.button == blank %}
+    <style>
+      .bento-card-{{ block.id }} {
+        justify-content: space-between;
+      }
+
+      .bento-card-{{ block.id }}:hover {
+        transition: all 0.25s ease 0s;
+        background-color: {{ block.settings.card_bg_hover_color }};
+        border: {{ card_border_thickness }}px solid {{ block.settings.card_border_hover_color }};
+      }
+
+      .bento-card-{{ block.id }}:hover .bento-card-subheading-{{ block.id }} * {
+        transition: all 0.25s ease 0s;
+        color: {{ block.settings.sub_heading_hover_color }};
+      }
+
+      .bento-card-{{ block.id }}:hover .bento-card-heading-{{ block.id }} * {
+        transition: all 0.25s ease 0s;
+        color: {{ block.settings.heading_hover_color }};
+      }   
+
+      .bento-card-{{ block.id }}:hover  .bento-icon-{{ block.id }} svg path {
+        transition: all 0.25s ease 0s;
+        fill: {{ block.settings.icon_hover_color }};
+      }
+    </style>
+  {% endif %}
+{% endfor %}
+
+<div class="section-{{ section.id }} bento-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      <div class="bento-body-{{ section.id }}">          
+        {% for block in section.blocks %}
+          {% if forloop.first %}
+            <{% if block.settings.button == blank and block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div {% endif %} class="bento-card-{{ section.id }} bento-card-{{ block.id }}">
+              <div class="bento-card-image-{{ section.id }}">
+                {% if block.settings.card_bg_image != blank %}
+                  <img src="{{ block.settings.card_bg_image | image_url }}" alt="{{ block.settings.card_bg_image.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} {% if before_image_mobile != blank %}before-after-image-first-{{ section.id }}{% endif %}">
+                {% endif %}
+              </div>    
+              {% if block.settings.button == blank %}
+                <div class="bento-card-top-{{ section.id }}">
+                  {% if block.settings.sub_heading != blank %}
+                    <div class="bento-card-subheading-{{ section.id }} bento-card-subheading-{{ block.id }}">{{ block.settings.sub_heading }}</div>
+                  {% endif %}   
+                  {% unless block.settings.hide_arrow %}
+                  <div class="bento-icon-{{ section.id }} bento-icon-{{ block.id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="-8.5 0 32 32" version="1.1">
+                      <path d="M14.56 9.6c0-0.64-0.44-0.92-0.88-0.92v0h-9.64c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h7.68l-11.48 11.52c-0.32 0.32-0.32 0.84 0 1.2 0.16 0.16 0.4 0.24 0.6 0.24s0.44-0.080 0.6-0.24l11.44-11.44v7.68c0 0.48 0.36 0.84 0.84 0.84s0.84-0.36 0.84-0.84v-9.72z"/>
+                    </svg>
+                  </div> 
+                  {% endunless %}
+                </div>
+              {% else %}  
+                {% if block.settings.sub_heading != blank %}
+                  <div class="bento-card-subheading-{{ section.id }} bento-card-subheading-{{ block.id }}">{{ block.settings.sub_heading }}</div>
+                {% endif %}   
+              {% endif %}                               
+              {% if block.settings.heading != blank %}
+                <div class="bento-card-heading-{{ section.id }} bento-card-heading-{{ block.id }}">{{ block.settings.heading }}</div>
+              {% endif %}   
+              {% if block.settings.button != blank %}
+                <{% if  block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="bento-card-button-{{ section.id }} bento-card-button-{{ block.id }}">
+                  <p class="bento-card-button-inner-{{ section.id }}">
+                  {{ block.settings.button }}
+                    {% if button_style == "non_outline_arrow" or button_style == "outline_arrow" %}
+                      <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                        <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                      </svg>
+                    {% endif %}
+                  </p>
+                </{% if block.settings.url != blank %}a{% else %}div{% endif %}>
+              {% endif %}            
+            </{% if block.settings.button == blank and block.settings.url != blank %}a{% else %}div{% endif %}>
+          {% endif %}         
+        {% endfor %}  
+        {% if card_count > 1 %}
+          <div class="bento-cards-column-{{ section.id }}">
+            {% for block in section.blocks %}
+              {% unless forloop.first %}
+                <{% if block.settings.button == blank and block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div {% endif %} class="bento-card-{{ section.id }} bento-card-{{ block.id }}">
+                  <div class="bento-card-image-{{ section.id }}">
+                    {% if block.settings.card_bg_image != blank %}
+                      <img src="{{ block.settings.card_bg_image | image_url }}" alt="{{ block.settings.card_bg_image.alt }}" {% if lazy %}loading="lazy"{% endif %} draggable="false" class="before-after-image-{{ section.id }} {% if before_image_mobile != blank %}before-after-image-first-{{ section.id }}{% endif %}">
+                    {% endif %}
+                  </div>              
+                  {% if block.settings.button == blank %}
+                    <div class="bento-card-top-{{ section.id }}">
+                      {% if block.settings.sub_heading != blank %}
+                        <div class="bento-card-subheading-{{ section.id }} bento-card-subheading-{{ block.id }}">{{ block.settings.sub_heading }}</div>
+                      {% endif %}   
+                      {% unless block.settings.hide_arrow %}
+                      <div class="bento-icon-{{ section.id }} bento-icon-{{ block.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="-8.5 0 32 32" version="1.1">
+                          <path d="M14.56 9.6c0-0.64-0.44-0.92-0.88-0.92v0h-9.64c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h7.68l-11.48 11.52c-0.32 0.32-0.32 0.84 0 1.2 0.16 0.16 0.4 0.24 0.6 0.24s0.44-0.080 0.6-0.24l11.44-11.44v7.68c0 0.48 0.36 0.84 0.84 0.84s0.84-0.36 0.84-0.84v-9.72z"/>
+                        </svg>
+                      </div>   
+                      {% endunless %}
+                    </div>
+                  {% else %}  
+                    {% if block.settings.sub_heading != blank %}
+                      <div class="bento-card-subheading-{{ section.id }} bento-card-subheading-{{ block.id }}">{{ block.settings.sub_heading }}</div>
+                    {% endif %}   
+                  {% endif %}                      
+                  {% if block.settings.heading != blank %}
+                    <div class="bento-card-heading-{{ section.id }} bento-card-heading-{{ block.id }}">{{ block.settings.heading }}</div>
+                  {% endif %}   
+                  {% if block.settings.button != blank %}
+                    <{% if  block.settings.url != blank %}a href="{{ block.settings.url }}"{% else %}div{% endif %} class="bento-card-button-{{ section.id }} bento-card-button-{{ block.id }}">
+                      <p class="bento-card-button-inner-{{ section.id }}">
+                      {{ block.settings.button }}
+                       {% if button_style == "non_outline_arrow" or button_style == "outline_arrow" %}
+                          <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M187.827 98.7858C188.123 98.4749 188.123 98.4749 188.123 98.1761C188.419 97.8652 188.419 97.5663 188.704 97.5663C189 96.9566 189 96.6458 189 96.0361C189 95.4263 189 94.8166 188.704 94.5058C188.704 94.195 188.408 93.8961 188.123 93.5852C188.123 93.2744 187.827 93.2744 187.827 92.9755L103.287 4.21945C102.41 3.29889 101.533 3 100.668 3C99.791 3 98.6295 3.31083 98.0488 4.21945C97.1719 5.14 96.8872 6.06058 96.8872 6.96919C96.8872 7.88974 97.1833 9.10918 98.0488 9.7189L175.587 92.0539H6.79206C4.75371 92.0539 3 93.895 3 96.0351C3 98.1751 4.75365 100.016 6.79206 100.016H175.575L97.7543 182.042C96.2967 183.572 96.2967 186.322 97.7543 187.852C99.2119 189.383 101.831 189.383 103.288 187.852L187.827 98.7858Z" fill="black"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M188.607 97.5657C188.432 97.5657 188.365 97.6788 188.27 97.8382C188.211 97.9378 188.141 98.0554 188.027 98.1748C188.027 98.4734 188.027 98.4734 187.731 98.7839L103.281 187.759C101.825 189.287 99.2085 189.287 97.7524 187.759C96.2963 186.23 96.2963 183.483 97.7524 181.954L175.492 100.013L6.88489 100.013C4.8486 100.013 3.09677 98.1739 3.09677 96.036C3.09677 93.8982 4.84866 92.059 6.88489 92.059L175.504 92.059L98.0465 9.80878C97.182 9.19968 96.8862 7.9815 96.8862 7.0619C96.8862 6.15422 97.1706 5.2346 98.0465 4.315C98.6267 3.40732 99.787 3.0968 100.663 3.0968C101.527 3.0968 102.403 3.39539 103.279 4.315L187.731 92.9796C187.731 93.1274 187.804 93.2021 187.877 93.2774C187.952 93.3543 188.027 93.4319 188.027 93.5887C188.046 93.6098 188.066 93.6308 188.085 93.6518C188.338 93.9267 188.584 94.1935 188.606 94.4689C188.607 94.482 188.607 94.4951 188.607 94.5083C188.903 94.8188 188.903 95.4279 188.903 96.037C188.903 96.6461 188.903 96.9566 188.607 97.5657ZM191.489 93.2767C191.79 93.8661 191.89 94.4204 191.934 94.7363C192.001 95.2226 192 95.7194 192 95.9856L192 96.037C192 96.0544 192 96.0729 192 96.0926C192 96.3523 192.001 96.8096 191.924 97.2931C191.828 97.8884 191.64 98.41 191.393 98.9184L190.546 100.663H190.212C190.127 100.759 190.038 100.852 189.988 100.905L189.974 100.92L105.527 189.891C102.85 192.701 98.1865 192.704 95.51 189.895C94.1476 188.464 93.5636 186.587 93.5636 184.857C93.5636 183.128 94.1468 181.252 95.5071 179.822M191.489 93.2767C191.316 92.7908 191.078 92.4357 190.938 92.2406C190.903 92.1912 190.866 92.142 190.828 92.0939V91.7408L105.522 2.17912C104.076 0.661813 102.397 0 100.663 0C99.3914 0 97.0569 0.401401 95.6212 2.37737C94.3151 3.83819 93.7895 5.45521 93.7895 7.0619C93.7895 8.26663 94.1183 10.6061 95.9608 12.111L168.333 88.9622L6.88489 88.9622C2.9981 88.9622 0 92.3316 0 96.036C0 99.7405 2.99801 103.11 6.88489 103.11L168.285 103.11" fill="black"></path>
+                            <path d="M169.5 104L16.5 102.5V90H171L97.5 10.5V7L107.5 4.5C131.167 29.6667 180.2 81.5 187 87.5C193.8 93.5 191.5 99 189.5 101L105.5 184L94 181.5L169.5 104Z" fill="black"></path>
+                          </svg>
+                        {% endif %}
+                      </p>
+                    </{% if block.settings.url != blank %}a{% else %}div{% endif %}>
+                  {% endif %}                           
+                </{% if block.settings.button == blank and block.settings.url != blank %}a{% else %}div{% endif %}>
+              {% endunless %}          
+            {% endfor %}         
+          </div>          
+        {% endif %}     
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "SG- Bento grid #2",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout settings"
+      },  
+      {
+        "type": "range",
+        "id": "cards_gap",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap",
+        "default": 8
+      },      
+      {
+        "type": "range",
+        "id": "cards_gap_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Gap - mobile",
+        "default": 8
+      },
+      {
+        "type": "header",
+        "content": "Card settings"
+      },    
+      {
+        "type": "range",
+        "id": "card_padding_horizontal",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "card_padding_horizontal_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding horizontal - mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "card_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical - mobile",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "card_height",
+        "min": 100,
+        "max": 400,
+        "step": 10,
+        "unit": "px",
+        "label": "Height",
+        "default": 290
+      },
+      {
+        "type": "range",
+        "id": "card_height_mobile",
+        "min": 100,
+        "max": 400,
+        "step": 10,
+        "unit": "px",
+        "label": "Height - mobile",
+        "default": 240
+      },      
+      {
+        "type": "range",
+        "id": "card_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Roundness",
+        "default": 32
+      },      
+      {
+        "type": "range",
+        "id": "card_border_thickness",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "text_alignment",
+        "id": "card_align",
+        "label": "Alignment"
+      },
+      {
+        "type": "text_alignment",
+        "id": "card_align_mobile",
+        "label": "Alignment - mobile"
+      }, 
+      {
+        "type": "checkbox",
+        "id": "use_box_shadow",
+        "label": "Use box shadow",
+        "default": false,
+      },
+      {
+        "type": "header",
+        "content": "Subheading settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "sub_heading_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "sub_heading_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "sub_heading_size",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "sub_heading_size_mobile",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "sub_heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 130
+      },
+      {
+        "type": "header",
+        "content": "Heading settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Font size",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "heading_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 130
+      },
+      {
+        "type": "range",
+        "id": "heading_mt",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "heading_mt_mobile",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Margin top - mobile",
+        "default": 8
+      },
+      {
+        "type": "header",
+        "content": "Button settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "button_custom",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "font_picker",
+        "id": "button_font",
+        "label": "Font family",
+        "default": "josefin_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "button_size",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_size_mobile",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size - mobile",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_height",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "%",
+        "label": "Line height",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_padding_vertical_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding vertical - mobile",
+        "default": 16
+      },
+      {
+         "type": "range",
+         "id": "button_padding_horizontal",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Padding horizontal",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "button_padding_horizontal_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Padding horizontal - mobile",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "button_radius",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Roundness",
+         "default": 100
+      },
+      {
+         "type": "range",
+         "id": "button_border_thickness",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "Border thickness",
+         "default": 0
+      },
+      {
+         "type": "range",
+         "id": "button_mt",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Margin top",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "button_mt_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 2,
+         "unit": "px",
+         "label": "Margin top - mobile",
+         "default": 16
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style",
+        "default": "non_outline",
+        "options": [
+          {
+            "label": "Link",
+            "value": "link"
+          },
+          {
+            "label": "Non-outline",
+            "value": "non_outline"
+          },
+          {
+            "label": "Non-outline & arrow",
+            "value": "non_outline_arrow"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          },
+          {
+            "label": "Outline & arrow",
+            "value": "outline_arrow"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Icon settings"
+      },
+      {
+         "type": "range",
+         "id": "icon_size",
+         "min": 10,
+         "max": 80,
+         "step": 2,
+         "unit": "px",
+         "label": "Size",
+         "default": 24
+      },
+      {
+         "type": "range",
+         "id": "icon_size_mobile",
+         "min": 10,
+         "max": 80,
+         "step": 2,
+         "unit": "px",
+         "label": "Size - mobile",
+         "default": 24
+      },
+      {
+        "type": "header",
+        "content": "Section colors"
+      },
+      {
+        "type": "color",
+        "label": "Section background",
+        "id": "background_color",
+        "default": "#F2F2F2"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Section background gradient",
+        "info": "Remove gradient to replace with solid colors"
+      },
+      {
+        "type": "color",
+        "label": "Border",
+        "id": "border_color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section margin (outside)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Margin sides",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Margin sides mobile",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section padding (inside)"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 36
+      },
+      {
+         "type": "range",
+         "id": "padding_bottom",
+         "min": 0,
+         "max": 100,
+         "step": 4,
+         "unit": "px",
+         "label": "Padding bottom",
+         "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "rem",
+        "label": "Padding sides",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "padding_horizontal_mobile",
+        "min": 0,
+        "max": 15,
+        "step": 0.5,
+        "unit": "rem",
+        "label": "Padding sides mobile",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Section settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "min": 800,
+        "max": 2000,
+        "step": 100,
+        "unit": "px",
+        "label": "Section content width",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "border_thickness",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_radius",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Section roundness",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy",
+        "label": "Lazy load",
+        "info": "Lazy load images for speed optimisation",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "SG-Card",
+        "limit": 5,
+        "settings": [  
+          {
+            "type": "image_picker",
+            "id": "card_bg_image",
+            "label": "Background image"
+          },      
+          {
+            "type": "richtext",
+            "id": "sub_heading",
+            "label": "Subheading",
+            "default": "<p>SUBHEADING</p>"
+          },    
+          {
+            "type": "richtext",
+            "id": "heading",
+            "label": "Heading",
+            "default": "<p>Heading</p>"
+          }, 
+          {
+            "type": "text",
+            "id": "button",
+            "label": "Button label",
+            "info": "Leave the label blank to hide the button."
+          },   
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_arrow",
+            "label": "Hide corner arrow",
+            "default": false,
+          },
+          {
+            "type": "header",
+            "content": "Card colors"
+          },
+          {
+            "type": "color",
+            "label": "Subheading",
+            "id": "sub_heading_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Subheading hover",
+            "id": "sub_heading_hover_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Heading",
+            "id": "heading_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Heading hover",
+            "id": "heading_hover_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Icon",
+            "id": "icon_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Icon hover",
+            "id": "icon_hover_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Background",
+            "id": "card_bg_color",
+            "default": "#a08bf4"
+          },
+          {
+            "type": "color",
+            "label": "Background hover",
+            "id": "card_bg_hover_color",
+            "default": "#a08bf4"
+          },
+          {
+            "type": "color",
+            "label": "Border",
+            "id": "card_border_color",
+            "default": "#000000"
+          },  
+          {
+            "type": "color",
+            "label": "Border hover",
+            "id": "card_border_hover_color",
+            "default": "#FFFFFF"
+          },          
+          {
+            "type": "header",
+            "content": "Button colors"
+          },
+          {
+            "type": "color",
+            "label": "Text",
+            "id": "button_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Hover text",
+            "id": "button_hover_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Background",
+            "id": "button_bg_color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "label": "Background hover",
+            "id": "button_bg_hover_color",
+            "default": "#F3F3F3"
+          },
+          {
+            "type": "color",
+            "label": "Button border",
+            "id": "button_border_color",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "label": "Border hover",
+            "id": "button_border_hover_color",
+            "default": "#000000"
+          },
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SG- Bento grid #2",
+        "blocks": [
+          {
+            "type": "card",
+            "settings": {
+              "button": "All products",
+              "card_bg_color": "#26282C",
+              "heading_color": "#FFFFFF",
+              "sub_heading_color": "#FFFFFF",
+              "icon_color": "#FFFFFF"
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "card_bg_color": "#FFFFFF",
+              "heading_color": "#000000",
+              "sub_heading_color": "#000000",
+              "icon_color": "#000000"
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "card_bg_color": "#A08BF4",
+              "heading_color": "#FFFFFF",
+              "sub_heading_color": "#FFFFFF",
+              "icon_color": "#FFFFFF"
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "card_bg_color": "#E58D54",
+              "heading_color": "#000000",
+              "sub_heading_color": "#000000",
+              "icon_color": "#000000"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

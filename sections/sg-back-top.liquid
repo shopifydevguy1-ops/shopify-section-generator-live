@@ -1,0 +1,807 @@
+{%- liquid
+  assign show_when_precent_of_page = section.settings.show_when_precent_of_page
+  assign hide_on_mobile = section.settings.hide_on_mobile
+  assign position = section.settings.position
+  assign horizontal_dst_to_edge = section.settings.horizontal_dst_to_edge
+  assign vertical_dst_to_edge = section.settings.vertical_dst_to_edge
+
+  assign independent = section.settings.independent
+  assign independent_distance = section.settings.independent_distance
+
+  assign button_border_thickness = section.settings.button_border_thickness
+  assign button_shadow = section.settings.button_shadow
+  assign button_bg_color = section.settings.button_bg_color
+  assign button_border_color = section.settings.button_border_color
+
+  assign image = section.settings.image
+  assign image_size = section.settings.image_size
+  assign image_size_mobile = section.settings.image_size_mobile
+  assign image_animate = section.settings.image_animate
+  assign image_direction = section.settings.image_direction
+  assign image_speed = section.settings.image_speed
+  assign image_bg_color = section.settings.image_bg_color
+  assign image_border_radius = section.settings.image_border_radius
+  
+  assign text = section.settings.text
+  assign text_distance = section.settings.text_distance
+  assign text_distance_mobile = section.settings.text_distance_mobile
+  assign text_duplicate = section.settings.text_duplicate
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_animate = section.settings.text_animate
+  assign text_direction = section.settings.text_direction
+  assign text_speed = section.settings.text_speed
+
+  assign text_distance_two = text_distance | times: 2
+  assign transfrom_origin = image_size | plus: text_distance_two
+
+  assign text_distance_mobile_two = text_distance_mobile | times: 2
+  assign transfrom_origin_mobile = image_size_mobile | plus: text_distance_mobile_two
+
+  if image_direction == "right"
+    assign image_rotate = "360deg"
+  else
+    assign image_rotate = "-360deg"
+  endif
+
+  if text_direction == "right"
+    assign text_rotate = "360deg"
+  else
+    assign text_rotate = "-360deg"
+  endif
+
+  if independent 
+    assign show_when_precent_of_page = 100
+  endif
+-%}
+
+{%- style -%}
+
+  {{ text_font | font_face: font_display: 'swap' }}
+
+  .back-top-wrapper-{{ section.id }} {
+    position: relative;
+  }
+  
+  .back-top-{{ section.id }} {
+    padding: 5px;
+    position: fixed;
+    bottom: {{ vertical_dst_to_edge }}px;
+    background-color: {{ button_bg_color }};
+    border-radius: 50%;
+    border: {{ button_border_thickness }}px solid {{ button_border_color }};
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: all 0.35s ease 0s;
+    transform: translateY(20px);
+  }
+
+  .back-top-{{ section.id }}.active {
+    transition: all 0.35s ease 0s;
+    opacity: 1;
+    pointer-events: all;
+    z-index: 2;
+    transform: translateY(0px);
+  }
+
+  .back-top-content-{{ section.id }} {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    padding: {{ text_distance_mobile }}px;
+  }
+
+  .back-top-image-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    border-radius: {{ image_border_radius }}%;
+    width: {{ image_size_mobile }}px;
+    height: {{ image_size_mobile }}px;
+    background-color: {{ image_bg_color }};
+  }
+
+  .back-top-image-{{ section.id }} img,
+  .back-top-image-{{ section.id }} svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: {{ image_border_radius }}%;
+  }
+
+  .back-top-text-{{ section.id }} {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-top-text_inner-{{ section.id }} {
+    height: 100%;
+    width: 100%;
+    transform-origin: center center;
+  }
+
+  #text-{{ section.id }} {
+    margin: 0px;
+    position: relative;
+  }
+
+  #text-{{ section.id }} span {
+    position: absolute;
+    transform-origin: 0 {{ transfrom_origin_mobile | times: 0.5 | round: 0 }}px;
+    left: 50%;
+    color: {{ text_color }};
+    font-size: {{ text_size_mobile }}px;
+    font-weight: 700;
+    line-height: 100%;
+  }
+
+  #right-eye,
+  #left-eye {
+    transform-origin: center;
+  }
+
+  @media(min-width: 1024px) {
+
+    .back-top-content-{{ section.id }} {
+      padding: {{ text_distance }}px;
+    }
+
+    .back-top-image-{{ section.id }} {
+      width: {{ image_size }}px;
+      height: {{ image_size }}px;
+    }
+    
+    #text-{{ section.id }} span {
+      transform-origin: 0 {{ transfrom_origin | times: 0.5 | round: 0 }}px;
+      font-size: {{ text_size }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if text_custom %}
+  <style>
+    #text-{{ section.id }} span {
+      font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+      font-weight: {{ text_font.weight }};
+      font-style: {{ text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if position == "left" %}
+  <style>
+    .back-top-{{ section.id }} {
+      left: {{ horizontal_dst_to_edge }}px;
+    }
+  </style>
+{% elsif position == "center" %}
+  <style>
+    .back-top-{{ section.id }} {
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+    }
+    
+    .back-top-{{ section.id }}.active {
+      transform: translateX(-50%) translateY(0px);
+    }
+  </style>
+{% else %}
+  <style>
+    .back-top-{{ section.id }} {
+      right: {{ horizontal_dst_to_edge }}px;
+    }
+  </style>
+{% endif %}
+
+{% if image_animate == "always" %}
+  <style>
+  
+    .back-top-image-{{ section.id }} img,
+    .back-top-image-{{ section.id }} svg {
+      animation: rotating {{ image_speed }}s linear infinite;  
+    }
+    
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate({{ image_rotate }});
+      }
+    }
+  </style>
+{% elsif image_animate == "hover" %}
+  <style>
+  
+    .back-top-{{ section.id }}:hover .back-top-image-{{ section.id }} img,
+    .back-top-{{ section.id }}:hover .back-top-image-{{ section.id }} svg {
+      animation: rotating {{ image_speed }}s linear infinite;  
+    }
+    
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate({{ image_rotate }});
+      }
+    }
+  </style>
+{% endif %}
+
+{% if text_animate == "always" %}
+  <style>
+  
+    .back-top-text_inner-{{ section.id }} {
+      animation: rotating_text {{ text_speed }}s linear infinite;  
+    }
+    
+    @keyframes rotating_text {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate({{ text_rotate }});
+      }
+    }
+  </style>
+{% elsif text_animate == "hover" %}
+  <style>
+  
+    .back-top-{{ section.id }}:hover .back-top-text_inner-{{ section.id }} {
+      animation: rotating_text {{ text_speed }}s linear infinite;  
+    }
+    
+    @keyframes rotating_text {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate({{ text_rotate }});
+      }
+    }
+  </style>
+{% endif %}
+
+{% if hide_on_mobile %}
+  <style>
+    
+    .back-top-{{ section.id }} {
+      display: none;
+    }
+
+    @media(min-width: 1024px) {
+      
+      .back-top-{{ section.id }} {
+        display: block;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if button_shadow %}
+  <style>
+    .back-top-{{ section.id }} {
+      box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
+  </style>
+{% endif %}
+
+{% if independent %}
+  <style>
+    .back-top-{{ section.id }} {
+      position: absolute;
+      bottom: unset;
+      top: -{{ independent_distance }}px;
+    }
+  </style>
+{% endif %}
+
+{% if independent %}<div class="back-top-wrapper-{{ section.id }}">{% endif %}
+<button class="back-top-{{ section.id }} {% if independent %}active{% endif %}">
+  <div class="back-top-content-{{ section.id }}">
+    <div class="back-top-image-{{ section.id }}">
+      {% if image != blank %}
+        <img src="{{ image | image_url }}" alt="back-top-image">
+      {% else %}
+        <svg width="79" height="73" viewBox="0 0 79 73" fill="none" xmlns="http://www.w3.org/2000/svg" id="eyes">
+          <g filter="url(#filter0_d_350_47)">
+          <path d="M10.1294 36.7103C10.1294 29.2549 11.9248 22.5582 14.7707 17.7621C17.6305 12.9424 21.4265 10.2166 25.4073 10.2166C29.3881 10.2166 33.184 12.9424 36.0438 17.7621C38.8897 22.5582 40.6851 29.2549 40.6851 36.7103C40.6851 44.1657 38.8897 50.8623 36.0438 55.6581C33.184 60.4781 29.388 63.2041 25.4072 63.2041C21.4265 63.2041 17.6305 60.4781 14.7707 55.6581C11.9248 50.8623 10.1294 44.1657 10.1294 36.7103Z" stroke="black" stroke-width="2.17752"/>
+          <mask id="mask0_350_47" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="9" y="9" width="33" height="56">
+          <path d="M10.1294 36.7103C10.1294 29.2549 11.9248 22.5582 14.7707 17.7621C17.6305 12.9424 21.4265 10.2166 25.4073 10.2166C29.3881 10.2166 33.184 12.9424 36.0438 17.7621C38.8897 22.5582 40.6851 29.2549 40.6851 36.7103C40.6851 44.1657 38.8897 50.8623 36.0438 55.6581C33.184 60.4781 29.388 63.2041 25.4072 63.2041C21.4265 63.2041 17.6305 60.4781 14.7707 55.6581C11.9248 50.8623 10.1294 44.1657 10.1294 36.7103Z" fill="white" stroke="black" stroke-width="2.17752"/>
+          </mask>
+          <g mask="url(#mask0_350_47)">
+          <path id="left-eye" d="M20.4575 36.4566C20.4575 32.8168 22.9779 30.4545 25.4071 30.4545C27.8364 30.4545 30.3568 32.8168 30.3568 36.4566C30.3568 40.0964 27.8364 42.4587 25.4071 42.4587C22.9779 42.4587 20.4575 40.0964 20.4575 36.4566Z" fill="black" stroke="black" stroke-width="5.10075"/>
+          </g>
+          <path d="M38.6606 36.7103C38.6606 29.2549 40.456 22.5582 43.3019 17.7621C46.1617 12.9424 49.9576 10.2166 53.9384 10.2166C57.9191 10.2166 61.7151 12.9424 64.5751 17.7621C67.4211 22.5582 69.2161 29.2549 69.2161 36.7103C69.2161 44.1657 67.4211 50.8623 64.5751 55.6581C61.7151 60.4781 57.9191 63.2041 53.9384 63.2041C49.9576 63.2041 46.1617 60.4781 43.3018 55.6581C40.456 50.8623 38.6606 44.1657 38.6606 36.7103Z" fill="white" stroke="black" stroke-width="2.17752"/>
+          <mask id="mask1_350_47" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="37" y="9" width="34" height="56">
+          <path d="M38.6606 36.7103C38.6607 29.2549 40.456 22.5582 43.3019 17.7621C46.1617 12.9424 49.9577 10.2166 53.9385 10.2166C57.9191 10.2166 61.7151 12.9424 64.5751 17.7621C67.4211 22.5582 69.2161 29.2549 69.2161 36.7103C69.2161 44.1657 67.4211 50.8623 64.5751 55.6581C61.7151 60.4781 57.9191 63.2041 53.9385 63.2041C49.9577 63.2041 46.1617 60.4781 43.3019 55.6581C40.456 50.8623 38.6606 44.1657 38.6606 36.7103Z" fill="white" stroke="black" stroke-width="2.17752"/>
+          </mask>
+          <g mask="url(#mask1_350_47)">
+          <path id="right-eye" d="M48.9888 36.7102C48.9888 33.0704 51.5092 30.7081 53.9385 30.7081C56.3681 30.7081 58.8881 33.0704 58.8881 36.7102C58.8881 40.35 56.3681 42.7123 53.9385 42.7123C51.5092 42.7123 48.9888 40.35 48.9888 36.7102Z" fill="black" stroke="black" stroke-width="5.10075"/>
+          </g>
+          </g>
+          <defs>
+          <filter id="filter0_d_350_47" x="0.344868" y="0.432148" width="78.6555" height="72.5564" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+          <feOffset/>
+          <feGaussianBlur stdDeviation="4.34783"/>
+          <feComposite in2="hardAlpha" operator="out"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_350_47"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_350_47" result="shape"/>
+          </filter>
+          </defs>
+        </svg>
+      {% endif %}
+    </div>
+
+    {% if text != blank %}
+      <div class="back-top-text-{{ section.id }}">
+        <div class="back-top-text_inner-{{ section.id }}">
+         <p data-text="{% for i in (1..text_duplicate) %}{{ text }} {% endfor %}" id="text-{{ section.id }}"></p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</button>
+{% if independent %}</div>{% endif %}
+
+<script>
+  function initBackToTop() {
+    var backToTopArrow = document.querySelector(
+      '.back-top-{{ section.id }}'
+    );
+    backToTopArrow.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+    {% unless independent %}
+    // it only shows when the view is 20% from bottom of the page:
+    const precentOfPage = 1 - {{ show_when_precent_of_page }} / 100;
+    if(precentOfPage === 1) {
+      backToTopArrow.classList.add('active');
+    } else {
+      window.addEventListener('scroll', function () {
+        if (
+          window.scrollY >
+          precentOfPage * (document.body.scrollHeight - window.innerHeight)
+        ) {
+          backToTopArrow.classList.add('active');
+        } else {
+          backToTopArrow.classList.remove('active');
+        }
+      });
+    }
+    {% endunless %}
+
+    let text = document.getElementById('text-{{ section.id }}');
+    let str = text.getAttribute('data-text');
+    let coef = 360 / str.length;
+    let maxWidth = 0; // Переменная для хранения максимальной ширины
+    
+    if (text) {
+      for (let i = 0; i < str.length; i++) {
+        let span = document.createElement('span');
+        span.innerHTML = str[i];
+        text.appendChild(span);
+    
+        // Установите временный стиль для span, чтобы получить его ширину
+        span.style.transform = `rotate(${coef * i}deg)`;
+        let spanWidth = span.offsetWidth;
+    
+        // Обновите maxWidth, если текущая ширина больше
+        maxWidth = Math.max(maxWidth, spanWidth);
+      }
+    
+      // Пройдите по всем span и установите им максимальную ширину
+      for (let i = 0; i < text.children.length; i++) {
+        let span = text.children[i];
+        span.style.width = maxWidth + 'px';
+      }
+    }
+    var leftEye = document.getElementById('left-eye');
+    var rightEye = document.getElementById('right-eye');
+
+    document.addEventListener('mousemove', function (e) {
+        moveEye(leftEye, e.clientX, e.clientY);
+        moveEye(rightEye, e.clientX, e.clientY);
+    });
+
+    function moveEye(eye, mouseX, mouseY) {
+        var eyeRect = eye.getBoundingClientRect();
+        var eyeX = eyeRect.left + eyeRect.width / 2;
+        var eyeY = eyeRect.top + eyeRect.height / 2;
+
+        var deltaX = mouseX - eyeX;
+        var deltaY = mouseY - eyeY;
+
+        var userAgent = navigator.userAgent;
+        var isFirefox = userAgent.includes('Firefox');
+        var angle = Math.atan2(deltaY, deltaX);
+        var distance;
+        if(isFirefox) {
+          distance = Math.min(eyeRect.width, eyeRect.height) / (1 * {{ image_size | times: 0.05 }}); 
+        } else {
+         distance = Math.min(eyeRect.width, eyeRect.height) / (1 * {{ image_size | times: 0.01 }}); 
+        }
+
+        var distance2 = Math.sqrt(deltaX**2 + deltaY**2);
+        var scaleMultiplier = 0.0006;
+        var scaleY = 1 + distance2 * scaleMultiplier;
+      
+
+        var newX = Math.cos(angle) * distance;
+        var newY = Math.sin(angle) * distance;
+
+        eye.style.transform = 'translate(' + newX + 'px, ' + newY + 'px) scaleY(' + scaleY + ')';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', initBackToTop);
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initBackToTop);
+     document.addEventListener('shopify:section:load', initBackToTop);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SG-Back to top",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Save to see changes"
+    },
+    {
+      "type": "header",
+      "content": "Position Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "independent",
+      "label": "Set as independent block"
+    },
+    {
+      "type": "range",
+      "id": "independent_distance",
+      "min": 0,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Distance from the of the section (when set as independent block)",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile?",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "show_when_precent_of_page",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Show when the view is X% from bottom of the page",
+      "default": 30,
+      "info": "0% means it will always show, 100% means it will never show"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "horizontal_dst_to_edge",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Horizontal Edge Distance",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "vertical_dst_to_edge",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical Edge Distance",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "range",
+      "id": "button_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Button Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "button_shadow",
+      "label": "Use Button Shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Size",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "image_size_mobile",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Size - Mobile",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image Border Radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "BACK TO TOP."
+    },
+    {
+      "type": "range",
+      "id": "text_distance",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Distance from Image",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "text_distance_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Distance from Image - Mobile",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "text_duplicate",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Duplicate Text",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use Custom Font",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Text Font Family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 44,
+      "step": 2,
+      "unit": "px",
+      "label": "Text Size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 0,
+      "max": 44,
+      "step": 2,
+      "unit": "px",
+      "label": "Text Size - Mobile",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Animate"
+    },
+    {
+      "type": "select",
+      "id": "image_animate",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "hover",
+          "label": "On Hover"
+        },
+        {
+          "value": "never",
+          "label": "Never"
+        }
+      ],
+      "default": "never",
+      "label": "Rotate the Image"
+    },
+    {
+      "type": "select",
+      "id": "image_direction",
+      "options": [
+        {
+          "value": "right",
+          "label": "Clockwise"
+        },
+        {
+          "value": "left",
+          "label": "Counter Clockwis"
+        }
+      ],
+      "default": "right",
+      "label": "Image Direction of Rotation"
+    },
+    {
+      "type": "range",
+      "id": "image_speed",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "label": "Speed of Image Rotation",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "text_animate",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "hover",
+          "label": "On Hover"
+        },
+        {
+          "value": "never",
+          "label": "Never"
+        }
+      ],
+      "default": "hover",
+      "label": "Rotate the Text"
+    },
+    {
+      "type": "select",
+      "id": "text_direction",
+      "options": [
+        {
+          "value": "right",
+          "label": "Clockwise"
+        },
+        {
+          "value": "left",
+          "label": "Counter Clockwis"
+        }
+      ],
+      "default": "right",
+      "label": "Text Direction of Rotation"
+    },
+    {
+      "type": "range",
+      "id": "text_speed",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "label": "Speed of Text Rotation",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Button Background Color",
+      "id": "button_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Button Border Color",
+      "id": "button_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Image Background Color",
+      "id": "image_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Text Color",
+      "id": "text_color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Back to top #2"
+    }
+  ]
+}
+{% endschema %}

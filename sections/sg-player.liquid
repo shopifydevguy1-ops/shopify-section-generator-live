@@ -1,0 +1,1516 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign full_width = section.settings.full_width
+  assign content_width = section.settings.content_width
+
+  assign player_width_mobile = section.settings.player_width_mobile
+  assign player_width = section.settings.player_width
+  assign player_bg_color = section.settings.player_bg_color
+  assign player_radius = section.settings.player_radius
+
+  assign player_image_radius = section.settings.player_image_radius
+
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_color = section.settings.title_color
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_height = section.settings.title_height
+
+  assign author_size = section.settings.author_size
+  assign author_size_mobile = section.settings.author_size_mobile
+  assign author_color = section.settings.author_color
+  assign author_custom = section.settings.author_custom
+  assign author_font = section.settings.author_font
+  assign author_height = section.settings.author_height
+
+  assign icons_color = section.settings.icons_color
+  assign icons_hover_bg_color = section.settings.icons_hover_bg_color
+  assign icons_hover_color = section.settings.icons_hover_color
+  assign icons_disabled_color = section.settings.icons_disabled_color
+  assign icons_active_bg_color = section.settings.icons_active_bg_color
+  assign icons_active_color = section.settings.icons_active_color
+
+  assign playlist_height = section.settings.playlist_height
+  assign playlist_odd_bg_color = section.settings.playlist_odd_bg_color
+  assign playlist_hover_bg_color = section.settings.playlist_hover_bg_color
+  assign playlist_hover_color = section.settings.playlist_hover_color
+  assign playlist_active_bg_color = section.settings.playlist_active_bg_color
+  assign playlist_active_color = section.settings.playlist_active_color
+
+  assign playlist_title_size = section.settings.playlist_title_size
+  assign playlist_title_size_mobile = section.settings.playlist_title_size_mobile
+  assign playlist_title_color = section.settings.playlist_title_color
+  assign playlist_title_custom = section.settings.playlist_title_custom
+  assign playlist_title_font = section.settings.playlist_title_font
+  assign playlist_title_height = section.settings.playlist_title_height
+
+  assign playlist_author_size = section.settings.playlist_author_size
+  assign playlist_author_size_mobile = section.settings.playlist_author_size_mobile
+  assign playlist_author_color = section.settings.playlist_author_color
+  assign playlist_author_custom = section.settings.playlist_author_custom
+  assign playlist_author_font = section.settings.playlist_author_font
+  assign playlist_author_height = section.settings.playlist_author_height
+
+  assign playlist_scrollbar_thumb_color = section.settings.playlist_scrollbar_thumb_color
+  assign playlist_scrollbar_bg_color = section.settings.playlist_scrollbar_bg_color
+  
+-%}
+
+{%- style -%}
+
+  {{  title_font | font_face: font_display: 'swap' }}
+  {{  author_font | font_face: font_display: 'swap' }}
+  {{  playlist_author_font | font_face: font_display: 'swap' }}
+  {{  playlist_title_font | font_face: font_display: 'swap' }}
+  
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-left: {{ padding_horizontal_mobile }}rem;
+    padding-right: {{ padding_horizontal_mobile }}rem;
+  }
+
+  .section-{{ section.id }}-settings #simp button,.section-{{ section.id }}-settings #simp input,.section-{{ section.id }}-settings #simp img {
+      border: 0;
+  }
+  
+  .section-{{ section.id }}-settings #simp {
+      max-width: {{ player_width_mobile }}%;
+      text-align: initial;
+      line-height: initial;
+      background: {{ player_bg_color }};
+      margin: 0 auto;
+      border-radius: {{ player_radius }}px;
+      overflow: hidden;
+      color: {{ icons_color }};
+  }
+
+  .section-{{ section.id }}-settings #simp .w-full {
+    width: 100%;
+  }
+
+  .section-{{ section.id }}-settings #simp .flex {
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .section-{{ section.id }}-settings #simp .flex-wrap {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .section-{{ section.id }}-settings #simp .flex-align {
+    -webkit-align-items: center;
+    align-items: center;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-album {
+      padding: 20px 25px 5px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-album .simp-cover {
+      margin-right: 20px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-album .simp-cover img {
+      max-width:80px;
+      width:100%;
+      margin:0;
+      padding:0;
+      display:block;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-album .simp-cover div {
+    display: block !important;
+    border-radius: {{ player_image_radius }}px;
+    overlow: hidden;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-album .simp-title {
+      margin: 0;
+      font-size: {{ title_size_mobile }}px;
+      color: {{ title_color }};
+      line-height: {{ title_height }}%;
+      text-transform: unset;
+      font-weight: 700;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-album .simp-artist {
+      margin: 0;
+      font-size: {{ author_size_mobile }}px;
+      color: {{ author_color }};
+      line-height: {{ author_height }}%;
+      text-transform: unset;
+      font-weight: 700;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls {
+      padding: 15px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls button {
+      font-size: 130%;
+      width: 32px;
+      height: 32px;
+      background: none;
+      color: {{ icons_color }};
+      padding: 7px;
+      cursor: pointer;
+      border: 0;
+      border-radius: 3px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls button[disabled] {
+      color: {{ icons_disabled_color }};
+      cursor: initial;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls button:not([disabled]):hover {
+      background: {{ icons_hover_bg_color }};
+      color: {{ icons_hover_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-prev,
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-next {
+      font-size: 100%;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-next {
+    padding-left: 9px;
+    padding-top: 6px;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-prev {
+    padding-left: 6px;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-plause {
+    padding-left: 9px;
+    padding-top: 6px;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-plext,
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-random {
+    padding-left: 6px;
+    padding-top: 6px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-tracker,
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume {
+      flex: 1;
+      margin-left: 10px;
+      position: relative;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-buffer  {
+      display: block !important;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: 5px;
+      margin-top: -2.5px;
+      border-radius: 100px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-buffer  {
+      -webkit-animation: audio-progress 1s linear infinite;
+      animation: audio-progress 1s linear infinite;
+      background-image: linear-gradient(-45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);
+      background-repeat: repeat-x;
+      background-size: 25px 25px;
+      color: transparent;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-time,
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-others {
+      margin-left: 10px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume {
+      max-width: 110px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-volume .simp-mute {
+     margin-right: 5px;
+     padding-left: 3px;
+     padding-top: 6px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-active {
+      background: {{ icons_active_bg_color }};
+      color: {{ icons_active_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-shide button {
+      font-size: 100%;
+      padding: 0;
+      width: 24px;
+      height: 17px;
+      display: block;
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-others .simp-shide button.simp-shide-bottom {
+    padding-bottom: 1px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+      height: 19px;
+      margin: 0;
+      width: 100%;
+      display: block;
+      position: relative;
+      z-index: 2;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-webkit-slider-runnable-track {
+      background: rgba(183,197,205,.66);
+      height: 5px;
+      border-radius: 2.5px;
+      transition: box-shadow .3s ease;
+      position: relative;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-moz-range-track {
+      background: rgba(183,197,205,.66);
+      height: 5px;
+      border-radius: 2.5px;
+      transition: box-shadow .3s ease;
+      position: relative;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-load .simp-progress::-webkit-slider-runnable-track {
+      background:#2f3841;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-load .simp-progress::-moz-range-track {
+      background:#2f3841;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-progress::-webkit-slider-runnable-track {
+      background:rgba(255,255,255,.25);
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls .simp-loading .simp-progress::-moz-range-track {
+      background: rgba(255,255,255,.25);
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background: #fff;
+      height: 13px;
+      width: 13px;
+      margin-top: -4px;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-controls input[type=range]::-moz-range-thumb {
+      -webkit-appearance: none;
+      background: #fff;
+      height: 13px;
+      width: 13px;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-footer {
+      padding: 10px 10px 12px;
+      font-size: 90%;
+      text-align: center;
+      opacity: .7;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-display {
+      overflow: hidden;
+      max-height: 650px;
+      transition: max-height .5s ease-in-out;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-hide {
+      max-height: 0;
+  }
+  
+  /* playlist */
+  .section-{{ section.id }}-settings #simp ul {
+      margin: 5px 0 0;
+      padding: 0;
+      list-style: none;
+      max-height: {{ playlist_height }}px;
+  }
+  
+  .section-{{ section.id }}-settings #simp ul li {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      margin: 0;
+      padding: 8px 20px;
+      cursor: pointer;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-playlist ul li:last-child {
+      padding-bottom: 13px;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-playlist ul li:nth-child(odd) {
+      background: {{ playlist_odd_bg_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-playlist ul li:hover {
+      background: {{ playlist_hover_bg_color }};
+      color: {{ playlist_hover_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-playlist ul li.simp-active {
+      background: {{ playlist_active_bg_color }};
+      color: {{ playlist_active_color }};
+  }
+
+  .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {
+      margin: 0;
+      font-size: {{ playlist_title_size_mobile }}px;
+      color: {{ playlist_title_color }};
+      line-height: {{ playlist_title_height }}%;
+      text-transform: unset;
+  }
+  
+  .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {
+      margin: 0;
+      font-size: {{ playlist_author_size_mobile }}px;
+      color: {{ playlist_author_color }};
+      line-height: {{ playlist_author_height }}%;
+      text-transform: unset;
+      opacity: 0.5;
+      margin-left: 5px;
+  }
+  
+  /* playlist scrollbar */
+  .section-{{ section.id }}-settings #simp ul {
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-color: {{ playlist_scrollbar_thumb_color }} {{ playlist_scrollbar_bg_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar-track {
+      background-color: {{ playlist_scrollbar_bg_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar {
+      width:6px;
+      background-color: {{ playlist_scrollbar_bg_color }};
+  }
+  
+  .section-{{ section.id }}-settings #simp ul::-webkit-scrollbar-thumb {
+      background-color: {{ playlist_scrollbar_thumb_color }};
+  }
+  
+  /* progress animation */
+  @-webkit-keyframes audio-progress {
+      to {
+          background-position: 25px 0;
+      }
+  }
+  @keyframes audio-progress {
+      to {
+          background-position: 25px 0;
+      }
+  }
+  
+  /* mobile */
+  @media screen and (max-width:480px)  {
+      .section-{{ section.id }}-settings #simp .simp-controls .simp-volume,.section-{{ section.id }}-settings #simp .simp-controls .simp-others {
+          display: none;
+      }
+    
+      .section-{{ section.id }}-settings #simp .simp-controls .simp-time {
+          margin-right: 10px;
+      }
+  }
+  @media screen and (max-width:370px)  {
+      .section-{{ section.id }}-settings #simp .simp-time .simp-slash,.section-{{ section.id }}-settings #simp .simp-time .end-time {
+          display: none;
+      }
+  }
+  
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    }
+    
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_horizontal }}rem;
+      padding-right: {{ padding_horizontal }}rem;
+    }
+
+    .section-{{ section.id }}-settings #simp {
+      max-width: {{ player_width }}px;
+    }
+
+    .section-{{ section.id }}-settings #simp .simp-album .simp-title {
+      font-size: {{ title_size }}px;
+    }
+
+    .section-{{ section.id }}-settings #simp .simp-album .simp-artist {
+      font-size: {{ author_size }}px;
+    }
+
+    .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {
+      font-size: {{ playlist_title_size }}px;
+    }
+
+    .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {
+      font-size: {{ playlist_author_size }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+{% unless full_width %}
+  <style>
+    .section-{{ section.id }}-settings {
+      max-width: {{ content_width }}rem;
+    }
+  </style>
+{% endunless %}
+
+{% if title_custom %}
+  <style>
+    .section-{{ section.id }}-settings #simp .simp-album .simp-title {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if author_custom %}
+  <style>
+    .section-{{ section.id }}-settings #simp .simp-album .simp-artist {
+      font-family: {{ author_font.family }}, {{ author_font.fallback_families }};
+      font-weight: {{ author_font.weight }};
+      font-style: {{ author_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if playlist_title_custom %}
+  <style>
+    .section-{{ section.id }}-settings #simp .simp-playlist .simp-source {
+      font-family: {{ playlist_title_font.family }}, {{ playlist_title_font.fallback_families }};
+      font-weight: {{ playlist_title_font.weight }};
+      font-style: {{ playlist_title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if playlist_author_custom %}
+  <style>
+    .section-{{ section.id }}-settings #simp .simp-playlist .simp-desc {
+      font-family: {{ playlist_author_font.family }}, {{ playlist_author_font.fallback_families }};
+      font-weight: {{ playlist_author_font.weight }};
+      font-style: {{ playlist_author_font.style }};
+    }
+  </style>
+{% endif %}
+
+<div class="section-{{ section.id }} player-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+    <div class="section-{{ section.id }}-settings">
+      <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}'>
+        <div class="simp-playlist">
+          <ul>
+            {% for block in section.blocks %}
+              {% if block.settings.audio != blank and block.settings.title != blank %}
+                <li><span class="simp-source {% if forloop.first %}simp-active{% endif %}" data-src="{{ block.settings.audio }}" {% if block.settings.image != blank %}data-cover="{{ block.settings.image | image_url }}"{% endif %}>{{ block.settings.title }}</span>{% if block.settings.author != blank %}<span class="simp-desc">{{ block.settings.author }}</span>{% endif %}</li>
+              {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+  function initPlayer() {
+    // Multiple events to a listener
+    function addEventListener_multi(element, eventNames, handler) {
+      var events = eventNames.split(' ');
+      events.forEach(e => element.addEventListener(e, handler, false));
+    }
+    
+    // Random numbers in a specific range
+    function getRandom(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    // Position element inside element
+    function getRelativePos(elm) {
+      var pPos = elm.parentNode.getBoundingClientRect(); // parent pos
+      var cPos = elm.getBoundingClientRect(); // target pos
+      var pos = {};
+    
+      pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
+      pos.right  = cPos.right  - pPos.right,
+      pos.bottom = cPos.bottom - pPos.bottom,
+      pos.left   = cPos.left   - pPos.left;
+    
+      return pos;
+    }
+    
+    function formatTime(val) {
+      var h = 0, m = 0, s;
+      val = parseInt(val, 10);
+      if (val > 60 * 60) {
+       h = parseInt(val / (60 * 60), 10);
+       val -= h * 60 * 60;
+      }
+      if (val > 60) {
+       m = parseInt(val / 60, 10);
+       val -= m * 60;
+      }
+      s = val;
+      val = (h > 0)? h + ':' : '';
+      val += (m > 0)? ((m < 10 && h > 0)? '0' : '') + m + ':' : '0:';
+      val += ((s < 10)? '0' : '') + s;
+      return val;
+    }
+    
+    function simp_initTime() {
+      simp_controls.querySelector('.start-time').innerHTML = formatTime(simp_audio.currentTime); //calculate current value time
+      if (!simp_isStream) {
+        simp_controls.querySelector('.end-time').innerHTML = formatTime(simp_audio.duration); //calculate total value time
+        simp_progress.value = simp_audio.currentTime / simp_audio.duration * 100; //progress bar
+      }
+      
+      // ended of the audio
+      if (simp_audio.currentTime == simp_audio.duration) {
+        simp_controls.querySelector('.simp-plause').classList.remove('fa-pause');
+        simp_controls.querySelector('.simp-plause').classList.add('fa-play');
+        simp_audio.removeEventListener('timeupdate', simp_initTime);
+        
+        if (simp_isNext) { //auto load next audio
+          var elem;
+          simp_a_index++;
+          if (simp_a_index == simp_a_url.length) { //repeat all audio
+            simp_a_index = 0;
+            elem = simp_a_url[0];
+          } else {
+            elem = simp_a_url[simp_a_index];  
+          }
+          simp_changeAudio(elem);
+          simp_setAlbum(simp_a_index);
+        } else {
+          simp_isPlaying = false;
+        }
+      }
+    }
+    
+    function simp_initAudio() {
+      // if readyState more than 2, audio file has loaded
+    	simp_isLoaded = simp_audio.readyState == 4 ? true : false;
+      simp_isStream = simp_audio.duration == 'Infinity' ? true : false;
+      simp_controls.querySelector('.simp-plause').disabled = false;
+      simp_progress.disabled = simp_isStream ? true : false;
+      if (!simp_isStream) {
+        simp_progress.parentNode.classList.remove('simp-load','simp-loading');
+        simp_controls.querySelector('.end-time').innerHTML = formatTime(simp_audio.duration);
+      }
+      simp_audio.addEventListener('timeupdate', simp_initTime); //tracking load progress
+      if (simp_isLoaded && simp_isPlaying) simp_audio.play();
+      
+      // progress bar click event
+      addEventListener_multi(simp_progress, 'touchstart mousedown', function(e) {
+        if (simp_isStream) {
+          e.stopPropagation();
+          return false;
+        }
+        if (simp_audio.readyState == 4) {
+          simp_audio.removeEventListener('timeupdate', simp_initTime);
+          simp_audio.pause();
+        }
+      });
+      
+      addEventListener_multi(simp_progress, 'touchend mouseup', function(e) {
+        if (simp_isStream) {
+          e.stopPropagation();
+          return false;
+        }
+        if (simp_audio.readyState == 4) {
+          simp_audio.currentTime = simp_progress.value * simp_audio.duration / 100;
+          simp_audio.addEventListener('timeupdate', simp_initTime);
+          if (simp_isPlaying) simp_audio.play();
+        }
+      });
+    }
+    
+    function simp_loadAudio(elem) {
+      simp_progress.parentNode.classList.add('simp-loading');
+      simp_controls.querySelector('.simp-plause').disabled = true;
+      simp_audio.querySelector('source').src = elem.dataset.src;
+      simp_audio.load();
+      
+      simp_audio.volume = parseFloat(simp_v_num / 100); //based on valume input value
+      simp_audio.addEventListener('canplaythrough', simp_initAudio); //play audio without stop for buffering
+      
+      // if audio fails to load, only IE/Edge 9.0 or above
+      simp_audio.addEventListener('error', function() {
+        alert('Please reload the page.');
+      });
+    }
+    
+    function simp_setAlbum(index) {
+      simp_cover.innerHTML = simp_a_url[index].dataset.cover ? '<div style="background:url(' + simp_a_url[index].dataset.cover + ') no-repeat;background-size:cover;width:80px;height:80px;"></div>' : '<i class="fa fa-music fa-5x"></i>';
+      simp_title.innerHTML = simp_source[index].querySelector('.simp-source').innerHTML;
+      simp_artist.innerHTML = simp_source[index].querySelector('.simp-desc') ? simp_source[index].querySelector('.simp-desc').innerHTML : '';
+    }
+    
+    function simp_changeAudio(elem) {
+    	simp_isLoaded = false;
+      simp_controls.querySelector('.simp-prev').disabled = simp_a_index == 0 ? true : false;
+      simp_controls.querySelector('.simp-plause').disabled = simp_auto_load ? true : false;
+      simp_controls.querySelector('.simp-next').disabled = simp_a_index == simp_a_url.length-1 ? true : false;
+      simp_progress.parentNode.classList.add('simp-load');
+      simp_progress.disabled = true;
+      simp_progress.value = 0;
+      simp_controls.querySelector('.start-time').innerHTML = '00:00';
+      simp_controls.querySelector('.end-time').innerHTML = '00:00';
+      elem = simp_isRandom && simp_isNext ? simp_a_url[getRandom(0, simp_a_url.length-1)] : elem;
+      
+      // playlist, audio is running
+      for (var i = 0; i < simp_a_url.length; i++) {
+        simp_a_url[i].parentNode.classList.remove('simp-active');
+        if (simp_a_url[i] == elem) {
+          simp_a_index = i;
+          simp_a_url[i].parentNode.classList.add('simp-active');
+        }
+      }
+      
+      // scrolling to element inside element
+      var simp_active = getRelativePos(simp_source[simp_a_index]);
+      simp_source[simp_a_index].parentNode.scrollTop = simp_active.top;
+      
+      if (simp_auto_load || simp_isPlaying) simp_loadAudio(elem);
+      
+      if (simp_isPlaying) {
+        simp_controls.querySelector('.simp-plause').classList.remove('fa-play');
+        simp_controls.querySelector('.simp-plause').classList.add('fa-pause');
+      }
+    }
+    
+    function simp_startScript() {
+      ap_simp = document.querySelector('.section-{{ section.id }}-settings #simp');
+      simp_audio = ap_simp.querySelector('#audio');
+      simp_album = ap_simp.querySelector('.simp-album');
+      simp_cover = simp_album.querySelector('.simp-cover');
+      simp_title = simp_album.querySelector('.simp-title');
+      simp_artist = simp_album.querySelector('.simp-artist');
+      simp_controls = ap_simp.querySelector('.simp-controls');
+      simp_progress = simp_controls.querySelector('.simp-progress');
+      simp_volume = simp_controls.querySelector('.simp-volume');
+      simp_v_slider = simp_volume.querySelector('.simp-v-slider');
+      simp_v_num = simp_v_slider.value; //default volume
+      simp_others = simp_controls.querySelector('.simp-others');
+      simp_auto_load = simp_config.auto_load; //auto load audio file
+      
+      if (simp_config.shide_top) simp_album.parentNode.classList.toggle('simp-hide');
+      if (simp_config.shide_btm) {
+        simp_playlist.classList.add('simp-display');
+        simp_playlist.classList.toggle('simp-hide');
+      }
+      
+      if (simp_a_url.length <= 1) {
+        simp_controls.querySelector('.simp-prev').style.display = 'none';
+        simp_controls.querySelector('.simp-next').style.display = 'none';
+        simp_others.querySelector('.simp-plext').style.display = 'none';
+        simp_others.querySelector('.simp-random').style.display = 'none';
+      }
+    
+      // Playlist listeners
+      simp_source.forEach(function(item, index) {
+        if (item.classList.contains('simp-active')) simp_a_index = index; //playlist contains '.simp-active'
+        item.addEventListener('click', function() {
+          simp_audio.removeEventListener('timeupdate', simp_initTime);
+          simp_a_index = index;
+          simp_changeAudio(this.querySelector('.simp-source'));
+          simp_setAlbum(simp_a_index);
+        });
+      });
+      
+      // FIRST AUDIO LOAD =======
+      simp_changeAudio(simp_a_url[simp_a_index]);
+      simp_setAlbum(simp_a_index);
+      // FIRST AUDIO LOAD =======
+      
+      // Controls listeners
+      simp_controls.querySelector('.simp-plauseward').addEventListener('click', function(e) {
+        var eles = e.target.classList;
+        if (eles.contains('simp-plause')) {
+          if (simp_audio.paused) {
+            if (!simp_isLoaded) simp_loadAudio(simp_a_url[simp_a_index]);
+            simp_audio.play();
+            simp_isPlaying = true;
+            eles.remove('fa-play');
+            eles.add('fa-pause');
+          } else {
+            simp_audio.pause();
+            simp_isPlaying = false;
+            eles.remove('fa-pause');
+            eles.add('fa-play');
+          }
+        } else {
+          if (eles.contains('simp-prev') && simp_a_index != 0) {
+            simp_a_index = simp_a_index-1;
+            e.target.disabled = simp_a_index == 0 ? true : false;
+          } else if (eles.contains('simp-next') && simp_a_index != simp_a_url.length-1) {
+            simp_a_index = simp_a_index+1;
+            e.target.disabled = simp_a_index == simp_a_url.length-1 ? true : false;
+          }
+          simp_audio.removeEventListener('timeupdate', simp_initTime);
+          simp_changeAudio(simp_a_url[simp_a_index]);
+          simp_setAlbum(simp_a_index);
+        }
+      });
+      
+      // Audio volume
+      simp_volume.addEventListener('click', function(e) {
+        var eles = e.target.classList;
+        if (eles.contains('simp-mute')) {
+          if (eles.contains('fa-volume-up')) {
+            eles.remove('fa-volume-up');
+            eles.add('fa-volume-off');
+            simp_v_slider.value = 0;
+          } else {
+            eles.remove('fa-volume-off');
+            eles.add('fa-volume-up');
+            simp_v_slider.value = simp_v_num;
+          }
+        } else {
+          simp_v_num = simp_v_slider.value;
+          if (simp_v_num != 0) {
+            simp_controls.querySelector('.simp-mute').classList.remove('fa-volume-off');
+            simp_controls.querySelector('.simp-mute').classList.add('fa-volume-up');
+          }
+        }
+        simp_audio.volume = parseFloat(simp_v_slider.value / 100);
+      });
+      
+      // Others
+      simp_others.addEventListener('click', function(e) {
+        var eles = e.target.classList;
+        if (eles.contains('simp-plext')) {
+          simp_isNext = simp_isNext && !simp_isRandom ? false : true;
+          if (!simp_isRandom) simp_isRanext = simp_isRanext ? false : true;
+          eles.contains('simp-active') && !simp_isRandom ? eles.remove('simp-active') : eles.add('simp-active');
+        } else if (eles.contains('simp-random')) {
+          simp_isRandom = simp_isRandom ? false : true;
+          if (simp_isNext && !simp_isRanext) {
+            simp_isNext = false;
+            simp_others.querySelector('.simp-plext').classList.remove('simp-active');
+          } else {
+            simp_isNext = true;
+            simp_others.querySelector('.simp-plext').classList.add('simp-active');
+          }
+          eles.contains('simp-active') ? eles.remove('simp-active') : eles.add('simp-active');
+        } else if (eles.contains('simp-shide-top')) {
+          simp_album.parentNode.classList.toggle('simp-hide');
+        } else if (eles.contains('simp-shide-bottom')) {
+          simp_playlist.classList.add('simp-display');
+          simp_playlist.classList.toggle('simp-hide');
+        }
+      });
+    }
+    
+    // Start simple player
+    if (document.querySelector('.section-{{ section.id }}-settings #simp')) {
+      var simp_auto_load, simp_audio, simp_album, simp_cover, simp_title, simp_artist, simp_controls, simp_progress, simp_volume, simp_v_slider, simp_v_num, simp_others;
+      var ap_simp = document.querySelector('.section-{{ section.id }}-settings #simp');
+      var simp_playlist = ap_simp.querySelector('.simp-playlist');
+      var simp_source = simp_playlist.querySelectorAll('li');
+      var simp_a_url = simp_playlist.querySelectorAll('[data-src]');
+      var simp_a_index = 0;
+      var simp_isPlaying = false;
+      var simp_isNext = false; //auto play
+      var simp_isRandom = false; //play random
+      var simp_isRanext = false; //check if before random starts, simp_isNext value is true
+      var simp_isStream = false; //radio streaming
+      var simp_isLoaded = false; //audio file has loaded
+      var simp_config = ap_simp.dataset.config ? JSON.parse(ap_simp.dataset.config) : {
+        shide_top: false, //show/hide album
+        shide_btm: false, //show/hide playlist
+        auto_load: false //auto load audio file
+      };
+      
+      var simp_elem = '';
+      simp_elem += '<audio id="audio" preload><source src="" type="audio/mpeg"></audio>';
+      simp_elem += '<div class="simp-display"><div class="simp-album w-full flex-wrap"><div class="simp-cover"><i class="fa fa-music fa-5x"></i></div><div class="simp-info"><div class="simp-title">Title</div><div class="simp-artist">Artist</div></div></div></div>';
+      simp_elem += '<div class="simp-controls flex-wrap flex-align">';
+      simp_elem += '<div class="simp-plauseward flex flex-align"><button type="button" class="simp-prev fa fa-backward" disabled></button><button type="button" class="simp-plause fa fa-play" disabled></button><button type="button" class="simp-next fa fa-forward" disabled></button></div>';
+      simp_elem += '<div class="simp-tracker simp-load"><input class="simp-progress" type="range" min="0" max="100" value="0" disabled/><div class="simp-buffer"></div></div>';
+      simp_elem += '<div class="simp-time flex flex-align"><span class="start-time">00:00</span><span class="simp-slash"> / </span><span class="end-time">00:00</span></div>';
+      simp_elem += '<div class="simp-volume flex flex-align"><button type="button" class="simp-mute fa fa-volume-up"></button><input class="simp-v-slider" type="range" min="0" max="100" value="100"/></div>';
+      simp_elem += '<div class="simp-others flex flex-align"><button type="button" class="simp-plext fa fa-play-circle" title="Auto Play"></button><button type="button" class="simp-random fa fa-random" title="Random"></button><div class="simp-shide"><button type="button" class="simp-shide-top fa fa-caret-up" title="Show/Hide Album"></button><button type="button" class="simp-shide-bottom fa fa-caret-down" title="Show/Hide Playlist"></button></div></div>';
+      simp_elem += '</div>'; //simp-controls
+      
+      var simp_player = document.createElement('div');
+      simp_player.classList.add('simp-player');
+      simp_player.innerHTML = simp_elem;
+      ap_simp.insertBefore(simp_player, simp_playlist);
+      simp_startScript();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initPlayer);
+  
+  if (Shopify.designMode) {
+     document.addEventListener('shopify:section:unload', initPlayer);
+     document.addEventListener('shopify:section:load', initPlayer);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SG-Audio Player",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Save settings to see section in action"
+    },
+    {
+      "type": "header",
+      "content": "Player Container Settings"
+    },
+    {
+      "type": "range",
+      "id": "player_width",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Player Container Width",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "player_width_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Player Container Width - Mobile",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "player_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Player Border Radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Player Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "player_image_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Player Image Border Radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Player Title Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Size - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Title Line Height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Player Author Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "author_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "author_font",
+      "label": "Author Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "author_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Author Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Author Size - Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Author Line Height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Player Playlist Settings"
+    },
+    {
+      "type": "range",
+      "id": "playlist_height",
+      "min": 200,
+      "max": 650,
+      "step": 5,
+      "unit": "px",
+      "label": "Player Playlist Max Height",
+      "default": 245
+    },
+    {
+      "type": "header",
+      "content": "Playlist Title Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "playlist_title_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "playlist_title_font",
+      "label": "Title Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "playlist_title_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "playlist_title_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Size - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "playlist_title_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Title Line Height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Playlist Author Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "playlist_author_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "playlist_author_font",
+      "label": "Author Font Family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "playlist_author_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Author Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "playlist_author_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Author Size - Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "playlist_author_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Author Line Height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Player Colors"
+    },
+    {
+      "type": "color",
+      "label": "Player Background Color",
+      "id": "player_bg_color",
+      "default": "#17212b"
+    },
+    {
+      "type": "color",
+      "label": "Player Title Color",
+      "id": "title_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Player Author Color",
+      "id": "author_color",
+      "default": "#6c7883"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Color",
+      "id": "icons_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Disabled Color",
+      "id": "icons_disabled_color",
+      "default": "#636469"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Active Color",
+      "id": "icons_active_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Active Bakground Color",
+      "id": "icons_active_bg_color",
+      "default": "#242f3d"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Hover Color",
+      "id": "icons_hover_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Player Icons Hover Background Color",
+      "id": "icons_hover_bg_color",
+      "default": "#4082bc"
+    },
+    {
+      "type": "header",
+      "content": "Playlist Colors"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Title Color",
+      "id": "playlist_title_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Author Color",
+      "id": "playlist_author_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Item Odd Background Color",
+      "id": "playlist_odd_bg_color",
+      "default": "#0e1621"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Item Hover Background Color",
+      "id": "playlist_hover_bg_color",
+      "default": "#242f3d"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Item Hover Color",
+      "id": "playlist_hover_color",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Item Active Background Color",
+      "id": "playlist_active_bg_color",
+      "default": "#4082bc"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Item Active Color",
+      "id": "playlist_active_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Scrollbar Background Color",
+      "id": "playlist_scrollbar_bg_color",
+      "default": "#2f3841"
+    },
+    {
+      "type": "color",
+      "label": "Playlist Scrollbar Thumb Color",
+      "id": "playlist_scrollbar_thumb_color",
+      "default": "#73797f"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "rem",
+      "label": "Section content width",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "audio",
+      "name": "Audio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "audio",
+          "label": "Audio URL",
+          "info": "[How to upload audio files](https://www.loom.com/share/a88954c542ff4d9bb4d421af98f632db?sid=26ab5775-b8b4-412a-8d4e-50d7c1fc7657)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Audio Title"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Audio Author"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Audio Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Audio Player",
+      "blocks": [
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "http://www.archive.org/download/CanonInD_261/CanoninD.mp3",
+            "title": "Canon in D",
+            "author": "Johann Pachelbel"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://cdn.shopify.com/s/files/1/0670/4834/1753/files/05.mp3?v=1708077309",
+            "title": "Artist 5"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://cdn.shopify.com/s/files/1/0670/4834/1753/files/Angklung_Preman_Pensiun.mp3?v=1708077241",
+            "title": "Angklung Preman Pensiun"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://cdn.shopify.com/s/files/1/0670/4834/1753/files/Canon_Rock_JerryC_-_funtwo.mp3?v=1708077435",
+            "title": "Canon Rock (JerryC)",
+            "author": "by Funtwo"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "http://listento.ardanradio.com:1059/;",
+            "title": "105.9 FM Ardan Radio",
+            "author": "Streaming Radio"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/78_jailhouse-rock_elvis-presley-jerry-leiber-mike-stoller_gbia0080595b/Jailhouse%20Rock%20-%20Elvis%20Presley%20-%20Jerry%20Leiber-restored.mp3",
+            "title": "Jailhouse Rock",
+            "author": "Elvis Presley"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/J._Period_and_Michael_Jackson_-_Man_Or_The_Music-2010/17%20Smooth%20Criminal.mp3",
+            "title": "Smooth Criminal",
+            "author": "Michael Jackson"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/OldPop_256/VillagePeople-Y.m.c.a.mp3",
+            "title": "Y.M.C.A",
+            "author": "Village People"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/AnimalsTheHouseOfTheRisingSun_201811/Animals%20-%20The%20House%20Of%20The%20Rising%20Sun.mp3",
+            "title": "House of the Rising Sun",
+            "author": "The Animals"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/DontStopMeNow_255/Queen-DontStopMeNow.mp3",
+            "title": "Don't Stop Me Now",
+            "author": "Queen"
+          }
+        },
+        {
+          "type": "audio",
+          "settings": {
+            "audio": "https://archive.org/download/NeverGonnaGiveYouUpOriginal/Never%20Gonna%20Give%20You%20Up%20Original.mp3",
+            "title": "Never Gonna Give You Up",
+            "author": "Rick Astley"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

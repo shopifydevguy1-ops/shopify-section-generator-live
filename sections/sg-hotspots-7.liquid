@@ -1,0 +1,2575 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+>
+
+{%- liquid
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_horizontal_mobile = section.settings.margin_horizontal_mobile
+  assign margin_horizontal = section.settings.margin_horizontal
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign lazy = section.settings.lazy
+  assign section_radius = section.settings.section_radius
+
+  assign slider_view = section.settings.slider_view
+  assign slider_view_mobile = section.settings.slider_view_mobile
+  assign slider_gap = section.settings.slider_gap
+  assign slider_gap_mobile = section.settings.slider_gap_mobile
+
+  assign image_ratio = section.settings.image_ratio
+  assign image_ratio_mobile = section.settings.image_ratio_mobile
+  assign image_radius = section.settings.image_radius
+  assign image_border_thickness = section.settings.image_border_thickness
+  assign image_border_color = section.settings.image_border_color
+  assign image_bg_overlay = section.settings.image_bg_overlay
+  assign image_overlay_color = section.settings.image_overlay_color
+
+  assign hotspot_size = section.settings.hotspot_size
+  assign hotspot_size_mobile = section.settings.hotspot_size_mobile
+  assign hotspot_bg_color = section.settings.hotspot_bg_color
+  assign hotspot_border_color = section.settings.hotspot_border_color
+  assign hotspot_icon_color = section.settings.hotspot_icon_color
+
+  assign product_width = section.settings.product_width
+  assign product_width_mobile = section.settings.product_width_mobile
+  assign product_radius = section.settings.product_radius
+  assign product_bg_color = section.settings.product_bg_color
+
+  assign product_image_ratio = section.settings.product_image_ratio
+  assign product_image_ratio_mobile = section.settings.product_image_ratio_mobile
+
+  assign product_content_padding_horizontal = section.settings.product_content_padding_horizontal
+  assign product_content_padding_horizontal_mobile = section.settings.product_content_padding_horizontal_mobile
+  assign product_content_padding_vertical = section.settings.product_content_padding_vertical
+  assign product_content_padding_vertical_mobile = section.settings.product_content_padding_vertical_mobile
+  assign product_content_align = section.settings.product_content_align
+  assign product_content_align_mobile = section.settings.product_content_align_mobile
+
+  assign product_content_horizontal_align = ''
+  if product_content_align == 'center'
+    assign product_content_horizontal_align = 'center'
+  elsif product_content_align == 'right'
+    assign product_content_horizontal_align = 'end'
+  else
+    assign product_content_horizontal_align = 'start'
+  endif
+
+  assign product_content_horizontal_align_mobile = ''
+  if product_content_align_mobile == 'center'
+    assign product_content_horizontal_align_mobile = 'center'
+  elsif product_content_align_mobile == 'right'
+    assign product_content_horizontal_align_mobile = 'end'
+  else
+    assign product_content_horizontal_align_mobile = 'start'
+  endif
+
+  assign hover_text_custom = section.settings.hover_text_custom
+  assign hover_text_font = section.settings.hover_text_font
+  assign hover_text_padding_horizontal = section.settings.hover_text_padding_horizontal
+  assign hover_text_padding_horizontal_mobile = section.settings.hover_text_padding_horizontal_mobile
+  assign hover_text_padding_vertical = section.settings.hover_text_padding_vertical
+  assign hover_text_padding_vertical_mobile = section.settings.hover_text_padding_vertical_mobile
+  assign hover_text_bg_color = section.settings.hover_text_bg_color
+  assign hover_text_radius = section.settings.hover_text_radius
+  assign hover_text_size = section.settings.hover_text_size
+  assign hover_text_size_mobile = section.settings.hover_text_size_mobile
+  assign hover_text_height = section.settings.hover_text_height
+  assign hover_text_color = section.settings.hover_text_color
+
+  assign close_bg_color = section.settings.close_bg_color
+  assign close_color = section.settings.close_color
+
+  assign use_vendor = section.settings.use_vendor
+  assign vendor_custom = section.settings.vendor_custom
+  assign vendor_font = section.settings.vendor_font
+  assign vendor_size = section.settings.vendor_size
+  assign vendor_size_mobile = section.settings.vendor_size_mobile
+  assign vendor_height = section.settings.vendor_height
+  assign vendor_color = section.settings.vendor_color
+
+  assign title_custom = section.settings.title_custom
+  assign title_font = section.settings.title_font
+  assign title_size = section.settings.title_size
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign title_height = section.settings.title_height
+  assign title_color = section.settings.title_color
+  assign title_mt = section.settings.title_mt
+  assign title_mt_mobile = section.settings.title_mt_mobile
+
+  assign use_desc = section.settings.use_desc
+  assign desc_custom = section.settings.desc_custom
+  assign desc_font = section.settings.desc_font
+  assign desc_size = section.settings.desc_size
+  assign desc_size_mobile = section.settings.desc_size_mobile
+  assign desc_height = section.settings.desc_height
+  assign desc_color = section.settings.desc_color
+  assign desc_mt = section.settings.desc_mt
+  assign desc_mt_mobile = section.settings.desc_mt_mobile
+  assign desc_length = section.settings.desc_length
+
+  assign price_custom = section.settings.price_custom
+  assign price_font = section.settings.price_font
+  assign price_size = section.settings.price_size
+  assign price_size_mobile = section.settings.price_size_mobile
+  assign price_height = section.settings.price_height
+  assign price_original_color = section.settings.price_original_color
+  assign price_color = section.settings.price_color
+  assign price_compare = section.settings.price_compare
+  assign price_mt = section.settings.price_mt
+  assign price_mt_mobile = section.settings.price_mt_mobile
+
+  assign arrow_size = section.settings.arrow_size
+  assign arrow_size_mobile = section.settings.arrow_size_mobile
+  assign arrow_icon_size = section.settings.arrow_icon_size
+  assign arrow_icon_size_mobile = section.settings.arrow_icon_size_mobile
+  assign arrow_color = section.settings.arrow_color
+  assign arrow_hover_color = section.settings.arrow_hover_color
+  assign arrow_bg_color = section.settings.arrow_bg_color
+  assign arrow_bg_hover_color = section.settings.arrow_bg_hover_color
+  assign arrow_radius = section.settings.arrow_radius
+  assign arrow_border_thickness = section.settings.arrow_border_thickness
+  assign arrow_border_color = section.settings.arrow_border_color
+  assign arrow_border_hover_color = section.settings.arrow_border_hover_color
+  assign arrow_show_desktop = section.settings.arrow_show_desktop
+  assign arrow_show_mobile = section.settings.arrow_show_mobile
+  assign arrow_hover_effect = section.settings.arrow_hover_effect
+
+
+  assign lazy_load_setting = 'lazy'
+  if lazy == false
+    assign lazy_load_setting = 'eager' 
+  endif
+  
+  # Determine image aspect ratio based on settings
+  assign image_aspect_ratio = 800
+  if image_ratio == 'portrait'
+    assign image_aspect_ratio = 1200
+  elsif image_ratio == 'square'
+    assign image_aspect_ratio = 800
+  elsif image_ratio == 'landscape'
+    assign image_aspect_ratio = 533
+  endif
+  
+  # Get product width values as numbers for image_tag sizing
+  assign product_width_value = product_width | times: 1
+  assign product_width_mobile_value = product_width_mobile | times: 1
+  
+-%}
+
+{%- style -%}
+  {{  hover_text_font | font_face: font_display: 'swap' }}
+  {{  vendor_font | font_face: font_display: 'swap' }}
+  {{  title_font | font_face: font_display: 'swap' }}
+  {{  desc_font | font_face: font_display: 'swap' }}
+  {{  price_font | font_face: font_display: 'swap' }}
+
+  .section-{{ section.id }} {
+    border-top: solid {{ border_color }} {{ border_thickness }}px;
+    border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+    margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-left: {{ margin_horizontal_mobile }}rem;
+    margin-right: {{ margin_horizontal_mobile }}rem;
+    border-radius: {{ section_radius | times: 0.6 | round: 0 }}px;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }}-settings {
+    margin: 0 auto;
+    padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+    position: relative;
+  }
+
+  .hotspots-slider-{{ section.id }} {
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .hotspots-slide-{{ section.id }} {
+    position: relative;
+    transition: all 0.25s ease 0s;
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  .hotspots-slide-{{ section.id }}::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: {{ image_overlay_color |  hex_to_rgba: image_bg_overlay }};
+    pointer-events: none;
+    border-radius: {{ image_radius }}px;
+  }
+
+  .hotspots-slide-{{ section.id }}.swiper-slide-active {
+    opacity: 1;
+    transition: all 0.25s ease 0s;
+    z-index: 2;
+  }
+
+  .hotspots-image-{{ section.id }} {
+    border-radius: {{ image_radius }}px;
+    border: {{ image_border_thickness }}px solid {{ image_border_color }};
+    overflow: hidden;
+  }
+
+  .hotspots-image-{{ section.id }} img,
+  .hotspots-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hotspots-image-{{ section.id }} svg {
+    background-color: #AFAFAF;
+  }
+
+  .hotspots-hover-text-{{ section.id }} {
+    display: block;
+    min-width: max-content;
+    max-width: 250px;
+    padding: {{ hover_text_padding_vertical_mobile }}px {{ hover_text_padding_horizontal_mobile }}px;
+    background-color: {{ hover_text_bg_color }};
+    border-radius: {{ hover_text_radius }}px;
+    opacity: 0;
+    transition: all 0.25s ease 0s;
+    position: absolute;
+    bottom: 160%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .hotspots-hover-text-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    border: 6px solid transparent;
+    border-top: 6px solid {{ hover_text_bg_color }};
+    bottom: -11px;
+    left: calc(50% - 6px);
+  }
+
+  .hotspots-hover-text-{{ section.id }} * {
+    word-wrap: break-word;
+    margin: 0;
+    text-align: center;
+    font-size: {{ hover_text_size_mobile }}px;
+    color: {{ hover_text_color }};
+    line-height: {{ hover_text_height }}%;
+    text-transform: unset;
+  }
+
+  .hotspots-item-{{ section.id }}.active .hotspots-hover-text-{{ section.id }} {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .hotspots-item-{{ section.id }}.active-mobile .hotspots-hover-text-{{ section.id }} {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hotspots-item-wrapper-{{ section.id }} {
+    position: relative;
+    z-index: 1
+  }
+
+  .hotspots-item-icon-{{ section.id }} {
+    width: {{ hotspot_size_mobile }}px;
+    height: {{ hotspot_size_mobile }}px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .hotspots-item-icon-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hotspots-item-icon-{{ section.id }} svg circle {
+    fill: {{ hotspot_bg_color }};
+    stroke: {{ hotspot_border_color }};
+  }
+
+  .hotspots-item-icon-{{ section.id }} svg path {
+    fill: {{ hotspot_icon_color }};
+  }
+
+  .hotspots-product-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    width: {{ product_width_mobile }}px;
+    border-radius: {{ product_radius }}px;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: {{ product_bg_color }};
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    opacity: 0;
+    transition: all 0.25s ease 0s;
+  }
+
+
+  .hotspots-product-image-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .hotspots-product-image-{{ section.id }} img,
+  .hotspots-product-image-{{ section.id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden
+  }
+
+  .hotspots-product-close-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background: {{ close_bg_color }};
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .hotspots-product-close-{{ section.id }} svg line {
+    stroke: {{ close_color }};
+  }
+
+  .hotspots-product-content-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ product_content_horizontal_align_mobile }};
+    padding: {{ product_content_padding_vertical_mobile }}px {{ product_content_padding_horizontal_mobile }}px;
+  }
+
+  .hotspots-product-vendor-{{ section.id }} {
+    word-wrap: break-word;
+    margin: 0;
+    text-align: {{ product_content_align_mobile }};
+    font-size: {{ vendor_size_mobile }}px;
+    color: {{ vendor_color }};
+    line-height: {{ vendor_height }}%;
+    text-transform: unset;
+  }
+
+  .hotspots-product-title-{{ section.id }} {
+    word-wrap: break-word;
+    margin: 0;
+    margin-top: {{ title_mt_mobile }}px;
+    font-weight: 700;
+    text-align: {{ product_content_align_mobile }};
+    font-size: {{ title_size_mobile }}px;
+    color: {{ title_color }};
+    line-height: {{ title_height }}%;
+    text-transform: unset;
+  }
+
+  .hotspots-product-text-{{ section.id }} {
+    margin: 0;
+    margin-top: {{ desc_mt_mobile }}px;
+    text-align: {{ product_content_align_mobile }};
+    font-size: {{ desc_size_mobile }}px;
+    color: {{ desc_color }};
+    line-height: {{ desc_height }}%;
+    text-transform: unset;
+    word-wrap: break-word;
+  }
+
+  .hotspots-product-price-body-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: {{ product_content_horizontal_align_mobile }};
+    margin-top: {{ price_mt_mobile }}px;
+    gap: 5px;
+  }
+
+  .hotspots-product-price-body-{{ section.id }} strong {
+    color: {{ price_color }};
+  }
+
+  .hotspots-product-price-{{ section.id }} {
+    word-wrap: break-word;
+    margin: 0;
+    text-align: {{ product_content_align_mobile }};
+    font-size: {{ price_size_mobile }}px;
+    color: {{ price_color }};
+    line-height: {{ price_height }}%;
+    text-transform: unset;
+  }
+
+  .hotspots-product-compare-price-{{ section.id }}  {
+    word-wrap: break-word;
+    margin: 0;
+    text-decoration: line-through;
+    text-align: {{ product_content_align_mobile }};
+    font-size: {{ price_size_mobile }}px;
+    color: {{ price_original_color }};
+    line-height: {{ price_height }}%;
+    text-transform: unset;
+  }
+
+  .hotspots-btn-prev-wrap-{{ section.id }},
+  .hotspots-btn-next-wrap-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  .hotspots-btn-prev-wrap-{{ section.id }} {
+    left: 15%;
+  }
+
+  .hotspots-btn-next-wrap-{{ section.id }} {
+    right: 15%;
+  }
+
+  .hotspots-btn-prev-{{ section.id }},
+  .hotspots-btn-next-{{ section.id }} {
+    display: flex;
+    width: {{ arrow_size_mobile }}px;
+    height: {{ arrow_size_mobile }}px;
+    border: 0px;
+    border: {{ arrow_border_thickness }}px solid {{ arrow_border_color }};
+    border-radius: {{ arrow_radius }}px;
+    background: transparent;
+    background: {{ arrow_bg_color }};
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    -webkit-appearance: none;
+    /* box-shadow: 0px 0px 10px 0px rgba(0,0,0,.15); */
+  }
+
+  .hotspots-btn-prev-{{ section.id }} .animate-icon,
+  .hotspots-btn-next-{{ section.id }} .animate-icon {
+    pointer-events: none;
+    place-items: center;
+    display: grid;
+  }
+
+  .hotspots-btn-prev-{{ section.id }} .animate-icon:before,
+  .hotspots-btn-next-{{ section.id }} .animate-icon:before {
+    content: "";
+    grid-area: 1 / -1;
+    transition: all .2s ease;
+    width: {{ arrow_icon_size_mobile }}px;
+    height: {{ arrow_icon_size_mobile }}px;
+    transform: rotate(calc(1 * 45deg));
+    box-sizing: border-box;
+    border-style: solid;
+    border: 0px;
+    border-right: 2px solid currentColor;
+    border-top: 2px solid currentColor;
+    position: relative;
+    left: -1px;
+  }
+
+  .hotspots-btn-prev-{{ section.id }} .animate-icon:before {
+    left: unset;
+    right: -1px;
+    border-right: 0px;
+    border-top: 0px;
+    border-bottom: 2px solid currentColor;
+    border-left: 2px solid currentColor;
+  }
+
+  .hotspots-btn-prev-{{ section.id }} .animate-icon:after,
+  .hotspots-btn-next-{{ section.id }} .animate-icon:after {
+    content: "";
+    grid-area: 1 / -1;
+    transition: all .2s ease;
+    width: {{ arrow_icon_size_mobile | minus: 0.3 }}px;
+    height: 1.6px;
+    transform-origin: center;
+    opacity: 0;
+    background: currentColor;
+    transform: scaleX(.5);
+  }
+
+  .hotspots-btn-prev-{{ section.id }} span,
+  .hotspots-btn-next-{{ section.id }} span {
+    color: {{ arrow_color }};
+  }
+
+  .hotspots-btn-prev-{{ section.id }}.swiper-button-disabled,
+  .hotspots-btn-next-{{ section.id }}.swiper-button-disabled {
+    opacity: 0.5;
+  }
+
+  @media(min-width: 1024px) {
+
+    .section-{{ section.id }} {
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+      margin-left: {{ margin_horizontal }}rem;
+      margin-right: {{ margin_horizontal }}rem;
+      border-radius: {{ section_radius }}px;
+    }
+
+    .section-{{ section.id }}-settings {
+      padding: 0 5rem;
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+    }
+
+    .hotspots-hover-text-{{ section.id }} {
+      padding: {{ hover_text_padding_vertical }}px {{ hover_text_padding_horizontal }}px;
+    }
+
+    .hotspots-hover-text-{{ section.id }} * {
+      font-size: {{ hover_text_size }}px;
+    }
+
+    .hotspots-product-{{ section.id }} {
+      width: {{ product_width }}px;
+    }
+
+    .hotspots-product-content-{{ section.id }} {
+      justify-content: {{ product_content_horizontal_align }};
+      padding: {{ product_content_padding_vertical }}px {{ product_content_padding_horizontal }}px;
+    }
+
+    .hotspots-product-vendor-{{ section.id }} {
+      font-size: {{ vendor_size }}px;
+    }
+
+    .hotspots-product-title-{{ section.id }} {
+      margin-top: {{ title_mt }}px;
+      text-align: {{ product_content_align }};
+      font-size: {{ title_size }}px;
+    }
+
+    .hotspots-item-icon-{{ section.id }} {
+      width: {{ hotspot_size }}px;
+      height: {{ hotspot_size }}px;
+    }
+
+    .hotspots-product-text-{{ section.id }} {
+      margin-top: {{ desc_mt }}px;
+      text-align: {{ product_content_align }};
+      font-size: {{ desc_size }}px;
+    }
+
+    .hotspots-product-price-body-{{ section.id }} {
+      margin-top: {{ price_mt }}px;
+      justify-content: {{ product_content_horizontal_align }};
+    }
+
+    .hotspots-product-price-{{ section.id }} {
+      text-align: {{ product_content_align }};
+      font-size: {{ price_size }}px;
+    }
+
+    .hotspots-product-compare-price-{{ section.id }} {
+      text-align: {{ product_content_align }};
+      font-size: {{ price_size }}px;
+    }
+
+    .hotspots-btn-prev-wrap-{{ section.id }} {
+      left: 25%;
+    }
+
+    .hotspots-btn-next-wrap-{{ section.id }} {
+      right: 25%;
+    }
+
+    .hotspots-btn-prev-{{ section.id }},
+    .hotspots-btn-next-{{ section.id }} {
+      width: {{ arrow_size }}px;
+      height: {{ arrow_size }}px;
+      transition: all 0.25s ease 0s;
+    }
+
+    .hotspots-btn-prev-{{ section.id }} .animate-icon:before,
+    .hotspots-btn-next-{{ section.id }} .animate-icon:before {
+      width: {{ arrow_icon_size }}px;
+      height: {{ arrow_icon_size }}px;
+    }
+
+    .hotspots-btn-prev-{{ section.id }} .animate-icon:after,
+    .hotspots-btn-next-{{ section.id }} .animate-icon:after {
+      width: {{ arrow_icon_size | minus: 0.3 }}px;
+    }
+
+    .hotspots-item-wrapper-{{ section.id }}:hover .hotspots-hover-text-{{ section.id }} {
+      opacity: 1;
+      pointer-events: all;
+      transition: all 0.25s ease 0s;
+    }
+
+    .hotspots-item-{{ section.id }}.active .hotspots-hover-text-{{ section.id }} {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+  }
+
+  @media (max-width: 1023px) {
+    .hotspots-item-wrapper-{{ section.id }} {
+      padding: 10px;
+      margin: -10px;
+    }
+
+    .hotspots-item-icon-{{ section.id }} {
+      width: {{ hotspot_size_mobile | plus: 10 }}px;
+      height: {{ hotspot_size_mobile | plus: 10 }}px;
+    }
+
+    .hotspots-item-{{ section.id }} {
+      z-index: 2;
+    }
+
+    .hotspots-item-{{ section.id }}.active-mobile {
+      z-index: 5;
+    }
+
+    .hotspots-product-{{ section.id }} {
+      z-index: 3;
+    }
+  }
+
+   @media (max-width: 1023px) {
+    .hotspots-product-{{ section.id }} {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 1000;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .hotspots-item-{{ section.id }}.active-mobile .hotspots-product-{{ section.id }} {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+  }
+{%- endstyle -%}
+
+{% if margin_horizontal_mobile > 0 %}
+  <style>
+    .section-{{ section.id }} {
+      border-left: solid {{ border_color }} {{ border_thickness }}px;
+      border-right: solid {{ border_color }} {{ border_thickness }}px;
+    }
+
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: 0px;
+        border-right: 0px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if margin_horizontal > 0 %}
+  <style>
+    @media(min-width: 1024px) {
+      .section-{{ section.id }} {
+        border-left: solid {{ border_color }} {{ border_thickness }}px;
+        border-right: solid {{ border_color }} {{ border_thickness }}px;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if hover_text_custom %}
+  <style>
+    .hotspots-hover-text-{{ section.id }} * {
+      font-family: {{ hover_text_font.family }}, {{ hover_text_font.fallback_families }};
+      font-weight: {{ hover_text_font.weight }};
+      font-style: {{ hover_text_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if vendor_custom %}
+  <style>
+    .hotspots-product-vendor-{{ section.id }} {
+      font-family: {{ vendor_font.family }}, {{ vendor_font.fallback_families }};
+      font-weight: {{ vendor_font.weight }};
+      font-style: {{ vendor_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if title_custom %}
+  <style>
+    .hotspots-product-title-{{ section.id }} {
+      font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+      font-weight: {{ title_font.weight }};
+      font-style: {{ title_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if desc_custom %}
+  <style>
+    .hotspots-product-text-{{ section.id }} {
+      font-family: {{ desc_font.family }}, {{ desc_font.fallback_families }};
+      font-weight: {{ desc_font.weight }};
+      font-style: {{ desc_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if price_custom %}
+  <style>
+    .hotspots-product-price-{{ section.id }} {
+      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};
+      font-weight: {{ price_font.weight }};
+      font-style: {{ price_font.style }};
+    }
+    .hotspots-product-compare-price-{{ section.id }} {
+      font-family: {{ price_font.family }}, {{ price_font.fallback_families }};
+      font-weight: {{ price_font.weight }};
+      font-style: {{ price_font.style }};
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio_mobile == 'portrait' %}
+  <style>
+    .hotspots-image-{{ section.id }} {
+      aspect-ratio: 9.6/13;
+    }
+  </style>
+{% elsif image_ratio_mobile == 'landscape' %}
+  <style>
+    .hotspots-image-{{ section.id }} {
+      aspect-ratio: 12/8;
+    }
+  </style>
+{% elsif image_ratio_mobile == 'square' %}
+  <style>
+    .hotspots-image-{{ section.id }} {
+      aspect-ratio: 12/12;
+    }
+  </style>
+{% else %}
+  <style>
+    .hotspots-image-{{ section.id }} {
+      aspect-ratio: auto;
+    }
+  </style>
+{% endif %}
+
+{% if image_ratio == 'portrait' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-image-{{ section.id }} {
+        aspect-ratio: 9.6/13;
+      }
+    }
+  </style>
+{% elsif image_ratio == 'landscape' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-image-{{ section.id }} {
+        aspect-ratio: 12/8;
+      }
+    }
+  </style>
+{% elsif image_ratio == 'square' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-image-{{ section.id }} {
+        aspect-ratio: 12/12;
+      }
+    }
+  </style>
+{% else %}
+  <style>
+     @media(min-width: 1024px) {
+      .hotspots-image-{{ section.id }} {
+        aspect-ratio: auto;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if product_image_ratio_mobile == 'portrait' %}
+  <style>
+    .hotspots-product-image-{{ section.id }} {
+      aspect-ratio: 9.6/13;
+    }
+  </style>
+{% elsif product_image_ratio_mobile == 'landscape' %}
+  <style>
+    .hotspots-product-image-{{ section.id }} {
+      aspect-ratio: 12/8;
+    }
+  </style>
+{% elsif product_image_ratio_mobile == 'square' %}
+  <style>
+    .hotspots-product-image-{{ section.id }} {
+      aspect-ratio: 12/12;
+    }
+  </style>
+{% else %}
+  <style>
+    .hotspots-product-image-{{ section.id }} {
+      aspect-ratio: auto;
+    }
+  </style>
+{% endif %}
+
+{% if product_image_ratio == 'portrait' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-product-image-{{ section.id }} {
+        aspect-ratio: 9.6/13;
+      }
+    }
+  </style>
+{% elsif product_image_ratio == 'landscape' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-product-image-{{ section.id }} {
+        aspect-ratio: 12/8;
+      }
+    }
+  </style>
+{% elsif product_image_ratio == 'square' %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-product-image-{{ section.id }} {
+        aspect-ratio: 12/12;
+      }
+    }
+  </style>
+{% else %}
+  <style>
+     @media(min-width: 1024px) {
+      .hotspots-product-image-{{ section.id }} {
+        aspect-ratio: auto;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if arrow_hover_effect == 'color' %}
+  <style>
+    .hotspots-btn-prev-{{ section.id }}:hover,
+    .hotspots-btn-next-{{ section.id }}:hover {
+      transition: all 0.3s ease 0s;
+      border: {{ arrow_border_thickness }}px solid {{ arrow_border_hover_color }};
+      background: {{ arrow_bg_hover_color }};
+    }
+
+    .hotspots-btn-prev-{{ section.id }}:hover .animate-icon,
+    .hotspots-btn-next-{{ section.id }}:hover .animate-icon {
+      color: {{ arrow_hover_color }};
+    }
+  </style>
+{% elsif arrow_hover_effect == 'scale' %}
+  <style>
+    .hotspots-btn-prev-{{ section.id }}:hover,
+    .hotspots-btn-next-{{ section.id }}:hover {
+      transform: scale(0.9);
+    }
+
+    @media(min-width: 1024px) {
+      .hotspots-btn-prev-{{ section.id }}:hover,
+      .hotspots-btn-next-{{ section.id }}:hover {
+        transform: scale(0.9);
+      }
+    }
+  </style>
+{% elsif arrow_hover_effect == 'arrow' %}
+  <style>
+    .hotspots-btn-next-{{ section.id }}:hover .animate-icon:before {
+      transform: translate(calc(1 * 0.125rem)) rotate(calc(1 * 45deg));
+    }
+
+    .hotspots-btn-prev-{{ section.id }}:hover .animate-icon:before {
+      transform: translate(calc(-1 * 0.125rem)) rotate(calc(1 * 45deg));
+    }
+
+    .hotspots-btn-prev-{{ section.id }}:hover .animate-icon:after,
+    .hotspots-btn-next-{{ section.id }}:hover .animate-icon:after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  </style>
+{% endif %}
+
+{% if arrow_show_mobile %}
+  <style>
+    .hotspots-btn-prev-{{ section.id }},
+    .hotspots-btn-next-{{ section.id }} {
+      display: flex;
+    }
+  </style>
+{% else %}
+  <style>
+    .hotspots-btn-prev-{{ section.id }},
+    .hotspots-btn-next-{{ section.id }} {
+      display: none;
+    }
+  </style>
+{% endif %}
+
+{% if arrow_show_desktop %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-btn-prev-{{ section.id }},
+      .hotspots-btn-next-{{ section.id }} {
+        display: flex;
+      }
+    }
+  </style>
+{% else %}
+  <style>
+    @media(min-width: 1024px) {
+      .hotspots-btn-prev-{{ section.id }},
+      .hotspots-btn-next-{{ section.id }} {
+        display: none;
+      }
+    }
+  </style>
+{% endif %}
+
+{% for block in section.blocks %}
+  {% if block.type == 'hotspot' %}
+    <style>
+      .hotspots-item-{{ block.id }} {
+        position: absolute;
+        left: {{ block.settings.horizontal_position_mobile }}%;
+        top: {{ block.settings.vertical_position_mobile }}%;
+        transform: translate(-{{ block.settings.horizontal_position_mobile }}%, -{{ block.settings.vertical_position_mobile}}%);
+        z-index: 1;
+      }
+
+      .hotspots-item-{{ block.id }}.active {
+        z-index: 3;
+      }
+
+      @media(min-width: 1024px) {
+        .hotspots-item-{{ block.id }} {
+          left: {{ block.settings.horizontal_position }}%;
+          top: {{ block.settings.vertical_position }}%;
+          transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position}}%);
+        }
+      }
+    </style>
+
+    {% if block.settings.horizontal_position_mobile < 50 %}
+      <style>
+        .hotspots-item-{{ block.id }} .hotspots-product-{{ section.id }} {
+          transform: translate(-35%, -50%) scale(0);
+        }
+
+        .hotspots-item-{{ block.id }}.active-mobile .hotspots-product-{{ section.id }} {
+          opacity: 1;
+          transform: translate(-35%, -50%) scale(1);
+          pointer-events: all;
+          z-index: 10;
+          transition: all 0.25s ease 0s;
+        }
+      </style>
+    {% else %}
+      <style>
+        .hotspots-item-{{ block.id }} .hotspots-product-{{ section.id }} {
+          transform: translate(-65%, -50%) scale(0);
+        }
+
+        .hotspots-item-{{ block.id }}.active-mobile .hotspots-product-{{ section.id }} {
+          opacity: 1;
+          transform: translate(-65%, -50%) scale(1);
+          pointer-events: all;
+          z-index: 10;
+          transition: all 0.25s ease 0s;
+        }
+      </style>
+    {% endif %}
+
+    {% if block.settings.horizontal_position < 50 %}
+      <style>
+        @media(min-width: 1024px) {
+          .hotspots-item-{{ block.id }} .hotspots-product-{{ section.id }} {
+            transform: translate(-35%, -50%) scale(0);
+          }
+
+          .hotspots-item-{{ block.id }}.active .hotspots-product-{{ section.id }},
+          .hotspots-item-{{ block.id }}.active-mobile .hotspots-product-{{ section.id }} {
+            opacity: 1;
+            transform: translate(-35%, -50%) scale(1);
+            pointer-events: all;
+            z-index: 10;
+            transition: all 0.25s ease 0s;
+          }
+        }
+      </style>
+    {% else %}
+      <style>
+        @media(min-width: 1024px) {
+          .hotspots-item-{{ block.id }} .hotspots-product-{{ section.id }} {
+            transform: translate(-65%, -50%) scale(0);
+          }
+
+          .hotspots-item-{{ block.id }}.active .hotspots-product-{{ section.id }},
+          .hotspots-item-{{ block.id }}.active-mobile .hotspots-product-{{ section.id }} {
+            opacity: 1;
+            transform: translate(-65%, -50%) scale(1);
+            pointer-events: all;
+            z-index: 10;
+            transition: all 0.25s ease 0s;
+          }
+        }
+      </style>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} PREVIEW {% endcomment %}
+<style>
+  .hotspots-slider-{{ section.id }}.preview .swiper-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .hotspots-slider-{{ section.id }}.preview .hotspots-slide-{{ section.id }} {
+    width: 100%;
+  }
+
+  .hotspots-slider-{{ section.id }}.preview .hotspots-slide-{{ section.id }}:not(:first-child) {
+    margin-left: {{ slider_gap_mobile }}px;
+  }
+
+  @media(min-width: 1024px) {
+    .hotspots-slider-{{ section.id }}.preview .hotspots-slide-{{ section.id }}:not(:first-child) {
+      margin-left: {{ slider_gap }}px;
+    }
+
+    .hotspots-slider-{{ section.id }}.preview .hotspots-slide-{{ section.id }} {
+      width: calc(100% / {{ slider_view }} - ({{ slider_gap }}px));
+    }
+  }
+</style>
+
+<div
+  class="section-{{ section.id }} hotspots-{{ section.id }}"
+  style="background-color:{{ background_color }}; background-image: {{ background_gradient }};"
+>
+  <div class="section-{{ section.id }}-settings">
+    <div class="hotspots-slider-{{ section.id }} preview swiper">
+      <div class="swiper-wrapper">
+        {% assign inside_item = false %}
+        {% for block in section.blocks %}
+          {% if block.type == 'image' %}
+            {% if inside_item %}
+              </div>
+            {% endif %}
+            <div class="hotspots-slide-{{ section.id }} swiper-slide">
+              <div class="hotspots-image-{{ section.id }}">
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 1500 | image_tag:
+                    loading: lazy_load_setting,
+                    width: block.settings.image.width,
+                    height: block.settings.image.height,
+                    class: "hotspots-main-image",
+                    sizes: "(min-width: 1024px) 33vw, 85vw",
+                    widths: "375, 550, 750, 1100, 1500, 1780, 2000"
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag }}
+                {% endif %}
+              </div>
+              {% assign inside_item = true %}
+          {% elsif block.type == 'hotspot' %}
+            <div class="hotspots-item-{{ section.id }} hotspots-item-{{ block.id }}">
+              <div class="hotspots-item-wrapper-{{ section.id }}">
+                <div class="hotspots-item-icon-{{ section.id }}" id="{{ block.id }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11.7693" cy="11.7688" r="10.742" fill="white" stroke="black"></circle>
+                    <path d="M12.5124 10.8451H15.4792V12.1165H12.5124V15.1418H11.1386V12.1165H8.17188V10.8451H11.1386V7.83447H12.5124V10.8451Z" fill="black"></path>
+                  </svg>
+                </div>
+                {% if block.settings.hover_text != blank or block.settings.product != blank %}
+                  <div class="hotspots-hover-text-{{ section.id }}">
+                    {% if block.settings.hover_text != blank %}
+                      <p>{{ block.settings.hover_text }}</p>
+                    {% elsif block.settings.product != blank %}
+                      <p>{{ block.settings.product.title }}</p>
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if block.settings.product != blank or block.settings.text != blank  %}
+                  {% if block.settings.product != blank %}
+                    <a
+                      href="{{ block.settings.product.url }}"
+                      class="hotspots-product-{{ section.id }}"
+                      data-id="{{ block.id }}"
+                    >
+                      <div class="hotspots-product-close-{{ section.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                          <line x1="17.7129" y1="5.89921" x2="6.39922" y2="17.2129" stroke="black"></line>
+                          <line x1="6.39848" y1="5.7878" x2="17.7122" y2="17.1015" stroke="black"></line>
+                        </svg>
+                      </div>
+                      <div class="hotspots-product-image-{{ section.id }}">
+                        {% capture product_sizes %}(min-width: 1024px) {{ product_width }}px, {{ product_width_mobile }}px{% endcapture %}
+                          {{ block.settings.product.featured_image | image_url: width: 800 | image_tag:
+                            loading: lazy_load_setting,
+                            width: block.settings.product.featured_image.width,
+                            height: block.settings.product.featured_image.height,
+                            class: "hotspots-product-img",
+                            sizes: product_sizes,
+                            widths: "300, 400, 500, 600, 700, 800"
+                          }}
+                      </div>
+                      <div class="hotspots-product-content-{{ section.id }}">
+                        <!-- Product content remains the same -->
+                        {% if use_vendor and block.settings.product.vendor != blank %}
+                          <p class="hotspots-product-vendor-{{ section.id }}">{{ block.settings.product.vendor }}</p>
+                        {% endif %}
+                        <p class="hotspots-product-title-{{ section.id }}">{{ block.settings.product.title }}</p>
+                        {% if use_desc and block.settings.product.description != blank %}
+                          <div class="hotspots-product-text-{{ section.id }}">
+                            {{ block.settings.product.description | strip_html | truncatewords: desc_length }}
+                          </div>
+                        {% endif %}
+                        {% if block.settings.product.price != blank %}
+                          <div class="hotspots-product-price-body-{{ section.id }}">
+                            <p class="hotspots-product-price-{{ section.id }}">
+                              {{ block.settings.product.price | money }}
+                            </p>
+                            {% if block.settings.product.compare_at_price != blank and price_compare %}
+                              <strong>-</strong>
+                              <p class="hotspots-product-compare-price-{{ section.id }}">
+                                {{ block.settings.product.compare_at_price | money }}
+                              </p>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </a>
+                  {% elsif block.settings.text != blank %}
+                    <!-- Text content remains the same -->
+                    <div class="hotspots-product-{{ section.id }}" data-id="{{ block.id }}">
+                      <div class="hotspots-product-close-{{ section.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                          <line x1="17.7129" y1="5.89921" x2="6.39922" y2="17.2129" stroke="black"></line>
+                          <line x1="6.39848" y1="5.7878" x2="17.7122" y2="17.1015" stroke="black"></line>
+                        </svg>
+                      </div>
+                      <div class="hotspots-product-content-{{ section.id }}">
+                        <div class="hotspots-product-text-{{ section.id }}">
+                          {{ block.settings.text }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% if inside_item %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="hotspots-btn-prev-wrap-{{ section.id }}">
+        <button class="hotspots-btn-prev-{{ section.id }}">
+          <span class="animate-icon"></span>
+        </button>
+      </div>
+      <div class="hotspots-btn-next-wrap-{{ section.id }}">
+        <button class="hotspots-btn-next-{{ section.id }}">
+          <span class="animate-icon"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function loadSwiper(callback) {
+    if (window.Swiper) {
+      callback();
+    } else {
+      const script = document.createElement('script');
+      script.src = "https://cdn.jsdelivr.net/npm/swiper@6.8.4/swiper-bundle.min.js";
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
+  }
+
+  function initHotspot7(sectionId) {
+    const sectionElement = document.getElementById(`shopify-section-${sectionId}`);
+    const sliderElement = sectionElement.querySelector(`.hotspots-slider-${sectionId}`);
+    
+    if (!sliderElement) return;
+  
+    sliderElement.classList.remove('preview');
+  
+    const hotspots = sectionElement.querySelectorAll(`.hotspots-item-${sectionId}`);
+    
+    const slider = new Swiper(sliderElement, {
+      speed: 800,
+      loop: true,
+      centeredSlides: true,
+      navigation: {
+        nextEl: `.hotspots-btn-next-${sectionId}`,
+        prevEl: `.hotspots-btn-prev-${sectionId}`,
+      },
+      breakpoints: {
+        320: {
+          spaceBetween: {{ slider_gap_mobile }},
+          slidesPerView: {{ slider_view_mobile }},
+        },
+        768: {
+          spaceBetween: {{ slider_gap_mobile }},
+          slidesPerView: {{ slider_view | times: 0.5 | round: 0 }},
+        },
+        1024: {
+          spaceBetween: {{ slider_gap }},
+          slidesPerView: {{ slider_view }},
+        }
+      },
+      on: {
+        slideChange: function () {
+          hotspots.forEach((hotspot) => {
+            hotspot.classList.remove('active', 'active-mobile');
+          });
+        }
+      }
+    });
+  
+    // Function to close all hotspots
+    const closeAllHotspots = () => {
+      hotspots.forEach((h) => {
+        h.classList.remove('active', 'active-mobile');
+      });
+      document.body.classList.remove('modal-open');
+    };
+  
+    // Handle clicks on the hotspot icons or close buttons
+    sectionElement.addEventListener('click', (event) => {
+      const hotspot = event.target.closest(`.hotspots-item-${sectionId}`);
+      
+      if (hotspot) {
+        const icon = event.target.closest(`.hotspots-item-icon-${sectionId}`);
+        const close = event.target.closest(`.hotspots-product-close-${sectionId}`);
+        
+        if (icon) {
+          event.preventDefault();
+          event.stopPropagation(); // Prevent the document click handler from firing
+          
+          const isMobile = window.innerWidth < 1024;
+          const activeClass = isMobile ? 'active-mobile' : 'active';
+          
+          // Close all other hotspots
+          hotspots.forEach((h) => {
+            if (h !== hotspot) {
+              h.classList.remove('active', 'active-mobile');
+            }
+          });
+          
+          // Toggle the current hotspot
+          const isActive = hotspot.classList.toggle(activeClass);
+          
+          if (isMobile) {
+            document.body.classList.toggle('modal-open', isActive);
+          }
+        } else if (close) {
+          event.preventDefault();
+          hotspot.classList.remove('active', 'active-mobile');
+          document.body.classList.remove('modal-open');
+        }
+      }
+    });
+  
+    // Add a click event listener to the document to close hotspots when clicking outside
+    document.addEventListener('click', (event) => {
+      // Check if the click was inside a hotspot or its product
+      const clickInsideHotspot = event.target.closest(`.hotspots-item-${sectionId}`);
+      const clickInsideProduct = event.target.closest(`.hotspots-product-${sectionId}`);
+      
+      // If the click was outside both hotspot and product areas, close all hotspots
+      if (!clickInsideHotspot && !clickInsideProduct) {
+        closeAllHotspots();
+      }
+    });
+  }
+  
+  function initializeAllHotspotSections() {
+    const sections = document.querySelectorAll('[id^="shopify-section-"]');
+    sections.forEach(section => {
+      if (section.querySelector('.hotspots-slider-{{ section.id }}')) {
+        const sectionId = section.id.replace('shopify-section-', '');
+        loadSwiper(() => initHotspot7(sectionId));
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAllHotspotSections);
+  } else {
+    initializeAllHotspotSections();
+  }
+  
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      const sectionId = event.detail.sectionId;
+      if (event.target.querySelector('.hotspots-slider-{{ section.id }}')) {
+        loadSwiper(() => initHotspot7(sectionId));
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SG- Hotspots #7",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "⚠️ Save settings to view updates"
+    },
+    {
+      "type": "paragraph",
+      "content": "Please adjust the product card size and section padding to ensure that all product cards fit within the section."
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "range",
+      "id": "slider_view",
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "label": "Slides per view",
+      "default": 3.5
+    },
+    {
+      "type": "range",
+      "id": "slider_view_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "label": "Slides per view - mobile",
+      "default": 1.3
+    },
+    {
+      "type": "range",
+      "id": "slider_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "slider_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - mobile",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Aspect ratio",
+      "default": "portrait",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "Aspect ratio - mobile",
+      "default": "portrait",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_bg_overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Overlay",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Hotspot settings"
+    },
+    {
+      "type": "range",
+      "id": "hotspot_size",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "hotspot_size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size - mobile",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Hover text settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "hover_text_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "hover_text_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "hover_text_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "hover_text_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "hover_text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "hover_text_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "hover_text_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "hover_text_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "hover_text_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "hover_text_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Product modal settings"
+    },
+    {
+      "type": "range",
+      "id": "product_width",
+      "min": 100,
+      "max": 300,
+      "step": 2,
+      "unit": "px",
+      "label": "Width",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "product_width_mobile",
+      "min": 100,
+      "max": 300,
+      "step": 2,
+      "unit": "px",
+      "label": "Width - mobile",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "product_radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Product image settings"
+    },
+    {
+      "type": "select",
+      "id": "product_image_ratio",
+      "label": "Aspect ratio",
+      "default": "square",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "product_image_ratio_mobile",
+      "label": "Aspect ratio - mobile",
+      "default": "square",
+      "options": [
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        },
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Original",
+          "value": "original"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Product content settings"
+    },
+    {
+      "type": "range",
+      "id": "product_content_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "product_content_padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal - mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "product_content_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "product_content_padding_vertical_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical - mobile",
+      "default": 10
+    },
+    {
+      "type": "text_alignment",
+      "id": "product_content_align",
+      "label": "Alignment"
+    },
+    {
+      "type": "text_alignment",
+      "id": "product_content_align_mobile",
+      "label": "Alignment - mobile"
+    },
+    {
+      "type": "header",
+      "content": "Product vendor settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_vendor",
+      "label": "Use vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "vendor_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "vendor_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "vendor_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "vendor_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "vendor_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "header",
+      "content": "Product title settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "title_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "title_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Product description settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_desc",
+      "label": "Use product description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "desc_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "desc_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desc_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desc_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "desc_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "desc_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "desc_length",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "label": "Length words",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Product price settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "price_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "price_font",
+      "label": "Font family",
+      "default": "josefin_sans_n4"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "price_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "price_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "price_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "price_mt_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top - mobile",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "price_compare",
+      "label": "Show compare-at price",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Arrow settings"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "arrow_size_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Size - mobile",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "arrow_icon_size",
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "arrow_icon_size_mobile",
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon size - mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "arrow_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "arrow_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "arrow_hover_effect",
+      "label": "Hover effect",
+      "default": "color",
+      "options": [
+        {
+          "label": "Change color",
+          "value": "color"
+        },
+        {
+          "label": "Change size",
+          "value": "scale"
+        },
+        {
+          "label": "Change arrow",
+          "value": "arrow"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "arrow_show_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrow_show_mobile",
+      "label": "Show on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Image colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "image_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Overlay",
+      "id": "image_overlay_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Hotspot colors"
+    },
+    {
+      "type": "color",
+      "label": "Icon",
+      "id": "hotspot_icon_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "hotspot_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "hotspot_border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Hover text colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "hover_text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "hover_text_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Product colors"
+    },
+    {
+      "type": "color",
+      "label": "Vendor",
+      "id": "vendor_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Title",
+      "id": "title_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Description",
+      "id": "desc_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Price",
+      "id": "price_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Compare-at price",
+      "id": "price_original_color",
+      "default": "#B64A40"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "product_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Product close colors"
+    },
+    {
+      "type": "color",
+      "label": "Close icon",
+      "id": "close_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "close_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Arrow colors"
+    },
+    {
+      "type": "color",
+      "label": "Icon",
+      "id": "arrow_color",
+      "default": "#7B7B7B"
+    },
+    {
+      "type": "color",
+      "label": "Icon hover",
+      "id": "arrow_hover_color",
+      "default": "#7B7B7B"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "arrow_bg_color",
+      "default": "#EBEBEB"
+    },
+    {
+      "type": "color",
+      "label": "Background hover",
+      "id": "arrow_bg_hover_color",
+      "default": "#F5F5F5"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "arrow_border_color",
+      "default": "#C7C7C7"
+    },
+    {
+      "type": "color",
+      "label": "Border hover",
+      "id": "arrow_border_hover_color",
+      "default": "#C7C7C7"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient",
+      "info": "Remove gradient to replace with solid colors"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Margin sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Margin sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 120
+    },
+    {
+       "type": "range",
+       "id": "padding_bottom",
+       "min": 0,
+       "max": 200,
+       "step": 4,
+       "unit": "px",
+       "label": "Padding bottom",
+       "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section roundness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "SG-Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "hotspot",
+      "name": "SG-Hotspot",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Hotspots position"
+        },
+        {
+          "type": "range",
+          "id": "vertical_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "vertical_position_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position - mobile",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position - mobile",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Hotspots content"
+        },
+        {
+          "type": "text",
+          "id": "hover_text",
+          "label": "Hover text",
+          "default": "Hover text",
+          "info": "Leave blank to show product title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "info": "Use this text when product is blank"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG- Hotspots #7",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 40,
+            "vertical_position_mobile": 40,
+            "horizontal_position": 10,
+            "horizontal_position_mobile": 10
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 20,
+            "vertical_position_mobile": 20,
+            "horizontal_position": 80,
+            "horizontal_position_mobile": 80
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 70,
+            "vertical_position_mobile": 70,
+            "horizontal_position": 85,
+            "horizontal_position_mobile": 85
+          }
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 40,
+            "vertical_position_mobile": 40,
+            "horizontal_position": 10,
+            "horizontal_position_mobile": 10
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 20,
+            "vertical_position_mobile": 20,
+            "horizontal_position": 80,
+            "horizontal_position_mobile": 80
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 70,
+            "vertical_position_mobile": 70,
+            "horizontal_position": 85,
+            "horizontal_position_mobile": 85
+          }
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 40,
+            "vertical_position_mobile": 40,
+            "horizontal_position": 10,
+            "horizontal_position_mobile": 10
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 20,
+            "vertical_position_mobile": 20,
+            "horizontal_position": 80,
+            "horizontal_position_mobile": 80
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "vertical_position": 70,
+            "vertical_position_mobile": 70,
+            "horizontal_position": 85,
+            "horizontal_position_mobile": 85
+          }
+        },
+      ]
+    }
+  ]
+}
+{% endschema %}

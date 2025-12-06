@@ -1,14 +1,14 @@
 <style>
-  {{ section.settings.ss_font_family | font_face: font_display: 'swap' }}
+  {{ section.settings.sg_font_family | font_face: font_display: 'swap' }}
 
-  .ss-announcement-bar,
-  .ss-announcement-bar__message {
+  .sg-announcement-bar,
+  .sg-announcement-bar__message {
     overflow: hidden;
   }
-  .ss-announcement-bar:hover {
+  .sg-announcement-bar:hover {
     opacity: {{ section.settings.hover_opacity | divided_by: 100.0 }};
   }
-  .ss-announcement-bar__link {
+  .sg-announcement-bar__link {
     display: block;
     width: 100%;
     padding: {{ section.settings.padding_vertical }}rem {{section.settings.padding_horizontal}}rem;
@@ -16,7 +16,7 @@
     color: var(--text-color);
     line-height:0;
   }
-  .ss-announcement-bar__link:hover {
+  .sg-announcement-bar__link:hover {
     color: var(--text-color);
   }
   #marq {
@@ -65,13 +65,13 @@
     }
   }
   {% endif %}
-  .ss-announcement-bar-{{ section.id }} #orig {
+  .sg-announcement-bar-{{ section.id }} #orig {
     display: inline-block;
     overflow: hidden;
     transform: translate(0);
   }
 
-  .ss-announcement-bar__message {
+  .sg-announcement-bar__message {
     text-align: center;
     padding: 0;
     margin: 0;
@@ -82,7 +82,7 @@
     display: flex;
     flex-direction: row-reverse;
   }
-  .ss-announcement-bar__message li {
+  .sg-announcement-bar__message li {
 
     line-height: 1;
     font-size: {{section.settings.text_size}}px;
@@ -91,7 +91,7 @@
     position: relative;
 
   }
-  .ss-announcement-bar__message li::after {
+  .sg-announcement-bar__message li::after {
     content: '';
     width: 3.5px;
     height: 3.5px;
@@ -107,25 +107,25 @@
     #marq {
       max-height: 39px;
     }
-    .ss-announcement-bar__message li {
+    .sg-announcement-bar__message li {
       padding-right: 55px;
     }
-    .ss-announcement-bar__message li::after {
+    .sg-announcement-bar__message li::after {
       right: 25px;
     }
   }
-  .ss-announcement-bar-{{ section.id }} #orig {
+  .sg-announcement-bar-{{ section.id }} #orig {
     animation: marquesina-{{ section.id }} var(--animation-duration, 45s) infinite normal linear 1s;
   }
 
-  .ss-announcement-bar-{{ section.id }} #orig.reverse {
+  .sg-announcement-bar-{{ section.id }} #orig.reverse {
    animation: marquesina-reverse-{{ section.id }} var(--animation-duration, 45s) infinite normal linear 2s;
   }
 </style>
 
 {% if section.settings.pause_hover %}
   <style>
-    .ss-announcement-bar:hover #orig {
+    .sg-announcement-bar:hover #orig {
       animation-play-state: paused
     }
   </style>
@@ -133,21 +133,21 @@
 
 {% if section.settings.text_custom %}
   <style>
-    .ss-announcement-bar__message {
-      font-family: {{section.settings.ss_font_family.family}};
-      font-weight: {{section.settings.ss_font_family.weight}};
+    .sg-announcement-bar__message {
+      font-family: {{section.settings.sg_font_family.family}};
+      font-weight: {{section.settings.sg_font_family.weight}};
     }
 
-    .ss-announcement-bar__message li {
-      font-family: {{section.settings.ss_font_family.family}};
-      font-weight: {{section.settings.ss_font_family.weight}};
+    .sg-announcement-bar__message li {
+      font-family: {{section.settings.sg_font_family.family}};
+      font-weight: {{section.settings.sg_font_family.weight}};
     }
   </style>
 {% endif %}
 
 <template id="marquee-announcement-bar-{{ section.id }}">
   <div
-    class="ss-announcement-bar ss-announcement-bar-{{ section.id }}"
+    class="sg-announcement-bar sg-announcement-bar-{{ section.id }}"
     aria-label="Announcement"
     style="background-color: {{ section.settings.bg }}; --text-color: {{ section.settings.text_color }}; --animation-duration: {{ section.settings.animation_duration }}s;"
   >
@@ -157,10 +157,10 @@
         style="cursor: pointer;"
       >
     {% endif %}
-    <div class="ss-announcement-bar__link">
+    <div class="sg-announcement-bar__link">
       <div class="" id="marq">
         <span id="orig">
-          <ul class="ss-announcement-bar__message">
+          <ul class="sg-announcement-bar__message">
             {% if section.blocks > 1 %}
               {% for i in (1..6) %}
                 {% for block in section.blocks %}
@@ -222,7 +222,7 @@
 
 {% schema %}
 {
-  "name": "SS - Scrolling ann bar",
+  "name": "SG-Scrolling ann bar",
   "settings": [
     {
       "type": "header",
@@ -239,7 +239,7 @@
     {
       "type": "header",
       "content": "Text"
-    },   
+    },
     {
       "type": "checkbox",
       "id": "text_custom",
@@ -248,20 +248,20 @@
     },
     {
       "type": "font_picker",
-      "id": "ss_font_family",
+      "id": "sg_font_family",
       "label": "Font family",
       "default": "montserrat_n4",
       "visible_if": "{{ section.settings.text_custom }}"
     },
     {
-        "type": "range",
-        "id": "text_size",
-        "label": "Font size",
-        "default": 12,
-        "min": 8,
-        "max": 50,
-        "step": 1,
-        "unit": "px"
+      "type": "range",
+      "id": "text_size",
+      "label": "Font size",
+      "default": 12,
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
     },
     {
       "type": "header",
@@ -362,18 +362,18 @@
   "presets": [
     {
       "category": "Custom",
-      "name": "SS - Scrolling announcement bar",
+      "name": "SG-Scrolling announcement bar",
       "blocks": [
         {
           "type": "text",
-          "settings":{
-            "text":"Free Shipping"
+          "settings": {
+            "text": "Free Shipping"
           }
         },
         {
           "type": "text",
-           "settings":{
-            "text":"Free Returns"
+          "settings": {
+            "text": "Free Returns"
           }
         }
       ]

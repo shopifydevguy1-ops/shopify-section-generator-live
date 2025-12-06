@@ -1,0 +1,199 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+>
+
+{% assign quotes_position = section.settings.quotes_position %}
+
+{% style %}
+  .quotes-{{ section.id }} p {
+    margin: 0;
+    text-align: center;
+  }
+  .quotes-slider-{{ section.id }}  {
+    padding-bottom: 60px;
+    --swiper-pagination-color: {{ section.settings.pagination_color }};
+    --swiper-pagination-bullet-inactive-color: {{ section.settings.pagination_color }};
+    color: {{ section.settings.text_color }};
+    font-size:{{section.settings.heading_size}}px;
+  }
+  .quotes-container-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    border-radius: 2rem;
+    padding: 3rem 3rem 1rem;
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function moreLoadProductForm() {
+      var productForm = document.querySelector('#sg-quotes');
+      if (!productForm){
+        var productForm = document.querySelector('{% if quotes_position == "below_title" or quotes_position == "above_title" %}.product__title{% elsif quotes_position == "below_description" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');
+        if (!productForm) return;
+        }
+        const templateContent = document.querySelector(
+          '#sg-quotes-{{ section.id }}'
+        ).content;
+
+        productForm.insertAdjacentElement(
+          '{% if quotes_position == "below_buy" or quotes_position == "below_title" or quotes_position == "below_description" %}afterend{% else %}beforebegin{% endif %}',
+          templateContent.firstElementChild
+        );
+    }
+    window.addEventListener('DOMContentLoaded', moreLoadProductForm);
+  })();
+</script>
+
+<template class="quotes-{{ section.id }}" id="sg-quotes-{{ section.id }}">
+  <div class="custom-swiper-container quotes-container-{{ section.id }} {{ section.settings.custom_classes }}">
+    <div class="swiper quotes-slider-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            {{ block.settings.quote }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</template>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      const slider = new Swiper('.quotes-slider-{{ section.id }}', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+          delay: 7000,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        speed: 1000,
+      });
+    }, 500);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "SG-Review Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Save settings to see section in action"
+    },
+    {
+      "type": "header",
+      "content": "Default placement is below buy buttons",
+      "info": "To change placement - Copy this code: <div id='sg-quotes'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
+    },
+    {
+      "type": "select",
+      "id": "quotes_position",
+      "label": "Quotes Position",
+      "default": "below_buy",
+      "options": [
+        {
+          "label": "Above Buy Buttons",
+          "value": "above_buy"
+        },
+        {
+          "label": "Below Buy Buttons",
+          "value": "below_buy"
+        },
+        {
+          "label": "Above Product Title",
+          "value": "above_title"
+        },
+        {
+          "label": "Below Product Title",
+          "value": "below_title"
+        },
+        {
+          "label": "Below Product Description",
+          "value": "below_description"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#db877b"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f4d9d5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#d87e71"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Review Quote",
+          "info": "Enter the review quote here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Reviews",
+      "name": "SG-Review Quote Slider",
+      "blocks": [
+        {
+          "type": "quote",
+          "settings": {
+            "quote": "<p>\"</p><p>This rug is such good quality and makes me so happy every time I look at it.  I'm using this one for a top cover over my bedspread. It's a perfect  match for my room and linen. I have another that I use as a throw  for the lounge and a picnic rug! In LOVE.</p><p>- Barbara W.</p>"
+          }
+        },
+        {
+          "type": "quote",
+          "settings": {
+            "quote": "<p>\"</p><p>The postage was incredibly quick and the quality and colours far exceeded what I thought. The pics don't do them justice. Truly unique rugs that I doubt will date anytime soon. I would recommend - beautiful rug and great customer service. </p><p>- Tanya E.</p>"
+          }
+        },
+        {
+          "type": "quote",
+          "settings": {
+            "quote": "<p>\"</p><p>My husband argued with me saying we didn’t need a new blanket. Once we received this one, he quickly changed his tune. It’s cozy, soft and warm. I love the design and boho vibe it adds to our home. High quality product at an affordable price.</p><p>- Bebe H.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

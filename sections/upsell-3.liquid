@@ -780,7 +780,7 @@
 <script>
   (function () {
     function moreLoadProductForm() {
-      let upsellForm = document.querySelector('#ss-upsell-3');
+      let upsellForm = document.querySelector('#sg-upsell-3');
       if (!upsellForm) {
         upsellForm = document.querySelector(
           '{% if upsell_position == "below_title" or upsell_position == "above_title" %}.product__title{% elsif upsell_position == "below_description" or upsell_position == "above_description" %}.product__description{% elsif upsell_position == "below_price" %}.price.price--large.price--show-badge{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}'
@@ -788,7 +788,7 @@
         if (!upsellForm) return;
       }
 
-      const template = document.querySelector('#ss-upsell-products-{{ section.id }}');
+      const template = document.querySelector('#sg-upsell-products-{{ section.id }}');
       if (template) {
         const clone = template.content.cloneNode(true);
         const element = clone.firstElementChild;
@@ -804,7 +804,7 @@
       const body = document.querySelector('body');
 
       {% for product in products %}
-        const tpl{{ forloop.index }} = document.querySelector('#ss-buy-with-wrapper-{{ product.id }}');
+        const tpl{{ forloop.index }} = document.querySelector('#sg-buy-with-wrapper-{{ product.id }}');
         if (tpl{{ forloop.index }}) {
           const clone{{ forloop.index }} = tpl{{ forloop.index }}.content.cloneNode(true);
           const el{{ forloop.index }} = clone{{ forloop.index }}.firstElementChild;
@@ -821,8 +821,8 @@
 
 
 
-<template id="ss-upsell-products-{{ section.id }}">
-<div class="section-{{ section.id }} buy-with-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};" id="ss-buy-with-{{ section.id }}">
+<template id="sg-upsell-products-{{ section.id }}">
+<div class="section-{{ section.id }} buy-with-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};" id="sg-buy-with-{{ section.id }}">
     <div class="section-{{ section.id }}-settings" id="buy-with-body-{{ section.id }}">
       {% if products != blank %}
         {% if heading != blank %}
@@ -849,7 +849,7 @@
 </template>
 
 {% for product in products %}
-  <template class="buy-with-modals-{{ section.id }}" id="ss-buy-with-wrapper-{{ product.id }}">
+  <template class="buy-with-modals-{{ section.id }}" id="sg-buy-with-wrapper-{{ product.id }}">
     <div class="buy-with-modal-{{ section.id }}" id="buy-with-modal-{{ product.id }}">
       <div class="buy-with-modal-body-{{ section.id }}">
         <svg
@@ -1114,1090 +1114,1090 @@
 </script>
 
 {% schema %}
-  {
-    "name": "SS - Upsell #3",
-    "settings": [
-      {
-        "type": "header",
-        "content": "⚠️ Save settings to view updates",
-        "info":"Learn how to add snippet sections with [this tutorial](https://section-store.helpscoutdocs.com/article/10-adding-product-page-snippets)"
-      },
-      {
-        "type": "paragraph",
-        "content": "Learn how to include dynamic content per product with [this tutorial](https://section-store.helpscoutdocs.com/article/17-dynamic-content-settings-per-product)"
-      },
-      {
-        "type": "header",
-        "content": "Custom placement",
-        "info": "Copy this code: <div id='ss-upsell-3'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
-      },
-      {
-        "type": "select",
-        "id": "upsell_position",
-        "label": "Position",
-        "default": "below_buy",
-        "options": [
-          {
-            "label": "Above buy buttons",
-            "value": "above_buy"
-          },
-          {
-            "label": "Below buy buttons",
-            "value": "below_buy"
-          },
-          {
-            "label": "Above product title",
-            "value": "above_title"
-          },
-          {
-            "label": "Below product title",
-            "value": "below_title"
-          },
-          {
-            "label": "Above product description",
-            "value": "above_description"
-          },
-          {
-            "label": "Below product description",
-            "value": "below_description"
-          }
-        ]
-      },
-      {
-        "type": "header",
-        "content": "Heading settings"
-      },
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Heading",
-        "default": "Buy it with"
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "heading_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "select",
-        "id": "heading_align",
-        "label": "Alignment",
-        "default": "center",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "checkbox",
-        "id": "heading_on_border",
-        "label": "Heading on border",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Content layout settings"
-      },
-      {
-        "type": "range",
-        "id": "content_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "content_padding_horizontal",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding sides",
-        "default": 18
-      },
-      {
-        "type": "range",
-        "id": "content_padding_vertical",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 18
-      },
-      {
-        "type": "range",
-        "id": "content_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 1
-      },
-      {
-        "type": "range",
-        "id": "content_radius",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "content_betweens",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Space between products",
-        "default": 18
-      },
-      {
-        "type": "checkbox",
-        "id": "content_use_shadow",
-        "label": "Use shadow",
-        "default": false
-      },
-      {
-        "type": "range",
-        "id": "content_shadow_width",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Shadow spread",
-        "default": 20
-      },
-      {
-        "type": "header",
-        "content": "Products settings"
-      },
-      {
-        "type": "product_list",
-        "id": "products",
-        "label": "Products"
-      },
-      {
-        "type": "range",
-        "id": "content_gap",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap between image and info",
-        "default": 10
-      },
-      {
-        "type": "select",
-        "id": "content_align",
-        "label": "Alignment",
-        "default": "left",
-        "options": [
-          {
-            "label": "Left",
-            "value": "left"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "right"
-          }
-        ]
-      },
-      {
-        "type": "range",
-        "id": "content_items_mt",
-        "min": 0,
-        "max": 40,
-        "step": 2,
-        "unit": "px",
-        "label": "Product info spacing",
-        "default": 10
-      },
-      {
-        "type": "header",
-        "content": "Product image settings"
-      },
-      {
-        "type": "range",
-        "id": "image_width",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "px",
-        "label": "Size",
-        "default": 90
-      },
-      {
-        "type": "range",
-        "id": "image_radius",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Product title settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "product_heading_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "product_heading_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "product_heading_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 14
-      },
-      {
-        "type": "range",
-        "id": "product_heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 150
-      },
-      {
-        "type": "header",
-        "content": "Product price settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "product_price_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "product_price_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "product_price_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "product_price_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "header",
-        "content": "Quick view button settings"
-      },
-      {
-        "type": "text",
-        "id": "product_quick",
-        "label": "Button label",
-        "default": "Quick view"
-      },
-      {
-        "type": "checkbox",
-        "id": "product_quick_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "product_quick_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "product_quick_size",
-        "min": 0,
-        "max": 40,
-        "step": 1,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "product_quick_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "range",
-        "id": "product_quick_padding_horizontal",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding sides",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "product_quick_padding_vertical",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "product_quick_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 1
-      },
-      {
-        "type": "range",
-        "id": "product_quick_radius",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Roundness",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Modal settings"
-      },
-      {
-        "type": "range",
-        "id": "modal_width",
-        "min": 15,
-        "max": 100,
-        "step": 5,
-        "unit": "%",
-        "label": "Width - desktop",
-        "default": 30
-      },
-      {
-        "type": "range",
-        "id": "modal_padding_horizontal",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding sides",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "modal_padding_vertical",
-        "min": 0,
-        "max": 100,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 20
-      },
-      {
-        "type": "select",
-        "id": "modal_align",
-        "label": "Alignment",
-        "default": "start",
-        "options": [
-          {
-            "label": "Left",
-            "value": "start"
-          },
-          {
-            "label": "Center",
-            "value": "center"
-          },
-          {
-            "label": "Right",
-            "value": "end"
-          }
-        ]
-      },
-      {
-        "type": "header",
-        "content": "Modal product title settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "modal_heading_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "modal_heading_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "modal_heading_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "modal_heading_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 150
-      },
-      {
-        "type": "header",
-        "content": "Modal product price settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "modal_price_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "modal_price_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "modal_price_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "modal_price_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "range",
-        "id": "modal_price_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 20
-      },
-      {
-        "type": "header",
-        "content": "Modal product image settings"
-      },
-      {
-        "type": "range",
-        "id": "modal_image_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "modal_space",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Space between images",
-        "default": 20
-      },
-      {
-        "type": "header",
-        "content": "Modal product variants settings"
-      },
-      {
-        "type": "range",
-        "id": "modal_variants_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 30
-      },
-      {
-        "type": "range",
-        "id": "modal_options_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Variant options margin top",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "modal_variants_gap",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Gap between variant options",
-        "default": 10
-      },
-      {
-        "type": "header",
-        "content": "Modal product variant name settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "variant_name_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "variant_name_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "variant_name_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "variant_name_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "header",
-        "content": "Modal product variant option settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "variant_option_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "variant_option_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "variant_option_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "variant_option_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "range",
-        "id": "variant_option_padding_horizontal",
-        "min": 0,
-        "max": 40,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding sides",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "variant_option_padding_vertical",
-        "min": 0,
-        "max": 40,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "variant_option_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 1
-      },
-      {
-        "type": "header",
-        "content": "Modal button settings"
-      },
-      {
-        "type": "text",
-        "id": "modal_button_text",
-        "label": "Button label",
-        "default": "Add to Cart"
-      },
-      {
-        "type": "text",
-        "id": "modal_button_text_added",
-        "label": "Button label after adding",
-        "default": "Added"
-      },
-      {
-        "type": "text",
-        "id": "modal_button_text_sold",
-        "label": "Button label (sold out)",
-        "default": "Sold Out"
-      },
-      {
-        "type": "checkbox",
-        "id": "modal_button_custom",
-        "label": "Use custom font",
-        "default": false
-      },
-      {
-        "type": "font_picker",
-        "id": "modal_button_font",
-        "label": "Font family",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "modal_button_size",
-        "min": 0,
-        "max": 72,
-        "step": 2,
-        "unit": "px",
-        "label": "Font size",
-        "default": 12
-      },
-      {
-        "type": "range",
-        "id": "modal_button_height",
-        "min": 50,
-        "max": 200,
-        "step": 10,
-        "unit": "%",
-        "label": "Line height",
-        "default": 100
-      },
-      {
-        "type": "range",
-        "id": "modal_button_mt",
-        "min": 0,
-        "max": 50,
-        "step": 2,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "modal_button_padding_horizontal",
-        "min": 0,
-        "max": 40,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding sides",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "modal_button_padding_vertical",
-        "min": 0,
-        "max": 40,
-        "step": 2,
-        "unit": "px",
-        "label": "Padding vertical",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "modal_button_border_thickness",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 1
-      },
-      {
-        "type": "header",
-        "content": "Product colors"
-      },
-      {
-        "type": "color",
-        "label": "Product title",
-        "id": "product_heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Product price",
-        "id": "product_price_color",
-        "default": "#707e7a"
-      },
-      {
-        "type": "header",
-        "content": "Quick view button colors"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "product_quick_color",
-        "default": "#d2815f"
-      },
-      {
-        "type": "color",
-        "label": "Hover text",
-        "id": "product_quick_hover_color",
-        "default": "#d2815f"
-      },
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "product_quick_bg_color",
-        "default": "#F5E9E4"
-      },
-      {
-        "type": "color",
-        "label": "Background hover",
-        "id": "product_quick_bg_hover_color",
-        "default": "#E6D4CC"
-      },
-      {
-        "type": "color",
-        "label": "Button border",
-        "id": "product_quick_border",
-        "default": "#F5E9E4"
-      },
-      {
-        "type": "color",
-        "label": "Border hover",
-        "id": "product_quick_hover_border",
-        "default": "#E6D4CC"
-      },
-      {
-        "type": "header",
-        "content": "Modal colors"
-      },
-      {
-        "type": "color",
-        "label": "Product title",
-        "id": "modal_heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Product price",
-        "id": "modal_price_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Product variant name",
-        "id": "variant_name_color",
-        "default": "#334641"
-      },
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "modal_bg_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "header",
-        "content": "Product variant options colors"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "variant_option_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Hover text",
-        "id": "variant_option_hover_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "variant_option_bg",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Background hover",
-        "id": "variant_option_hover_bg",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "variant_option_border",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Border hover",
-        "id": "variant_option_hover_border",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Modal button colors"
-      },
-      {
-        "type": "color",
-        "label": "Text",
-        "id": "modal_button_color",
-        "default": "#D2815F"
-      },
-      {
-        "type": "color",
-        "label": "Hover text",
-        "id": "modal_button_hover_color",
-        "default": "#D2815F"
-      },
-      {
-        "type": "color",
-        "label": "Background",
-        "id": "modal_button_bg",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "label": "Background hover",
-        "id": "modal_button_hover_bg",
-        "default": "#F1E8E4"
-      },
-      {
-        "type": "color",
-        "label": "Button border",
-        "id": "modal_button_border",
-        "default": "#D2815F"
-      },
-      {
-        "type": "color",
-        "label": "Border hover",
-        "id": "modal_button_hover_border",
-        "default": "#D2815F"
-      },
-      {
-        "type": "header",
-        "content": "Section colors"
-      },
-      {
-        "type": "color",
-        "label": "Heading",
-        "id": "heading_color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "label": "Content border",
-        "id": "content_border_color",
-        "default": "#D6D3D3"
-      },
-      {
-        "type": "color",
-        "label": "Section background",
-        "id": "background_color",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color_background",
-        "id": "background_gradient",
-        "label": "Section background gradient"
-      },
-      {
-        "type": "color",
-        "label": "Border",
-        "id": "border_color",
-        "default": "#000000"
-      },
-      {
-        "type": "header",
-        "content": "Section margin (outside)"
-      },
-      {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin top",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Margin bottom",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section padding (inside)"
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal",
-        "min": 0,
-        "max": 30,
-        "step": 1,
-        "unit": "rem",
-        "label": "Padding sides",
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "padding_horizontal_mobile",
-        "min": 0,
-        "max": 15,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Padding sides mobile",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "Section Settings"
-      },
-      {
-        "type": "range",
-        "id": "border_thickness",
-        "min": 0,
-        "max": 50,
-        "step": 1,
-        "unit": "px",
-        "label": "Border thickness",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy",
-        "label": "Lazy load",
-        "info": "Lazy load images for speed optimisation"
-      }
-    ],
-    "presets": [
-      {
-        "name": "SS - Upsell #3"
-      }
-    ]
-  }
+{
+  "name": "SG-Upsell #3",
+  "settings": [
+    {
+      "type": "header",
+      "content": "⚠️ Save settings to view updates",
+      "info": "Learn how to add snippet sections with [this tutorial](https://section-store.helpscoutdocs.com/article/10-adding-product-page-snippets)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn how to include dynamic content per product with [this tutorial](https://section-store.helpscoutdocs.com/article/17-dynamic-content-settings-per-product)"
+    },
+    {
+      "type": "header",
+      "content": "Custom placement",
+      "info": "Copy this code: <div id='sg-upsell-3'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
+    },
+    {
+      "type": "select",
+      "id": "upsell_position",
+      "label": "Position",
+      "default": "below_buy",
+      "options": [
+        {
+          "label": "Above buy buttons",
+          "value": "above_buy"
+        },
+        {
+          "label": "Below buy buttons",
+          "value": "below_buy"
+        },
+        {
+          "label": "Above product title",
+          "value": "above_title"
+        },
+        {
+          "label": "Below product title",
+          "value": "below_title"
+        },
+        {
+          "label": "Above product description",
+          "value": "above_description"
+        },
+        {
+          "label": "Below product description",
+          "value": "below_description"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Buy it with"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Alignment",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_on_border",
+      "label": "Heading on border",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content layout settings"
+    },
+    {
+      "type": "range",
+      "id": "content_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_horizontal",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding sides",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "content_padding_vertical",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "content_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "content_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_betweens",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between products",
+      "default": 18
+    },
+    {
+      "type": "checkbox",
+      "id": "content_use_shadow",
+      "label": "Use shadow",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_shadow_width",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow spread",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Products settings"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between image and info",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Alignment",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_items_mt",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Product info spacing",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Product image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Size",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Product title settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "product_heading_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "product_heading_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "product_heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Product price settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_price_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "product_price_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "product_price_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "product_price_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Quick view button settings"
+    },
+    {
+      "type": "text",
+      "id": "product_quick",
+      "label": "Button label",
+      "default": "Quick view"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_quick_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "product_quick_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "product_quick_size",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "product_quick_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "product_quick_padding_horizontal",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding sides",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "product_quick_padding_vertical",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "product_quick_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "product_quick_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Roundness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Modal settings"
+    },
+    {
+      "type": "range",
+      "id": "modal_width",
+      "min": 15,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Width - desktop",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "modal_padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding sides",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "modal_padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "modal_align",
+      "label": "Alignment",
+      "default": "start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Modal product title settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "modal_heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "modal_heading_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "modal_heading_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "modal_heading_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Modal product price settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "modal_price_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "modal_price_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "modal_price_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "modal_price_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "modal_price_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Modal product image settings"
+    },
+    {
+      "type": "range",
+      "id": "modal_image_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "modal_space",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between images",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Modal product variants settings"
+    },
+    {
+      "type": "range",
+      "id": "modal_variants_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "modal_options_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Variant options margin top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "modal_variants_gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between variant options",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Modal product variant name settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "variant_name_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "variant_name_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "variant_name_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "variant_name_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Modal product variant option settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "variant_option_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "variant_option_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "variant_option_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "variant_option_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "variant_option_padding_horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding sides",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "variant_option_padding_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "variant_option_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Modal button settings"
+    },
+    {
+      "type": "text",
+      "id": "modal_button_text",
+      "label": "Button label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "modal_button_text_added",
+      "label": "Button label after adding",
+      "default": "Added"
+    },
+    {
+      "type": "text",
+      "id": "modal_button_text_sold",
+      "label": "Button label (sold out)",
+      "default": "Sold Out"
+    },
+    {
+      "type": "checkbox",
+      "id": "modal_button_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "modal_button_font",
+      "label": "Font family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "modal_button_size",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "modal_button_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "modal_button_mt",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "modal_button_padding_horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding sides",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "modal_button_padding_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "modal_button_border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Product colors"
+    },
+    {
+      "type": "color",
+      "label": "Product title",
+      "id": "product_heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Product price",
+      "id": "product_price_color",
+      "default": "#707e7a"
+    },
+    {
+      "type": "header",
+      "content": "Quick view button colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "product_quick_color",
+      "default": "#d2815f"
+    },
+    {
+      "type": "color",
+      "label": "Hover text",
+      "id": "product_quick_hover_color",
+      "default": "#d2815f"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "product_quick_bg_color",
+      "default": "#F5E9E4"
+    },
+    {
+      "type": "color",
+      "label": "Background hover",
+      "id": "product_quick_bg_hover_color",
+      "default": "#E6D4CC"
+    },
+    {
+      "type": "color",
+      "label": "Button border",
+      "id": "product_quick_border",
+      "default": "#F5E9E4"
+    },
+    {
+      "type": "color",
+      "label": "Border hover",
+      "id": "product_quick_hover_border",
+      "default": "#E6D4CC"
+    },
+    {
+      "type": "header",
+      "content": "Modal colors"
+    },
+    {
+      "type": "color",
+      "label": "Product title",
+      "id": "modal_heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Product price",
+      "id": "modal_price_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Product variant name",
+      "id": "variant_name_color",
+      "default": "#334641"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "modal_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Product variant options colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "variant_option_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Hover text",
+      "id": "variant_option_hover_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "variant_option_bg",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background hover",
+      "id": "variant_option_hover_bg",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "variant_option_border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Border hover",
+      "id": "variant_option_hover_border",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Modal button colors"
+    },
+    {
+      "type": "color",
+      "label": "Text",
+      "id": "modal_button_color",
+      "default": "#D2815F"
+    },
+    {
+      "type": "color",
+      "label": "Hover text",
+      "id": "modal_button_hover_color",
+      "default": "#D2815F"
+    },
+    {
+      "type": "color",
+      "label": "Background",
+      "id": "modal_button_bg",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "label": "Background hover",
+      "id": "modal_button_hover_bg",
+      "default": "#F1E8E4"
+    },
+    {
+      "type": "color",
+      "label": "Button border",
+      "id": "modal_button_border",
+      "default": "#D2815F"
+    },
+    {
+      "type": "color",
+      "label": "Border hover",
+      "id": "modal_button_hover_border",
+      "default": "#D2815F"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "label": "Heading",
+      "id": "heading_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Content border",
+      "id": "content_border_color",
+      "default": "#D6D3D3"
+    },
+    {
+      "type": "color",
+      "label": "Section background",
+      "id": "background_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section background gradient"
+    },
+    {
+      "type": "color",
+      "label": "Border",
+      "id": "border_color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section margin (outside)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding (inside)"
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "rem",
+      "label": "Padding sides",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 15,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Padding sides mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy",
+      "label": "Lazy load",
+      "info": "Lazy load images for speed optimisation"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG-Upsell #3"
+    }
+  ]
+}
 {% endschema %}

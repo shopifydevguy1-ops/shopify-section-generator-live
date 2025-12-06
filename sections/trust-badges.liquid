@@ -1,14 +1,3 @@
-{% comment %}
----------------------------------------------------------
-Copyright © 2023 Section Store. All rights reserved.
-Unauthorized copying, modification, distribution, or use
-of this code or any portion of it, is strictly prohibited.
-Violators will be prosecuted to the fullest extent of the law.
-For inquiries or permissions, contact daniel@section.store
----------------------------------------------------------
-{% endcomment %}
-
-
 {%- liquid 
   assign padding_horizontal = section.settings.padding_horizontal
   assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
@@ -62,14 +51,14 @@ For inquiries or permissions, contact daniel@section.store
     padding-right: {{ padding_horizontal_mobile }}rem;
   }
 
-  .ss-trust-badges-list-{{ section.id }} {
+  .sg-trust-badges-list-{{ section.id }} {
     list-style: none;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   
-  .ss-trust-badge-item-{{ section.id }} {
+  .sg-trust-badge-item-{{ section.id }} {
     text-align: center;
     padding: .75rem;
     flex: 1;
@@ -79,22 +68,22 @@ For inquiries or permissions, contact daniel@section.store
     border-width: 0px;
   }
   
-  .ss-trust-badge-item-{{ section.id }}:nth-child(even) {
+  .sg-trust-badge-item-{{ section.id }}:nth-child(even) {
     border-right-width: 0;
     border-bottom-width: 1px;
   }
   
-  .ss-trust-badge-item-{{ section.id }}:nth-child(odd) {
+  .sg-trust-badge-item-{{ section.id }}:nth-child(odd) {
     border-left-width: 0;
     border-right-width: 1px;
     border-bottom-width: 1px;
   }
   
-  .ss-trust-badge-item-{{ section.id }}:nth-child(-n+2) {
+  .sg-trust-badge-item-{{ section.id }}:nth-child(-n+2) {
     border-top-width: 0;
   }
   
-  .ss-trust-badge-icon-{{ section.id }} {
+  .sg-trust-badge-icon-{{ section.id }} {
     margin:0 10px 0 2.5px;
     display: flex;
     justify-content: center;
@@ -103,24 +92,24 @@ For inquiries or permissions, contact daniel@section.store
     font-size: calc(var(--emoji-font-size) * 0.9);
   }
   
-  .ss-trust-badge-icon-{{ section.id }} svg {
+  .sg-trust-badge-icon-{{ section.id }} svg {
     height: 30px;
   }
   
-  .ss-trust-badge-text-{{ section.id }} {
+  .sg-trust-badge-text-{{ section.id }} {
     display: flex;
     justify-content: center;
     flex-direction: column;
   }
   
-  .ss-trust-badge-text-{{ section.id }} p {
+  .sg-trust-badge-text-{{ section.id }} p {
     line-height: 1.2;
     margin-top: 0;
     margin-bottom: 0;
     text-align: left;
   }
   
-  .ss-trust-badge-title-{{ section.id }} {
+  .sg-trust-badge-title-{{ section.id }} {
     margin: 0;
     font-size: {{ title_size_mobile }}px;
     color: {{ title_color }};
@@ -128,7 +117,7 @@ For inquiries or permissions, contact daniel@section.store
     text-transform: unset;
   }
   
-  .ss-trust-badge-subtitle-{{ section.id }} {
+  .sg-trust-badge-subtitle-{{ section.id }} {
     margin: 0;
     font-size: {{ sub_title_size_mobile }}px;
     color: {{ sub_title_color }};
@@ -136,11 +125,11 @@ For inquiries or permissions, contact daniel@section.store
     text-transform: unset;
   }
 
-   .ss-trust-badge-image-{{ section.id }} {
+   .sg-trust-badge-image-{{ section.id }} {
      flex: 0 0 40px;
    }
 
-  .ss-trust-badge-image-{{ section.id }} img {
+  .sg-trust-badge-image-{{ section.id }} img {
     display: block;
     width: 100%;
     height: 100%;
@@ -162,16 +151,16 @@ For inquiries or permissions, contact daniel@section.store
       padding-right: {{ padding_horizontal }}rem;
     }
 
-    .ss-trust-badge-icon-{{ section.id }} {
+    .sg-trust-badge-icon-{{ section.id }} {
       margin:0 10px 0 7.5px;
       font-size: var(--emoji-font-size);
     }
     
-    .ss-trust-badge-title-{{ section.id }} {
+    .sg-trust-badge-title-{{ section.id }} {
       font-size: {{ title_size }}px;
     }
     
-    .ss-trust-badge-subtitle-{{ section.id }} {
+    .sg-trust-badge-subtitle-{{ section.id }} {
       font-size: {{ sub_title_size }}px;
     }
   }
@@ -188,7 +177,7 @@ For inquiries or permissions, contact daniel@section.store
 
 {% if title_custom %}
   <style>
-    .ss-trust-badge-title-{{ section.id }} {
+    .sg-trust-badge-title-{{ section.id }} {
       font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
       font-weight: {{ title_font.weight }};
       font-style: {{ title_font.style }};
@@ -198,7 +187,7 @@ For inquiries or permissions, contact daniel@section.store
 
 {% if sub_title_custom %}
   <style>
-    .ss-trust-badge-subtitle-{{ section.id }} {
+    .sg-trust-badge-subtitle-{{ section.id }} {
       font-family: {{ sub_title_font.family }}, {{ sub_title_font.fallback_families }};
       font-weight: {{ sub_title_font.weight }};
       font-style: {{ sub_title_font.style }};
@@ -210,7 +199,7 @@ For inquiries or permissions, contact daniel@section.store
   (function () {
     function loadProductForm() {
 
-      var productForm = document.querySelector('#ss-emoji');
+      var productForm = document.querySelector('#sg-emoji');
       
       if (!productForm){
         var productForm = document.querySelector('{% if trust_position == "below_title" or trust_position == "above_title" %}.product__title{% elsif trust_position == "below_description" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');
@@ -218,7 +207,7 @@ For inquiries or permissions, contact daniel@section.store
       }
 
       const templateContent = document.querySelector(
-        '#ss-trust-badges-template-{{ section.id }}'
+        '#sg-trust-badges-template-{{ section.id }}'
       ).content;
 
       {%- comment -%}
@@ -226,10 +215,10 @@ For inquiries or permissions, contact daniel@section.store
         if the section.blocks.size is odd, the last block will have no border-bottom
       {%- endcomment -%}
       const trustBadgesList = templateContent.querySelector(
-        '#ss-trust-badges-list-{{ section.id }}'
+        '#sg-trust-badges-list-{{ section.id }}'
       );
       const trustBadgeItems = trustBadgesList.querySelectorAll(
-        '.ss-trust-badge-item-{{ section.id }}'
+        '.sg-trust-badge-item-{{ section.id }}'
       );
       const trustBadgeItemsCount = trustBadgeItems.length;
       const trustBadgeItemsLastIndex = trustBadgeItemsCount - 1;
@@ -246,7 +235,7 @@ For inquiries or permissions, contact daniel@section.store
       );
     }
     function unloadProductForm() {
-      var productForm = document.querySelector('#ss-emoji');
+      var productForm = document.querySelector('#sg-emoji');
       
       if (!productForm){
         var productForm = document.querySelector('{% if trust_position == "below_title" or trust_position == "above_title" %}.product__title{% elsif trust_position == "below_description" %}.product__description{% else %}.button--add-to-cart, .product .product-form, .product-single__add-to-cart, .shopify-payment-button, .shopify-payment-button__button, .ProductForm__BuyButtons, .add-to-cart{% endif %}');
@@ -254,7 +243,7 @@ For inquiries or permissions, contact daniel@section.store
       }
 
       const trustBadgesList = document.querySelector(
-        '#ss-trust-badges-list-{{ section.id }}'
+        '#sg-trust-badges-list-{{ section.id }}'
       );
 
       if (trustBadgesList) trustBadgesList.remove();
@@ -264,12 +253,12 @@ For inquiries or permissions, contact daniel@section.store
   })();
 </script>
 
-<template id="ss-trust-badges-template-{{ section.id }}">
+<template id="sg-trust-badges-template-{{ section.id }}">
   <div class="section-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
     <div class="section-{{ section.id }}-settings">
       <ul
-        id="ss-trust-badges-list-{{ section.id }}"
-        class="ss-trust-badges-list-{{ section.id }}"
+        id="sg-trust-badges-list-{{ section.id }}"
+        class="sg-trust-badges-list-{{ section.id }}"
         aria-label="{{ section.settings.list_label }}"
         style="
           --emoji-font-size: {{ section.settings.emoji_font_size }}px;
@@ -277,28 +266,28 @@ For inquiries or permissions, contact daniel@section.store
       >
         {% for block in section.blocks %}
           <li
-            class="ss-trust-badge-item-{{ section.id }}"
+            class="sg-trust-badge-item-{{ section.id }}"
           >
             {% if block.settings.image != blank %}
-              <div class="ss-trust-badge-image-{{ section.id }}">
+              <div class="sg-trust-badge-image-{{ section.id }}">
                 <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image }}">
               </div>
             {% else %}
               {% unless block.settings.icon == blank %}
-                <div class="ss-trust-badge-icon-{{ section.id }}">
+                <div class="sg-trust-badge-icon-{{ section.id }}">
                   {{ block.settings.icon }}
                 </div>
               {% endunless %}
             {% endif %}
-            <div class="ss-trust-badge-text-{{ section.id }}">
+            <div class="sg-trust-badge-text-{{ section.id }}">
               <div
-                class="ss-trust-badge-title-{{ section.id }}"
+                class="sg-trust-badge-title-{{ section.id }}"
               >
                 {{ block.settings.title }}
               </div>
               {% if block.settings.subtitle != blank %}
                 <div
-                  class="ss-trust-badge-subtitle-{{ section.id }}"
+                  class="sg-trust-badge-subtitle-{{ section.id }}"
                 >
                   {{ block.settings.subtitle }}
                 </div>
@@ -313,7 +302,7 @@ For inquiries or permissions, contact daniel@section.store
 
 {% schema %}
 {
-  "name": "SS - Trust Badges Emoji",
+  "name": "SG-Trust Badges Emoji",
   "settings": [
     {
       "type": "paragraph",
@@ -321,8 +310,8 @@ For inquiries or permissions, contact daniel@section.store
     },
     {
       "type": "header",
-      "content":"Default placement is below buy buttons",
-      "info": "To change placement - Copy this code: <div id='ss-emoji'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
+      "content": "Default placement is below buy buttons",
+      "info": "To change placement - Copy this code: <div id='sg-emoji'></div> - Click 'Add block' -> Custom Liquid/HTML -> Paste."
     },
     {
       "type": "select",
@@ -539,14 +528,14 @@ For inquiries or permissions, contact daniel@section.store
       "default": 36
     },
     {
-       "type": "range",
-       "id": "padding_bottom",
-       "min": 0,
-       "max": 100,
-       "step": 4,
-       "unit": "px",
-       "label": "Padding bottom",
-       "default": 36
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
     },
     {
       "type": "range",
@@ -632,7 +621,7 @@ For inquiries or permissions, contact daniel@section.store
   ],
   "presets": [
     {
-      "name": "SS - Trust Badges Emoji",
+      "name": "SG-Trust Badges Emoji",
       "blocks": [
         {
           "type": "item",
