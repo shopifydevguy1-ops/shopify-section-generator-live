@@ -9,9 +9,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] relative">
       <LandingBackground />
-      <Navbar />
-      
-      <main className="relative z-10">
+      <div className="relative z-10">
+        <Navbar />
+        
+        <main className="relative">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-20 text-center relative">
           <div className="max-w-3xl mx-auto">
@@ -101,13 +102,14 @@ export default function LandingPage() {
             </CardContent>
           </Card>
         </section>
-      </main>
+        </main>
 
-      <footer className="border-t py-8 mt-20">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2024 Shopify Section Generator. All rights reserved.</p>
-        </div>
-      </footer>
+        <footer className="border-t py-8 mt-20">
+          <div className="container mx-auto px-4 text-center text-muted-foreground">
+            <p>&copy; 2024 Shopify Section Generator. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
     </div>
   )
 }
