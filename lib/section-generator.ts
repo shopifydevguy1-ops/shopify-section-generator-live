@@ -1051,9 +1051,9 @@ function loadReferenceSections(input: string, maxReferences: number = 3): string
         const filePath = path.join(sectionsPath, file)
         const content = fs.readFileSync(filePath, 'utf-8')
         
-        // Truncate very long sections (keep first 2000 chars)
-        const truncatedContent = content.length > 2000 
-          ? content.substring(0, 2000) + '\n... (truncated)'
+        // Truncate very long sections (keep first 1500 chars to reduce token usage)
+        const truncatedContent = content.length > 1500 
+          ? content.substring(0, 1500) + '\n... (truncated)'
           : content
         
         references.push(`\n--- Reference Section: ${file} ---\n${truncatedContent}`)
@@ -1079,16 +1079,18 @@ function loadReferenceSections(input: string, maxReferences: number = 3): string
 async function fetchWithRetry(
   url: string,
   options: RequestInit,
-  maxRetries: number = 3,
-  baseDelay: number = 1000
+  maxRetries: number = 5,
+  baseDelay: number = 2000
 ): Promise<Response> {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     const response = await fetch(url, options)
     
     // If 429 (Too Many Requests), retry with exponential backoff
     if (response.status === 429 && attempt < maxRetries - 1) {
+      // Longer delays: 2s, 4s, 8s, 16s, 32s
       const delay = baseDelay * Math.pow(2, attempt)
-      console.log(`[AI Generator] Rate limited (429), retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`)
+      const delaySeconds = Math.floor(delay / 1000)
+      console.log(`[AI Generator] Rate limited (429), waiting ${delaySeconds}s before retry (attempt ${attempt + 1}/${maxRetries})`)
       await new Promise(resolve => setTimeout(resolve, delay))
       continue
     }
@@ -1115,8 +1117,8 @@ export async function generateSectionWithAI(
     throw new Error('AI API key not configured. Please set AI_API_KEY environment variable.')
   }
 
-  // Load reference sections from the sections folder
-  const referenceSections = loadReferenceSections(input, 3)
+  // Load reference sections from the sections folder (reduced to 1 to save tokens and avoid rate limits)
+  const referenceSections = loadReferenceSections(input, 1)
   console.log(`[AI Generator] Loaded ${referenceSections ? 'reference sections' : 'no reference sections'} for context`)
 
   const systemPrompt = `You are an expert Shopify theme developer. Generate complete Shopify liquid section files based on user descriptions.
@@ -1166,7 +1168,7 @@ Return each section as a separate complete liquid file.${referenceSections}`
         }],
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 8000,
+          maxOutputTokens: 4000, // Reduced to avoid rate limits
           topP: 0.95,
           topK: 40,
         }
@@ -1178,7 +1180,17 @@ Return each section as a separate complete liquid file.${referenceSections}`
       console.error('[AI Generator] API Error:', errorText)
       
       if (response.status === 429) {
-        throw new Error('Rate limit exceeded. Please wait a moment and try again.')
+        // Parse error details if available
+        let errorDetails = 'Rate limit exceeded'
+        try {
+          const errorData = JSON.parse(errorText)
+          if (errorData.error?.message) {
+            errorDetails = errorData.error.message
+          }
+        } catch (e) {
+          // Use default message
+        }
+        throw new Error(`Rate limit exceeded. ${errorDetails}. Please wait 30-60 seconds before trying again, or check your Gemini API quota.`)
       }
       
       throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
