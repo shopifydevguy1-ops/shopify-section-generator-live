@@ -33,6 +33,14 @@ export interface UsageLog {
   year: number
 }
 
+export interface DownloadLog {
+  id: string
+  user_id: string
+  section_id: string
+  action: 'copy' | 'download'
+  created_at: Date
+}
+
 export interface SectionTemplate {
   id: string
   name: string
@@ -308,6 +316,33 @@ export async function createOrUpdateSubscription(params: {
     subscriptions.set(subscription.id, subscription)
     return subscription
   }
+}
+
+export async function getDownloadCount(userId: string): Promise<number> {
+  return downloadLogs.filter(log => log.user_id === userId).length
+}
+
+export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', isAdmin: boolean): Promise<{ allowed: boolean; count: number; limit: number }> {
+  // Pro users and admins have unlimited downloads
+  if (plan === 'pro' || isAdmin) {
+    return { allowed: true, count: 0, limit: Infinity }
+  }
+  
+  // Free users have a limit of 5 downloads/copies total
+  const count = await getDownloadCount(userId)
+  const limit = 5
+  return { allowed: count < limit, count, limit }
+}
+
+export async function logDownloadOrCopy(userId: string, sectionId: string, action: 'copy' | 'download'): Promise<void> {
+  const log: DownloadLog = {
+    id: crypto.randomUUID(),
+    user_id: userId,
+    section_id: sectionId,
+    action,
+    created_at: new Date(),
+  }
+  downloadLogs.push(log)
 }
 
 // Note: In production, replace all these functions with actual database queries

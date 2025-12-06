@@ -38,13 +38,36 @@ export default function GeneratorPage() {
   const [lastInput, setLastInput] = useState<string>("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showInstructions, setShowInstructions] = useState(false)
+  const [downloadStats, setDownloadStats] = useState<{
+    count: number
+    limit: number
+    remaining: number
+    allowed: boolean
+  } | null>(null)
 
   useEffect(() => {
     if (isLoaded && !user) {
       router.push("/sign-in")
       return
     }
+    
+    // Fetch download stats when user is loaded
+    if (isLoaded && user) {
+      fetchDownloadStats()
+    }
   }, [user, isLoaded, router])
+
+  const fetchDownloadStats = async () => {
+    try {
+      const response = await fetch("/api/sections/download")
+      if (response.ok) {
+        const data = await response.json()
+        setDownloadStats(data)
+      }
+    } catch (error) {
+      console.error("Error fetching download stats:", error)
+    }
+  }
 
   const generateSection = async () => {
     if (!sectionInput.trim()) {
@@ -115,32 +138,126 @@ export default function GeneratorPage() {
     }
   }
 
-  const copyToClipboard = () => {
+  const copyToClipboard = async () => {
     if (!selectedSection) return
-    navigator.clipboard.writeText(selectedSection.liquidCode)
-    toast({
-      title: "Copied!",
-      description: "Code copied to clipboard",
-    })
+
+    try {
+      // Check limit before copying
+      const response = await fetch("/api/sections/download", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sectionId: selectedSection.sectionId,
+          action: "copy"
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        if (data.reached) {
+          toast({
+            title: "Download Limit Reached",
+            description: data.error || "You have reached your download/copy limit. Upgrade to Pro for unlimited downloads.",
+            variant: "destructive",
+          })
+        } else {
+          throw new Error(data.error || "Failed to copy")
+        }
+        return
+      }
+
+      // Copy to clipboard
+      navigator.clipboard.writeText(selectedSection.liquidCode)
+      
+      // Update stats
+      if (data.remaining !== undefined) {
+        setDownloadStats({
+          count: data.count,
+          limit: data.limit,
+          remaining: data.remaining,
+          allowed: data.remaining > 0 || data.remaining === Infinity
+        })
+      }
+
+      toast({
+        title: "Copied!",
+        description: data.remaining === Infinity 
+          ? "Code copied to clipboard" 
+          : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
+      })
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to copy code",
+        variant: "destructive",
+      })
+    }
   }
 
-  const downloadLiquid = () => {
+  const downloadLiquid = async () => {
     if (!selectedSection) return
 
-    const blob = new Blob([selectedSection.liquidCode], { type: "text/plain" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `${selectedSection.sectionId}-${Date.now()}.liquid`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-    
-    toast({
-      title: "Downloaded!",
-      description: "Section file downloaded successfully",
-    })
+    try {
+      // Check limit before downloading
+      const response = await fetch("/api/sections/download", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sectionId: selectedSection.sectionId,
+          action: "download"
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        if (data.reached) {
+          toast({
+            title: "Download Limit Reached",
+            description: data.error || "You have reached your download/copy limit. Upgrade to Pro for unlimited downloads.",
+            variant: "destructive",
+          })
+        } else {
+          throw new Error(data.error || "Failed to download")
+        }
+        return
+      }
+
+      // Download the file
+      const blob = new Blob([selectedSection.liquidCode], { type: "text/plain" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `${selectedSection.sectionId}-${Date.now()}.liquid`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+
+      // Update stats
+      if (data.remaining !== undefined) {
+        setDownloadStats({
+          count: data.count,
+          limit: data.limit,
+          remaining: data.remaining,
+          allowed: data.remaining > 0 || data.remaining === Infinity
+        })
+      }
+      
+      toast({
+        title: "Downloaded!",
+        description: data.remaining === Infinity 
+          ? "Section file downloaded successfully" 
+          : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
+      })
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to download file",
+        variant: "destructive",
+      })
+    }
   }
 
   const handleSectionSelect = (section: typeof selectedSection) => {
