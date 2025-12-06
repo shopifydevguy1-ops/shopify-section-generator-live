@@ -1194,13 +1194,104 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
 }
 
 /**
+ * Get model name for a specific provider from AI_MODEL environment variable
+ * Handles comma-separated model lists and selects the appropriate model for each provider
+ */
+function getModelForProvider(provider: LLMProvider): string {
+  const modelEnv = process.env.AI_MODEL
+  if (!modelEnv) {
+    // Return provider-specific defaults
+    switch (provider) {
+      case 'groq':
+        return 'llama-3.1-70b-instruct'
+      case 'openrouter':
+        return 'meta-llama/llama-3.1-70b-instruct:free'
+      case 'together':
+        return 'meta-llama/Llama-3-70b-chat-hf'
+      case 'huggingface':
+        return 'meta-llama/Meta-Llama-3-70B-Instruct'
+      case 'gemini':
+        return 'gemini-2.0-flash-exp'
+      default:
+        return 'llama-3.1-70b-instruct'
+    }
+  }
+
+  // Split by comma or space, then trim and filter
+  const models = modelEnv
+    .split(/[,\s]+/)
+    .map(m => m.trim())
+    .filter(m => m.length > 0 && !m.match(/^(and|or|,)$/i))
+
+  // Find the first model that matches the provider's expected format
+  for (const model of models) {
+    const lowerModel = model.toLowerCase()
+    
+    switch (provider) {
+      case 'groq':
+        // Groq models: llama-3.1-70b-instruct, llama-3.1-8b-instant, mixtral-8x7b-32768, gemma-7b-it
+        // Groq doesn't use prefixes like "meta-llama/", so we need to extract just the model name
+        if (lowerModel.includes('llama-3.1') || lowerModel.includes('mixtral') || lowerModel.includes('gemma')) {
+          // Remove any provider prefix (e.g., "meta-llama/") and any suffix (e.g., ":free")
+          let cleanModel = model.replace(/^[^\/]+\//, '').split(':')[0].trim()
+          // Ensure it's a valid Groq model format (no slashes)
+          if (!cleanModel.includes('/')) {
+            return cleanModel
+          }
+        }
+        break
+      case 'openrouter':
+        // OpenRouter models: meta-llama/llama-3.1-70b-instruct:free
+        if (lowerModel.includes('meta-llama') || lowerModel.includes(':free') || lowerModel.includes('openrouter')) {
+          return model
+        }
+        break
+      case 'together':
+        // Together models: meta-llama/Llama-3-70b-chat-hf
+        if (lowerModel.includes('llama-3') || lowerModel.includes('together')) {
+          return model
+        }
+        break
+      case 'huggingface':
+        // Hugging Face models: meta-llama/Meta-Llama-3-70B-Instruct
+        if (lowerModel.includes('meta-llama') || lowerModel.includes('huggingface')) {
+          return model
+        }
+        break
+      case 'gemini':
+        // Gemini models: gemini-2.0-flash-exp
+        if (lowerModel.includes('gemini')) {
+          return model
+        }
+        break
+    }
+  }
+
+  // If no match found, use provider-specific defaults
+  switch (provider) {
+    case 'groq':
+      return 'llama-3.1-70b-instruct'
+    case 'openrouter':
+      return 'meta-llama/llama-3.1-70b-instruct:free'
+    case 'together':
+      return 'meta-llama/Llama-3-70b-chat-hf'
+    case 'huggingface':
+      return 'meta-llama/Meta-Llama-3-70B-Instruct'
+    case 'gemini':
+      return 'gemini-2.0-flash-exp'
+    default:
+      return models[0] || 'llama-3.1-70b-instruct'
+  }
+}
+
+/**
  * Generate with Groq (Free, Fast, No Rate Limits)
  * Get API key: https://console.groq.com/
  */
 async function generateWithGroq(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
   // Updated to currently supported Groq models
   // Available models: llama-3.1-70b-instruct, llama-3.1-8b-instant, mixtral-8x7b-32768, gemma-7b-it
-  const model = process.env.AI_MODEL || 'llama-3.1-70b-instruct'
+  const model = getModelForProvider('groq')
   const url = 'https://api.groq.com/openai/v1/chat/completions'
   
   const response = await fetchWithRetry(url, {
@@ -1234,7 +1325,7 @@ async function generateWithGroq(apiKey: string, systemPrompt: string, userPrompt
  * Get API key: https://openrouter.ai/
  */
 async function generateWithOpenRouter(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
-  const model = process.env.AI_MODEL || 'meta-llama/llama-3.1-70b-instruct:free'
+  const model = getModelForProvider('openrouter')
   const url = 'https://openrouter.ai/api/v1/chat/completions'
   
   const response = await fetchWithRetry(url, {
@@ -1270,7 +1361,7 @@ async function generateWithOpenRouter(apiKey: string, systemPrompt: string, user
  * Get API key: https://together.ai/
  */
 async function generateWithTogether(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
-  const model = process.env.AI_MODEL || 'meta-llama/Llama-3-70b-chat-hf'
+  const model = getModelForProvider('together')
   const url = 'https://api.together.xyz/v1/chat/completions'
   
   const response = await fetchWithRetry(url, {
@@ -1304,7 +1395,7 @@ async function generateWithTogether(apiKey: string, systemPrompt: string, userPr
  * Get API key: https://huggingface.co/settings/tokens
  */
 async function generateWithHuggingFace(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
-  const model = process.env.AI_MODEL || 'meta-llama/Meta-Llama-3-70B-Instruct'
+  const model = getModelForProvider('huggingface')
   
   // Try router API endpoint first (new format)
   const url = `https://router.huggingface.co/hf-inference/models/${model}`
@@ -1358,7 +1449,7 @@ async function generateWithHuggingFace(apiKey: string, systemPrompt: string, use
  */
 async function generateWithGemini(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
   const apiUrl = process.env.AI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent'
-  const model = process.env.AI_MODEL || 'gemini-2.0-flash-exp'
+  const model = getModelForProvider('gemini')
   
   const response = await fetchWithRetry(`${apiUrl}?key=${apiKey}`, {
     method: 'POST',
