@@ -6,7 +6,7 @@ import {
   logUsage,
   createUser
 } from "@/lib/db"
-import { generateSectionFromReferences } from "@/lib/section-generator"
+import { generateSectionWithAI } from "@/lib/section-generator"
 
 export const dynamic = 'force-dynamic'
 
@@ -64,18 +64,29 @@ export async function POST(request: Request) {
       }
     }
 
-    // Generate sections from references (returns up to 6 sections for selection)
-    const excludedIds = excludedSectionIds && Array.isArray(excludedSectionIds) ? excludedSectionIds : []
-    const results = generateSectionFromReferences(sectionInput, excludedIds, 6)
+    // Generate sections using AI
+    console.log(`[API] Generating sections with AI for input: "${sectionInput}"`)
+    
+    let results
+    try {
+      results = await generateSectionWithAI(sectionInput, 6)
+      console.log(`[API] AI generated ${results.length} sections`)
+    } catch (error: any) {
+      console.error("[API] AI generation error:", error)
+      return NextResponse.json(
+        { error: error.message || "Failed to generate sections with AI. Please try again." },
+        { status: 500 }
+      )
+    }
 
     if (results.length === 0) {
       return NextResponse.json(
-        { error: "No sections found matching your request. Try being more specific." },
+        { error: "No sections generated. Please try again with a different description." },
         { status: 404 }
       )
     }
 
-    // Log usage (use "custom" as type since we're generating from references)
+    // Log usage (use "custom" as type for AI-generated sections)
     await logUsage(user.id, "custom")
 
     return NextResponse.json({

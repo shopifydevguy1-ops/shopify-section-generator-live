@@ -477,26 +477,33 @@ export function findSectionsByNaturalLanguage(input: string, maxResults: number 
     
     // 1. Check section ID match (filename) - HIGHEST PRIORITY
     keywords.forEach(keyword => {
-      // Direct match in ID
+      // Direct match in ID (this handles both "testimonial" matching "testimonials" and vice versa)
       if (lowerId.includes(keyword)) {
         score += 30 // Very high score for direct ID match
+      }
+      
+      // Also check if keyword is contained in ID (handles "testimonial" in "testimonials")
+      // This is important because "testimonial" should match "testimonials-22"
+      if (lowerId.includes(keyword) || keyword.includes(lowerId.split('-').find(p => p.includes(keyword)) || '')) {
+        score += 30 // Already handled above, but ensure we catch it
       }
       
       // Handle plural/singular variations more aggressively
       const singular = keyword.replace(/s$/, '')
       const plural = keyword + 's'
-      const plural2 = keyword.replace(/y$/, 'ies') // testimonial -> testimonials (but we handle this differently)
       
-      if (lowerId.includes(singular) && singular.length > 3) {
-        score += 25 // High score for singular match
+      // Check if ID contains singular form (e.g., "testimonial" keyword matches "testimonials" in ID)
+      if (lowerId.includes(singular) && singular.length > 2) {
+        score += 25 // High score for singular match in plural ID
       }
-      if (lowerId.includes(plural) && plural.length > 3) {
+      // Check if ID contains plural form (e.g., "testimonials" keyword matches "testimonials" in ID)
+      if (lowerId.includes(plural) && plural.length > 2) {
         score += 25 // High score for plural match
       }
       
-      // Special handling for common patterns
-      if (keyword === 'testimonial' && lowerId.includes('testimonial')) {
-        score += 30 // Direct match for testimonial
+      // Special handling: if keyword is singular and ID contains plural (or vice versa)
+      if (singular !== keyword && lowerId.includes(singular)) {
+        score += 30 // Very high score for singular/plural match
       }
     })
     
@@ -972,5 +979,230 @@ function generateSectionCode(template: SectionTemplate): { liquidCode: string; s
     sectionId: template.id,
     previewImage: template.preview_image
   }
+}
+
+/**
+ * Generate Shopify liquid section using Google Gemini AI
+ */
+export async function generateSectionWithAI(
+  input: string,
+  maxResults: number = 6
+): Promise<Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }>> {
+  const apiKey = process.env.AI_API_KEY
+  const apiUrl = process.env.AI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent'
+  const model = process.env.AI_MODEL || 'gemini-2.0-flash-exp'
+
+  if (!apiKey) {
+    throw new Error('AI API key not configured. Please set AI_API_KEY environment variable.')
+  }
+
+  const systemPrompt = `You are an expert Shopify theme developer. Generate complete Shopify liquid section files based on user descriptions.
+
+Requirements:
+1. Generate valid Shopify liquid code with proper syntax
+2. Include a complete {% schema %} block at the end with:
+   - name: A descriptive section name
+   - tag: "section"
+   - class: "section"
+   - settings: Array of customizable settings (text, textarea, color, etc.)
+   - presets: Array with at least one preset
+3. Use modern, responsive HTML/CSS
+4. Include proper Shopify liquid tags and filters
+5. Make sections customizable through schema settings
+6. Use semantic HTML and accessible markup
+7. Include inline styles or CSS classes for styling
+
+Generate ${maxResults} different variations of the requested section. Each variation should be unique but match the user's description. Return ONLY valid liquid code for each section, nothing else.`
+
+  const userPrompt = `Generate ${maxResults} Shopify liquid section variations for: "${input}"
+
+Each section should be complete with:
+- HTML/Liquid markup
+- Inline CSS or classes for styling
+- Complete {% schema %} block with settings
+- Responsive design
+- Modern, professional appearance
+
+Return each section as a separate complete liquid file.`
+
+  try {
+    console.log(`[AI Generator] Generating sections with Gemini for: "${input}"`)
+    
+    // Use Gemini API directly
+    const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `${systemPrompt}\n\n${userPrompt}`
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8000,
+          topP: 0.95,
+          topK: 40,
+        }
+      })
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('[AI Generator] API Error:', errorText)
+      throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    
+    // Extract text from Gemini response
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text
+    if (!responseText) {
+      console.error('[AI Generator] Unexpected response format:', JSON.stringify(data, null, 2))
+      throw new Error('No response from AI. Please try again.')
+    }
+
+    console.log(`[AI Generator] Received response (${responseText.length} chars)`)
+
+    // Parse the response to extract individual sections
+    const sections = parseAIGeneratedSections(responseText, input)
+    
+    if (sections.length === 0) {
+      throw new Error('Failed to parse AI-generated sections. Please try again.')
+    }
+
+    console.log(`[AI Generator] Successfully generated ${sections.length} sections`)
+    return sections.slice(0, maxResults)
+  } catch (error: any) {
+    console.error('[AI Generator] Error:', error)
+    throw new Error(`AI generation failed: ${error.message || 'Unknown error'}`)
+  }
+}
+
+/**
+ * Parse AI-generated response into individual sections
+ */
+function parseAIGeneratedSections(response: string, input: string): Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> {
+  const sections: Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> = []
+  
+  // Try to split by common delimiters
+  const delimiters = [
+    /(?:^|\n\n)(?=.*?{%\s*schema\s*%})/gm, // Sections with schema blocks
+    /(?:^|\n\n)(?=.*?<div)/gm, // Sections starting with div
+    /(?:^|\n\n)(?=.*?<section)/gm, // Sections starting with section
+  ]
+
+  let parts: string[] = []
+  
+  // Try each delimiter
+  for (const delimiter of delimiters) {
+    const matches = response.split(delimiter).filter(p => p.trim().length > 0)
+    if (matches.length > 1) {
+      parts = matches
+      break
+    }
+  }
+
+  // If no clear delimiter found, treat entire response as one section
+  if (parts.length === 0) {
+    parts = [response]
+  }
+
+  // Process each part
+  for (let i = 0; i < parts.length; i++) {
+    let liquidCode = parts[i].trim()
+    
+    // Remove markdown code blocks if present
+    liquidCode = liquidCode.replace(/^```(?:liquid|html)?\n?/gm, '').replace(/\n?```$/gm, '')
+    liquidCode = liquidCode.trim()
+
+    // Ensure it has schema
+    if (!liquidCode.includes('{% schema %}')) {
+      // Try to extract schema from the code or generate a basic one
+      const schemaMatch = liquidCode.match(/{%\s*endschema\s*%}/)
+      if (!schemaMatch) {
+        // Add a basic schema if missing
+        const sectionName = extractSectionNameFromCode(liquidCode) || `Generated Section ${i + 1}`
+        const basicSchema = generateBasicSchema(sectionName)
+        liquidCode += '\n\n' + basicSchema
+      }
+    }
+
+    // Extract section name from schema or generate one
+    const schema = extractSchemaFromLiquid(liquidCode)
+    const sectionName = schema?.name || extractSectionNameFromCode(liquidCode) || `Generated Section ${i + 1}`
+    const sectionId = generateSectionId(sectionName, i)
+    const description = `AI-generated section: ${input}`
+
+    if (liquidCode.length > 100) { // Only add if it's substantial
+      sections.push({
+        liquidCode,
+        sectionId,
+        name: sectionName,
+        description,
+      })
+    }
+  }
+
+  return sections
+}
+
+/**
+ * Extract section name from liquid code
+ */
+function extractSectionNameFromCode(code: string): string | null {
+  const schema = extractSchemaFromLiquid(code)
+  if (schema?.name) {
+    return schema.name
+  }
+  
+  // Try to find a heading or title
+  const headingMatch = code.match(/<h[1-6][^>]*>([^<]+)<\/h[1-6]>/i)
+  if (headingMatch) {
+    return headingMatch[1].trim()
+  }
+  
+  return null
+}
+
+/**
+ * Generate a basic schema for a section
+ */
+function generateBasicSchema(sectionName: string): string {
+  return `{% schema %}
+{
+  "name": "${sectionName}",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "${sectionName}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "${sectionName}"
+    }
+  ]
+}
+{% endschema %}`
+}
+
+/**
+ * Generate a unique section ID from name and index
+ */
+function generateSectionId(name: string, index: number): string {
+  const cleanName = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 50)
+  
+  return `ai-generated-${cleanName}-${index + 1}`
 }
 
