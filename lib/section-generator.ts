@@ -1244,7 +1244,7 @@ async function generateWithTogether(apiKey: string, systemPrompt: string, userPr
  */
 async function generateWithHuggingFace(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
   const model = process.env.AI_MODEL || 'meta-llama/Meta-Llama-3-70B-Instruct'
-  const url = `https://api-inference.huggingface.co/models/${model}`
+  const url = `https://router.huggingface.co/models/${model}`
   
   const response = await fetchWithRetry(url, {
     method: 'POST',
