@@ -61,11 +61,24 @@ export async function PATCH(
       )
     }
 
-    // If user is being set as admin, they must have pro plan
-    // If user is being set to free plan, they cannot be admin
-    if (is_admin === true && plan === 'free') {
+    // Get current user to check existing state
+    const { getUserById } = await import("@/lib/db")
+    const currentUser = await getUserById(params.userId)
+    
+    if (!currentUser) {
       return NextResponse.json(
-        { error: "Admin users must have Pro plan. Please set plan to Pro first, or remove admin status." },
+        { error: "User not found" },
+        { status: 404 }
+      )
+    }
+
+    // Determine final admin status (use provided value or keep current)
+    const finalIsAdmin = is_admin !== undefined ? is_admin : currentUser.is_admin
+
+    // If trying to set plan to free but user is/will be admin, prevent it
+    if (plan === 'free' && finalIsAdmin) {
+      return NextResponse.json(
+        { error: "Admin users must have Pro plan. Please remove admin status first, then change plan to free." },
         { status: 400 }
       )
     }
@@ -75,17 +88,15 @@ export async function PATCH(
       await updateUserAdminStatus(params.userId, is_admin)
     }
 
-    // Then update plan if provided (this will override the admin auto-pro if needed)
-    // But only if user is not admin (admins must stay on pro)
+    // Then update plan if provided
+    // Note: If user is admin, updateUserAdminStatus already set plan to pro,
+    // so this will only apply if user is not admin
     if (plan !== undefined) {
-      // Get current user to check admin status
-      const { getUserById } = await import("@/lib/db")
-      const currentUser = await getUserById(params.userId)
-      
-      // If user is admin, they must stay on pro plan
-      if (currentUser?.is_admin && plan === 'free') {
+      // Double-check: if user is now admin, don't allow free plan
+      const updatedUser = await getUserById(params.userId)
+      if (updatedUser?.is_admin && plan === 'free') {
         return NextResponse.json(
-          { error: "Admin users must have Pro plan. Please remove admin status first." },
+          { error: "Cannot set free plan for admin users. Please remove admin status first." },
           { status: 400 }
         )
       }
