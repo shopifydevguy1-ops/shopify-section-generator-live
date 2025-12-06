@@ -1133,6 +1133,67 @@ function getLLMProviders(): LLMProvider[] {
 }
 
 /**
+ * Get API key for a specific provider from comma-separated AI_API_KEY
+ * Supports multiple API keys: AI_API_KEY=gsk_...,sk-or-v1-...,hf_...
+ * Keys are identified by prefix:
+ * - gsk_ = Groq
+ * - sk-or-v1- = OpenRouter
+ * - hf_ = Hugging Face
+ * - Together and Gemini use their own keys or fallback to first key
+ */
+function getAPIKeyForProvider(provider: LLMProvider): string | null {
+  const apiKeysEnv = process.env.AI_API_KEY
+  if (!apiKeysEnv) {
+    return null
+  }
+
+  // Split by comma and trim
+  const apiKeys = apiKeysEnv.split(',').map(key => key.trim()).filter(key => key.length > 0)
+
+  // Try to match by prefix
+  for (const key of apiKeys) {
+    switch (provider) {
+      case 'groq':
+        if (key.startsWith('gsk_')) {
+          return key
+        }
+        break
+      case 'openrouter':
+        if (key.startsWith('sk-or-v1-')) {
+          return key
+        }
+        break
+      case 'huggingface':
+        if (key.startsWith('hf_')) {
+          return key
+        }
+        break
+      case 'together':
+        // Together AI keys typically start with specific prefixes, but we'll use any key that doesn't match others
+        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_')) {
+          return key
+        }
+        break
+      case 'gemini':
+        // Gemini keys are typically long alphanumeric strings, use any key that doesn't match others
+        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_')) {
+          return key
+        }
+        break
+    }
+  }
+
+  // Fallback: if no specific match found, use the first key
+  // This handles cases where keys might be in a different format
+  if (apiKeys.length > 0) {
+    console.warn(`[getAPIKeyForProvider] No specific key found for ${provider}, using first available key`)
+    return apiKeys[0]
+  }
+
+  return null
+}
+
+/**
  * Generate with Groq (Free, Fast, No Rate Limits)
  * Get API key: https://console.groq.com/
  */
@@ -1349,9 +1410,10 @@ export async function generateSectionWithAI(
   maxResults: number = 6
 ): Promise<Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }>> {
   const providers = getLLMProviders()
-  const apiKey = process.env.AI_API_KEY
-
-  if (!apiKey) {
+  
+  // Check if at least one API key is configured
+  const apiKeysEnv = process.env.AI_API_KEY
+  if (!apiKeysEnv) {
     throw new Error(`AI API key not configured. Please set AI_API_KEY environment variable. Trying providers: ${providers.join(', ')}`)
   }
 
@@ -1400,6 +1462,13 @@ Return each section as a separate complete liquid file.${referenceSections}`
     for (const provider of providers) {
       try {
         console.log(`[AI Generator] Attempting with ${provider.toUpperCase()} for: "${input}"`)
+        
+        // Get the correct API key for this provider
+        const apiKey = getAPIKeyForProvider(provider)
+        if (!apiKey) {
+          console.warn(`[AI Generator] No API key found for ${provider}, skipping`)
+          continue
+        }
         
         switch (provider) {
           case 'groq':
