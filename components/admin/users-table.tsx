@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { EditUserDialog } from "./edit-user-dialog"
-import { Edit, Loader2, RefreshCw } from "lucide-react"
+import { Edit, Loader2, RefreshCw, RotateCcw } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import type { User } from "@/lib/db"
 
@@ -27,6 +27,7 @@ export function UsersTable() {
   const [loading, setLoading] = useState(true)
   const [selectedUser, setSelectedUser] = useState<UserWithClerk | null>(null)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [resettingUserId, setResettingUserId] = useState<string | null>(null)
 
   const fetchUsers = async () => {
     setLoading(true)
@@ -61,6 +62,43 @@ export function UsersTable() {
 
   const handleUserUpdated = () => {
     fetchUsers()
+  }
+
+  const handleResetLimit = async (userId: string) => {
+    if (!confirm("Are you sure you want to reset this user's usage limit for the current month? This will delete all their usage logs (generations, downloads, copies) for this month.")) {
+      return
+    }
+
+    setResettingUserId(userId)
+    try {
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reset-usage" }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to reset usage limit")
+      }
+
+      toast({
+        title: "Success",
+        description: data.message || `Reset ${data.deleted || 0} usage log(s) for user`,
+      })
+
+      // Refresh users list
+      fetchUsers()
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to reset usage limit",
+        variant: "destructive",
+      })
+    } finally {
+      setResettingUserId(null)
+    }
   }
 
   if (loading) {
@@ -135,14 +173,30 @@ export function UsersTable() {
                           : new Date(user.created_at).toLocaleDateString()}
                       </td>
                       <td className="p-2">
-                        <Button
-                          onClick={() => handleEdit(user)}
-                          variant="ghost"
-                          size="sm"
-                        >
-                          <Edit className="h-4 w-4 mr-1" />
-                          Edit
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleEdit(user)}
+                            variant="ghost"
+                            size="sm"
+                          >
+                            <Edit className="h-4 w-4 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            onClick={() => handleResetLimit(user.id)}
+                            variant="ghost"
+                            size="sm"
+                            disabled={resettingUserId === user.id}
+                            title="Reset usage limit for current month"
+                          >
+                            {resettingUserId === user.id ? (
+                              <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                            ) : (
+                              <RotateCcw className="h-4 w-4 mr-1" />
+                            )}
+                            Reset Limit
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))

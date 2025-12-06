@@ -31,6 +31,7 @@ export interface UsageLog {
   generated_at: Date
   month: number
   year: number
+  ip_address?: string
 }
 
 export interface DownloadLog {
@@ -39,6 +40,7 @@ export interface DownloadLog {
   section_id: string
   action: 'copy' | 'download'
   created_at: Date
+  ip_address?: string
 }
 
 export interface SectionTemplate {
@@ -213,15 +215,54 @@ export async function getUserStats(): Promise<{
   }
 }
 
-export async function getUserUsageCount(userId: string, month: number, year: number): Promise<number> {
-  return usageLogs.filter(
+export async function getUserUsageCount(userId: string, month: number, year: number, ipAddress?: string): Promise<number> {
+  // Count generations from usageLogs
+  const generationCount = usageLogs.filter(
     log => log.user_id === userId && 
     log.month === month && 
     log.year === year
   ).length
+  
+  // Count downloads/copies from downloadLogs
+  const downloadCopyCount = downloadLogs.filter(
+    log => {
+      const logDate = new Date(log.created_at)
+      return log.user_id === userId && 
+        logDate.getMonth() + 1 === month && 
+        logDate.getFullYear() === year
+    }
+  ).length
+  
+  // Return total count (generations + downloads + copies)
+  return generationCount + downloadCopyCount
 }
 
-export async function logUsage(userId: string, sectionType: string): Promise<void> {
+// Get usage count by IP address (to prevent multiple account abuse)
+export async function getIPUsageCount(ipAddress: string, month: number, year: number): Promise<number> {
+  if (!ipAddress) return 0
+  
+  // Count generations from usageLogs by IP
+  const generationCount = usageLogs.filter(
+    log => log.ip_address === ipAddress && 
+    log.month === month && 
+    log.year === year
+  ).length
+  
+  // Count downloads/copies from downloadLogs by IP
+  const downloadCopyCount = downloadLogs.filter(
+    log => {
+      const logDate = new Date(log.created_at)
+      return log.ip_address === ipAddress && 
+        logDate.getMonth() + 1 === month && 
+        logDate.getFullYear() === year
+    }
+  ).length
+  
+  // Return total count (generations + downloads + copies) for this IP
+  return generationCount + downloadCopyCount
+}
+
+export async function logUsage(userId: string, sectionType: string, ipAddress?: string): Promise<void> {
   const now = new Date()
   const log: UsageLog = {
     id: crypto.randomUUID(),
@@ -230,9 +271,10 @@ export async function logUsage(userId: string, sectionType: string): Promise<voi
     generated_at: now,
     month: now.getMonth() + 1,
     year: now.getFullYear(),
+    ip_address: ipAddress,
   }
   usageLogs.push(log)
-  console.log(`[logUsage] Logged usage for user ${userId}, sectionType: ${sectionType}, total logs: ${usageLogs.length}`)
+  console.log(`[logUsage] Logged usage for user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, total logs: ${usageLogs.length}`)
 }
 
 export async function getSubscriptionByUserId(userId: string): Promise<Subscription | null> {
@@ -320,27 +362,119 @@ export async function getDownloadCount(userId: string): Promise<number> {
   return downloadLogs.filter(log => log.user_id === userId).length
 }
 
-export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', isAdmin: boolean): Promise<{ allowed: boolean; count: number; limit: number }> {
+export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
   // Pro users and admins have unlimited downloads
   if (plan === 'pro' || isAdmin) {
     return { allowed: true, count: 0, limit: Infinity }
   }
   
-  // Free users have a limit of 5 downloads/copies total
-  const count = await getDownloadCount(userId)
+  // Free users have a limit of 5 total actions (generations + downloads + copies)
+  const now = new Date()
+  const currentMonth = now.getMonth() + 1
+  const currentYear = now.getFullYear()
+  
+  // Check by user ID
+  const userCount = await getUserUsageCount(userId, currentMonth, currentYear, ipAddress)
+  
+  // Also check by IP address to prevent multiple account abuse
+  let ipCount = 0
+  if (ipAddress) {
+    ipCount = await getIPUsageCount(ipAddress, currentMonth, currentYear)
+  }
+  
+  // Use the higher count (either by user or by IP)
+  const count = Math.max(userCount, ipCount)
   const limit = 5
+  
+  // If IP limit is reached, provide a reason
+  if (ipAddress && ipCount >= limit && ipCount > userCount) {
+    return { 
+      allowed: false, 
+      count, 
+      limit, 
+      reason: "You have reached the limit from this IP address. Please upgrade to Pro for unlimited access." 
+    }
+  }
+  
   return { allowed: count < limit, count, limit }
 }
 
-export async function logDownloadOrCopy(userId: string, sectionId: string, action: 'copy' | 'download'): Promise<void> {
+export async function logDownloadOrCopy(userId: string, sectionId: string, action: 'copy' | 'download', ipAddress?: string): Promise<void> {
   const log: DownloadLog = {
     id: crypto.randomUUID(),
     user_id: userId,
     section_id: sectionId,
     action,
     created_at: new Date(),
+    ip_address: ipAddress,
   }
   downloadLogs.push(log)
+}
+
+// Reset user usage limits (admin function)
+export async function resetUserUsageLimit(userId: string, month?: number, year?: number): Promise<{ deleted: number }> {
+  const now = new Date()
+  const targetMonth = month || now.getMonth() + 1
+  const targetYear = year || now.getFullYear()
+  
+  // Delete usage logs for the user in the specified month/year
+  const initialUsageCount = usageLogs.length
+  usageLogs = usageLogs.filter(
+    log => !(log.user_id === userId && log.month === targetMonth && log.year === targetYear)
+  )
+  const deletedUsage = initialUsageCount - usageLogs.length
+  
+  // Delete download logs for the user in the specified month/year
+  const initialDownloadCount = downloadLogs.length
+  downloadLogs = downloadLogs.filter(
+    log => {
+      const logDate = new Date(log.created_at)
+      return !(log.user_id === userId && 
+        logDate.getMonth() + 1 === targetMonth && 
+        logDate.getFullYear() === targetYear)
+    }
+  )
+  const deletedDownloads = initialDownloadCount - downloadLogs.length
+  
+  const totalDeleted = deletedUsage + deletedDownloads
+  console.log(`[resetUserUsageLimit] Reset usage for user ${userId}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs`)
+  
+  return { deleted: totalDeleted }
+}
+
+// Reset IP usage limits (admin function)
+export async function resetIPUsageLimit(ipAddress: string, month?: number, year?: number): Promise<{ deleted: number }> {
+  if (!ipAddress) {
+    return { deleted: 0 }
+  }
+  
+  const now = new Date()
+  const targetMonth = month || now.getMonth() + 1
+  const targetYear = year || now.getFullYear()
+  
+  // Delete usage logs for the IP in the specified month/year
+  const initialUsageCount = usageLogs.length
+  usageLogs = usageLogs.filter(
+    log => !(log.ip_address === ipAddress && log.month === targetMonth && log.year === targetYear)
+  )
+  const deletedUsage = initialUsageCount - usageLogs.length
+  
+  // Delete download logs for the IP in the specified month/year
+  const initialDownloadCount = downloadLogs.length
+  downloadLogs = downloadLogs.filter(
+    log => {
+      const logDate = new Date(log.created_at)
+      return !(log.ip_address === ipAddress && 
+        logDate.getMonth() + 1 === targetMonth && 
+        logDate.getFullYear() === targetYear)
+    }
+  )
+  const deletedDownloads = initialDownloadCount - downloadLogs.length
+  
+  const totalDeleted = deletedUsage + deletedDownloads
+  console.log(`[resetIPUsageLimit] Reset usage for IP ${ipAddress}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs`)
+  
+  return { deleted: totalDeleted }
 }
 
 // Note: In production, replace all these functions with actual database queries

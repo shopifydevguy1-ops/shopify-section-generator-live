@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { getUserByClerkId, canDownloadOrCopy, logDownloadOrCopy, createUser } from "@/lib/db"
+import { getUserByClerkId, canDownloadOrCopy, logDownloadOrCopy, createUser, logUsage } from "@/lib/db"
 
 export async function POST(request: Request) {
   try {
@@ -58,8 +58,11 @@ export async function POST(request: Request) {
       )
     }
 
-    // Log the download/copy action
+    // Log the download/copy action (for download/copy limit tracking)
     await logDownloadOrCopy(dbUser.id, sectionId, action)
+    
+    // Also log as usage for monthly limit tracking (so it syncs with dashboard)
+    await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download')
 
     return NextResponse.json({
       success: true,

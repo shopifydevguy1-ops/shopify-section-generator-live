@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { getUserByClerkId, updateUserPlan, updateUserAdminStatus } from "@/lib/db"
+import { getUserByClerkId, updateUserPlan, updateUserAdminStatus, resetUserUsageLimit } from "@/lib/db"
 
 async function checkAdminAccess(userId: string) {
   const user = await currentUser()
@@ -125,6 +125,67 @@ export async function PATCH(
     console.error("Error updating user:", error)
     return NextResponse.json(
       { error: error.message || "Failed to update user" },
+      { status: 500 }
+    )
+  }
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: { userId: string } }
+) {
+  try {
+    const { userId: currentUserId } = auth()
+    
+    if (!currentUserId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
+    // Check if current user is admin using comprehensive check
+    const isAdmin = await checkAdminAccess(currentUserId)
+    if (!isAdmin) {
+      return NextResponse.json(
+        { error: "Forbidden - Admin access required" },
+        { status: 403 }
+      )
+    }
+
+    const body = await request.json()
+    const { action, month, year } = body
+
+    if (action !== 'reset-usage') {
+      return NextResponse.json(
+        { error: "Invalid action. Must be 'reset-usage'" },
+        { status: 400 }
+      )
+    }
+
+    // Get user to verify they exist
+    const { getUserById } = await import("@/lib/db")
+    const user = await getUserById(params.userId)
+    
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      )
+    }
+
+    // Reset usage limit
+    const result = await resetUserUsageLimit(params.userId, month, year)
+
+    return NextResponse.json({ 
+      success: true,
+      message: `Reset ${result.deleted} usage log(s) for user`,
+      deleted: result.deleted
+    })
+  } catch (error: any) {
+    console.error("Error resetting user usage:", error)
+    return NextResponse.json(
+      { error: error.message || "Failed to reset user usage" },
       { status: 500 }
     )
   }

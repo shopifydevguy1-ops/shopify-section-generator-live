@@ -7,6 +7,7 @@ import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lu
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
 import { SyncUsersButton } from "@/components/admin/sync-users-button"
+import { SupportRequests } from "@/components/admin/support-requests"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -296,6 +297,9 @@ export default async function AdminPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* Support Requests Section */}
+        <SupportRequests />
       </main>
     </div>
   )

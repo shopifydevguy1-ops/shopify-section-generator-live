@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useUser, SignInButton, UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Shield, Menu, X } from "lucide-react"
+import { Moon, Sun, Shield, Menu, X, Mail } from "lucide-react"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import {
@@ -107,6 +107,16 @@ export function Navbar() {
               size={mobile ? "lg" : "sm"}
             >
               Account
+            </Button>
+          </Link>
+          <Link href="/support" onClick={() => mobile && setMobileMenuOpen(false)}>
+            <Button 
+              variant={isActive("/support") ? "default" : "ghost"}
+              className={`${isActive("/support") ? "bg-primary" : ""} ${mobile ? "w-full justify-start" : "hidden md:inline-flex"}`}
+              size={mobile ? "lg" : "sm"}
+            >
+              <Mail className="h-4 w-4 mr-2" />
+              Support
             </Button>
           </Link>
           {isAdmin && (
