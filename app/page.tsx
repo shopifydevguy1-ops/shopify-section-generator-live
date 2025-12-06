@@ -2,16 +2,18 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Navbar } from "@/components/navbar"
+import { LandingBackground } from "@/components/landing-background"
 import { Check, Sparkles, Zap, Shield } from "lucide-react"
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] relative">
+      <LandingBackground />
       <Navbar />
       
-      <main>
+      <main className="relative z-10">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 py-20 text-center">
+        <section className="container mx-auto px-4 py-20 text-center relative">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Generate Beautiful Shopify Sections
@@ -36,7 +38,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="container mx-auto px-4 py-20 relative">
           <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="glass">
@@ -82,8 +84,8 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="container mx-auto px-4 py-20">
-          <Card className="max-w-2xl mx-auto gradient-bg text-white border-0">
+        <section className="container mx-auto px-4 py-20 relative">
+          <Card className="max-w-2xl mx-auto gradient-bg text-white border-0 relative z-10">
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4">Ready to Get Started?</CardTitle>
               <CardDescription className="text-white/90">
