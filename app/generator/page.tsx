@@ -222,15 +222,15 @@ export default function GeneratorPage() {
         {/* Generated Sections Preview - Full Width Below */}
         {generatedSections.length > 0 && (
           <Card className="border-2 shadow-lg">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-2xl">Generated Sections</CardTitle>
-              <CardDescription className="text-base">
+            <CardHeader className="pb-4 p-4 sm:p-6">
+              <CardTitle className="text-xl sm:text-2xl">Generated Sections</CardTitle>
+              <CardDescription className="text-sm sm:text-base">
                 Click on any section below to view instructions on how to add it to your Shopify store.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Grid of Section Previews - 3 columns per row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+              {/* Grid of Section Previews - Responsive: 1 col mobile, 2 col tablet, 3 col desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {generatedSections.map((section, index) => (
                   <div
                     key={section.sectionId}
