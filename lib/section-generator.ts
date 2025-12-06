@@ -1155,16 +1155,19 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
     switch (provider) {
       case 'groq':
         if (key.startsWith('gsk_')) {
+          console.log(`[getAPIKeyForProvider] Groq: Found key (length: ${key.length})`)
           return key
         }
         break
       case 'openrouter':
         if (key.startsWith('sk-or-v1-')) {
+          console.log(`[getAPIKeyForProvider] OpenRouter: Found key (length: ${key.length})`)
           return key
         }
         break
       case 'huggingface':
         if (key.startsWith('hf_')) {
+          console.log(`[getAPIKeyForProvider] HuggingFace: Found key (length: ${key.length})`)
           return key
         }
         break
@@ -1173,6 +1176,7 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
         // Check if it's a Together key by length and that it doesn't match other known patterns
         if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_') && key.length >= 40) {
           // Together keys are usually 64+ characters, prioritize longer keys
+          console.log(`[getAPIKeyForProvider] Together: Found potential key (length: ${key.length})`)
           return key
         }
         break
@@ -1180,6 +1184,7 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
         // Gemini keys are typically very long (100+ chars) alphanumeric strings
         // Check last to avoid conflicts with Together
         if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_') && key.length >= 100) {
+          console.log(`[getAPIKeyForProvider] Gemini: Found key (length: ${key.length})`)
           return key
         }
         break
@@ -1251,67 +1256,113 @@ function getModelForProvider(provider: LLMProvider): string {
     .map(m => m.trim())
     .filter(m => m.length > 0 && !m.match(/^(and|or|,)$/i))
 
-  // Find the first model that matches the provider's expected format
+  // Collect matching models for each provider, then select the best one
+  const groqModels: string[] = []
+  const openRouterModels: string[] = []
+  const togetherModels: string[] = []
+  const huggingFaceModels: string[] = []
+  const geminiModels: string[] = []
+  
   for (const model of models) {
     const lowerModel = model.toLowerCase()
     
-    switch (provider) {
-      case 'groq':
-        // Groq models: llama-3.1-70b-instruct, llama-3.1-8b-instant, mixtral-8x7b-32768, gemma-7b-it
-        // Groq doesn't use prefixes like "meta-llama/", so we need to extract just the model name
-        if (lowerModel.includes('llama-3.1') || lowerModel.includes('mixtral') || lowerModel.includes('gemma')) {
-          // Remove any provider prefix (e.g., "meta-llama/") and any suffix (e.g., ":free")
-          let cleanModel = model.replace(/^[^\/]+\//, '').split(':')[0].trim()
-          // Ensure it's a valid Groq model format (no slashes)
-          if (!cleanModel.includes('/')) {
-            return cleanModel
-          }
-        }
-        break
-      case 'openrouter':
-        // OpenRouter models: meta-llama/llama-3.1-70b-instruct:free
-        if (lowerModel.includes('meta-llama') || lowerModel.includes(':free') || lowerModel.includes('openrouter')) {
-          return model
-        }
-        break
-      case 'together':
-        // Together models: meta-llama/Llama-3-70b-chat-hf
-        if (lowerModel.includes('llama-3') || lowerModel.includes('together')) {
-          return model
-        }
-        break
-      case 'huggingface':
-        // Hugging Face models: meta-llama/Meta-Llama-3-70B-Instruct
-        if (lowerModel.includes('meta-llama') || lowerModel.includes('huggingface')) {
-          return model
-        }
-        break
-      case 'gemini':
-        // Gemini models: gemini-2.0-flash-exp
-        if (lowerModel.includes('gemini')) {
-          return model
-        }
-        break
+    // Groq models: llama-3.1-70b-instruct, llama-3.1-8b-instant, mixtral-8x7b-32768, gemma-7b-it
+    if (lowerModel.includes('llama-3.1') || lowerModel.includes('mixtral') || lowerModel.includes('gemma')) {
+      // Remove any provider prefix (e.g., "meta-llama/") and any suffix (e.g., ":free")
+      let cleanModel = model.replace(/^[^\/]+\//, '').split(':')[0].trim()
+      // Ensure it's a valid Groq model format (no slashes)
+      if (!cleanModel.includes('/')) {
+        groqModels.push(cleanModel)
+      }
     }
+    
+    // OpenRouter models: meta-llama/llama-3.1-70b-instruct:free
+    if (lowerModel.includes('meta-llama') && (lowerModel.includes(':free') || lowerModel.includes('openrouter'))) {
+      openRouterModels.push(model)
+    }
+    
+    // Together models: meta-llama/Llama-3-70b-chat-hf
+    if (lowerModel.includes('llama-3') || lowerModel.includes('together')) {
+      togetherModels.push(model)
+    }
+    
+    // Hugging Face models: meta-llama/Meta-Llama-3-70B-Instruct
+    if (lowerModel.includes('meta-llama') && !lowerModel.includes(':free') && !lowerModel.includes('openrouter')) {
+      huggingFaceModels.push(model)
+    }
+    
+    // Gemini models: gemini-2.0-flash-exp
+    if (lowerModel.includes('gemini')) {
+      geminiModels.push(model)
+    }
+  }
+  
+  // Select the best model for the provider (prefer more accessible models)
+  let selectedModel: string | null = null
+  switch (provider) {
+    case 'groq':
+      // Prefer 8b-instant (more accessible) over 70b-instruct
+      selectedModel = groqModels.find(m => m.includes('8b-instant')) || 
+                     groqModels.find(m => m.includes('8b')) || 
+                     groqModels[0] || null
+      if (selectedModel) {
+        console.log(`[getModelForProvider] Groq: Found ${groqModels.length} models, selected: ${selectedModel}`)
+        return selectedModel
+      }
+      break
+    case 'openrouter':
+      // Prefer 8b models over 70b (more accessible)
+      selectedModel = openRouterModels.find(m => m.toLowerCase().includes('8b')) || 
+                     openRouterModels[0] || null
+      if (selectedModel) {
+        console.log(`[getModelForProvider] OpenRouter: Found ${openRouterModels.length} models, selected: ${selectedModel}`)
+        return selectedModel
+      }
+      break
+    case 'together':
+      selectedModel = togetherModels[0] || null
+      if (selectedModel) {
+        console.log(`[getModelForProvider] Together: Found ${togetherModels.length} models, selected: ${selectedModel}`)
+        return selectedModel
+      }
+      break
+    case 'huggingface':
+      selectedModel = huggingFaceModels[0] || null
+      if (selectedModel) {
+        console.log(`[getModelForProvider] HuggingFace: Found ${huggingFaceModels.length} models, selected: ${selectedModel}`)
+        return selectedModel
+      }
+      break
+    case 'gemini':
+      selectedModel = geminiModels[0] || null
+      if (selectedModel) {
+        console.log(`[getModelForProvider] Gemini: Found ${geminiModels.length} models, selected: ${selectedModel}`)
+        return selectedModel
+      }
+      break
   }
 
   // If no match found, use provider-specific defaults (using more accessible models)
-  switch (provider) {
-    case 'groq':
-      // Use llama-3.1-8b-instant as it's more commonly available
-      return 'llama-3.1-8b-instant'
-    case 'openrouter':
-      // Use a model that definitely exists on OpenRouter
-      return 'meta-llama/llama-3.1-8b-instruct:free'
-    case 'together':
-      return 'meta-llama/Llama-3-70b-chat-hf'
-    case 'huggingface':
-      return 'meta-llama/Meta-Llama-3-70B-Instruct'
-    case 'gemini':
-      return 'gemini-2.0-flash-exp'
-    default:
-      return models[0] || 'llama-3.1-8b-instant'
-  }
+  const defaultModel = (() => {
+    switch (provider) {
+      case 'groq':
+        // Use llama-3.1-8b-instant as it's more commonly available
+        return 'llama-3.1-8b-instant'
+      case 'openrouter':
+        // Use a model that definitely exists on OpenRouter
+        return 'meta-llama/llama-3.1-8b-instruct:free'
+      case 'together':
+        return 'meta-llama/Llama-3-70b-chat-hf'
+      case 'huggingface':
+        return 'meta-llama/Meta-Llama-3-70B-Instruct'
+      case 'gemini':
+        return 'gemini-2.0-flash-exp'
+      default:
+        return models[0] || 'llama-3.1-8b-instant'
+    }
+  })()
+  console.log(`[getModelForProvider] ${provider}: No matching model found in AI_MODEL, using default: ${defaultModel}`)
+  return defaultModel
 }
 
 /**
