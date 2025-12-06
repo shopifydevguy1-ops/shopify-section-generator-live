@@ -259,6 +259,7 @@ export async function updateUserAdminStatus(userId: string, isAdmin: boolean): P
   if (user) {
     user.is_admin = isAdmin
     // Admins automatically get pro plan
+    // Note: We don't change plan when removing admin status - let the plan update handle that
     if (isAdmin) {
       user.plan = 'pro'
     }

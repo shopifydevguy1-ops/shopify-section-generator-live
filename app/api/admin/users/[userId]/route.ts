@@ -78,22 +78,26 @@ export async function PATCH(
     // If trying to set plan to free but user is/will be admin, prevent it
     if (plan === 'free' && finalIsAdmin) {
       return NextResponse.json(
-        { error: "Admin users must have Pro plan. Please remove admin status first, then change plan to free." },
+        { error: "Admin users must have Pro plan. Please uncheck 'Admin Access' first, then change plan to free." },
         { status: 400 }
       )
     }
 
-    // Update admin status FIRST (this may set plan to pro if admin is true)
+    // If both plan and admin status are being updated, handle the order carefully
+    // If removing admin AND setting to free, do admin first, then plan
+    // If setting admin, do admin first (which sets plan to pro), then plan update is ignored
     if (is_admin !== undefined) {
       await updateUserAdminStatus(params.userId, is_admin)
     }
 
     // Then update plan if provided
-    // Note: If user is admin, updateUserAdminStatus already set plan to pro,
-    // so this will only apply if user is not admin
+    // Note: If user is now admin, updateUserAdminStatus already set plan to pro,
+    // so we need to check again before updating plan
     if (plan !== undefined) {
-      // Double-check: if user is now admin, don't allow free plan
+      // Get updated user to check current admin status
       const updatedUser = await getUserById(params.userId)
+      
+      // If user is admin, they must stay on pro plan
       if (updatedUser?.is_admin && plan === 'free') {
         return NextResponse.json(
           { error: "Cannot set free plan for admin users. Please remove admin status first." },
@@ -101,6 +105,7 @@ export async function PATCH(
         )
       }
       
+      // Only update plan if user is not admin
       await updateUserPlan(params.userId, plan)
     }
 
