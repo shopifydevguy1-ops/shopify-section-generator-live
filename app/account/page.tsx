@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { getUserByClerkId, getSubscriptionByUserId } from "@/lib/db"
 import { CreditCard, Settings, User } from "lucide-react"
+import { AccountProfileCard } from "@/components/account/account-profile-card"
 
 export default async function AccountPage() {
   const { userId } = auth()
@@ -39,29 +40,14 @@ export default async function AccountPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                <CardTitle>Profile Information</CardTitle>
-              </div>
-              <CardDescription>Your account details</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Email</p>
-                <p className="text-sm">{user.emailAddresses[0]?.emailAddress}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Name</p>
-                <p className="text-sm">{user.firstName} {user.lastName}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">User ID</p>
-                <p className="text-sm font-mono text-xs">{user.id}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <AccountProfileCard
+            user={{
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.emailAddresses[0]?.emailAddress || "",
+              id: user.id,
+            }}
+          />
 
           <Card>
             <CardHeader>

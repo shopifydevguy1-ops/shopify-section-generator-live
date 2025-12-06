@@ -6,6 +6,7 @@ import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions, getAl
 import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
+import { SyncUsersButton } from "@/components/admin/sync-users-button"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -223,6 +224,13 @@ export default async function AdminPage() {
 
         {/* All Users Table from Clerk */}
         <div className="mt-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold">User Management</h2>
+              <p className="text-sm text-muted-foreground">Sync Clerk users with database</p>
+            </div>
+            <SyncUsersButton />
+          </div>
           <UsersTable />
         </div>
 

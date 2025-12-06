@@ -245,6 +245,15 @@ export async function updateUserPlan(userId: string, plan: 'free' | 'pro'): Prom
   }
 }
 
+export async function updateUserEmail(userId: string, email: string): Promise<void> {
+  const user = Array.from(users.values()).find(u => u.id === userId)
+  if (user) {
+    user.email = email
+    user.updated_at = new Date()
+    users.set(user.id, user)
+  }
+}
+
 export async function updateUserAdminStatus(userId: string, isAdmin: boolean): Promise<void> {
   const user = Array.from(users.values()).find(u => u.id === userId)
   if (user) {
