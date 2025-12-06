@@ -400,10 +400,14 @@ export function getAvailableTypes(): string[] {
 }
 
 /**
- * Clean section name by removing "CUSTOM" prefix
+ * Clean section name by removing "CUSTOM" and "SS-" prefixes
  */
 export function cleanSectionName(name: string): string {
-  return name.replace(/^CUSTOM\s+/i, '').trim()
+  return name
+    .replace(/^CUSTOM\s+/i, '')
+    .replace(/^SS-\s*/i, '')
+    .replace(/^SS\s+/i, '')
+    .trim()
 }
 
 /**
@@ -1730,6 +1734,30 @@ Return each section as a separate complete liquid file.${referenceSections}`
 }
 
 /**
+ * Save generated section to the sections folder
+ */
+function saveSectionToFolder(sectionId: string, liquidCode: string): void {
+  try {
+    const sectionsPath = getSectionsDirectoryPath()
+    
+    // Ensure the sections directory exists
+    if (!fs.existsSync(sectionsPath)) {
+      console.warn(`[saveSectionToFolder] Sections directory not found at ${sectionsPath}, creating it...`)
+      fs.mkdirSync(sectionsPath, { recursive: true })
+    }
+    
+    const filePath = path.join(sectionsPath, `${sectionId}.liquid`)
+    
+    // Write the liquid code to the file
+    fs.writeFileSync(filePath, liquidCode, 'utf-8')
+    console.log(`[saveSectionToFolder] ✓ Saved section ${sectionId} to ${filePath}`)
+  } catch (error) {
+    console.error(`[saveSectionToFolder] Error saving section ${sectionId}:`, error)
+    throw error
+  }
+}
+
+/**
  * Parse AI-generated response into individual sections
  */
 function parseAIGeneratedSections(response: string, input: string): Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }> {
@@ -1781,14 +1809,45 @@ function parseAIGeneratedSections(response: string, input: string): Array<{ liqu
     // Extract section name from schema or generate one
     const schema = extractSchemaFromLiquid(liquidCode)
     const sectionName = schema?.name || extractSectionNameFromCode(liquidCode) || `Generated Section ${i + 1}`
-    const sectionId = generateSectionId(sectionName, i)
+    // Clean the section name to remove SS- prefix
+    const cleanedSectionName = cleanSectionName(sectionName)
+    const sectionId = generateSectionId(cleanedSectionName, i)
     const description = `AI-generated section: ${input}`
 
     if (liquidCode.length > 100) { // Only add if it's substantial
+      // Update schema name to use cleaned name (remove SS-)
+      if (schema && schema.name && schema.name !== cleanedSectionName) {
+        // Replace the name in the schema JSON
+        const schemaRegex = /{%\s*schema\s*%}([\s\S]*?){%\s*endschema\s*%}/
+        const schemaMatch = liquidCode.match(schemaRegex)
+        if (schemaMatch) {
+          try {
+            const schemaJson = JSON.parse(schemaMatch[1])
+            schemaJson.name = cleanedSectionName
+            const updatedSchema = `{% schema %}\n${JSON.stringify(schemaJson, null, 2)}\n{% endschema %}`
+            liquidCode = liquidCode.replace(schemaRegex, updatedSchema)
+          } catch (e) {
+            // If JSON parsing fails, try simple string replacement
+            liquidCode = liquidCode.replace(
+              /"name"\s*:\s*"[^"]*"/,
+              `"name": "${cleanedSectionName.replace(/"/g, '\\"')}"`
+            )
+          }
+        }
+      }
+      
+      // Save to sections folder
+      try {
+        saveSectionToFolder(sectionId, liquidCode)
+      } catch (error) {
+        console.warn(`[parseAIGeneratedSections] Failed to save section ${sectionId} to folder:`, error)
+        // Continue even if save fails
+      }
+      
       sections.push({
         liquidCode,
         sectionId,
-        name: sectionName,
+        name: cleanedSectionName,
         description,
       })
     }
