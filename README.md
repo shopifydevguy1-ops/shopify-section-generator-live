@@ -61,7 +61,9 @@ A full-featured web application for generating Shopify sections from pre-built t
    # PayMongo
    PAYMONGO_SECRET_KEY=sk_test_...
    PAYMONGO_WEBHOOK_SECRET=whsec_...
-   PAYMONGO_PRO_AMOUNT=2000
+   PRO_PLAN_USD_AMOUNT=20
+   # Optional: Default USD to PHP exchange rate (fallback if API fails)
+   DEFAULT_USD_TO_PHP_RATE=56.0
 
    # Database (PostgreSQL connection string)
    DATABASE_URL=postgresql://user:password@localhost:5432/shopify_section_generator
@@ -117,7 +119,9 @@ A full-featured web application for generating Shopify sections from pre-built t
      - `payment.failed`
      - `payment.refunded`
 6. Copy the webhook signing secret to `PAYMONGO_WEBHOOK_SECRET`
-7. Configure `PAYMONGO_PRO_AMOUNT` (amount in cents, e.g., 2000 = ₱20.00)
+7. Configure `PRO_PLAN_USD_AMOUNT` (amount in USD, e.g., 20 = $20.00)
+   - The system will automatically convert USD to PHP based on current exchange rates
+   - Optionally set `DEFAULT_USD_TO_PHP_RATE` for a fallback rate if the API fails
 
 **Note:** PayMongo doesn't have native subscription support like Stripe. This implementation uses manual recurring billing. For true recurring subscriptions, you'll need to implement a cron job or scheduled task to create new checkout sessions monthly.
 

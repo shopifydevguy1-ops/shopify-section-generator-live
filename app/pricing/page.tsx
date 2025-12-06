@@ -4,9 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Navbar } from "@/components/navbar"
 import { Check } from "lucide-react"
 import { auth } from "@clerk/nextjs/server"
+import { convertUSDToPHPCents, formatPHP, formatUSD } from "@/lib/currency"
 
 export default async function PricingPage() {
   const { userId } = auth()
+  
+  // Get Pro plan pricing
+  const usdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "20")
+  const phpCents = await convertUSDToPHPCents(usdAmount)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -77,8 +82,13 @@ export default async function PricingPage() {
               <CardTitle className="text-2xl">Pro</CardTitle>
               <CardDescription>For professionals and agencies</CardDescription>
               <div className="mt-4">
-                <span className="text-4xl font-bold">$20</span>
-                <span className="text-muted-foreground">/month</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold">{formatUSD(usdAmount)}</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  ≈ {formatPHP(phpCents)} PHP (converted at current rate)
+                </p>
               </div>
             </CardHeader>
             <CardContent>
