@@ -1169,23 +1169,49 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
         }
         break
       case 'together':
-        // Together AI keys typically start with specific prefixes, but we'll use any key that doesn't match others
-        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_')) {
+        // Together AI keys are typically long alphanumeric strings (64+ chars) without specific prefixes
+        // Check if it's a Together key by length and that it doesn't match other known patterns
+        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_') && key.length >= 40) {
+          // Together keys are usually 64+ characters, prioritize longer keys
           return key
         }
         break
       case 'gemini':
-        // Gemini keys are typically long alphanumeric strings, use any key that doesn't match others
-        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_')) {
+        // Gemini keys are typically very long (100+ chars) alphanumeric strings
+        // Check last to avoid conflicts with Together
+        if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_') && key.length >= 100) {
           return key
         }
         break
     }
   }
 
-  // Fallback: if no specific match found, use the first key
+  // Fallback: if no specific match found, try to match by position or use appropriate key
   // This handles cases where keys might be in a different format
   if (apiKeys.length > 0) {
+    // Get list of providers to match by position if possible
+    const providers = getLLMProviders()
+    const providerIndex = providers.indexOf(provider)
+    
+    // If we can match by position and the key exists at that position, use it
+    if (providerIndex >= 0 && providerIndex < apiKeys.length) {
+      const keyAtPosition = apiKeys[providerIndex]
+      // Only use it if it doesn't match other known patterns (to avoid conflicts)
+      if (!keyAtPosition.startsWith('gsk_') && !keyAtPosition.startsWith('sk-or-v1-') && !keyAtPosition.startsWith('hf_')) {
+        console.log(`[getAPIKeyForProvider] Using key at position ${providerIndex} for ${provider}`)
+        return keyAtPosition
+      }
+    }
+    
+    // Otherwise, find the first key that doesn't match known patterns
+    for (const key of apiKeys) {
+      if (!key.startsWith('gsk_') && !key.startsWith('sk-or-v1-') && !key.startsWith('hf_')) {
+        console.warn(`[getAPIKeyForProvider] No specific key found for ${provider}, using first non-matching key`)
+        return key
+      }
+    }
+    
+    // Last resort: use first key
     console.warn(`[getAPIKeyForProvider] No specific key found for ${provider}, using first available key`)
     return apiKeys[0]
   }
@@ -1200,12 +1226,14 @@ function getAPIKeyForProvider(provider: LLMProvider): string | null {
 function getModelForProvider(provider: LLMProvider): string {
   const modelEnv = process.env.AI_MODEL
   if (!modelEnv) {
-    // Return provider-specific defaults
+    // Return provider-specific defaults (using more accessible models)
     switch (provider) {
       case 'groq':
-        return 'llama-3.1-70b-instruct'
+        // Use llama-3.1-8b-instant as it's more commonly available
+        return 'llama-3.1-8b-instant'
       case 'openrouter':
-        return 'meta-llama/llama-3.1-70b-instruct:free'
+        // Use a model that definitely exists on OpenRouter
+        return 'meta-llama/llama-3.1-8b-instruct:free'
       case 'together':
         return 'meta-llama/Llama-3-70b-chat-hf'
       case 'huggingface':
@@ -1213,7 +1241,7 @@ function getModelForProvider(provider: LLMProvider): string {
       case 'gemini':
         return 'gemini-2.0-flash-exp'
       default:
-        return 'llama-3.1-70b-instruct'
+        return 'llama-3.1-8b-instant'
     }
   }
 
@@ -1267,12 +1295,14 @@ function getModelForProvider(provider: LLMProvider): string {
     }
   }
 
-  // If no match found, use provider-specific defaults
+  // If no match found, use provider-specific defaults (using more accessible models)
   switch (provider) {
     case 'groq':
-      return 'llama-3.1-70b-instruct'
+      // Use llama-3.1-8b-instant as it's more commonly available
+      return 'llama-3.1-8b-instant'
     case 'openrouter':
-      return 'meta-llama/llama-3.1-70b-instruct:free'
+      // Use a model that definitely exists on OpenRouter
+      return 'meta-llama/llama-3.1-8b-instruct:free'
     case 'together':
       return 'meta-llama/Llama-3-70b-chat-hf'
     case 'huggingface':
@@ -1280,7 +1310,7 @@ function getModelForProvider(provider: LLMProvider): string {
     case 'gemini':
       return 'gemini-2.0-flash-exp'
     default:
-      return models[0] || 'llama-3.1-70b-instruct'
+      return models[0] || 'llama-3.1-8b-instant'
   }
 }
 
