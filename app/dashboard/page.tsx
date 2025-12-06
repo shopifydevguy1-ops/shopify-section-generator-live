@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
+import { DashboardBackground } from "@/components/dashboard-background"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -47,10 +48,11 @@ export default async function DashboardPage() {
   const remaining = (dbUser.plan === "pro" || dbUser.is_admin) ? "Unlimited" : Math.max(0, maxUsage - usageCount)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] relative">
+      <DashboardBackground />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 relative z-10">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
           <p className="text-muted-foreground">Welcome back, {user.firstName || user.emailAddresses[0]?.emailAddress}</p>

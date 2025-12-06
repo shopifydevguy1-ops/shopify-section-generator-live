@@ -111,6 +111,10 @@ let users: Map<string, User> = new Map()
 let subscriptions: Map<string, Subscription> = new Map()
 let usageLogs: UsageLog[] = []
 
+export async function getUserById(userId: string): Promise<User | null> {
+  return users.get(userId) || null
+}
+
 export async function getUserByClerkId(clerkId: string): Promise<User | null> {
   // In production, query your database
   // SELECT * FROM users WHERE clerk_id = $1

@@ -70,7 +70,8 @@ export function Navbar() {
     <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img src="/logo.svg" alt="Logo" className="h-8 w-8" />
             <span className="text-2xl font-bold bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Shopify Section Generator
             </span>

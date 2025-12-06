@@ -178,7 +178,7 @@ export default function GeneratorPage() {
           <Card className="border-2 shadow-lg">
             <CardHeader className="pb-4">
               <CardTitle className="text-2xl">Describe Your Section</CardTitle>
-              <CardDescription className="text-base">Describe what you need in natural language</CardDescription>
+              <CardDescription className="text-base">Describe what you need in natural language - individual sections or complete landing pages</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -187,7 +187,7 @@ export default function GeneratorPage() {
                   id="section-input"
                   value={sectionInput}
                   onChange={(e) => setSectionInput(e.target.value)}
-                  placeholder="I need a hero banner with gradient background and CTA button"
+                  placeholder="I need a hero banner with gradient background and CTA button, or create a complete landing page for a product launch"
                   className="mt-2 min-h-[150px] text-base"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -197,7 +197,7 @@ export default function GeneratorPage() {
                   }}
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Search for sections by name, tags, or description (e.g., &quot;hero&quot;, &quot;banner&quot;, &quot;testimonial&quot;). The system will find matching sections from your /sections folder.
+                  Search for sections by name, tags, or description (e.g., &quot;hero&quot;, &quot;banner&quot;, &quot;testimonial&quot;). You can also generate complete landing pages - just describe your landing page needs and the system will generate a section composed of a whole landing page from top to bottom, including header, hero, features, testimonials, and footer. The system will find matching sections from your /sections folder.
                 </p>
               </div>
               <Button

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
 import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { UsersTable } from "@/components/admin/users-table"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -220,63 +221,70 @@ export default async function AdminPage() {
           </Card>
         </div>
 
-        {/* All Users Table */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>All Users & Subscribers</CardTitle>
-            <CardDescription>Complete list of all registered users</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left p-2">Email</th>
-                    <th className="text-left p-2">Plan</th>
-                    <th className="text-left p-2">Subscription Status</th>
-                    <th className="text-left p-2">Joined</th>
-                    <th className="text-left p-2">Total Generations</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allUsers.map((user) => {
-                    const subscription = allSubscriptions.find(s => s.user_id === user.id)
-                    const userLogs = allLogs.filter(log => log.user_id === user.id)
-                    return (
-                      <tr key={user.id} className="border-b">
-                        <td className="p-2">{user.email}</td>
-                        <td className="p-2">
-                          <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
-                            {user.plan}
-                          </Badge>
-                        </td>
-                        <td className="p-2">
-                          {subscription ? (
-                            <Badge 
-                              variant={
-                                subscription.status === "active" ? "default" : 
-                                subscription.status === "canceled" ? "destructive" : 
-                                "secondary"
-                              }
-                            >
-                              {subscription.status}
+        {/* All Users Table from Clerk */}
+        <div className="mt-6">
+          <UsersTable />
+        </div>
+
+        {/* Database Users Table (Legacy) */}
+        {allUsers.length > 0 && (
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Database Users (Legacy)</CardTitle>
+              <CardDescription>Users stored in local database</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-2">Email</th>
+                      <th className="text-left p-2">Plan</th>
+                      <th className="text-left p-2">Subscription Status</th>
+                      <th className="text-left p-2">Joined</th>
+                      <th className="text-left p-2">Total Generations</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allUsers.map((user) => {
+                      const subscription = allSubscriptions.find(s => s.user_id === user.id)
+                      const userLogs = allLogs.filter(log => log.user_id === user.id)
+                      return (
+                        <tr key={user.id} className="border-b">
+                          <td className="p-2">{user.email}</td>
+                          <td className="p-2">
+                            <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
+                              {user.plan}
                             </Badge>
-                          ) : (
-                            <span className="text-muted-foreground">No subscription</span>
-                          )}
-                        </td>
-                        <td className="p-2 text-muted-foreground">
-                          {new Date(user.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="p-2">{userLogs.length}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+                          </td>
+                          <td className="p-2">
+                            {subscription ? (
+                              <Badge 
+                                variant={
+                                  subscription.status === "active" ? "default" : 
+                                  subscription.status === "canceled" ? "destructive" : 
+                                  "secondary"
+                                }
+                              >
+                                {subscription.status}
+                              </Badge>
+                            ) : (
+                              <span className="text-muted-foreground">No subscription</span>
+                            )}
+                          </td>
+                          <td className="p-2 text-muted-foreground">
+                            {new Date(user.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="p-2">{userLogs.length}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </main>
     </div>
   )

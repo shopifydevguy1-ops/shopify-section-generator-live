@@ -1,15 +1,29 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { JetBrains_Mono, Inter } from "next/font/google"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from "@/components/ui/toaster"
 import Script from "next/script"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap"
+})
+
+const jetbrainsMono = JetBrains_Mono({ 
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap"
+})
 
 export const metadata: Metadata = {
   title: "Shopify Section Generator",
   description: "Generate beautiful Shopify sections from pre-built templates",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -21,6 +35,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/logo.svg" />
           <Script
             id="theme-init"
             strategy="beforeInteractive"
@@ -43,7 +59,7 @@ export default function RootLayout({
             }}
           />
         </head>
-        <body className={inter.className}>
+        <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
           {children}
           <Toaster />
         </body>
