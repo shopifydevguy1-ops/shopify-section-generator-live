@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
-import { getUserByClerkId, canDownloadOrCopy, logDownloadOrCopy } from "@/lib/db"
+import { auth, currentUser } from "@clerk/nextjs/server"
+import { getUserByClerkId, canDownloadOrCopy, logDownloadOrCopy, createUser } from "@/lib/db"
 
 export async function POST(request: Request) {
   try {
@@ -23,13 +23,19 @@ export async function POST(request: Request) {
       )
     }
 
-    // Get user from database
-    const dbUser = await getUserByClerkId(userId)
+    // Get user from database, create if doesn't exist
+    let dbUser = await getUserByClerkId(userId)
     if (!dbUser) {
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      )
+      // Create user if doesn't exist
+      const clerkUser = await currentUser()
+      if (!clerkUser) {
+        return NextResponse.json(
+          { error: "Unable to get user information" },
+          { status: 401 }
+        )
+      }
+      const email = clerkUser.emailAddresses[0]?.emailAddress || ""
+      dbUser = await createUser(userId, email)
     }
 
     // Check if user can download/copy
@@ -81,13 +87,19 @@ export async function GET() {
       )
     }
 
-    // Get user from database
-    const dbUser = await getUserByClerkId(userId)
+    // Get user from database, create if doesn't exist
+    let dbUser = await getUserByClerkId(userId)
     if (!dbUser) {
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      )
+      // Create user if doesn't exist
+      const clerkUser = await currentUser()
+      if (!clerkUser) {
+        return NextResponse.json(
+          { error: "Unable to get user information" },
+          { status: 401 }
+        )
+      }
+      const email = clerkUser.emailAddresses[0]?.emailAddress || ""
+      dbUser = await createUser(userId, email)
     }
 
     // Get download/copy stats

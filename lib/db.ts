@@ -214,14 +214,10 @@ export async function getUserStats(): Promise<{
 }
 
 export async function getUserUsageCount(userId: string, month: number, year: number): Promise<number> {
-  const currentDate = new Date()
-  const currentMonth = currentDate.getMonth() + 1
-  const currentYear = currentDate.getFullYear()
-  
   return usageLogs.filter(
     log => log.user_id === userId && 
-    log.month === currentMonth && 
-    log.year === currentYear
+    log.month === month && 
+    log.year === year
   ).length
 }
 
