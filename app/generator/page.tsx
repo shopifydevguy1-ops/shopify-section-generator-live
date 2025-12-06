@@ -100,7 +100,7 @@ export default function GeneratorPage() {
       
       toast({
         title: "Success",
-        description: `Found ${data.sections.length} section${data.sections.length > 1 ? 's' : ''}. Click on an image to view the code.`,
+        description: `Found ${data.sections.length} section${data.sections.length > 1 ? 's' : ''} from /sections folder. Click on an image to view the code.`,
       })
     } catch (error: any) {
       console.error("Error generating section:", error)
@@ -162,7 +162,7 @@ export default function GeneratorPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Section Generator</h1>
-          <p className="text-muted-foreground">Enter section references to generate your Shopify section with schema tags</p>
+          <p className="text-muted-foreground">Search and find sections from your /sections folder</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
@@ -184,7 +184,7 @@ export default function GeneratorPage() {
                     className="mt-1 min-h-[200px]"
                   />
                   <p className="text-xs text-muted-foreground mt-2">
-                    Describe what you need in plain English (e.g., &quot;hero banner with animation&quot;). The system will automatically find the best matching sections from the library.
+                    Search for sections by name, tags, or description (e.g., &quot;hero&quot;, &quot;banner&quot;, &quot;testimonial&quot;). The system will find matching sections from your /sections folder.
                   </p>
                 </div>
                 <Button
@@ -195,10 +195,10 @@ export default function GeneratorPage() {
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Generating...
+                      Searching...
                     </>
                   ) : (
-                    "Generate Section"
+                    "Search Sections"
                   )}
                 </Button>
               </CardContent>
@@ -211,8 +211,8 @@ export default function GeneratorPage() {
               <CardTitle>Generated Sections</CardTitle>
               <CardDescription>
                 {generatedSections.length > 0 
-                  ? `Found ${generatedSections.length} section${generatedSections.length > 1 ? 's' : ''}. Click on an image to view and copy the code.`
-                  : "Generated sections will appear here"}
+                  ? `Found ${generatedSections.length} section${generatedSections.length > 1 ? 's' : ''} from /sections folder. Click on an image to view and copy the code.`
+                  : "Sections from /sections folder will appear here"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -333,8 +333,8 @@ export default function GeneratorPage() {
                 <div className="flex items-center justify-center h-[400px] text-muted-foreground">
                   <div className="text-center">
                     <Code className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Generated sections will appear here</p>
-                    <p className="text-sm mt-2 opacity-75">Enter a description and click &quot;Generate Section&quot;</p>
+                    <p>Sections from /sections folder will appear here</p>
+                    <p className="text-sm mt-2 opacity-75">Enter keywords and click &quot;Search Sections&quot;</p>
                   </div>
                 </div>
               )}

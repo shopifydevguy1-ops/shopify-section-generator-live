@@ -6,7 +6,7 @@ import {
   logUsage,
   createUser
 } from "@/lib/db"
-import { generateSectionWithAI } from "@/lib/section-generator"
+import { searchSections, loadAllSections } from "@/lib/section-lookup"
 
 export const dynamic = 'force-dynamic'
 
@@ -64,29 +64,41 @@ export async function POST(request: Request) {
       }
     }
 
-    // Generate sections using AI
-    console.log(`[API] Generating sections with AI for input: "${sectionInput}"`)
+    // Search sections from /sections folder (NO AI generation)
+    console.log(`[API] Searching sections from /sections folder for input: "${sectionInput}"`)
     
     let results
     try {
-      results = await generateSectionWithAI(sectionInput, 6)
-      console.log(`[API] AI generated ${results.length} sections`)
+      // Load all sections and search
+      const allSections = loadAllSections()
+      const searchResults = searchSections(sectionInput, allSections)
+      
+      // Limit to 6 results and map to expected format
+      results = searchResults.slice(0, 6).map(section => ({
+        liquidCode: section.liquidCode,
+        sectionId: section.filename.replace(/\.liquid$/, ''),
+        previewImage: section.previewImage,
+        name: section.name,
+        description: section.description || `Section: ${section.name}`,
+      }))
+      
+      console.log(`[API] Found ${results.length} sections from /sections folder`)
     } catch (error: any) {
-      console.error("[API] AI generation error:", error)
+      console.error("[API] Section search error:", error)
       return NextResponse.json(
-        { error: error.message || "Failed to generate sections with AI. Please try again." },
+        { error: error.message || "Failed to search sections. Please try again." },
         { status: 500 }
       )
     }
 
     if (results.length === 0) {
       return NextResponse.json(
-        { error: "No sections generated. Please try again with a different description." },
+        { error: `No sections found matching "${sectionInput}". Try different keywords like "hero", "banner", "testimonial", etc.` },
         { status: 404 }
       )
     }
 
-    // Log usage (use "custom" as type for AI-generated sections)
+    // Log usage (use "custom" as type for section lookups)
     await logUsage(user.id, "custom")
 
     return NextResponse.json({
