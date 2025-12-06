@@ -1,7 +1,32 @@
 import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import { clerkClient } from "@clerk/nextjs/server"
 import { getUserByClerkId, createUser } from "@/lib/db"
+
+async function checkAdminAccess(userId: string) {
+  const user = await currentUser()
+  if (!user) return false
+
+  // Check if user is admin via Clerk roles (handle different metadata formats)
+  const publicMeta = user.publicMetadata as Record<string, unknown> | undefined
+  const privateMeta = user.privateMetadata as Record<string, unknown> | undefined
+  const hasAdminRole = 
+    publicMeta?.role === 'admin' || 
+    (typeof publicMeta?.role === 'string' && publicMeta.role.toLowerCase() === 'admin') ||
+    privateMeta?.role === 'admin' ||
+    (typeof privateMeta?.role === 'string' && privateMeta.role.toLowerCase() === 'admin')
+  
+  // Check if user is admin via ADMIN_EMAILS environment variable
+  const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
+  const emailIsAdmin = adminEmails.includes(user.emailAddresses[0]?.emailAddress?.toLowerCase() || '')
+  
+  // Check database admin status
+  const dbUser = await getUserByClerkId(userId)
+  const isDbAdmin = dbUser?.is_admin || false
+  
+  // User is admin if they have admin role in Clerk OR email is in ADMIN_EMAILS OR marked as admin in DB
+  return hasAdminRole || emailIsAdmin || isDbAdmin
+}
 
 export async function GET() {
   try {
@@ -14,9 +39,9 @@ export async function GET() {
       )
     }
 
-    // Check if current user is admin
-    const currentUser = await getUserByClerkId(userId)
-    if (!currentUser || !currentUser.is_admin) {
+    // Check if current user is admin using comprehensive check
+    const isAdmin = await checkAdminAccess(userId)
+    if (!isAdmin) {
       return NextResponse.json(
         { error: "Forbidden - Admin access required" },
         { status: 403 }
