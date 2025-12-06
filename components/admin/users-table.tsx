@@ -53,6 +53,9 @@ export function UsersTable() {
 
   useEffect(() => {
     fetchUsers()
+    // Auto-refresh every 10 seconds
+    const interval = setInterval(fetchUsers, 10000)
+    return () => clearInterval(interval)
   }, [])
 
   const handleEdit = (user: UserWithClerk) => {

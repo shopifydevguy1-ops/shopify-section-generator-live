@@ -43,6 +43,15 @@ export interface DownloadLog {
   ip_address?: string
 }
 
+export interface LoginLog {
+  id: string
+  user_id: string
+  clerk_id: string
+  email: string
+  ip_address?: string
+  created_at: Date
+}
+
 export interface SectionTemplate {
   id: string
   name: string
@@ -121,6 +130,7 @@ let users: Map<string, User> = new Map()
 let subscriptions: Map<string, Subscription> = new Map()
 let usageLogs: UsageLog[] = []
 let downloadLogs: DownloadLog[] = []
+let loginLogs: LoginLog[] = []
 
 // Support requests store
 export interface SupportRequest {
@@ -205,6 +215,27 @@ export async function getAllSubscriptions(): Promise<Subscription[]> {
 
 export async function getAllUsageLogs(): Promise<UsageLog[]> {
   return usageLogs
+}
+
+export async function getAllLoginLogs(): Promise<LoginLog[]> {
+  return loginLogs
+}
+
+export async function logLogin(userId: string, clerkId: string, email: string, ipAddress?: string): Promise<void> {
+  const log: LoginLog = {
+    id: crypto.randomUUID(),
+    user_id: userId,
+    clerk_id: clerkId,
+    email,
+    ip_address: ipAddress,
+    created_at: new Date(),
+  }
+  loginLogs.push(log)
+  // Keep only last 1000 login logs to prevent memory issues
+  if (loginLogs.length > 1000) {
+    loginLogs = loginLogs.slice(-1000)
+  }
+  console.log(`[logLogin] Logged login for user ${email}, total logs: ${loginLogs.length}`)
 }
 
 export async function getUserStats(): Promise<{

@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
 import { Copy, Download, Loader2, Code, BookOpen, X } from "lucide-react"
+import { TrackLogin } from "@/components/track-login"
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
@@ -285,6 +286,7 @@ export default function GeneratorPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+      <TrackLogin />
       <Navbar />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">

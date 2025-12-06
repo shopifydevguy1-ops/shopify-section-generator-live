@@ -2,12 +2,14 @@ import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions, getAllUsageLogs } from "@/lib/db"
+import { getUserByClerkId, getUserStats, getAllUsers, getAllSubscriptions } from "@/lib/db"
 import { Users, UserCheck, CreditCard, FileText, TrendingUp, Calendar } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
 import { SyncUsersButton } from "@/components/admin/sync-users-button"
 import { SupportRequests } from "@/components/admin/support-requests"
+import { RecentUsersLive } from "@/components/admin/recent-users-live"
+import { RecentActivityLive } from "@/components/admin/recent-activity-live"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -84,17 +86,6 @@ export default async function AdminPage() {
   const stats = await getUserStats()
   const allUsers = await getAllUsers()
   const allSubscriptions = await getAllSubscriptions()
-  const allLogs = await getAllUsageLogs()
-
-  // Get recent users (last 10)
-  const recentUsers = allUsers
-    .sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
-    .slice(0, 10)
-
-  // Get recent usage logs (last 20)
-  const recentLogs = allLogs
-    .sort((a, b) => b.generated_at.getTime() - a.generated_at.getTime())
-    .slice(0, 20)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -164,63 +155,11 @@ export default async function AdminPage() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Recent Users */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Users</CardTitle>
-              <CardDescription>Latest registered users</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentUsers.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No users yet</p>
-                ) : (
-                  recentUsers.map((user) => (
-                    <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div className="flex-1">
-                        <p className="font-medium">{user.email}</p>
-                        <p className="text-xs text-muted-foreground">
-                          Joined {new Date(user.created_at).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <Badge variant={user.plan === "pro" ? "default" : "secondary"}>
-                        {user.plan}
-                      </Badge>
-                    </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Recent Users - Live Component */}
+          <RecentUsersLive />
 
-          {/* Recent Activity */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest section generations</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentLogs.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No activity yet</p>
-                ) : (
-                  recentLogs.map((log) => {
-                    const user = allUsers.find(u => u.id === log.user_id)
-                    return (
-                      <div key={log.id} className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex-1">
-                          <p className="font-medium text-sm">{user?.email || 'Unknown user'}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {log.section_type} • {new Date(log.generated_at).toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  })
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Recent Activity - Live Component */}
+          <RecentActivityLive />
         </div>
 
         {/* All Users Table from Clerk */}

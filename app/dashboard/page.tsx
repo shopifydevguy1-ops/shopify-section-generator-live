@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { getUserUsageCount, getUserByClerkId, getSubscriptionByUserId } from "@/lib/db"
 import { Zap, FileText, TrendingUp } from "lucide-react"
+import { TrackLogin } from "@/components/track-login"
 
 export default async function DashboardPage() {
   const { userId } = auth()
@@ -49,6 +50,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] relative">
+      <TrackLogin />
       <DashboardBackground />
       <Navbar />
       
