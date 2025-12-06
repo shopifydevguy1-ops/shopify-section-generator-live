@@ -291,7 +291,7 @@ export default function GeneratorPage() {
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">Access Your Theme Editor</h3>
                             <p className="text-muted-foreground">
-                              Go to your Shopify admin dashboard → <strong>Online Store</strong> → <strong>Themes</strong> → Click <strong>"Customize"</strong> on your active theme.
+                              Go to your Shopify admin dashboard → <strong>Online Store</strong> → <strong>Themes</strong> → Click <strong>&quot;Customize&quot;</strong> on your active theme.
                             </p>
                           </div>
                         </div>
@@ -303,7 +303,7 @@ export default function GeneratorPage() {
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">Navigate to Theme Files</h3>
                             <p className="text-muted-foreground">
-                              In the theme editor, click on <strong>"Theme settings"</strong> (gear icon) or use the left sidebar to access <strong>"Sections"</strong> folder.
+                              In the theme editor, click on <strong>&quot;Theme settings&quot;</strong> (gear icon) or use the left sidebar to access <strong>&quot;Sections&quot;</strong> folder.
                             </p>
                           </div>
                         </div>
@@ -315,12 +315,12 @@ export default function GeneratorPage() {
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">Upload the Section File</h3>
                             <p className="text-muted-foreground mb-2">
-                              Click <strong>"Add a new section"</strong> or upload the section file directly:
+                              Click <strong>&quot;Add a new section&quot;</strong> or upload the section file directly:
                             </p>
                             <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                              <li>Click <strong>"Add section"</strong> button</li>
+                              <li>Click <strong>&quot;Add section&quot;</strong> button</li>
                               <li>Name the file: <code className="bg-muted px-2 py-1 rounded text-sm">{selectedSection.sectionId}.liquid</code></li>
-                              <li>Paste the section code (click "View Code" below to copy)</li>
+                              <li>Paste the section code (click &quot;View Code&quot; below to copy)</li>
                             </ul>
                           </div>
                         </div>
@@ -332,7 +332,7 @@ export default function GeneratorPage() {
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">Add Section to Your Page</h3>
                             <p className="text-muted-foreground">
-                              After saving, go back to the page editor and click <strong>"Add section"</strong>. You'll find your new section in the list. Click it to add it to your page.
+                              After saving, go back to the page editor and click <strong>&quot;Add section&quot;</strong>. You&apos;ll find your new section in the list. Click it to add it to your page.
                             </p>
                           </div>
                         </div>
@@ -344,7 +344,7 @@ export default function GeneratorPage() {
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">Customize and Save</h3>
                             <p className="text-muted-foreground">
-                              Customize the section settings using the sidebar options, then click <strong>"Save"</strong> to publish your changes.
+                              Customize the section settings using the sidebar options, then click <strong>&quot;Save&quot;</strong> to publish your changes.
                             </p>
                           </div>
                         </div>
