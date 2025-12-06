@@ -1117,6 +1117,22 @@ function getLLMProvider(): LLMProvider {
 }
 
 /**
+ * Get list of providers to try (with fallback)
+ * Supports comma-separated list: LLM_PROVIDER=groq,openrouter,together
+ */
+function getLLMProviders(): LLMProvider[] {
+  const providerEnv = process.env.LLM_PROVIDER || 'groq'
+  const providers = providerEnv.split(',').map(p => p.trim().toLowerCase() as LLMProvider)
+  const validProviders: LLMProvider[] = ['groq', 'openrouter', 'together', 'gemini', 'huggingface']
+  
+  // Filter to only valid providers
+  const valid = providers.filter(p => validProviders.includes(p))
+  
+  // If none valid, default to groq
+  return valid.length > 0 ? valid : ['groq']
+}
+
+/**
  * Generate with Groq (Free, Fast, No Rate Limits)
  * Get API key: https://console.groq.com/
  */
@@ -1332,11 +1348,11 @@ export async function generateSectionWithAI(
   input: string,
   maxResults: number = 6
 ): Promise<Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }>> {
-  const provider = getLLMProvider()
+  const providers = getLLMProviders()
   const apiKey = process.env.AI_API_KEY
 
   if (!apiKey) {
-    throw new Error(`AI API key not configured. Please set AI_API_KEY environment variable for ${provider}.`)
+    throw new Error(`AI API key not configured. Please set AI_API_KEY environment variable. Trying providers: ${providers.join(', ')}`)
   }
 
   // Load reference sections from the sections folder (reduced to 1 to save tokens and avoid rate limits)
@@ -1374,32 +1390,56 @@ Each section should be complete with:
 Return each section as a separate complete liquid file.${referenceSections}`
 
   try {
-    console.log(`[AI Generator] Generating sections with ${provider.toUpperCase()} for: "${input}"`)
+    const providers = getLLMProviders()
+    console.log(`[AI Generator] Trying providers in order: ${providers.join(', ').toUpperCase()}`)
     
-    let responseText: string
+    let responseText: string | null = null
+    let lastError: Error | null = null
     
-    // Route to appropriate provider
-    switch (provider) {
-      case 'groq':
-        responseText = await generateWithGroq(apiKey, systemPrompt, userPrompt)
-        break
-      case 'openrouter':
-        responseText = await generateWithOpenRouter(apiKey, systemPrompt, userPrompt)
-        break
-      case 'together':
-        responseText = await generateWithTogether(apiKey, systemPrompt, userPrompt)
-        break
-      case 'huggingface':
-        responseText = await generateWithHuggingFace(apiKey, systemPrompt, userPrompt)
-        break
-      case 'gemini':
-      default:
-        responseText = await generateWithGemini(apiKey, systemPrompt, userPrompt)
-        break
+    // Try each provider in order until one succeeds
+    for (const provider of providers) {
+      try {
+        console.log(`[AI Generator] Attempting with ${provider.toUpperCase()} for: "${input}"`)
+        
+        switch (provider) {
+          case 'groq':
+            responseText = await generateWithGroq(apiKey, systemPrompt, userPrompt)
+            break
+          case 'openrouter':
+            responseText = await generateWithOpenRouter(apiKey, systemPrompt, userPrompt)
+            break
+          case 'together':
+            responseText = await generateWithTogether(apiKey, systemPrompt, userPrompt)
+            break
+          case 'huggingface':
+            responseText = await generateWithHuggingFace(apiKey, systemPrompt, userPrompt)
+            break
+          case 'gemini':
+            responseText = await generateWithGemini(apiKey, systemPrompt, userPrompt)
+            break
+          default:
+            throw new Error(`Unknown provider: ${provider}`)
+        }
+
+        if (responseText && responseText.trim().length > 0) {
+          console.log(`[AI Generator] ✓ Success with ${provider.toUpperCase()}`)
+          break
+        } else {
+          throw new Error('Empty response from provider')
+        }
+      } catch (error: any) {
+        console.warn(`[AI Generator] ✗ ${provider.toUpperCase()} failed: ${error.message}`)
+        lastError = error
+        // Continue to next provider
+        continue
+      }
     }
 
     if (!responseText || responseText.trim().length === 0) {
-      throw new Error('No response from AI. Please try again.')
+      const errorMsg = lastError 
+        ? `All providers failed. Last error: ${lastError.message}` 
+        : 'No response from any AI provider. Please try again.'
+      throw new Error(errorMsg)
     }
 
     console.log(`[AI Generator] Received response (${responseText.length} chars)`)
