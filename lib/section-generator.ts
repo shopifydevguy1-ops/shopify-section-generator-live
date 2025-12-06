@@ -1734,7 +1734,95 @@ Return each section as a separate complete liquid file.${referenceSections}`
 }
 
 /**
+ * Generate preview image URL for a section
+ * Uses HTML/CSS to image service or generates a placeholder based on section type
+ */
+function generatePreviewImageUrl(sectionName: string, sectionId: string, liquidCode: string): string | undefined {
+  try {
+    // Infer section type from name or code
+    const lowerName = sectionName.toLowerCase()
+    const lowerCode = liquidCode.toLowerCase()
+    
+    // Determine section type for better preview
+    let sectionType = 'section'
+    if (lowerName.includes('banner') || lowerName.includes('hero')) {
+      sectionType = 'banner'
+    } else if (lowerName.includes('testimonial') || lowerName.includes('review')) {
+      sectionType = 'testimonial'
+    } else if (lowerName.includes('product') || lowerCode.includes('product')) {
+      sectionType = 'product'
+    } else if (lowerName.includes('gallery') || lowerName.includes('image')) {
+      sectionType = 'gallery'
+    } else if (lowerName.includes('video')) {
+      sectionType = 'video'
+    } else if (lowerName.includes('faq') || lowerName.includes('accordion')) {
+      sectionType = 'faq'
+    } else if (lowerName.includes('form') || lowerName.includes('contact')) {
+      sectionType = 'form'
+    } else if (lowerName.includes('slider') || lowerName.includes('carousel')) {
+      sectionType = 'slider'
+    }
+    
+    // Use a placeholder service that generates images from HTML/CSS
+    // Option 1: Use htmlcsstoimage.com API (requires API key)
+    // Option 2: Use a simple placeholder service
+    // Option 3: Generate a data URI with SVG preview
+    
+    // For now, we'll use a simple SVG-based preview that represents the section type
+    // This can be replaced with a real screenshot service later
+    const svgPreview = generateSVGPreview(sectionName, sectionType)
+    
+    // Convert SVG to data URI
+    const dataUri = `data:image/svg+xml;base64,${Buffer.from(svgPreview).toString('base64')}`
+    
+    return dataUri
+  } catch (error) {
+    console.warn(`[generatePreviewImageUrl] Failed to generate preview for ${sectionId}:`, error)
+    return undefined
+  }
+}
+
+/**
+ * Generate a simple SVG preview for a section
+ */
+function generateSVGPreview(sectionName: string, sectionType: string): string {
+  const colors: Record<string, { bg: string; accent: string }> = {
+    banner: { bg: '#667eea', accent: '#f5576c' },
+    testimonial: { bg: '#f093fb', accent: '#4facfe' },
+    product: { bg: '#4facfe', accent: '#00f2fe' },
+    gallery: { bg: '#43e97b', accent: '#38f9d7' },
+    video: { bg: '#fa709a', accent: '#fee140' },
+    faq: { bg: '#30cfd0', accent: '#330867' },
+    form: { bg: '#a8edea', accent: '#fed6e3' },
+    slider: { bg: '#ff9a9e', accent: '#fecfef' },
+    section: { bg: '#a1c4fd', accent: '#c2e9fb' },
+  }
+  
+  const color = colors[sectionType] || colors.section
+  const shortName = sectionName.length > 20 ? sectionName.substring(0, 20) + '...' : sectionName
+  
+  return `
+    <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:${color.bg};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:${color.accent};stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#grad)"/>
+      <text x="200" y="140" font-family="Arial, sans-serif" font-size="24" font-weight="bold" 
+            text-anchor="middle" fill="white">${shortName}</text>
+      <text x="200" y="170" font-family="Arial, sans-serif" font-size="14" 
+            text-anchor="middle" fill="rgba(255,255,255,0.9)">${sectionType}</text>
+      <rect x="50" y="200" width="300" height="60" rx="5" fill="rgba(255,255,255,0.2)"/>
+    </svg>
+  `.trim()
+}
+
+/**
  * Save generated section to the sections folder
+ * Saved sections are automatically loaded by loadSectionTemplates() and will be
+ * available for search and reference in the section library
  */
 function saveSectionToFolder(sectionId: string, liquidCode: string): void {
   try {
@@ -1751,6 +1839,7 @@ function saveSectionToFolder(sectionId: string, liquidCode: string): void {
     // Write the liquid code to the file
     fs.writeFileSync(filePath, liquidCode, 'utf-8')
     console.log(`[saveSectionToFolder] ✓ Saved section ${sectionId} to ${filePath}`)
+    console.log(`[saveSectionToFolder] Section will be automatically available in the section library on next load`)
   } catch (error) {
     console.error(`[saveSectionToFolder] Error saving section ${sectionId}:`, error)
     throw error
@@ -1836,9 +1925,13 @@ function parseAIGeneratedSections(response: string, input: string): Array<{ liqu
         }
       }
       
+      // Generate preview image based on section type/name
+      const previewImage = generatePreviewImageUrl(cleanedSectionName, sectionId, liquidCode)
+      
       // Save to sections folder
       try {
         saveSectionToFolder(sectionId, liquidCode)
+        console.log(`[parseAIGeneratedSections] ✓ Section ${sectionId} saved and will be available in section library`)
       } catch (error) {
         console.warn(`[parseAIGeneratedSections] Failed to save section ${sectionId} to folder:`, error)
         // Continue even if save fails
@@ -1849,6 +1942,7 @@ function parseAIGeneratedSections(response: string, input: string): Array<{ liqu
         sectionId,
         name: cleanedSectionName,
         description,
+        previewImage,
       })
     }
   }
