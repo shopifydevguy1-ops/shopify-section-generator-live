@@ -118,6 +118,7 @@ CREATE INDEX IF NOT EXISTS idx_section_templates_tags ON section_templates USING
 let users: Map<string, User> = new Map()
 let subscriptions: Map<string, Subscription> = new Map()
 let usageLogs: UsageLog[] = []
+let downloadLogs: DownloadLog[] = []
 
 export async function getUserById(userId: string): Promise<User | null> {
   return users.get(userId) || null
