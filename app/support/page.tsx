@@ -85,7 +85,7 @@ export default function SupportPage() {
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Contact Support</h1>
             <p className="text-muted-foreground">
-              Have a question or need help? Send us a message and we'll get back to you as soon as possible.
+              Have a question or need help? Send us a message and we&apos;ll get back to you as soon as possible.
             </p>
           </div>
 
@@ -162,7 +162,7 @@ export default function SupportPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                You can also reach out through your Clerk account dashboard or by checking the admin panel if you're an admin.
+                You can also reach out through your Clerk account dashboard or by checking the admin panel if you&apos;re an admin.
               </p>
             </CardContent>
           </Card>
