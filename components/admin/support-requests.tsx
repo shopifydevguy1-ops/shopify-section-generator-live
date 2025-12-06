@@ -8,6 +8,15 @@ import { Loader2, RefreshCw, Mail } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { SupportTicketModal } from "./support-ticket-modal"
 
+interface SupportReply {
+  id: string
+  support_request_id: string
+  message: string
+  from_admin: boolean
+  created_at: string
+  admin_email?: string
+}
+
 interface SupportRequest {
   id: string
   user_id: string
@@ -17,6 +26,7 @@ interface SupportRequest {
   message: string
   created_at: string
   status: 'open' | 'closed' | 'in_progress'
+  replies?: SupportReply[]
 }
 
 export function SupportRequests() {
