@@ -8,7 +8,7 @@ import { Loader2 } from "lucide-react"
 interface RecentUser {
   id: string
   email: string
-  plan: 'free' | 'pro'
+  plan: 'free' | 'pro' | 'expert'
   created_at: Date
   lastLogin: Date | null
 }

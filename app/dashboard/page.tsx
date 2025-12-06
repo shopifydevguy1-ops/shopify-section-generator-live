@@ -215,10 +215,14 @@ export default async function DashboardPage() {
                   <div className="w-full bg-secondary rounded-full h-2">
                     <div
                       className="bg-primary h-2 rounded-full transition-all"
-                      style={{ width: `${Math.min(100, (usageCount / maxUsage) * 100)}%` }}
+                      style={{ 
+                        width: typeof maxUsage === 'number' 
+                          ? `${Math.min(100, (usageCount / maxUsage) * 100)}%` 
+                          : '0%'
+                      }}
                     />
                   </div>
-                  {usageCount >= maxUsage && (
+                  {typeof maxUsage === 'number' && usageCount >= maxUsage && (
                     <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
                       <p className="text-sm text-destructive font-semibold">
                         {dbUser.plan === "free" 

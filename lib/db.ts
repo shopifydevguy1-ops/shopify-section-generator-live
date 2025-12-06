@@ -281,6 +281,7 @@ export async function getUserStats(): Promise<{
   totalUsers: number
   freeUsers: number
   proUsers: number
+  expertUsers: number
   totalSubscriptions: number
   activeSubscriptions: number
   totalGenerations: number
