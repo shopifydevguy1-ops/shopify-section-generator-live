@@ -256,7 +256,15 @@ export default async function AdminPage() {
                   <tbody>
                     {allUsers.map((user) => {
                       const subscription = allSubscriptions.find(s => s.user_id === user.id)
-                      const userLogs = allLogs.filter(log => log.user_id === user.id)
+                      // Filter logs by user's database ID (not clerk_id)
+                      const userLogs = allLogs.filter(log => {
+                        const matches = log.user_id === user.id
+                        if (!matches && allLogs.length > 0) {
+                          // Debug: log mismatches for troubleshooting
+                          console.log(`[Admin] User ID mismatch - log.user_id: ${log.user_id}, user.id: ${user.id}, user.clerk_id: ${user.clerk_id}`)
+                        }
+                        return matches
+                      })
                       return (
                         <tr key={user.id} className="border-b">
                           <td className="p-2">{user.email}</td>
@@ -283,7 +291,12 @@ export default async function AdminPage() {
                           <td className="p-2 text-muted-foreground">
                             {new Date(user.created_at).toLocaleDateString()}
                           </td>
-                          <td className="p-2">{userLogs.length}</td>
+                          <td className="p-2">
+                            <span className="font-medium">{userLogs.length}</span>
+                            {userLogs.length === 0 && allLogs.length > 0 && (
+                              <span className="text-xs text-muted-foreground ml-2">(checking...)</span>
+                            )}
+                          </td>
                         </tr>
                       )
                     })}

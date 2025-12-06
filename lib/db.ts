@@ -235,6 +235,7 @@ export async function logUsage(userId: string, sectionType: string): Promise<voi
     year: now.getFullYear(),
   }
   usageLogs.push(log)
+  console.log(`[logUsage] Logged usage for user ${userId}, sectionType: ${sectionType}, total logs: ${usageLogs.length}`)
 }
 
 export async function getSubscriptionByUserId(userId: string): Promise<Subscription | null> {
