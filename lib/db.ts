@@ -237,11 +237,13 @@ export async function getSubscriptionByUserId(userId: string): Promise<Subscript
 }
 
 export async function updateUserPlan(userId: string, plan: 'free' | 'pro'): Promise<void> {
-  const user = Array.from(users.values()).find(u => u.id === userId)
+  const user = users.get(userId) || Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.plan = plan
     user.updated_at = new Date()
     users.set(user.id, user)
+  } else {
+    throw new Error(`User with ID ${userId} not found for plan update`)
   }
 }
 
@@ -255,7 +257,7 @@ export async function updateUserEmail(userId: string, email: string): Promise<vo
 }
 
 export async function updateUserAdminStatus(userId: string, isAdmin: boolean): Promise<void> {
-  const user = Array.from(users.values()).find(u => u.id === userId)
+  const user = users.get(userId) || Array.from(users.values()).find(u => u.id === userId)
   if (user) {
     user.is_admin = isAdmin
     // Admins automatically get pro plan
@@ -265,6 +267,8 @@ export async function updateUserAdminStatus(userId: string, isAdmin: boolean): P
     }
     user.updated_at = new Date()
     users.set(user.id, user)
+  } else {
+    throw new Error(`User with ID ${userId} not found for admin status update`)
   }
 }
 

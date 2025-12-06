@@ -62,12 +62,20 @@ export async function PATCH(
     }
 
     // Get current user to check existing state
-    const { getUserById } = await import("@/lib/db")
-    const currentUser = await getUserById(params.userId)
+    // Try to find user by database ID first, then by clerk_id if needed
+    const { getUserById, getAllUsers } = await import("@/lib/db")
+    let currentUser = await getUserById(params.userId)
+    
+    // If user not found by ID, try to find by searching all users
+    // This handles cases where the user might have been created but the Map lookup failed
+    if (!currentUser) {
+      const allUsers = await getAllUsers()
+      currentUser = allUsers.find(u => u.id === params.userId) || null
+    }
     
     if (!currentUser) {
       return NextResponse.json(
-        { error: "User not found" },
+        { error: `User not found with ID: ${params.userId}. Please refresh the page and try again.` },
         { status: 404 }
       )
     }
