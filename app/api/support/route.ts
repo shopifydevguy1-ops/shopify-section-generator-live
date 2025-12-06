@@ -1,18 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { getUserByClerkId, createUser } from "@/lib/db"
-
-// In-memory store for support requests (in production, use a database)
-let supportRequests: Array<{
-  id: string
-  user_id: string
-  clerk_id: string
-  email: string
-  subject: string
-  message: string
-  created_at: Date
-  status: 'open' | 'closed' | 'in_progress'
-}> = []
+import { getUserByClerkId, createUser, getAllSupportRequests, addSupportRequest } from "@/lib/db"
 
 export async function POST(request: Request) {
   try {
@@ -65,7 +53,7 @@ export async function POST(request: Request) {
       status: 'open' as const,
     }
 
-    supportRequests.push(supportRequest)
+    addSupportRequest(supportRequest)
 
     console.log(`[Support] New support request from ${email}: ${subject}`)
 
@@ -135,7 +123,8 @@ export async function GET() {
     }
 
     // Return all support requests (sorted by newest first)
-    const sortedRequests = [...supportRequests].sort(
+    const allRequests = getAllSupportRequests()
+    const sortedRequests = allRequests.sort(
       (a, b) => b.created_at.getTime() - a.created_at.getTime()
     )
 
@@ -152,7 +141,4 @@ export async function GET() {
     )
   }
 }
-
-// Export supportRequests for admin page access
-export { supportRequests }
 

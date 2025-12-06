@@ -122,6 +122,28 @@ let subscriptions: Map<string, Subscription> = new Map()
 let usageLogs: UsageLog[] = []
 let downloadLogs: DownloadLog[] = []
 
+// Support requests store
+export interface SupportRequest {
+  id: string
+  user_id: string
+  clerk_id: string
+  email: string
+  subject: string
+  message: string
+  created_at: Date
+  status: 'open' | 'closed' | 'in_progress'
+}
+
+let supportRequests: SupportRequest[] = []
+
+export function getAllSupportRequests(): SupportRequest[] {
+  return [...supportRequests]
+}
+
+export function addSupportRequest(request: SupportRequest): void {
+  supportRequests.push(request)
+}
+
 export async function getUserById(userId: string): Promise<User | null> {
   return users.get(userId) || null
 }
