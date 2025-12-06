@@ -17,8 +17,16 @@ interface ClerkUserData {
   createdAt: number
 }
 
+interface ActivityStats {
+  generations: number
+  copies: number
+  downloads: number
+  total: number
+}
+
 interface UserWithClerk extends User {
   clerkUser?: ClerkUserData
+  activityStats?: ActivityStats
 }
 
 export function UsersTable() {
@@ -138,6 +146,7 @@ export function UsersTable() {
                   <th className="text-left p-2">Name</th>
                   <th className="text-left p-2">Plan</th>
                   <th className="text-left p-2">Admin</th>
+                  <th className="text-left p-2">Activity</th>
                   <th className="text-left p-2">Joined</th>
                   <th className="text-left p-2">Actions</th>
                 </tr>
@@ -145,7 +154,7 @@ export function UsersTable() {
               <tbody>
                 {users.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-4 text-center text-muted-foreground">
+                    <td colSpan={7} className="p-4 text-center text-muted-foreground">
                       No users found
                     </td>
                   </tr>
@@ -168,6 +177,30 @@ export function UsersTable() {
                           <Badge variant="default">Admin</Badge>
                         ) : (
                           <span className="text-muted-foreground">-</span>
+                        )}
+                      </td>
+                      <td className="p-2">
+                        {user.activityStats ? (
+                          <div className="flex flex-col gap-1 text-xs">
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">Gen:</span>
+                              <span className="font-medium">{user.activityStats.generations}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">Copy:</span>
+                              <span className="font-medium">{user.activityStats.copies}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">Down:</span>
+                              <span className="font-medium">{user.activityStats.downloads}</span>
+                            </div>
+                            <div className="flex items-center gap-2 pt-1 border-t">
+                              <span className="text-muted-foreground">Total:</span>
+                              <span className="font-semibold">{user.activityStats.total}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-muted-foreground text-xs">-</span>
                         )}
                       </td>
                       <td className="p-2 text-muted-foreground">

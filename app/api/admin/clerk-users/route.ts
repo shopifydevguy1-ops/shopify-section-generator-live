@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { clerkClient } from "@clerk/nextjs/server"
-import { getUserByClerkId, createUser } from "@/lib/db"
+import { getUserByClerkId, createUser, getUserActivityStats } from "@/lib/db"
 
 async function checkAdminAccess(userId: string) {
   const user = await currentUser()
@@ -66,29 +66,24 @@ export async function GET() {
       offset += limit
     }
 
-    // Sync Clerk users with database
+    // Sync Clerk users with database and add activity stats
     const syncedUsers = await Promise.all(
       allClerkUsers.map(async (clerkUser) => {
         const email = clerkUser.emailAddresses[0]?.emailAddress || ""
         const dbUser = await getUserByClerkId(clerkUser.id)
         
         // If user doesn't exist in DB, create them
-        if (!dbUser) {
-          const newUser = await createUser(clerkUser.id, email)
-          return {
-            ...newUser,
-            clerkUser: {
-              id: clerkUser.id,
-              firstName: clerkUser.firstName,
-              lastName: clerkUser.lastName,
-              imageUrl: clerkUser.imageUrl,
-              createdAt: clerkUser.createdAt,
-            }
-          }
+        let user = dbUser
+        if (!user) {
+          user = await createUser(clerkUser.id, email)
         }
         
+        // Get activity stats for this user
+        const activityStats = await getUserActivityStats(user.id)
+        
         return {
-          ...dbUser,
+          ...user,
+          activityStats,
           clerkUser: {
             id: clerkUser.id,
             firstName: clerkUser.firstName,

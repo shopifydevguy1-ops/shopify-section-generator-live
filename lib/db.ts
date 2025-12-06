@@ -454,6 +454,29 @@ export async function getDownloadCount(userId: string): Promise<number> {
   return downloadLogs.filter(log => log.user_id === userId).length
 }
 
+export async function getUserActivityStats(userId: string): Promise<{
+  generations: number
+  copies: number
+  downloads: number
+  total: number
+}> {
+  // Count generations (from usageLogs)
+  const generations = usageLogs.filter(log => log.user_id === userId).length
+  
+  // Count copies (from downloadLogs where action is 'copy')
+  const copies = downloadLogs.filter(log => log.user_id === userId && log.action === 'copy').length
+  
+  // Count downloads (from downloadLogs where action is 'download')
+  const downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
+  
+  return {
+    generations,
+    copies,
+    downloads,
+    total: generations + copies + downloads,
+  }
+}
+
 export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
   // Pro users and admins have unlimited downloads
   if (plan === 'pro' || isAdmin) {
