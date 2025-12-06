@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
-import { Copy, Download, Loader2, Code } from "lucide-react"
+import { Copy, Download, Loader2, Code, BookOpen, X } from "lucide-react"
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
@@ -37,6 +37,7 @@ export default function GeneratorPage() {
   const [excludedSectionIds, setExcludedSectionIds] = useState<string[]>([])
   const [lastInput, setLastInput] = useState<string>("")
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showInstructions, setShowInstructions] = useState(false)
 
   useEffect(() => {
     if (isLoaded && !user) {
@@ -100,7 +101,7 @@ export default function GeneratorPage() {
       
       toast({
         title: "Success",
-        description: `Found ${data.sections.length} section${data.sections.length > 1 ? 's' : ''} from /sections folder. Click on an image to view the code.`,
+        description: `Generated ${data.sections.length} section${data.sections.length > 1 ? 's' : ''}. Click on any section to view instructions.`,
       })
     } catch (error: any) {
       console.error("Error generating section:", error)
@@ -144,6 +145,11 @@ export default function GeneratorPage() {
 
   const handleSectionSelect = (section: typeof selectedSection) => {
     setSelectedSection(section)
+    setShowInstructions(true)
+  }
+
+  const handleViewCode = () => {
+    setShowInstructions(false)
     setIsModalOpen(true)
   }
 
@@ -164,7 +170,7 @@ export default function GeneratorPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
             Section Generator
           </h1>
-          <p className="text-muted-foreground text-lg">Search and find sections from your /sections folder</p>
+          <p className="text-muted-foreground text-lg">Generate a high converting section</p>
         </div>
 
         {/* Section Input - Full Width on Top */}
@@ -203,10 +209,10 @@ export default function GeneratorPage() {
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Searching Sections...
+                    Generating Section...
                   </>
                 ) : (
-                  "Search Sections"
+                  "Generate Section"
                 )}
               </Button>
             </CardContent>
@@ -219,12 +225,12 @@ export default function GeneratorPage() {
             <CardHeader className="pb-4">
               <CardTitle className="text-2xl">Generated Sections</CardTitle>
               <CardDescription className="text-base">
-                Found {generatedSections.length} section{generatedSections.length > 1 ? 's' : ''} from /sections folder. Click on an image to view and copy the code.
+                Click on any section below to view instructions on how to add it to your Shopify store.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Grid of Section Previews - Larger and More Spacious */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {/* Grid of Section Previews - 3 columns per row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {generatedSections.map((section, index) => (
                   <div
                     key={section.sectionId}
@@ -262,6 +268,110 @@ export default function GeneratorPage() {
                   </div>
                 ))}
               </div>
+
+              {/* Instructions Modal */}
+              {selectedSection && (
+                <Dialog open={showInstructions} onOpenChange={setShowInstructions}>
+                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl flex items-center gap-2">
+                        <BookOpen className="h-6 w-6" />
+                        How to Add Section to Shopify
+                      </DialogTitle>
+                      <DialogDescription className="text-base mt-2">
+                        Follow these steps to add <strong>{selectedSection.name}</strong> to your Shopify theme.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-6 py-4">
+                      <div className="space-y-4">
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            1
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg mb-2">Access Your Theme Editor</h3>
+                            <p className="text-muted-foreground">
+                              Go to your Shopify admin dashboard → <strong>Online Store</strong> → <strong>Themes</strong> → Click <strong>"Customize"</strong> on your active theme.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            2
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg mb-2">Navigate to Theme Files</h3>
+                            <p className="text-muted-foreground">
+                              In the theme editor, click on <strong>"Theme settings"</strong> (gear icon) or use the left sidebar to access <strong>"Sections"</strong> folder.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            3
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg mb-2">Upload the Section File</h3>
+                            <p className="text-muted-foreground mb-2">
+                              Click <strong>"Add a new section"</strong> or upload the section file directly:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                              <li>Click <strong>"Add section"</strong> button</li>
+                              <li>Name the file: <code className="bg-muted px-2 py-1 rounded text-sm">{selectedSection.sectionId}.liquid</code></li>
+                              <li>Paste the section code (click "View Code" below to copy)</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            4
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg mb-2">Add Section to Your Page</h3>
+                            <p className="text-muted-foreground">
+                              After saving, go back to the page editor and click <strong>"Add section"</strong>. You'll find your new section in the list. Click it to add it to your page.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            5
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg mb-2">Customize and Save</h3>
+                            <p className="text-muted-foreground">
+                              Customize the section settings using the sidebar options, then click <strong>"Save"</strong> to publish your changes.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-muted/50 rounded-lg p-4 border border-border">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Code className="h-4 w-4" />
+                          Quick Tip
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          You can also download the section file and upload it via FTP or using Shopify CLI. The section file should be placed in the <code className="bg-background px-1.5 py-0.5 rounded text-xs">sections/</code> folder of your theme.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 pt-4 border-t">
+                      <Button onClick={handleViewCode} className="flex-1" size="lg">
+                        <Code className="mr-2 h-4 w-4" />
+                        View Code
+                      </Button>
+                      <Button onClick={() => setShowInstructions(false)} variant="outline" size="lg">
+                        Close
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
 
               {/* Modal with Image and Code */}
               {selectedSection && (
@@ -345,7 +455,7 @@ export default function GeneratorPage() {
               <div className="text-center">
                 <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
                 <p className="text-lg font-medium mb-2">No sections found yet</p>
-                <p className="text-sm opacity-75">Enter keywords above and click &quot;Search Sections&quot; to find matching sections</p>
+                <p className="text-sm opacity-75">Enter keywords above and click &quot;Generate Section&quot; to find matching sections</p>
               </div>
             </CardContent>
           </Card>
