@@ -1103,18 +1103,238 @@ async function fetchWithRetry(
 }
 
 /**
- * Generate Shopify liquid section using Google Gemini AI
+ * LLM Provider types
+ */
+type LLMProvider = 'groq' | 'openrouter' | 'together' | 'gemini' | 'huggingface'
+
+/**
+ * Get LLM provider from environment or default to Groq (free and fast)
+ */
+function getLLMProvider(): LLMProvider {
+  const provider = (process.env.LLM_PROVIDER || 'groq').toLowerCase() as LLMProvider
+  const validProviders: LLMProvider[] = ['groq', 'openrouter', 'together', 'gemini', 'huggingface']
+  return validProviders.includes(provider) ? provider : 'groq'
+}
+
+/**
+ * Generate with Groq (Free, Fast, No Rate Limits)
+ * Get API key: https://console.groq.com/
+ */
+async function generateWithGroq(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
+  const model = process.env.AI_MODEL || 'llama-3.1-70b-versatile'
+  const url = 'https://api.groq.com/openai/v1/chat/completions'
+  
+  const response = await fetchWithRetry(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 4000,
+    })
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`Groq API error: ${response.status} - ${errorText}`)
+  }
+
+  const data = await response.json()
+  return data.choices?.[0]?.message?.content || ''
+}
+
+/**
+ * Generate with OpenRouter (Free models available)
+ * Get API key: https://openrouter.ai/
+ */
+async function generateWithOpenRouter(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
+  const model = process.env.AI_MODEL || 'meta-llama/llama-3.1-70b-instruct:free'
+  const url = 'https://openrouter.ai/api/v1/chat/completions'
+  
+  const response = await fetchWithRetry(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+      'X-Title': 'Shopify Section Generator',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 4000,
+    })
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`)
+  }
+
+  const data = await response.json()
+  return data.choices?.[0]?.message?.content || ''
+}
+
+/**
+ * Generate with Together AI (Free tier available)
+ * Get API key: https://together.ai/
+ */
+async function generateWithTogether(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
+  const model = process.env.AI_MODEL || 'meta-llama/Llama-3-70b-chat-hf'
+  const url = 'https://api.together.xyz/v1/chat/completions'
+  
+  const response = await fetchWithRetry(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 4000,
+    })
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`Together AI API error: ${response.status} - ${errorText}`)
+  }
+
+  const data = await response.json()
+  return data.choices?.[0]?.message?.content || ''
+}
+
+/**
+ * Generate with Hugging Face (Free Inference API)
+ * Get API key: https://huggingface.co/settings/tokens
+ */
+async function generateWithHuggingFace(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
+  const model = process.env.AI_MODEL || 'meta-llama/Meta-Llama-3-70B-Instruct'
+  const url = `https://api-inference.huggingface.co/models/${model}`
+  
+  const response = await fetchWithRetry(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      inputs: `${systemPrompt}\n\n${userPrompt}`,
+      parameters: {
+        temperature: 0.7,
+        max_new_tokens: 4000,
+        return_full_text: false,
+      }
+    })
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`)
+  }
+
+  const data = await response.json()
+  // Hugging Face returns array or object with generated_text
+  if (Array.isArray(data) && data[0]?.generated_text) {
+    return data[0].generated_text
+  }
+  if (data.generated_text) {
+    return data.generated_text
+  }
+  return ''
+}
+
+/**
+ * Generate with Google Gemini (original implementation)
+ */
+async function generateWithGemini(apiKey: string, systemPrompt: string, userPrompt: string): Promise<string> {
+  const apiUrl = process.env.AI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent'
+  const model = process.env.AI_MODEL || 'gemini-2.0-flash-exp'
+  
+  const response = await fetchWithRetry(`${apiUrl}?key=${apiKey}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{
+          text: `${systemPrompt}\n\n${userPrompt}`
+        }]
+      }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 4000,
+        topP: 0.95,
+        topK: 40,
+      }
+    })
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    console.error('[AI Generator] API Error:', errorText)
+    
+    if (response.status === 429) {
+      let errorDetails = 'Rate limit exceeded'
+      try {
+        const errorData = JSON.parse(errorText)
+        if (errorData.error?.message) {
+          errorDetails = errorData.error.message
+        }
+      } catch (e) {
+        // Use default message
+      }
+      throw new Error(`Rate limit exceeded. ${errorDetails}. Please wait 30-60 seconds before trying again, or check your Gemini API quota.`)
+    }
+    
+    throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
+  }
+
+  const data = await response.json()
+  
+  if (data.error) {
+    console.error('[AI Generator] API Error in response:', data.error)
+    throw new Error(data.error.message || 'API returned an error')
+  }
+  
+  const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text
+  if (!responseText) {
+    console.error('[AI Generator] Unexpected response format:', JSON.stringify(data, null, 2))
+    throw new Error('No response from AI. Please try again.')
+  }
+  
+  return responseText
+}
+
+/**
+ * Generate Shopify liquid section using AI (supports multiple free LLM providers)
  */
 export async function generateSectionWithAI(
   input: string,
   maxResults: number = 6
 ): Promise<Array<{ liquidCode: string; sectionId: string; previewImage?: string; name: string; description: string }>> {
+  const provider = getLLMProvider()
   const apiKey = process.env.AI_API_KEY
-  const apiUrl = process.env.AI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent'
-  const model = process.env.AI_MODEL || 'gemini-2.0-flash-exp'
 
   if (!apiKey) {
-    throw new Error('AI API key not configured. Please set AI_API_KEY environment variable.')
+    throw new Error(`AI API key not configured. Please set AI_API_KEY environment variable for ${provider}.`)
   }
 
   // Load reference sections from the sections folder (reduced to 1 to save tokens and avoid rate limits)
@@ -1152,62 +1372,31 @@ Each section should be complete with:
 Return each section as a separate complete liquid file.${referenceSections}`
 
   try {
-    console.log(`[AI Generator] Generating sections with Gemini for: "${input}"`)
+    console.log(`[AI Generator] Generating sections with ${provider.toUpperCase()} for: "${input}"`)
     
-    // Use Gemini API with retry logic for rate limiting
-    const response = await fetchWithRetry(`${apiUrl}?key=${apiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `${systemPrompt}\n\n${userPrompt}`
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 4000, // Reduced to avoid rate limits
-          topP: 0.95,
-          topK: 40,
-        }
-      })
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('[AI Generator] API Error:', errorText)
-      
-      if (response.status === 429) {
-        // Parse error details if available
-        let errorDetails = 'Rate limit exceeded'
-        try {
-          const errorData = JSON.parse(errorText)
-          if (errorData.error?.message) {
-            errorDetails = errorData.error.message
-          }
-        } catch (e) {
-          // Use default message
-        }
-        throw new Error(`Rate limit exceeded. ${errorDetails}. Please wait 30-60 seconds before trying again, or check your Gemini API quota.`)
-      }
-      
-      throw new Error(`Gemini API error: ${response.status} ${response.statusText}`)
+    let responseText: string
+    
+    // Route to appropriate provider
+    switch (provider) {
+      case 'groq':
+        responseText = await generateWithGroq(apiKey, systemPrompt, userPrompt)
+        break
+      case 'openrouter':
+        responseText = await generateWithOpenRouter(apiKey, systemPrompt, userPrompt)
+        break
+      case 'together':
+        responseText = await generateWithTogether(apiKey, systemPrompt, userPrompt)
+        break
+      case 'huggingface':
+        responseText = await generateWithHuggingFace(apiKey, systemPrompt, userPrompt)
+        break
+      case 'gemini':
+      default:
+        responseText = await generateWithGemini(apiKey, systemPrompt, userPrompt)
+        break
     }
 
-    const data = await response.json()
-    
-    // Check for API errors in response
-    if (data.error) {
-      console.error('[AI Generator] API Error in response:', data.error)
-      throw new Error(data.error.message || 'API returned an error')
-    }
-    
-    // Extract text from Gemini response
-    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text
-    if (!responseText) {
-      console.error('[AI Generator] Unexpected response format:', JSON.stringify(data, null, 2))
+    if (!responseText || responseText.trim().length === 0) {
       throw new Error('No response from AI. Please try again.')
     }
 
