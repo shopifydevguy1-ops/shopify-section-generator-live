@@ -1325,6 +1325,10 @@ async function generateWithHuggingFace(apiKey: string, systemPrompt: string, use
 
   if (!response.ok) {
     const errorText = await response.text()
+    // 403 errors indicate permission issues - provide clearer message
+    if (response.status === 403) {
+      throw new Error(`Hugging Face API permission error (403): The API key does not have sufficient permissions for Inference Providers. Please check your Hugging Face token permissions or use a different provider.`)
+    }
     throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`)
   }
 
@@ -1457,16 +1461,21 @@ Return each section as a separate complete liquid file.${referenceSections}`
     
     let responseText: string | null = null
     let lastError: Error | null = null
+    const attemptedProviders: string[] = []
+    const failedProviders: Array<{ provider: string; error: string }> = []
     
     // Try each provider in order until one succeeds
     for (const provider of providers) {
       try {
+        attemptedProviders.push(provider)
         console.log(`[AI Generator] Attempting with ${provider.toUpperCase()} for: "${input}"`)
         
         // Get the correct API key for this provider
         const apiKey = getAPIKeyForProvider(provider)
         if (!apiKey) {
-          console.warn(`[AI Generator] No API key found for ${provider}, skipping`)
+          const errorMsg = `No API key found for ${provider}`
+          console.warn(`[AI Generator] ${errorMsg}, skipping`)
+          failedProviders.push({ provider, error: errorMsg })
           continue
         }
         
@@ -1497,7 +1506,9 @@ Return each section as a separate complete liquid file.${referenceSections}`
           throw new Error('Empty response from provider')
         }
       } catch (error: any) {
-        console.warn(`[AI Generator] ✗ ${provider.toUpperCase()} failed: ${error.message}`)
+        const errorMsg = error.message || 'Unknown error'
+        console.warn(`[AI Generator] ✗ ${provider.toUpperCase()} failed: ${errorMsg}`)
+        failedProviders.push({ provider, error: errorMsg })
         lastError = error
         // Continue to next provider
         continue
@@ -1505,9 +1516,17 @@ Return each section as a separate complete liquid file.${referenceSections}`
     }
 
     if (!responseText || responseText.trim().length === 0) {
-      const errorMsg = lastError 
-        ? `All providers failed. Last error: ${lastError.message}` 
-        : 'No response from any AI provider. Please try again.'
+      let errorMsg = 'All providers failed. '
+      
+      if (failedProviders.length > 0) {
+        const failures = failedProviders.map(f => `${f.provider.toUpperCase()}: ${f.error}`).join('; ')
+        errorMsg += `Attempted: ${attemptedProviders.join(', ').toUpperCase()}. Errors: ${failures}`
+      } else if (lastError) {
+        errorMsg += `Last error: ${lastError.message}`
+      } else {
+        errorMsg += 'No response from any AI provider. Please try again.'
+      }
+      
       throw new Error(errorMsg)
     }
 
