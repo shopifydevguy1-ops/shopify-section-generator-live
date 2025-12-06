@@ -74,10 +74,6 @@ export function Navbar() {
     return pathname === path || pathname?.startsWith(path + "/")
   }
 
-  const isActive = (path: string) => {
-    return pathname === path || pathname?.startsWith(path + "/")
-  }
-
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => {
     const baseClasses = mobile 
       ? "w-full justify-start" 
