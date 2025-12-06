@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: Request,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
     const { userId } = auth()
@@ -19,7 +19,9 @@ export async function GET(
       )
     }
 
-    const imagePath = params.path.join('/')
+    // Await params in Next.js 15
+    const { path } = await params
+    const imagePath = path.join('/')
     
     // Get sections directory path
     const sectionsPath = process.env.SECTIONS_DIRECTORY_PATH || path.join(process.cwd(), 'sections')

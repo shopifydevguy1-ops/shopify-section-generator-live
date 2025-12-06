@@ -29,7 +29,7 @@ async function checkAdminAccess(userId: string) {
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     const { userId: currentUserId } = auth()
@@ -61,21 +61,24 @@ export async function PATCH(
       )
     }
 
+    // Await params in Next.js 15
+    const { userId } = await params
+
     // Get current user to check existing state
     // Try to find user by database ID first, then by clerk_id if needed
     const { getUserById, getAllUsers } = await import("@/lib/db")
-    let currentUser = await getUserById(params.userId)
+    let currentUser = await getUserById(userId)
     
     // If user not found by ID, try to find by searching all users
     // This handles cases where the user might have been created but the Map lookup failed
     if (!currentUser) {
       const allUsers = await getAllUsers()
-      currentUser = allUsers.find(u => u.id === params.userId) || null
+      currentUser = allUsers.find(u => u.id === userId) || null
     }
     
     if (!currentUser) {
       return NextResponse.json(
-        { error: `User not found with ID: ${params.userId}. Please refresh the page and try again.` },
+        { error: `User not found with ID: ${userId}. Please refresh the page and try again.` },
         { status: 404 }
       )
     }
@@ -95,7 +98,7 @@ export async function PATCH(
     // If removing admin AND setting to free, do admin first, then plan
     // If setting admin, do admin first (which sets plan to pro), then plan update is ignored
     if (is_admin !== undefined) {
-      await updateUserAdminStatus(params.userId, is_admin)
+      await updateUserAdminStatus(userId, is_admin)
     }
 
     // Then update plan if provided
@@ -103,7 +106,7 @@ export async function PATCH(
     // so we need to check again before updating plan
     if (plan !== undefined) {
       // Get updated user to check current admin status
-      const updatedUser = await getUserById(params.userId)
+      const updatedUser = await getUserById(userId)
       
       // If user is admin, they must stay on pro plan
       if (updatedUser?.is_admin && plan === 'free') {
@@ -114,7 +117,7 @@ export async function PATCH(
       }
       
       // Only update plan if user is not admin
-      await updateUserPlan(params.userId, plan)
+      await updateUserPlan(userId, plan)
     }
 
     return NextResponse.json({ 
@@ -132,7 +135,7 @@ export async function PATCH(
 
 export async function POST(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     const { userId: currentUserId } = auth()
@@ -163,9 +166,12 @@ export async function POST(
       )
     }
 
+    // Await params in Next.js 15
+    const { userId } = await params
+
     // Get user to verify they exist
     const { getUserById } = await import("@/lib/db")
-    const user = await getUserById(params.userId)
+    const user = await getUserById(userId)
     
     if (!user) {
       return NextResponse.json(
@@ -175,7 +181,7 @@ export async function POST(
     }
 
     // Reset usage limit
-    const result = await resetUserUsageLimit(params.userId, month, year)
+    const result = await resetUserUsageLimit(userId, month, year)
 
     return NextResponse.json({ 
       success: true,
