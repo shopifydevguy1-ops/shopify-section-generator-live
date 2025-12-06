@@ -61,14 +61,36 @@ export async function PATCH(
       )
     }
 
-    // Update user plan if provided
-    if (plan !== undefined) {
-      await updateUserPlan(params.userId, plan)
+    // If user is being set as admin, they must have pro plan
+    // If user is being set to free plan, they cannot be admin
+    if (is_admin === true && plan === 'free') {
+      return NextResponse.json(
+        { error: "Admin users must have Pro plan. Please set plan to Pro first, or remove admin status." },
+        { status: 400 }
+      )
     }
 
-    // Update admin status if provided
+    // Update admin status FIRST (this may set plan to pro if admin is true)
     if (is_admin !== undefined) {
       await updateUserAdminStatus(params.userId, is_admin)
+    }
+
+    // Then update plan if provided (this will override the admin auto-pro if needed)
+    // But only if user is not admin (admins must stay on pro)
+    if (plan !== undefined) {
+      // Get current user to check admin status
+      const { getUserById } = await import("@/lib/db")
+      const currentUser = await getUserById(params.userId)
+      
+      // If user is admin, they must stay on pro plan
+      if (currentUser?.is_admin && plan === 'free') {
+        return NextResponse.json(
+          { error: "Admin users must have Pro plan. Please remove admin status first." },
+          { status: 400 }
+        )
+      }
+      
+      await updateUserPlan(params.userId, plan)
     }
 
     return NextResponse.json({ 
