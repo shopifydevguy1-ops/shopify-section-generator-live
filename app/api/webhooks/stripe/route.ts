@@ -53,28 +53,48 @@ export async function POST(request: Request) {
         // Payment was successful
         const metadata = eventData.attributes?.metadata || {}
         const clerkUserId = metadata.clerk_user_id
+        const plan = metadata.plan || "pro"
+        const isOneTime = metadata.is_one_time === "true" || metadata.billing_period === "lifetime"
 
         if (clerkUserId) {
           const user = await getUserByClerkId(clerkUserId)
           if (user) {
-            await updateUserPlan(user.id, "pro")
+            // Update user plan based on payment
+            await updateUserPlan(user.id, plan as 'free' | 'pro' | 'expert')
             
-            // Create or update subscription record
-            // Since PayMongo doesn't have native subscriptions, we'll track manually
-            const now = new Date()
-            const nextMonth = new Date(now)
-            nextMonth.setMonth(nextMonth.getMonth() + 1)
+            if (isOneTime) {
+              // For one-time payments (Expert plan), create a lifetime subscription record
+              const now = new Date()
+              const farFuture = new Date(now)
+              farFuture.setFullYear(farFuture.getFullYear() + 100) // Set to 100 years in future (effectively lifetime)
 
-            await createOrUpdateSubscription({
-              userId: user.id,
-              paymongoPaymentId: eventData.id,
-              paymongoPaymentIntentId: eventData.attributes?.payment_intent?.id || null,
-              status: "active",
-              currentPeriodStart: now,
-              currentPeriodEnd: nextMonth,
-            })
+              await createOrUpdateSubscription({
+                userId: user.id,
+                paymongoPaymentId: eventData.id,
+                paymongoPaymentIntentId: eventData.attributes?.payment_intent?.id || null,
+                status: "active",
+                currentPeriodStart: now,
+                currentPeriodEnd: farFuture,
+              })
 
-            console.log(`User ${clerkUserId} upgraded to Pro`)
+              console.log(`User ${clerkUserId} upgraded to ${plan} (lifetime/one-time payment)`)
+            } else {
+              // For monthly subscriptions (Pro plan), create recurring subscription record
+              const now = new Date()
+              const nextMonth = new Date(now)
+              nextMonth.setMonth(nextMonth.getMonth() + 1)
+
+              await createOrUpdateSubscription({
+                userId: user.id,
+                paymongoPaymentId: eventData.id,
+                paymongoPaymentIntentId: eventData.attributes?.payment_intent?.id || null,
+                status: "active",
+                currentPeriodStart: now,
+                currentPeriodEnd: nextMonth,
+              })
+
+              console.log(`User ${clerkUserId} upgraded to ${plan} (monthly subscription)`)
+            }
           }
         }
         break

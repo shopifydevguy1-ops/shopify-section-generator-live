@@ -18,6 +18,11 @@ export async function POST() {
       redirect("/sign-in")
     }
 
+    // Expert plan is a one-time payment, cannot be canceled
+    if (user.plan === "expert") {
+      redirect("/account?error=expert_plan_cannot_cancel")
+    }
+
     const subscription = await getSubscriptionByUserId(user.id)
     
     if (subscription) {

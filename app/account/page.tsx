@@ -95,10 +95,16 @@ export default async function AccountPage() {
                   {subscription.current_period_end && (
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">
-                        {subscription.status === "active" ? "Renews" : "Expires"}
+                        {dbUser.plan === "expert" 
+                          ? "Access Type" 
+                          : subscription.status === "active" 
+                          ? "Renews" 
+                          : "Expires"}
                       </p>
                       <p className="text-sm">
-                        {new Date(subscription.current_period_end).toLocaleDateString()}
+                        {dbUser.plan === "expert" 
+                          ? "Lifetime Access" 
+                          : new Date(subscription.current_period_end).toLocaleDateString()}
                       </p>
                     </div>
                   )}
@@ -113,6 +119,12 @@ export default async function AccountPage() {
                 <Link href="/pricing">
                   <Button className="w-full">Upgrade to Expert</Button>
                 </Link>
+              ) : dbUser.plan === "expert" ? (
+                <div className="p-3 bg-primary/10 border border-primary/20 rounded-md">
+                  <p className="text-sm text-muted-foreground">
+                    You have lifetime access to Expert features. No subscription needed.
+                  </p>
+                </div>
               ) : subscription?.status === "active" ? (
                 <form action="/api/cancel-subscription" method="POST">
                   <Button type="submit" variant="destructive" className="w-full">

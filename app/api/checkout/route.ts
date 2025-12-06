@@ -39,20 +39,26 @@ export async function GET(request: Request) {
     // Convert USD to PHP cents automatically based on current exchange rate
     const amount = await convertUSDToPHPCents(usdAmount)
     
-    console.log(`[Checkout] Converting $${usdAmount} USD to ${amount} PHP cents (₱${(amount / 100).toFixed(2)}) for ${planName} plan`)
+    const isOneTimePayment = plan === 'expert'
+    const description = isOneTimePayment 
+      ? `${planName} Plan - One-Time Payment ($${usdAmount} USD)`
+      : `${planName} Plan - Monthly Subscription ($${usdAmount} USD)`
+    
+    console.log(`[Checkout] Converting $${usdAmount} USD to ${amount} PHP cents (₱${(amount / 100).toFixed(2)}) for ${planName} plan (${isOneTimePayment ? 'one-time' : 'monthly'})`)
 
     // Create PayMongo checkout session
     const session = await paymongo.createCheckoutSession({
       amount: amount,
       currency: "PHP",
-      description: `${planName} Plan - Monthly Subscription ($${usdAmount} USD)`,
+      description: description,
       successUrl: `${appUrl}/account?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${appUrl}/pricing`,
       metadata: {
         clerk_user_id: userId,
         plan: plan,
-        billing_period: "monthly",
+        billing_period: isOneTimePayment ? "lifetime" : "monthly",
         usd_amount: usdAmount.toString(),
+        is_one_time: isOneTimePayment.toString(),
       },
     })
 

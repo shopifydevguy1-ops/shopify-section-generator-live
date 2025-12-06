@@ -155,10 +155,13 @@ export default async function PricingPage() {
               <div className="mt-4">
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-bold">{formatUSD(expertUsdAmount)}</span>
-                  <span className="text-muted-foreground">/month</span>
+                  <span className="text-muted-foreground">one-time</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
                   ≈ {formatPHP(expertPhpCents)} PHP (converted at current rate)
+                </p>
+                <p className="text-xs text-muted-foreground mt-1 italic">
+                  Lifetime access, no recurring charges
                 </p>
               </div>
             </CardHeader>
