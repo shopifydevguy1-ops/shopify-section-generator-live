@@ -534,7 +534,7 @@ export default function GeneratorPage() {
                               variant="default" 
                               size="sm" 
                               className="flex-1"
-                              disabled={downloadStats && !downloadStats.allowed}
+                              disabled={downloadStats ? !downloadStats.allowed : false}
                             >
                               <Copy className="mr-2 h-4 w-4" />
                               Copy Code
@@ -543,7 +543,7 @@ export default function GeneratorPage() {
                               onClick={downloadLiquid} 
                               variant="outline" 
                               size="sm"
-                              disabled={downloadStats && !downloadStats.allowed}
+                              disabled={downloadStats ? !downloadStats.allowed : false}
                             >
                               <Download className="mr-2 h-4 w-4" />
                               Download
