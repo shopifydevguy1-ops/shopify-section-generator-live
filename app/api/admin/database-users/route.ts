@@ -53,6 +53,12 @@ export async function GET() {
       allUsers.map(async (user) => {
         const activityStats = await getUserActivityStats(user.id)
         const subscription = allSubscriptions.find(s => s.user_id === user.id)
+        
+        // Enhanced logging for debugging
+        if (activityStats.total > 0 || activityStats.copies > 0 || activityStats.downloads > 0) {
+          console.log(`[database-users API] User ${user.email} (ID: ${user.id}):`, activityStats)
+        }
+        
         return { 
           user, 
           activityStats,

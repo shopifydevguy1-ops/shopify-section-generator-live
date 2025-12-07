@@ -56,6 +56,17 @@ export function DatabaseUsersLegacyLive() {
 
       console.log(`[DatabaseUsersLegacyLive] Fetched ${data.users?.length || 0} users`)
       if (data.users && Array.isArray(data.users)) {
+        // Log users with activity for debugging
+        const usersWithActivity = data.users.filter((u: UserWithStats) => 
+          u.activityStats && (u.activityStats.total > 0 || u.activityStats.copies > 0 || u.activityStats.downloads > 0)
+        )
+        if (usersWithActivity.length > 0) {
+          console.log('[DatabaseUsersLegacyLive] Users with activity:', usersWithActivity.map((u: UserWithStats) => ({
+            email: u.user.email,
+            id: u.user.id,
+            stats: u.activityStats
+          })))
+        }
         setUsers(data.users)
       }
     } catch (error: any) {
