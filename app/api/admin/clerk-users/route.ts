@@ -81,10 +81,11 @@ export async function GET() {
         // Get activity stats for this user
         const activityStats = await getUserActivityStats(user.id)
         
-        // Debug logging to help diagnose sync issues
-        if (activityStats.total > 0 || activityStats.copies > 0 || activityStats.downloads > 0) {
-          console.log(`[clerk-users API] User ${user.email} (DB ID: ${user.id}, Clerk ID: ${clerkUser.id}):`, activityStats)
-        }
+        // Enhanced debug logging to help diagnose sync issues
+        console.log(`[clerk-users API] User ${user.email} (DB ID: ${user.id}, Clerk ID: ${clerkUser.id}):`, {
+          activityStats,
+          hasLogs: activityStats.total > 0
+        })
         
         return {
           ...user,

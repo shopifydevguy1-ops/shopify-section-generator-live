@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { getUserUsageCount, getUserByClerkId, getSubscriptionByUserId } from "@/lib/db"
-import { Zap, FileText, TrendingUp } from "lucide-react"
+import { Zap, TrendingUp } from "lucide-react"
 import { TrackLogin } from "@/components/track-login"
+import { DashboardUsageLive } from "@/components/dashboard-usage-live"
+import { DashboardUsageLimitLive } from "@/components/dashboard-usage-limit-live"
 
 export default async function DashboardPage() {
   const { userId } = auth()
@@ -110,25 +112,11 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Usage This Month</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{usageCount}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {dbUser.plan === "expert" || dbUser.is_admin
-                  ? "Unlimited copy/download" 
-                  : dbUser.plan === "pro"
-                  ? `${remaining} copy/download remaining out of ${maxUsage}`
-                  : `${remaining} copy/download remaining out of ${maxUsage}`}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1 italic">
-                Generation/search is unlimited
-              </p>
-            </CardContent>
-          </Card>
+          <DashboardUsageLive 
+            initialUsageCount={usageCount}
+            plan={dbUser.plan}
+            isAdmin={dbUser.is_admin}
+          />
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -196,53 +184,11 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Usage Limit</CardTitle>
-              <CardDescription>Your copy/download quota for this month (generation/search is unlimited)</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {dbUser.plan === "expert" || dbUser.is_admin ? (
-                <div className="text-center py-8">
-                  <p className="text-2xl font-bold text-primary">Unlimited</p>
-                  <p className="text-muted-foreground mt-2">You have unlimited copy/download</p>
-                  <p className="text-xs text-muted-foreground mt-1 italic">Generation/search is unlimited</p>
-                  <Link href="/sections" className="block mt-4">
-                    <Button size="sm" variant="outline">Browse Section Library</Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Used</span>
-                    <span>{usageCount} / {maxUsage}</span>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div
-                      className="bg-primary h-2 rounded-full transition-all"
-                      style={{ 
-                        width: typeof maxUsage === 'number' 
-                          ? `${Math.min(100, (usageCount / maxUsage) * 100)}%` 
-                          : '0%'
-                      }}
-                    />
-                  </div>
-                  {typeof maxUsage === 'number' && usageCount >= maxUsage && (
-                    <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
-                      <p className="text-sm text-destructive font-semibold">
-                        {dbUser.plan === "free" 
-                          ? "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Pro for 50 copies/downloads per month, or Expert for unlimited."
-                          : "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access."}
-                      </p>
-                      <Link href="/pricing" className="block mt-2">
-                        <Button size="sm">Upgrade Now</Button>
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <DashboardUsageLimitLive 
+            initialUsageCount={usageCount}
+            plan={dbUser.plan}
+            isAdmin={dbUser.is_admin}
+          />
         </div>
       </main>
     </div>

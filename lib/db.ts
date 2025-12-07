@@ -467,8 +467,20 @@ export async function getUserActivityStats(userId: string): Promise<{
   // Count downloads (from downloadLogs where action is 'download')
   const downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
   
-  // Debug logging to help diagnose issues
-  console.log(`[getUserActivityStats] User ${userId}: generations=${generations}, copies=${copies}, downloads=${downloads}, total usageLogs=${usageLogs.filter(log => log.user_id === userId).length}, total downloadLogs=${downloadLogs.filter(log => log.user_id === userId).length}`)
+  // Enhanced debug logging to help diagnose issues
+  const userUsageLogs = usageLogs.filter(log => log.user_id === userId)
+  const userDownloadLogs = downloadLogs.filter(log => log.user_id === userId)
+  
+  console.log(`[getUserActivityStats] User ${userId}:`, {
+    generations,
+    copies,
+    downloads,
+    total: generations + copies + downloads,
+    totalUsageLogs: userUsageLogs.length,
+    totalDownloadLogs: userDownloadLogs.length,
+    usageLogDetails: userUsageLogs.map(log => ({ section_type: log.section_type, created: log.generated_at })),
+    downloadLogDetails: userDownloadLogs.map(log => ({ action: log.action, section_id: log.section_id, created: log.created_at }))
+  })
   
   return {
     generations,

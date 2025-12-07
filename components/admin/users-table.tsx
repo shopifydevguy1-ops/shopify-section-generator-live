@@ -42,15 +42,22 @@ export function UsersTable() {
       setLoading(true)
     }
     try {
-      const response = await fetch("/api/admin/clerk-users")
+      // Add cache-busting timestamp to ensure fresh data
+      const response = await fetch(`/api/admin/clerk-users?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      })
       const data = await response.json()
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch users")
       }
 
-      // Only update users if we got valid data (preserves activity stats during refresh)
+      // Always update users with fresh data from server
       if (data.users && Array.isArray(data.users)) {
+        console.log(`[UsersTable] Fetched ${data.users.length} users, updating state`)
         setUsers(data.users)
       }
     } catch (error: any) {
@@ -75,8 +82,11 @@ export function UsersTable() {
   useEffect(() => {
     // Initial load with loading state
     fetchUsers(true)
-    // Auto-refresh every 30 seconds without showing loading state (preserves activity data)
-    const interval = setInterval(() => fetchUsers(false), 30000)
+    // Auto-refresh every 10 seconds to catch activity updates faster
+    const interval = setInterval(() => {
+      console.log('[UsersTable] Auto-refreshing users list...')
+      fetchUsers(false)
+    }, 10000)
     return () => clearInterval(interval)
   }, [])
 
