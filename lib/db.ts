@@ -454,14 +454,21 @@ export async function getUserActivityStats(userId: string): Promise<{
   downloads: number
   total: number
 }> {
-  // Count generations (from usageLogs)
-  const generations = usageLogs.filter(log => log.user_id === userId).length
+  // Count generations (from usageLogs, excluding copy/download activities)
+  // Note: Generations are not currently logged, so this will be 0
+  // But we exclude copy/download to avoid double-counting
+  const generations = usageLogs.filter(
+    log => log.user_id === userId && log.section_type !== 'copy' && log.section_type !== 'download'
+  ).length
   
   // Count copies (from downloadLogs where action is 'copy')
   const copies = downloadLogs.filter(log => log.user_id === userId && log.action === 'copy').length
   
   // Count downloads (from downloadLogs where action is 'download')
   const downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
+  
+  // Debug logging to help diagnose issues
+  console.log(`[getUserActivityStats] User ${userId}: generations=${generations}, copies=${copies}, downloads=${downloads}, total usageLogs=${usageLogs.filter(log => log.user_id === userId).length}, total downloadLogs=${downloadLogs.filter(log => log.user_id === userId).length}`)
   
   return {
     generations,
@@ -538,6 +545,7 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
     ip_address: ipAddress,
   }
   downloadLogs.push(log)
+  console.log(`[logDownloadOrCopy] Logged ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, total downloadLogs: ${downloadLogs.length}`)
 }
 
 // Reset user usage limits (admin function)
