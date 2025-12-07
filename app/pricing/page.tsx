@@ -44,7 +44,11 @@ export default async function PricingPage() {
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>5 section generations per month</span>
+                  <span>Unlimited section search/browse</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-primary mr-2" />
+                  <span>5 copies/downloads per month</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
@@ -99,11 +103,11 @@ export default async function PricingPage() {
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span className="font-semibold">50 sections per month</span>
+                  <span>Unlimited section search/browse</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>Generate, copy, and download</span>
+                  <span className="font-semibold">50 copies/downloads per month</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
