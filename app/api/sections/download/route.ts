@@ -48,11 +48,11 @@ export async function POST(request: Request) {
     if (!allowed) {
       const limitValue = limit === Infinity ? 50 : limit
       const upgradeMessage = dbUser.plan === 'free' 
-        ? 'Upgrade to Pro for 50 sections per month, or Expert for unlimited access.'
-        : 'Upgrade to Expert for unlimited access and full library access.'
+        ? 'You can still search/browse unlimited sections. Upgrade to Pro for 50 copies/downloads per month, or Expert for unlimited access.'
+        : 'You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access.'
       return NextResponse.json(
         { 
-          error: `You have reached your download/copy limit of ${limitValue} sections. ${upgradeMessage}`,
+          error: `You have reached your copy/download limit of ${limitValue} sections. ${upgradeMessage}`,
           count,
           limit: limit === Infinity ? null : limit,
           reached: true

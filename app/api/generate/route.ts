@@ -46,38 +46,7 @@ export async function POST(request: Request) {
       user = await createUser(userId, email)
     }
 
-    // Check usage limits based on plan
-    if (user.plan === "free" && !user.is_admin) {
-      const now = new Date()
-      const currentMonth = now.getMonth() + 1
-      const currentYear = now.getFullYear()
-      const usageCount = await getUserUsageCount(user.id, currentMonth, currentYear)
-      
-      if (usageCount >= 5) {
-        return NextResponse.json(
-          { 
-            error: "You've reached your monthly limit of 5 generations. Please upgrade to Pro for 50 generations per month.",
-            limitReached: true
-          },
-          { status: 403 }
-        )
-      }
-    } else if (user.plan === "pro" && !user.is_admin) {
-      const now = new Date()
-      const currentMonth = now.getMonth() + 1
-      const currentYear = now.getFullYear()
-      const usageCount = await getUserUsageCount(user.id, currentMonth, currentYear)
-      
-      if (usageCount >= 50) {
-        return NextResponse.json(
-          { 
-            error: "You've reached your monthly limit of 50 sections. Upgrade to Expert for unlimited access and full library access.",
-            limitReached: true
-          },
-          { status: 403 }
-        )
-      }
-    }
+    // No limit checking for generation/search - limits only apply to copy/download
     // Expert plan and admins have unlimited - no check needed
 
     // Search sections from /sections folder (NO AI generation)
@@ -114,10 +83,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // Log usage (use "custom" as type for section lookups)
-    // Important: Use database user.id, not Clerk userId
-    console.log(`[API Generate] Logging usage for user.id: ${user.id}, clerk_id: ${userId}`)
-    await logUsage(user.id, "custom")
+    // Don't log usage for generation/search - limits only apply to copy/download
+    // This allows users to search/browse unlimited sections
 
     return NextResponse.json({
       sections: results,

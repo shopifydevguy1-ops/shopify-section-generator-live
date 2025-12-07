@@ -43,8 +43,9 @@ export default async function DashboardPage() {
   const now = new Date()
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
+  // Only count downloads/copies - generation/search is unlimited
   const usageCount = await getUserUsageCount(dbUser.id, currentMonth, currentYear)
-  // Determine limits based on plan
+  // Determine limits based on plan (for copy/download only)
   let maxUsage: number | string
   let remaining: number | string
   if (dbUser.plan === "expert" || dbUser.is_admin) {
@@ -118,10 +119,13 @@ export default async function DashboardPage() {
               <div className="text-2xl font-bold">{usageCount}</div>
               <p className="text-xs text-muted-foreground mt-1">
                 {dbUser.plan === "expert" || dbUser.is_admin
-                  ? "Unlimited generations" 
+                  ? "Unlimited copy/download" 
                   : dbUser.plan === "pro"
-                  ? `${remaining} remaining out of ${maxUsage}`
-                  : `${remaining} remaining out of ${maxUsage}`}
+                  ? `${remaining} copy/download remaining out of ${maxUsage}`
+                  : `${remaining} copy/download remaining out of ${maxUsage}`}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1 italic">
+                Generation/search is unlimited
               </p>
             </CardContent>
           </Card>
@@ -195,13 +199,14 @@ export default async function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle>Usage Limit</CardTitle>
-              <CardDescription>Your generation quota for this month</CardDescription>
+              <CardDescription>Your copy/download quota for this month (generation/search is unlimited)</CardDescription>
             </CardHeader>
             <CardContent>
               {dbUser.plan === "expert" || dbUser.is_admin ? (
                 <div className="text-center py-8">
                   <p className="text-2xl font-bold text-primary">Unlimited</p>
-                  <p className="text-muted-foreground mt-2">You have unlimited generations</p>
+                  <p className="text-muted-foreground mt-2">You have unlimited copy/download</p>
+                  <p className="text-xs text-muted-foreground mt-1 italic">Generation/search is unlimited</p>
                   <Link href="/sections" className="block mt-4">
                     <Button size="sm" variant="outline">Browse Section Library</Button>
                   </Link>
@@ -226,8 +231,8 @@ export default async function DashboardPage() {
                     <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
                       <p className="text-sm text-destructive font-semibold">
                         {dbUser.plan === "free" 
-                          ? "You've reached your monthly limit. Upgrade to Pro for 50 sections per month, or Expert for unlimited."
-                          : "You've reached your monthly limit. Upgrade to Expert for unlimited access and full library access."}
+                          ? "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Pro for 50 copies/downloads per month, or Expert for unlimited."
+                          : "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access."}
                       </p>
                       <Link href="/pricing" className="block mt-2">
                         <Button size="sm">Upgrade Now</Button>

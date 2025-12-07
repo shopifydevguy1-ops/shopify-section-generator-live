@@ -314,13 +314,7 @@ export async function getUserStats(): Promise<{
 }
 
 export async function getUserUsageCount(userId: string, month: number, year: number, ipAddress?: string): Promise<number> {
-  // Count generations from usageLogs
-  const generationCount = usageLogs.filter(
-    log => log.user_id === userId && 
-    log.month === month && 
-    log.year === year
-  ).length
-  
+  // Only count downloads/copies - generation/search is unlimited
   // Count downloads/copies from downloadLogs
   const downloadCopyCount = downloadLogs.filter(
     log => {
@@ -331,21 +325,15 @@ export async function getUserUsageCount(userId: string, month: number, year: num
     }
   ).length
   
-  // Return total count (generations + downloads + copies)
-  return generationCount + downloadCopyCount
+  // Return count of downloads/copies only (generation/search doesn't count)
+  return downloadCopyCount
 }
 
 // Get usage count by IP address (to prevent multiple account abuse)
 export async function getIPUsageCount(ipAddress: string, month: number, year: number): Promise<number> {
   if (!ipAddress) return 0
   
-  // Count generations from usageLogs by IP
-  const generationCount = usageLogs.filter(
-    log => log.ip_address === ipAddress && 
-    log.month === month && 
-    log.year === year
-  ).length
-  
+  // Only count downloads/copies - generation/search is unlimited
   // Count downloads/copies from downloadLogs by IP
   const downloadCopyCount = downloadLogs.filter(
     log => {
@@ -356,8 +344,8 @@ export async function getIPUsageCount(ipAddress: string, month: number, year: nu
     }
   ).length
   
-  // Return total count (generations + downloads + copies) for this IP
-  return generationCount + downloadCopyCount
+  // Return count of downloads/copies only (generation/search doesn't count)
+  return downloadCopyCount
 }
 
 export async function logUsage(userId: string, sectionType: string, ipAddress?: string): Promise<void> {
@@ -502,19 +490,19 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
         allowed: false, 
         count: userCount, 
         limit, 
-        reason: "You have reached your monthly limit of 50 sections. Upgrade to Expert for unlimited access." 
+        reason: "You have reached your monthly limit of 50 copies/downloads. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access." 
       }
     }
     
     return { allowed: true, count: userCount, limit }
   }
   
-  // Free users have a limit of 5 total actions (generations + downloads + copies)
+  // Free users have a limit of 5 downloads/copies per month (generation/search is unlimited)
   const now = new Date()
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
   
-  // Check by user ID
+  // Check by user ID (only downloads/copies count)
   const userCount = await getUserUsageCount(userId, currentMonth, currentYear, ipAddress)
   
   // Also check by IP address to prevent multiple account abuse
