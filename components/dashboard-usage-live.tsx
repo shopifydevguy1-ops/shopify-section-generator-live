@@ -23,10 +23,12 @@ interface DashboardUsageLiveProps {
 
 export function DashboardUsageLive({ initialUsageCount, plan, isAdmin }: DashboardUsageLiveProps) {
   const [usageStats, setUsageStats] = useState<UsageStats | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true) // Start with loading true to fetch immediately
 
-  const fetchUsageStats = async () => {
-    setLoading(true)
+  const fetchUsageStats = async (showLoading = false) => {
+    if (showLoading) {
+      setLoading(true)
+    }
     try {
       const response = await fetch(`/api/sections/download?t=${Date.now()}`, {
         cache: 'no-store',
@@ -37,15 +39,16 @@ export function DashboardUsageLive({ initialUsageCount, plan, isAdmin }: Dashboa
       
       if (response.ok) {
         const data = await response.json()
-        setUsageStats({
+        const stats = {
           count: data.count,
           limit: data.limit === null ? Infinity : data.limit,
           remaining: data.remaining === null ? Infinity : data.remaining,
           allowed: data.allowed,
           plan: data.plan,
           isAdmin: data.isAdmin
-        })
-        console.log('[DashboardUsageLive] Fetched usage stats:', data)
+        }
+        setUsageStats(stats)
+        console.log('[DashboardUsageLive] Fetched usage stats:', stats)
       }
     } catch (error) {
       console.error("Error fetching usage stats:", error)
@@ -55,17 +58,18 @@ export function DashboardUsageLive({ initialUsageCount, plan, isAdmin }: Dashboa
   }
 
   useEffect(() => {
-    // Initial fetch
-    fetchUsageStats()
+    // Initial fetch immediately with loading state
+    fetchUsageStats(true)
     // Auto-refresh every 5 seconds to catch updates quickly
-    const interval = setInterval(fetchUsageStats, 5000)
+    const interval = setInterval(() => fetchUsageStats(false), 5000)
     return () => clearInterval(interval)
   }, [])
 
   // Determine limits based on plan
   const maxUsage: number | string = plan === "expert" || isAdmin ? "Unlimited" : plan === "pro" ? 50 : 5
-  const usageCount = usageStats?.count ?? initialUsageCount
-  const remaining = usageStats?.remaining ?? (typeof maxUsage === 'number' ? Math.max(0, maxUsage - initialUsageCount) : "Unlimited")
+  // Only use initialUsageCount as fallback if we haven't fetched yet and we're not loading
+  const usageCount = usageStats?.count ?? (loading ? 0 : initialUsageCount)
+  const remaining = usageStats?.remaining ?? (loading ? (typeof maxUsage === 'number' ? maxUsage : "Unlimited") : (typeof maxUsage === 'number' ? Math.max(0, maxUsage - initialUsageCount) : "Unlimited"))
 
   return (
     <Card>

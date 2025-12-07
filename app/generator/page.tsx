@@ -52,8 +52,9 @@ export default function GeneratorPage() {
       return
     }
     
-    // Fetch download stats when user is loaded
+    // Fetch download stats immediately when user is loaded
     if (isLoaded && user) {
+      console.log('[Generator] User loaded, fetching download stats immediately...')
       fetchDownloadStats()
     }
   }, [user, isLoaded, router])
