@@ -50,8 +50,20 @@ export async function GET() {
     // Get stats
     const stats = await getUserStats()
 
+    console.log('[admin/stats API] Returning stats:', {
+      totalUsers: stats.totalUsers,
+      totalSubscriptions: stats.totalSubscriptions,
+      activeSubscriptions: stats.activeSubscriptions
+    })
+
     return NextResponse.json({
       stats,
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      }
     })
   } catch (error: any) {
     console.error("Error fetching admin stats:", error)

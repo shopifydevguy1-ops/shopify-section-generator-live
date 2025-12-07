@@ -22,13 +22,19 @@ export function StatsCardsLive() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/admin/stats")
+      const response = await fetch(`/api/admin/stats?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      })
       const data = await response.json()
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch stats")
       }
 
+      console.log('[StatsCardsLive] Fetched stats:', data.stats)
       setStats(data.stats)
     } catch (error) {
       console.error("Error fetching stats:", error)
@@ -39,8 +45,11 @@ export function StatsCardsLive() {
 
   useEffect(() => {
     fetchStats()
-    // Refresh every 10 seconds
-    const interval = setInterval(fetchStats, 10000)
+    // Refresh every 10 seconds to catch updates
+    const interval = setInterval(() => {
+      console.log('[StatsCardsLive] Auto-refreshing stats...')
+      fetchStats()
+    }, 10000)
     return () => clearInterval(interval)
   }, [])
 

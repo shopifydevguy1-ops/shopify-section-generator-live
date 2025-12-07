@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserByClerkId, getAllUsers, getAllSubscriptions, getAllUsageLogs, getAllDownloadLogs, getUserActivityStats } from "@/lib/db"
+import { getUserByClerkId } from "@/lib/db"
 import { Badge } from "@/components/ui/badge"
 import { UsersTable } from "@/components/admin/users-table"
 import { SyncUsersButton } from "@/components/admin/sync-users-button"
@@ -10,6 +10,7 @@ import { SupportRequests } from "@/components/admin/support-requests"
 import { RecentUsersLive } from "@/components/admin/recent-users-live"
 import { RecentActivityLive } from "@/components/admin/recent-activity-live"
 import { StatsCardsLive } from "@/components/admin/stats-cards-live"
+import { DatabaseUsersLegacyLive } from "@/components/admin/database-users-legacy-live"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -82,19 +83,7 @@ export default async function AdminPage() {
     await createUser(user.id, user.emailAddresses[0]?.emailAddress || "", true)
   }
 
-  // Get data for legacy table (stats are now live via StatsCardsLive component)
-  const allUsers = await getAllUsers()
-  const allSubscriptions = await getAllSubscriptions()
-  const allLogs = await getAllUsageLogs()
-  const allDownloadLogs = await getAllDownloadLogs()
-  
-  // Get activity stats for all users
-  const usersWithStats = await Promise.all(
-    allUsers.map(async (user) => {
-      const activityStats = await getUserActivityStats(user.id)
-      return { user, activityStats }
-    })
-  )
+  // Legacy table is now handled by DatabaseUsersLegacyLive component
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -121,80 +110,8 @@ export default async function AdminPage() {
           <UsersTable />
         </div>
 
-        {/* Database Users Table (Legacy) */}
-        {allUsers.length > 0 && (
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Database Users (Legacy)</CardTitle>
-              <CardDescription>Users stored in local database</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2">Email</th>
-                      <th className="text-left p-2">Plan</th>
-                      <th className="text-left p-2">Subscription Status</th>
-                      <th className="text-left p-2">Joined</th>
-                      <th className="text-left p-2">Generations</th>
-                      <th className="text-left p-2">Copies</th>
-                      <th className="text-left p-2">Downloads</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usersWithStats.map(({ user, activityStats }) => {
-                      const subscription = allSubscriptions.find(s => s.user_id === user.id)
-                      return (
-                        <tr key={user.id} className="border-b">
-                          <td className="p-2">{user.email}</td>
-                          <td className="p-2">
-                            <Badge 
-                              variant={
-                                user.plan === "expert" ? "default" : 
-                                user.plan === "pro" ? "default" : 
-                                "secondary"
-                              }
-                            >
-                              {user.plan}
-                            </Badge>
-                          </td>
-                          <td className="p-2">
-                            {subscription ? (
-                              <Badge 
-                                variant={
-                                  subscription.status === "active" ? "default" : 
-                                  subscription.status === "canceled" ? "destructive" : 
-                                  "secondary"
-                                }
-                              >
-                                {subscription.status}
-                              </Badge>
-                            ) : (
-                              <span className="text-muted-foreground">No subscription</span>
-                            )}
-                          </td>
-                          <td className="p-2 text-muted-foreground">
-                            {new Date(user.created_at).toLocaleDateString()}
-                          </td>
-                          <td className="p-2">
-                            <span className="font-medium">{activityStats.generations}</span>
-                          </td>
-                          <td className="p-2">
-                            <span className="font-medium">{activityStats.copies}</span>
-                          </td>
-                          <td className="p-2">
-                            <span className="font-medium">{activityStats.downloads}</span>
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {/* Database Users Table (Legacy) - Now Live */}
+        <DatabaseUsersLegacyLive />
 
         {/* Support Requests Section */}
         <SupportRequests />
