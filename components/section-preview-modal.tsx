@@ -68,7 +68,7 @@ export function SectionPreviewModal({ section, open, onClose }: SectionPreviewMo
                 src={section.previewImage}
                 alt={section.name}
                 fill
-                className="object-cover"
+                className="object-contain"
                 unoptimized
               />
             </div>

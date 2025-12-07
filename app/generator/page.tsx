@@ -367,7 +367,7 @@ export default function GeneratorPage() {
                           src={section.previewImage} 
                           alt={section.name}
                           fill
-                          className="object-cover transition-transform group-hover:scale-105"
+                          className="object-contain transition-transform group-hover:scale-105"
                           unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity" />

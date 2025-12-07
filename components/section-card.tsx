@@ -27,7 +27,7 @@ export function SectionCard({ section, onClick }: SectionCardProps) {
             src={section.previewImage}
             alt={section.name}
             fill
-            className="object-cover"
+            className="object-contain"
             unoptimized
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
