@@ -60,9 +60,16 @@ export default function GeneratorPage() {
 
   const fetchDownloadStats = async () => {
     try {
-      const response = await fetch("/api/sections/download")
+      // Add cache-busting to ensure fresh data
+      const response = await fetch(`/api/sections/download?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      })
       if (response.ok) {
         const data = await response.json()
+        console.log('[Generator] Fetched download stats:', data)
         setDownloadStats({
           count: data.count,
           limit: data.limit === null ? Infinity : data.limit,
@@ -128,6 +135,9 @@ export default function GeneratorPage() {
       setGeneratedSections(verifiedSections)
       setSelectedSection(null) // Reset selection
       
+      // Refresh download stats after generating new sections to ensure they're up to date
+      await fetchDownloadStats()
+      
       toast({
         title: "Success",
         description: `Generated ${data.sections.length} section${data.sections.length > 1 ? 's' : ''}. Click on any section to view instructions.`,
@@ -176,21 +186,29 @@ export default function GeneratorPage() {
       // Copy to clipboard
       navigator.clipboard.writeText(selectedSection.liquidCode)
       
-      // Update stats
-      if (data.remaining !== undefined) {
-        setDownloadStats({
-          count: data.count,
-          limit: data.limit === null ? Infinity : data.limit,
-          remaining: data.remaining === null ? Infinity : data.remaining,
-          allowed: data.remaining === null || data.remaining > 0
-        })
+      // Update stats with fresh data from response
+      const remaining = data.remaining === null || data.remaining === undefined ? Infinity : data.remaining
+      const newStats = {
+        count: data.count,
+        limit: data.limit === null ? Infinity : data.limit,
+        remaining: remaining,
+        allowed: data.allowed !== undefined ? data.allowed : (remaining === Infinity || remaining > 0)
       }
+      
+      console.log('[Generator] Copy successful, updating stats:', newStats)
+      setDownloadStats(newStats)
+      
+      // Refresh stats from server to ensure sync (with a small delay to allow server to process)
+      setTimeout(() => {
+        console.log('[Generator] Refreshing stats after copy...')
+        fetchDownloadStats()
+      }, 500)
 
       toast({
         title: "Copied!",
-        description: data.remaining === null 
+        description: remaining === Infinity
           ? "Code copied to clipboard" 
-          : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
+          : `${remaining} download${remaining !== 1 ? 's' : ''} remaining`,
       })
     } catch (error: any) {
       toast({
@@ -241,21 +259,29 @@ export default function GeneratorPage() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
 
-      // Update stats
-      if (data.remaining !== undefined) {
-        setDownloadStats({
-          count: data.count,
-          limit: data.limit === null ? Infinity : data.limit,
-          remaining: data.remaining === null ? Infinity : data.remaining,
-          allowed: data.remaining === null || data.remaining > 0
-        })
+      // Update stats with fresh data from response
+      const remaining = data.remaining === null || data.remaining === undefined ? Infinity : data.remaining
+      const newStats = {
+        count: data.count,
+        limit: data.limit === null ? Infinity : data.limit,
+        remaining: remaining,
+        allowed: data.allowed !== undefined ? data.allowed : (remaining === Infinity || remaining > 0)
       }
+      
+      console.log('[Generator] Download successful, updating stats:', newStats)
+      setDownloadStats(newStats)
+      
+      // Refresh stats from server to ensure sync (with a small delay to allow server to process)
+      setTimeout(() => {
+        console.log('[Generator] Refreshing stats after download...')
+        fetchDownloadStats()
+      }, 500)
       
       toast({
         title: "Downloaded!",
-        description: data.remaining === null 
+        description: remaining === Infinity
           ? "Section file downloaded successfully" 
-          : `${data.remaining} download${data.remaining !== 1 ? 's' : ''} remaining`,
+          : `${remaining} download${remaining !== 1 ? 's' : ''} remaining`,
       })
     } catch (error: any) {
       toast({
@@ -541,7 +567,7 @@ export default function GeneratorPage() {
                               variant="default" 
                               size="sm" 
                               className="flex-1"
-                              disabled={downloadStats ? !downloadStats.allowed : false}
+                              disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
                             >
                               <Copy className="mr-2 h-4 w-4" />
                               Copy Code
@@ -550,7 +576,7 @@ export default function GeneratorPage() {
                               onClick={downloadLiquid} 
                               variant="outline" 
                               size="sm"
-                              disabled={downloadStats ? !downloadStats.allowed : false}
+                              disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
                             >
                               <Download className="mr-2 h-4 w-4" />
                               Download

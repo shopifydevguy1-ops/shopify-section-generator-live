@@ -67,12 +67,23 @@ export async function POST(request: Request) {
     // Also log as usage for monthly limit tracking (so it syncs with dashboard)
     await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download')
 
+    // Get fresh stats after logging to ensure accurate count
+    const now = new Date()
+    const currentMonth = now.getMonth() + 1
+    const currentYear = now.getFullYear()
+    const { getUserUsageCount } = await import("@/lib/db")
+    const freshCount = await getUserUsageCount(dbUser.id, currentMonth, currentYear)
+    const freshRemaining = limit === Infinity ? null : Math.max(0, limit - freshCount)
+
+    console.log(`[download API] After ${action}: user ${dbUser.id}, freshCount=${freshCount}, limit=${limit}, remaining=${freshRemaining}`)
+
     return NextResponse.json({
       success: true,
       message: action === 'copy' ? "Code copied successfully" : "Download logged successfully",
-      remaining: limit === Infinity ? null : limit - count - 1,
-      count: count + 1,
-      limit: limit === Infinity ? null : limit
+      remaining: freshRemaining,
+      count: freshCount,
+      limit: limit === Infinity ? null : limit,
+      allowed: limit === Infinity || freshRemaining === null || freshRemaining > 0
     })
   } catch (error: any) {
     console.error("Error processing download/copy:", error)
