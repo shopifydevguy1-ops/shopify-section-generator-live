@@ -829,16 +829,23 @@ export async function isUserInFirstMonth(userId: string): Promise<boolean> {
   // Calculate one month ago more accurately (30 days)
   const oneMonthAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000))
   
-  // User is in first month if created less than 30 days ago
   // Also ensure createdAt is a valid date
   if (isNaN(createdAt.getTime())) {
     console.error(`[isUserInFirstMonth] Invalid created_at date for user ${userId}`)
     return false
   }
   
-  const isInFirstMonth = createdAt.getTime() >= oneMonthAgo.getTime()
+  // Safety check: if user was created in the future (timezone issues), treat as just created
+  if (createdAt.getTime() > now.getTime()) {
+    console.warn(`[isUserInFirstMonth] User ${userId} has future created_at date, treating as just created`)
+    return true
+  }
   
-  console.log(`[isUserInFirstMonth] User ${userId}: createdAt=${createdAt.toISOString()}, oneMonthAgo=${oneMonthAgo.toISOString()}, isInFirstMonth=${isInFirstMonth}, daysDiff=${Math.floor((now.getTime() - createdAt.getTime()) / (24 * 60 * 60 * 1000))}`)
+  // User is in first month if created less than 30 days ago
+  const isInFirstMonth = createdAt.getTime() >= oneMonthAgo.getTime()
+  const daysDiff = Math.floor((now.getTime() - createdAt.getTime()) / (24 * 60 * 60 * 1000))
+  
+  console.log(`[isUserInFirstMonth] User ${userId}: createdAt=${createdAt.toISOString()}, oneMonthAgo=${oneMonthAgo.toISOString()}, isInFirstMonth=${isInFirstMonth}, daysDiff=${daysDiff}`)
   
   return isInFirstMonth
 }
