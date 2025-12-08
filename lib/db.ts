@@ -808,16 +808,34 @@ export async function isUserInFirstMonth(userId: string): Promise<boolean> {
     [userId]
   )
   
-  if (!dbResult || !dbResult.rows || dbResult.rows.length === 0) {
+  let createdAt: Date | null = null
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    createdAt = new Date(dbResult.rows[0].created_at)
+  } else {
+    // Fallback to in-memory user data
+    const user = users.get(userId) || Array.from(users.values()).find(u => u.id === userId)
+    if (user) {
+      createdAt = user.created_at
+    }
+  }
+  
+  if (!createdAt) {
+    console.log(`[isUserInFirstMonth] User ${userId} not found, returning false`)
     return false
   }
   
-  const createdAt = new Date(dbResult.rows[0].created_at)
   const now = new Date()
-  const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
+  // Calculate one month ago more accurately
+  const oneMonthAgo = new Date(now)
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
   
   // User is in first month if created less than 1 month ago
-  return createdAt >= oneMonthAgo
+  const isInFirstMonth = createdAt >= oneMonthAgo
+  
+  console.log(`[isUserInFirstMonth] User ${userId}: createdAt=${createdAt.toISOString()}, oneMonthAgo=${oneMonthAgo.toISOString()}, isInFirstMonth=${isInFirstMonth}`)
+  
+  return isInFirstMonth
 }
 
 export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | 'expert', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
