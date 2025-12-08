@@ -92,7 +92,7 @@ export default async function AccountPage() {
                 <div className="p-3 bg-primary/10 border border-primary/20 rounded-md mb-4">
                   <p className="text-sm font-semibold text-primary">Free Trial Active</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    You're in your first month with 20 free sections. Subscribe to continue after the trial ends.
+                    You&apos;re in your first month with 20 free sections. Subscribe to continue after the trial ends.
                   </p>
                 </div>
               )}
