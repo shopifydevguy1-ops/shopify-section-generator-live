@@ -29,56 +29,7 @@ export default async function PricingPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Free Plan */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Free</CardTitle>
-              <CardDescription>Perfect for trying out our service</CardDescription>
-              <div className="mt-4">
-                <span className="text-4xl font-bold">$0</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>Unlimited section search/browse</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>5 copies/downloads per month</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>Access to all templates</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>Download as .liquid files</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>Basic customization options</span>
-                </li>
-              </ul>
-              {userId ? (
-                <Link href="/dashboard">
-                  <Button className="w-full" variant="outline">
-                    Current Plan
-                  </Button>
-                </Link>
-              ) : (
-                <Link href="/sign-up">
-                  <Button className="w-full" variant="outline">
-                    Get Started
-                  </Button>
-                </Link>
-              )}
-            </CardContent>
-          </Card>
-
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Pro Plan */}
           <Card className="border-primary border-2 relative">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -97,6 +48,9 @@ export default async function PricingPage() {
                 <p className="text-sm text-muted-foreground mt-2">
                   ≈ {formatPHP(proPhpCents)} PHP (converted at current rate)
                 </p>
+                <p className="text-sm text-primary font-semibold mt-2">
+                  ✨ Free for first month - 20 sections included
+                </p>
               </div>
             </CardHeader>
             <CardContent>
@@ -107,7 +61,11 @@ export default async function PricingPage() {
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span className="font-semibold">50 copies/downloads per month</span>
+                  <span className="font-semibold">20 free sections in first month</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-primary mr-2" />
+                  <span className="font-semibold">50 copies/downloads per month (after trial)</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
@@ -133,13 +91,13 @@ export default async function PricingPage() {
               {userId ? (
                 <Link href="/api/checkout">
                   <Button className="w-full">
-                    Upgrade to Pro
+                    Subscribe to Pro
                   </Button>
                 </Link>
               ) : (
                 <Link href="/sign-up">
                   <Button className="w-full">
-                    Get Started
+                    Get Started Free
                   </Button>
                 </Link>
               )}

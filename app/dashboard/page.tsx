@@ -48,15 +48,31 @@ export default async function DashboardPage() {
   // Only count downloads/copies - generation/search is unlimited
   const usageCount = await getUserUsageCount(dbUser.id, currentMonth, currentYear)
   // Determine limits based on plan (for copy/download only)
+  // Import function to check if user is in first month
+  const { isUserInFirstMonth } = await import("@/lib/db")
+  const inFirstMonth = await isUserInFirstMonth(dbUser.id)
+  const hasActiveSubscription = subscription?.status === 'active'
+  
   let maxUsage: number | string
   let remaining: number | string
   if (dbUser.plan === "expert" || dbUser.is_admin) {
     maxUsage = "Unlimited"
     remaining = "Unlimited"
   } else if (dbUser.plan === "pro") {
-    maxUsage = 50
-    remaining = Math.max(0, maxUsage - usageCount)
+    // Pro users in first month without subscription get 20, otherwise 50 with subscription
+    if (inFirstMonth && !hasActiveSubscription) {
+      maxUsage = 20
+      remaining = Math.max(0, maxUsage - usageCount)
+    } else if (hasActiveSubscription) {
+      maxUsage = 50
+      remaining = Math.max(0, maxUsage - usageCount)
+    } else {
+      // Trial ended, no subscription
+      maxUsage = 0
+      remaining = 0
+    }
   } else {
+    // Legacy free plan (shouldn't happen for new users)
     maxUsage = 5
     remaining = Math.max(0, maxUsage - usageCount)
   }
@@ -91,7 +107,7 @@ export default async function DashboardPage() {
                 >
                   {dbUser.plan === "expert" ? "Expert Member" : 
                    dbUser.plan === "pro" ? "Pro Member" : 
-                   "Free Plan"}
+                   "Pro Member"}
                 </Badge>
                 {dbUser.is_admin && (
                   <Badge variant="default" className="bg-purple-600 hover:bg-purple-700">
@@ -99,15 +115,27 @@ export default async function DashboardPage() {
                   </Badge>
                 )}
               </div>
-              {dbUser.plan === "free" && !dbUser.is_admin && (
-                <Link href="/pricing" className="block mt-4">
-                  <Button size="sm" className="w-full">Upgrade to Pro</Button>
-                </Link>
-              )}
               {dbUser.plan === "pro" && !dbUser.is_admin && (
-                <Link href="/pricing" className="block mt-4">
-                  <Button size="sm" className="w-full">Upgrade to Expert</Button>
-                </Link>
+                <>
+                  {subscription?.status === "active" ? (
+                    <Link href="/pricing" className="block mt-4">
+                      <Button size="sm" className="w-full">Upgrade to Expert</Button>
+                    </Link>
+                  ) : inFirstMonth ? (
+                    <div className="mt-4">
+                      <p className="text-xs text-muted-foreground mb-2">
+                        Free trial: {maxUsage === "Unlimited" ? "Unlimited" : `${remaining} of ${maxUsage} remaining`}
+                      </p>
+                      <Link href="/api/checkout" className="block">
+                        <Button size="sm" className="w-full">Subscribe to Pro</Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <Link href="/api/checkout" className="block mt-4">
+                      <Button size="sm" className="w-full">Subscribe to Pro</Button>
+                    </Link>
+                  )}
+                </>
               )}
             </CardContent>
           </Card>
@@ -167,19 +195,22 @@ export default async function DashboardPage() {
                   </Button>
                 </Link>
               )}
-              {dbUser.plan === "free" && !dbUser.is_admin && (
-                <Link href="/pricing">
-                  <Button className="w-full">
-                    Upgrade to Pro
-                  </Button>
-                </Link>
-              )}
               {dbUser.plan === "pro" && !dbUser.is_admin && (
-                <Link href="/pricing">
-                  <Button className="w-full">
-                    Upgrade to Expert
-                  </Button>
-                </Link>
+                <>
+                  {subscription?.status === "active" ? (
+                    <Link href="/pricing">
+                      <Button className="w-full">
+                        Upgrade to Expert
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href="/api/checkout">
+                      <Button className="w-full">
+                        Subscribe to Pro
+                      </Button>
+                    </Link>
+                  )}
+                </>
               )}
             </CardContent>
           </Card>

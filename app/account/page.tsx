@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { getUserByClerkId, getSubscriptionByUserId } from "@/lib/db"
+import { getUserByClerkId, getSubscriptionByUserId, isUserInFirstMonth } from "@/lib/db"
 import { CreditCard, Settings, User } from "lucide-react"
 import { AccountProfileCard } from "@/components/account/account-profile-card"
 import { UserMessages } from "@/components/account/user-messages"
@@ -29,6 +29,8 @@ export default async function AccountPage() {
   }
 
   const subscription = await getSubscriptionByUserId(dbUser.id)
+  const inFirstMonth = await isUserInFirstMonth(dbUser.id)
+  const hasActiveSubscription = subscription?.status === 'active'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -71,7 +73,7 @@ export default async function AccountPage() {
                   >
                     {dbUser.plan === "expert" ? "Expert" : 
                      dbUser.plan === "pro" ? "Pro" : 
-                     "Free"}
+                     "Pro"}
                   </Badge>
                   {dbUser.is_admin && (
                     <Badge variant="default" className="bg-purple-600 hover:bg-purple-700">
@@ -86,6 +88,14 @@ export default async function AccountPage() {
                 )}
               </div>
 
+              {dbUser.plan === "pro" && inFirstMonth && !hasActiveSubscription && (
+                <div className="p-3 bg-primary/10 border border-primary/20 rounded-md mb-4">
+                  <p className="text-sm font-semibold text-primary">Free Trial Active</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    You're in your first month with 20 free sections. Subscribe to continue after the trial ends.
+                  </p>
+                </div>
+              )}
               {subscription && (
                 <>
                   <div>
@@ -110,15 +120,32 @@ export default async function AccountPage() {
                   )}
                 </>
               )}
+              {dbUser.plan === "pro" && !inFirstMonth && !hasActiveSubscription && (
+                <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md mb-4">
+                  <p className="text-sm font-semibold text-destructive">Trial Ended</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Your free trial has ended. Subscribe to continue using Pro features.
+                  </p>
+                </div>
+              )}
 
-              {dbUser.plan === "free" ? (
-                <Link href="/pricing">
-                  <Button className="w-full">Upgrade to Pro</Button>
-                </Link>
-              ) : dbUser.plan === "pro" ? (
-                <Link href="/pricing">
-                  <Button className="w-full">Upgrade to Expert</Button>
-                </Link>
+              {dbUser.plan === "pro" ? (
+                subscription?.status === "active" ? (
+                  <>
+                    <Link href="/pricing">
+                      <Button className="w-full" variant="outline">Upgrade to Expert</Button>
+                    </Link>
+                    <form action="/api/cancel-subscription" method="POST" className="mt-2">
+                      <Button type="submit" variant="destructive" className="w-full" size="sm">
+                        Cancel Subscription
+                      </Button>
+                    </form>
+                  </>
+                ) : (
+                  <Link href="/api/checkout">
+                    <Button className="w-full">Subscribe to Pro</Button>
+                  </Link>
+                )
               ) : dbUser.plan === "expert" ? (
                 <div className="p-3 bg-primary/10 border border-primary/20 rounded-md">
                   <p className="text-sm text-muted-foreground">

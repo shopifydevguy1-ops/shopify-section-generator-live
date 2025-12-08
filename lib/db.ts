@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   clerk_id VARCHAR(255) UNIQUE NOT NULL,
   email VARCHAR(255) NOT NULL,
-  plan VARCHAR(20) DEFAULT 'free' CHECK (plan IN ('free', 'pro', 'expert')),
+  plan VARCHAR(20) DEFAULT 'pro' CHECK (plan IN ('free', 'pro', 'expert')),
   is_admin BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
@@ -365,6 +365,7 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     : adminEmails.includes(email.toLowerCase())
   
   // Admins automatically get expert plan with unlimited generations
+  // New users get PRO plan by default (with first month trial)
   const userId = crypto.randomUUID()
   const now = new Date()
   
@@ -372,7 +373,7 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     id: userId,
     clerk_id: clerkId,
     email,
-    plan: shouldBeAdmin ? 'expert' : 'free',
+    plan: shouldBeAdmin ? 'expert' : 'pro',
     is_admin: shouldBeAdmin,
     created_at: now,
     updated_at: now,
@@ -527,7 +528,7 @@ export async function getUserStats(): Promise<{
   
   return {
     totalUsers: allUsers.length,
-    freeUsers: allUsers.filter(u => u.plan === 'free').length,
+    freeUsers: allUsers.filter(u => u.plan === 'free').length, // Legacy users only
     proUsers: allUsers.filter(u => u.plan === 'pro').length,
     expertUsers: allUsers.filter(u => u.plan === 'expert').length,
     totalSubscriptions: allSubscriptions.length,
@@ -799,20 +800,72 @@ export async function getUserActivityStats(userId: string): Promise<{
   }
 }
 
+// Check if user is in their first month (trial period)
+export async function isUserInFirstMonth(userId: string): Promise<boolean> {
+  // Get user from database
+  const dbResult = await queryDb(
+    `SELECT created_at FROM users WHERE id = $1`,
+    [userId]
+  )
+  
+  if (!dbResult || !dbResult.rows || dbResult.rows.length === 0) {
+    return false
+  }
+  
+  const createdAt = new Date(dbResult.rows[0].created_at)
+  const now = new Date()
+  const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
+  
+  // User is in first month if created less than 1 month ago
+  return createdAt >= oneMonthAgo
+}
+
 export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | 'expert', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
   // Expert users and admins have unlimited downloads
   if (plan === 'expert' || isAdmin) {
     return { allowed: true, count: 0, limit: Infinity }
   }
   
-  // Pro users have a limit of 50 per month
+  // Pro users: check if they're in first month trial or have active subscription
   if (plan === 'pro') {
     const now = new Date()
     const currentMonth = now.getMonth() + 1
     const currentYear = now.getFullYear()
     const userCount = await getUserUsageCount(userId, currentMonth, currentYear, ipAddress)
-    const limit = 50
     
+    // Check if user is in first month (trial period)
+    const inFirstMonth = await isUserInFirstMonth(userId)
+    
+    // Check if user has active subscription
+    const subscription = await getSubscriptionByUserId(userId)
+    const hasActiveSubscription = subscription?.status === 'active'
+    
+    // If in first month trial, allow 20 downloads/copies
+    if (inFirstMonth && !hasActiveSubscription) {
+      const trialLimit = 20
+      if (userCount >= trialLimit) {
+        return { 
+          allowed: false, 
+          count: userCount, 
+          limit: trialLimit, 
+          reason: "You've used your 20 free sections for this month. Subscribe to Pro to continue with 50 copies/downloads per month, or upgrade to Expert for unlimited access." 
+        }
+      }
+      return { allowed: true, count: userCount, limit: trialLimit }
+    }
+    
+    // After first month, require active subscription
+    if (!hasActiveSubscription) {
+      return { 
+        allowed: false, 
+        count: userCount, 
+        limit: 0, 
+        reason: "Your free trial has ended. Please subscribe to Pro to continue using the service. You can still search/browse unlimited sections." 
+      }
+    }
+    
+    // Pro users with active subscription have 50 per month
+    const limit = 50
     if (userCount >= limit) {
       return { 
         allowed: false, 
@@ -826,6 +879,7 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
   }
   
   // Free users have a limit of 5 downloads/copies per month (generation/search is unlimited)
+  // Note: This should rarely be used now since new users default to 'pro'
   const now = new Date()
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()

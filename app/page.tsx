@@ -26,7 +26,7 @@ export default function LandingPage() {
             <div className="flex gap-4 justify-center">
               <Link href="/sign-up">
                 <Button size="lg" className="text-lg px-8">
-                  Get Started Free
+                  Start Free Trial
                 </Button>
               </Link>
               <Link href="/pricing">
@@ -90,13 +90,13 @@ export default function LandingPage() {
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4">Ready to Get Started?</CardTitle>
               <CardDescription className="text-white/90">
-                Start generating beautiful Shopify sections today. 5 free generations included.
+                Start generating beautiful Shopify sections today. 20 free sections in your first month.
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <Link href="/sign-up">
                 <Button size="lg" variant="secondary" className="text-lg px-8">
-                  Create Free Account
+                  Start Free Trial
                 </Button>
               </Link>
             </CardContent>

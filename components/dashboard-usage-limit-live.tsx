@@ -13,6 +13,7 @@ interface UsageStats {
   allowed: boolean
   plan: string
   isAdmin: boolean
+  reason?: string
 }
 
 interface DashboardUsageLimitLiveProps {
@@ -45,7 +46,8 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
           remaining: data.remaining === null ? Infinity : data.remaining,
           allowed: data.allowed,
           plan: data.plan,
-          isAdmin: data.isAdmin
+          isAdmin: data.isAdmin,
+          reason: data.reason
         }
         setUsageStats(stats)
         console.log('[DashboardUsageLimitLive] Fetched usage stats:', stats)
@@ -66,7 +68,9 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
   }, [])
 
   // Determine limits based on plan
-  const maxUsage: number | string = plan === "expert" || isAdmin ? "Unlimited" : plan === "pro" ? 50 : 5
+  // Note: For PRO users, the actual limit depends on trial status and subscription
+  // This component will show the limit from the API response
+  const maxUsage: number | string = plan === "expert" || isAdmin ? "Unlimited" : plan === "pro" ? (usageStats?.limit ?? 50) : 5
   // Only use initialUsageCount as fallback if we haven't fetched yet and we're not loading
   const usageCount = usageStats?.count ?? (loading ? 0 : initialUsageCount)
 
@@ -108,12 +112,12 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
             {typeof maxUsage === 'number' && usageCount >= maxUsage && (
               <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
                 <p className="text-sm text-destructive font-semibold">
-                  {plan === "free" 
-                    ? "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Pro for 50 copies/downloads per month, or Expert for unlimited."
+                  {plan === "pro" 
+                    ? usageStats?.reason || "You've reached your copy/download limit. You can still search/browse unlimited sections. Subscribe to Pro or upgrade to Expert for unlimited access."
                     : "You've reached your copy/download limit. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access."}
                 </p>
-                <Link href="/pricing" className="block mt-2">
-                  <Button size="sm">Upgrade Now</Button>
+                <Link href={plan === "pro" ? "/api/checkout" : "/pricing"} className="block mt-2">
+                  <Button size="sm">{plan === "pro" ? "Subscribe Now" : "Upgrade Now"}</Button>
                 </Link>
               </div>
             )}

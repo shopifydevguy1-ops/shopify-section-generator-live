@@ -113,15 +113,28 @@ export async function POST(request: Request) {
       }
 
       case "payment.refunded": {
-        // Payment was refunded - downgrade user
+        // Payment was refunded - cancel subscription but keep user on pro plan
         const metadata = eventData.attributes?.metadata || {}
         const clerkUserId = metadata.clerk_user_id
 
         if (clerkUserId) {
           const user = await getUserByClerkId(clerkUserId)
-          if (user) {
-            await updateUserPlan(user.id, "free")
-            console.log(`User ${clerkUserId} downgraded to Free (refunded)`)
+          if (user && user.plan === "pro") {
+            // Cancel subscription but keep user on pro plan
+            // They'll lose access after trial period ends
+            const { getSubscriptionByUserId } = await import("@/lib/db")
+            const subscription = await getSubscriptionByUserId(user.id)
+            if (subscription) {
+              await createOrUpdateSubscription({
+                userId: user.id,
+                paymongoPaymentId: subscription.paymongo_payment_id,
+                paymongoPaymentIntentId: subscription.paymongo_payment_intent_id,
+                status: "canceled",
+                currentPeriodStart: subscription.current_period_start,
+                currentPeriodEnd: subscription.current_period_end,
+              })
+            }
+            console.log(`User ${clerkUserId} subscription canceled (refunded)`)
           }
         }
         break

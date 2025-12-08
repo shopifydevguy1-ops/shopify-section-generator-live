@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     }
 
     // Check if user can download/copy
-    const { allowed, count, limit } = await canDownloadOrCopy(
+    const { allowed, count, limit, reason } = await canDownloadOrCopy(
       dbUser.id,
       dbUser.plan,
       dbUser.is_admin
@@ -47,12 +47,12 @@ export async function POST(request: Request) {
 
     if (!allowed) {
       const limitValue = limit === Infinity ? 50 : limit
-      const upgradeMessage = dbUser.plan === 'free' 
-        ? 'You can still search/browse unlimited sections. Upgrade to Pro for 50 copies/downloads per month, or Expert for unlimited access.'
-        : 'You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access.'
+      const upgradeMessage = reason || (dbUser.plan === 'pro' 
+        ? 'You can still search/browse unlimited sections. Subscribe to Pro for 50 copies/downloads per month, or upgrade to Expert for unlimited access.'
+        : 'You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access.')
       return NextResponse.json(
         { 
-          error: `You have reached your copy/download limit of ${limitValue} sections. ${upgradeMessage}`,
+          error: limitValue > 0 ? `You have reached your copy/download limit of ${limitValue} sections. ${upgradeMessage}` : upgradeMessage,
           count,
           limit: limit === Infinity ? null : limit,
           reached: true
@@ -121,7 +121,7 @@ export async function GET() {
     }
 
     // Get download/copy stats
-    const { allowed, count, limit } = await canDownloadOrCopy(
+    const { allowed, count, limit, reason } = await canDownloadOrCopy(
       dbUser.id,
       dbUser.plan,
       dbUser.is_admin
@@ -133,7 +133,8 @@ export async function GET() {
       remaining: limit === Infinity ? null : Math.max(0, limit - count),
       allowed,
       plan: dbUser.plan,
-      isAdmin: dbUser.is_admin
+      isAdmin: dbUser.is_admin,
+      reason: reason || undefined
     })
   } catch (error: any) {
     console.error("Error getting download stats:", error)

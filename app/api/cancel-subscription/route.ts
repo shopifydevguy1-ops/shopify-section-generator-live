@@ -37,12 +37,11 @@ export async function POST() {
         currentPeriodEnd: subscription.current_period_end,
       })
       
-      // Downgrade user plan immediately (or wait until period end - your choice)
-      await updateUserPlan(user.id, "free")
-    } else {
-      // If no subscription record, just update user plan
-      await updateUserPlan(user.id, "free")
+      // Keep user on pro plan - they'll lose access after subscription period ends
+      // The canDownloadOrCopy function will check subscription status
+      // No need to change plan - they stay on 'pro' but subscription is canceled
     }
+    // If no subscription record exists, nothing to cancel
 
     redirect("/account?canceled=true")
   } catch (error: any) {
