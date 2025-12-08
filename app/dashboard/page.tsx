@@ -127,8 +127,13 @@ export default async function DashboardPage() {
                         Free trial: {maxUsage === "Unlimited" ? "Unlimited" : `${remaining} of ${maxUsage} remaining`}
                       </p>
                       <Link href="/api/checkout" className="block">
-                        <Button size="sm" className="w-full">Subscribe to Pro</Button>
+                        <Button size="sm" className="w-full" variant="outline">
+                          Subscribe Early (Optional)
+                        </Button>
                       </Link>
+                      <p className="text-xs text-muted-foreground mt-2 text-center">
+                        Enjoy your free trial. Subscribe anytime to continue.
+                      </p>
                     </div>
                   ) : (
                     <Link href="/api/checkout" className="block mt-4">
@@ -201,6 +206,12 @@ export default async function DashboardPage() {
                     <Link href="/pricing">
                       <Button className="w-full">
                         Upgrade to Expert
+                      </Button>
+                    </Link>
+                  ) : inFirstMonth ? (
+                    <Link href="/api/checkout">
+                      <Button className="w-full" variant="outline">
+                        Subscribe Early (Optional)
                       </Button>
                     </Link>
                   ) : (

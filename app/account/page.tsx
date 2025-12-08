@@ -141,6 +141,17 @@ export default async function AccountPage() {
                       </Button>
                     </form>
                   </>
+                ) : inFirstMonth ? (
+                  <>
+                    <Link href="/api/checkout">
+                      <Button className="w-full" variant="outline">
+                        Subscribe Early (Optional)
+                      </Button>
+                    </Link>
+                    <p className="text-xs text-muted-foreground mt-2 text-center">
+                      You&apos;re in your free trial. Subscribe anytime to continue after trial ends.
+                    </p>
+                  </>
                 ) : (
                   <Link href="/api/checkout">
                     <Button className="w-full">Subscribe to Pro</Button>
