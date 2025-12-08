@@ -826,14 +826,19 @@ export async function isUserInFirstMonth(userId: string): Promise<boolean> {
   }
   
   const now = new Date()
-  // Calculate one month ago more accurately
-  const oneMonthAgo = new Date(now)
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+  // Calculate one month ago more accurately (30 days)
+  const oneMonthAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000))
   
-  // User is in first month if created less than 1 month ago
-  const isInFirstMonth = createdAt >= oneMonthAgo
+  // User is in first month if created less than 30 days ago
+  // Also ensure createdAt is a valid date
+  if (isNaN(createdAt.getTime())) {
+    console.error(`[isUserInFirstMonth] Invalid created_at date for user ${userId}`)
+    return false
+  }
   
-  console.log(`[isUserInFirstMonth] User ${userId}: createdAt=${createdAt.toISOString()}, oneMonthAgo=${oneMonthAgo.toISOString()}, isInFirstMonth=${isInFirstMonth}`)
+  const isInFirstMonth = createdAt.getTime() >= oneMonthAgo.getTime()
+  
+  console.log(`[isUserInFirstMonth] User ${userId}: createdAt=${createdAt.toISOString()}, oneMonthAgo=${oneMonthAgo.toISOString()}, isInFirstMonth=${isInFirstMonth}, daysDiff=${Math.floor((now.getTime() - createdAt.getTime()) / (24 * 60 * 60 * 1000))}`)
   
   return isInFirstMonth
 }
