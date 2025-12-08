@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useUser, SignInButton, UserButton } from "@clerk/nextjs"
+import { useUser, SignInButton, UserButton, useClerk } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Shield, Menu, X, Mail } from "lucide-react"
+import { Moon, Sun, Shield, Menu, X, Mail, User } from "lucide-react"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import {
@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/sheet"
 
 export function Navbar() {
-  const { isSignedIn } = useUser()
+  const { isSignedIn, user } = useUser()
+  const { signOut } = useClerk()
   const pathname = usePathname()
   const [darkMode, setDarkMode] = useState(true) // Default to dark mode
   const [isAdmin, setIsAdmin] = useState(false)
@@ -216,12 +217,50 @@ export function Navbar() {
                   <NavLinks mobile />
                   
                   {isSignedIn ? (
-                    <div className="pt-4 border-t">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Account</span>
-                        <UserButton afterSignOutUrl="/" />
+                    <>
+                      <div className="pt-4 border-t space-y-2">
+                        <Link 
+                          href="/account" 
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="block"
+                        >
+                          <Button 
+                            variant="outline" 
+                            className="w-full justify-start" 
+                            size="lg"
+                          >
+                            <User className="h-4 w-4 mr-2" />
+                            Manage Account
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="destructive"
+                          className="w-full justify-start"
+                          size="lg"
+                          onClick={async () => {
+                            setMobileMenuOpen(false)
+                            await signOut({ redirectUrl: "/" })
+                          }}
+                        >
+                          <X className="h-4 w-4 mr-2" />
+                          Sign Out
+                        </Button>
                       </div>
-                    </div>
+                      <div className="pt-2 border-t">
+                        <div className="flex items-center justify-center py-2">
+                          <UserButton 
+                            afterSignOutUrl="/" 
+                            appearance={{
+                              elements: {
+                                avatarBox: "h-8 w-8",
+                                userButtonPopoverCard: "z-[100]",
+                                userButtonPopoverActions: "z-[100]",
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <div className="pt-4 border-t">
                       <SignInButton mode="modal">
