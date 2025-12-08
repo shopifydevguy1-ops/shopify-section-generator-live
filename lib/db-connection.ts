@@ -18,24 +18,53 @@ export function getDbPool(): Pool | null {
   }
 
   try {
+    // Supabase requires SSL - check if it's a Supabase URL
+    const isSupabase = databaseUrl.includes('supabase.co') || databaseUrl.includes('supabase.com')
+    
     pool = new Pool({
       connectionString: databaseUrl,
-      ssl: databaseUrl.includes('sslmode=require') || databaseUrl.includes('ssl=true') 
+      // Supabase always requires SSL
+      ssl: isSupabase || databaseUrl.includes('sslmode=require') || databaseUrl.includes('ssl=true')
         ? { rejectUnauthorized: false }
         : false,
+      // Connection pool settings for Supabase
+      max: isSupabase ? 10 : 20, // Supabase has connection limits
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
     })
 
-    // Test connection
-    pool.query('SELECT NOW()')
-      .then(() => console.log('[DB] Database connection established'))
+    // Test connection asynchronously (don't block)
+    pool.query('SELECT NOW() as now')
+      .then((result) => {
+        console.log('[DB] Database connection established successfully at', result.rows[0].now)
+        // Verify tables exist
+        return pool?.query(`
+          SELECT table_name 
+          FROM information_schema.tables 
+          WHERE table_schema = 'public' 
+          AND table_name IN ('download_logs', 'usage_logs', 'users')
+        `)
+      })
+      .then((result) => {
+        if (result && result.rows) {
+          const tables = result.rows.map((r: any) => r.table_name)
+          console.log('[DB] Found tables:', tables)
+          if (tables.length < 3) {
+            console.warn('[DB] Warning: Some tables may be missing. Make sure you ran the database schema.')
+          }
+        }
+      })
       .catch((err) => {
-        console.error('[DB] Database connection failed:', err.message)
+        console.error('[DB] Database connection test failed:', err.message)
+        console.error('[DB] This might indicate:', err.message.includes('SSL') ? 'SSL configuration issue' : 'Connection or authentication issue')
         pool = null
       })
-
+    
     return pool
   } catch (error: any) {
     console.error('[DB] Failed to create database pool:', error.message)
+    console.error('[DB] Error details:', error)
+    pool = null
     return null
   }
 }
@@ -47,13 +76,18 @@ export async function queryDb(
   const dbPool = getDbPool()
   
   if (!dbPool) {
+    console.log('[DB] No database pool available, query skipped:', text.substring(0, 50))
     return null
   }
 
   try {
-    return await dbPool.query(text, params)
+    const result = await dbPool.query(text, params)
+    return result
   } catch (error: any) {
-    console.error('[DB] Query error:', error.message, text)
+    console.error('[DB] Query error:', error.message)
+    console.error('[DB] Query:', text)
+    console.error('[DB] Params:', params)
+    console.error('[DB] Full error:', error)
     return null
   }
 }
