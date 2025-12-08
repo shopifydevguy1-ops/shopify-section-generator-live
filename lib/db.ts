@@ -863,6 +863,8 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
     const subscription = await getSubscriptionByUserId(userId)
     const hasActiveSubscription = subscription?.status === 'active'
     
+    console.log(`[canDownloadOrCopy] User ${userId} (plan: ${plan}): inFirstMonth=${inFirstMonth}, hasActiveSubscription=${hasActiveSubscription}, userCount=${userCount}`)
+    
     // If in first month trial, allow 20 downloads/copies
     if (inFirstMonth && !hasActiveSubscription) {
       const trialLimit = 20
