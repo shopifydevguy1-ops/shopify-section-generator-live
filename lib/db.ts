@@ -283,8 +283,57 @@ export async function getUserById(userId: string): Promise<User | null> {
 }
 
 export async function getUserByClerkId(clerkId: string): Promise<User | null> {
-  // In production, query your database
-  // SELECT * FROM users WHERE clerk_id = $1
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, clerk_id, email, plan, is_admin, created_at, updated_at 
+     FROM users 
+     WHERE clerk_id = $1 
+     LIMIT 1`,
+    [clerkId]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    const user: User = {
+      id: row.id,
+      clerk_id: row.clerk_id,
+      email: row.email,
+      plan: row.plan,
+      is_admin: row.is_admin,
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+    }
+    
+    // Check if user should be admin based on current ADMIN_EMAILS
+    const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
+    if (adminEmails.includes(user.email.toLowerCase()) && !user.is_admin) {
+      // Update user to admin and expert plan if email is in admin list
+      user.is_admin = true
+      user.plan = 'expert'
+      user.updated_at = new Date()
+      // Update in database
+      await queryDb(
+        `UPDATE users SET is_admin = $1, plan = $2, updated_at = $3 WHERE id = $4`,
+        [true, 'expert', user.updated_at, user.id]
+      )
+    }
+    // If user is admin but not on expert plan, upgrade them
+    if (user.is_admin && user.plan !== 'expert') {
+      user.plan = 'expert'
+      user.updated_at = new Date()
+      // Update in database
+      await queryDb(
+        `UPDATE users SET plan = $1, updated_at = $2 WHERE id = $3`,
+        ['expert', user.updated_at, user.id]
+      )
+    }
+    
+    // Update in-memory cache
+    users.set(user.id, user)
+    return user
+  }
+  
+  // Fallback to in-memory
   for (const user of users.values()) {
     if (user.clerk_id === clerkId) {
       // Check if user should be admin based on current ADMIN_EMAILS
@@ -315,16 +364,42 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     ? isAdmin 
     : adminEmails.includes(email.toLowerCase())
   
-      // Admins automatically get expert plan with unlimited generations
+  // Admins automatically get expert plan with unlimited generations
+  const userId = crypto.randomUUID()
+  const now = new Date()
+  
   const user: User = {
-    id: crypto.randomUUID(),
+    id: userId,
     clerk_id: clerkId,
     email,
     plan: shouldBeAdmin ? 'expert' : 'free',
     is_admin: shouldBeAdmin,
-    created_at: new Date(),
-    updated_at: new Date(),
+    created_at: now,
+    updated_at: now,
   }
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO users (id, clerk_id, email, plan, is_admin, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
+     ON CONFLICT (clerk_id) DO UPDATE SET
+       email = EXCLUDED.email,
+       updated_at = EXCLUDED.updated_at
+     RETURNING id`,
+    [userId, clerkId, email, user.plan, user.is_admin, now, now]
+  )
+  
+  if (dbResult) {
+    console.log(`[createUser] Saved to database: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
+    // If database returned a different ID (from ON CONFLICT), use that
+    if (dbResult.rows && dbResult.rows.length > 0) {
+      user.id = dbResult.rows[0].id
+    }
+  } else {
+    console.log(`[createUser] Saved to memory only: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
+  }
+  
+  // Always keep in-memory for backward compatibility
   users.set(user.id, user)
   return user
 }
