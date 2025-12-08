@@ -2,6 +2,8 @@
 // This file contains database schema and helper functions
 // For production, you'll need to set up a PostgreSQL database
 
+import { queryDb } from './db-connection'
+
 export interface User {
   id: string
   clerk_id: string
@@ -96,7 +98,28 @@ CREATE TABLE IF NOT EXISTS usage_logs (
   section_type VARCHAR(100) NOT NULL,
   generated_at TIMESTAMP DEFAULT NOW(),
   month INTEGER NOT NULL,
-  year INTEGER NOT NULL
+  year INTEGER NOT NULL,
+  ip_address VARCHAR(45)
+);
+
+-- Download logs table (for tracking copy/download actions)
+CREATE TABLE IF NOT EXISTS download_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  section_id VARCHAR(255) NOT NULL,
+  action VARCHAR(20) NOT NULL CHECK (action IN ('copy', 'download')),
+  created_at TIMESTAMP DEFAULT NOW(),
+  ip_address VARCHAR(45)
+);
+
+-- Login logs table
+CREATE TABLE IF NOT EXISTS login_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  clerk_id VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  ip_address VARCHAR(45),
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- Section templates table (optional - can also load from JSON files)
@@ -118,6 +141,11 @@ CREATE INDEX IF NOT EXISTS idx_subscriptions_paymongo_payment_id ON subscription
 CREATE INDEX IF NOT EXISTS idx_subscriptions_paymongo_payment_intent_id ON subscriptions(paymongo_payment_intent_id);
 CREATE INDEX IF NOT EXISTS idx_usage_logs_user_id ON usage_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_usage_logs_user_month_year ON usage_logs(user_id, month, year);
+CREATE INDEX IF NOT EXISTS idx_download_logs_user_id ON download_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_download_logs_user_created ON download_logs(user_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_download_logs_ip_address ON download_logs(ip_address, created_at);
+CREATE INDEX IF NOT EXISTS idx_login_logs_user_id ON login_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_login_logs_clerk_id ON login_logs(clerk_id);
 CREATE INDEX IF NOT EXISTS idx_section_templates_type ON section_templates(type);
 CREATE INDEX IF NOT EXISTS idx_section_templates_tags ON section_templates USING GIN(tags);
 `;
@@ -131,6 +159,63 @@ let subscriptions: Map<string, Subscription> = new Map()
 let usageLogs: UsageLog[] = []
 let downloadLogs: DownloadLog[] = []
 let loginLogs: LoginLog[] = []
+
+// Load existing logs from database on startup (if database is available)
+// This ensures data persists across server restarts
+async function loadLogsFromDatabase() {
+  try {
+    // Load download logs
+    const downloadLogsResult = await queryDb(
+      `SELECT id, user_id, section_id, action, created_at, ip_address 
+       FROM download_logs 
+       ORDER BY created_at DESC 
+       LIMIT 10000`
+    )
+    
+    if (downloadLogsResult && downloadLogsResult.rows) {
+      downloadLogs = downloadLogsResult.rows.map((row: any) => ({
+        id: row.id,
+        user_id: row.user_id,
+        section_id: row.section_id,
+        action: row.action,
+        created_at: new Date(row.created_at),
+        ip_address: row.ip_address || undefined,
+      }))
+      console.log(`[DB] Loaded ${downloadLogs.length} download logs from database`)
+    }
+    
+    // Load usage logs
+    const usageLogsResult = await queryDb(
+      `SELECT id, user_id, section_type, generated_at, month, year, ip_address 
+       FROM usage_logs 
+       ORDER BY generated_at DESC 
+       LIMIT 10000`
+    )
+    
+    if (usageLogsResult && usageLogsResult.rows) {
+      usageLogs = usageLogsResult.rows.map((row: any) => ({
+        id: row.id,
+        user_id: row.user_id,
+        section_type: row.section_type,
+        generated_at: new Date(row.generated_at),
+        month: row.month,
+        year: row.year,
+        ip_address: row.ip_address || undefined,
+      }))
+      console.log(`[DB] Loaded ${usageLogs.length} usage logs from database`)
+    }
+  } catch (error: any) {
+    console.error('[DB] Error loading logs from database:', error.message)
+  }
+}
+
+// Initialize database connection and load existing data
+if (typeof window === 'undefined') {
+  // Only run on server side
+  loadLogsFromDatabase().catch(err => {
+    console.error('[DB] Failed to load logs from database:', err)
+  })
+}
 
 // Support requests store
 export interface SupportReply {
@@ -253,6 +338,31 @@ export async function getAllSubscriptions(): Promise<Subscription[]> {
 }
 
 export async function getAllUsageLogs(): Promise<UsageLog[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, section_type, generated_at, month, year, ip_address 
+     FROM usage_logs 
+     ORDER BY generated_at DESC`
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    // Merge database logs with in-memory logs (avoid duplicates)
+    const dbLogs = dbResult.rows.map((row: any) => ({
+      id: row.id,
+      user_id: row.user_id,
+      section_type: row.section_type,
+      generated_at: new Date(row.generated_at),
+      month: row.month,
+      year: row.year,
+      ip_address: row.ip_address || undefined,
+    }))
+    
+    // Merge with in-memory logs, avoiding duplicates
+    const memoryLogIds = new Set(usageLogs.map(log => log.id))
+    const uniqueDbLogs = dbLogs.filter(log => !memoryLogIds.has(log.id))
+    return [...usageLogs, ...uniqueDbLogs]
+  }
+  
   return usageLogs
 }
 
@@ -261,24 +371,65 @@ export async function getAllLoginLogs(): Promise<LoginLog[]> {
 }
 
 export async function getAllDownloadLogs(): Promise<DownloadLog[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, section_id, action, created_at, ip_address 
+     FROM download_logs 
+     ORDER BY created_at DESC`
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    // Merge database logs with in-memory logs (avoid duplicates)
+    const dbLogs = dbResult.rows.map((row: any) => ({
+      id: row.id,
+      user_id: row.user_id,
+      section_id: row.section_id,
+      action: row.action,
+      created_at: new Date(row.created_at),
+      ip_address: row.ip_address || undefined,
+    }))
+    
+    // Merge with in-memory logs, avoiding duplicates
+    const memoryLogIds = new Set(downloadLogs.map(log => log.id))
+    const uniqueDbLogs = dbLogs.filter(log => !memoryLogIds.has(log.id))
+    return [...downloadLogs, ...uniqueDbLogs]
+  }
+  
   return downloadLogs
 }
 
 export async function logLogin(userId: string, clerkId: string, email: string, ipAddress?: string): Promise<void> {
+  const now = new Date()
+  const logId = crypto.randomUUID()
+  
   const log: LoginLog = {
-    id: crypto.randomUUID(),
+    id: logId,
     user_id: userId,
     clerk_id: clerkId,
     email,
     ip_address: ipAddress,
-    created_at: new Date(),
+    created_at: now,
   }
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO login_logs (id, user_id, clerk_id, email, ip_address, created_at)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [logId, userId, clerkId, email, ipAddress || null, now]
+  )
+  
+  // Always keep in-memory for backward compatibility
   loginLogs.push(log)
   // Keep only last 1000 login logs to prevent memory issues
   if (loginLogs.length > 1000) {
     loginLogs = loginLogs.slice(-1000)
   }
-  console.log(`[logLogin] Logged login for user ${email}, total logs: ${loginLogs.length}`)
+  
+  if (dbResult) {
+    console.log(`[logLogin] Saved to database: user ${email}`)
+  } else {
+    console.log(`[logLogin] Saved to memory only: user ${email}, total logs: ${loginLogs.length}`)
+  }
 }
 
 export async function getUserStats(): Promise<{
@@ -315,7 +466,24 @@ export async function getUserStats(): Promise<{
 
 export async function getUserUsageCount(userId: string, month: number, year: number, ipAddress?: string): Promise<number> {
   // Only count downloads/copies - generation/search is unlimited
-  // Count downloads/copies from downloadLogs
+  
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT COUNT(*) as count 
+     FROM download_logs 
+     WHERE user_id = $1 
+       AND EXTRACT(MONTH FROM created_at) = $2 
+       AND EXTRACT(YEAR FROM created_at) = $3`,
+    [userId, month, year]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const dbCount = parseInt((dbResult.rows[0] as any).count, 10)
+    console.log(`[getUserUsageCount] From database: user ${userId}, month ${month}/${year}, count: ${dbCount}`)
+    return dbCount
+  }
+  
+  // Fallback to in-memory
   const downloadCopyCount = downloadLogs.filter(
     log => {
       const logDate = new Date(log.created_at)
@@ -325,7 +493,7 @@ export async function getUserUsageCount(userId: string, month: number, year: num
     }
   ).length
   
-  // Return count of downloads/copies only (generation/search doesn't count)
+  console.log(`[getUserUsageCount] From memory: user ${userId}, month ${month}/${year}, count: ${downloadCopyCount}`)
   return downloadCopyCount
 }
 
@@ -334,7 +502,24 @@ export async function getIPUsageCount(ipAddress: string, month: number, year: nu
   if (!ipAddress) return 0
   
   // Only count downloads/copies - generation/search is unlimited
-  // Count downloads/copies from downloadLogs by IP
+  
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT COUNT(*) as count 
+     FROM download_logs 
+     WHERE ip_address = $1 
+       AND EXTRACT(MONTH FROM created_at) = $2 
+       AND EXTRACT(YEAR FROM created_at) = $3`,
+    [ipAddress, month, year]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const dbCount = parseInt((dbResult.rows[0] as any).count, 10)
+    console.log(`[getIPUsageCount] From database: IP ${ipAddress}, month ${month}/${year}, count: ${dbCount}`)
+    return dbCount
+  }
+  
+  // Fallback to in-memory
   const downloadCopyCount = downloadLogs.filter(
     log => {
       const logDate = new Date(log.created_at)
@@ -344,23 +529,41 @@ export async function getIPUsageCount(ipAddress: string, month: number, year: nu
     }
   ).length
   
-  // Return count of downloads/copies only (generation/search doesn't count)
+  console.log(`[getIPUsageCount] From memory: IP ${ipAddress}, month ${month}/${year}, count: ${downloadCopyCount}`)
   return downloadCopyCount
 }
 
 export async function logUsage(userId: string, sectionType: string, ipAddress?: string): Promise<void> {
   const now = new Date()
+  const month = now.getMonth() + 1
+  const year = now.getFullYear()
+  const logId = crypto.randomUUID()
+  
   const log: UsageLog = {
-    id: crypto.randomUUID(),
+    id: logId,
     user_id: userId,
     section_type: sectionType,
     generated_at: now,
-    month: now.getMonth() + 1,
-    year: now.getFullYear(),
+    month,
+    year,
     ip_address: ipAddress,
   }
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    [logId, userId, sectionType, now, month, year, ipAddress || null]
+  )
+  
+  // Always keep in-memory for backward compatibility and as fallback
   usageLogs.push(log)
-  console.log(`[logUsage] Logged usage for user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, total logs: ${usageLogs.length}`)
+  
+  if (dbResult) {
+    console.log(`[logUsage] Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}`)
+  } else {
+    console.log(`[logUsage] Saved to memory only: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, total logs: ${usageLogs.length}`)
+  }
 }
 
 export async function getSubscriptionByUserId(userId: string): Promise<Subscription | null> {
@@ -454,32 +657,63 @@ export async function getUserActivityStats(userId: string): Promise<{
   downloads: number
   total: number
 }> {
-  // Count generations (from usageLogs, excluding copy/download activities)
-  // Note: Generations are not currently logged, so this will be 0
-  // But we exclude copy/download to avoid double-counting
-  const generations = usageLogs.filter(
-    log => log.user_id === userId && log.section_type !== 'copy' && log.section_type !== 'download'
-  ).length
+  // Try to get from database first
+  const [generationsResult, copiesResult, downloadsResult] = await Promise.all([
+    queryDb(
+      `SELECT COUNT(*) as count 
+       FROM usage_logs 
+       WHERE user_id = $1 
+         AND section_type NOT IN ('copy', 'download')`,
+      [userId]
+    ),
+    queryDb(
+      `SELECT COUNT(*) as count 
+       FROM download_logs 
+       WHERE user_id = $1 AND action = 'copy'`,
+      [userId]
+    ),
+    queryDb(
+      `SELECT COUNT(*) as count 
+       FROM download_logs 
+       WHERE user_id = $1 AND action = 'download'`,
+      [userId]
+    )
+  ])
   
-  // Count copies (from downloadLogs where action is 'copy')
-  const copies = downloadLogs.filter(log => log.user_id === userId && log.action === 'copy').length
+  let generations = 0
+  let copies = 0
+  let downloads = 0
   
-  // Count downloads (from downloadLogs where action is 'download')
-  const downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
+  if (generationsResult && generationsResult.rows && generationsResult.rows.length > 0) {
+    generations = parseInt((generationsResult.rows[0] as any).count, 10)
+  } else {
+    // Fallback to in-memory
+    generations = usageLogs.filter(
+      log => log.user_id === userId && log.section_type !== 'copy' && log.section_type !== 'download'
+    ).length
+  }
   
-  // Enhanced debug logging to help diagnose issues
-  const userUsageLogs = usageLogs.filter(log => log.user_id === userId)
-  const userDownloadLogs = downloadLogs.filter(log => log.user_id === userId)
+  if (copiesResult && copiesResult.rows && copiesResult.rows.length > 0) {
+    copies = parseInt((copiesResult.rows[0] as any).count, 10)
+  } else {
+    // Fallback to in-memory
+    copies = downloadLogs.filter(log => log.user_id === userId && log.action === 'copy').length
+  }
   
+  if (downloadsResult && downloadsResult.rows && downloadsResult.rows.length > 0) {
+    downloads = parseInt((downloadsResult.rows[0] as any).count, 10)
+  } else {
+    // Fallback to in-memory
+    downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
+  }
+  
+  // Enhanced debug logging
   console.log(`[getUserActivityStats] User ${userId}:`, {
     generations,
     copies,
     downloads,
     total: generations + copies + downloads,
-    totalUsageLogs: userUsageLogs.length,
-    totalDownloadLogs: userDownloadLogs.length,
-    usageLogDetails: userUsageLogs.map(log => ({ section_type: log.section_type, created: log.generated_at })),
-    downloadLogDetails: userDownloadLogs.map(log => ({ action: log.action, section_id: log.section_id, created: log.created_at }))
+    source: (generationsResult || copiesResult || downloadsResult) ? 'database' : 'memory'
   })
   
   return {
@@ -548,16 +782,33 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
 }
 
 export async function logDownloadOrCopy(userId: string, sectionId: string, action: 'copy' | 'download', ipAddress?: string): Promise<void> {
+  const now = new Date()
+  const logId = crypto.randomUUID()
+  
   const log: DownloadLog = {
-    id: crypto.randomUUID(),
+    id: logId,
     user_id: userId,
     section_id: sectionId,
     action,
-    created_at: new Date(),
+    created_at: now,
     ip_address: ipAddress,
   }
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [logId, userId, sectionId, action, now, ipAddress || null]
+  )
+  
+  // Always keep in-memory for backward compatibility and as fallback
   downloadLogs.push(log)
-  console.log(`[logDownloadOrCopy] Logged ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, total downloadLogs: ${downloadLogs.length}`)
+  
+  if (dbResult) {
+    console.log(`[logDownloadOrCopy] Saved to database: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}`)
+  } else {
+    console.log(`[logDownloadOrCopy] Saved to memory only: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, total downloadLogs: ${downloadLogs.length}`)
+  }
 }
 
 // Reset user usage limits (admin function)
