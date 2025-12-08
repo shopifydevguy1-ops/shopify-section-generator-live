@@ -67,12 +67,21 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
     return () => clearInterval(interval)
   }, [])
 
-  // Determine limits based on plan
-  // Note: For PRO users, the actual limit depends on trial status and subscription
-  // This component will show the limit from the API response
-  const maxUsage: number | string = plan === "expert" || isAdmin ? "Unlimited" : plan === "pro" ? (usageStats?.limit ?? 50) : 5
-  // Only use initialUsageCount as fallback if we haven't fetched yet and we're not loading
-  const usageCount = usageStats?.count ?? (loading ? 0 : initialUsageCount)
+  // Use limit from API response (accounts for trial period, subscription status, etc.)
+  // This is the source of truth - it handles trial (20), subscribed (50), expert (unlimited)
+  const maxUsage: number | string = usageStats?.limit === Infinity || usageStats?.limit === null
+    ? "Unlimited"
+    : usageStats?.limit !== undefined
+    ? usageStats.limit
+    : plan === "expert" || isAdmin
+    ? "Unlimited"
+    : plan === "pro"
+    ? 50  // Fallback only if API hasn't responded
+    : 5
+  
+  // Use count from API response - only use initial as very temporary fallback
+  // Prefer showing API data even if it's 0, as it's the source of truth
+  const usageCount = usageStats !== null ? (usageStats.count ?? 0) : (loading ? 0 : initialUsageCount)
 
   return (
     <Card>

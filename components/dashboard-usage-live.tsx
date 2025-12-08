@@ -65,11 +65,30 @@ export function DashboardUsageLive({ initialUsageCount, plan, isAdmin }: Dashboa
     return () => clearInterval(interval)
   }, [])
 
-  // Determine limits based on plan
-  const maxUsage: number | string = plan === "expert" || isAdmin ? "Unlimited" : plan === "pro" ? 50 : 5
-  // Only use initialUsageCount as fallback if we haven't fetched yet and we're not loading
-  const usageCount = usageStats?.count ?? (loading ? 0 : initialUsageCount)
-  const remaining = usageStats?.remaining ?? (loading ? (typeof maxUsage === 'number' ? maxUsage : "Unlimited") : (typeof maxUsage === 'number' ? Math.max(0, maxUsage - initialUsageCount) : "Unlimited"))
+  // Use limit from API response (accounts for trial period, subscription status, etc.)
+  // Fallback to plan-based defaults only if API hasn't responded yet
+  const maxUsage: number | string = usageStats?.limit === Infinity || usageStats?.limit === null
+    ? "Unlimited"
+    : usageStats?.limit !== undefined
+    ? usageStats.limit
+    : plan === "expert" || isAdmin
+    ? "Unlimited"
+    : plan === "pro"
+    ? 50
+    : 5
+  
+  // Use count from API response - only use initial as very temporary fallback
+  // Prefer showing API data even if it's 0, as it's the source of truth
+  const usageCount = usageStats !== null ? (usageStats.count ?? 0) : (loading ? 0 : initialUsageCount)
+  
+  // Use remaining from API response - this is the source of truth
+  const remaining = usageStats?.remaining !== undefined && usageStats?.remaining !== null
+    ? (usageStats.remaining === Infinity ? "Unlimited" : usageStats.remaining)
+    : usageStats !== null && usageStats.limit !== undefined && usageStats.limit !== null
+    ? (usageStats.limit === Infinity ? "Unlimited" : Math.max(0, (usageStats.limit === null ? 0 : usageStats.limit) - usageCount))
+    : loading
+    ? (typeof maxUsage === 'number' ? maxUsage : "Unlimited")
+    : (typeof maxUsage === 'number' ? Math.max(0, maxUsage - initialUsageCount) : "Unlimited")
 
   return (
     <Card>
