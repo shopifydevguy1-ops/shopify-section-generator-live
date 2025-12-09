@@ -605,11 +605,11 @@ export async function getUserUsageCount(userId: string, month: number, year: num
   // Only count downloads/copies - generation/search is unlimited
   
   // Try to get from database first
-  // Ensure userId is properly cast to UUID for database queries
+  // PostgreSQL will automatically cast string UUIDs to UUID type
   const dbResult = await queryDb(
     `SELECT COUNT(*) as count 
      FROM download_logs 
-     WHERE user_id = $1::uuid 
+     WHERE user_id = $1 
        AND EXTRACT(MONTH FROM created_at) = $2 
        AND EXTRACT(YEAR FROM created_at) = $3`,
     [userId, month, year]
@@ -696,10 +696,10 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
   }
   
   // Try to save to database first
-  // Cast userId to UUID to ensure proper type matching
+  // PostgreSQL will automatically cast string UUIDs to UUID type
   const dbResult = await queryDb(
     `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
-     VALUES ($1::uuid, $2::uuid, $3, $4, $5, $6, $7)`,
+     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     [logId, userId, sectionType, now, month, year, ipAddress || null]
   )
   
@@ -892,25 +892,25 @@ export async function getUserActivityStats(userId: string): Promise<{
   const useDatabase = dbPool !== null
   
   // Try to get from database first if available
-  // Ensure userId is properly cast to UUID for database queries
+  // PostgreSQL will automatically cast string UUIDs to UUID type
   const [generationsResult, copiesResult, downloadsResult] = await Promise.all([
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM usage_logs 
-       WHERE user_id = $1::uuid 
+       WHERE user_id = $1 
          AND section_type NOT IN ('copy', 'download')`,
       [userId]
     ),
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
-       WHERE user_id = $1::uuid AND action = 'copy'`,
+       WHERE user_id = $1 AND action = 'copy'`,
       [userId]
     ),
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
-       WHERE user_id = $1::uuid AND action = 'download'`,
+       WHERE user_id = $1 AND action = 'download'`,
       [userId]
     )
   ])
@@ -938,12 +938,21 @@ export async function getUserActivityStats(userId: string): Promise<{
       downloads = typeof count === 'string' ? parseInt(count, 10) : Number(count)
     }
     
-    // Log if database queries failed but database is available (this is an error)
+    // Log detailed information about query results
     if (!generationsResult || !copiesResult || !downloadsResult) {
       console.error(`[getUserActivityStats] Database queries failed for user ${userId} but database is available!`, {
         generationsResult: !!generationsResult,
         copiesResult: !!copiesResult,
-        downloadsResult: !!downloadsResult
+        downloadsResult: !!downloadsResult,
+        userId: userId,
+        userIdType: typeof userId
+      })
+    } else {
+      // Log successful query results for debugging
+      console.log(`[getUserActivityStats] Query results for user ${userId}:`, {
+        generations: generationsResult.rows?.[0]?.count || 0,
+        copies: copiesResult.rows?.[0]?.count || 0,
+        downloads: downloadsResult.rows?.[0]?.count || 0
       })
     }
   } else {
@@ -969,6 +978,11 @@ export async function getUserActivityStats(userId: string): Promise<{
       generations: !!generationsResult,
       copies: !!copiesResult,
       downloads: !!downloadsResult
+    },
+    rawCounts: {
+      generations: generationsResult?.rows?.[0]?.count,
+      copies: copiesResult?.rows?.[0]?.count,
+      downloads: downloadsResult?.rows?.[0]?.count
     }
   })
   
@@ -1136,10 +1150,10 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
   }
   
   // Try to save to database first
-  // Cast userId to UUID to ensure proper type matching
+  // PostgreSQL will automatically cast string UUIDs to UUID type
   const dbResult = await queryDb(
     `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
-     VALUES ($1::uuid, $2::uuid, $3, $4, $5, $6)`,
+     VALUES ($1, $2, $3, $4, $5, $6)`,
     [logId, userId, sectionId, action, now, ipAddress || null]
   )
   
@@ -1167,18 +1181,18 @@ export async function resetUserUsageLimit(userId: string, month?: number, year?:
   const targetYear = year || now.getFullYear()
   
   // Delete from database first
-  // Ensure userId is properly cast to UUID for database queries
+  // PostgreSQL will automatically cast string UUIDs to UUID type
   const [usageDeleteResult, downloadDeleteResult] = await Promise.all([
     queryDb(
       `DELETE FROM usage_logs 
-       WHERE user_id = $1::uuid 
+       WHERE user_id = $1 
          AND month = $2 
          AND year = $3`,
       [userId, targetMonth, targetYear]
     ),
     queryDb(
       `DELETE FROM download_logs 
-       WHERE user_id = $1::uuid 
+       WHERE user_id = $1 
          AND EXTRACT(MONTH FROM created_at) = $2 
          AND EXTRACT(YEAR FROM created_at) = $3`,
       [userId, targetMonth, targetYear]
@@ -1327,46 +1341,47 @@ export async function getOnlineUsers(): Promise<Array<{ user_id: string; email: 
   
   // Get users from login_logs (most reliable indicator of online status)
   const loginResult = await queryDb(
-    `SELECT DISTINCT ON (u.id)
+    `SELECT 
        u.id as user_id,
        u.email,
        MAX(ll.created_at) as last_activity,
        'login' as activity_type
      FROM users u
-     INNER JOIN login_logs ll ON u.id = ll.user_id::uuid
+     INNER JOIN login_logs ll ON u.id = ll.user_id
      WHERE ll.created_at > $1
-     GROUP BY u.id, u.email
-     ORDER BY u.id, MAX(ll.created_at) DESC`,
+     GROUP BY u.id, u.email`,
     [tenMinutesAgo]
   )
   
   // Get users from download_logs
   const downloadResult = await queryDb(
-    `SELECT DISTINCT ON (u.id)
+    `SELECT 
        u.id as user_id,
        u.email,
        MAX(dl.created_at) as last_activity,
-       MAX(dl.action) as activity_type
+       (SELECT dl2.action FROM download_logs dl2 
+        WHERE dl2.user_id = u.id AND dl2.created_at = MAX(dl.created_at) 
+        LIMIT 1) as activity_type
      FROM users u
-     INNER JOIN download_logs dl ON u.id = dl.user_id::uuid
+     INNER JOIN download_logs dl ON u.id = dl.user_id
      WHERE dl.created_at > $1
-     GROUP BY u.id, u.email
-     ORDER BY u.id, MAX(dl.created_at) DESC`,
+     GROUP BY u.id, u.email`,
     [tenMinutesAgo]
   )
   
   // Get users from usage_logs
   const usageResult = await queryDb(
-    `SELECT DISTINCT ON (u.id)
+    `SELECT 
        u.id as user_id,
        u.email,
        MAX(ul.generated_at) as last_activity,
-       MAX(ul.section_type) as activity_type
+       (SELECT ul2.section_type FROM usage_logs ul2 
+        WHERE ul2.user_id = u.id AND ul2.generated_at = MAX(ul.generated_at) 
+        LIMIT 1) as activity_type
      FROM users u
-     INNER JOIN usage_logs ul ON u.id = ul.user_id::uuid
+     INNER JOIN usage_logs ul ON u.id = ul.user_id
      WHERE ul.generated_at > $1
-     GROUP BY u.id, u.email
-     ORDER BY u.id, MAX(ul.generated_at) DESC`,
+     GROUP BY u.id, u.email`,
     [tenMinutesAgo]
   )
   
@@ -1396,7 +1411,15 @@ export async function getOnlineUsers(): Promise<Array<{ user_id: string; email: 
   addToMap(downloadResult?.rows || [])
   addToMap(usageResult?.rows || [])
   
-  return Array.from(userMap.values()).sort((a, b) => b.last_activity.getTime() - a.last_activity.getTime())
+  const onlineUsers = Array.from(userMap.values()).sort((a, b) => b.last_activity.getTime() - a.last_activity.getTime())
+  
+  console.log(`[getOnlineUsers] Found ${onlineUsers.length} online users:`, onlineUsers.map(u => ({
+    email: u.email,
+    activity: u.activity_type,
+    time: u.last_activity.toISOString()
+  })))
+  
+  return onlineUsers
 }
 
 // Note: In production, replace all these functions with actual database queries

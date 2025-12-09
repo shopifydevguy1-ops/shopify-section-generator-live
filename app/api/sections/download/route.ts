@@ -133,6 +133,8 @@ export async function GET() {
       dbUser.is_admin
     )
 
+    console.log(`[download GET] User ${dbUser.email} (${dbUser.id}): count=${count}, limit=${limit}, allowed=${allowed}`)
+
     return NextResponse.json({
       count,
       limit: limit === Infinity ? null : limit,
