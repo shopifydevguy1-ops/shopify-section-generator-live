@@ -733,23 +733,28 @@ export async function getUserActivityStats(userId: string): Promise<{
   downloads: number
   total: number
 }> {
-  // Try to get from database first
+  // Check if database is available
+  const { getDbPool } = await import('./db-connection')
+  const dbPool = getDbPool()
+  const useDatabase = dbPool !== null
+  
+  // Try to get from database first if available
   const [generationsResult, copiesResult, downloadsResult] = await Promise.all([
     queryDb(
-      `SELECT COUNT(*) as count 
+      `SELECT COUNT(*)::bigint as count 
        FROM usage_logs 
        WHERE user_id = $1 
          AND section_type NOT IN ('copy', 'download')`,
       [userId]
     ),
     queryDb(
-      `SELECT COUNT(*) as count 
+      `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
        WHERE user_id = $1 AND action = 'copy'`,
       [userId]
     ),
     queryDb(
-      `SELECT COUNT(*) as count 
+      `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
        WHERE user_id = $1 AND action = 'download'`,
       [userId]
@@ -760,26 +765,41 @@ export async function getUserActivityStats(userId: string): Promise<{
   let copies = 0
   let downloads = 0
   
-  if (generationsResult && generationsResult.rows && generationsResult.rows.length > 0) {
-    generations = parseInt((generationsResult.rows[0] as any).count, 10)
+  // If database is available, we MUST use database results (don't fall back to memory)
+  // Only use in-memory fallback if database is not available
+  if (useDatabase) {
+    // Database is available - use database results only
+    if (generationsResult && generationsResult.rows && generationsResult.rows.length > 0) {
+      const count = generationsResult.rows[0].count
+      generations = typeof count === 'string' ? parseInt(count, 10) : Number(count)
+    }
+    
+    if (copiesResult && copiesResult.rows && copiesResult.rows.length > 0) {
+      const count = copiesResult.rows[0].count
+      copies = typeof count === 'string' ? parseInt(count, 10) : Number(count)
+    }
+    
+    if (downloadsResult && downloadsResult.rows && downloadsResult.rows.length > 0) {
+      const count = downloadsResult.rows[0].count
+      downloads = typeof count === 'string' ? parseInt(count, 10) : Number(count)
+    }
+    
+    // Log if database queries failed but database is available (this is an error)
+    if (!generationsResult || !copiesResult || !downloadsResult) {
+      console.error(`[getUserActivityStats] Database queries failed for user ${userId} but database is available!`, {
+        generationsResult: !!generationsResult,
+        copiesResult: !!copiesResult,
+        downloadsResult: !!downloadsResult
+      })
+    }
   } else {
-    // Fallback to in-memory
+    // Database not available - use in-memory fallback
     generations = usageLogs.filter(
       log => log.user_id === userId && log.section_type !== 'copy' && log.section_type !== 'download'
     ).length
-  }
-  
-  if (copiesResult && copiesResult.rows && copiesResult.rows.length > 0) {
-    copies = parseInt((copiesResult.rows[0] as any).count, 10)
-  } else {
-    // Fallback to in-memory
+    
     copies = downloadLogs.filter(log => log.user_id === userId && log.action === 'copy').length
-  }
-  
-  if (downloadsResult && downloadsResult.rows && downloadsResult.rows.length > 0) {
-    downloads = parseInt((downloadsResult.rows[0] as any).count, 10)
-  } else {
-    // Fallback to in-memory
+    
     downloads = downloadLogs.filter(log => log.user_id === userId && log.action === 'download').length
   }
   
@@ -789,7 +809,13 @@ export async function getUserActivityStats(userId: string): Promise<{
     copies,
     downloads,
     total: generations + copies + downloads,
-    source: (generationsResult || copiesResult || downloadsResult) ? 'database' : 'memory'
+    source: useDatabase ? 'database' : 'memory',
+    dbAvailable: useDatabase,
+    queryResults: {
+      generations: !!generationsResult,
+      copies: !!copiesResult,
+      downloads: !!downloadsResult
+    }
   })
   
   return {

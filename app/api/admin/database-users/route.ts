@@ -51,7 +51,30 @@ export async function GET() {
     // Get activity stats for all users
     const usersWithStats = await Promise.all(
       allUsers.map(async (user) => {
-        const activityStats = await getUserActivityStats(user.id)
+        let activityStats
+        try {
+          activityStats = await getUserActivityStats(user.id)
+        } catch (error: any) {
+          console.error(`[database-users API] Error getting stats for user ${user.id}:`, error)
+          // Return zero stats if there's an error
+          activityStats = {
+            generations: 0,
+            copies: 0,
+            downloads: 0,
+            total: 0
+          }
+        }
+        
+        // Ensure activityStats is always defined
+        if (!activityStats) {
+          activityStats = {
+            generations: 0,
+            copies: 0,
+            downloads: 0,
+            total: 0
+          }
+        }
+        
         const subscription = allSubscriptions.find(s => s.user_id === user.id)
         
         // Enhanced logging for debugging

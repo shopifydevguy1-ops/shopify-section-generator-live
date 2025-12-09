@@ -56,8 +56,19 @@ export function DatabaseUsersLegacyLive() {
 
       console.log(`[DatabaseUsersLegacyLive] Fetched ${data.users?.length || 0} users`)
       if (data.users && Array.isArray(data.users)) {
+        // Ensure all users have activityStats (defensive programming)
+        const usersWithStats = data.users.map((u: UserWithStats) => ({
+          ...u,
+          activityStats: u.activityStats || {
+            generations: 0,
+            copies: 0,
+            downloads: 0,
+            total: 0
+          }
+        }))
+        
         // Log users with activity for debugging
-        const usersWithActivity = data.users.filter((u: UserWithStats) => 
+        const usersWithActivity = usersWithStats.filter((u: UserWithStats) => 
           u.activityStats && (u.activityStats.total > 0 || u.activityStats.copies > 0 || u.activityStats.downloads > 0)
         )
         if (usersWithActivity.length > 0) {
@@ -67,7 +78,16 @@ export function DatabaseUsersLegacyLive() {
             stats: u.activityStats
           })))
         }
-        setUsers(data.users)
+        
+        // Log all stats for debugging
+        console.log('[DatabaseUsersLegacyLive] All user stats:', usersWithStats.map((u: UserWithStats) => ({
+          email: u.user.email,
+          generations: u.activityStats?.generations || 0,
+          copies: u.activityStats?.copies || 0,
+          downloads: u.activityStats?.downloads || 0
+        })))
+        
+        setUsers(usersWithStats)
       }
     } catch (error: any) {
       console.error("Error fetching database users:", error)
@@ -164,13 +184,13 @@ export function DatabaseUsersLegacyLive() {
                     {new Date(user.created_at).toLocaleDateString()}
                   </td>
                   <td className="p-2">
-                    <span className="font-medium">{activityStats.generations}</span>
+                    <span className="font-medium">{activityStats?.generations ?? 0}</span>
                   </td>
                   <td className="p-2">
-                    <span className="font-medium">{activityStats.copies}</span>
+                    <span className="font-medium">{activityStats?.copies ?? 0}</span>
                   </td>
                   <td className="p-2">
-                    <span className="font-medium">{activityStats.downloads}</span>
+                    <span className="font-medium">{activityStats?.downloads ?? 0}</span>
                   </td>
                 </tr>
               ))}
