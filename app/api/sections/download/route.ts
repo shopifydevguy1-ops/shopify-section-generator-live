@@ -67,11 +67,25 @@ export async function POST(request: Request) {
       )
     }
 
+    console.log(`[download API] Starting ${action} for user ${dbUser.id} (${dbUser.email}), sectionId: ${sectionId}`)
+    
     // Log the download/copy action (for download/copy limit tracking)
-    await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
+    try {
+      await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
+      console.log(`[download API] ✅ logDownloadOrCopy completed for ${action}`)
+    } catch (error: any) {
+      console.error(`[download API] ❌ logDownloadOrCopy failed: ${error.message}`, error)
+      // Don't fail the request, but log the error
+    }
     
     // Also log as usage for monthly limit tracking (so it syncs with dashboard)
-    await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download', ipAddress)
+    try {
+      await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download', ipAddress)
+      console.log(`[download API] ✅ logUsage completed for ${action}`)
+    } catch (error: any) {
+      console.error(`[download API] ❌ logUsage failed: ${error.message}`, error)
+      // Don't fail the request, but log the error
+    }
 
     // Get fresh stats after logging to ensure accurate count
     const now = new Date()
@@ -82,6 +96,26 @@ export async function POST(request: Request) {
     const freshRemaining = limit === Infinity ? null : Math.max(0, limit - freshCount)
 
     console.log(`[download API] After ${action}: user ${dbUser.id}, freshCount=${freshCount}, limit=${limit}, remaining=${freshRemaining}`)
+    
+    // Verify the data was written by checking the database
+    try {
+      const { queryDb } = await import("@/lib/db-connection")
+      const verifyResult = await queryDb(
+        `SELECT COUNT(*) as count FROM download_logs WHERE user_id = $1 AND action = $2 AND created_at > NOW() - INTERVAL '1 minute'`,
+        [dbUser.id, action]
+      )
+      if (verifyResult && verifyResult.rows && verifyResult.rows.length > 0) {
+        const recentCount = parseInt(verifyResult.rows[0].count, 10) || 0
+        console.log(`[download API] ✅ Verification: Found ${recentCount} recent ${action} record(s) for user ${dbUser.id}`)
+        if (recentCount === 0) {
+          console.error(`[download API] ⚠️ WARNING: No recent ${action} records found in database! Data may not have been saved.`)
+        }
+      } else {
+        console.error(`[download API] ⚠️ WARNING: Verification query returned no results!`)
+      }
+    } catch (error: any) {
+      console.error(`[download API] ❌ Verification query failed: ${error.message}`)
+    }
 
     return NextResponse.json({
       success: true,

@@ -724,22 +724,39 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
   
   // Try to save to database first
   // PostgreSQL will automatically cast string UUIDs to UUID type
-  const dbResult = await queryDb(
-    `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [logId, userId, sectionType, now, month, year, ipAddress || null]
-  )
+  try {
+    const dbResult = await queryDb(
+      `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [logId, userId, sectionType, now, month, year, ipAddress || null]
+    )
+    
+    if (dbResult) {
+      console.log(`[logUsage] ✅ Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+    } else {
+      console.error(`[logUsage] ❌ Database query returned null: user ${userId}, sectionType: ${sectionType}`)
+      console.error(`[logUsage] UserId: ${userId}, LogId: ${logId}`)
+    }
+  } catch (error: any) {
+    console.error(`[logUsage] ❌ Database insert error: ${error.message}`, error)
+    console.error(`[logUsage] Error details: user ${userId}, sectionType: ${sectionType}`)
+  }
   
   // Always keep in-memory for backward compatibility and as fallback
   usageLogs.push(log)
   
-  if (dbResult) {
-    console.log(`[logUsage] Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}`)
-  } else {
-    console.error(`[logUsage] Failed to save to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}`)
-    console.error(`[logUsage] UserId type: ${typeof userId}, value: ${userId}`)
-    console.error(`[logUsage] LogId type: ${typeof logId}, value: ${logId}`)
-    console.log(`[logUsage] Saved to memory only, total logs: ${usageLogs.length}`)
+  // Verify the insert by querying back
+  try {
+    const verifyResult = await queryDb(
+      `SELECT COUNT(*) as count FROM usage_logs WHERE user_id = $1 AND section_type = $2 AND month = $3 AND year = $4`,
+      [userId, sectionType, month, year]
+    )
+    if (verifyResult && verifyResult.rows && verifyResult.rows.length > 0) {
+      const count = parseInt(verifyResult.rows[0].count, 10) || 0
+      console.log(`[logUsage] Verification: Found ${count} record(s) for user ${userId}, sectionType: ${sectionType}, month: ${month}, year: ${year}`)
+    }
+  } catch (error: any) {
+    console.error(`[logUsage] Verification query failed: ${error.message}`)
   }
 }
 
@@ -1294,26 +1311,39 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
   
   // Try to save to database first
   // PostgreSQL will automatically cast string UUIDs to UUID type
-  const dbResult = await queryDb(
-    `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
-     VALUES ($1, $2, $3, $4, $5, $6)`,
-    [logId, userId, sectionId, action, now, ipAddress || null]
-  )
-  
-  // Log detailed error information if insert failed
-  if (!dbResult) {
-    console.error(`[logDownloadOrCopy] Failed to save to database: ${action} for user ${userId}, sectionId: ${sectionId}`)
-    console.error(`[logDownloadOrCopy] UserId type: ${typeof userId}, value: ${userId}`)
-    console.error(`[logDownloadOrCopy] LogId type: ${typeof logId}, value: ${logId}`)
+  try {
+    const dbResult = await queryDb(
+      `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [logId, userId, sectionId, action, now, ipAddress || null]
+    )
+    
+    if (dbResult) {
+      console.log(`[logDownloadOrCopy] ✅ Saved to database: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+    } else {
+      console.error(`[logDownloadOrCopy] ❌ Database query returned null: ${action} for user ${userId}, sectionId: ${sectionId}`)
+      console.error(`[logDownloadOrCopy] UserId: ${userId}, LogId: ${logId}`)
+    }
+  } catch (error: any) {
+    console.error(`[logDownloadOrCopy] ❌ Database insert error: ${error.message}`, error)
+    console.error(`[logDownloadOrCopy] Error details: ${action} for user ${userId}, sectionId: ${sectionId}`)
   }
   
   // Always keep in-memory for backward compatibility and as fallback
   downloadLogs.push(log)
   
-  if (dbResult) {
-    console.log(`[logDownloadOrCopy] Saved to database: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}`)
-  } else {
-    console.log(`[logDownloadOrCopy] Saved to memory only: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, total downloadLogs: ${downloadLogs.length}`)
+  // Verify the insert by querying back
+  try {
+    const verifyResult = await queryDb(
+      `SELECT COUNT(*) as count FROM download_logs WHERE user_id = $1 AND section_id = $2 AND action = $3`,
+      [userId, sectionId, action]
+    )
+    if (verifyResult && verifyResult.rows && verifyResult.rows.length > 0) {
+      const count = parseInt(verifyResult.rows[0].count, 10) || 0
+      console.log(`[logDownloadOrCopy] Verification: Found ${count} record(s) for user ${userId}, sectionId: ${sectionId}, action: ${action}`)
+    }
+  } catch (error: any) {
+    console.error(`[logDownloadOrCopy] Verification query failed: ${error.message}`)
   }
 }
 
