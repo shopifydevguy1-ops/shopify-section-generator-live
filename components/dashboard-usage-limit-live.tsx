@@ -14,6 +14,20 @@ interface UsageStats {
   plan: string
   isAdmin: boolean
   reason?: string
+  trialInfo?: {
+    isInTrial: boolean
+    daysRemaining: number
+    copiesUsed: number
+    copiesLimit: number
+  }
+  trialExpirationInfo?: {
+    isInTrial: boolean
+    daysRemaining: number
+    trialExpiresAt: string | null
+    copiesUsed: number
+    copiesLimit: number
+    hasActiveSubscription: boolean
+  }
 }
 
 interface DashboardUsageLimitLiveProps {
@@ -47,7 +61,9 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
           allowed: data.allowed,
           plan: data.plan,
           isAdmin: data.isAdmin,
-          reason: data.reason
+          reason: data.reason,
+          trialInfo: data.trialInfo,
+          trialExpirationInfo: data.trialExpirationInfo
         }
         setUsageStats(stats)
         console.log('[DashboardUsageLimitLive] Fetched usage stats:', stats)
@@ -101,6 +117,60 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
           </div>
         ) : (
           <div className="space-y-4">
+            {/* Trial Expiration Warning */}
+            {usageStats?.trialExpirationInfo?.isInTrial && (
+              <div className={`p-4 rounded-md border-2 ${
+                usageStats.trialExpirationInfo.daysRemaining <= 3 || 
+                usageStats.trialExpirationInfo.copiesUsed >= usageStats.trialExpirationInfo.copiesLimit
+                  ? 'bg-destructive/20 border-destructive animate-pulse'
+                  : usageStats.trialExpirationInfo.daysRemaining <= 7 || 
+                    usageStats.trialExpirationInfo.copiesUsed >= usageStats.trialExpirationInfo.copiesLimit * 0.8
+                  ? 'bg-yellow-500/20 border-yellow-500'
+                  : 'bg-blue-500/10 border-blue-500'
+              }`}>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <p className="text-sm font-bold mb-1">
+                      {usageStats.trialExpirationInfo.daysRemaining <= 3
+                        ? `🚨 Trial expires in ${usageStats.trialExpirationInfo.daysRemaining} day${usageStats.trialExpirationInfo.daysRemaining !== 1 ? 's' : ''}!`
+                        : usageStats.trialExpirationInfo.daysRemaining <= 7
+                        ? `⚠️ Trial expires in ${usageStats.trialExpirationInfo.daysRemaining} days`
+                        : `Free Trial Active: ${usageStats.trialExpirationInfo.daysRemaining} days remaining`}
+                    </p>
+                    <p className="text-xs opacity-90 mb-2">
+                      Copies used: {usageStats.trialExpirationInfo.copiesUsed} / {usageStats.trialExpirationInfo.copiesLimit}
+                      {usageStats.trialExpirationInfo.trialExpiresAt && (
+                        <span className="block mt-1">
+                          Expires: {new Date(usageStats.trialExpirationInfo.trialExpiresAt).toLocaleDateString()}
+                        </span>
+                      )}
+                    </p>
+                    {(usageStats.trialExpirationInfo.daysRemaining <= 7 || 
+                      usageStats.trialExpirationInfo.copiesUsed >= usageStats.trialExpirationInfo.copiesLimit * 0.8) && (
+                      <Link href="/api/checkout" className="block mt-2">
+                        <Button size="sm" variant={usageStats.trialExpirationInfo.daysRemaining <= 3 ? "destructive" : "default"}>
+                          Subscribe Now to Continue
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Trial Expired Warning */}
+            {usageStats?.trialExpirationInfo && !usageStats.trialExpirationInfo.isInTrial && !usageStats.trialExpirationInfo.hasActiveSubscription && (
+              <div className="p-4 bg-destructive/20 border-2 border-destructive rounded-md">
+                <p className="text-sm font-bold mb-2">🚨 Your Free Trial Has Expired</p>
+                <p className="text-xs opacity-90 mb-3">
+                  Your trial period has ended. Subscribe to Pro to continue using the service with 50 copies/downloads per month.
+                </p>
+                <Link href="/api/checkout" className="block">
+                  <Button size="sm" variant="destructive" className="w-full">Subscribe to Pro Now</Button>
+                </Link>
+              </div>
+            )}
+
             <div className="flex justify-between text-sm">
               <span>Used</span>
               <span className="flex items-center gap-2">

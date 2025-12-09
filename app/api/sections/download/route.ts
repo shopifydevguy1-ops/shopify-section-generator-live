@@ -127,13 +127,25 @@ export async function GET() {
     }
 
     // Get download/copy stats
-    const { allowed, count, limit, reason } = await canDownloadOrCopy(
+    const { allowed, count, limit, reason, trialInfo } = await canDownloadOrCopy(
       dbUser.id,
       dbUser.plan,
       dbUser.is_admin
     )
 
     console.log(`[download GET] User ${dbUser.email} (${dbUser.id}): count=${count}, limit=${limit}, allowed=${allowed}`)
+
+    // Get trial expiration info for pro users
+    let trialExpirationInfo = null
+    if (dbUser.plan === 'pro' && !dbUser.is_admin) {
+      const { getTrialExpirationInfo } = await import("@/lib/db")
+      const trialInfoData = await getTrialExpirationInfo(dbUser.id)
+      // Serialize dates for JSON response
+      trialExpirationInfo = {
+        ...trialInfoData,
+        trialExpiresAt: trialInfoData.trialExpiresAt ? trialInfoData.trialExpiresAt.toISOString() : null
+      }
+    }
 
     return NextResponse.json({
       count,
@@ -142,7 +154,9 @@ export async function GET() {
       allowed,
       plan: dbUser.plan,
       isAdmin: dbUser.is_admin,
-      reason: reason || undefined
+      reason: reason || undefined,
+      trialInfo: trialInfo || undefined,
+      trialExpirationInfo: trialExpirationInfo || undefined
     })
   } catch (error: any) {
     console.error("Error getting download stats:", error)

@@ -279,6 +279,33 @@ export function updateSupportRequestStatus(requestId: string, status: 'open' | '
 }
 
 export async function getUserById(userId: string): Promise<User | null> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, clerk_id, email, plan, is_admin, created_at, updated_at 
+     FROM users 
+     WHERE id = $1 
+     LIMIT 1`,
+    [userId]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    const user: User = {
+      id: row.id,
+      clerk_id: row.clerk_id,
+      email: row.email,
+      plan: row.plan,
+      is_admin: row.is_admin,
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+    }
+    
+    // Update in-memory cache
+    users.set(user.id, user)
+    return user
+  }
+  
+  // Fallback to in-memory
   return users.get(userId) || null
 }
 
@@ -1044,7 +1071,75 @@ export async function isUserInFirstMonth(userId: string): Promise<boolean> {
   return isInFirstMonth
 }
 
-export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | 'expert', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string }> {
+// Get trial expiration information for pro users
+export async function getTrialExpirationInfo(userId: string): Promise<{
+  isInTrial: boolean
+  daysRemaining: number
+  trialExpiresAt: Date | null
+  copiesUsed: number
+  copiesLimit: number
+  hasActiveSubscription: boolean
+}> {
+  const user = await getUserById(userId)
+  if (!user) {
+    return {
+      isInTrial: false,
+      daysRemaining: 0,
+      trialExpiresAt: null,
+      copiesUsed: 0,
+      copiesLimit: 0,
+      hasActiveSubscription: false
+    }
+  }
+
+  const inFirstMonth = await isUserInFirstMonth(userId)
+  const subscription = await getSubscriptionByUserId(userId)
+  const hasActiveSubscription = subscription?.status === 'active'
+  
+  // If user has active subscription, they're not in trial
+  if (hasActiveSubscription) {
+    return {
+      isInTrial: false,
+      daysRemaining: 0,
+      trialExpiresAt: null,
+      copiesUsed: 0,
+      copiesLimit: 0,
+      hasActiveSubscription: true
+    }
+  }
+
+  // Calculate trial expiration
+  const now = new Date()
+  const createdAt = new Date(user.created_at)
+  const trialDuration = 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
+  const trialExpiresAt = new Date(createdAt.getTime() + trialDuration)
+  const daysRemaining = Math.max(0, Math.ceil((trialExpiresAt.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)))
+  
+  // Get total copies used (not just this month, but all time for trial)
+  const allCopiesResult = await queryDb(
+    `SELECT COUNT(*) as count 
+     FROM download_logs 
+     WHERE user_id = $1 AND action = 'copy'`,
+    [userId]
+  )
+  
+  const copiesUsed = allCopiesResult && allCopiesResult.rows && allCopiesResult.rows.length > 0
+    ? parseInt(allCopiesResult.rows[0].count, 10) || 0
+    : 0
+  
+  const copiesLimit = 20 // Trial limit is 20 copies
+  
+  return {
+    isInTrial: inFirstMonth && !hasActiveSubscription,
+    daysRemaining,
+    trialExpiresAt: inFirstMonth ? trialExpiresAt : null,
+    copiesUsed,
+    copiesLimit,
+    hasActiveSubscription: false
+  }
+}
+
+export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | 'expert', isAdmin: boolean, ipAddress?: string): Promise<{ allowed: boolean; count: number; limit: number; reason?: string; trialInfo?: { isInTrial: boolean; daysRemaining: number; copiesUsed: number; copiesLimit: number } }> {
   // Expert users and admins have unlimited downloads
   if (plan === 'expert' || isAdmin) {
     return { allowed: true, count: 0, limit: Infinity }
@@ -1066,18 +1161,66 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
     
     console.log(`[canDownloadOrCopy] User ${userId} (plan: ${plan}): inFirstMonth=${inFirstMonth}, hasActiveSubscription=${hasActiveSubscription}, userCount=${userCount}`)
     
-    // If in first month trial, allow 20 downloads/copies
+    // If in first month trial, allow 20 downloads/copies total (not per month)
     if (inFirstMonth && !hasActiveSubscription) {
+      // Get total copies used (all time, not just this month)
+      const allCopiesResult = await queryDb(
+        `SELECT COUNT(*) as count 
+         FROM download_logs 
+         WHERE user_id = $1 AND action = 'copy'`,
+        [userId]
+      )
+      
+      const totalCopiesUsed = allCopiesResult && allCopiesResult.rows && allCopiesResult.rows.length > 0
+        ? parseInt(allCopiesResult.rows[0].count, 10) || 0
+        : 0
+      
       const trialLimit = 20
-      if (userCount >= trialLimit) {
+      const trialInfo = await getTrialExpirationInfo(userId)
+      
+      // Check if trial expired by date
+      if (trialInfo.daysRemaining <= 0 && !trialInfo.isInTrial) {
         return { 
           allowed: false, 
-          count: userCount, 
-          limit: trialLimit, 
-          reason: "You've used your 20 free sections for this month. Subscribe to Pro to continue with 50 copies/downloads per month, or upgrade to Expert for unlimited access." 
+          count: totalCopiesUsed, 
+          limit: 0, 
+          reason: "Your free trial has expired. Please subscribe to Pro to continue using the service. You can still search/browse unlimited sections.",
+          trialInfo: {
+            isInTrial: false,
+            daysRemaining: 0,
+            copiesUsed: totalCopiesUsed,
+            copiesLimit: trialLimit
+          }
         }
       }
-      return { allowed: true, count: userCount, limit: trialLimit }
+      
+      // Check if trial expired by copy limit
+      if (totalCopiesUsed >= trialLimit) {
+        return { 
+          allowed: false, 
+          count: totalCopiesUsed, 
+          limit: trialLimit, 
+          reason: `You've used all ${trialLimit} free copies. Subscribe to Pro to continue with 50 copies/downloads per month, or upgrade to Expert for unlimited access.`,
+          trialInfo: {
+            isInTrial: true,
+            daysRemaining: trialInfo.daysRemaining,
+            copiesUsed: totalCopiesUsed,
+            copiesLimit: trialLimit
+          }
+        }
+      }
+      
+      return { 
+        allowed: true, 
+        count: totalCopiesUsed, 
+        limit: trialLimit,
+        trialInfo: {
+          isInTrial: true,
+          daysRemaining: trialInfo.daysRemaining,
+          copiesUsed: totalCopiesUsed,
+          copiesLimit: trialLimit
+        }
+      }
     }
     
     // After first month, require active subscription
