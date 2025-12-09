@@ -30,7 +30,7 @@ export async function POST(
     }
 
     // Get the support request
-    const supportRequest = getSupportRequestById(requestId)
+    const supportRequest = await getSupportRequestById(requestId)
     if (!supportRequest) {
       return NextResponse.json(
         { error: "Support request not found" },
@@ -73,28 +73,31 @@ export async function POST(
     }
 
     // Create reply
-    const reply = {
+    const reply = await addSupportReply({
       id: crypto.randomUUID(),
       support_request_id: requestId,
       message: message.trim(),
       from_admin: isAdmin,
-      created_at: new Date(),
       admin_email: isAdmin ? user.emailAddresses[0]?.emailAddress : undefined,
-    }
-
-    addSupportReply(reply)
+    })
 
     // Update status if provided
-    if (status && ['open', 'closed', 'in_progress'].includes(status)) {
-      updateSupportRequestStatus(requestId, status as 'open' | 'closed' | 'in_progress')
+    if (status && ['open', 'closed', 'pending', 'in_progress'].includes(status)) {
+      await updateSupportRequestStatus(requestId, status as 'open' | 'closed' | 'pending' | 'in_progress')
     }
 
     console.log(`[Support Reply] ${isAdmin ? 'Admin' : 'User'} replied to request ${requestId}`)
 
+    // Serialize dates for JSON response
+    const serializedReply = {
+      ...reply,
+      created_at: reply.created_at.toISOString(),
+    }
+
     return NextResponse.json({
       success: true,
       message: "Reply added successfully",
-      reply,
+      reply: serializedReply,
     })
   } catch (error: any) {
     console.error("Error adding support reply:", error)

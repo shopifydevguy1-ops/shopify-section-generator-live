@@ -9,8 +9,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { Mail, Send, Loader2 } from "lucide-react"
+import { Mail, Send, Loader2, AlertCircle } from "lucide-react"
 
 export default function SupportPage() {
   const { user, isLoaded } = useUser()
@@ -20,6 +27,8 @@ export default function SupportPage() {
   const [formData, setFormData] = useState({
     subject: "",
     message: "",
+    category: "Error" as "Error" | "Custom Section" | "Suggestion",
+    urgency: "medium" as "low" | "medium" | "high" | "critical",
   })
 
   if (!isLoaded) {
@@ -49,6 +58,8 @@ export default function SupportPage() {
         body: JSON.stringify({
           subject: formData.subject,
           message: formData.message,
+          category: formData.category,
+          urgency: formData.urgency,
         }),
       })
 
@@ -64,7 +75,7 @@ export default function SupportPage() {
       })
 
       // Reset form
-      setFormData({ subject: "", message: "" })
+      setFormData({ subject: "", message: "", category: "Error", urgency: "medium" })
     } catch (error: any) {
       toast({
         title: "Error",
@@ -125,6 +136,47 @@ export default function SupportPage() {
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     required
                   />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Category *</Label>
+                    <Select
+                      value={formData.category}
+                      onValueChange={(value: "Error" | "Custom Section" | "Suggestion") =>
+                        setFormData({ ...formData, category: value })
+                      }
+                    >
+                      <SelectTrigger id="category">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Error">Error</SelectItem>
+                        <SelectItem value="Custom Section">Custom Section</SelectItem>
+                        <SelectItem value="Suggestion">Suggestion</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="urgency">Urgency Level *</Label>
+                    <Select
+                      value={formData.urgency}
+                      onValueChange={(value: "low" | "medium" | "high" | "critical") =>
+                        setFormData({ ...formData, urgency: value })
+                      }
+                    >
+                      <SelectTrigger id="urgency">
+                        <SelectValue placeholder="Select urgency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="critical">Critical</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
                 <div className="space-y-2">

@@ -39,8 +39,11 @@ interface SupportRequest {
   email: string
   subject: string
   message: string
+  category: 'Error' | 'Custom Section' | 'Suggestion'
+  urgency: 'low' | 'medium' | 'high' | 'critical'
+  status: 'open' | 'closed' | 'pending' | 'in_progress'
   created_at: string
-  status: 'open' | 'closed' | 'in_progress'
+  updated_at: string
   replies?: SupportReply[]
 }
 
@@ -59,7 +62,7 @@ export function SupportTicketModal({
 }: SupportTicketModalProps) {
   const { toast } = useToast()
   const [replyMessage, setReplyMessage] = useState("")
-  const [status, setStatus] = useState<'open' | 'closed' | 'in_progress'>('open')
+  const [status, setStatus] = useState<'open' | 'closed' | 'pending' | 'in_progress'>('open')
   const [sending, setSending] = useState(false)
   const [fullRequest, setFullRequest] = useState<SupportRequest | null>(request)
 
@@ -142,17 +145,45 @@ export function SupportTicketModal({
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle>{fullRequest.subject}</DialogTitle>
-            <Badge
-              variant={
-                fullRequest.status === 'open'
-                  ? 'default'
-                  : fullRequest.status === 'in_progress'
-                  ? 'secondary'
-                  : 'outline'
-              }
-            >
-              {fullRequest.status}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={
+                  fullRequest.status === 'open'
+                    ? 'default'
+                    : fullRequest.status === 'pending'
+                    ? 'secondary'
+                    : fullRequest.status === 'in_progress'
+                    ? 'secondary'
+                    : 'outline'
+                }
+              >
+                {fullRequest.status}
+              </Badge>
+              <Badge
+                variant={
+                  fullRequest.category === 'Error'
+                    ? 'destructive'
+                    : fullRequest.category === 'Custom Section'
+                    ? 'default'
+                    : 'secondary'
+                }
+              >
+                {fullRequest.category}
+              </Badge>
+              <Badge
+                variant={
+                  fullRequest.urgency === 'critical'
+                    ? 'destructive'
+                    : fullRequest.urgency === 'high'
+                    ? 'default'
+                    : fullRequest.urgency === 'medium'
+                    ? 'secondary'
+                    : 'outline'
+                }
+              >
+                {fullRequest.urgency}
+              </Badge>
+            </div>
           </div>
           <DialogDescription>
             From: {fullRequest.email} • {new Date(fullRequest.created_at).toLocaleString()}
@@ -210,6 +241,7 @@ export function SupportTicketModal({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="open">Open</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
                   <SelectItem value="in_progress">In Progress</SelectItem>
                   <SelectItem value="closed">Closed</SelectItem>
                 </SelectContent>

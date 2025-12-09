@@ -250,47 +250,294 @@ export interface SupportRequest {
   email: string
   subject: string
   message: string
+  category: 'Error' | 'Custom Section' | 'Suggestion'
+  urgency: 'low' | 'medium' | 'high' | 'critical'
+  status: 'open' | 'closed' | 'pending' | 'in_progress'
   created_at: Date
-  status: 'open' | 'closed' | 'in_progress'
+  updated_at: Date
   replies?: SupportReply[]
 }
 
-let supportRequests: SupportRequest[] = []
-
-export function getAllSupportRequests(): SupportRequest[] {
-  return [...supportRequests]
+// Get all support requests (admin only)
+export async function getAllSupportRequests(): Promise<SupportRequest[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, clerk_id, email, subject, message, category, urgency, status, created_at, updated_at
+     FROM support_requests
+     ORDER BY created_at DESC`
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const requests = await Promise.all(
+      dbResult.rows.map(async (row: any) => {
+        // Get replies for each request
+        const repliesResult = await queryDb(
+          `SELECT id, support_request_id, message, from_admin, admin_email, created_at
+           FROM support_replies
+           WHERE support_request_id = $1
+           ORDER BY created_at ASC`,
+          [row.id]
+        )
+        
+        const replies: SupportReply[] = repliesResult && repliesResult.rows
+          ? repliesResult.rows.map((r: any) => ({
+              id: r.id,
+              support_request_id: r.support_request_id,
+              message: r.message,
+              from_admin: r.from_admin,
+              admin_email: r.admin_email || undefined,
+              created_at: new Date(r.created_at),
+            }))
+          : []
+        
+        return {
+          id: row.id,
+          user_id: row.user_id,
+          clerk_id: row.clerk_id,
+          email: row.email,
+          subject: row.subject,
+          message: row.message,
+          category: row.category,
+          urgency: row.urgency,
+          status: row.status,
+          created_at: new Date(row.created_at),
+          updated_at: new Date(row.updated_at),
+          replies,
+        }
+      })
+    )
+    
+    console.log(`[getAllSupportRequests] Loaded ${requests.length} support requests from database`)
+    return requests
+  }
+  
+  console.log(`[getAllSupportRequests] No support requests found in database`)
+  return []
 }
 
-export function addSupportRequest(request: SupportRequest): void {
-  supportRequests.push({ ...request, replies: [] })
-}
-
-export function getSupportRequestById(requestId: string): SupportRequest | null {
-  return supportRequests.find(r => r.id === requestId) || null
-}
-
-export function getSupportRequestsByUserId(userId: string): SupportRequest[] {
-  return supportRequests.filter(r => r.user_id === userId)
-}
-
-export function addSupportReply(reply: SupportReply): void {
-  const request = supportRequests.find(r => r.id === reply.support_request_id)
-  if (request) {
-    if (!request.replies) {
-      request.replies = []
+// Add support request
+export async function addSupportRequest(request: Omit<SupportRequest, 'replies' | 'updated_at'>): Promise<SupportRequest> {
+  const requestId = request.id || crypto.randomUUID()
+  const now = new Date()
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO support_requests (id, user_id, clerk_id, email, subject, message, category, urgency, status, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+     RETURNING id, created_at, updated_at`,
+    [
+      requestId,
+      request.user_id,
+      request.clerk_id,
+      request.email,
+      request.subject,
+      request.message,
+      request.category || 'Error',
+      request.urgency || 'medium',
+      request.status || 'open',
+      now,
+      now,
+    ]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    console.log(`[addSupportRequest] Saved to database: request ${requestId}, category: ${request.category}, urgency: ${request.urgency}`)
+    return {
+      ...request,
+      id: row.id,
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+      replies: [],
     }
-    request.replies.push(reply)
-    // Update status if admin replied
-    if (reply.from_admin && request.status === 'open') {
-      request.status = 'in_progress'
-    }
+  }
+  
+  console.warn(`[addSupportRequest] Failed to save to database, using in-memory only`)
+  return {
+    ...request,
+    id: requestId,
+    created_at: now,
+    updated_at: now,
+    replies: [],
   }
 }
 
-export function updateSupportRequestStatus(requestId: string, status: 'open' | 'closed' | 'in_progress'): void {
-  const request = supportRequests.find(r => r.id === requestId)
-  if (request) {
-    request.status = status
+// Get support request by ID
+export async function getSupportRequestById(requestId: string): Promise<SupportRequest | null> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, clerk_id, email, subject, message, category, urgency, status, created_at, updated_at
+     FROM support_requests
+     WHERE id = $1`,
+    [requestId]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    
+    // Get replies
+    const repliesResult = await queryDb(
+      `SELECT id, support_request_id, message, from_admin, admin_email, created_at
+       FROM support_replies
+       WHERE support_request_id = $1
+       ORDER BY created_at ASC`,
+      [requestId]
+    )
+    
+    const replies: SupportReply[] = repliesResult && repliesResult.rows
+      ? repliesResult.rows.map((r: any) => ({
+          id: r.id,
+          support_request_id: r.support_request_id,
+          message: r.message,
+          from_admin: r.from_admin,
+          admin_email: r.admin_email || undefined,
+          created_at: new Date(r.created_at),
+        }))
+      : []
+    
+    return {
+      id: row.id,
+      user_id: row.user_id,
+      clerk_id: row.clerk_id,
+      email: row.email,
+      subject: row.subject,
+      message: row.message,
+      category: row.category,
+      urgency: row.urgency,
+      status: row.status,
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+      replies,
+    }
+  }
+  
+  return null
+}
+
+// Get support requests by user ID
+export async function getSupportRequestsByUserId(userId: string): Promise<SupportRequest[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, clerk_id, email, subject, message, category, urgency, status, created_at, updated_at
+     FROM support_requests
+     WHERE user_id = $1
+     ORDER BY created_at DESC`,
+    [userId]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const requests = await Promise.all(
+      dbResult.rows.map(async (row: any) => {
+        // Get replies for each request
+        const repliesResult = await queryDb(
+          `SELECT id, support_request_id, message, from_admin, admin_email, created_at
+           FROM support_replies
+           WHERE support_request_id = $1
+           ORDER BY created_at ASC`,
+          [row.id]
+        )
+        
+        const replies: SupportReply[] = repliesResult && repliesResult.rows
+          ? repliesResult.rows.map((r: any) => ({
+              id: r.id,
+              support_request_id: r.support_request_id,
+              message: r.message,
+              from_admin: r.from_admin,
+              admin_email: r.admin_email || undefined,
+              created_at: new Date(r.created_at),
+            }))
+          : []
+        
+        return {
+          id: row.id,
+          user_id: row.user_id,
+          clerk_id: row.clerk_id,
+          email: row.email,
+          subject: row.subject,
+          message: row.message,
+          category: row.category,
+          urgency: row.urgency,
+          status: row.status,
+          created_at: new Date(row.created_at),
+          updated_at: new Date(row.updated_at),
+          replies,
+        }
+      })
+    )
+    
+    console.log(`[getSupportRequestsByUserId] Loaded ${requests.length} support requests for user ${userId}`)
+    return requests
+  }
+  
+  return []
+}
+
+// Add support reply
+export async function addSupportReply(reply: Omit<SupportReply, 'created_at'>): Promise<SupportReply> {
+  const replyId = reply.id || crypto.randomUUID()
+  const now = new Date()
+  
+  // Try to save to database first
+  const dbResult = await queryDb(
+    `INSERT INTO support_replies (id, support_request_id, message, from_admin, admin_email, created_at)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING id, created_at`,
+    [
+      replyId,
+      reply.support_request_id,
+      reply.message,
+      reply.from_admin,
+      reply.admin_email || null,
+      now,
+    ]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    console.log(`[addSupportReply] Saved to database: reply ${replyId}, from_admin: ${reply.from_admin}`)
+    
+    // Update request status if admin replied
+    if (reply.from_admin) {
+      const request = await getSupportRequestById(reply.support_request_id)
+      if (request && request.status === 'open') {
+        await updateSupportRequestStatus(reply.support_request_id, 'in_progress')
+      }
+    }
+    
+    return {
+      ...reply,
+      id: row.id,
+      created_at: new Date(row.created_at),
+    }
+  }
+  
+  console.warn(`[addSupportReply] Failed to save to database`)
+  return {
+    ...reply,
+    id: replyId,
+    created_at: now,
+  }
+}
+
+// Update support request status
+export async function updateSupportRequestStatus(
+  requestId: string,
+  status: 'open' | 'closed' | 'pending' | 'in_progress'
+): Promise<void> {
+  const now = new Date()
+  
+  // Try to update in database
+  const dbResult = await queryDb(
+    `UPDATE support_requests
+     SET status = $1, updated_at = $2
+     WHERE id = $3`,
+    [status, now, requestId]
+  )
+  
+  if (dbResult) {
+    console.log(`[updateSupportRequestStatus] Updated request ${requestId} to status: ${status}`)
+  } else {
+    console.warn(`[updateSupportRequestStatus] Failed to update request ${requestId} in database`)
   }
 }
 

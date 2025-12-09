@@ -33,8 +33,11 @@ interface SupportRequest {
   email: string
   subject: string
   message: string
+  category: 'Error' | 'Custom Section' | 'Suggestion'
+  urgency: 'low' | 'medium' | 'high' | 'critical'
+  status: 'open' | 'closed' | 'pending' | 'in_progress'
   created_at: string
-  status: 'open' | 'closed' | 'in_progress'
+  updated_at: string
   replies?: SupportReply[]
 }
 
@@ -170,18 +173,46 @@ export function UserMessages() {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <h4 className="font-semibold">{request.subject}</h4>
                         <Badge
                           variant={
                             request.status === 'open'
                               ? 'default'
+                              : request.status === 'pending'
+                              ? 'secondary'
                               : request.status === 'in_progress'
                               ? 'secondary'
                               : 'outline'
                           }
                         >
                           {request.status}
+                        </Badge>
+                        <Badge
+                          variant={
+                            request.category === 'Error'
+                              ? 'destructive'
+                              : request.category === 'Custom Section'
+                              ? 'default'
+                              : 'secondary'
+                          }
+                          className="text-xs"
+                        >
+                          {request.category}
+                        </Badge>
+                        <Badge
+                          variant={
+                            request.urgency === 'critical'
+                              ? 'destructive'
+                              : request.urgency === 'high'
+                              ? 'default'
+                              : request.urgency === 'medium'
+                              ? 'secondary'
+                              : 'outline'
+                          }
+                          className="text-xs"
+                        >
+                          {request.urgency}
                         </Badge>
                         {request.replies && request.replies.length > 0 && (
                           <Badge variant="outline" className="text-xs">

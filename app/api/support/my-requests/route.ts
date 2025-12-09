@@ -25,14 +25,22 @@ export async function GET() {
     }
 
     // Get user's support requests
-    const requests = getSupportRequestsByUserId(dbUser.id)
-    const sortedRequests = requests.sort(
-      (a, b) => b.created_at.getTime() - a.created_at.getTime()
-    )
+    const requests = await getSupportRequestsByUserId(dbUser.id)
+    
+    // Serialize dates for JSON response
+    const serializedRequests = requests.map(req => ({
+      ...req,
+      created_at: req.created_at.toISOString(),
+      updated_at: req.updated_at.toISOString(),
+      replies: req.replies?.map(reply => ({
+        ...reply,
+        created_at: reply.created_at.toISOString(),
+      })),
+    }))
 
     return NextResponse.json({
-      requests: sortedRequests,
-      total: sortedRequests.length,
+      requests: serializedRequests,
+      total: serializedRequests.length,
     })
   } catch (error: any) {
     console.error("Error fetching user support requests:", error)

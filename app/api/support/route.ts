@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { subject, message } = body
+    const { subject, message, category, urgency } = body
 
     if (!subject || !message) {
       return NextResponse.json(
@@ -22,6 +22,14 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
+
+    // Validate category
+    const validCategories = ['Error', 'Custom Section', 'Suggestion']
+    const ticketCategory = validCategories.includes(category) ? category : 'Error'
+
+    // Validate urgency
+    const validUrgencies = ['low', 'medium', 'high', 'critical']
+    const ticketUrgency = validUrgencies.includes(urgency) ? urgency : 'medium'
 
     // Get user from database, create if doesn't exist
     let dbUser = await getUserByClerkId(userId)
@@ -42,18 +50,18 @@ export async function POST(request: Request) {
     const email = clerkUser?.emailAddresses[0]?.emailAddress || dbUser.email
 
     // Create support request
-    const supportRequest = {
+    const supportRequest = await addSupportRequest({
       id: crypto.randomUUID(),
       user_id: dbUser.id,
       clerk_id: userId,
       email,
       subject: subject.trim(),
       message: message.trim(),
+      category: ticketCategory as 'Error' | 'Custom Section' | 'Suggestion',
+      urgency: ticketUrgency as 'low' | 'medium' | 'high' | 'critical',
+      status: 'open',
       created_at: new Date(),
-      status: 'open' as const,
-    }
-
-    addSupportRequest(supportRequest)
+    })
 
     console.log(`[Support] New support request from ${email}: ${subject}`)
 
@@ -122,16 +130,27 @@ export async function GET() {
       )
     }
 
-    // Return all support requests (sorted by newest first)
-    const allRequests = getAllSupportRequests()
-    const sortedRequests = allRequests.sort(
-      (a, b) => b.created_at.getTime() - a.created_at.getTime()
-    )
+    // Return all support requests (already sorted by newest first from database)
+    const allRequests = await getAllSupportRequests()
+
+    // Serialize dates for JSON response
+    const serializedRequests = allRequests.map(req => ({
+      ...req,
+      created_at: req.created_at.toISOString(),
+      updated_at: req.updated_at.toISOString(),
+      replies: req.replies?.map(reply => ({
+        ...reply,
+        created_at: reply.created_at.toISOString(),
+      })),
+    }))
 
     return NextResponse.json({
-      requests: sortedRequests,
-      total: sortedRequests.length,
-      open: sortedRequests.filter(r => r.status === 'open').length,
+      requests: serializedRequests,
+      total: serializedRequests.length,
+      open: serializedRequests.filter(r => r.status === 'open').length,
+      pending: serializedRequests.filter(r => r.status === 'pending').length,
+      in_progress: serializedRequests.filter(r => r.status === 'in_progress').length,
+      closed: serializedRequests.filter(r => r.status === 'closed').length,
     })
   } catch (error: any) {
     console.error("Error fetching support requests:", error)
