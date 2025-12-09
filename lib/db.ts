@@ -605,10 +605,11 @@ export async function getUserUsageCount(userId: string, month: number, year: num
   // Only count downloads/copies - generation/search is unlimited
   
   // Try to get from database first
+  // Ensure userId is properly cast to UUID for database queries
   const dbResult = await queryDb(
     `SELECT COUNT(*) as count 
      FROM download_logs 
-     WHERE user_id = $1 
+     WHERE user_id = $1::uuid 
        AND EXTRACT(MONTH FROM created_at) = $2 
        AND EXTRACT(YEAR FROM created_at) = $3`,
     [userId, month, year]
@@ -879,24 +880,25 @@ export async function getUserActivityStats(userId: string): Promise<{
   const useDatabase = dbPool !== null
   
   // Try to get from database first if available
+  // Ensure userId is properly cast to UUID for database queries
   const [generationsResult, copiesResult, downloadsResult] = await Promise.all([
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM usage_logs 
-       WHERE user_id = $1 
+       WHERE user_id = $1::uuid 
          AND section_type NOT IN ('copy', 'download')`,
       [userId]
     ),
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
-       WHERE user_id = $1 AND action = 'copy'`,
+       WHERE user_id = $1::uuid AND action = 'copy'`,
       [userId]
     ),
     queryDb(
       `SELECT COUNT(*)::bigint as count 
        FROM download_logs 
-       WHERE user_id = $1 AND action = 'download'`,
+       WHERE user_id = $1::uuid AND action = 'download'`,
       [userId]
     )
   ])
@@ -1144,14 +1146,35 @@ export async function resetUserUsageLimit(userId: string, month?: number, year?:
   const targetMonth = month || now.getMonth() + 1
   const targetYear = year || now.getFullYear()
   
-  // Delete usage logs for the user in the specified month/year
+  // Delete from database first
+  // Ensure userId is properly cast to UUID for database queries
+  const [usageDeleteResult, downloadDeleteResult] = await Promise.all([
+    queryDb(
+      `DELETE FROM usage_logs 
+       WHERE user_id = $1::uuid 
+         AND month = $2 
+         AND year = $3`,
+      [userId, targetMonth, targetYear]
+    ),
+    queryDb(
+      `DELETE FROM download_logs 
+       WHERE user_id = $1::uuid 
+         AND EXTRACT(MONTH FROM created_at) = $2 
+         AND EXTRACT(YEAR FROM created_at) = $3`,
+      [userId, targetMonth, targetYear]
+    )
+  ])
+  
+  // Get deleted counts from database
+  const deletedUsage = usageDeleteResult?.rowCount || 0
+  const deletedDownloads = downloadDeleteResult?.rowCount || 0
+  
+  // Also delete from in-memory arrays for consistency
   const initialUsageCount = usageLogs.length
   usageLogs = usageLogs.filter(
     log => !(log.user_id === userId && log.month === targetMonth && log.year === targetYear)
   )
-  const deletedUsage = initialUsageCount - usageLogs.length
   
-  // Delete download logs for the user in the specified month/year
   const initialDownloadCount = downloadLogs.length
   downloadLogs = downloadLogs.filter(
     log => {
@@ -1161,10 +1184,9 @@ export async function resetUserUsageLimit(userId: string, month?: number, year?:
         logDate.getFullYear() === targetYear)
     }
   )
-  const deletedDownloads = initialDownloadCount - downloadLogs.length
   
   const totalDeleted = deletedUsage + deletedDownloads
-  console.log(`[resetUserUsageLimit] Reset usage for user ${userId}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs`)
+  console.log(`[resetUserUsageLimit] Reset usage for user ${userId}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs from database (usage: ${deletedUsage}, downloads: ${deletedDownloads})`)
   
   return { deleted: totalDeleted }
 }
@@ -1179,14 +1201,34 @@ export async function resetIPUsageLimit(ipAddress: string, month?: number, year?
   const targetMonth = month || now.getMonth() + 1
   const targetYear = year || now.getFullYear()
   
-  // Delete usage logs for the IP in the specified month/year
+  // Delete from database first
+  const [usageDeleteResult, downloadDeleteResult] = await Promise.all([
+    queryDb(
+      `DELETE FROM usage_logs 
+       WHERE ip_address = $1 
+         AND month = $2 
+         AND year = $3`,
+      [ipAddress, targetMonth, targetYear]
+    ),
+    queryDb(
+      `DELETE FROM download_logs 
+       WHERE ip_address = $1 
+         AND EXTRACT(MONTH FROM created_at) = $2 
+         AND EXTRACT(YEAR FROM created_at) = $3`,
+      [ipAddress, targetMonth, targetYear]
+    )
+  ])
+  
+  // Get deleted counts from database
+  const deletedUsage = usageDeleteResult?.rowCount || 0
+  const deletedDownloads = downloadDeleteResult?.rowCount || 0
+  
+  // Also delete from in-memory arrays for consistency
   const initialUsageCount = usageLogs.length
   usageLogs = usageLogs.filter(
     log => !(log.ip_address === ipAddress && log.month === targetMonth && log.year === targetYear)
   )
-  const deletedUsage = initialUsageCount - usageLogs.length
   
-  // Delete download logs for the IP in the specified month/year
   const initialDownloadCount = downloadLogs.length
   downloadLogs = downloadLogs.filter(
     log => {
@@ -1196,10 +1238,9 @@ export async function resetIPUsageLimit(ipAddress: string, month?: number, year?
         logDate.getFullYear() === targetYear)
     }
   )
-  const deletedDownloads = initialDownloadCount - downloadLogs.length
   
   const totalDeleted = deletedUsage + deletedDownloads
-  console.log(`[resetIPUsageLimit] Reset usage for IP ${ipAddress}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs`)
+  console.log(`[resetIPUsageLimit] Reset usage for IP ${ipAddress}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs from database (usage: ${deletedUsage}, downloads: ${deletedDownloads})`)
   
   return { deleted: totalDeleted }
 }
