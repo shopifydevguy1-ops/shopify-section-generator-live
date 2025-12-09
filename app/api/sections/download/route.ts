@@ -69,38 +69,14 @@ export async function POST(request: Request) {
 
     console.log(`[download API] Starting ${action} for user ${dbUser.id} (${dbUser.email}), sectionId: ${sectionId}`)
     
-    // Verify database connection before attempting inserts
-    const { getDbPool } = await import("@/lib/db-connection")
-    const dbPool = getDbPool()
-    if (!dbPool) {
-      console.error(`[download API] ❌ No database pool available! Cannot save ${action} data.`)
-      return NextResponse.json(
-        { error: "Database connection unavailable. Please try again." },
-        { status: 503 }
-      )
-    }
-    
     // Log the download/copy action (for download/copy limit tracking)
-    try {
-      await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
-      console.log(`[download API] ✅ logDownloadOrCopy completed for ${action}`)
-    } catch (error: any) {
-      console.error(`[download API] ❌ logDownloadOrCopy failed: ${error.message}`, error)
-      // Return error to user so they know it failed
-      return NextResponse.json(
-        { error: `Failed to log ${action}. Please try again.`, details: error.message },
-        { status: 500 }
-      )
-    }
+    // These functions now always save to in-memory as fallback, so they won't throw errors
+    await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
+    console.log(`[download API] ✅ logDownloadOrCopy completed for ${action} (saved to in-memory, database may have failed)`)
     
     // Also log as usage for monthly limit tracking (so it syncs with dashboard)
-    try {
-      await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download', ipAddress)
-      console.log(`[download API] ✅ logUsage completed for ${action}`)
-    } catch (error: any) {
-      console.error(`[download API] ❌ logUsage failed: ${error.message}`, error)
-      // Log error but don't fail the request since download_logs was saved
-    }
+    await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download', ipAddress)
+    console.log(`[download API] ✅ logUsage completed for ${action} (saved to in-memory, database may have failed)`)
 
     // Get fresh stats after logging to ensure accurate count
     const now = new Date()

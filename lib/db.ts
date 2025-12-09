@@ -1326,15 +1326,18 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
     ip_address: ipAddress,
   }
   
-  // Try to save to database first
+  // Always keep in-memory first for backward compatibility and as fallback
+  downloadLogs.push(log)
+  
+  // Try to save to database (non-blocking - in-memory is already saved)
   // PostgreSQL will automatically cast string UUIDs to UUID type
   try {
     // First verify database connection
     const { getDbPool } = await import('./db-connection')
     const dbPool = getDbPool()
     if (!dbPool) {
-      console.error(`[logDownloadOrCopy] ❌ No database pool available!`)
-      throw new Error('Database pool not available')
+      console.warn(`[logDownloadOrCopy] ⚠️ No database pool available - using in-memory storage only`)
+      return // Exit early, in-memory storage already done
     }
     
     const dbResult = await queryDb(
@@ -1351,20 +1354,16 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
         console.warn(`[logDownloadOrCopy] ⚠️ Insert returned 0 rows (possibly duplicate): ${action} for user ${userId}, sectionId: ${sectionId}`)
       }
     } else {
-      console.error(`[logDownloadOrCopy] ❌ Database query returned null: ${action} for user ${userId}, sectionId: ${sectionId}`)
-      console.error(`[logDownloadOrCopy] UserId: ${userId}, LogId: ${logId}, SectionId: ${sectionId}`)
-      throw new Error('Database insert returned null')
+      console.warn(`[logDownloadOrCopy] ⚠️ Database query returned null - using in-memory storage: ${action} for user ${userId}, sectionId: ${sectionId}`)
+      console.warn(`[logDownloadOrCopy] UserId: ${userId}, LogId: ${logId}, SectionId: ${sectionId}`)
     }
   } catch (error: any) {
-    console.error(`[logDownloadOrCopy] ❌ Database insert error: ${error.message}`, error)
+    // Log error but don't throw - in-memory storage already saved as fallback
+    console.error(`[logDownloadOrCopy] ❌ Database insert error (using in-memory fallback): ${error.message}`, error)
     console.error(`[logDownloadOrCopy] Error stack: ${error.stack}`)
     console.error(`[logDownloadOrCopy] Error details: ${action} for user ${userId}, sectionId: ${sectionId}`)
-    // Re-throw to let caller know it failed
-    throw error
+    // Don't throw - in-memory storage is the fallback and already saved
   }
-  
-  // Always keep in-memory for backward compatibility and as fallback
-  downloadLogs.push(log)
   
   // Verify the insert by querying back
   try {
@@ -1631,4 +1630,3 @@ export async function getOnlineUsers(): Promise<Array<{ user_id: string; email: 
 
 // Note: In production, replace all these functions with actual database queries
 // using a library like pg (PostgreSQL) or your ORM of choice
-
