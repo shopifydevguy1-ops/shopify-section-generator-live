@@ -11,6 +11,7 @@ import { RecentUsersLive } from "@/components/admin/recent-users-live"
 import { RecentActivityLive } from "@/components/admin/recent-activity-live"
 import { StatsCardsLive } from "@/components/admin/stats-cards-live"
 import { DatabaseUsersLegacyLive } from "@/components/admin/database-users-legacy-live"
+import { OnlineUsersLive } from "@/components/admin/online-users-live"
 
 export default async function AdminPage() {
   const { userId } = auth()
@@ -109,6 +110,9 @@ export default async function AdminPage() {
           </div>
           <UsersTable />
         </div>
+
+        {/* Online Users */}
+        <OnlineUsersLive />
 
         {/* Database Users Table (Legacy) - Now Live */}
         <DatabaseUsersLegacyLive />

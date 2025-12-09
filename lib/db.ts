@@ -616,9 +616,17 @@ export async function getUserUsageCount(userId: string, month: number, year: num
   )
   
   if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
-    const dbCount = parseInt((dbResult.rows[0] as any).count, 10)
+    const countValue = dbResult.rows[0].count
+    const dbCount = typeof countValue === 'string' ? parseInt(countValue, 10) : Number(countValue)
     console.log(`[getUserUsageCount] From database: user ${userId}, month ${month}/${year}, count: ${dbCount}`)
-    return dbCount
+    return isNaN(dbCount) ? 0 : dbCount
+  }
+  
+  // Log if query returned but no rows (shouldn't happen, but good to know)
+  if (dbResult && (!dbResult.rows || dbResult.rows.length === 0)) {
+    console.warn(`[getUserUsageCount] Query returned but no rows for user ${userId}, month ${month}/${year}`)
+  } else if (!dbResult) {
+    console.warn(`[getUserUsageCount] Database query returned null for user ${userId}, month ${month}/${year} - using memory fallback`)
   }
   
   // Fallback to in-memory
@@ -688,9 +696,10 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
   }
   
   // Try to save to database first
+  // Cast userId to UUID to ensure proper type matching
   const dbResult = await queryDb(
     `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+     VALUES ($1::uuid, $2::uuid, $3, $4, $5, $6, $7)`,
     [logId, userId, sectionType, now, month, year, ipAddress || null]
   )
   
@@ -700,7 +709,10 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
   if (dbResult) {
     console.log(`[logUsage] Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}`)
   } else {
-    console.log(`[logUsage] Saved to memory only: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, total logs: ${usageLogs.length}`)
+    console.error(`[logUsage] Failed to save to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}`)
+    console.error(`[logUsage] UserId type: ${typeof userId}, value: ${userId}`)
+    console.error(`[logUsage] LogId type: ${typeof logId}, value: ${logId}`)
+    console.log(`[logUsage] Saved to memory only, total logs: ${usageLogs.length}`)
   }
 }
 
@@ -1124,11 +1136,19 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
   }
   
   // Try to save to database first
+  // Cast userId to UUID to ensure proper type matching
   const dbResult = await queryDb(
     `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
-     VALUES ($1, $2, $3, $4, $5, $6)`,
+     VALUES ($1::uuid, $2::uuid, $3, $4, $5, $6)`,
     [logId, userId, sectionId, action, now, ipAddress || null]
   )
+  
+  // Log detailed error information if insert failed
+  if (!dbResult) {
+    console.error(`[logDownloadOrCopy] Failed to save to database: ${action} for user ${userId}, sectionId: ${sectionId}`)
+    console.error(`[logDownloadOrCopy] UserId type: ${typeof userId}, value: ${userId}`)
+    console.error(`[logDownloadOrCopy] LogId type: ${typeof logId}, value: ${logId}`)
+  }
   
   // Always keep in-memory for backward compatibility and as fallback
   downloadLogs.push(log)
@@ -1243,6 +1263,140 @@ export async function resetIPUsageLimit(ipAddress: string, month?: number, year?
   console.log(`[resetIPUsageLimit] Reset usage for IP ${ipAddress}, month ${targetMonth}/${targetYear}, deleted ${totalDeleted} logs from database (usage: ${deletedUsage}, downloads: ${deletedDownloads})`)
   
   return { deleted: totalDeleted }
+}
+
+// Get online users (users active in the last 10 minutes)
+export async function getOnlineUsers(): Promise<Array<{ user_id: string; email: string; last_activity: Date; activity_type: string }>> {
+  const { getDbPool } = await import('./db-connection')
+  const dbPool = getDbPool()
+  const useDatabase = dbPool !== null
+  
+  if (!useDatabase) {
+    // Fallback: check in-memory logs for last 10 minutes
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
+    const recentLogins = loginLogs.filter(log => new Date(log.created_at) > tenMinutesAgo)
+    const recentDownloads = downloadLogs.filter(log => new Date(log.created_at) > tenMinutesAgo)
+    const recentUsage = usageLogs.filter(log => new Date(log.generated_at) > tenMinutesAgo)
+    
+    // Combine and deduplicate by user_id
+    const userMap = new Map<string, { user_id: string; email: string; last_activity: Date; activity_type: string }>()
+    
+    recentLogins.forEach(log => {
+      const existing = userMap.get(log.user_id)
+      if (!existing || new Date(log.created_at) > existing.last_activity) {
+        userMap.set(log.user_id, {
+          user_id: log.user_id,
+          email: log.email,
+          last_activity: new Date(log.created_at),
+          activity_type: 'login'
+        })
+      }
+    })
+    
+    recentDownloads.forEach(log => {
+      const existing = userMap.get(log.user_id)
+      if (!existing || new Date(log.created_at) > existing.last_activity) {
+        const user = Array.from(users.values()).find(u => u.id === log.user_id)
+        userMap.set(log.user_id, {
+          user_id: log.user_id,
+          email: user?.email || 'Unknown',
+          last_activity: new Date(log.created_at),
+          activity_type: log.action
+        })
+      }
+    })
+    
+    recentUsage.forEach(log => {
+      const existing = userMap.get(log.user_id)
+      if (!existing || new Date(log.generated_at) > existing.last_activity) {
+        const user = Array.from(users.values()).find(u => u.id === log.user_id)
+        userMap.set(log.user_id, {
+          user_id: log.user_id,
+          email: user?.email || 'Unknown',
+          last_activity: new Date(log.generated_at),
+          activity_type: log.section_type
+        })
+      }
+    })
+    
+    return Array.from(userMap.values()).sort((a, b) => b.last_activity.getTime() - a.last_activity.getTime())
+  }
+  
+  // Query database for users active in last 10 minutes
+  const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
+  
+  // Get users from login_logs (most reliable indicator of online status)
+  const loginResult = await queryDb(
+    `SELECT DISTINCT ON (u.id)
+       u.id as user_id,
+       u.email,
+       MAX(ll.created_at) as last_activity,
+       'login' as activity_type
+     FROM users u
+     INNER JOIN login_logs ll ON u.id = ll.user_id::uuid
+     WHERE ll.created_at > $1
+     GROUP BY u.id, u.email
+     ORDER BY u.id, MAX(ll.created_at) DESC`,
+    [tenMinutesAgo]
+  )
+  
+  // Get users from download_logs
+  const downloadResult = await queryDb(
+    `SELECT DISTINCT ON (u.id)
+       u.id as user_id,
+       u.email,
+       MAX(dl.created_at) as last_activity,
+       MAX(dl.action) as activity_type
+     FROM users u
+     INNER JOIN download_logs dl ON u.id = dl.user_id::uuid
+     WHERE dl.created_at > $1
+     GROUP BY u.id, u.email
+     ORDER BY u.id, MAX(dl.created_at) DESC`,
+    [tenMinutesAgo]
+  )
+  
+  // Get users from usage_logs
+  const usageResult = await queryDb(
+    `SELECT DISTINCT ON (u.id)
+       u.id as user_id,
+       u.email,
+       MAX(ul.generated_at) as last_activity,
+       MAX(ul.section_type) as activity_type
+     FROM users u
+     INNER JOIN usage_logs ul ON u.id = ul.user_id::uuid
+     WHERE ul.generated_at > $1
+     GROUP BY u.id, u.email
+     ORDER BY u.id, MAX(ul.generated_at) DESC`,
+    [tenMinutesAgo]
+  )
+  
+  // Combine all results and get the most recent activity per user
+  const userMap = new Map<string, { user_id: string; email: string; last_activity: Date; activity_type: string }>()
+  
+  const addToMap = (rows: any[]) => {
+    if (rows) {
+      rows.forEach((row: any) => {
+        const userId = row.user_id
+        const lastActivity = new Date(row.last_activity)
+        const existing = userMap.get(userId)
+        
+        if (!existing || lastActivity > existing.last_activity) {
+          userMap.set(userId, {
+            user_id: userId,
+            email: row.email,
+            last_activity: lastActivity,
+            activity_type: row.activity_type || 'unknown'
+          })
+        }
+      })
+    }
+  }
+  
+  addToMap(loginResult?.rows || [])
+  addToMap(downloadResult?.rows || [])
+  addToMap(usageResult?.rows || [])
+  
+  return Array.from(userMap.values()).sort((a, b) => b.last_activity.getTime() - a.last_activity.getTime())
 }
 
 // Note: In production, replace all these functions with actual database queries
