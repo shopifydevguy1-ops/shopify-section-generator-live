@@ -1377,6 +1377,25 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
     
     // If in first month trial, allow 20 downloads/copies total (not per month)
     if (inFirstMonth && !hasActiveSubscription) {
+      // Check if this device/IP has already used a trial (trial abuse detection)
+      if (ipAddress) {
+        const trialCheck = await hasDeviceUsedTrial(undefined, ipAddress)
+        if (trialCheck.hasUsedTrial && trialCheck.existingUserId !== userId) {
+          return {
+            allowed: false,
+            count: 0,
+            limit: 0,
+            reason: `This device or IP address has already been used for a free trial. Please subscribe to Pro to continue using the service.`,
+            trialInfo: {
+              isInTrial: false,
+              daysRemaining: 0,
+              copiesUsed: 0,
+              copiesLimit: 0
+            }
+          }
+        }
+      }
+      
       // Get total copies used (all time, not just this month)
       const allCopiesResult = await queryDb(
         `SELECT COUNT(*) as count 
