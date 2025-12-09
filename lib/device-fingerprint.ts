@@ -42,8 +42,9 @@ export function generateDeviceFingerprint(): string {
     
     // WebGL fingerprint
     try {
-      const gl = document.createElement('canvas').getContext('webgl') || 
-                 document.createElement('canvas').getContext('experimental-webgl')
+      const canvas = document.createElement('canvas')
+      const gl = (canvas.getContext('webgl') || 
+                 canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null
       if (gl) {
         const debugInfo = gl.getExtension('WEBGL_debug_renderer_info')
         if (debugInfo) {
@@ -103,30 +104,31 @@ export async function generateEnhancedFingerprint(): Promise<string> {
       // Ignore
     }
     
-    // Audio context fingerprint (if available)
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      const oscillator = audioContext.createOscillator()
-      const analyser = audioContext.createAnalyser()
-      const gainNode = audioContext.createGain()
-      const scriptProcessor = audioContext.createScriptProcessor(4096, 1, 1)
-      
-      gainNode.gain.value = 0
-      oscillator.connect(analyser)
-      analyser.connect(scriptProcessor)
-      scriptProcessor.connect(gainNode)
-      gainNode.connect(audioContext.destination)
-      
-      oscillator.start(0)
-      scriptProcessor.onaudioprocess = () => {
-        const audioHash = analyser.frequencyData.length.toString()
-        components.push(`audio:${audioHash}`)
-        oscillator.stop()
-        audioContext.close()
-      }
-    } catch (e) {
-      // Audio not available or blocked
-    }
+    // Audio context fingerprint (if available) - commented out as it's async and complex
+    // This would require Promise handling which complicates the function
+    // try {
+    //   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    //   const oscillator = audioContext.createOscillator()
+    //   const analyser = audioContext.createAnalyser()
+    //   const gainNode = audioContext.createGain()
+    //   const scriptProcessor = audioContext.createScriptProcessor(4096, 1, 1)
+    //   
+    //   gainNode.gain.value = 0
+    //   oscillator.connect(analyser)
+    //   analyser.connect(scriptProcessor)
+    //   scriptProcessor.connect(gainNode)
+    //   gainNode.connect(audioContext.destination)
+    //   
+    //   oscillator.start(0)
+    //   scriptProcessor.onaudioprocess = () => {
+    //     const audioHash = analyser.frequencyData.length.toString()
+    //     components.push(`audio:${audioHash}`)
+    //     oscillator.stop()
+    //     audioContext.close()
+    //   }
+    // } catch (e) {
+    //   // Audio not available or blocked
+    // }
   }
   
   const fingerprintString = components.join('|')
