@@ -163,6 +163,12 @@ let loginLogs: LoginLog[] = []
 // Load existing logs from database on startup (if database is available)
 // This ensures data persists across server restarts
 async function loadLogsFromDatabase() {
+  // Skip during build time
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    console.log('[DB] Skipping database load during build phase')
+    return
+  }
+  
   try {
     // Load download logs
     const downloadLogsResult = await queryDb(
@@ -205,15 +211,25 @@ async function loadLogsFromDatabase() {
       console.log(`[DB] Loaded ${usageLogs.length} usage logs from database`)
     }
   } catch (error: any) {
-    console.error('[DB] Error loading logs from database:', error.message)
+    // Only log errors if not during build
+    if (process.env.NEXT_PHASE !== 'phase-production-build') {
+      console.error('[DB] Error loading logs from database:', error.message)
+    }
   }
 }
 
 // Initialize database connection and load existing data
-if (typeof window === 'undefined') {
-  // Only run on server side
-  loadLogsFromDatabase().catch(err => {
-    console.error('[DB] Failed to load logs from database:', err)
+// Only run on server side and NOT during build time
+if (typeof window === 'undefined' && process.env.NEXT_PHASE !== 'phase-production-build') {
+  // Load logs asynchronously without blocking
+  // Use setImmediate to defer execution until after module load
+  setImmediate(() => {
+    loadLogsFromDatabase().catch(err => {
+      // Silently fail during build - database may not be accessible
+      if (process.env.NEXT_PHASE !== 'phase-production-build') {
+        console.error('[DB] Failed to load logs from database:', err)
+      }
+    })
   })
 }
 
@@ -722,15 +738,19 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
     ip_address: ipAddress,
   }
   
-  // Try to save to database first
+  // Always keep in-memory first for backward compatibility and as fallback
+  // This ensures data is saved even if database operations fail
+  usageLogs.push(log)
+  
+  // Try to save to database (non-blocking - in-memory is already saved)
   // PostgreSQL will automatically cast string UUIDs to UUID type
   try {
     // First verify database connection
     const { getDbPool } = await import('./db-connection')
     const dbPool = getDbPool()
     if (!dbPool) {
-      console.error(`[logUsage] ❌ No database pool available!`)
-      throw new Error('Database pool not available')
+      console.warn(`[logUsage] ⚠️ No database pool available - using in-memory storage only`)
+      return // Exit early, in-memory storage already done
     }
     
     const dbResult = await queryDb(
@@ -747,20 +767,16 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
         console.warn(`[logUsage] ⚠️ Insert returned 0 rows (possibly duplicate): user ${userId}, sectionType: ${sectionType}`)
       }
     } else {
-      console.error(`[logUsage] ❌ Database query returned null: user ${userId}, sectionType: ${sectionType}`)
-      console.error(`[logUsage] UserId: ${userId}, LogId: ${logId}`)
-      throw new Error('Database insert returned null')
+      console.warn(`[logUsage] ⚠️ Database query returned null - using in-memory storage: user ${userId}, sectionType: ${sectionType}`)
+      console.warn(`[logUsage] UserId: ${userId}, LogId: ${logId}`)
     }
   } catch (error: any) {
-    console.error(`[logUsage] ❌ Database insert error: ${error.message}`, error)
+    // Log error but don't throw - in-memory storage already saved as fallback
+    console.error(`[logUsage] ❌ Database insert error (using in-memory fallback): ${error.message}`, error)
     console.error(`[logUsage] Error stack: ${error.stack}`)
     console.error(`[logUsage] Error details: user ${userId}, sectionType: ${sectionType}`)
-    // Re-throw to let caller know it failed
-    throw error
+    // Don't throw - in-memory storage is the fallback and already saved
   }
-  
-  // Always keep in-memory for backward compatibility and as fallback
-  usageLogs.push(log)
   
   // Verify the insert by querying back
   try {
@@ -1327,6 +1343,7 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
   }
   
   // Always keep in-memory first for backward compatibility and as fallback
+  // This ensures data is saved even if database operations fail
   downloadLogs.push(log)
   
   // Try to save to database (non-blocking - in-memory is already saved)
