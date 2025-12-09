@@ -13,13 +13,36 @@ export function getDbPool(): Pool | null {
   const databaseUrl = process.env.DATABASE_URL
   
   if (!databaseUrl) {
-    console.log('[DB] No DATABASE_URL found, using in-memory storage')
+    console.error('[DB] ❌ No DATABASE_URL found in environment variables!')
+    console.error('[DB] Please set DATABASE_URL in your Vercel environment variables or .env.local')
     return null
+  }
+
+  // Log connection info (without exposing password)
+  const urlParts = databaseUrl.match(/^([^:]+):\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)$/)
+  if (urlParts) {
+    const [, protocol, username, , host, port, database] = urlParts
+    console.log('[DB] Connection info:', {
+      protocol,
+      username,
+      host,
+      port,
+      database,
+      hasPassword: !!databaseUrl.includes('@')
+    })
+  } else {
+    console.warn('[DB] ⚠️ DATABASE_URL format may be incorrect')
+    console.warn('[DB] Expected format: postgresql://user:password@host:port/database')
+    console.warn('[DB] Your URL starts with:', databaseUrl.substring(0, 30))
   }
 
   try {
     // Supabase requires SSL - check if it's a Supabase URL
     const isSupabase = databaseUrl.includes('supabase.co') || databaseUrl.includes('supabase.com')
+    
+    if (isSupabase) {
+      console.log('[DB] Detected Supabase connection, enabling SSL')
+    }
     
     pool = new Pool({
       connectionString: databaseUrl,
@@ -55,8 +78,23 @@ export function getDbPool(): Pool | null {
         }
       })
       .catch((err) => {
-        console.error('[DB] Database connection test failed:', err.message)
-        console.error('[DB] This might indicate:', err.message.includes('SSL') ? 'SSL configuration issue' : 'Connection or authentication issue')
+        console.error('[DB] ❌ Database connection test failed:', err.message)
+        console.error('[DB] Error code:', err.code)
+        
+        if (err.code === 'ENOTFOUND') {
+          console.error('[DB] 🔍 DNS lookup failed - hostname cannot be resolved')
+          const hostname = databaseUrl.match(/@([^:]+)/)?.[1] || 'unknown'
+          console.error('[DB] Hostname:', hostname)
+          console.error('[DB] This usually means:')
+          console.error('[DB]   1. The DATABASE_URL hostname is incorrect')
+          console.error('[DB]   2. The database instance does not exist')
+          console.error('[DB]   3. The DATABASE_URL environment variable is not set correctly in Vercel')
+          console.error('[DB] 💡 Check your Vercel environment variables and ensure DATABASE_URL is set correctly')
+        } else if (err.message.includes('SSL')) {
+          console.error('[DB] 🔍 SSL configuration issue')
+        } else {
+          console.error('[DB] 🔍 This might indicate: Connection or authentication issue')
+        }
         pool = null
       })
     
