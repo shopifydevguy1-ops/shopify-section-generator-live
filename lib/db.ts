@@ -423,24 +423,52 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
   }
   
   // Try to save to database first
-  const dbResult = await queryDb(
-    `INSERT INTO users (id, clerk_id, email, plan, is_admin, created_at, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
-     ON CONFLICT (clerk_id) DO UPDATE SET
-       email = EXCLUDED.email,
-       updated_at = EXCLUDED.updated_at
-     RETURNING id`,
-    [userId, clerkId, email, user.plan, user.is_admin, now, now]
+  // First check if user already exists to preserve created_at
+  const existingUser = await queryDb(
+    `SELECT id, created_at FROM users WHERE clerk_id = $1`,
+    [clerkId]
   )
   
-  if (dbResult) {
-    console.log(`[createUser] Saved to database: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
-    // If database returned a different ID (from ON CONFLICT), use that
-    if (dbResult.rows && dbResult.rows.length > 0) {
-      user.id = dbResult.rows[0].id
+  let finalCreatedAt = now
+  let finalUserId = userId
+  
+  if (existingUser && existingUser.rows && existingUser.rows.length > 0) {
+    // User already exists - preserve original created_at
+    finalCreatedAt = new Date(existingUser.rows[0].created_at)
+    finalUserId = existingUser.rows[0].id
+    user.id = finalUserId
+    user.created_at = finalCreatedAt
+    
+    // Update only email and updated_at, preserve created_at
+    const dbResult = await queryDb(
+      `UPDATE users 
+       SET email = $1, updated_at = $2
+       WHERE clerk_id = $3
+       RETURNING id, created_at`,
+      [email, now, clerkId]
+    )
+    
+    if (dbResult) {
+      console.log(`[createUser] Updated existing user: ${finalUserId}, clerkId: ${clerkId}, email: ${email}, preserved created_at: ${finalCreatedAt.toISOString()}`)
     }
   } else {
-    console.log(`[createUser] Saved to memory only: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
+    // New user - insert with new created_at
+    const dbResult = await queryDb(
+      `INSERT INTO users (id, clerk_id, email, plan, is_admin, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING id, created_at`,
+      [userId, clerkId, email, user.plan, user.is_admin, now, now]
+    )
+    
+    if (dbResult) {
+      console.log(`[createUser] Created new user: ${userId}, clerkId: ${clerkId}, email: ${email}`)
+      if (dbResult.rows && dbResult.rows.length > 0) {
+        user.id = dbResult.rows[0].id
+        user.created_at = new Date(dbResult.rows[0].created_at)
+      }
+    } else {
+      console.log(`[createUser] Saved to memory only: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
+    }
   }
   
   // Always keep in-memory for backward compatibility
@@ -623,20 +651,36 @@ export async function getUserStats(): Promise<{
   generationsThisMonth: number
 }> {
   const allUsers = await getAllUsers()
-  const allSubscriptions = await getAllSubscriptions()
+  
+  // Get subscriptions directly from database with better error handling
+  let allSubscriptions: Subscription[] = []
+  try {
+    allSubscriptions = await getAllSubscriptions()
+    console.log(`[getUserStats] Loaded ${allSubscriptions.length} subscriptions`)
+  } catch (error: any) {
+    console.error(`[getUserStats] Error loading subscriptions: ${error.message}`)
+    // Fallback to empty array
+    allSubscriptions = []
+  }
+  
   const allLogs = await getAllUsageLogs()
   
   const now = new Date()
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
   
+  const totalSubs = allSubscriptions.length
+  const activeSubs = allSubscriptions.filter(s => s.status === 'active').length
+  
+  console.log(`[getUserStats] Stats: totalUsers=${allUsers.length}, totalSubscriptions=${totalSubs}, activeSubscriptions=${activeSubs}`)
+  
   return {
     totalUsers: allUsers.length,
     freeUsers: allUsers.filter(u => u.plan === 'free').length, // Legacy users only
     proUsers: allUsers.filter(u => u.plan === 'pro').length,
     expertUsers: allUsers.filter(u => u.plan === 'expert').length,
-    totalSubscriptions: allSubscriptions.length,
-    activeSubscriptions: allSubscriptions.filter(s => s.status === 'active').length,
+    totalSubscriptions: totalSubs,
+    activeSubscriptions: activeSubs,
     totalGenerations: allLogs.length,
     generationsThisMonth: allLogs.filter(log => 
       log.month === currentMonth && log.year === currentYear
