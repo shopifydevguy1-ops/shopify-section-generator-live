@@ -81,15 +81,35 @@ export async function queryDb(
   }
 
   try {
+    // Check if pool is still connected
+    if (dbPool.totalCount === 0 && dbPool.idleCount === 0) {
+      console.warn('[DB] Pool appears to be empty, attempting to reconnect...')
+    }
+    
     const result = await dbPool.query(text, params)
     return result
   } catch (error: any) {
     // Log detailed error information
-    console.error('[DB] Query error:', error.message)
+    console.error('[DB] ❌ Query error:', error.message)
     console.error('[DB] Query:', text.substring(0, 200)) // Log first 200 chars to avoid huge logs
     console.error('[DB] Params:', params)
     console.error('[DB] Error code:', error.code)
     console.error('[DB] Error detail:', error.detail)
+    console.error('[DB] Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error)))
+    
+    // Check for specific error types
+    if (error.code === '57P01' || error.message?.includes('terminating connection')) {
+      console.error('[DB] Connection was terminated. Pool may need to be reset.')
+      pool = null // Reset pool to force reconnection
+    }
+    
+    if (error.code === '53300' || error.message?.includes('too many connections')) {
+      console.error('[DB] Too many database connections. Check connection pool settings.')
+    }
+    
+    if (error.code === '42501' || error.message?.includes('permission denied') || error.message?.includes('row-level security')) {
+      console.error('[DB] Permission denied or RLS blocking query. Check RLS policies and user permissions.')
+    }
     
     // For Supabase-specific errors, provide helpful messages
     if (error.message?.includes('connection') || error.message?.includes('timeout')) {

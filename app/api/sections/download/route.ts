@@ -69,13 +69,28 @@ export async function POST(request: Request) {
 
     console.log(`[download API] Starting ${action} for user ${dbUser.id} (${dbUser.email}), sectionId: ${sectionId}`)
     
+    // Verify database connection before attempting inserts
+    const { getDbPool } = await import("@/lib/db-connection")
+    const dbPool = getDbPool()
+    if (!dbPool) {
+      console.error(`[download API] ❌ No database pool available! Cannot save ${action} data.`)
+      return NextResponse.json(
+        { error: "Database connection unavailable. Please try again." },
+        { status: 503 }
+      )
+    }
+    
     // Log the download/copy action (for download/copy limit tracking)
     try {
       await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
       console.log(`[download API] ✅ logDownloadOrCopy completed for ${action}`)
     } catch (error: any) {
       console.error(`[download API] ❌ logDownloadOrCopy failed: ${error.message}`, error)
-      // Don't fail the request, but log the error
+      // Return error to user so they know it failed
+      return NextResponse.json(
+        { error: `Failed to log ${action}. Please try again.`, details: error.message },
+        { status: 500 }
+      )
     }
     
     // Also log as usage for monthly limit tracking (so it syncs with dashboard)
@@ -84,7 +99,7 @@ export async function POST(request: Request) {
       console.log(`[download API] ✅ logUsage completed for ${action}`)
     } catch (error: any) {
       console.error(`[download API] ❌ logUsage failed: ${error.message}`, error)
-      // Don't fail the request, but log the error
+      // Log error but don't fail the request since download_logs was saved
     }
 
     // Get fresh stats after logging to ensure accurate count
@@ -97,25 +112,28 @@ export async function POST(request: Request) {
 
     console.log(`[download API] After ${action}: user ${dbUser.id}, freshCount=${freshCount}, limit=${limit}, remaining=${freshRemaining}`)
     
-    // Verify the data was written by checking the database
-    try {
-      const { queryDb } = await import("@/lib/db-connection")
-      const verifyResult = await queryDb(
-        `SELECT COUNT(*) as count FROM download_logs WHERE user_id = $1 AND action = $2 AND created_at > NOW() - INTERVAL '1 minute'`,
-        [dbUser.id, action]
-      )
-      if (verifyResult && verifyResult.rows && verifyResult.rows.length > 0) {
-        const recentCount = parseInt(verifyResult.rows[0].count, 10) || 0
-        console.log(`[download API] ✅ Verification: Found ${recentCount} recent ${action} record(s) for user ${dbUser.id}`)
-        if (recentCount === 0) {
-          console.error(`[download API] ⚠️ WARNING: No recent ${action} records found in database! Data may not have been saved.`)
+    // Verify the data was written by checking the database (with a small delay to ensure commit)
+    setTimeout(async () => {
+      try {
+        const { queryDb } = await import("@/lib/db-connection")
+        const verifyResult = await queryDb(
+          `SELECT COUNT(*) as count FROM download_logs WHERE user_id = $1 AND action = $2 AND created_at >= $3`,
+          [dbUser.id, action, new Date(Date.now() - 5000)] // Check last 5 seconds
+        )
+        if (verifyResult && verifyResult.rows && verifyResult.rows.length > 0) {
+          const recentCount = parseInt(verifyResult.rows[0].count, 10) || 0
+          if (recentCount > 0) {
+            console.log(`[download API] ✅ Verification: Found ${recentCount} recent ${action} record(s) for user ${dbUser.id}`)
+          } else {
+            console.error(`[download API] ⚠️ WARNING: No recent ${action} records found in database! Data may not have been saved.`)
+          }
+        } else {
+          console.error(`[download API] ⚠️ WARNING: Verification query returned no results!`)
         }
-      } else {
-        console.error(`[download API] ⚠️ WARNING: Verification query returned no results!`)
+      } catch (error: any) {
+        console.error(`[download API] ❌ Verification query failed: ${error.message}`)
       }
-    } catch (error: any) {
-      console.error(`[download API] ❌ Verification query failed: ${error.message}`)
-    }
+    }, 1000) // Wait 1 second for commit
 
     return NextResponse.json({
       success: true,

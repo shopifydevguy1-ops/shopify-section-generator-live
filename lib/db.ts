@@ -725,21 +725,38 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
   // Try to save to database first
   // PostgreSQL will automatically cast string UUIDs to UUID type
   try {
+    // First verify database connection
+    const { getDbPool } = await import('./db-connection')
+    const dbPool = getDbPool()
+    if (!dbPool) {
+      console.error(`[logUsage] ❌ No database pool available!`)
+      throw new Error('Database pool not available')
+    }
+    
     const dbResult = await queryDb(
       `INSERT INTO usage_logs (id, user_id, section_type, generated_at, month, year, ip_address)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING id`,
       [logId, userId, sectionType, now, month, year, ipAddress || null]
     )
     
     if (dbResult) {
-      console.log(`[logUsage] ✅ Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+      if (dbResult.rowCount && dbResult.rowCount > 0) {
+        console.log(`[logUsage] ✅ Saved to database: user ${userId}, sectionType: ${sectionType}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+      } else {
+        console.warn(`[logUsage] ⚠️ Insert returned 0 rows (possibly duplicate): user ${userId}, sectionType: ${sectionType}`)
+      }
     } else {
       console.error(`[logUsage] ❌ Database query returned null: user ${userId}, sectionType: ${sectionType}`)
       console.error(`[logUsage] UserId: ${userId}, LogId: ${logId}`)
+      throw new Error('Database insert returned null')
     }
   } catch (error: any) {
     console.error(`[logUsage] ❌ Database insert error: ${error.message}`, error)
+    console.error(`[logUsage] Error stack: ${error.stack}`)
     console.error(`[logUsage] Error details: user ${userId}, sectionType: ${sectionType}`)
+    // Re-throw to let caller know it failed
+    throw error
   }
   
   // Always keep in-memory for backward compatibility and as fallback
@@ -1312,21 +1329,38 @@ export async function logDownloadOrCopy(userId: string, sectionId: string, actio
   // Try to save to database first
   // PostgreSQL will automatically cast string UUIDs to UUID type
   try {
+    // First verify database connection
+    const { getDbPool } = await import('./db-connection')
+    const dbPool = getDbPool()
+    if (!dbPool) {
+      console.error(`[logDownloadOrCopy] ❌ No database pool available!`)
+      throw new Error('Database pool not available')
+    }
+    
     const dbResult = await queryDb(
       `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id`,
       [logId, userId, sectionId, action, now, ipAddress || null]
     )
     
     if (dbResult) {
-      console.log(`[logDownloadOrCopy] ✅ Saved to database: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+      if (dbResult.rowCount && dbResult.rowCount > 0) {
+        console.log(`[logDownloadOrCopy] ✅ Saved to database: ${action} for user ${userId}, sectionId: ${sectionId}, ip: ${ipAddress || 'unknown'}, rowCount: ${dbResult.rowCount}`)
+      } else {
+        console.warn(`[logDownloadOrCopy] ⚠️ Insert returned 0 rows (possibly duplicate): ${action} for user ${userId}, sectionId: ${sectionId}`)
+      }
     } else {
       console.error(`[logDownloadOrCopy] ❌ Database query returned null: ${action} for user ${userId}, sectionId: ${sectionId}`)
-      console.error(`[logDownloadOrCopy] UserId: ${userId}, LogId: ${logId}`)
+      console.error(`[logDownloadOrCopy] UserId: ${userId}, LogId: ${logId}, SectionId: ${sectionId}`)
+      throw new Error('Database insert returned null')
     }
   } catch (error: any) {
     console.error(`[logDownloadOrCopy] ❌ Database insert error: ${error.message}`, error)
+    console.error(`[logDownloadOrCopy] Error stack: ${error.stack}`)
     console.error(`[logDownloadOrCopy] Error details: ${action} for user ${userId}, sectionId: ${sectionId}`)
+    // Re-throw to let caller know it failed
+    throw error
   }
   
   // Always keep in-memory for backward compatibility and as fallback
