@@ -406,10 +406,71 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
 }
 
 export async function getAllUsers(): Promise<User[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, clerk_id, email, plan, is_admin, created_at, updated_at 
+     FROM users 
+     ORDER BY created_at DESC`
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const dbUsers = dbResult.rows.map((row: any) => ({
+      id: row.id,
+      clerk_id: row.clerk_id,
+      email: row.email,
+      plan: row.plan,
+      is_admin: row.is_admin,
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+    }))
+    
+    // Update in-memory cache
+    dbUsers.forEach(user => {
+      users.set(user.id, user)
+    })
+    
+    console.log(`[getAllUsers] Loaded ${dbUsers.length} users from database`)
+    return dbUsers
+  }
+  
+  // Fallback to in-memory
+  console.log(`[getAllUsers] Using in-memory fallback: ${users.size} users`)
   return Array.from(users.values())
 }
 
 export async function getAllSubscriptions(): Promise<Subscription[]> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, paymongo_payment_id, paymongo_payment_intent_id, status, 
+            current_period_start, current_period_end, created_at, updated_at 
+     FROM subscriptions 
+     ORDER BY created_at DESC`
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const dbSubscriptions = dbResult.rows.map((row: any) => ({
+      id: row.id,
+      user_id: row.user_id,
+      paymongo_payment_id: row.paymongo_payment_id,
+      paymongo_payment_intent_id: row.paymongo_payment_intent_id,
+      status: row.status,
+      current_period_start: new Date(row.current_period_start),
+      current_period_end: new Date(row.current_period_end),
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+    }))
+    
+    // Update in-memory cache
+    dbSubscriptions.forEach(sub => {
+      subscriptions.set(sub.id, sub)
+    })
+    
+    console.log(`[getAllSubscriptions] Loaded ${dbSubscriptions.length} subscriptions from database`)
+    return dbSubscriptions
+  }
+  
+  // Fallback to in-memory
+  console.log(`[getAllSubscriptions] Using in-memory fallback: ${subscriptions.size} subscriptions`)
   return Array.from(subscriptions.values())
 }
 
@@ -643,6 +704,37 @@ export async function logUsage(userId: string, sectionType: string, ipAddress?: 
 }
 
 export async function getSubscriptionByUserId(userId: string): Promise<Subscription | null> {
+  // Try to get from database first
+  const dbResult = await queryDb(
+    `SELECT id, user_id, paymongo_payment_id, paymongo_payment_intent_id, status, 
+            current_period_start, current_period_end, created_at, updated_at 
+     FROM subscriptions 
+     WHERE user_id = $1 
+     ORDER BY created_at DESC 
+     LIMIT 1`,
+    [userId]
+  )
+  
+  if (dbResult && dbResult.rows && dbResult.rows.length > 0) {
+    const row = dbResult.rows[0]
+    const subscription: Subscription = {
+      id: row.id,
+      user_id: row.user_id,
+      paymongo_payment_id: row.paymongo_payment_id,
+      paymongo_payment_intent_id: row.paymongo_payment_intent_id,
+      status: row.status,
+      current_period_start: new Date(row.current_period_start),
+      current_period_end: new Date(row.current_period_end),
+      created_at: new Date(row.created_at),
+      updated_at: new Date(row.updated_at),
+    }
+    
+    // Update in-memory cache
+    subscriptions.set(subscription.id, subscription)
+    return subscription
+  }
+  
+  // Fallback to in-memory
   for (const sub of subscriptions.values()) {
     if (sub.user_id === userId) return sub
   }
@@ -654,6 +746,13 @@ export async function updateUserPlan(userId: string, plan: 'free' | 'pro' | 'exp
   if (user) {
     user.plan = plan
     user.updated_at = new Date()
+    
+    // Update in database
+    await queryDb(
+      `UPDATE users SET plan = $1, updated_at = $2 WHERE id = $3`,
+      [plan, user.updated_at, userId]
+    )
+    
     users.set(user.id, user)
   } else {
     throw new Error(`User with ID ${userId} not found for plan update`)
@@ -694,6 +793,7 @@ export async function createOrUpdateSubscription(params: {
   currentPeriodEnd: Date
 }): Promise<Subscription> {
   const existing = await getSubscriptionByUserId(params.userId)
+  const now = new Date()
   
   if (existing) {
     // Update existing subscription
@@ -702,7 +802,29 @@ export async function createOrUpdateSubscription(params: {
     existing.status = params.status
     existing.current_period_start = params.currentPeriodStart
     existing.current_period_end = params.currentPeriodEnd
-    existing.updated_at = new Date()
+    existing.updated_at = now
+    
+    // Update in database
+    await queryDb(
+      `UPDATE subscriptions 
+       SET paymongo_payment_id = $1, 
+           paymongo_payment_intent_id = $2, 
+           status = $3, 
+           current_period_start = $4, 
+           current_period_end = $5, 
+           updated_at = $6 
+       WHERE id = $7`,
+      [
+        existing.paymongo_payment_id,
+        existing.paymongo_payment_intent_id,
+        existing.status,
+        existing.current_period_start,
+        existing.current_period_end,
+        existing.updated_at,
+        existing.id
+      ]
+    )
+    
     subscriptions.set(existing.id, existing)
     return existing
   } else {
@@ -715,9 +837,27 @@ export async function createOrUpdateSubscription(params: {
       status: params.status,
       current_period_start: params.currentPeriodStart,
       current_period_end: params.currentPeriodEnd,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: now,
+      updated_at: now,
     }
+    
+    // Save to database
+    await queryDb(
+      `INSERT INTO subscriptions (id, user_id, paymongo_payment_id, paymongo_payment_intent_id, status, current_period_start, current_period_end, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [
+        subscription.id,
+        subscription.user_id,
+        subscription.paymongo_payment_id,
+        subscription.paymongo_payment_intent_id,
+        subscription.status,
+        subscription.current_period_start,
+        subscription.current_period_end,
+        subscription.created_at,
+        subscription.updated_at
+      ]
+    )
+    
     subscriptions.set(subscription.id, subscription)
     return subscription
   }

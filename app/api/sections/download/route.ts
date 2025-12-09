@@ -38,11 +38,17 @@ export async function POST(request: Request) {
       dbUser = await createUser(userId, email)
     }
 
+    // Extract IP address from request headers
+    const forwardedFor = request.headers.get('x-forwarded-for')
+    const realIp = request.headers.get('x-real-ip')
+    const ipAddress = forwardedFor?.split(',')[0]?.trim() || realIp || undefined
+
     // Check if user can download/copy
     const { allowed, count, limit, reason } = await canDownloadOrCopy(
       dbUser.id,
       dbUser.plan,
-      dbUser.is_admin
+      dbUser.is_admin,
+      ipAddress
     )
 
     if (!allowed) {
@@ -62,10 +68,10 @@ export async function POST(request: Request) {
     }
 
     // Log the download/copy action (for download/copy limit tracking)
-    await logDownloadOrCopy(dbUser.id, sectionId, action)
+    await logDownloadOrCopy(dbUser.id, sectionId, action, ipAddress)
     
     // Also log as usage for monthly limit tracking (so it syncs with dashboard)
-    await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download')
+    await logUsage(dbUser.id, action === 'copy' ? 'copy' : 'download', ipAddress)
 
     // Get fresh stats after logging to ensure accurate count
     const now = new Date()
