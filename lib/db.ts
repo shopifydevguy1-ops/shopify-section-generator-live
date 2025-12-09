@@ -400,12 +400,125 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
   return null
 }
 
-export async function createUser(clerkId: string, email: string, isAdmin?: boolean): Promise<User> {
+// Check if device/IP has already used a free trial
+export async function hasDeviceUsedTrial(fingerprintHash?: string, ipAddress?: string): Promise<{
+  hasUsedTrial: boolean
+  reason: string
+  existingUserEmail?: string
+  existingUserId?: string
+}> {
+  if (!fingerprintHash && !ipAddress) {
+    return { hasUsedTrial: false, reason: 'No device fingerprint or IP provided' }
+  }
+
+  // Check by device fingerprint first (most reliable)
+  if (fingerprintHash) {
+    const fingerprintCheck = await queryDb(
+      `SELECT u.id, u.email, u.created_at, u.plan
+       FROM users u
+       INNER JOIN device_fingerprints df ON u.id = df.user_id
+       WHERE df.fingerprint_hash = $1
+       AND u.plan = 'pro'
+       AND u.created_at > NOW() - INTERVAL '30 days'
+       ORDER BY u.created_at ASC
+       LIMIT 1`,
+      [fingerprintHash]
+    )
+    
+    if (fingerprintCheck && fingerprintCheck.rows && fingerprintCheck.rows.length > 0) {
+      const existingUser = fingerprintCheck.rows[0]
+      const subscriptionCheck = await queryDb(
+        `SELECT id FROM subscriptions WHERE user_id = $1 AND status = 'active'`,
+        [existingUser.id]
+      )
+      
+      // If they don't have an active subscription, they used the trial
+      if (!subscriptionCheck || !subscriptionCheck.rows || subscriptionCheck.rows.length === 0) {
+        return {
+          hasUsedTrial: true,
+          reason: 'This device has already used a free trial',
+          existingUserEmail: existingUser.email,
+          existingUserId: existingUser.id
+        }
+      }
+    }
+  }
+
+  // Check by IP address (less reliable but still useful)
+  if (ipAddress) {
+    const ipCheck = await queryDb(
+      `SELECT DISTINCT u.id, u.email, u.created_at, u.plan
+       FROM users u
+       INNER JOIN login_logs ll ON u.id = ll.user_id
+       WHERE ll.ip_address = $1
+       AND u.plan = 'pro'
+       AND u.created_at > NOW() - INTERVAL '30 days'
+       ORDER BY u.created_at ASC
+       LIMIT 1`,
+      [ipAddress]
+    )
+    
+    if (ipCheck && ipCheck.rows && ipCheck.rows.length > 0) {
+      const existingUser = ipCheck.rows[0]
+      const subscriptionCheck = await queryDb(
+        `SELECT id FROM subscriptions WHERE user_id = $1 AND status = 'active'`,
+        [existingUser.id]
+      )
+      
+      // If they don't have an active subscription, they used the trial
+      if (!subscriptionCheck || !subscriptionCheck.rows || subscriptionCheck.rows.length === 0) {
+        return {
+          hasUsedTrial: true,
+          reason: 'This IP address has already been used for a free trial',
+          existingUserEmail: existingUser.email,
+          existingUserId: existingUser.id
+        }
+      }
+    }
+  }
+
+  return { hasUsedTrial: false, reason: 'No previous trial found for this device/IP' }
+}
+
+// Save device fingerprint
+export async function saveDeviceFingerprint(
+  userId: string,
+  fingerprintHash: string,
+  ipAddress?: string,
+  userAgent?: string
+): Promise<void> {
+  try {
+    await queryDb(
+      `INSERT INTO device_fingerprints (fingerprint_hash, user_id, ip_address, user_agent, last_seen_at)
+       VALUES ($1, $2, $3, $4, NOW())
+       ON CONFLICT (fingerprint_hash, user_id) DO UPDATE SET
+         last_seen_at = NOW(),
+         ip_address = EXCLUDED.ip_address,
+         user_agent = EXCLUDED.user_agent`,
+      [fingerprintHash, userId, ipAddress || null, userAgent || null]
+    )
+    console.log(`[saveDeviceFingerprint] Saved fingerprint for user ${userId}`)
+  } catch (error: any) {
+    console.error(`[saveDeviceFingerprint] Error: ${error.message}`)
+  }
+}
+
+export async function createUser(clerkId: string, email: string, isAdmin?: boolean, fingerprintHash?: string, ipAddress?: string): Promise<User> {
   // Check if email is in admin list from environment variable
   const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || []
   const shouldBeAdmin = isAdmin !== undefined 
     ? isAdmin 
     : adminEmails.includes(email.toLowerCase())
+  
+  // Check for trial abuse BEFORE creating user (only for non-admin pro users)
+  if (!shouldBeAdmin && (fingerprintHash || ipAddress)) {
+    const trialCheck = await hasDeviceUsedTrial(fingerprintHash, ipAddress)
+    if (trialCheck.hasUsedTrial) {
+      console.warn(`[createUser] Trial abuse detected: ${trialCheck.reason}, existing user: ${trialCheck.existingUserEmail}`)
+      // Still create the user, but they won't get the trial (will be handled in canDownloadOrCopy)
+      // This allows legitimate users to sign up, but prevents trial abuse
+    }
+  }
   
   // Admins automatically get expert plan with unlimited generations
   // New users get PRO plan by default (with first month trial)
@@ -469,6 +582,13 @@ export async function createUser(clerkId: string, email: string, isAdmin?: boole
     } else {
       console.log(`[createUser] Saved to memory only: user ${userId}, clerkId: ${clerkId}, email: ${email}`)
     }
+  }
+  
+  // Save device fingerprint if provided
+  if (fingerprintHash && user.id) {
+    const headersList = await import('next/headers').then(m => m.headers())
+    const userAgent = headersList.get('user-agent') || undefined
+    await saveDeviceFingerprint(user.id, fingerprintHash, ipAddress, userAgent)
   }
   
   // Always keep in-memory for backward compatibility
