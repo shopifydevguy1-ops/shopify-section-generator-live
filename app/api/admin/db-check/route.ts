@@ -18,10 +18,13 @@ export async function GET() {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 })
     }
 
+    const databaseUrl = process.env.DATABASE_URL
     const diagnostics: any = {
-      hasDatabaseUrl: !!process.env.DATABASE_URL,
-      databaseUrlPrefix: process.env.DATABASE_URL?.substring(0, 20) + '...',
-      isSupabase: process.env.DATABASE_URL?.includes('supabase'),
+      hasDatabaseUrl: !!databaseUrl,
+      databaseUrlPrefix: databaseUrl?.substring(0, 30) + '...',
+      databaseUrlHost: databaseUrl?.match(/@([^:]+)/)?.[1] || 'Not found',
+      isSupabase: databaseUrl?.includes('supabase'),
+      databaseUrlLength: databaseUrl?.length || 0,
     }
 
     // Test basic connection
@@ -93,6 +96,48 @@ export async function GET() {
         diagnostics.user_id_used = dbUser.id
         diagnostics.user_id_type = typeof dbUser.id
       }
+    }
+
+    // Test INSERT operation
+    console.log('[DB Check] Testing INSERT operation...')
+    const testId = crypto.randomUUID()
+    const testUserId = dbUser?.id || crypto.randomUUID()
+    try {
+      const insertTest = await queryDb(
+        `INSERT INTO download_logs (id, user_id, section_id, action, created_at, ip_address)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING id`,
+        [testId, testUserId, 'db-check-test', 'copy', new Date(), '127.0.0.1']
+      )
+      if (insertTest && insertTest.rowCount && insertTest.rowCount > 0) {
+        diagnostics.insert_test = 'SUCCESS'
+        diagnostics.insert_row_count = insertTest.rowCount
+        // Clean up test record
+        await queryDb('DELETE FROM download_logs WHERE id = $1', [testId])
+        diagnostics.insert_cleanup = 'SUCCESS'
+      } else {
+        diagnostics.insert_test = 'FAILED'
+        diagnostics.insert_error = 'Insert returned 0 rows'
+      }
+    } catch (error: any) {
+      diagnostics.insert_test = 'FAILED'
+      diagnostics.insert_error = error.message
+      diagnostics.insert_error_code = error.code
+    }
+
+    // Check RLS status
+    const rlsCheck = await queryDb(`
+      SELECT tablename, rowsecurity 
+      FROM pg_tables 
+      WHERE schemaname = 'public' 
+      AND tablename IN ('download_logs', 'usage_logs', 'users')
+      ORDER BY tablename
+    `)
+    if (rlsCheck) {
+      diagnostics.rls_status = rlsCheck.rows.map((r: any) => ({
+        table: r.tablename,
+        rls_enabled: r.rowsecurity
+      }))
     }
 
     return NextResponse.json(diagnostics)
