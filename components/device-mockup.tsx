@@ -33,29 +33,60 @@ export function DeviceMockup({
     )
   }
 
-  // Laptop + Mobile only view (now just displays image directly since images include device frame)
+  // Laptop + Mobile only view - shows main and mobile images side-by-side
   if (showLaptopMobileOnly) {
     return (
-      <div className={`flex items-center justify-center w-full ${className}`}>
-        <div className="relative w-full h-full max-w-full">
-          <Image
-            src={previewImage || ''}
-            alt={alt}
-            fill
-            className="object-contain"
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 800px"
-            unoptimized
-          />
-        </div>
+      <div className={`flex items-center justify-center gap-4 sm:gap-6 w-full ${className}`}>
+        {/* Main/Desktop Image */}
+        {previewImage && (
+          <div className="relative flex-1 max-w-[50%] aspect-video min-h-[200px]">
+            <Image
+              src={previewImage}
+              alt={alt}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 50vw, 400px"
+              unoptimized
+            />
+          </div>
+        )}
+        
+        {/* Mobile Image */}
+        {mobileImage && (
+          <div className="relative flex-1 max-w-[50%] aspect-[9/16] min-h-[200px]">
+            <Image
+              src={mobileImage}
+              alt={`${alt} - Mobile`}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 50vw, 300px"
+              unoptimized
+            />
+          </div>
+        )}
+        
+        {/* Fallback if only one image */}
+        {previewImage && !mobileImage && (
+          <div className="relative w-full aspect-video min-h-[200px]">
+            <Image
+              src={previewImage}
+              alt={alt}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 100vw, 800px"
+              unoptimized
+            />
+          </div>
+        )}
       </div>
     )
   }
 
-  // Laptop only view (now just displays image directly since images include device frame)
+  // Laptop only view - displays main image only
   if (showLaptopOnly) {
     return (
       <div className={`flex items-center justify-center w-full ${className}`}>
-        <div className="relative w-full h-full max-w-full">
+        <div className="relative w-full aspect-video min-h-[200px]">
           <Image
             src={previewImage || ''}
             alt={alt}
