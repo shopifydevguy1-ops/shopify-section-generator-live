@@ -50,7 +50,7 @@ export function DeviceMockup({
                 
                 {/* Screen area */}
                 <div className="absolute inset-[1px] top-[4px] bg-white rounded-sm overflow-hidden shadow-inner">
-                  <div className="relative w-full h-full">
+                  <div className="relative w-full h-full bg-white">
                     <Image
                       src={previewImage || ''}
                       alt={alt}
