@@ -386,14 +386,16 @@ export default function GeneratorPage() {
                     onClick={() => handleSectionSelect(section)}
                   >
                     {section.previewImage ? (
-                      <div className="relative aspect-video bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden flex items-center justify-center py-4">
-                        <DeviceMockup 
-                          previewImage={section.previewImage}
-                          mobileImage={section.mobileImage}
-                          alt={section.name}
-                          showLaptopMobileOnly={true}
-                          className="scale-75 sm:scale-90 md:scale-100"
-                        />
+                      <div className="relative aspect-video bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden flex items-center justify-center py-2 sm:py-4">
+                        <div className="w-full h-full flex items-center justify-center scale-75 sm:scale-90 md:scale-100">
+                          <DeviceMockup 
+                            previewImage={section.previewImage}
+                            mobileImage={section.mobileImage}
+                            alt={section.name}
+                            showLaptopMobileOnly={true}
+                            className="w-full"
+                          />
+                        </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                       </div>
                     ) : (
@@ -430,13 +432,15 @@ export default function GeneratorPage() {
                     <div className="flex flex-col lg:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
                       {/* Left Side - Preview with Laptop and Mobile */}
                       <div className="lg:w-2/5 w-full bg-gradient-to-br from-muted/30 to-muted/10 p-4 md:p-6 overflow-auto flex items-center justify-center border-b lg:border-b-0 lg:border-r border-border min-h-[300px] lg:min-h-0">
-                        <DeviceMockup 
-                          previewImage={selectedSection.previewImage}
-                          mobileImage={selectedSection.mobileImage}
-                          alt={selectedSection.name}
-                          showLaptopMobileOnly={true}
-                          className="py-4"
-                        />
+                        <div className="w-full max-w-full flex items-center justify-center">
+                          <DeviceMockup 
+                            previewImage={selectedSection.previewImage}
+                            mobileImage={selectedSection.mobileImage}
+                            alt={selectedSection.name}
+                            showLaptopMobileOnly={true}
+                            className="py-4 w-full"
+                          />
+                        </div>
                       </div>
                       
                       {/* Right Side - Instructions and Code */}
