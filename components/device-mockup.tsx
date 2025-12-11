@@ -93,8 +93,8 @@ export function DeviceMockup({
                 </div>
               </div>
               
-              {/* Trackpad - Dark area */}
-              <div className="absolute bottom-[30%] left-1/2 -translate-x-1/2 w-[22%] h-[12%] bg-slate-600/40 rounded-lg border border-slate-500/30"></div>
+              {/* Trackpad - Dark area - Positioned below keyboard to avoid overlap */}
+              <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-[22%] h-[12%] bg-slate-600/40 rounded-lg border border-slate-500/30"></div>
             </div>
           </div>
         </div>
