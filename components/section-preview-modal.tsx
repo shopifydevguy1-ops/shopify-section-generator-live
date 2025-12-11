@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image"
 import { Copy, Download, Code } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { DeviceMockup } from "@/components/device-mockup"
 
 interface SectionPreviewModalProps {
   section: {
@@ -63,13 +64,11 @@ export function SectionPreviewModal({ section, open, onClose }: SectionPreviewMo
         <div className="space-y-4">
           {/* Preview Image */}
           {section.previewImage && (
-            <div className="relative w-full aspect-video bg-muted rounded-lg overflow-hidden">
-              <Image
-                src={section.previewImage}
+            <div className="relative w-full bg-muted rounded-lg overflow-hidden py-8">
+              <DeviceMockup 
+                previewImage={section.previewImage}
                 alt={section.name}
-                fill
-                className="object-contain"
-                unoptimized
+                showAllDevices={true}
               />
             </div>
           )}

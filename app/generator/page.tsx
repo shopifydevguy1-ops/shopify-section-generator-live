@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useToast } from "@/hooks/use-toast"
 import { Copy, Download, Loader2, Code, BookOpen, X } from "lucide-react"
 import { TrackLogin } from "@/components/track-login"
+import { DeviceMockup } from "@/components/device-mockup"
 
 export default function GeneratorPage() {
   const { user, isLoaded } = useUser()
@@ -537,26 +538,12 @@ export default function GeneratorPage() {
                     <div className="flex flex-col md:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
                       {/* Left Side - Image */}
                       <div className="md:w-1/2 w-full bg-gradient-to-br from-muted/30 to-muted/10 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
-                        {selectedSection.previewImage ? (
-                          <div className="relative w-full h-full min-h-[300px]">
-                            <Image 
-                              src={selectedSection.previewImage} 
-                              alt={selectedSection.name}
-                              fill
-                              className="object-contain rounded-lg shadow-2xl"
-                              unoptimized
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center h-full text-muted-foreground">
-                            <div className="text-center">
-                              <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                              <p className="text-sm font-medium">Preview image not available</p>
-                              <p className="text-xs mt-2 opacity-75">Section: {selectedSection.sectionId}</p>
-                              <p className="text-xs mt-1 opacity-50">Add an image to sections/images/{selectedSection.sectionId}.png</p>
-                            </div>
-                          </div>
-                        )}
+                        <DeviceMockup 
+                          previewImage={selectedSection.previewImage}
+                          alt={selectedSection.name}
+                          showAllDevices={true}
+                          className="py-8"
+                        />
                       </div>
                       
                       {/* Right Side - Code */}
