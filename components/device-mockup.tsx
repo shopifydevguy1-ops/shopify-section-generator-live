@@ -116,12 +116,12 @@ export function DeviceMockup({
               
               {/* Screen area - With visible bezel around it */}
               <div className="absolute inset-[3px] sm:inset-[3.5px] md:inset-[4px] lg:inset-[4.5px] top-[28px] sm:top-[31px] md:top-[34px] lg:top-[37px] bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[21px] lg:rounded-[25px] overflow-hidden shadow-inner">
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full bg-white">
                   <Image
                     src={mobileImage || previewImage || ''}
                     alt={alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, 160px"
                     unoptimized
                   />
@@ -178,12 +178,12 @@ export function DeviceMockup({
               
               {/* Screen area */}
               <div className="absolute inset-[4px] sm:inset-[5px] md:inset-[6px] top-[28px] sm:top-[34px] md:top-[40px] bg-white rounded-[16px] sm:rounded-[18px] md:rounded-[20px] overflow-hidden">
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full bg-white">
                   <Image
                     src={previewImage}
                     alt={alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 160px"
                     unoptimized
                   />
@@ -200,12 +200,12 @@ export function DeviceMockup({
             <div className="absolute inset-0 bg-black rounded-[10px] sm:rounded-[12px] md:rounded-[14px] shadow-[0_8px_25px_rgba(0,0,0,0.4)]">
               {/* Screen area */}
               <div className="absolute inset-[5px] sm:inset-[6px] md:inset-[7px] bg-white rounded-[6px] sm:rounded-[7px] md:rounded-[8px] overflow-hidden">
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full bg-white">
                   <Image
                     src={previewImage}
                     alt={alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 640px) 160px, (max-width: 768px) 180px, 200px"
                     unoptimized
                   />
@@ -226,12 +226,12 @@ export function DeviceMockup({
           <div className="absolute inset-[4px] bg-gray-800 rounded-md">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] h-[6px] bg-gray-700 rounded-b-full"></div>
             <div className="absolute inset-[2px] top-[10px] bg-white rounded-sm overflow-hidden">
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full bg-white">
                 <Image
                   src={previewImage}
                   alt={alt}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   sizes="100vw"
                   unoptimized
                 />
