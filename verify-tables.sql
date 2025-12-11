@@ -5,3 +5,4 @@ WHERE table_schema = 'public'
   AND table_name IN ('users', 'subscriptions', 'usage_logs', 'download_logs', 'login_logs', 'section_templates')
 ORDER BY table_name;
 
+

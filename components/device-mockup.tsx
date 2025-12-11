@@ -7,6 +7,7 @@ interface DeviceMockupProps {
   previewImage?: string
   alt?: string
   showAllDevices?: boolean
+  showLaptopMobileOnly?: boolean
   className?: string
 }
 
@@ -14,6 +15,7 @@ export function DeviceMockup({
   previewImage, 
   alt = "Preview", 
   showAllDevices = true,
+  showLaptopMobileOnly = false,
   className = "" 
 }: DeviceMockupProps) {
   if (!previewImage) {
@@ -22,6 +24,69 @@ export function DeviceMockup({
         <div className="text-center">
           <Code className="h-16 w-16 mx-auto mb-4 opacity-50" />
           <p className="text-sm font-medium">Preview image not available</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Laptop + Mobile only view
+  if (showLaptopMobileOnly) {
+    return (
+      <div className={`flex items-end justify-center gap-3 sm:gap-5 md:gap-6 ${className}`}>
+        {/* Laptop - Left side */}
+        <div className="relative w-[280px] sm:w-[320px] md:w-[360px] h-[180px] sm:h-[200px] md:h-[220px]">
+          {/* Laptop screen frame */}
+          <div className="absolute inset-0">
+            {/* Outer frame - dark gray/black */}
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+              {/* Inner bezel */}
+              <div className="absolute inset-[4px] bg-gray-800 rounded-md">
+                {/* Notch at top center - MacBook style */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[6px] bg-gray-700 rounded-b-full"></div>
+                
+                {/* Screen area - white background */}
+                <div className="absolute inset-[2px] top-[10px] bg-white rounded-sm overflow-hidden">
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={previewImage}
+                      alt={alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 360px"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Laptop base - subtle shadow underneath */}
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[95%] h-[4px] bg-gray-700 rounded-b-lg shadow-lg"></div>
+        </div>
+
+        {/* Smartphone - Right side */}
+        <div className="relative z-10 w-[120px] sm:w-[140px] md:w-[160px] h-[200px] sm:h-[240px] md:h-[280px]">
+          <div className="absolute inset-0">
+            {/* Phone frame - black with rounded corners */}
+            <div className="absolute inset-0 bg-black rounded-[20px] sm:rounded-[24px] md:rounded-[28px] shadow-[0_8px_25px_rgba(0,0,0,0.4)]">
+              {/* Dynamic island / notch at top */}
+              <div className="absolute top-[8px] sm:top-[10px] md:top-[12px] left-1/2 -translate-x-1/2 w-[50px] sm:w-[60px] md:w-[70px] h-[20px] sm:h-[24px] md:h-[28px] bg-black rounded-full border border-gray-900"></div>
+              
+              {/* Screen area */}
+              <div className="absolute inset-[4px] sm:inset-[5px] md:inset-[6px] top-[28px] sm:top-[34px] md:top-[40px] bg-white rounded-[16px] sm:rounded-[18px] md:rounded-[20px] overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={previewImage}
+                    alt={alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 160px"
+                    unoptimized
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

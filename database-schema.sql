@@ -83,3 +83,4 @@ CREATE INDEX IF NOT EXISTS idx_login_logs_clerk_id ON login_logs(clerk_id);
 CREATE INDEX IF NOT EXISTS idx_section_templates_type ON section_templates(type);
 CREATE INDEX IF NOT EXISTS idx_section_templates_tags ON section_templates USING GIN(tags);
 
+

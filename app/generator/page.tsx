@@ -39,7 +39,6 @@ export default function GeneratorPage() {
   const [excludedSectionIds, setExcludedSectionIds] = useState<string[]>([])
   const [lastInput, setLastInput] = useState<string>("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [showInstructions, setShowInstructions] = useState(false)
   const [downloadStats, setDownloadStats] = useState<{
     count: number
     limit: number
@@ -296,11 +295,6 @@ export default function GeneratorPage() {
 
   const handleSectionSelect = (section: typeof selectedSection) => {
     setSelectedSection(section)
-    setShowInstructions(true)
-  }
-
-  const handleViewCode = () => {
-    setShowInstructions(false)
     setIsModalOpen(true)
   }
 
@@ -394,7 +388,7 @@ export default function GeneratorPage() {
                         <DeviceMockup 
                           previewImage={section.previewImage}
                           alt={section.name}
-                          showAllDevices={true}
+                          showLaptopMobileOnly={true}
                           className="scale-75 sm:scale-90 md:scale-100"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
@@ -420,111 +414,7 @@ export default function GeneratorPage() {
                 ))}
               </div>
 
-              {/* Instructions Modal */}
-              {selectedSection && (
-                <Dialog open={showInstructions} onOpenChange={setShowInstructions}>
-                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl flex items-center gap-2">
-                        <BookOpen className="h-6 w-6" />
-                        How to Add Section to Shopify
-                      </DialogTitle>
-                      <DialogDescription className="text-base mt-2">
-                        Follow these steps to add <strong>{selectedSection.name}</strong> to your Shopify theme.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-6 py-4">
-                      <div className="space-y-4">
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-                            1
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg mb-2">Access Your Theme Editor</h3>
-                            <p className="text-muted-foreground">
-                              Go to your Shopify admin dashboard → <strong>Online Store</strong> → <strong>Themes</strong> → Click <strong>&quot;Customize&quot;</strong> on your active theme.
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-                            2
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg mb-2">Navigate to Theme Files</h3>
-                            <p className="text-muted-foreground">
-                              In the theme editor, click on <strong>&quot;Theme settings&quot;</strong> (gear icon) or use the left sidebar to access <strong>&quot;Sections&quot;</strong> folder.
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-                            3
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg mb-2">Upload the Section File</h3>
-                            <p className="text-muted-foreground mb-2">
-                              Click <strong>&quot;Add a new section&quot;</strong> or upload the section file directly:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                              <li>Click <strong>&quot;Add section&quot;</strong> button</li>
-                              <li>Name the file: <code className="bg-muted px-2 py-1 rounded text-sm">{selectedSection.sectionId}.liquid</code></li>
-                              <li>Paste the section code (click &quot;View Code&quot; below to copy)</li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-                            4
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg mb-2">Add Section to Your Page</h3>
-                            <p className="text-muted-foreground">
-                              After saving, go back to the page editor and click <strong>&quot;Add section&quot;</strong>. You&apos;ll find your new section in the list. Click it to add it to your page.
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-                            5
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg mb-2">Customize and Save</h3>
-                            <p className="text-muted-foreground">
-                              Customize the section settings using the sidebar options, then click <strong>&quot;Save&quot;</strong> to publish your changes.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-muted/50 rounded-lg p-4 border border-border">
-                        <h4 className="font-semibold mb-2 flex items-center gap-2">
-                          <Code className="h-4 w-4" />
-                          Quick Tip
-                        </h4>
-                        <p className="text-sm text-muted-foreground">
-                          You can also download the section file and upload it via FTP or using Shopify CLI. The section file should be placed in the <code className="bg-background px-1.5 py-0.5 rounded text-xs">sections/</code> folder of your theme.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3 pt-4 border-t">
-                      <Button onClick={handleViewCode} className="flex-1" size="lg">
-                        <Code className="mr-2 h-4 w-4" />
-                        View Code
-                      </Button>
-                      <Button onClick={() => setShowInstructions(false)} variant="outline" size="lg">
-                        Close
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              )}
-
-              {/* Modal with Image and Code */}
+              {/* Modal with Image, Instructions, and Code */}
               {selectedSection && (
                 <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                   <DialogContent className="max-w-[95vw] max-h-[95vh] w-full p-0 gap-0 overflow-hidden">
@@ -534,68 +424,143 @@ export default function GeneratorPage() {
                         {selectedSection.description || "No description available"}
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="flex flex-col md:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
-                      {/* Left Side - Image */}
-                      <div className="md:w-1/2 w-full bg-gradient-to-br from-muted/30 to-muted/10 p-4 md:p-6 overflow-auto flex items-center justify-center border-r border-border">
+                    <div className="flex flex-col lg:flex-row h-[calc(95vh-180px)] min-h-[400px] overflow-hidden">
+                      {/* Left Side - Preview with Laptop and Mobile */}
+                      <div className="lg:w-2/5 w-full bg-gradient-to-br from-muted/30 to-muted/10 p-4 md:p-6 overflow-auto flex items-center justify-center border-b lg:border-b-0 lg:border-r border-border">
                         <DeviceMockup 
                           previewImage={selectedSection.previewImage}
                           alt={selectedSection.name}
-                          showAllDevices={true}
-                          className="py-8"
+                          showLaptopMobileOnly={true}
+                          className="py-4"
                         />
                       </div>
                       
-                      {/* Right Side - Code */}
-                      <div className="md:w-1/2 w-full flex flex-col p-4 md:p-6 overflow-hidden bg-background">
-                        <div className="flex flex-col gap-2 mb-4">
-                          <div className="flex gap-2">
-                            <Button 
-                              onClick={copyToClipboard} 
-                              variant="default" 
-                              size="sm" 
-                              className="flex-1"
-                              disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
-                            >
-                              <Copy className="mr-2 h-4 w-4" />
-                              Copy Code
-                            </Button>
-                            <Button 
-                              onClick={downloadLiquid} 
-                              variant="outline" 
-                              size="sm"
-                              disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
-                            >
-                              <Download className="mr-2 h-4 w-4" />
-                              Download
-                            </Button>
+                      {/* Right Side - Instructions and Code */}
+                      <div className="lg:w-3/5 w-full flex flex-col overflow-hidden bg-background">
+                        {/* Instructions Section */}
+                        <div className="border-b border-border bg-muted/20 p-4 md:p-6 overflow-y-auto max-h-[40%]">
+                          <div className="flex items-center gap-2 mb-4">
+                            <BookOpen className="h-5 w-5 text-primary" />
+                            <h3 className="text-lg font-semibold">How to Add Section to Shopify</h3>
                           </div>
-                          {downloadStats && downloadStats.limit !== Infinity && (
-                            <p className="text-xs text-muted-foreground text-center">
-                              {downloadStats.remaining > 0 
-                                ? `${downloadStats.remaining} download${downloadStats.remaining !== 1 ? 's' : ''} remaining (${downloadStats.count}/${downloadStats.limit} used)`
-                                : `Download limit reached (${downloadStats.count}/${downloadStats.limit}). Upgrade to Pro for unlimited downloads.`
-                              }
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex-1 overflow-auto rounded-lg border bg-muted/30 p-4">
-                          <Textarea
-                            value={selectedSection.liquidCode || ''}
-                            readOnly
-                            className="font-mono text-xs md:text-sm min-h-[300px] resize-none border-0 bg-transparent"
-                            style={{ 
-                              whiteSpace: 'pre-wrap',
-                              wordBreak: 'break-word'
-                            }}
-                          />
-                          {selectedSection.liquidCode && (
-                            <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
-                              <span>Code length: {selectedSection.liquidCode.length.toLocaleString()} characters</span>
-                              {selectedSection.liquidCode.includes('{% schema %}') && selectedSection.liquidCode.includes('{% endschema %}') 
-                                ? <span className="text-green-600 dark:text-green-400">✓ Includes schema</span>
-                                : <span className="text-orange-600 dark:text-orange-400">⚠ Missing schema</span>}
+                          <div className="space-y-4">
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                                1
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-sm mb-1">Access Your Theme Editor</h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Go to Shopify admin → <strong>Online Store</strong> → <strong>Themes</strong> → Click <strong>&quot;Customize&quot;</strong>
+                                </p>
+                              </div>
                             </div>
-                          )}
+
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                                2
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-sm mb-1">Navigate to Theme Files</h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Click <strong>&quot;Theme settings&quot;</strong> (gear icon) or access <strong>&quot;Sections&quot;</strong> folder
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                                3
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-sm mb-1">Upload the Section File</h4>
+                                <p className="text-xs text-muted-foreground mb-1">
+                                  Click <strong>&quot;Add a new section&quot;</strong> and name it: <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{selectedSection.sectionId}.liquid</code>
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  Paste the code below or download the file
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                                4
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-sm mb-1">Add Section to Your Page</h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Go back to page editor → Click <strong>&quot;Add section&quot;</strong> → Select your new section
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                                5
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-sm mb-1">Customize and Save</h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Customize settings in the sidebar, then click <strong>&quot;Save&quot;</strong>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Code Section */}
+                        <div className="flex-1 flex flex-col p-4 md:p-6 overflow-hidden">
+                          <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex gap-2">
+                              <Button 
+                                onClick={copyToClipboard} 
+                                variant="default" 
+                                size="sm" 
+                                className="flex-1"
+                                disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
+                              >
+                                <Copy className="mr-2 h-4 w-4" />
+                                Copy Code
+                              </Button>
+                              <Button 
+                                onClick={downloadLiquid} 
+                                variant="outline" 
+                                size="sm"
+                                disabled={!selectedSection || (downloadStats ? !downloadStats.allowed : false)}
+                              >
+                                <Download className="mr-2 h-4 w-4" />
+                                Download
+                              </Button>
+                            </div>
+                            {downloadStats && downloadStats.limit !== Infinity && (
+                              <p className="text-xs text-muted-foreground text-center">
+                                {downloadStats.remaining > 0 
+                                  ? `${downloadStats.remaining} download${downloadStats.remaining !== 1 ? 's' : ''} remaining (${downloadStats.count}/${downloadStats.limit} used)`
+                                  : `Download limit reached (${downloadStats.count}/${downloadStats.limit}). Upgrade to Pro for unlimited downloads.`
+                                }
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex-1 overflow-auto rounded-lg border bg-muted/30 p-4">
+                            <Textarea
+                              value={selectedSection.liquidCode || ''}
+                              readOnly
+                              className="font-mono text-xs md:text-sm min-h-[200px] resize-none border-0 bg-transparent"
+                              style={{ 
+                                whiteSpace: 'pre-wrap',
+                                wordBreak: 'break-word'
+                              }}
+                            />
+                            {selectedSection.liquidCode && (
+                              <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+                                <span>Code length: {selectedSection.liquidCode.length.toLocaleString()} characters</span>
+                                {selectedSection.liquidCode.includes('{% schema %}') && selectedSection.liquidCode.includes('{% endschema %}') 
+                                  ? <span className="text-green-600 dark:text-green-400">✓ Includes schema</span>
+                                  : <span className="text-orange-600 dark:text-orange-400">⚠ Missing schema</span>}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>

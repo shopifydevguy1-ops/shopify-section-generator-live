@@ -116,3 +116,4 @@ ORDER BY u.created_at DESC;
    - Check database for existing device fingerprints
    - Ensure IP address is being captured correctly
 
+
