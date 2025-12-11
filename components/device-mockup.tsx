@@ -33,102 +33,19 @@ export function DeviceMockup({
     )
   }
 
-  // Laptop + Mobile only view
+  // Laptop + Mobile only view (now just displays image directly since images include device frame)
   if (showLaptopMobileOnly) {
     return (
-      <div className={`flex items-end justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap w-full ${className}`}>
-        {/* Laptop - Left side - Silver/Grey MacBook style */}
-        <div className="relative w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] h-[150px] sm:h-[175px] md:h-[200px] lg:h-[225px] flex-shrink-0">
-          {/* Laptop Screen */}
-          <div className="absolute inset-0" style={{ transform: 'perspective(1200px) rotateX(2deg)', transformOrigin: 'bottom' }}>
-            {/* Outer bezel - Silver/Grey MacBook style */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-300 via-slate-200 to-slate-300 rounded-t-lg shadow-[0_15px_40px_rgba(0,0,0,0.3)] border border-slate-400/30">
-              {/* Inner bezel - Thin black */}
-              <div className="absolute inset-[2px] bg-black rounded-t-md">
-                {/* Subtle notch/camera at top center */}
-                <div className="absolute top-[1px] left-1/2 -translate-x-1/2 w-[50px] sm:w-[60px] md:w-[70px] lg:w-[80px] h-[3px] bg-slate-400/40 rounded-b-full"></div>
-                
-                {/* Screen area */}
-                <div className="absolute inset-[1px] top-[4px] bg-white rounded-sm overflow-hidden shadow-inner">
-                  <div className="relative w-full h-full bg-white">
-                    <Image
-                      src={previewImage || ''}
-                      alt={alt}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 360px"
-                      unoptimized
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Laptop Base/Keyboard - Silver/Grey */}
-          <div className="absolute bottom-0 left-0 right-0" style={{ height: '14%', transform: 'perspective(800px) rotateX(18deg)', transformOrigin: 'top' }}>
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-300 via-slate-200 to-slate-300 rounded-b-lg shadow-[0_5px_20px_rgba(0,0,0,0.3)] border-t border-slate-400/30">
-              {/* Speaker grilles at bottom */}
-              <div className="absolute bottom-[15%] left-[5%] right-[5%] h-[2px] flex gap-1">
-                {Array.from({ length: 20 }).map((_, i) => (
-                  <div key={i} className="flex-1 h-full bg-slate-400/20 rounded"></div>
-                ))}
-              </div>
-              
-              {/* Keyboard area - Grey keys */}
-              <div className="absolute inset-x-[6%] top-[25%] bottom-[25%] bg-slate-400/20 rounded">
-                {/* Keyboard rows */}
-                <div className="absolute inset-x-[2%] top-[10%] h-[18%] flex gap-[1px]">
-                  {Array.from({ length: 12 }).map((_, i) => (
-                    <div key={i} className="flex-1 bg-slate-500/30 rounded-sm"></div>
-                  ))}
-                </div>
-                <div className="absolute inset-x-[2%] top-[35%] h-[18%] flex gap-[1px]">
-                  {Array.from({ length: 12 }).map((_, i) => (
-                    <div key={i} className="flex-1 bg-slate-500/30 rounded-sm"></div>
-                  ))}
-                </div>
-                <div className="absolute inset-x-[2%] top-[60%] h-[18%] flex gap-[1px]">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="flex-1 bg-slate-500/30 rounded-sm"></div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Trackpad - Dark area */}
-              <div className="absolute bottom-[30%] left-1/2 -translate-x-1/2 w-[22%] h-[12%] bg-slate-600/40 rounded-lg border border-slate-500/30"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Smartphone - Right side - Black iPhone style with visible bezel and prominent island */}
-        <div className="relative z-10 w-[100px] sm:w-[120px] md:w-[140px] lg:w-[160px] h-[180px] sm:h-[210px] md:h-[240px] lg:h-[270px] flex-shrink-0">
-          <div className="absolute inset-0">
-            {/* Phone frame - Black with visible bezel */}
-            <div className="absolute inset-0 bg-black rounded-[22px] sm:rounded-[26px] md:rounded-[30px] lg:rounded-[34px] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-              {/* Outer bezel - visible black frame */}
-              <div className="absolute inset-0 bg-black rounded-[22px] sm:rounded-[26px] md:rounded-[30px] lg:rounded-[34px]"></div>
-              
-              {/* Dynamic island - Prominent pill-shaped at top center */}
-              <div className="absolute top-[6px] sm:top-[7px] md:top-[8px] lg:top-[9px] left-1/2 -translate-x-1/2 w-[50px] sm:w-[58px] md:w-[66px] lg:w-[74px] h-[22px] sm:h-[24px] md:h-[26px] lg:h-[28px] bg-black rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.9)] z-10">
-                <div className="absolute inset-[1px] bg-gray-950 rounded-full"></div>
-              </div>
-              
-              {/* Screen area - With visible bezel around it */}
-              <div className="absolute inset-[3px] sm:inset-[3.5px] md:inset-[4px] lg:inset-[4.5px] top-[28px] sm:top-[31px] md:top-[34px] lg:top-[37px] bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[21px] lg:rounded-[25px] overflow-hidden shadow-inner">
-                <div className="relative w-full h-full bg-white">
-                  <Image
-                    src={mobileImage || previewImage || ''}
-                    alt={alt}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, 160px"
-                    unoptimized
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className={`flex items-center justify-center w-full ${className}`}>
+        <div className="relative w-full h-full max-w-full">
+          <Image
+            src={previewImage || ''}
+            alt={alt}
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 800px"
+            unoptimized
+          />
         </div>
       </div>
     )
