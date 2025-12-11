@@ -392,8 +392,8 @@ export default function GeneratorPage() {
                             previewImage={section.previewImage}
                             mobileImage={section.mobileImage}
                             alt={section.name}
-                            showLaptopOnly={true}
-                            className="w-full h-full"
+                            showLaptopMobileOnly={true}
+                            className="w-full scale-75 sm:scale-85 md:scale-95"
                           />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
