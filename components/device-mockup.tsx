@@ -99,23 +99,23 @@ export function DeviceMockup({
           </div>
         </div>
 
-        {/* Smartphone - Overlapping laptop on the right - Black iPhone style */}
-        <div className="relative z-20 w-[100px] sm:w-[120px] md:w-[140px] lg:w-[160px] h-[180px] sm:h-[210px] md:h-[240px] lg:h-[270px] flex-shrink-0 -ml-[40px] sm:-ml-[50px] md:-ml-[60px] lg:-ml-[70px] mb-[20px] sm:mb-[25px] md:mb-[30px] lg:mb-[35px]">
+        {/* Smartphone - Right side - Black iPhone style with improved design */}
+        <div className="relative z-10 w-[100px] sm:w-[120px] md:w-[140px] lg:w-[160px] h-[180px] sm:h-[210px] md:h-[240px] lg:h-[270px] flex-shrink-0">
           <div className="absolute inset-0">
             {/* Phone frame - Black with visible bezel */}
-            <div className="absolute inset-0 bg-black rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+            <div className="absolute inset-0 bg-black rounded-[22px] sm:rounded-[26px] md:rounded-[30px] lg:rounded-[34px] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
               {/* Outer bezel - visible black frame */}
-              <div className="absolute inset-0 bg-black rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px]"></div>
+              <div className="absolute inset-0 bg-black rounded-[22px] sm:rounded-[26px] md:rounded-[30px] lg:rounded-[34px]"></div>
               
-              {/* Dynamic island - Prominent elongated oval at top center */}
-              <div className="absolute top-[6px] sm:top-[7px] md:top-[8px] lg:top-[9px] left-1/2 -translate-x-1/2 w-[50px] sm:w-[58px] md:w-[66px] lg:w-[74px] h-[22px] sm:h-[24px] md:h-[26px] lg:h-[28px] bg-black rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.9)] z-10">
+              {/* Dynamic island - More prominent and realistic */}
+              <div className="absolute top-[7px] sm:top-[8px] md:top-[9px] lg:top-[10px] left-1/2 -translate-x-1/2 w-[48px] sm:w-[56px] md:w-[64px] lg:w-[72px] h-[22px] sm:h-[24px] md:h-[26px] lg:h-[28px] bg-black rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.9)] z-10">
                 <div className="absolute inset-[1px] bg-gray-950 rounded-full"></div>
                 {/* Inner highlight for depth */}
-                <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-[60%] h-[2px] bg-gray-800/30 rounded-full"></div>
+                <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-[65%] h-[2px] bg-gray-800/40 rounded-full"></div>
               </div>
               
               {/* Screen area - With visible bezel around it */}
-              <div className="absolute inset-[3px] sm:inset-[3.5px] md:inset-[4px] lg:inset-[4.5px] top-[28px] sm:top-[31px] md:top-[34px] lg:top-[37px] bg-white rounded-[14px] sm:rounded-[17px] md:rounded-[20px] lg:rounded-[24px] overflow-hidden shadow-inner">
+              <div className="absolute inset-[3px] sm:inset-[3.5px] md:inset-[4px] lg:inset-[4.5px] top-[29px] sm:top-[32px] md:top-[35px] lg:top-[38px] bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[21px] lg:rounded-[25px] overflow-hidden shadow-inner">
                 <div className="relative w-full h-full">
                   <Image
                     src={mobileImage || previewImage || ''}

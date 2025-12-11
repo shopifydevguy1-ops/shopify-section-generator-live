@@ -387,13 +387,13 @@ export default function GeneratorPage() {
                   >
                     {section.previewImage ? (
                       <div className="relative aspect-video bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden flex items-center justify-center py-2 sm:py-4">
-                        <div className="w-full h-full flex items-center justify-center scale-75 sm:scale-90 md:scale-100">
+                        <div className="w-full h-full flex items-center justify-center">
                           <DeviceMockup 
                             previewImage={section.previewImage}
                             mobileImage={section.mobileImage}
                             alt={section.name}
-                            showLaptopMobileOnly={true}
-                            className="w-full"
+                            showLaptopOnly={true}
+                            className="w-full h-full"
                           />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
