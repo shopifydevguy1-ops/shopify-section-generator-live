@@ -9,6 +9,7 @@ interface DeviceMockupProps {
   alt?: string
   showAllDevices?: boolean
   showLaptopMobileOnly?: boolean
+  showLaptopOnly?: boolean
   className?: string
 }
 
@@ -18,6 +19,7 @@ export function DeviceMockup({
   alt = "Preview", 
   showAllDevices = true,
   showLaptopMobileOnly = false,
+  showLaptopOnly = false,
   className = "" 
 }: DeviceMockupProps) {
   if (!previewImage) {
@@ -53,7 +55,7 @@ export function DeviceMockup({
                       src={previewImage || ''}
                       alt={alt}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 360px"
                       unoptimized
                     />
@@ -153,7 +155,7 @@ export function DeviceMockup({
                       src={previewImage}
                       alt={alt}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 360px"
                       unoptimized
                     />
