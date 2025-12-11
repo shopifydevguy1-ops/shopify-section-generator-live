@@ -390,15 +390,14 @@ export default function GeneratorPage() {
                     onClick={() => handleSectionSelect(section)}
                   >
                     {section.previewImage ? (
-                      <div className="relative aspect-video bg-muted/30">
-                        <Image 
-                          src={section.previewImage} 
+                      <div className="relative aspect-video bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden flex items-center justify-center py-4">
+                        <DeviceMockup 
+                          previewImage={section.previewImage}
                           alt={section.name}
-                          fill
-                          className="object-contain transition-transform group-hover:scale-105"
-                          unoptimized
+                          showAllDevices={true}
+                          className="scale-75 sm:scale-90 md:scale-100"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                       </div>
                     ) : (
                       <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-muted/50 to-muted/30 text-muted-foreground">
