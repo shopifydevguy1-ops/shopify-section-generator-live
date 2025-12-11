@@ -34,9 +34,9 @@ export function DeviceMockup({
   // Laptop + Mobile only view
   if (showLaptopMobileOnly) {
     return (
-      <div className={`flex items-end justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap ${className}`} style={{ maxWidth: '100%' }}>
+      <div className={`flex items-end justify-center gap-3 sm:gap-5 md:gap-6 lg:gap-8 flex-wrap w-full ${className}`}>
         {/* Laptop - Left side */}
-        <div className="relative" style={{ width: 'clamp(240px, 35vw, 400px)', height: 'clamp(150px, 22vw, 250px)' }}>
+        <div className="relative w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] h-[150px] sm:h-[175px] md:h-[200px] lg:h-[225px] flex-shrink-0">
           {/* Laptop Screen */}
           <div className="absolute inset-0" style={{ transform: 'perspective(1200px) rotateX(2deg)', transformOrigin: 'bottom' }}>
             {/* Outer bezel - MacBook style */}
@@ -44,7 +44,7 @@ export function DeviceMockup({
               {/* Inner bezel */}
               <div className="absolute inset-[3px] bg-gray-800 rounded-t-md">
                 {/* Notch at top center - MacBook style */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[clamp(60px,8vw,100px)] h-[5px] bg-gray-900 rounded-b-full"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] sm:w-[70px] md:w-[80px] lg:w-[90px] h-[5px] bg-gray-900 rounded-b-full"></div>
                 
                 {/* Screen area */}
                 <div className="absolute inset-[1px] top-[8px] bg-white rounded-sm overflow-hidden shadow-inner">
@@ -54,7 +54,7 @@ export function DeviceMockup({
                       alt={alt}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 240px, (max-width: 768px) 320px, 400px"
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 360px"
                       unoptimized
                     />
                   </div>
@@ -75,34 +75,34 @@ export function DeviceMockup({
         </div>
 
         {/* Smartphone - Right side */}
-        <div className="relative z-10" style={{ width: 'clamp(100px, 15vw, 180px)', height: 'clamp(180px, 27vw, 320px)' }}>
+        <div className="relative z-10 w-[100px] sm:w-[120px] md:w-[140px] lg:w-[160px] h-[180px] sm:h-[210px] md:h-[240px] lg:h-[270px] flex-shrink-0">
           <div className="absolute inset-0">
             {/* Phone frame - iPhone style */}
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900 rounded-[clamp(18px,2.5vw,32px)] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900 rounded-[18px] sm:rounded-[22px] md:rounded-[26px] lg:rounded-[30px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
               {/* Outer bezel glow */}
-              <div className="absolute inset-[1px] bg-gradient-to-b from-gray-800/50 to-transparent rounded-[clamp(17px,2.4vw,31px)]"></div>
+              <div className="absolute inset-[1px] bg-gradient-to-b from-gray-800/50 to-transparent rounded-[17px] sm:rounded-[21px] md:rounded-[25px] lg:rounded-[29px]"></div>
               
               {/* Dynamic island / notch at top */}
-              <div className="absolute top-[clamp(6px,0.8vw,10px)] left-1/2 -translate-x-1/2 w-[clamp(40px,5.5vw,65px)] h-[clamp(18px,2.4vw,28px)] bg-black rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+              <div className="absolute top-[6px] sm:top-[7px] md:top-[8px] lg:top-[9px] left-1/2 -translate-x-1/2 w-[40px] sm:w-[48px] md:w-[56px] lg:w-[64px] h-[18px] sm:h-[21px] md:h-[24px] lg:h-[27px] bg-black rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 <div className="absolute inset-[1px] bg-gray-900 rounded-full"></div>
               </div>
               
               {/* Screen area */}
-              <div className="absolute inset-[clamp(3px,0.4vw,5px)] top-[clamp(24px,3.2vw,38px)] bg-white rounded-[clamp(14px,1.9vw,26px)] overflow-hidden shadow-inner">
+              <div className="absolute inset-[3px] sm:inset-[3.5px] md:inset-[4px] lg:inset-[4.5px] top-[24px] sm:top-[28px] md:top-[32px] lg:top-[36px] bg-white rounded-[14px] sm:rounded-[17px] md:rounded-[20px] lg:rounded-[24px] overflow-hidden shadow-inner">
                 <div className="relative w-full h-full">
                   <Image
                     src={mobileImage || previewImage || ''}
                     alt={alt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 100px, (max-width: 768px) 140px, 180px"
+                    sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, 160px"
                     unoptimized
                   />
                 </div>
               </div>
               
               {/* Home indicator (for older iPhone style) */}
-              <div className="absolute bottom-[clamp(4px,0.5vw,6px)] left-1/2 -translate-x-1/2 w-[clamp(30px,4vw,50px)] h-[clamp(3px,0.4vw,4px)] bg-gray-700 rounded-full"></div>
+              <div className="absolute bottom-[4px] sm:bottom-[5px] md:bottom-[5px] lg:bottom-[6px] left-1/2 -translate-x-1/2 w-[30px] sm:w-[36px] md:w-[42px] lg:w-[48px] h-[3px] sm:h-[3.5px] md:h-[4px] bg-gray-700 rounded-full"></div>
             </div>
           </div>
         </div>
