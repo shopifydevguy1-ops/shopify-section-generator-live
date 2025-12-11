@@ -25,6 +25,7 @@ export default function GeneratorPage() {
     liquidCode: string
     sectionId: string
     previewImage?: string
+    mobileImage?: string
     name: string
     description: string
   }>>([])
@@ -32,6 +33,7 @@ export default function GeneratorPage() {
     liquidCode: string
     sectionId: string
     previewImage?: string
+    mobileImage?: string
     name: string
     description: string
   } | null>(null)
@@ -387,6 +389,7 @@ export default function GeneratorPage() {
                       <div className="relative aspect-video bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden flex items-center justify-center py-4">
                         <DeviceMockup 
                           previewImage={section.previewImage}
+                          mobileImage={section.mobileImage}
                           alt={section.name}
                           showLaptopMobileOnly={true}
                           className="scale-75 sm:scale-90 md:scale-100"
@@ -429,6 +432,7 @@ export default function GeneratorPage() {
                       <div className="lg:w-2/5 w-full bg-gradient-to-br from-muted/30 to-muted/10 p-4 md:p-6 overflow-auto flex items-center justify-center border-b lg:border-b-0 lg:border-r border-border min-h-[300px] lg:min-h-0">
                         <DeviceMockup 
                           previewImage={selectedSection.previewImage}
+                          mobileImage={selectedSection.mobileImage}
                           alt={selectedSection.name}
                           showLaptopMobileOnly={true}
                           className="py-4"

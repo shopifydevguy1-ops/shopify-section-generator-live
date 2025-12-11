@@ -5,6 +5,7 @@ import { Code } from "lucide-react"
 
 interface DeviceMockupProps {
   previewImage?: string
+  mobileImage?: string
   alt?: string
   showAllDevices?: boolean
   showLaptopMobileOnly?: boolean
@@ -12,7 +13,8 @@ interface DeviceMockupProps {
 }
 
 export function DeviceMockup({ 
-  previewImage, 
+  previewImage,
+  mobileImage,
   alt = "Preview", 
   showAllDevices = true,
   showLaptopMobileOnly = false,
@@ -76,7 +78,7 @@ export function DeviceMockup({
               <div className="absolute inset-[4px] sm:inset-[5px] md:inset-[6px] top-[28px] sm:top-[34px] md:top-[40px] bg-white rounded-[16px] sm:rounded-[18px] md:rounded-[20px] overflow-hidden">
                 <div className="relative w-full h-full">
                   <Image
-                    src={previewImage}
+                    src={mobileImage || previewImage || ''}
                     alt={alt}
                     fill
                     className="object-cover"

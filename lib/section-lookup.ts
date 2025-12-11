@@ -12,6 +12,7 @@ export interface SectionMetadata {
   description: string
   liquidCode: string
   previewImage?: string
+  mobileImage?: string
 }
 
 /**
@@ -90,6 +91,25 @@ function getPreviewImagePath(sectionsPath: string, filename: string): string | u
 }
 
 /**
+ * Get mobile preview image path for a section
+ * Checks /sections/images/mobile/{filename}.png
+ * Returns API route path for serving the image
+ */
+function getMobileImagePath(sectionsPath: string, filename: string): string | undefined {
+  const mobileImageDir = path.join(sectionsPath, 'images', 'mobile')
+  // Keep the same filename (including SG- prefix) for image
+  const imageName = filename.replace(/\.(liquid|html)$/i, '.png')
+  const imagePath = path.join(mobileImageDir, imageName)
+
+  if (fs.existsSync(imagePath)) {
+    // Return API route path for serving the image
+    return `/api/sections/images/mobile/${imageName}`
+  }
+
+  return undefined
+}
+
+/**
  * Load all sections from /sections folder
  * Extracts metadata from comments and file content
  */
@@ -138,6 +158,9 @@ export function loadAllSections(): SectionMetadata[] {
 
         // Get preview image path
         const previewImage = getPreviewImagePath(sectionsPath, file)
+        
+        // Get mobile image path
+        const mobileImage = getMobileImagePath(sectionsPath, file)
 
         sections.push({
           filename: file,
@@ -146,6 +169,7 @@ export function loadAllSections(): SectionMetadata[] {
           description,
           liquidCode: content,
           previewImage,
+          mobileImage,
         })
       } catch (error) {
         console.error(`[Section Lookup] Error loading ${file}:`, error)

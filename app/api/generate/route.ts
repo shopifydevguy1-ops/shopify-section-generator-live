@@ -63,6 +63,7 @@ export async function POST(request: Request) {
         liquidCode: section.liquidCode,
         sectionId: section.filename.replace(/\.liquid$/, ''),
         previewImage: section.previewImage,
+        mobileImage: section.mobileImage,
         name: section.name,
         description: section.description || `Section: ${section.name}`,
       }))
