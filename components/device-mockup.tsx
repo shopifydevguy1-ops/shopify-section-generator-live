@@ -51,6 +51,24 @@ export function DeviceMockup({
     )
   }
 
+  // Laptop only view (now just displays image directly since images include device frame)
+  if (showLaptopOnly) {
+    return (
+      <div className={`flex items-center justify-center w-full ${className}`}>
+        <div className="relative w-full h-full max-w-full">
+          <Image
+            src={previewImage || ''}
+            alt={alt}
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 800px"
+            unoptimized
+          />
+        </div>
+      </div>
+    )
+  }
+
   if (showAllDevices) {
     return (
       <div className={`flex items-end justify-center gap-2 sm:gap-4 md:gap-6 flex-wrap ${className}`}>
