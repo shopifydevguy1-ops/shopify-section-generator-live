@@ -29,28 +29,27 @@ export function DeviceMockup({
 
   if (showAllDevices) {
     return (
-      <div className={`flex items-end justify-center gap-3 md:gap-6 flex-wrap ${className}`}>
+      <div className={`flex items-end justify-center gap-2 sm:gap-4 md:gap-6 flex-wrap ${className}`}>
         {/* Laptop - Left side, largest */}
-        <div className="relative" style={{ width: '320px', height: '200px' }}>
-          {/* Laptop base */}
-          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-b from-gray-700 to-gray-900 rounded-b-lg shadow-lg" style={{ transform: 'perspective(500px) rotateX(15deg)' }}></div>
-          
-          {/* Laptop screen */}
-          <div className="absolute inset-0" style={{ transform: 'perspective(1000px) rotateX(8deg)' }}>
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-2xl">
-              {/* Screen bezel */}
-              <div className="absolute inset-0 bg-gray-800 rounded-lg" style={{ margin: '6px' }}>
-                {/* Notch at top center */}
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-1.5 bg-gray-700 rounded-b-full"></div>
+        <div className="relative w-[280px] sm:w-[320px] md:w-[360px] h-[180px] sm:h-[200px] md:h-[220px]">
+          {/* Laptop screen frame */}
+          <div className="absolute inset-0">
+            {/* Outer frame - dark gray/black */}
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+              {/* Inner bezel */}
+              <div className="absolute inset-[4px] bg-gray-800 rounded-md">
+                {/* Notch at top center - MacBook style */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] sm:w-[90px] md:w-[100px] h-[6px] bg-gray-700 rounded-b-full"></div>
                 
-                {/* Screen content */}
-                <div className="absolute inset-0 bg-white rounded" style={{ margin: '2px', marginTop: '10px' }}>
-                  <div className="relative w-full h-full rounded overflow-hidden bg-white">
+                {/* Screen area - white background */}
+                <div className="absolute inset-[2px] top-[10px] bg-white rounded-sm overflow-hidden">
+                  <div className="relative w-full h-full">
                     <Image
                       src={previewImage}
                       alt={alt}
                       fill
-                      className="object-contain"
+                      className="object-cover"
+                      sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 360px"
                       unoptimized
                     />
                   </div>
@@ -58,42 +57,52 @@ export function DeviceMockup({
               </div>
             </div>
           </div>
+          {/* Laptop base - subtle shadow underneath */}
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[95%] h-[4px] bg-gray-700 rounded-b-lg shadow-lg"></div>
         </div>
 
-        {/* Smartphone - Center, overlapping */}
-        <div className="relative z-10" style={{ width: '140px', height: '240px', marginBottom: '-20px' }}>
-          <div className="absolute inset-0 bg-black rounded-[24px] shadow-2xl">
-            {/* Dynamic island / notch */}
-            <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-black rounded-full border border-gray-800"></div>
-            
-            {/* Screen */}
-            <div className="absolute inset-0 bg-white rounded-[20px]" style={{ margin: '5px', marginTop: '20px' }}>
-              <div className="relative w-full h-full rounded-[16px] overflow-hidden bg-white">
-                <Image
-                  src={previewImage}
-                  alt={alt}
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
+        {/* Smartphone - Center, slightly overlapping */}
+        <div className="relative z-10 w-[120px] sm:w-[140px] md:w-[160px] h-[200px] sm:h-[240px] md:h-[280px] -mb-4 sm:-mb-6">
+          <div className="absolute inset-0">
+            {/* Phone frame - black with rounded corners */}
+            <div className="absolute inset-0 bg-black rounded-[20px] sm:rounded-[24px] md:rounded-[28px] shadow-[0_8px_25px_rgba(0,0,0,0.4)]">
+              {/* Dynamic island / notch at top */}
+              <div className="absolute top-[8px] sm:top-[10px] md:top-[12px] left-1/2 -translate-x-1/2 w-[50px] sm:w-[60px] md:w-[70px] h-[20px] sm:h-[24px] md:h-[28px] bg-black rounded-full border border-gray-900"></div>
+              
+              {/* Screen area */}
+              <div className="absolute inset-[4px] sm:inset-[5px] md:inset-[6px] top-[28px] sm:top-[34px] md:top-[40px] bg-white rounded-[16px] sm:rounded-[18px] md:rounded-[20px] overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={previewImage}
+                    alt={alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 160px"
+                    unoptimized
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Tablet - Right side */}
-        <div className="relative" style={{ width: '200px', height: '280px' }}>
-          <div className="absolute inset-0 bg-black rounded-[14px] shadow-2xl">
-            {/* Screen */}
-            <div className="absolute inset-0 bg-white rounded-[10px]" style={{ margin: '7px' }}>
-              <div className="relative w-full h-full rounded-[6px] overflow-hidden bg-white">
-                <Image
-                  src={previewImage}
-                  alt={alt}
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
+        <div className="relative w-[160px] sm:w-[180px] md:w-[200px] h-[220px] sm:h-[250px] md:h-[280px]">
+          <div className="absolute inset-0">
+            {/* Tablet frame - black with rounded corners */}
+            <div className="absolute inset-0 bg-black rounded-[10px] sm:rounded-[12px] md:rounded-[14px] shadow-[0_8px_25px_rgba(0,0,0,0.4)]">
+              {/* Screen area */}
+              <div className="absolute inset-[5px] sm:inset-[6px] md:inset-[7px] bg-white rounded-[6px] sm:rounded-[7px] md:rounded-[8px] overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={previewImage}
+                    alt={alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 160px, (max-width: 768px) 180px, 200px"
+                    unoptimized
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -105,25 +114,25 @@ export function DeviceMockup({
   // Single device view (desktop only)
   return (
     <div className={`relative w-full h-full min-h-[300px] ${className}`}>
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-2xl" 
-           style={{ 
-             clipPath: 'polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%)',
-             transform: 'perspective(1000px) rotateX(5deg)'
-           }}>
-        <div className="absolute inset-0 bg-gray-800 rounded-lg" style={{ margin: '8px' }}>
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gray-700 rounded-b-full"></div>
-          <div className="absolute inset-0 bg-white rounded" style={{ margin: '2px', marginTop: '12px' }}>
-            <div className="relative w-full h-full rounded overflow-hidden">
-              <Image
-                src={previewImage}
-                alt={alt}
-                fill
-                className="object-contain"
-                unoptimized
-              />
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+          <div className="absolute inset-[4px] bg-gray-800 rounded-md">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] h-[6px] bg-gray-700 rounded-b-full"></div>
+            <div className="absolute inset-[2px] top-[10px] bg-white rounded-sm overflow-hidden">
+              <div className="relative w-full h-full">
+                <Image
+                  src={previewImage}
+                  alt={alt}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
         </div>
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[95%] h-[4px] bg-gray-700 rounded-b-lg shadow-lg"></div>
       </div>
     </div>
   )
