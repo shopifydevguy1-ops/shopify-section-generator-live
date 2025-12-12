@@ -446,7 +446,7 @@ export default function GeneratorPage() {
                       {/* Right Side - Instructions and Code */}
                       <div className="lg:w-3/5 w-full flex flex-col overflow-hidden bg-background">
                         {/* Instructions Section */}
-                        <div className="border-b border-border bg-muted/20 p-4 md:p-6 overflow-y-auto flex-shrink-0" style={{ maxHeight: '35%' }}>
+                        <div className="border-b border-border bg-muted/20 p-4 md:p-6 overflow-y-auto flex-shrink-0" style={{ maxHeight: '100%' }}>
                           <div className="flex items-center gap-2 mb-4">
                             <BookOpen className="h-5 w-5 text-primary" />
                             <h3 className="text-lg font-semibold">How to Add Section to Shopify</h3>
