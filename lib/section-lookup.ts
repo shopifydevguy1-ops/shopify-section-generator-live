@@ -74,7 +74,7 @@ function inferNameFromFilename(filename: string): string {
 /**
  * Get preview image path for a section
  * Checks /sections/images/{filename}.png
- * Returns API route path for serving the image
+ * Returns API route path for serving the image with cache-busting query parameter
  */
 function getPreviewImagePath(sectionsPath: string, filename: string): string | undefined {
   const imageDir = path.join(sectionsPath, 'images')
@@ -83,8 +83,11 @@ function getPreviewImagePath(sectionsPath: string, filename: string): string | u
   const imagePath = path.join(imageDir, imageName)
 
   if (fs.existsSync(imagePath)) {
-    // Return API route path for serving the image
-    return `/api/sections/images/${imageName}`
+    // Get file modification time for cache busting
+    const stats = fs.statSync(imagePath)
+    const lastModified = stats.mtime.getTime()
+    // Return API route path with cache-busting query parameter
+    return `/api/sections/images/${imageName}?v=${lastModified}`
   }
 
   return undefined
@@ -93,7 +96,7 @@ function getPreviewImagePath(sectionsPath: string, filename: string): string | u
 /**
  * Get mobile preview image path for a section
  * Checks /sections/images/mobile/{filename}.png
- * Returns API route path for serving the image
+ * Returns API route path for serving the image with cache-busting query parameter
  */
 function getMobileImagePath(sectionsPath: string, filename: string): string | undefined {
   const mobileImageDir = path.join(sectionsPath, 'images', 'mobile')
@@ -102,8 +105,11 @@ function getMobileImagePath(sectionsPath: string, filename: string): string | un
   const imagePath = path.join(mobileImageDir, imageName)
 
   if (fs.existsSync(imagePath)) {
-    // Return API route path for serving the image
-    return `/api/sections/images/mobile/${imageName}`
+    // Get file modification time for cache busting
+    const stats = fs.statSync(imagePath)
+    const lastModified = stats.mtime.getTime()
+    // Return API route path with cache-busting query parameter
+    return `/api/sections/images/mobile/${imageName}?v=${lastModified}`
   }
 
   return undefined

@@ -50,6 +50,11 @@ export async function GET(
     const imageBuffer = fs.readFileSync(imageFilePath)
     const ext = path.extname(imagePath).toLowerCase()
     
+    // Get file modification time for cache busting
+    const stats = fs.statSync(imageFilePath)
+    const lastModified = stats.mtime.getTime()
+    const etag = `"${lastModified}"`
+    
     let contentType = 'image/png'
     if (ext === '.jpg' || ext === '.jpeg') {
       contentType = 'image/jpeg'
@@ -61,10 +66,18 @@ export async function GET(
       contentType = 'image/svg+xml'
     }
 
+    // Check if client has cached version
+    const ifNoneMatch = request.headers.get('if-none-match')
+    if (ifNoneMatch === etag) {
+      return new NextResponse(null, { status: 304 })
+    }
+
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Cache-Control': 'public, max-age=3600, must-revalidate',
+        'ETag': etag,
+        'Last-Modified': stats.mtime.toUTCString(),
       },
     })
   } catch (error: any) {
