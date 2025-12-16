@@ -24,18 +24,32 @@ export async function GET(
     const imagePath = pathArray.join('/')
     
     // Get sections directory path - try multiple possible locations
+    // In Vercel serverless, process.cwd() points to the function's working directory
     let sectionsPath = process.env.SECTIONS_DIRECTORY_PATH
     
     if (!sectionsPath) {
-      // Try common paths in order of preference
+      // Try common paths in order of preference for Vercel serverless environment
+      const cwd = process.cwd()
       const possiblePaths = [
-        path.join(process.cwd(), 'sections'),
-        path.join(process.cwd(), '..', 'sections'),
+        // Standard location (most common)
+        path.join(cwd, 'sections'),
+        // Vercel serverless function location
+        path.join(cwd, '..', 'sections'),
+        path.join(cwd, '../..', 'sections'),
+        // Absolute path resolution
+        path.resolve(cwd, 'sections'),
         path.resolve('./sections'),
+        // Vercel build output location
+        '/var/task/sections',
+        path.join('/var/task', 'sections'),
       ]
       
+      console.log(`[Image Route] Trying to find sections directory. CWD: ${cwd}`)
+      
       for (const possiblePath of possiblePaths) {
+        console.log(`[Image Route] Checking path: ${possiblePath}`)
         if (fs.existsSync(possiblePath)) {
+          console.log(`[Image Route] Found sections directory at: ${possiblePath}`)
           sectionsPath = possiblePath
           break
         }
@@ -43,8 +57,11 @@ export async function GET(
       
       // Fallback to default
       if (!sectionsPath) {
-        sectionsPath = path.join(process.cwd(), 'sections')
+        sectionsPath = path.join(cwd, 'sections')
+        console.log(`[Image Route] Using fallback path: ${sectionsPath}`)
       }
+    } else {
+      console.log(`[Image Route] Using SECTIONS_DIRECTORY_PATH env var: ${sectionsPath}`)
     }
     
     const imageFilePath = path.join(sectionsPath, 'images', imagePath)
