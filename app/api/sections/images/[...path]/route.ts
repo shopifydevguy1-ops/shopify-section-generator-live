@@ -32,6 +32,7 @@ export async function GET(
     const resolvedSectionsPath = path.resolve(path.join(sectionsPath, 'images'))
     
     if (!resolvedPath.startsWith(resolvedSectionsPath)) {
+      console.error(`[Image Route] Invalid path: ${resolvedPath} not within ${resolvedSectionsPath}`)
       return NextResponse.json(
         { error: "Invalid path" },
         { status: 403 }
@@ -40,8 +41,11 @@ export async function GET(
 
     // Check if file exists
     if (!fs.existsSync(imageFilePath)) {
+      console.error(`[Image Route] File not found: ${imageFilePath}`)
+      console.error(`[Image Route] Sections path: ${sectionsPath}`)
+      console.error(`[Image Route] Current working directory: ${process.cwd()}`)
       return NextResponse.json(
-        { error: "Image not found" },
+        { error: "Image not found", path: imageFilePath },
         { status: 404 }
       )
     }
