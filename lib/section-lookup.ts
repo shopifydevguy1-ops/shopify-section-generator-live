@@ -73,46 +73,28 @@ function inferNameFromFilename(filename: string): string {
 
 /**
  * Get preview image path for a section
- * Checks /sections/images/{filename}.png
- * Returns API route path for serving the image with cache-busting query parameter
+ * Returns API route path for serving the image
+ * NOTE: We don't check if file exists here to avoid tracing images during build
+ * The image route will return 404 if the image doesn't exist
  */
 function getPreviewImagePath(sectionsPath: string, filename: string): string | undefined {
-  const imageDir = path.join(sectionsPath, 'images')
   // Keep the same filename (including SG- prefix) for image
   const imageName = filename.replace(/\.(liquid|html)$/i, '.png')
-  const imagePath = path.join(imageDir, imageName)
-
-  if (fs.existsSync(imagePath)) {
-    // Get file modification time for cache busting
-    const stats = fs.statSync(imagePath)
-    const lastModified = stats.mtime.getTime()
-    // Return API route path with cache-busting query parameter
-    return `/api/sections/images/${imageName}?v=${lastModified}`
-  }
-
-  return undefined
+  // Return API route path - don't check existence to avoid file tracing
+  return `/api/sections/images/${imageName}`
 }
 
 /**
  * Get mobile preview image path for a section
- * Checks /sections/images/mobile/{filename}.png
- * Returns API route path for serving the image with cache-busting query parameter
+ * Returns API route path for serving the image
+ * NOTE: We don't check if file exists here to avoid tracing images during build
+ * The image route will return 404 if the image doesn't exist
  */
 function getMobileImagePath(sectionsPath: string, filename: string): string | undefined {
-  const mobileImageDir = path.join(sectionsPath, 'images', 'mobile')
   // Keep the same filename (including SG- prefix) for image
   const imageName = filename.replace(/\.(liquid|html)$/i, '.png')
-  const imagePath = path.join(mobileImageDir, imageName)
-
-  if (fs.existsSync(imagePath)) {
-    // Get file modification time for cache busting
-    const stats = fs.statSync(imagePath)
-    const lastModified = stats.mtime.getTime()
-    // Return API route path with cache-busting query parameter
-    return `/api/sections/images/mobile/${imageName}?v=${lastModified}`
-  }
-
-  return undefined
+  // Return API route path - don't check existence to avoid file tracing
+  return `/api/sections/images/mobile/${imageName}`
 }
 
 /**
