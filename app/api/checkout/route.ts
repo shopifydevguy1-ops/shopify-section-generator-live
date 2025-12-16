@@ -29,10 +29,10 @@ export async function GET(request: Request) {
     let planName: string
     
     if (plan === 'expert') {
-      usdAmount = parseFloat(process.env.EXPERT_PLAN_USD_AMOUNT || "125")
+      usdAmount = parseFloat(process.env.EXPERT_PLAN_USD_AMOUNT || "49.99")
       planName = "Expert"
     } else {
-      usdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "20")
+      usdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "4.99")
       planName = "Pro"
     }
     

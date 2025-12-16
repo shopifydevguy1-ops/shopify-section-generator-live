@@ -10,11 +10,11 @@ export default async function PricingPage() {
   const { userId } = auth()
   
   // Get Pro plan pricing
-  const proUsdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "20")
+  const proUsdAmount = parseFloat(process.env.PRO_PLAN_USD_AMOUNT || "4.99")
   const proPhpCents = await convertUSDToPHPCents(proUsdAmount)
   
   // Get Expert plan pricing
-  const expertUsdAmount = parseFloat(process.env.EXPERT_PLAN_USD_AMOUNT || "125")
+  const expertUsdAmount = parseFloat(process.env.EXPERT_PLAN_USD_AMOUNT || "49.99")
   const expertPhpCents = await convertUSDToPHPCents(expertUsdAmount)
 
   return (
@@ -49,7 +49,7 @@ export default async function PricingPage() {
                   ≈ {formatPHP(proPhpCents)} PHP (converted at current rate)
                 </p>
                 <p className="text-sm text-primary font-semibold mt-2">
-                  ✨ Free for first month - 20 sections included
+                  ✨ Free for first month - 10 sections included
                 </p>
               </div>
             </CardHeader>
@@ -61,11 +61,11 @@ export default async function PricingPage() {
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span className="font-semibold">20 free sections in first month</span>
+                  <span className="font-semibold">10 free sections in first month</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />
-                  <span className="font-semibold">50 copies/downloads per month (after trial)</span>
+                  <span className="font-semibold">20 copies/downloads per month (after trial)</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-primary mr-2" />

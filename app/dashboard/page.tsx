@@ -59,12 +59,12 @@ export default async function DashboardPage() {
     maxUsage = "Unlimited"
     remaining = "Unlimited"
   } else if (dbUser.plan === "pro") {
-    // Pro users in first month without subscription get 20, otherwise 50 with subscription
+    // Pro users in first month without subscription get 10, otherwise 20 with subscription
     if (inFirstMonth && !hasActiveSubscription) {
-      maxUsage = 20
+      maxUsage = 10
       remaining = Math.max(0, maxUsage - usageCount)
     } else if (hasActiveSubscription) {
-      maxUsage = 50
+      maxUsage = 20
       remaining = Math.max(0, maxUsage - usageCount)
     } else {
       // Trial ended, no subscription

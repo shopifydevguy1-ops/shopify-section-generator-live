@@ -163,7 +163,7 @@ export function DashboardUsageLimitLive({ initialUsageCount, plan, isAdmin }: Da
               <div className="p-4 bg-destructive/20 border-2 border-destructive rounded-md">
                 <p className="text-sm font-bold mb-2">🚨 Your Free Trial Has Expired</p>
                 <p className="text-xs opacity-90 mb-3">
-                  Your trial period has ended. Subscribe to Pro to continue using the service with 50 copies/downloads per month.
+                  Your trial period has ended. Subscribe to Pro to continue using the service with 20 copies/downloads per month.
                 </p>
                 <Link href="/api/checkout" className="block">
                   <Button size="sm" variant="destructive" className="w-full">Subscribe to Pro Now</Button>

@@ -1588,7 +1588,7 @@ export async function getTrialExpirationInfo(userId: string): Promise<{
     ? parseInt(allCopiesResult.rows[0].count, 10) || 0
     : 0
   
-  const copiesLimit = 20 // Trial limit is 20 copies
+  const copiesLimit = 10 // Trial limit is 10 copies
   
   return {
     isInTrial: inFirstMonth && !hasActiveSubscription,
@@ -1655,7 +1655,7 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
         ? parseInt(allCopiesResult.rows[0].count, 10) || 0
         : 0
       
-      const trialLimit = 20
+      const trialLimit = 10
       const trialInfo = await getTrialExpirationInfo(userId)
       
       // Check if trial expired by date
@@ -1680,7 +1680,7 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
           allowed: false, 
           count: totalCopiesUsed, 
           limit: trialLimit, 
-          reason: `You've used all ${trialLimit} free copies. Subscribe to Pro to continue with 50 copies/downloads per month, or upgrade to Expert for unlimited access.`,
+          reason: `You've used all ${trialLimit} free copies. Subscribe to Pro to continue with 20 copies/downloads per month, or upgrade to Expert for unlimited access.`,
           trialInfo: {
             isInTrial: true,
             daysRemaining: trialInfo.daysRemaining,
@@ -1713,14 +1713,14 @@ export async function canDownloadOrCopy(userId: string, plan: 'free' | 'pro' | '
       }
     }
     
-    // Pro users with active subscription have 50 per month
-    const limit = 50
+    // Pro users with active subscription have 20 per month
+    const limit = 20
     if (userCount >= limit) {
       return { 
         allowed: false, 
         count: userCount, 
         limit, 
-        reason: "You have reached your monthly limit of 50 copies/downloads. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access." 
+        reason: "You have reached your monthly limit of 20 copies/downloads. You can still search/browse unlimited sections. Upgrade to Expert for unlimited access." 
       }
     }
     

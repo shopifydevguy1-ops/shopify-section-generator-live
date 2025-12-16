@@ -90,7 +90,7 @@ export default function LandingPage() {
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4">Ready to Get Started?</CardTitle>
               <CardDescription className="text-white/90">
-                Start generating beautiful Shopify sections today. 20 free sections in your first month.
+                Start generating beautiful Shopify sections today. 10 free sections in your first month.
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center">

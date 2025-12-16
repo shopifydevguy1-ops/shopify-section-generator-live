@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     if (!allowed) {
       const limitValue = limit === Infinity ? 50 : limit
       const upgradeMessage = reason || (dbUser.plan === 'pro' 
-        ? 'You can still search/browse unlimited sections. Subscribe to Pro for 50 copies/downloads per month, or upgrade to Expert for unlimited access.'
+        ? 'You can still search/browse unlimited sections. Subscribe to Pro for 20 copies/downloads per month, or upgrade to Expert for unlimited access.'
         : 'You can still search/browse unlimited sections. Upgrade to Expert for unlimited access and full library access.')
       return NextResponse.json(
         { 
