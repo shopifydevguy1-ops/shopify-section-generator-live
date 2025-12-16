@@ -58,8 +58,10 @@ export async function POST(request: Request) {
       const allSections = loadAllSections()
       const searchResults = searchSections(sectionInput, allSections)
       
-      // Limit to 6 results and map to expected format
-      results = searchResults.slice(0, 6).map(section => ({
+      // Return up to 12 results (increased from 6) to show more relevant sections
+      // If search returns fewer results, show all of them
+      const maxResults = Math.max(12, searchResults.length > 0 ? searchResults.length : 12)
+      results = searchResults.slice(0, maxResults).map(section => ({
         liquidCode: section.liquidCode,
         sectionId: section.filename.replace(/\.liquid$/, ''),
         previewImage: section.previewImage,

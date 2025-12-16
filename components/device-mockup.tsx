@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Code } from "lucide-react"
+import { useState } from "react"
 
 interface DeviceMockupProps {
   previewImage?: string
@@ -22,6 +23,9 @@ export function DeviceMockup({
   showLaptopOnly = false,
   className = "" 
 }: DeviceMockupProps) {
+  const [imageError, setImageError] = useState(false)
+  const [mobileImageError, setMobileImageError] = useState(false)
+
   if (!previewImage) {
     return (
       <div className={`flex items-center justify-center h-full text-muted-foreground ${className}`}>
@@ -38,7 +42,7 @@ export function DeviceMockup({
     return (
       <div className={`flex items-center justify-center gap-4 sm:gap-6 w-full ${className}`}>
         {/* Main/Desktop Image */}
-        {previewImage && (
+        {previewImage && !imageError && (
           <div className="relative flex-1 max-w-[50%] aspect-video min-h-[200px]">
             <Image
               src={previewImage}
@@ -47,12 +51,21 @@ export function DeviceMockup({
               className="object-contain"
               sizes="(max-width: 640px) 50vw, 400px"
               unoptimized
+              onError={() => setImageError(true)}
             />
+          </div>
+        )}
+        {imageError && (
+          <div className="flex-1 max-w-[50%] aspect-video min-h-[200px] flex items-center justify-center bg-muted/30 text-muted-foreground">
+            <div className="text-center">
+              <Code className="h-8 w-8 mx-auto mb-2 opacity-50" />
+              <p className="text-xs">Image unavailable</p>
+            </div>
           </div>
         )}
         
         {/* Mobile Image */}
-        {mobileImage && (
+        {mobileImage && !mobileImageError && (
           <div className="relative flex-1 max-w-[50%] aspect-[9/16] min-h-[200px]">
             <Image
               src={mobileImage}
@@ -61,7 +74,16 @@ export function DeviceMockup({
               className="object-contain"
               sizes="(max-width: 640px) 50vw, 300px"
               unoptimized
+              onError={() => setMobileImageError(true)}
             />
+          </div>
+        )}
+        {mobileImageError && (
+          <div className="flex-1 max-w-[50%] aspect-[9/16] min-h-[200px] flex items-center justify-center bg-muted/30 text-muted-foreground">
+            <div className="text-center">
+              <Code className="h-8 w-8 mx-auto mb-2 opacity-50" />
+              <p className="text-xs">Mobile image unavailable</p>
+            </div>
           </div>
         )}
         

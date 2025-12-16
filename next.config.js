@@ -11,6 +11,11 @@ const nextConfig = {
       'sections/images/**/*',
     ],
   },
+  // Allow images from API routes
+  images: {
+    remotePatterns: [],
+    unoptimized: true, // We're using unoptimized in components, but set globally too
+  },
 }
 
 module.exports = nextConfig

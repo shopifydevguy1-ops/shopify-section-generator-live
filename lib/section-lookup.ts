@@ -192,15 +192,61 @@ function getSectionsDirectoryPath(): string {
 }
 
 /**
+ * Keyword mappings for common section types
+ * Maps user-friendly keywords to section type identifiers
+ */
+const KEYWORD_MAPPINGS: Record<string, string[]> = {
+  'hero': ['hero', 'landing', 'header', 'intro', 'banner', 'headline', 'main'],
+  'feature': ['feature', 'features', 'benefit', 'benefits', 'advantage', 'advantages', 'highlight', 'highlights'],
+  'testimonial': ['testimonial', 'testimonials', 'review', 'reviews', 'rating', 'ratings', 'customer', 'feedback'],
+  'announcement': ['announcement', 'announcements', 'alert', 'alerts', 'notice', 'notices', 'bar', 'banner'],
+  'header': ['header', 'headers', 'navigation', 'nav', 'menu', 'navbar'],
+  'banner': ['banner', 'banners', 'promo', 'promotion', 'promotional', 'ad', 'advertisement'],
+  'gallery': ['gallery', 'galleries', 'image', 'images', 'photo', 'photos', 'picture', 'pictures'],
+  'product': ['product', 'products', 'item', 'items', 'shop', 'shopping'],
+  'collection': ['collection', 'collections', 'category', 'categories'],
+  'faq': ['faq', 'faqs', 'question', 'questions', 'accordion', 'accordions', 'help'],
+  'form': ['form', 'forms', 'contact', 'email', 'subscribe', 'subscription'],
+  'video': ['video', 'videos', 'youtube', 'vimeo'],
+  'slider': ['slider', 'sliders', 'carousel', 'carousels', 'slideshow', 'slides'],
+  'countdown': ['countdown', 'timer', 'timers', 'deadline'],
+  'blog': ['blog', 'article', 'articles', 'post', 'posts'],
+  'footer': ['footer', 'footers', 'bottom'],
+}
+
+/**
+ * Expand search terms with keyword mappings
+ */
+function expandSearchTerms(terms: string[]): string[] {
+  const expanded = new Set<string>(terms)
+  
+  for (const term of terms) {
+    // Check if term matches any keyword mapping
+    for (const [key, synonyms] of Object.entries(KEYWORD_MAPPINGS)) {
+      if (synonyms.some(syn => syn.includes(term) || term.includes(syn))) {
+        // Add the main keyword and all synonyms
+        expanded.add(key)
+        synonyms.forEach(syn => expanded.add(syn))
+      }
+    }
+  }
+  
+  return Array.from(expanded)
+}
+
+/**
  * Tokenize user input into search terms
  */
 function tokenizeInput(input: string): string[] {
-  return input
+  const terms = input
     .toLowerCase()
     .split(/\s+/)
     .map(term => term.trim())
     .filter(term => term.length > 0)
-    .filter(term => !['a', 'an', 'the', 'i', 'need', 'want', 'give', 'me', 'get'].includes(term))
+    .filter(term => !['a', 'an', 'the', 'i', 'need', 'want', 'give', 'me', 'get', 'show', 'looking', 'for'].includes(term))
+  
+  // Expand with keyword mappings
+  return expandSearchTerms(terms)
 }
 
 /**
@@ -216,8 +262,25 @@ function scoreSection(section: SectionMetadata, searchTerms: string[]): number {
   const lowerCode = section.liquidCode.toLowerCase()
 
   for (const term of searchTerms) {
-    // Exact filename match (highest priority)
-    if (lowerFilename.includes(term)) {
+    // Check keyword mappings for boosted scoring
+    let isKeywordMatch = false
+    for (const [key, synonyms] of Object.entries(KEYWORD_MAPPINGS)) {
+      if (synonyms.includes(term)) {
+        // If filename contains the main keyword type, boost score
+        if (lowerFilename.includes(key)) {
+          score += 60 // Very high score for keyword type match
+          isKeywordMatch = true
+        }
+        // Also check if any synonym appears in filename
+        if (synonyms.some(syn => lowerFilename.includes(syn))) {
+          score += 55
+          isKeywordMatch = true
+        }
+      }
+    }
+
+    // Exact filename match (highest priority if not already matched)
+    if (!isKeywordMatch && lowerFilename.includes(term)) {
       score += 50
     }
 
@@ -236,7 +299,7 @@ function scoreSection(section: SectionMetadata, searchTerms: string[]): number {
       score += 15
     }
 
-    // Partial filename match (e.g., "hero" matches "hero-banner")
+    // Partial filename match (e.g., "hero" matches "hero-banner" or "sg-hero-10")
     const filenameParts = lowerFilename.split(/[-_]/)
     if (filenameParts.some(part => part.includes(term) || term.includes(part))) {
       score += 20
@@ -274,10 +337,20 @@ export function searchSections(query: string, allSections?: SectionMetadata[]): 
     score: scoreSection(section, searchTerms),
   }))
 
-  // Filter out zero-score sections and sort by score
-  return scoredSections
+  // Filter and sort by score
+  const filtered = scoredSections
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .map(item => item.section)
+  
+  // If we have good matches (score > 10), return them
+  // Otherwise, if no good matches, return sections with any score > 0
+  const goodMatches = scoredSections
+    .filter(item => item.score > 10)
+    .sort((a, b) => b.score - a.score)
+    .map(item => item.section)
+  
+  // Return good matches if available, otherwise return all matches
+  return goodMatches.length > 0 ? goodMatches : filtered
 }
 
