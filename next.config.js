@@ -3,10 +3,14 @@ const nextConfig = {
   // Vercel supports full Next.js features including API routes
   trailingSlash: true,
   // Exclude large image directories from serverless function bundles
-  // BUT: We need to ensure the image serving route can access them
-  // Exclude from all routes EXCEPT the image serving route
+  // Following Vercel's guide: https://vercel.com/kb/guide/troubleshooting-function-250mb-limit
+  // According to Vercel: Files excluded from tracing are still deployed and accessible
+  // at runtime via filesystem - they're just not bundled into the function
+  // Use excludeFiles in vercel.json for function-specific exclusions
   outputFileTracingExcludes: {
-    // Exclude images from routes that don't need them
+    // Exclude images from routes that don't need them (reduces bundle size)
+    // The image serving route (app/api/sections/images) is NOT excluded here
+    // so it can access images at runtime via filesystem
     'app/api/generate/route': [
       'sections/images/**',
     ],
@@ -19,8 +23,6 @@ const nextConfig = {
     'app/api/templates/route': [
       'sections/images/**',
     ],
-    // NOTE: app/api/sections/images route is NOT in this list
-    // so it will have access to images at runtime
   },
   // Allow images from API routes
   images: {
