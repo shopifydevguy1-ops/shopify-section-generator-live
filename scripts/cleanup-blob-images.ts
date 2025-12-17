@@ -26,7 +26,7 @@ async function cleanupBlobImages() {
   
   try {
     do {
-      const result = await list({
+      const result: { blobs: Array<{ url: string; pathname: string }>; cursor?: string } = await list({
         token,
         cursor,
         limit: 1000, // Maximum allowed
