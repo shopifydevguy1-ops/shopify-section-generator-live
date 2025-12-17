@@ -31,6 +31,7 @@ export async function GET(
     if (USE_BLOB_STORAGE) {
       try {
         // Check if blob exists and get metadata
+        // head() returns blob metadata including url
         const blobInfo = await head(imagePath, {
           token: process.env.BLOB_READ_WRITE_TOKEN,
         })
@@ -42,11 +43,10 @@ export async function GET(
           )
         }
 
-        // Get download URL and fetch the blob content
-        const downloadUrl = await getDownloadUrl(imagePath, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        })
+        // Get download URL from the blob URL
+        const downloadUrl = getDownloadUrl(blobInfo.url)
         
+        // Fetch the blob content
         const response = await fetch(downloadUrl)
         if (!response.ok) {
           throw new Error(`Failed to fetch blob: ${response.statusText}`)
