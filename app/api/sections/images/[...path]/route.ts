@@ -32,6 +32,7 @@ export async function GET(
       try {
         // Check if blob exists and get metadata
         // head() returns blob metadata including url
+        // The imagePath should match what was uploaded (e.g., "sg-hero-1.png" or "mobile/sg-hero-1.png")
         const blobInfo = await head(imagePath, {
           token: process.env.BLOB_READ_WRITE_TOKEN,
         })
