@@ -4,24 +4,29 @@ const nextConfig = {
   trailingSlash: true,
   // Exclude large image directories from serverless function bundles
   // Following Vercel's guide: https://vercel.com/kb/guide/troubleshooting-function-250mb-limit
-  // Exclude from routes that don't need images, but allow image route to access them
+  // Use output path format (without .js extension) to match build output
   outputFileTracingExcludes: {
     // Exclude images from routes that don't need them
-    // The image serving route is NOT excluded so it can access files
-    'app/api/generate/route': [
+    // Use the output path format that matches the build
+    'api/generate': [
       'sections/images/**',
+      'sections/images/mobile/**',
     ],
-    'app/api/sections/list/route': [
+    'api/sections/list': [
       'sections/images/**',
+      'sections/images/mobile/**',
     ],
-    'app/api/sections/search/route': [
+    'api/sections/search': [
       'sections/images/**',
+      'sections/images/mobile/**',
     ],
-    'app/api/templates/route': [
+    'api/templates': [
       'sections/images/**',
+      'sections/images/mobile/**',
     ],
-    // NOTE: app/api/sections/images/[...path]/route is NOT in exclusions
-    // This allows it to access images at runtime
+    // NOTE: api/sections/images/[...path] is NOT excluded
+    // This allows it to access images at runtime, but it will still be large
+    // Consider moving to external storage if this exceeds 250MB
   },
   // Allow images from API routes
   images: {
