@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
+import { get } from '@vercel/blob'
 import fs from "fs"
 import path from "path"
 
 export const dynamic = 'force-dynamic'
+
+// Use Blob Storage if token is available, otherwise fallback to filesystem
+const USE_BLOB_STORAGE = !!process.env.BLOB_READ_WRITE_TOKEN
 
 export async function GET(
   request: Request,
@@ -23,45 +27,67 @@ export async function GET(
     const { path: pathArray } = await params
     const imagePath = pathArray.join('/')
     
-    // Get sections directory path - try multiple possible locations
-    // In Vercel serverless, process.cwd() points to the function's working directory
+    // Try Blob Storage first if available
+    if (USE_BLOB_STORAGE) {
+      try {
+        const blob = await get(imagePath)
+        
+        if (!blob) {
+          return NextResponse.json(
+            { error: "Image not found in Blob Storage", path: imagePath },
+            { status: 404 }
+          )
+        }
+
+        const ext = path.extname(imagePath).toLowerCase()
+        let contentType = 'image/png'
+        if (ext === '.jpg' || ext === '.jpeg') {
+          contentType = 'image/jpeg'
+        } else if (ext === '.gif') {
+          contentType = 'image/gif'
+        } else if (ext === '.webp') {
+          contentType = 'image/webp'
+        } else if (ext === '.svg') {
+          contentType = 'image/svg+xml'
+        }
+
+        return new NextResponse(blob, {
+          headers: {
+            'Content-Type': contentType,
+            'Cache-Control': 'public, max-age=3600, must-revalidate',
+          },
+        })
+      } catch (error: any) {
+        console.error(`[Image Route] Blob Storage error for ${imagePath}:`, error.message)
+        // Fall through to filesystem fallback
+      }
+    }
+
+    // Fallback to filesystem (for local development or if Blob fails)
     let sectionsPath = process.env.SECTIONS_DIRECTORY_PATH
     
     if (!sectionsPath) {
-      // Try common paths in order of preference for Vercel serverless environment
       const cwd = process.cwd()
       const possiblePaths = [
-        // Standard location (most common)
         path.join(cwd, 'sections'),
-        // Vercel serverless function location
         path.join(cwd, '..', 'sections'),
         path.join(cwd, '../..', 'sections'),
-        // Absolute path resolution
         path.resolve(cwd, 'sections'),
         path.resolve('./sections'),
-        // Vercel build output location
         '/var/task/sections',
         path.join('/var/task', 'sections'),
       ]
       
-      console.log(`[Image Route] Trying to find sections directory. CWD: ${cwd}`)
-      
       for (const possiblePath of possiblePaths) {
-        console.log(`[Image Route] Checking path: ${possiblePath}`)
         if (fs.existsSync(possiblePath)) {
-          console.log(`[Image Route] Found sections directory at: ${possiblePath}`)
           sectionsPath = possiblePath
           break
         }
       }
       
-      // Fallback to default
       if (!sectionsPath) {
-        sectionsPath = path.join(cwd, 'sections')
-        console.log(`[Image Route] Using fallback path: ${sectionsPath}`)
+        sectionsPath = path.join(process.cwd(), 'sections')
       }
-    } else {
-      console.log(`[Image Route] Using SECTIONS_DIRECTORY_PATH env var: ${sectionsPath}`)
     }
     
     const imageFilePath = path.join(sectionsPath, 'images', imagePath)
@@ -81,22 +107,6 @@ export async function GET(
     // Check if file exists
     if (!fs.existsSync(imageFilePath)) {
       console.error(`[Image Route] File not found: ${imageFilePath}`)
-      console.error(`[Image Route] Sections path: ${sectionsPath}`)
-      console.error(`[Image Route] Current working directory: ${process.cwd()}`)
-      console.error(`[Image Route] Resolved path: ${resolvedPath}`)
-      console.error(`[Image Route] Image path requested: ${imagePath}`)
-      
-      // Try to list what's actually in the images directory for debugging
-      try {
-        const imagesDir = path.join(sectionsPath, 'images')
-        if (fs.existsSync(imagesDir)) {
-          const files = fs.readdirSync(imagesDir).slice(0, 10)
-          console.error(`[Image Route] Sample files in images dir: ${files.join(', ')}`)
-        }
-      } catch (e) {
-        console.error(`[Image Route] Could not list images directory:`, e)
-      }
-      
       return NextResponse.json(
         { error: "Image not found", path: imageFilePath, requested: imagePath },
         { status: 404 }
