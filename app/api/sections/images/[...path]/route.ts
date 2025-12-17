@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
-import { get } from '@vercel/blob'
+import { head, getDownloadUrl } from '@vercel/blob'
 import fs from "fs"
 import path from "path"
 
@@ -30,28 +30,46 @@ export async function GET(
     // Try Blob Storage first if available
     if (USE_BLOB_STORAGE) {
       try {
-        const blob = await get(imagePath)
+        // Check if blob exists and get metadata
+        const blobInfo = await head(imagePath, {
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        })
         
-        if (!blob) {
+        if (!blobInfo) {
           return NextResponse.json(
             { error: "Image not found in Blob Storage", path: imagePath },
             { status: 404 }
           )
         }
 
+        // Get download URL and fetch the blob content
+        const downloadUrl = await getDownloadUrl(imagePath, {
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        })
+        
+        const response = await fetch(downloadUrl)
+        if (!response.ok) {
+          throw new Error(`Failed to fetch blob: ${response.statusText}`)
+        }
+        
+        const blobBuffer = await response.arrayBuffer()
         const ext = path.extname(imagePath).toLowerCase()
-        let contentType = 'image/png'
-        if (ext === '.jpg' || ext === '.jpeg') {
-          contentType = 'image/jpeg'
-        } else if (ext === '.gif') {
-          contentType = 'image/gif'
-        } else if (ext === '.webp') {
-          contentType = 'image/webp'
-        } else if (ext === '.svg') {
-          contentType = 'image/svg+xml'
+        
+        // Use content type from blob info if available, otherwise infer from extension
+        let contentType = blobInfo.contentType || 'image/png'
+        if (!blobInfo.contentType) {
+          if (ext === '.jpg' || ext === '.jpeg') {
+            contentType = 'image/jpeg'
+          } else if (ext === '.gif') {
+            contentType = 'image/gif'
+          } else if (ext === '.webp') {
+            contentType = 'image/webp'
+          } else if (ext === '.svg') {
+            contentType = 'image/svg+xml'
+          }
         }
 
-        return new NextResponse(blob, {
+        return new NextResponse(blobBuffer, {
           headers: {
             'Content-Type': contentType,
             'Cache-Control': 'public, max-age=3600, must-revalidate',
